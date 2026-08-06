@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 向量：从箭头到数组 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 1 章：向量的三种视角（箭头/数组/抽象对象），加法与数乘的几何意义，配可拖拽的向量加法演示与分层习题。">
+  <meta name="kb:tags" content="线性代数,教材,向量,向量加法,数乘">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 1 章 · 向量：从箭头到数组</h1>
+        <p class="kb-lead">整个线性代数都建立在一个不起眼的对象上：向量。这一章搞清楚三个问题——向量到底是什么、怎么用坐标表示它、以及它仅有的两种基本运算（加法和数乘）在几何上意味着什么。别小看这两种运算：后面十一章的所有内容，本质上都是它们的展开。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用“箭头 / 数组 / 抽象对象”三种视角解释向量；② 熟练进行向量加法、减法与数乘的坐标计算；③ 在图上画出这些运算的几何意义；④ 把“从 A 走到 B”一类几何叙述翻译成向量算式。</p>
+        </div>
+
+        <h2>从位移说起</h2>
+        <p>你从家出发走 300 米到便利店，再走 400 米到学校。要描述这两段行程，光说“300 米”“400 米”不够——<strong>方向</strong>同样重要：往东 300 米和往北 300 米是完全不同的移动。像位移这样“既有大小、又有方向”的量，物理里还有很多：速度、力、加速度。数学把它们抽象成同一个对象：<strong>向量</strong>。</p>
+        <p>更妙的是，两段位移的<strong>净效果</strong>（从家直接到学校）恰好对应向量的“加法”，而“把这段位移放大三倍”对应“数乘”。向量的全部基本运算，就藏在走路这件事里。</p>
+
+        <h2>向量的三种视角</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>视角</th><th>向量是什么</th><th>关心什么</th></tr></thead>
+            <tbody>
+              <tr><td>物理 / 几何</td><td>空间中的一个<strong>箭头</strong>：有长度、有方向</td><td>平移不改变向量——两个箭头只要长度方向相同，就是同一个向量</td></tr>
+              <tr><td>计算机 / 数据</td><td>一列有序的数：<code>[3, 2]</code>、<code>[身高, 体重, 年龄]</code></td><td>每个位置的数各自代表什么；如何高效批量运算</td></tr>
+              <tr><td>数学（抽象）</td><td>任何“能相加、能数乘”且运算性质良好的对象</td><td>只依赖运算规则本身，因此结论对箭头、数组甚至函数都成立</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>三种视角互为翻译：几何直觉帮你<strong>理解</strong>，坐标数组帮你<strong>计算</strong>，抽象定义保证结论<strong>通用</strong>。本教材的习惯是：概念先画箭头，动手就用数组。</p>
+
+        <h2>坐标表示</h2>
+        <p>在平面上取定原点和坐标轴后，把向量的起点挪到原点，箭头终点的坐标就完全确定了这个向量。我们记作 <strong>v</strong> = (3, 2)：沿 <em class="kb-math">x</em> 方向走 3、沿 <em class="kb-math">y</em> 方向走 2。每个数叫一个<strong>分量</strong>。</p>
+        <figure>
+          <svg viewBox="0 0 420 240" width="420" height="240" role="img" aria-label="坐标平面中的向量 (3,2)，虚线标出两个分量">
+            <g stroke="var(--kb-border)" stroke-width="1">
+              <path d="M 60 200 h 320 M 60 200 v -170" fill="none" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <path d="M 140 205 v -175 M 220 205 v -175 M 300 205 v -175 M 55 120 h 330 M 55 40 h 330" fill="none"/>
+            </g>
+            <g stroke="var(--kb-accent)" stroke-width="3">
+              <line x1="60" y1="200" x2="296" y2="42"/>
+              <path d="M 296 42 l -13 2.5 l 6 9 z" fill="var(--kb-accent)" stroke="none"/>
+            </g>
+            <g stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="5 4">
+              <line x1="300" y1="200" x2="300" y2="44"/>
+              <line x1="60" y1="40" x2="296" y2="40"/>
+            </g>
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="14" fill="var(--kb-fg-muted)">
+              <text x="175" y="222">x 分量 = 3</text>
+              <text x="310" y="128">y 分量 = 2</text>
+              <text x="48" y="218">O</text>
+            </g>
+            <text x="230" y="100" font-family="Times New Roman, serif" font-style="italic" font-size="19" fill="var(--kb-accent)" font-weight="bold">v = (3, 2)</text>
+          </svg>
+          <figcaption>把起点放到原点后，向量与“终点坐标”一一对应：箭头视角与数组视角在此汇合。</figcaption>
+        </figure>
+        <p>三维向量 (2, 1, 5) 同理多一个分量；数据科学里一条用户记录动辄几百个分量，虽然画不出来，但所有运算规则与二维完全一样——这正是抽象视角的好处。</p>
+
+        <h2>向量加法：首尾相接</h2>
+        <p>坐标上，加法就是<strong>分量对应相加</strong>：(2, 1) + (1, 3) = (3, 4)。几何上有两种等价画法：</p>
+        <ul>
+          <li><strong>三角形法则</strong>：把 <strong>v</strong> 的起点接到 <strong>u</strong> 的终点，从 <strong>u</strong> 的起点指向 <strong>v</strong> 的终点就是 <strong>u</strong> + <strong>v</strong>——正是“两段位移的净效果”。</li>
+          <li><strong>平行四边形法则</strong>：让 <strong>u</strong>、<strong>v</strong> 共起点，以它们为邻边作平行四边形，对角线就是和。</li>
+        </ul>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 拖一拖：向量加法的平行四边形</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas kb-canvas-drag" id="add-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：向量加法既是分量相加，也是几何上的“首尾相接”。</p></noscript>
+            <div class="kb-interactive-controls">
+              <span class="kb-control" style="min-width:220px">拖动 <strong style="color:#2563eb">u</strong>、<strong style="color:#16a34a">v</strong> 的箭头端点，观察
+                <strong style="color:#9466de">u + v</strong> 如何变化<span class="kb-control-value" id="add-readout"></span></span>
+              <button class="kb-btn" id="add-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 试试这两个位置</p>
+          <p>① 把 <strong>v</strong> 拖到与 <strong>u</strong> 同方向：和向量最长（长度相加）。② 拖到正相反方向且等长：和向量缩成一点——这就是<strong>零向量 0</strong>，加法里的“0”。</p>
+        </div>
+
+        <h2>数乘：拉伸、压缩与反向</h2>
+        <p>用数 <em class="kb-math">k</em> 乘向量，每个分量都乘 <em class="kb-math">k</em>：2 · (3, 2) = (6, 4)。几何效果只有三种，全由 <em class="kb-math">k</em> 决定：</p>
+        <figure>
+          <svg viewBox="0 0 520 210" width="520" height="210" role="img" aria-label="数乘的三种几何效果：放大、压缩、反向">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="13.5" fill="var(--kb-fg-muted)">
+              <text x="85" y="196" text-anchor="middle">k = 2：放大</text>
+              <text x="265" y="196" text-anchor="middle">k = ½：压缩</text>
+              <text x="445" y="196" text-anchor="middle">k = −1：反向</text>
+            </g>
+            <g stroke-width="2.5">
+              <line x1="60" y1="150" x2="108" y2="118" stroke="var(--kb-fg-muted)"/>
+              <path d="M 108 118 l -11 1.5 l 5 8 z" fill="var(--kb-fg-muted)" stroke="none"/>
+              <line x1="60" y1="150" x2="156" y2="86" stroke="var(--kb-accent)"/>
+              <path d="M 156 86 l -11 1.5 l 5 8 z" fill="var(--kb-accent)" stroke="none"/>
+              <line x1="240" y1="150" x2="336" y2="86" stroke="var(--kb-fg-muted)"/>
+              <path d="M 336 86 l -11 1.5 l 5 8 z" fill="var(--kb-fg-muted)" stroke="none"/>
+              <line x1="240" y1="150" x2="288" y2="118" stroke="var(--kb-accent)"/>
+              <path d="M 288 118 l -11 1.5 l 5 8 z" fill="var(--kb-accent)" stroke="none"/>
+              <line x1="445" y1="118" x2="493" y2="86" stroke="var(--kb-fg-muted)"/>
+              <path d="M 493 86 l -11 1.5 l 5 8 z" fill="var(--kb-fg-muted)" stroke="none"/>
+              <line x1="445" y1="118" x2="397" y2="150" stroke="#ef4444"/>
+              <path d="M 397 150 l 11 -1.5 l -5 -8 z" fill="#ef4444" stroke="none"/>
+            </g>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="15">
+              <text x="100" y="140" fill="var(--kb-fg-muted)">v</text>
+              <text x="148" y="78" fill="var(--kb-accent)">2v</text>
+              <text x="330" y="78" fill="var(--kb-fg-muted)">v</text>
+              <text x="270" y="140" fill="var(--kb-accent)">½v</text>
+              <text x="487" y="78" fill="var(--kb-fg-muted)">v</text>
+              <text x="385" y="172" fill="#ef4444">−v</text>
+            </g>
+          </svg>
+          <figcaption>|k| 决定长度伸缩，k 的正负决定是否掉头；k = 0 时压缩成零向量。数乘后的向量永远与原向量<strong>共线</strong>。</figcaption>
+        </figure>
+        <p>这也给出<strong>减法</strong>：<strong>u</strong> − <strong>v</strong> 定义为 <strong>u</strong> + (−1)<strong>v</strong>，分量对应相减。几何上把 <strong>u</strong>、<strong>v</strong> 画成共起点，<strong>u</strong> − <strong>v</strong> 就是<strong>从 v 的终点指向 u 的终点</strong>的箭头（验证：<strong>v</strong> + (<strong>u</strong> − <strong>v</strong>) = <strong>u</strong>，正好首尾相接）。“终点减起点”，这个方向千万别记反。</p>
+
+        <h2>运算律：为什么可以放心计算</h2>
+        <p>向量加法与数乘满足与数字运算相同的定律——交换律 <strong>u</strong> + <strong>v</strong> = <strong>v</strong> + <strong>u</strong>、结合律、分配律 <em class="kb-math">k</em>(<strong>u</strong> + <strong>v</strong>) = <em class="kb-math">k</em><strong>u</strong> + <em class="kb-math">k</em><strong>v</strong> 等。它们看似废话，实则是“把向量式子当普通代数式移项化简”的许可证；抽象视角里，这八条运算律就是向量的<strong>定义</strong>本身。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 基本运算</p>
+          <p>设 <strong>u</strong> = (2, 1)，<strong>v</strong> = (−1, 3)。求 <strong>u</strong> + <strong>v</strong>、<strong>u</strong> − <strong>v</strong> 和 3<strong>u</strong> − 2<strong>v</strong>。</p>
+          <p><strong>解</strong>：<strong>u</strong> + <strong>v</strong> = (2−1, 1+3) = (1, 4)；<strong>u</strong> − <strong>v</strong> = (2+1, 1−3) = (3, −2)；3<strong>u</strong> − 2<strong>v</strong> = (6, 3) − (−2, 6) = (8, −3)。注意 3<strong>u</strong> − 2<strong>v</strong> 的读法：沿 <strong>u</strong> 方向走 3 步，再沿 <strong>v</strong> 反方向走 2 步。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 终点减起点</p>
+          <p>点 <em class="kb-math">A</em> = (1, 2)，<em class="kb-math">B</em> = (4, 6)。求位移向量 <span style="text-decoration:overline">AB</span> 及线段 <em class="kb-math">AB</em> 的中点。</p>
+          <p><strong>解</strong>：<span style="text-decoration:overline">AB</span> = <em class="kb-math">B</em> − <em class="kb-math">A</em> = (3, 4)（终点减起点）。中点 = <em class="kb-math">A</em> + ½<span style="text-decoration:overline">AB</span> = (1, 2) + (1.5, 2) = (2.5, 4)——“从 A 出发走一半路程”，比死记中点公式更不容易错。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>设 <strong>u</strong> = (4, −2)，<strong>v</strong> = (1, 5)。计算：(a) <strong>u</strong> + <strong>v</strong>；(b) <strong>v</strong> − <strong>u</strong>；(c) −2<strong>u</strong> + 3<strong>v</strong>。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) (5, 3)；(b) (−3, 7)；(c) (−8, 4) + (3, 15) = <strong>(−5, 19)</strong>。</p>
+            <p><strong>解析</strong>：全部按分量独立计算，互不干扰——这种“逐分量”性质是向量运算高效的根源。(b) 注意顺序：<strong>v</strong> − <strong>u</strong> 与 <strong>u</strong> − <strong>v</strong> 恰好反向。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>设 <strong>u</strong> = (3, 0)，<strong>v</strong> = (0, 4)。画出（或在脑中想象）<strong>u</strong> + <strong>v</strong> 与 <strong>u</strong> − <strong>v</strong>，并分别说出它们的长度。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>u</strong> + <strong>v</strong> = (3, 4)，长度 5；<strong>u</strong> − <strong>v</strong> = (3, −4)，长度也是 5。</p>
+            <p><strong>解析</strong>：两个向量恰好垂直，和与差是同一个矩形的两条对角线，因此等长（3-4-5 勾股数）。若 <strong>u</strong>、<strong>v</strong> 不垂直，|<strong>u</strong> + <strong>v</strong>| 与 |<strong>u</strong> − <strong>v</strong>| 一般不相等——第 3 章的点积会给出精确关系。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>无人机以恒定速度 <strong>w</strong> = (5, −2, 1)（米/秒）飞行。它在 4 秒内的位移是多少？若起点为 (10, 3, 0)，4 秒后位于何处？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>位移 = 4<strong>w</strong> = (20, −8, 4)；终点 = (10, 3, 0) + (20, −8, 4) = <strong>(30, −5, 4)</strong>。</p>
+            <p><strong>解析</strong>：位移 = 速度 × 时间是数乘；“位置 + 位移 = 新位置”是加法。三维与二维规则完全相同，只是多一个分量。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>求向量 <strong>x</strong>，使得 (2, 7) + <strong>x</strong> = (−1, 3)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>x</strong> = (−1, 3) − (2, 7) = <strong>(−3, −4)</strong>。</p>
+            <p><strong>解析</strong>：把向量方程当普通方程“移项”——运算律保证了这样做合法。几何上 <strong>x</strong> 是从 (2, 7) 指向 (−1, 3) 的箭头。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>判断下列各对向量是否共线（即一个是另一个的数乘）：(a) (4, 6) 与 (6, 9)；(b) (2, −1) 与 (−4, 2)；(c) (3, 2) 与 (2, 3)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 共线：(6, 9) = 1.5 · (4, 6)。(b) 共线：(−4, 2) = −2 · (2, −1)（方向相反也算共线）。(c) 不共线：若 (2, 3) = k(3, 2)，第一分量要求 k = 2/3，第二分量要求 k = 3/2，矛盾。</p>
+            <p><strong>解析</strong>：判共线就是解 <strong>v</strong> = <em class="kb-math">k</em><strong>u</strong>——各分量给出的 <em class="kb-math">k</em> 必须一致。也可用交叉相乘检验：(a) 4×9 = 6×6 ✓。这个概念下一章将升级为“线性相关”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>三角形顶点为 <em class="kb-math">A</em>、<em class="kb-math">B</em>、<em class="kb-math">C</em>，<em class="kb-math">M</em>、<em class="kb-math">N</em> 分别是 <em class="kb-math">AB</em>、<em class="kb-math">AC</em> 的中点。用向量证明：<span style="text-decoration:overline">MN</span> 平行于 <span style="text-decoration:overline">BC</span> 且长度是它的一半（三角形中位线定理）。提示：把 <span style="text-decoration:overline">MN</span> 用 <span style="text-decoration:overline">AB</span>、<span style="text-decoration:overline">AC</span> 表示。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><span style="text-decoration:overline">MN</span> = <span style="text-decoration:overline">AN</span> − <span style="text-decoration:overline">AM</span> = ½<span style="text-decoration:overline">AC</span> − ½<span style="text-decoration:overline">AB</span> = ½(<span style="text-decoration:overline">AC</span> − <span style="text-decoration:overline">AB</span>) = ½<span style="text-decoration:overline">BC</span>。</p>
+            <p><strong>解析</strong>：结论“<span style="text-decoration:overline">MN</span> 是 <span style="text-decoration:overline">BC</span> 的 ½ 倍数乘”一步同时给出平行（共线）与长度减半。对比初中的全等/相似证法，向量证明几乎是纯计算——这正是向量方法的威力：<strong>把几何论证变成代数运算</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>用向量证明：若四边形 <em class="kb-math">ABCD</em> 的对角线互相平分，则它是平行四边形（即 <span style="text-decoration:overline">AB</span> = <span style="text-decoration:overline">DC</span>）。提示：设对角线交点为 <em class="kb-math">O</em>，用“互相平分”写出 <em class="kb-math">O</em> 与四个顶点的向量关系。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>以 <em class="kb-math">O</em> 为原点。对角线 <em class="kb-math">AC</em>、<em class="kb-math">BD</em> 都被 <em class="kb-math">O</em> 平分，意味着 <em class="kb-math">C</em> = −<em class="kb-math">A</em>，<em class="kb-math">D</em> = −<em class="kb-math">B</em>（这里用顶点字母代表其位置向量）。于是 <span style="text-decoration:overline">AB</span> = <em class="kb-math">B</em> − <em class="kb-math">A</em>，而 <span style="text-decoration:overline">DC</span> = <em class="kb-math">C</em> − <em class="kb-math">D</em> = −<em class="kb-math">A</em> − (−<em class="kb-math">B</em>) = <em class="kb-math">B</em> − <em class="kb-math">A</em>。两者相等，故 <em class="kb-math">AB</em> 与 <em class="kb-math">DC</em> 平行且等长，<em class="kb-math">ABCD</em> 是平行四边形。∎</p>
+            <p><strong>解析</strong>：关键一步是<strong>选一个好原点</strong>——选在对角线交点上，“互相平分”立刻翻译成 <em class="kb-math">C</em> = −<em class="kb-math">A</em>、<em class="kb-math">D</em> = −<em class="kb-math">B</em>，剩下的只是两行代数。选取合适参考点让表达式最简，是向量证明的常用招数。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 向量 = 有方向的量，平移不变，坐标化后是数组；② 加法：分量相加 / 首尾相接；数乘：分量同乘 / 伸缩掉头；减法：终点减起点；③ 运算律允许像普通代数一样移项化简；④ 向量把几何证明变成代数计算。<br><strong>下一章预告</strong>：只用这两种运算反复组合，两个向量能“够到”平面上哪些点？答案会引出线性代数的第一组核心概念——线性组合与张成。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./00-大纲与学习路线.html">← 大纲与学习路线</a>
+          <a href="./02-线性组合张成与线性无关.html">第 2 章 线性组合、张成与线性无关 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("add-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 40;
+    var u0 = { x: 2, y: 1 }, v0 = { x: 1, y: 2 };
+    var u = { x: u0.x, y: u0.y }, v = { x: v0.x, y: v0.y };
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("add-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2 - 40, y: H / 2 + 60 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function toVec(x, y) {
+      var o = origin();
+      return { x: Math.round((x - o.x) / SCALE * 2) / 2, y: Math.round((o.y - y) / SCALE * 2) / 2 };
+    }
+
+    function arrow(from, to, color, width, dash) {
+      var a = toPx(from), b = toPx(to);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash || []);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      if (len < 4) return;
+      var ux = dx / len, uy = dy / len, s = 11;
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(b.x - s * ux - s * 0.5 * uy, b.y - s * uy + s * 0.5 * ux);
+      ctx.lineTo(b.x - s * ux + s * 0.5 * uy, b.y - s * uy - s * 0.5 * ux);
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 1;
+    }
+
+    function label(vec, text, color, off) {
+      var p = toPx(vec);
+      ctx.fillStyle = color;
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      ctx.fillText(text, p.x + (off && off.x || 8), p.y + (off && off.y || -8));
+    }
+
+    function fmt(p) { return "(" + p.x + ", " + p.y + ")"; }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var s = { x: u.x + v.x, y: u.y + v.y };
+      var gray = css("--kb-fg-faint");
+      arrow(u, s, gray, 1.5, [5, 4]);   // u 终点平移 v（虚线）
+      arrow(v, s, gray, 1.5, [5, 4]);   // v 终点平移 u（虚线）
+      arrow({ x: 0, y: 0 }, s, "#9466de", 3);
+      arrow({ x: 0, y: 0 }, u, "#2563eb", 3);
+      arrow({ x: 0, y: 0 }, v, "#16a34a", 3);
+      // 端点手柄
+      ["#2563eb", "#16a34a"].forEach(function (color, i) {
+        var p = toPx(i === 0 ? u : v);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = css("--kb-surface");
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+      label(u, "u", "#2563eb");
+      label(v, "v", "#16a34a");
+      label(s, "u+v", "#9466de", { x: 10, y: 4 });
+      readout.textContent = "　u = " + fmt(u) + "，v = " + fmt(v) + "，u+v = " + fmt(s);
+    }
+
+    KB.enableDrag(canvas,
+      function (x, y) {
+        var pu = toPx(u), pv = toPx(v);
+        if (Math.hypot(x - pu.x, y - pu.y) < 20) return "u";
+        if (Math.hypot(x - pv.x, y - pv.y) < 20) return "v";
+        return null;
+      },
+      function (target, x, y) {
+        var nv = toVec(x, y);
+        if (Math.abs(nv.x) > 6 || Math.abs(nv.y) > 4.5) return; // 别拖出画面太远
+        if (target === "u") u = nv; else v = nv;
+        draw();
+      });
+
+    document.getElementById("add-reset").addEventListener("click", function () {
+      u = { x: u0.x, y: u0.y };
+      v = { x: v0.x, y: v0.y };
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

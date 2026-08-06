@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>矩阵 · 知识库</title>
+  <meta name="kb:summary" content="矩阵是按行和列排成的数表：矩阵的记法、加法与数乘、矩阵乘法的行乘列规则，以及常见特殊矩阵一览。">
+  <meta name="kb:tags" content="线性代数,矩阵,数学基础">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>矩阵</h1>
+        <p class="kb-lead">矩阵是把数按行、列排成的矩形数表，是线性代数的基本对象。它既可以看作一张数据表，也可以看作一种“变换”：向量乘上矩阵，就被旋转、拉伸或投影到新的位置。</p>
+
+        <h2>什么是矩阵</h2>
+        <p>一个 <em class="kb-math">m</em> × <em class="kb-math">n</em> 矩阵由 <em class="kb-math">m</em> 行、<em class="kb-math">n</em> 列共 <em class="kb-math">m·n</em> 个元素组成，通常记作大写字母 <strong>A</strong>，其中第 <em class="kb-math">i</em> 行第 <em class="kb-math">j</em> 列的元素记作 <em class="kb-math">a<sub>ij</sub></em>。<strong>先行后列</strong>是所有下标的约定：<em class="kb-math">a</em><sub>23</sub> 表示第 2 行、第 3 列那个数。</p>
+
+        <figure>
+          <svg viewBox="0 0 520 250" width="520" height="250" role="img" aria-label="3 行 3 列矩阵的记法示意图">
+            <path d="M 150 30 h -18 v 190 h 18" fill="none" stroke="var(--kb-fg-muted)" stroke-width="3"/>
+            <path d="M 370 30 h 18 v 190 h -18" fill="none" stroke="var(--kb-fg-muted)" stroke-width="3"/>
+            <rect x="140" y="108" width="240" height="38" rx="6" fill="var(--kb-accent)" opacity="0.14"/>
+            <rect x="300" y="36" width="64" height="178" rx="6" fill="#22c55e" opacity="0.16"/>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="24" fill="var(--kb-fg)" text-anchor="middle">
+              <text x="180" y="72">a<tspan baseline-shift="sub" font-size="15">11</tspan></text>
+              <text x="256" y="72">a<tspan baseline-shift="sub" font-size="15">12</tspan></text>
+              <text x="332" y="72">a<tspan baseline-shift="sub" font-size="15">13</tspan></text>
+              <text x="180" y="134">a<tspan baseline-shift="sub" font-size="15">21</tspan></text>
+              <text x="256" y="134">a<tspan baseline-shift="sub" font-size="15">22</tspan></text>
+              <text x="332" y="134">a<tspan baseline-shift="sub" font-size="15">23</tspan></text>
+              <text x="180" y="196">a<tspan baseline-shift="sub" font-size="15">31</tspan></text>
+              <text x="256" y="196">a<tspan baseline-shift="sub" font-size="15">32</tspan></text>
+              <text x="332" y="196">a<tspan baseline-shift="sub" font-size="15">33</tspan></text>
+            </g>
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="14">
+              <text x="425" y="132" fill="var(--kb-accent)">← 第 2 行</text>
+              <text x="332" y="238" fill="#16a34a" text-anchor="middle">↑ 第 3 列</text>
+              <text x="70" y="132" fill="var(--kb-fg-muted)" text-anchor="middle">A =</text>
+            </g>
+          </svg>
+          <figcaption>3 × 3 矩阵的记法：下标先行后列，<em class="kb-math">a</em><sub>23</sub> 位于第 2 行与第 3 列的交叉处。</figcaption>
+        </figure>
+
+        <h2>加法与数乘</h2>
+        <p>两个<strong>同型</strong>（行数、列数都相同）的矩阵才能相加：对应位置的元素分别相加。数乘则更简单——用一个数去乘矩阵，就是把每个元素都乘上这个数。</p>
+        <ul>
+          <li><strong>加法</strong>：(A + B)<sub><em class="kb-math">ij</em></sub> = <em class="kb-math">a<sub>ij</sub></em> + <em class="kb-math">b<sub>ij</sub></em>，满足交换律与结合律。</li>
+          <li><strong>数乘</strong>：(kA)<sub><em class="kb-math">ij</em></sub> = <em class="kb-math">k·a<sub>ij</sub></em>。</li>
+        </ul>
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">💡 类比</p>
+          <p>把同型矩阵想成两张同样大小的表格：加法就是把两张表逐格相加。不同尺寸的表格没法逐格对齐，所以不同型矩阵不能相加。</p>
+        </div>
+
+        <h2>矩阵乘法</h2>
+        <p>矩阵乘法的规则是<strong>“行乘列”</strong>：C = AB 中的元素 <em class="kb-math">c<sub>ij</sub></em>，等于 A 的第 <em class="kb-math">i</em> 行与 B 的第 <em class="kb-math">j</em> 列对应元素乘积之和。因此 <strong>A 的列数必须等于 B 的行数</strong>：<em class="kb-math">m</em>×<em class="kb-math">n</em> 矩阵乘 <em class="kb-math">n</em>×<em class="kb-math">p</em> 矩阵，结果是 <em class="kb-math">m</em>×<em class="kb-math">p</em> 矩阵。</p>
+
+        <figure>
+          <svg viewBox="0 0 560 240" width="560" height="240" role="img" aria-label="矩阵乘法行乘列示意图">
+            <!-- A 2x3 -->
+            <path d="M 40 60 h -12 v 100 h 12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <path d="M 178 60 h 12 v 100 h -12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <rect x="34" y="76" width="150" height="30" rx="5" fill="var(--kb-accent)" opacity="0.16"/>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="19" fill="var(--kb-fg)" text-anchor="middle">
+              <text x="62" y="98">a<tspan baseline-shift="sub" font-size="12">11</tspan></text>
+              <text x="110" y="98">a<tspan baseline-shift="sub" font-size="12">12</tspan></text>
+              <text x="158" y="98">a<tspan baseline-shift="sub" font-size="12">13</tspan></text>
+              <text x="62" y="146">a<tspan baseline-shift="sub" font-size="12">21</tspan></text>
+              <text x="110" y="146">a<tspan baseline-shift="sub" font-size="12">22</tspan></text>
+              <text x="158" y="146">a<tspan baseline-shift="sub" font-size="12">23</tspan></text>
+            </g>
+            <text x="205" y="118" font-size="18" fill="var(--kb-fg)">×</text>
+            <!-- B 3x2 -->
+            <path d="M 240 40 h -12 v 140 h 12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <path d="M 340 40 h 12 v 140 h -12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <rect x="242" y="44" width="44" height="132" rx="5" fill="#22c55e" opacity="0.18"/>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="19" fill="var(--kb-fg)" text-anchor="middle">
+              <text x="264" y="76">b<tspan baseline-shift="sub" font-size="12">11</tspan></text>
+              <text x="318" y="76">b<tspan baseline-shift="sub" font-size="12">12</tspan></text>
+              <text x="264" y="122">b<tspan baseline-shift="sub" font-size="12">21</tspan></text>
+              <text x="318" y="122">b<tspan baseline-shift="sub" font-size="12">22</tspan></text>
+              <text x="264" y="168">b<tspan baseline-shift="sub" font-size="12">31</tspan></text>
+              <text x="318" y="168">b<tspan baseline-shift="sub" font-size="12">32</tspan></text>
+            </g>
+            <text x="368" y="118" font-size="18" fill="var(--kb-fg)">=</text>
+            <!-- C 2x2 -->
+            <path d="M 402 60 h -12 v 100 h 12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <path d="M 508 60 h 12 v 100 h -12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <circle cx="428" cy="92" r="17" fill="var(--kb-warn)" opacity="0.25"/>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="19" fill="var(--kb-fg)" text-anchor="middle">
+              <text x="428" y="98">c<tspan baseline-shift="sub" font-size="12">11</tspan></text>
+              <text x="484" y="98">c<tspan baseline-shift="sub" font-size="12">12</tspan></text>
+              <text x="428" y="146">c<tspan baseline-shift="sub" font-size="12">21</tspan></text>
+              <text x="484" y="146">c<tspan baseline-shift="sub" font-size="12">22</tspan></text>
+            </g>
+            <text x="280" y="222" font-family="Times New Roman, serif" font-style="italic" font-size="17"
+              fill="var(--kb-fg-muted)" text-anchor="middle">c<tspan baseline-shift="sub" font-size="11">11</tspan> = a<tspan baseline-shift="sub" font-size="11">11</tspan>b<tspan baseline-shift="sub" font-size="11">11</tspan> + a<tspan baseline-shift="sub" font-size="11">12</tspan>b<tspan baseline-shift="sub" font-size="11">21</tspan> + a<tspan baseline-shift="sub" font-size="11">13</tspan>b<tspan baseline-shift="sub" font-size="11">31</tspan></text>
+          </svg>
+          <figcaption>行乘列：A 的第 1 行（蓝）与 B 的第 1 列（绿）做内积，得到 <em class="kb-math">c</em><sub>11</sub>（黄）。</figcaption>
+        </figure>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 注意</p>
+          <p>矩阵乘法<strong>不满足交换律</strong>：一般 AB ≠ BA，甚至一个有定义另一个没定义。但结合律 (AB)C = A(BC) 与分配律仍然成立。</p>
+        </div>
+
+        <h2>常见特殊矩阵</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead>
+              <tr><th>名称</th><th>定义</th><th>备注</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>零矩阵 O</td><td>所有元素都是 0</td><td>加法单位元：A + O = A</td></tr>
+              <tr><td>单位矩阵 I</td><td>主对角线为 1，其余为 0 的方阵</td><td>乘法单位元：AI = IA = A</td></tr>
+              <tr><td>对角矩阵</td><td>非对角元素全为 0 的方阵</td><td>相乘只需对角元素相乘，计算最省</td></tr>
+              <tr><td>转置矩阵 Aᵀ</td><td>把 A 的行列互换</td><td>(AB)ᵀ = BᵀAᵀ，顺序要反过来</td></tr>
+              <tr><td>对称矩阵</td><td>满足 Aᵀ = A 的方阵</td><td>协方差矩阵、距离矩阵都是对称的</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>矩阵在哪里出现</h2>
+        <p>矩阵远不止是课本符号：图像本身就是像素值矩阵；神经网络的一层就是一次矩阵乘法加激活；图的邻接矩阵用 0/1 记录顶点是否相连；三维游戏里每一次旋转、缩放、平移都由 4×4 变换矩阵完成。掌握矩阵，是读懂这些领域的第一步。</p>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本页要点</p>
+          <p>① 矩阵下标先行后列；② 同型才能相加，数乘逐元素；③ 乘法是“行乘列”，A 列数 = B 行数才可乘，且一般不可交换；④ 单位矩阵在乘法中的作用相当于数字 1。</p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../assets/js/theme.js" defer></script>
+  <script src="../../../assets/js/nav.js" defer></script>
+  <script src="../../../assets/js/toc.js" defer></script>
+  <script src="../../../assets/js/search.js" defer></script>
+  <script src="../../../assets/js/interactive.js" defer></script>
+  <script src="../../../assets/js/app.js" defer></script>
+</body>
+</html>

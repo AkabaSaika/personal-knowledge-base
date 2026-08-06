@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>单摆 · 知识库</title>
+  <meta name="kb:summary" content="单摆的受力分析、运动方程与小角近似周期公式 T=2π√(L/g)，配可调摆长、重力、阻尼的实时交互模拟。">
+  <meta name="kb:tags" content="力学,单摆,简谐运动,交互演示">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>单摆</h1>
+        <p class="kb-lead">一根不可伸长的轻绳吊着一个小球，偏离竖直位置后来回摆动——这就是单摆。它是理解周期运动的入门模型：钟摆计时、秋千荡漾、桥梁晃动，背后都是同一套规律。先玩下面的模拟，再看原理。</p>
+
+        <h2>动手试：单摆模拟器</h2>
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 实时模拟 — 拖动滑块观察摆动如何变化</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="pendulum-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript 才能运行。核心结论：摆长越长摆得越慢，重力越强摆得越快，周期与摆球质量无关。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">摆长 L <span class="kb-control-value" id="val-length"></span>
+                <input type="range" id="ctl-length" min="0.5" max="2.5" step="0.1" value="1.2"></label>
+              <label class="kb-control">重力加速度 g <span class="kb-control-value" id="val-gravity"></span>
+                <input type="range" id="ctl-gravity" min="1.6" max="24.8" step="0.1" value="9.8"></label>
+              <label class="kb-control">阻尼 <span class="kb-control-value" id="val-damping"></span>
+                <input type="range" id="ctl-damping" min="0" max="0.5" step="0.01" value="0.02"></label>
+              <label class="kb-control">初始角度 <span class="kb-control-value" id="val-angle"></span>
+                <input type="range" id="ctl-angle" min="5" max="85" step="1" value="30"></label>
+              <button class="kb-btn kb-btn-primary" id="btn-toggle" type="button">暂停</button>
+              <button class="kb-btn" id="btn-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🔍 观察建议</p>
+          <p>① 把摆长调到最长再调到最短，数一数来回一次的时间怎么变；② 把 g 调到 1.6（月球表面），感受“月球上的钟摆走多慢”；③ 初始角度调大后，实际周期会比理论值略长——这正是小角近似失效的表现。</p>
+        </div>
+
+        <h2>受力分析</h2>
+        <p>摆球只受两个力：竖直向下的重力 <em class="kb-math">mg</em> 与沿绳方向的张力 <em class="kb-math">T</em>。把重力沿绳方向和垂直绳方向分解：沿绳分量 <em class="kb-math">mg</em>cos<em class="kb-math">θ</em> 与张力抵消（维持圆弧轨道），<strong>垂直绳的分量 <em class="kb-math">mg</em>sin<em class="kb-math">θ</em> 才是把摆球拉回最低点的“回复力”</strong>。</p>
+        <figure>
+          <svg viewBox="0 0 360 270" width="360" height="270" role="img" aria-label="单摆受力分析：重力分解为沿绳与垂直绳两个分量">
+            <line x1="180" y1="30" x2="180" y2="200" stroke="var(--kb-fg-faint)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="180" y1="30" x2="262" y2="172" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+            <circle cx="180" cy="30" r="5" fill="var(--kb-fg-muted)"/>
+            <path d="M 180 78 A 48 48 0 0 1 204 71" fill="none" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+            <text x="196" y="98" font-family="Times New Roman, serif" font-style="italic" font-size="16" fill="var(--kb-fg)">θ</text>
+            <circle cx="262" cy="172" r="14" fill="var(--kb-accent)"/>
+            <g stroke-width="2.5">
+              <line x1="262" y1="172" x2="262" y2="248" stroke="#ef4444"/>
+              <path d="M 262 248 l -5 -9 h 10 z" fill="#ef4444" stroke="none"/>
+              <line x1="262" y1="172" x2="228" y2="230" stroke="#16a34a"/>
+              <path d="M 228 230 l 0.5 -10.5 l 9 5.4 z" fill="#16a34a" stroke="none"/>
+              <line x1="262" y1="172" x2="221" y2="101" stroke="#2563eb"/>
+              <path d="M 221 101 l 9.2 5 l -0.3 -10.6 z" fill="#2563eb" stroke="none"/>
+            </g>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="15">
+              <text x="270" y="242" fill="#ef4444">mg</text>
+              <text x="196" y="240" fill="#16a34a">mg sinθ</text>
+              <text x="200" y="96" fill="#2563eb" transform="translate(30,20)">T</text>
+            </g>
+          </svg>
+          <figcaption>重力的切向分量 <em class="kb-math">mg</em>sin<em class="kb-math">θ</em>（绿）充当回复力，方向始终指向最低点。</figcaption>
+        </figure>
+
+        <h2>运动方程与小角近似</h2>
+        <p>对切向方向用牛顿第二定律，得到单摆的运动方程（<em class="kb-math">θ</em> 以弧度计）：</p>
+        <pre><code>θ'' = −(g / L) · sinθ − c · θ'      （c 为阻尼系数）</code></pre>
+        <p>当摆角很小时（工程上通常取 <em class="kb-math">θ</em> &lt; 5°），sin<em class="kb-math">θ</em> ≈ <em class="kb-math">θ</em>，方程退化为标准的<strong>简谐振动</strong>方程 <em class="kb-math">θ''</em> = −(<em class="kb-math">g</em>/<em class="kb-math">L</em>)<em class="kb-math">θ</em>，于是有著名的周期公式：</p>
+        <pre><code>T = 2π √(L / g)</code></pre>
+        <ul>
+          <li><strong>周期与质量无关</strong>——换个更重的摆球，节奏不变；</li>
+          <li><strong>周期与振幅（近似）无关</strong>——这叫“等时性”，伽利略在教堂看吊灯时发现的正是它；</li>
+          <li>周期只由<strong>摆长</strong>和<strong>当地重力</strong>决定：摆长变为 4 倍，周期变为 2 倍。</li>
+        </ul>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 反过来用：拿单摆量重力</p>
+          <p>把公式变形为 <em class="kb-math">g</em> = 4π²<em class="kb-math">L</em>/<em class="kb-math">T</em>²，量出摆长和周期就能算出当地重力加速度——这是中学物理经典实验，也是历史上测 g 的标准方法。</p>
+        </div>
+
+        <h2>超出小角度会怎样</h2>
+        <p>摆角变大后 sin<em class="kb-math">θ</em> &lt; <em class="kb-math">θ</em>，回复力比简谐模型偏弱，实际周期随振幅增大而<strong>变长</strong>：45° 时约慢 4%，80° 时约慢 14%。上面的模拟器解的是完整方程（含 sin<em class="kb-math">θ</em>），把初始角度拉到 80° 再对照理论周期，就能看到这个偏差。</p>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../assets/js/theme.js" defer></script>
+  <script src="../../../assets/js/nav.js" defer></script>
+  <script src="../../../assets/js/toc.js" defer></script>
+  <script src="../../../assets/js/search.js" defer></script>
+  <script src="../../../assets/js/interactive.js" defer></script>
+  <script src="../../../assets/js/app.js" defer></script>
+  <script>
+  // 页面专属演示逻辑。defer 脚本先于 DOMContentLoaded 执行完毕，
+  // 因此在回调里可以安全使用 KB.fitCanvas / KB.bindRange / KB.makeLoop。
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("pendulum-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var ctx = KB.fitCanvas(canvas, 360, function () { draw(); }); // 窗口缩放后重绘（暂停时画布不留白）
+    var css = function (name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    };
+
+    var L = 1.2, g = 9.8, c = 0.02, theta0 = 30 * Math.PI / 180;
+    var theta = theta0, omega = 0;
+
+    function periodText() {
+      return "（理论周期 T ≈ " + (2 * Math.PI * Math.sqrt(L / g)).toFixed(2) + " s）";
+    }
+    var lengthVal = document.getElementById("val-length");
+    KB.bindRange(document.getElementById("ctl-length"), lengthVal, null, function (v) {
+      L = v;
+      lengthVal.textContent = v.toFixed(1) + " m " + periodText();
+    });
+    var gravityVal = document.getElementById("val-gravity");
+    KB.bindRange(document.getElementById("ctl-gravity"), gravityVal, null, function (v) {
+      g = v;
+      gravityVal.textContent = v.toFixed(1) + " m/s²";
+      lengthVal.textContent = L.toFixed(1) + " m " + periodText();
+    });
+    KB.bindRange(document.getElementById("ctl-damping"), document.getElementById("val-damping"),
+      function (v) { return v.toFixed(2); }, function (v) { c = v; });
+    KB.bindRange(document.getElementById("ctl-angle"), document.getElementById("val-angle"),
+      function (v) { return v.toFixed(0) + "°"; }, function (v) {
+        theta0 = v * Math.PI / 180;
+        theta = theta0;
+        omega = 0;
+        if (!loop.running()) draw();
+      });
+
+    function physics(dt) {
+      // 完整方程（不做小角近似），子步长积分保证稳定
+      var h = 1 / 240;
+      for (var t = 0; t < dt; t += h) {
+        var alpha = -(g / L) * Math.sin(theta) - c * omega;
+        omega += alpha * h;
+        theta += omega * h;
+      }
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      var hgt = 360;
+      ctx.clearRect(0, 0, w, hgt);
+      var px = 110; // 每米像素数
+      var ox = w / 2, oy = 44;
+      var bx = ox + Math.sin(theta) * L * px;
+      var by = oy + Math.cos(theta) * L * px;
+
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(ox, oy + 2.6 * px);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 摆动范围弧线
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.beginPath();
+      ctx.arc(ox, oy, L * px, Math.PI / 2 - theta0, Math.PI / 2 + theta0);
+      ctx.stroke();
+
+      ctx.strokeStyle = css("--kb-fg-muted");
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(bx, by);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.beginPath();
+      ctx.arc(ox, oy, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = css("--kb-accent");
+      ctx.beginPath();
+      ctx.arc(bx, by, 15, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.font = "13px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("θ = " + (theta * 180 / Math.PI).toFixed(1) + "°", 16, 26);
+    }
+
+    var loop = KB.makeLoop(function (dt) {
+      physics(dt);
+      draw();
+    });
+
+    var toggleBtn = document.getElementById("btn-toggle");
+    function syncBtn() {
+      toggleBtn.textContent = loop.running() ? "暂停" : "播放";
+    }
+    toggleBtn.addEventListener("click", function () {
+      loop.toggle();
+      syncBtn();
+    });
+    document.getElementById("btn-reset").addEventListener("click", function () {
+      theta = theta0;
+      omega = 0;
+      if (!loop.running()) draw();
+    });
+
+    draw();
+    if (KB.motionOK) loop.start(); // 用户偏好减少动效时默认暂停
+    syncBtn();
+  });
+  </script>
+</body>
+</html>

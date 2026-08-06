@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12 手感与原型：从「能玩」到「好玩」 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 12 章（终章）：手感的物理参数与输入宽容、果汁（缓动/粒子/顿帧/震屏）、反馈三层次、纸面原型与灰盒、游戏测试的观察纪律，配逐项开关果汁的跳跃演示。">
+  <meta name="kb:tags" content="游戏设计,教材,手感,果汁,原型,游戏测试,sgfkyyx">
+  <meta name="kb:created" content="2026-08-06">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 12 章 · 手感与原型：从「能玩」到「好玩」</h1>
+        <p class="kb-lead">全书终章。同一个跳跃，为什么马里奥按下去「就是舒服」，而无数模仿者「就是木」？差距不在功能——两个跳跃的代码可能只差二十行——在<strong>手感</strong>。这一章先拆手感与「果汁」的配方，再讲一个更朴素的行业真理：<strong>想法不值钱，能玩的原型才值钱</strong>；最后交给你设计师的最后一件武器——闭上嘴看别人玩。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 把「木、飘、跟手」这类玄学词翻译成可调的物理参数与输入宽容；② 说出果汁的五个通道（视觉/听觉/触觉/时间/镜头）和过量的代价；③ 用反馈三层次（信息→确认→奖赏）诊断「打击感不足」；④ 会用纸面原型与灰盒验证核心循环，并遵守游戏测试的观察纪律。</p>
+        </div>
+
+        <h2>手感：看不见的物理学</h2>
+        <p>先解剖「马里奥的跳跃为什么舒服」。答案是一张看不见的规格表：</p>
+        <ul>
+          <li><strong>响应速度</strong>：按键到起跳不超过 2 帧（约 0.03 秒）——超过 6 帧，玩家嘴里的「木」就出现了。响应是手感的地基，别的都可以商量，这条不行；</li>
+          <li><strong>可变跳高</strong>：轻点小跳、按住大跳——把一个数字键变成了模拟量，玩家的「意图强度」有了表达通道；</li>
+          <li><strong>非对称重力</strong>：下落的重力大于上升——上升舒展、下落利落，落点来得干脆。对称抛物线在数学上更「正确」，在手感上更「飘」；</li>
+          <li><strong>土狼时间（Coyote time）</strong>：跑出平台边缘后的几帧内仍允许起跳——像动画片里冲出悬崖还能悬停一秒的那只郊狼；</li>
+          <li><strong>跳跃缓冲</strong>：落地前几帧按下的跳跃键不会作废，落地瞬间自动起跳——玩家的连跳节奏永不掉拍。</li>
+        </ul>
+        <p>注意后两条的本质：<strong>系统在替玩家作弊</strong>。玩家以为自己「刚好」踩线起跳了——其实是游戏悄悄把判定放宽了几帧。这不是欺骗，是<strong>输入宽容</strong>：人类的手指有物理误差，严格判定惩罚的不是失误而是硬件极限；宽容判定校准的是「玩家的意图」而非「玩家的输入」。手感的秘密一半在物理参数，另一半就在这些看不见的仁慈里——<strong>玩家感觉到的公平，比数学上的精确更重要</strong>（第 8 章驯化随机的同款哲学，这次驯化的是物理）。</p>
+
+        <h2>果汁：让每次交互都有回应</h2>
+        <p>手感管「操作本身」，<strong>果汁（Juice）</strong>管「操作的回响」——同一次交互上叠加多通道的反馈，让世界对你的每次触碰都热烈响应。五个通道：</p>
+        <ul>
+          <li><strong>视觉</strong>：挤压拉伸（起跳拉长、落地压扁——迪士尼动画十二法则进游戏）、粒子（落地扬尘、命中火花）、闪白（受击帧）；</li>
+          <li><strong>听觉</strong>：音效，以及音效的<strong>变化</strong>（连击音调逐级升高——马里奥连踩的「咚咚咚↑」是听觉的连击计数器）；</li>
+          <li><strong>触觉</strong>：手柄震动的轻重缓急；</li>
+          <li><strong>时间</strong>：<strong>顿帧（Hitstop）</strong>——命中瞬间全世界冻结几帧。这是打击感的头号秘密：大脑把这次中断解释为「力量大到时间都卡了一下」；</li>
+          <li><strong>镜头</strong>：震屏、微缩放、拉镜——给大事件盖章的标点符号。</li>
+        </ul>
+        <p>亲手感受一下。下面的方块跳跃默认是「全关」状态——刻意的木。先跳三次记住这种木，然后逐项打开，最后全开再跳，对比第一次：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 果汁试验台：同一次跳跃，从「木」到「舒服」</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="juice-canvas" height="340"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一段跳跃逻辑，逐项叠加挤压拉伸、粒子、顿帧、震屏后，「木」变成「舒服」——手感不来自功能，来自围绕功能的多通道反馈；而每种果汁过量都会从调味变成噪音。</p></noscript>
+            <p id="juice-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);">当前：全关——记住这种「木」的感觉，然后逐项打开。</p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-jump" type="button">🕹 跳！</button>
+              <button class="kb-btn" id="tg-squash" type="button" aria-pressed="false">挤压拉伸：关</button>
+              <button class="kb-btn" id="tg-dust" type="button" aria-pressed="false">粒子：关</button>
+              <button class="kb-btn" id="tg-stop" type="button" aria-pressed="false">顿帧：关</button>
+              <button class="kb-btn" id="tg-shake" type="button" aria-pressed="false">震屏：关</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-all-on" type="button">全开</button>
+              <button class="kb-btn" id="btn-all-off" type="button">全关</button>
+            </div>
+          </div>
+        </div>
+        <p>两条随演示奉上的行规。<strong>其一，果汁讲配比</strong>：每样单独尝、组合调——顿帧长一倍就从「有力」变「卡顿」，震屏常驻就从「标点」变「地震仪」。过量的果汁不是更爽，是噪音淹没信号：小事件也满屏烟花，大事件反而没了排面（第 9 章感知台阶的反面教材）。<strong>其二，果汁要有开关</strong>：震屏与闪光对晕动症、光敏玩家是生理攻击——「减少动态效果」选项不是可选的善意，是必答题（本站演示遵守同一条：系统开启「减少动态」时，动画默认不自动播放——你现在就在一个吃自己狗粮的页面里）。</p>
+
+        <h2>反馈的层次：先说清，再说爽</h2>
+        <p>果汁不能乱浇。反馈按职能分三层，诊断与建设都要按顺序来：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>层次</th><th>职能</th><th>例子</th><th>缺失的症状</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>① 信息</strong></td>
+                <td>没它没法玩：状态必须可读</td>
+                <td>血条、弹药数、命中与否、敌人意图</td>
+                <td>「我怎么死的？」「打没打中啊？」</td>
+              </tr>
+              <tr>
+                <td><strong>② 确认</strong></td>
+                <td>没它很难受：每个输入要被听见</td>
+                <td>按键音、受击闪白、脚步声、按钮按下态</td>
+                <td>「木」「像打空气」「不跟手」</td>
+              </tr>
+              <tr>
+                <td><strong>③ 奖赏</strong></td>
+                <td>没它不够爽：给好表现加冕</td>
+                <td>连击特效、暴击大字、慢镜头处决</td>
+                <td>「寡淡」「爽不起来」</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>顺序就是纪律：<strong>信息不清时浇奖赏，是在化脓的伤口上抹粉</strong>——满屏粒子炸裂但看不清自己血条的游戏，你一定见过。诊断口诀：玩家说「不爽」，先查第①层（是不是根本看不清发生了什么），再查第②层（输入有没有被确认），最后才轮到第③层加料。这张表也是第 2 章那句老话的完全体：机制负责事实，反馈的三层负责把事实<strong>说清、说实、说漂亮</strong>。</p>
+
+        <h2>原型：想法不值钱</h2>
+        <p>手感和果汁都要在「东西」上调——于是回到行业最朴素的真理：<strong>想法不值钱，能玩的原型才值钱</strong>。每个从业者都被亲戚朋友讲过「我有个游戏点子就差程序员了」——真相是点子人人有，值钱的是验证过的点子。验证的阶梯有三级：</p>
+        <ul>
+          <li><strong>纸面原型</strong>：规则和数值用纸笔卡牌跑起来——一晚上能迭代五个版本，代码一周都出不来第一版。适合验证：回合制规则、经济数值、卡牌平衡（你的「盖数字」小游戏从 4.8 一路养到 10.8，走的正是这条路）。不适合：手感与实时操作（纸上跳不了马里奥）；</li>
+          <li><strong>灰盒原型（Graybox）</strong>：无美术、纯几何体、真代码——方块人在方块关里跳真实的跳。行业铁律：<strong>灰盒阶段就好玩的游戏，加上美术如虎添翼；灰盒不好玩的游戏，加上美术是昂贵的不好玩</strong>。美术是放大器，不是救生圈；</li>
+          <li><strong>最小可玩版本</strong>：只做核心循环——一个动词、一个循环、一个失败条件（第 3 章的最小配置）。判断标准冷酷而简单：灰盒摆在同事面前，有没有人自发说「再来一局」？有，核心成立，值得继续投入；没有，换核心，别恋战。</li>
+        </ul>
+        <p>原型的三条纪律：<strong>快</strong>（一周做不完的原型说明问题问大了，拆小）、<strong>丑</strong>（原型阶段每一分钟美化都是浪费——丑是功能，它明确告诉所有人「这里只看玩法」）、<strong>可丢弃</strong>（原型代码的宿命是被扔掉重写；舍不得删原型，是新人从「作品思维」转「实验思维」路上最后一道坎）。</p>
+
+        <h2>测试：闭嘴，看</h2>
+        <p>原型跑起来，最后一步是放进真人手里——<strong>游戏测试（Playtest）</strong>。它的技术含量不在流程在纪律，每一条都反本能：</p>
+        <ol>
+          <li><strong>别解释</strong>。玩家卡住时你多想说「往左走啊」——忍住。上市那天你不能蹲在每台设备旁边当解说；测试时你替游戏说的每句话，都是在掩盖一个上线后会爆炸的问题；</li>
+          <li><strong>看行为，别只听嘴</strong>。玩家嘴上说「挺好玩的」（人类会礼貌性说谎），身体却很诚实：在哪里皱眉、哪里前倾、哪里第一次看手机——行为是不会说谎的问卷。第 6 章说过后台数据看不见疲惫，测试现场看得见；</li>
+          <li><strong>问感受，别问方案</strong>。「哪里最烦？」有效；「你觉得该怎么改？」无效——玩家是病情的专家，不是药方的专家。玩家提的方案（「加个双倍伤害道具吧」）要翻译回病情（他觉得战斗拖沓——真正该调的可能是第 9 章的 TTK）；</li>
+          <li><strong>五人定律</strong>。可用性研究的经典结论：5 个测试者能暴露约 85% 的问题——与其攒 20 人做一场，不如 5 人一轮、改完再来 5 人。<strong>测试的频率比规模值钱</strong>；</li>
+          <li><strong>记录「第一次」</strong>。第一次笑、第一次骂、第一次卡住、第一次看手机的时间点——这四个时间戳勾出的曲线，就是你的游戏在真实玩家心里的紧张度曲线（第 11 章的图，这次由玩家亲手画）。</li>
+        </ol>
+        <p>把最后一块拼图放进全书的版图：设计师的完整工作循环是——<strong>假设</strong>（机制设计，第 1–3 章的语言）→ <strong>实验</strong>（原型）→ <strong>观察</strong>（测试）→ <strong>修正</strong>（回到 MDA 单行道的起点再来一遍）。第 2 章说游戏设计是实验科学时，你可能以为是修辞——现在你有了全套仪器，知道它是字面意思。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 可变跳高：一个按键的模拟量革命</p>
+          <p>「按住跳得高、轻点跳得低」几乎是平台游戏的出厂标配。分析这条设计买到了什么，以及它对「手感」的深层贡献。</p>
+          <p><strong>分析</strong>：表层收益：一个二值按键变成了模拟量输入，跳跃有了「力度」。深层收益有三：① <strong>意图的表达通道</strong>——玩家心里的「小心翼翼」和「全力一搏」终于能被硬件听见，操作从执行命令升格为表达状态；② <strong>难度的自适应粒度</strong>——关卡里同一个跳台，新手全力按住稳稳过，高手轻点收着跳顺便够金币：一个跳台服务两条技能线（第 5 章通道的微观实现）；③ <strong>失误的自我归因</strong>——跳短了是「我没按够」而不是「它就跳这么高」，锅回到玩家手里，而自己的锅激发的是「再来」（第 1 章俄罗斯方块的老公理，在 0.3 秒的时间尺度上再现）。<strong>结论</strong>：手感设计的最高目标不是「响应快」，是<strong>让手柄成为意图的直通管道</strong>——玩家想到什么，角色就做什么，误差由宽容机制悄悄吸收。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 顿帧：最便宜的魔法与它的剂量表</p>
+          <p>格斗游戏与平台乱斗类游戏的打击感公认第一梯队，核心技术之一是顿帧：命中瞬间双方（甚至全世界）冻结 3–15 帧，攻击越重冻越久。分析它为什么有效、剂量如何标定、以及过量案例。</p>
+          <p><strong>分析</strong>：<strong>为什么有效</strong>：大脑对「时间异常」高度敏感——正常流动的时间突然卡住一瞬，会被解释为「刚才那一下力量大到时间都顿了」；同时冻结帧给了眼睛读取「命中确认」的窗口（第①层信息反馈搭了顺风车）——一个技巧同时喂了信息层和奖赏层。<strong>剂量表</strong>：轻攻击 2–4 帧（有触感即可）、重击 8–12 帧（一锤定音）、终结技可达 20 帧＋镜头介入——剂量必须与事件重要性成正比，这正是「感知台阶」的时间版：顿帧的层级差就是攻击的重量语言。<strong>过量案例</strong>：某些割草游戏给每次普攻都配长顿帧——每秒五次攻击 × 每次 10 帧冻结，玩家的体感不是「有力」是「卡了」；重量语言里所有词都加粗，等于没有词加粗。<strong>结论</strong>：时间是最强的调味料，也最经不起挥霍——果汁的一切原则在顿帧上以最高倍率成立。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 一场教科书式的测试事故与修复</p>
+          <p>你的解谜平台游戏灰盒测试：第二关需要推箱子垫脚开门。3 名测试者口头评价都是「挺有意思的」，但行为记录显示：3 人都在门前徘徊超过 2 分钟，其中 2 人期间看了手机，1 人试图反复跳墙。走完「诊断 → 修复 → 复测」的完整流程。</p>
+          <p><strong>诊断</strong>：先排除嘴（3 张好人卡不作数），看行为：全员在同一位置卡住 = 系统性问题而非个体手残；「反复跳墙」说明玩家在错误的解法上有信心——他不是没想法，是没看见正确的道具。回看关卡：箱子的颜色与背景墙几乎同色，且摆在入口视野的背后——<strong>不是难度问题，是引导问题</strong>（第 11 章：违反了「可交互物要有色彩契约」）。注意这个区分的分量：按「难度问题」修（简化谜题）会把好谜题改没，按「引导问题」修只动可读性。<strong>修复</strong>：箱子换成全游戏统一的「可推动木色」＋边缘高亮；门口地面加两道箱底拖痕（环境叙事当引导：有人推过东西）；谜题本身一毫米不动。<strong>复测</strong>：新一轮 5 人，平均 40 秒内注意到箱子，3 人推箱前露出「哦——」的表情（11.5 说的目标台词，被听到了）。<strong>结论</strong>：测试的价值链——行为数据定位病灶、学科知识（引导 vs 难度）选对刀口、最小修复保住设计、复测闭环。四步里没有一步用到「感觉」。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>把玩家的四句玄学抱怨翻译成可调的参数：A「跳起来像一块木头」；B「角色飘得像在月球」；C「明明按了闪避它不闪」；D「走路像推一辆购物车」。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 响应延迟过高（按键到起跳的帧数）＋缺确认反馈（无起跳音效/拉伸）；B 重力过小、或上升下落对称（下落段重力要更大）；C 输入宽容不足——闪避没有缓冲队列（连招硬直中按下的闪避被丢弃），需要输入缓冲；D 加速度/减速度参数过大（惯性太重）——起步慢半拍、停步滑一步。</p>
+            <p><strong>解析</strong>：这张「玄学 → 参数」的翻译表是手感调优的日常词典。要点在方法：玩家的形容词永远指向体验（MDA 右端），修理永远发生在参数（左端）——中间的翻译就是设计师的手艺。攒你自己的词典：每次听到新的玄学抱怨，逼自己写出至少两个候选参数。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>选一个你觉得「打击感好」的游戏，拆解它一次普通攻击命中的全部反馈，按五通道（视觉/听觉/触觉/时间/镜头）归类，并找出其中给「重攻击」升级用的通道。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以一款动作游戏的刀击为例）：视觉——刀光轨迹、命中火花、敌人受击闪白＋后仰；听觉——挥刀风声＋命中的金属脆响；触觉——手柄短震；时间——3 帧顿帧；镜头——无（普攻不动镜头）。重攻击的升级路径：顿帧加长到 10 帧、震动加重、镜头加入轻微推近——<strong>时间与镜头是留给重事件的保留通道</strong>。</p>
+            <p><strong>解析</strong>：注意「保留通道」的设计智慧：普攻若五通道全开满，重击就无法更响——反馈系统和第 9 章的数值一样需要「成长空间」。检验一个游戏反馈设计的功力，就看它的最强反馈出现时，是否还能比日常反馈明显高出一截。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>用反馈三层次给三个症状开诊断与药方：A「打人像打空气」；B「我都不知道自己什么时候掉的血」；C「屏幕上一直在爆炸，但玩着很无聊」。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 第②层确认缺失——命中无声无光无顿：补受击闪白、命中音、2–4 帧顿帧（先别加大伤害数字，那是往第③层跑错了楼层）；B 第①层信息缺失——受击反馈不可读：补受击方向指示、屏幕边缘红光、掉血音；C 第③层过量而第①②层可能失衡——烟花太多信号太少：先做减法（普通事件降特效），再检查爆炸是否至少携带信息（伤害来源、命中确认），最后重建「大小事件的反馈落差」。</p>
+            <p><strong>解析</strong>：C 是最有教育意义的病：它证明反馈不是越多越爽——<strong>爽来自落差，不来自总量</strong>。三层诊断的顺序纪律（先①后②再③）值得贴在工位上：绝大多数「打击感不行」的真病灶在①②层，而新人加的第一样东西几乎总是③层的粒子。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>土狼时间和跳跃缓冲都是系统在「替玩家作弊」。为什么玩家不但不觉得被骗，反而觉得「这游戏真跟手」？从「意图 vs 输入」的角度解释，并再举一个同族设计。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：玩家的自我认知以<strong>意图</strong>为准（「我在悬崖边起跳了」），硬件收到的是<strong>输入</strong>（实际晚了 3 帧）——两者永远有生理级的误差。严格按输入判定，等于系统天天纠正玩家的自我认知（「你其实没按对」），积累成「不跟手」的怨气；宽容判定让世界按玩家的意图运转，玩家的体验是「我做到了我想做的」——没人会觉得被骗，因为被成全的正是他自己的叙事。<strong>同族设计</strong>：射击游戏的辅助瞄准（子弹磁性）、格斗游戏的指令缓冲（提前输入的必杀在硬直结束瞬间发出）、动作游戏的「背刺判定角度放宽」、甚至第 8 章 XCOM 的暗中命中补正——全族的家训是一句话：<strong>校准意图，而不是审判输入</strong>。</p>
+            <p><strong>解析</strong>：注意边界：竞技对抗场景要收紧宽容（宽容一方等于惩罚另一方，5.2 例的橡皮筋教训）；单人体验场景可以大方。宽容度也是一个随场景调的旋钮，不是道德立场。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>把一个实时电子游戏创意「降维」成 30 分钟内能玩起来的纸面原型：自选一个创意（或用「吸血鬼幸存者式的自动战斗生存」），写出纸面版规则、你保留了哪个核心循环、以及你明知丢掉了什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（吸血鬼幸存者纸面版）：回合制网格纸＋骰子。每回合：① 掷骰生成 2–4 个敌人标记从纸边缘向中心推进一格；② 玩家的武器卡自动结算（每张卡写攻击范围模板，如「横排 3 格」）；③ 消灭的敌人变成经验币，攒 5 枚触发「三选一」——从牌库翻三张武器/强化卡选一张。失败条件：敌人标记进入中心格。<strong>保留的核心循环</strong>：杀怪 → 经验 → 三选一 build → 杀得更快（第 3 章画过的那个环，原样搬进纸面）；<strong>明知丢掉的</strong>：走位与手感（实时躲避的紧张感在回合制里不存在）、数量的压迫感（纸上摆不下三百个怪）。</p>
+            <p><strong>解析</strong>：这道题的核心能力是「知道自己在验证什么」：纸面版能回答「三选一的 build 组合是否有趣、成长节奏的数值曲线舒不舒服」（第 7、9 章的问题），不能回答「走位手感好不好」（本章的问题，只能灰盒答）。<strong>每种原型是一台只能测部分指标的仪器</strong>——选错仪器测错指标，结论再漂亮也是错的。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为你的灰盒测试设计一份访谈表：6 个测试后问题（标注每题在问「感受」还是「行为回忆」），外加 2 个你故意不问的问题及理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考问题</strong>：① 「哪个瞬间你最想再来一次？」（感受·定位爽点）② 「哪里你觉得最烦或最想跳过？」（感受·定位痛点）③ 「你在第二关卡了一会儿——当时你在想什么？」（行为回忆·还原卡点的心理过程，注意是基于观察记录的追问）④ 「有没有哪个操作，你以为会发生 A 结果发生了 B？」（行为回忆·挖预期违背=第②层反馈或引导问题）⑤ 「如果现在能继续玩，你想去做什么？」（感受·测残留动机，第 6 章的现场版）⑥ 「你会推荐给谁玩？」（感受·让测试者自己说出目标玩家画像）。<strong>不问的两题</strong>：✗「你觉得难度合适吗？」——引导性太强且玩家会给礼貌中值，难度要从行为（死亡次数、重试意愿）读；✗「你觉得应该怎么改？」——方案要自己开，玩家的药方需翻译回病情（正文纪律③），直接问只会收获一筐跑题的功能建议。</p>
+            <p><strong>解析</strong>：好访谈表的共同特征：每题都<strong>指向具体时刻</strong>（「第二关那次」优于「总体感觉」），且和观察记录互相印证——访谈是给行为数据配音，不是代替它。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>你的灰盒原型测试结果：5 人里 2 人明显上头（主动加局），3 人礼貌地玩完就放下。继续打磨还是砍掉重来？建立你的判断框架（至少三条判据），并说明两种误判的代价。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考框架</strong>：判据一——<strong>上头的 2 人是不是目标玩家？</strong>是：2/5 可能已经很好（锋利的设计必然切开人群，4.7 老结论），看无感的 3 人是否本就是圈外人；不是：警报——连目标玩家都没被击中。判据二——<strong>无感的 3 人卡在哪一层？</strong>行为记录显示是「没看懂」（引导/反馈问题，可修）还是「看懂了但不想再来」（核心循环问题，难修）——前者打磨，后者动刀。判据三——<strong>上头的 2 人在重复什么？</strong>他们自发重玩的那个行为若正是你设计的核心动词，核心成立；若他们上头的是你没设计的边角（在物理引擎里瞎玩），考虑「顺着玩家挖」——历史上不少神作源于此。<strong>两种误判的代价</strong>：把「该砍」误判为「该磨」——沉没成本滚雪球，团队在坏地基上盖楼（最贵的错误）；把「该磨」误判为「该砍」——错杀一个只差临门一脚的好核心（最可惜的错误）。因为前者的代价远大于后者，业界的默认偏向是：<strong>证据不足时，先假设该砍</strong>——好核心经得起再测一轮，坏核心经不起再投三个月。</p>
+            <p><strong>解析</strong>：注意框架里没有一条是「相信自己的感觉」——到了终章，你应该已经习惯这件事：<strong>热爱用来选题，证据用来决策</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>全书毕业设计：写一页纸的游戏概念文档，必须包含——核心动词与核心循环图（第 1、3 章）、主打的两种乐趣与目标玩家（第 2、4、6 章）、一个有意义的核心选择（第 7 章）、随机的位置与驯化（第 8 章）、三条数值体验目标与锚（第 9 章）、一段四步法教学关（第 11 章）、果汁清单与第一轮测试计划（第 12 章）。可以用你养了一路的纸笔游戏，也可以全新开一个。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>验收清单</strong>（对照打勾）：□ 核心动词是动词且唯一；□ 循环图闭合、标了奖励与闸门；□ 两种乐趣敢于取舍（写了「不服务谁」的比写了「服务所有人」的得分高）；□ 核心选择过三条件（取舍/信息/后果）；□ 随机标明了输入/输出侧与驯化手段；□ 数值目标是体验语言（「一局 10 分钟」）而非数字语言（「攻击力 50」）；□ 教学关四步齐全且失败代价递增；□ 果汁按三层次排了优先级（信息>确认>奖赏）；□ 测试计划写明了观察什么行为、问什么问题、不问什么。</p>
+            <p><strong>解析</strong>：如果你真的写了这一页纸——注意一件事：十二章的工具在纸上完成了合流，它们本来就不是十二样东西，是<strong>同一件事的十二个切面</strong>：让一个自愿的人，在一个公平的结构里，做有意义的决定，得到诚实的回应，并且想再来一次。这一页纸不是作业的终点，是你的第一份设计文档——找五个人，测它。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 手感 = 物理参数（响应≤2 帧、非对称重力、可变跳高）＋输入宽容（土狼时间、跳跃缓冲）——<strong>校准意图，而不是审判输入</strong>；② 果汁五通道：视觉/听觉/触觉/时间/镜头，顿帧是最便宜的魔法；爽来自落差不来自总量，果汁必须配无障碍开关；③ 反馈三层次：信息→确认→奖赏，诊断与建设都按此顺序——多数「打击感不行」病在①②层；④ 想法不值钱：纸面原型测规则、灰盒测手感，美术是放大器不是救生圈；原型要快、丑、可丢弃；⑤ 测试纪律：别解释、看行为、问感受不问方案、五人一轮勤复测、记录四个「第一次」——<strong>热爱用来选题，证据用来决策</strong>。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎓 全书结语</p>
+          <p>三篇十二章走完了。回望这条路：<strong>观察篇</strong>给了你看穿游戏的 X 光（四特征、四元素与 MDA、循环、五问），<strong>体验篇</strong>解释了屏幕对面那颗大脑（心流、动机、选择、随机），<strong>系统篇</strong>教你把理解锻造成实物（数值、经济、关卡、手感与原型）。如果只能带走三句话：<strong>设计师只能动机制，玩家只感受体验；所有的「好玩」都有结构，所有的结构都可以学；热爱用来选题，证据用来决策。</strong>接下来的路在书外——继续深造可读 Jesse Schell《游戏设计艺术》（The Art of Game Design）、Steve Swink《游戏感》（Game Feel）；想动手就去参加一次 Game Jam（48 小时做一个游戏，本书所有工具的实弹演习）；最低配的持续练习是你已经会的：<strong>每周拆一个游戏，每月测一个原型</strong>。玩家的世界很大，欢迎来当建筑师。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./11-关卡设计入门.html">← 第 11 章 关卡：用空间教学与讲故事</a>
+          <a href="./00-大纲与学习路线.html">返回大纲与学习路线 ↩</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("juice-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 340, GROUND = H - 60, SIZE = 40, GRAV_UP = 1600, GRAV_DOWN = 2600, VJUMP = -760;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var msg = document.getElementById("juice-msg");
+
+    var fx = { squash: false, dust: false, stop: false, shake: false };
+    var y = GROUND, vy = 0, airborne = false;
+    var scaleX = 1, scaleY = 1;
+    var particles = [];      /* {x, y, vx, vy, age} */
+    var stopTimer = 0, shakeAmp = 0;
+    var jumps = 0;
+
+    var toggles = {
+      squash: document.getElementById("tg-squash"),
+      dust: document.getElementById("tg-dust"),
+      stop: document.getElementById("tg-stop"),
+      shake: document.getElementById("tg-shake")
+    };
+    var NAMES = { squash: "挤压拉伸", dust: "粒子", stop: "顿帧", shake: "震屏" };
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    var loop = KB.makeLoop(function (dt) {
+      if (stopTimer > 0) {
+        stopTimer -= dt;          /* 顿帧：世界冻结 */
+      } else {
+        if (airborne) {
+          vy += (vy < 0 ? GRAV_UP : GRAV_DOWN) * dt;
+          y += vy * dt;
+          if (fx.squash) {
+            var t = Math.min(Math.abs(vy) / 900, 1);
+            scaleY = vy < 0 ? 1 + 0.18 * t : 1 + 0.10 * t;
+            scaleX = 1 / scaleY;
+          }
+          if (y >= GROUND) {      /* 落地 */
+            y = GROUND;
+            airborne = false;
+            vy = 0;
+            if (fx.squash) { scaleX = 1.35; scaleY = 0.65; }
+            if (fx.dust) spawnDust();
+            if (fx.stop) stopTimer = 0.07;
+            if (fx.shake) shakeAmp = 9;
+          }
+        }
+        /* 挤压恢复 */
+        scaleX += (1 - scaleX) * Math.min(dt * 12, 1);
+        scaleY += (1 - scaleY) * Math.min(dt * 12, 1);
+        /* 粒子 */
+        for (var i = particles.length - 1; i >= 0; i--) {
+          var p = particles[i];
+          p.age += dt;
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.vy += 500 * dt;
+          if (p.age > 0.5) particles.splice(i, 1);
+        }
+        shakeAmp *= Math.pow(0.001, dt); /* 快速衰减 */
+        if (shakeAmp < 0.3) shakeAmp = 0;
+      }
+      draw();
+      if (!airborne && particles.length === 0 && shakeAmp === 0 && stopTimer <= 0 &&
+          Math.abs(scaleX - 1) < 0.01) {
+        loop.stop();
+        draw();
+      }
+    });
+
+    function spawnDust() {
+      var cx = canvas.clientWidth / 2;
+      for (var i = 0; i < 10; i++) {
+        var a = Math.PI + Math.random() * Math.PI; /* 向上半圆 */
+        var sp = 80 + Math.random() * 160;
+        particles.push({
+          x: cx + (Math.random() - 0.5) * SIZE,
+          y: GROUND,
+          vx: Math.cos(a) * sp * (Math.random() < 0.5 ? 1 : -1),
+          vy: Math.sin(a) * sp * 0.5,
+          age: 0
+        });
+      }
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var ox = 0, oy = 0;
+      if (shakeAmp > 0) {
+        ox = (Math.random() - 0.5) * 2 * shakeAmp;
+        oy = (Math.random() - 0.5) * 2 * shakeAmp;
+      }
+      ctx.save();
+      ctx.translate(ox, oy);
+      /* 地面 */
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, GROUND + 1);
+      ctx.lineTo(w, GROUND + 1);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+      /* 粒子 */
+      ctx.fillStyle = css("--kb-fg-muted");
+      particles.forEach(function (p) {
+        ctx.globalAlpha = Math.max(1 - p.age * 2, 0);
+        ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+      });
+      ctx.globalAlpha = 1;
+      /* 方块角色（以底边中点为锚做缩放） */
+      var cx = w / 2;
+      var bw = SIZE * scaleX, bh = SIZE * scaleY;
+      ctx.fillStyle = "#2563eb";
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(cx - bw / 2, y - bh, bw, bh, 8);
+      else ctx.rect(cx - bw / 2, y - bh, bw, bh);
+      ctx.fill();
+      /* 读数 */
+      ctx.font = "12.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("已跳 " + jumps + " 次", 14, 24);
+      ctx.restore();
+    }
+
+    function jump() {
+      if (airborne) return;
+      airborne = true;
+      vy = VJUMP;
+      jumps += 1;
+      if (fx.squash) { scaleX = 0.8; scaleY = 1.25; }
+      loop.start();
+      draw();
+    }
+
+    function updateMsg() {
+      var on = Object.keys(fx).filter(function (k) { return fx[k]; }).map(function (k) { return NAMES[k]; });
+      if (on.length === 0) {
+        msg.textContent = "当前：全关——记住这种「木」的感觉，然后逐项打开。";
+      } else if (on.length === 4) {
+        msg.textContent = "当前：全开——再跳几次，和最开始的「木」对比一下。这就是果汁。";
+      } else {
+        msg.textContent = "当前开启：" + on.join("、") + "——每加一样都跳几次，感受它单独的贡献。";
+      }
+    }
+
+    document.getElementById("btn-jump").addEventListener("click", jump);
+    canvas.addEventListener("pointerdown", jump);
+
+    Object.keys(toggles).forEach(function (k) {
+      toggles[k].addEventListener("click", function () {
+        fx[k] = !fx[k];
+        toggles[k].textContent = NAMES[k] + "：" + (fx[k] ? "开" : "关");
+        toggles[k].setAttribute("aria-pressed", String(fx[k]));
+        updateMsg();
+      });
+    });
+    document.getElementById("btn-all-on").addEventListener("click", function () {
+      Object.keys(fx).forEach(function (k) {
+        fx[k] = true;
+        toggles[k].textContent = NAMES[k] + "：开";
+        toggles[k].setAttribute("aria-pressed", "true");
+      });
+      updateMsg();
+    });
+    document.getElementById("btn-all-off").addEventListener("click", function () {
+      Object.keys(fx).forEach(function (k) {
+        fx[k] = false;
+        toggles[k].textContent = NAMES[k] + "：关";
+        toggles[k].setAttribute("aria-pressed", "false");
+      });
+      updateMsg();
+    });
+
+    /* 尊重「减少动态效果」：默认不开震屏，且提示 */
+    if (!KB.motionOK) {
+      toggles.shake.disabled = true;
+      toggles.shake.textContent = "震屏：已禁用（系统减少动态）";
+    }
+
+    draw();
+  });
+  </script>
+</body>
+</html>

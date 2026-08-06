@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11 关卡：用空间教学与讲故事 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 11 章：无字教学四步法（引入—练习—组合—高潮）、紧张度曲线与捷径设计、路径地标光线诱饵等无形引导、环境叙事，配四步法关卡步进演示。">
+  <meta name="kb:tags" content="游戏设计,教材,关卡设计,无字教学,引导,环境叙事,gksjrm">
+  <meta name="kb:created" content="2026-08-06">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 11 章 · 关卡：用空间教学与讲故事</h1>
+        <p class="kb-lead">第 4 章我们逐砖拆过马里奥 1-1，得出一句话：好关卡是一位不说话的老师。这一章把那门手艺系统化——<strong>空间就是你的语言</strong>：用四步法教学，用紧张度曲线排节奏，用光线、地标和金币牵引玩家的脚步，最后让房间自己讲故事。学完这一章，你走进任何一个游戏关卡，都能看见地板下面的设计图。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用四步法（引入—练习—组合—高潮）为任何新机制搭一段教学关；② 画出一关的紧张度曲线，说出峰、谷与捷径各自的职能；③ 列举并识别至少五种无形引导技巧；④ 用「环境叙事」让空间在没有一行文字的情况下讲故事。</p>
+        </div>
+
+        <h2>无字教学四步法</h2>
+        <p>第 4 章的三根水管是「微型难度曲线」，把它放大、补全，就是关卡教学的标准骨架——<strong>四步法</strong>：</p>
+        <ol>
+          <li><strong>引入</strong>：在绝对安全的环境里让新机制亮相——单独出现、无威胁、玩不死。玩家自由摆弄，自己发现「它会怎样」；</li>
+          <li><strong>练习</strong>：低风险地重复几次，带一点变体——间距变大、角度变化。失败代价压到最低（浅坑、就近重生），错了立刻再来；</li>
+          <li><strong>组合</strong>：新机制 × 旧机制、或放进新环境——弹簧遇上移动平台、盾反遇上双敌人。这一步才检验真正的理解，而不是肌肉模仿；</li>
+          <li><strong>高潮</strong>：一场有压力的考试——限时、有代价、需要前三步的全部积累。通过即毕业，且毕业要有仪式感（宝箱、旗帜、开门的巨响）。</li>
+        </ol>
+        <p>马里奥每个新道具、每种新敌人都走这四步；塞尔达的每座神庙干脆就是一颗「四步法胶囊」——一个机制从见面到精通的完整旅程压缩在十分钟里。下面的演示用一个虚构的「弹簧关」走完四步，注意下方紧张度曲线与每一段的对应关系：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 四步法解剖：一段弹簧教学关，和它的紧张度心电图</div>
+          <div class="kb-interactive-body">
+            <svg id="lvl-svg" viewBox="0 0 660 310" width="660" height="310" role="img" aria-label="弹簧教学关的四个段落示意与对应的紧张度曲线：引入、练习、组合、高潮">
+              <g font-family="-apple-system, PingFang SC, sans-serif">
+                <g id="seg-0">
+                  <rect x="10" y="20" width="150" height="150" rx="10" fill="var(--kb-accent)" opacity="0.06"/>
+                  <rect x="10" y="20" width="150" height="150" rx="10" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.2"/>
+                  <text x="85" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">① 引入</text>
+                  <rect x="20" y="150" width="130" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <path d="M 78 150 l 4 -6 l -8 -5 l 8 -5 l -8 -5 l 8 -5 l -4 -6" stroke="#16a34a" stroke-width="2.5" fill="none"/>
+                  <circle cx="40" cy="140" r="8" fill="#ef4444"/>
+                  <path d="M 82 100 C 90 70 110 60 126 66" stroke="var(--kb-fg-muted)" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
+                  <text x="85" y="184" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">平地一个弹簧，玩不死</text>
+                </g>
+                <g id="seg-1">
+                  <rect x="172" y="20" width="150" height="150" rx="10" fill="var(--kb-accent)" opacity="0.06"/>
+                  <rect x="172" y="20" width="150" height="150" rx="10" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.2"/>
+                  <text x="247" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">② 练习</text>
+                  <rect x="180" y="150" width="30" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <rect x="222" y="150" width="26" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <rect x="262" y="150" width="22" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <rect x="296" y="150" width="18" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <path d="M 194 150 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <path d="M 234 150 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <path d="M 272 150 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <rect x="180" y="160" width="134" height="6" fill="#2563eb" opacity="0.25"/>
+                  <text x="247" y="184" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">弹簧三连，下面是浅水</text>
+                </g>
+                <g id="seg-2">
+                  <rect x="334" y="20" width="150" height="150" rx="10" fill="var(--kb-accent)" opacity="0.06"/>
+                  <rect x="334" y="20" width="150" height="150" rx="10" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.2"/>
+                  <text x="409" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">③ 组合</text>
+                  <rect x="342" y="150" width="40" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <path d="M 360 150 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <rect x="398" y="100" width="34" height="8" rx="3" fill="#9466de" opacity="0.7"/>
+                  <path d="M 398 92 h 34" stroke="var(--kb-fg-muted)" stroke-width="1" stroke-dasharray="3 3"/>
+                  <circle cx="456" cy="142" r="8" fill="#9466de"/>
+                  <rect x="440" y="150" width="36" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <text x="409" y="184" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">弹簧＋移动平台＋巡逻敌人</text>
+                </g>
+                <g id="seg-3">
+                  <rect x="496" y="20" width="150" height="150" rx="10" fill="var(--kb-accent)" opacity="0.06"/>
+                  <rect x="496" y="20" width="150" height="150" rx="10" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.2"/>
+                  <text x="571" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">④ 高潮</text>
+                  <rect x="504" y="150" width="24" height="10" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <path d="M 514 150 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <path d="M 546 132 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <path d="M 578 114 l 3 -5 l -6 -4 l 6 -4 l -6 -4 l 3 -5" stroke="#16a34a" stroke-width="2" fill="none"/>
+                  <rect x="536" y="132" width="22" height="6" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <rect x="568" y="114" width="22" height="6" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <line x1="622" y1="60" x2="622" y2="100" stroke="var(--kb-fg-muted)" stroke-width="3"/>
+                  <path d="M 622 60 l -20 8 20 8 z" fill="#ef4444"/>
+                  <rect x="608" y="100" width="30" height="8" fill="var(--kb-border-strong)" opacity="0.5"/>
+                  <text x="571" y="184" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">大坑上的弹簧链，终点旗帜</text>
+                </g>
+
+                <g id="curve-bg">
+                  <rect x="10" y="210" width="150" height="80" fill="var(--kb-accent)" opacity="0.05"/>
+                  <rect x="172" y="210" width="150" height="80" fill="var(--kb-accent)" opacity="0.05"/>
+                  <rect x="334" y="210" width="150" height="80" fill="var(--kb-accent)" opacity="0.05"/>
+                  <rect x="496" y="210" width="150" height="80" fill="var(--kb-accent)" opacity="0.05"/>
+                </g>
+                <text x="14" y="204" font-size="11" fill="var(--kb-fg-muted)">紧张度</text>
+                <line x1="10" y1="290" x2="646" y2="290" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+                <path id="tension-line" d="M 14 282 C 60 280 120 276 160 274 C 220 270 280 260 322 252 C 380 240 440 234 484 232 C 530 228 590 216 620 214 L 634 218 L 646 282"
+                      stroke="#2563eb" stroke-width="2.5" fill="none"/>
+                <circle id="tension-dot" cx="85" cy="278" r="6" fill="#ef4444"/>
+              </g>
+            </svg>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：新机制的教学按「引入（安全展示）→ 练习（低代价重复）→ 组合（与旧机制相乘）→ 高潮（有压力的考试）」推进，紧张度随四段逐级爬升、考试后骤降释放——这正是第 5 章锯齿难度在关卡内部的形态。</p></noscript>
+            <p id="lvl-q" style="margin:10px 0 4px; font-weight:600;"></p>
+            <p id="lvl-a" style="margin:4px 0 6px; font-size:0.93em; color:var(--kb-fg-muted);"></p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-prev" type="button">← 上一段</button>
+              <span class="kb-control-value" id="lvl-step" style="align-self:center;"></span>
+              <button class="kb-btn" id="btn-next" type="button">下一段 →</button>
+            </div>
+          </div>
+        </div>
+        <p>四步法最常见的死法是<strong>跳步</strong>：引入完直接考试（玩家没练熟就上高压场景，评测词「劝退」），或者永远停在练习（同难度重复二十次，评测词「无聊」）。回想第 4 章的结论——玩家讨厌被教、热爱学会：四步法就是把「教」藏进「玩」的标准工艺。</p>
+
+        <h2>紧张度曲线：关卡的心电图</h2>
+        <p>把视角从一段教学拉远到一整关，纵轴换成玩家的<strong>紧张度</strong>，你会再次看到那条熟悉的锯齿（第 5 章难度的锯齿、第 9 章回报率的锯齿——同一条心跳的第三次出场）。以一段典型的魂类地图为例：</p>
+        <figure>
+          <svg viewBox="0 0 660 230" width="660" height="230" role="img" aria-label="魂类地图的紧张度曲线：篝火出发爬升，精英怪小高峰，解锁捷径骤降，Boss 战最高峰后释放">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <line x1="40" y1="190" x2="640" y2="190" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <line x1="40" y1="190" x2="40" y2="26" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <text x="36" y="20" font-size="11" fill="var(--kb-fg-muted)">紧张度</text>
+              <text x="630" y="210" text-anchor="end" font-size="11" fill="var(--kb-fg-muted)">推进 →</text>
+              <path d="M 46 180 C 90 172 120 150 150 132 C 172 120 188 108 200 96 C 212 110 226 148 250 152 C 290 158 320 130 356 106 C 372 96 382 88 392 80 C 400 120 420 164 448 168 C 480 172 520 100 556 48 C 566 36 574 40 580 56 C 592 100 606 160 622 176"
+                    stroke="#2563eb" stroke-width="2.5" fill="none"/>
+              <g font-size="10.5" fill="var(--kb-fg-muted)">
+                <text x="52" y="200">🔥 篝火</text>
+                <text x="150" y="122" text-anchor="middle">杂兵路段爬升</text>
+                <text x="204" y="86" text-anchor="middle" fill="#ef4444">精英怪⚔</text>
+                <text x="252" y="172" text-anchor="middle">拾取奖励 · 喘息</text>
+                <text x="392" y="66" text-anchor="middle" fill="#ef4444">伏兵陷阱</text>
+                <text x="452" y="188" text-anchor="middle" fill="#16a34a">🔓 解锁捷径回篝火</text>
+                <text x="556" y="34" text-anchor="middle" fill="#ef4444">BOSS</text>
+                <text x="612" y="150" text-anchor="middle">战利品 · 过场释放</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption>峰是考验，谷是喘息与消化；「解锁捷径」是紧张度管理的神来之笔——它同时是奖励（探索的回报）、安全阀（紧张清零）和保险丝（把 Boss 的重试成本一刀砍掉，呼应第 5 章魂类三支柱）。</figcaption>
+        </figure>
+        <p>排布紧张度的三条实操准则：① <strong>峰要渐次抬高</strong>——本关最高峰（Boss）之前的每个小峰都是它的预告与训练；② <strong>谷要有事可做</strong>——喘息段不是空走廊，放奖励、风景、环境叙事（下文），让「松」也有内容；③ <strong>大峰之前给深谷</strong>——Boss 门前那间安静的、有篝火或补给的小屋，既是仁慈也是修辞：安静得越彻底，推门的心跳越响。</p>
+
+        <h2>无形的引导：让玩家自己「想去那儿」</h2>
+        <p>玩家讨厌小地图上的任务箭头，就像讨厌被人拽着胳膊逛街——但没有引导的开放空间又会让人原地转圈。解法是一套「看不见的手」，全部利用人类的本能：</p>
+        <ul>
+          <li><strong>路径与门框</strong>：人会沿着路走、朝门框走——一条被踩秃的草径、一个发亮的门洞，就是最古老的箭头；</li>
+          <li><strong>地标</strong>：远处一座始终可见的高塔/城堡/巨树（迪士尼乐园设计师称之为 weenie）——玩家迷路时抬头就能重新定向。1-1 结尾的旗杆、旷野之息开局就能望见的海拉鲁城堡（第 4 章例 2），都是地标教学；</li>
+          <li><strong>光线</strong>：人趋光。黑暗走廊尽头的一盏灯 = 「出口在这」；恐怖游戏反着用——把资源藏进黑暗，用恐惧给探索定价；</li>
+          <li><strong>诱饵</strong>：一串金币铺成弧线——它既是奖励，也是<strong>跳跃轨迹的虚线</strong>（马里奥的金币弧真的在教你按多久跳键）；一枚放在岔路口的收集品，是「这边有支路」的悄悄话；</li>
+          <li><strong>色彩契约</strong>：可攀爬的岩点刷黄漆、可爆炸的桶刷红漆——教一次，全游戏通用。契约的关键是<strong>一致性</strong>：中途拿黄色当装饰色，等于当着玩家的面撕合同；</li>
+          <li><strong>构图</strong>：出生点的朝向、画面的留白方向、框景（用门洞/树枝框住远处的目标）——玩家睁眼第一秒看见什么，就会走向什么（1-1 让马里奥站在最左端，留白全在右边）。</li>
+        </ul>
+        <p>所有技巧共享同一条底层原则，也是第 4 章那句话的引导版：<strong>最好的引导让玩家以为是自己发现的</strong>。检验标准很残酷——玩家访谈里说「我自己找到了一条隐藏路线！」而设计文档里写着「引导成功率 92%」，两边都对，这就是手艺。</p>
+
+        <h2>空间讲故事</h2>
+        <p>关卡的最后一项超能力：不用一行台词、一段过场，让空间自己叙事——行话叫<strong>环境叙事</strong>。三个层次由浅入深：</p>
+        <ul>
+          <li><strong>房间即事件现场</strong>：翻倒的桌子、抵住门的柜子、墙上的抓痕、一具背对着门的骸骨——玩家像侦探一样自己拼出「这里发生过什么」。自己推理出的故事比字幕讲的故事记得牢十倍（原理同上：自己发现的才是自己的）；</li>
+          <li><strong>空间序列即情绪剧本</strong>：狭窄→开阔 = 释放（魂类电梯升顶豁然看见王城全景、走出初始台地的那一刻）；下行 = 深入危险（地牢向下走，心理跟着下沉）；折返 = 物是人非（同一条路，来时安全回程遇袭）。设计师排布空间的开合明暗，就是在写一份玩家身体亲历的剧本；</li>
+          <li><strong>空间记录成长</strong>：银河城（Metroidvania）的看家本领——那扇开局就看见却打不开的门，十小时后你拿着新能力回来推开它：<strong>空间没变，你变了</strong>，地图本身成了你成长的纪念碑。第 3 章的成长循环，在这里被砌进了砖墙。</li>
+        </ul>
+        <p>收束系统篇的空间一章：关卡设计是一门<strong>翻译</strong>手艺——把第 5 章的节奏、第 6 章的动机（探索者的问号、成就者的考试）、第 7 章的岔路选择，全部翻译成玩家脚下的地板。数值住在表格里，经济住在市场里，而所有这些最终都要住进空间里，被玩家用脚投票。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 神庙即胶囊：塞尔达的四步法标准件</p>
+          <p>以旷野之息的一座典型神庙（如磁力主题）为例，解剖任天堂如何把四步法做成了可量产的标准件。</p>
+          <p><strong>分析</strong>：进门第一间——地上一块孤零零的铁板，用磁力吸起来就能看到下面的通道（<strong>引入</strong>：安全环境、单一对象、玩不死）；第二间——用铁板搭桥过水、开铁门（<strong>练习</strong>：同一能力换两三个低风险场景）；第三间——铁箱要先吸到高处、再借它压住机关，同时场景里有一个守卫（<strong>组合</strong>：磁力 × 物理堆叠 × 战斗）；最后——宝箱藏在需要「用铁门当电梯」的反直觉位置（<strong>高潮</strong>：考创造性应用，通过者领奖毕业）。<strong>更妙的一层</strong>：神庙教完，大世界才是真考场——野外的铁箱、水下的宝箱、带金属武器的敌人（磁力吸走它！）散布各处，且从不提示「此处可用磁力」。<strong>结论</strong>：神庙负责四步法的前三步半，开放世界负责无限期的期末考试——「胶囊教学＋旷野应用」的分工，是开放世界教学设计的黄金答案。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 一串金币的三份工</p>
+          <p>马里奥里一串排成弧线的金币，同时打了三份工。逐一说明，并解释为什么「小道具身兼数职」是关卡设计的美德。</p>
+          <p><strong>分析</strong>：第一份工——<strong>诱饵</strong>：金币指到哪，玩家跳到哪（第 6 章：收集是本能级动机），设计师用它牵引路线，不着一字；第二份工——<strong>轨迹教学</strong>：弧线就是这一跳的正确抛物线——「照着金币的形状跳」等于把按键时长的手感画在了空中（马里奥的可变跳高，第 12 章预告）；第三份工——<strong>风险标价</strong>：铺在危险路径上的金币是补偿（走钢丝有加薪），金币的密度悄悄标注了这条路的难度与回报（第 7 章风险回报的空间化）。<strong>为什么身兼数职是美德</strong>：关卡里每多一种专用标记（教学用箭头、引导用光柱、奖励用金币各干各的），玩家就多一层要学的符号；一个金币三职合一，认知成本一份、功能三份——回到第 2 章的优雅标准：以少生多，在关卡语言里同样成立。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 恐怖游戏的反引导：先立契约，再违约</p>
+          <p>生化危机式的恐怖游戏系统性地违反本章引导守则：灯在你身后、地标被浓雾吃掉、补给品摆在一看就是陷阱的位置。分析这种「反引导」为什么有效，以及它成立的前提。</p>
+          <p><strong>分析</strong>：逐条对照守则看它怎么反着用——趋光本能：光源放在必经之路的<strong>反方向</strong>，走向黑暗的每一步都在对抗本能，紧张度自动拉满；地标：浓雾吞掉远景，玩家失去定向能力——「不知道自己在哪」正是恐惧的配方；诱饵：弹药放在明显「有埋伏」的开阔地中央——拿不拿？第 7 章的风险回报选择被恐惧调了味。<strong>成立的前提</strong>：玩家必须先在几十个正常游戏里内化了这些守则，违约才有的可违——反引导的恐惧感，本质是「熟悉的语法突然失灵」的不安。所以恐怖游戏也不敢全程违约：存档房的安全音乐、打字机的暖光，是它们严格遵守的「安全区契约」——<strong>先立契约、局部违约、违约本身成为语言</strong>。<strong>结论</strong>：守则的最高级用法是有意识地打破它，但打破的前提是玩家和你都清楚守则是什么——这对一切设计守则都成立，包括本书写过的每一条。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>用四步法框架重新分析马里奥 1-1 对「踩敌人」这个机制的教学（素材第 4 章都见过，这次按四步归位）：每一步对应关卡里的什么安排？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>：引入——第一只板栗仔从远处缓缓走来，单独一只、空旷地形，看得清踩得着（4.2 讲过它是「移动的教具」）；练习——随后的板栗仔一只只来，间隔宽松，偶尔两只并排（最小变体）；组合——板栗仔出现在沟坎与水管之间（踩敌 × 跳跃地形），以及乌龟登场（踩完还有壳，机制长出新枝）；高潮——关卡后段敌人与坑的密集混排，一口气用上全部本事，旗杆结算毕业。</p>
+            <p><strong>解析</strong>：注意 1-1 的四步不是四个隔开的房间，而是<strong>溶解在一条连续路径里</strong>——横版过关的四步法靠间距与密度控制，神庙式的四步法靠房间切分。框架相同，载体不同：这正是学「法」而不是学「例」的价值。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>回忆你最熟悉的一段关卡（任何游戏），画出它的紧张度曲线：标出至少两个峰、两个谷，写明每个峰谷对应的具体事件，并检查它符不符合「峰渐次抬高、谷有事可做」。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（示例：某横版关）：小峰 1——中段精英怪（第一次强制战斗）；谷 1——之后的奖励房（金币+回血，顺带一幅壁画暗示 Boss 弱点=谷里有事做）；小峰 2——追逐段（新压力类型：限时）；谷 2——Boss 门前的存档点（深谷配大峰）；主峰——Boss 战。峰确实渐次抬高（精英<追逐<Boss），达标。</p>
+            <p><strong>解析</strong>：画完自查最常见的两种病：<strong>全程高原</strong>（峰连着峰，5.3 的八连 Boss 病）与<strong>虎头蛇尾</strong>（主峰出现在中段，之后一路下坡——玩家的记忆终点是段乏味的扫尾）。人对体验的记忆遵循「峰终定律」：最高峰与结尾几乎决定全部印象——所以主峰要靠后，结尾要干脆。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>识别下列场景各用了哪种引导技巧：A 森林岔路口，正确的路上停着一只发光的萤火虫群；B 城市废墟中，远处电视塔在每条街道尽头都可见；C 悬崖边缘一块突出的黄色岩石；D 房间里唯一没积灰的门把手。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 光线＋诱饵（趋光本能加一点收集欲）；B 地标（weenie，全程可见的定向锚）；C 色彩契约（黄色=可攀爬的全游戏约定）；D 环境叙事兼引导——积灰是「没人用过」，干净是「常有人来」，一个把手同时说了「往这走」和「有人住在这」。</p>
+            <p><strong>解析</strong>：D 值得多看一眼：引导与叙事在高水平关卡里经常是同一件道具（回看例 2 的「身兼数职」美德）。做这类识别练习的进阶版：下次玩任何 3D 游戏时问自己「我为什么往这边走？」——每次都能答上来，你的关卡眼就练成了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>某游戏前十小时用黄色标记所有可攀爬岩点，第十一小时的新区域里美术把黄色大量用作装饰色（黄墙、黄旗、黄花）。预测玩家行为与情绪，并给出两种修复方案。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>预测</strong>：玩家会挨个去扒黄墙黄旗（契约驱动的行为惯性），反复失败后进入「不再信任黄色」的状态——此后连真岩点也要试错确认，攀爬体验全面变糊；情绪从困惑到「设计偷懒」的恼怒。契约违约的代价不是局部的，是<strong>追溯全局的</strong>：之前十小时建立的信任一并作废。</p>
+            <p><strong>修复</strong>：方案一——美术让步：装饰改用相邻色（土黄→赭石），把信号黄留给机制专用（信号色是机制资产，不是调色盘的公共财产）；方案二——机制让步：给可攀爬点追加第二重信号（黄色＋白色磨损痕），用「组合信号」把契约升级，装饰色单独出现不再构成承诺。<strong>解析</strong>：两案的共同原则：<strong>信号的专用性必须有人守护</strong>——大型团队里这正是关卡设计师与美术之间最高频的谈判之一，「好看」与「可读」打架时，关卡语言的一致性优先。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为平台跳跃游戏的新机制「二段跳」设计一段四步法教学关：文字描述每一步的场景布置、失败代价与你想让玩家说出的那句话（如引入段是「咦，空中还能再跳一次？」）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：<strong>引入</strong>——一道略宽于单跳极限的浅沟，沟底是软垫可爬回；沟对面高台上放一件闪光收集品（诱饵拉着你试第二下）。目标台词：「咦，空中还能再跳？！」<strong>练习</strong>——连续三道沟，宽度渐增、最后一道要求在最高点接二段跳；下方全是浅水（失败=湿身重来，代价三秒）。台词：「找到节奏了。」<strong>组合</strong>——二段跳 × 移动平台（起跳点在动）＋ 二段跳 × 敌人（用踩敌弹跳接二段跳够到更高处——新旧机制相乘）。台词：「原来还能这么用！」<strong>高潮</strong>——一段限时崩塌路：脚下平台逐块坠落，必须连续精准二段跳冲刺终点，终点是俯瞰全关的高台＋存档旗（毕业仪式）。台词：「好险——但我做到了。」</p>
+            <p><strong>解析</strong>：评分点藏在两处：失败代价是否随四步<strong>递增</strong>（软垫→浅水→小伤→限时重来——难度是赚来的信任，4.2 老话）；每步是否有「目标台词」——用玩家的内心独白当验收标准，是把「教学成功」从玄学变成可测试指标的实用技巧（第 12 章 playtest 时真的能听到）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>魂类玩家推开那扇单向门、发现电梯直通出发点篝火的瞬间，常被形容为「比打赢 Boss 还爽」。用紧张度曲线、第 5 章（重试成本）与第 3 章（循环）三个镜头解释这一秒钟里发生了什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：紧张度镜头——捷径解锁是一次瞬间的深谷：紧绷了四十分钟的「死了要重跑」压力当场清零，落差之大等同于一次奖励峰（爽=紧张度的一阶导数，骤降比缓降爽得多）；重试成本镜头——它把 Boss 的重试路径从五分钟砍到三十秒，第 5 章魂类三支柱的「重试便宜」正是靠捷径兑现的——捷径是难度设计的减震器，藏在关卡设计的口袋里；循环镜头——捷径把一条长直路改造成<strong>环</strong>：探索的成果以「空间结构改变」的形式永久保存（比掉落一件装备更强的进度感），地图本身成了你的存档。三个镜头合起来：<strong>一扇门同时完成了情绪释放、难度调节和进度固化</strong>——每分钟开发成本上，捷径可能是游戏史上性价比最高的设计。</p>
+            <p><strong>解析</strong>：这题示范系统篇的思维成品：一个设计点被三章工具分别照亮，而它在三个系统里都是关键件。以后评审任何设计，试着至少换三个镜头看它——只在一个镜头里成立的设计，多半是补丁；在三个镜头里都成立的，才是结构件。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>环境叙事写作：只用五件道具布置一个房间，讲一个「没有一行文字」的故事。写出五件道具及摆放方式，再写出你预期玩家的推理链，以及一个你故意留下的开放疑点。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>：场景——灯塔顶层小屋。五件道具：① 两副餐具的餐桌，其中一副从未动过、食物完好风干；② 望远镜倒在窗边，镜筒指向海面而非航道；③ 一面墙上按日期钉着 41 张手绘的同一片海域的素描，最后一张只画了一半；④ 床下一只收拾好却没带走的行李箱；⑤ 门从<strong>里面</strong>反锁，钥匙还插在锁孔上。<strong>预期推理链</strong>：守塔人天天画海、在等某个从海上回来的人（两副餐具）→ 等待很久（41 张）→ 某天看到了什么（素描中断、望远镜倒地）→ 决定出去？可行李没带、门却从里面锁着人不在——<strong>他去哪了？</strong>（开放疑点：房间里没有第二个出口。）</p>
+            <p><strong>解析</strong>：评分点三条：道具之间是否<strong>互相印证</strong>（孤立的怪道具是布景，能连成链的才是叙事）；推理链是否由玩家可自然触发的观察顺序展开（进门先看见什么？）；疑点是否「开放而不敷衍」——好的留白让玩家散场后还在讨论，坏的留白让玩家觉得作者自己也没想好。环境叙事的终极检验：两个玩家拼出的故事版本略有不同，且都言之成理——那说明你提供的是证据，而不是答案。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>旷野之息的引导哲学被总结为「三角法则」：用大小山体（三角形轮廓）遮挡与显露远景，让玩家永远同时看得见一个近目标和半个远目标。分析这套系统为什么能取代任务箭头，然后为一个开放世界新手区（半径一公里）设计你自己的地标体系：一个主地标、三个次级地标，写明视线关系。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>分析</strong>：三角法则的机理——山体遮挡制造「看不全」（好奇：山后是什么？第 6 章探索者的问号），翻过棱线的瞬间新地标显露（好奇的即时兑付+下一个钩子无缝衔接）；玩家的行进路线于是变成自己「选」出来的连续小目标链——每一步都是自主的（第 6 章自主需求），而路线的大方向始终被地标的摆位悄悄控制着。任务箭头给的是命令，地标体系给的是<strong>诱惑</strong>——结果相同，体验的归属感天差地别。</p>
+            <p><strong>参考设计</strong>：主地标——区域中心的巨型断桥（高度全区可见，桥的「断」自带叙事疑问）；次级地标 A——出生点正前方山脊上的风车（近、小、必经，教「朝地标走有奖励」的第一课）；次级地标 B——湖心塔（从风车处首次显露，与断桥呈 90°，拉开探索扇面）；次级地标 C——林中烟柱（动态地标：只在黄昏可见，教「世界随时间变化」）。视线关系：出生点见风车＋断桥剪影；到风车见湖心塔全貌＋断桥更近；到湖心塔见烟柱——每个节点都「兑付一个近目标＋发放一个远目标」，链条闭合回断桥。</p>
+            <p><strong>解析</strong>：自查两点：每个节点是否遵守「兑一发一」（只兑不发=断链，玩家在此失去方向）；地标是否各有<strong>差异化的钩子</strong>（高度/疑问/动态——同质地标会互相稀释）。做完这题你已经在用第 6 章的动机理论指挥第 11 章的空间布置——系统篇的科目正在合并，这正是毕业的前兆。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 四步法：引入（安全展示）→ 练习（低代价重复）→ 组合（新旧相乘，理解的真检验）→ 高潮（有仪式感的考试）；最常见的死法是跳步；② 紧张度曲线是第 5 章锯齿的关卡形态：峰渐次抬高、谷有事可做、大峰前给深谷；捷径一扇门同时做了情绪释放、难度减震与进度固化；③ 无形引导六件套：路径、地标、光线、诱饵、色彩契约、构图——<strong>最好的引导让玩家以为是自己发现的</strong>，契约的生命线是一致性；④ 环境叙事三层：房间即现场、序列即剧本、空间记录成长——给证据，不给答案；⑤ 守则的最高级用法是先立契约再有意识地违约（恐怖游戏的反引导）。<br><strong>下一章预告</strong>：全书终章。关卡有了、数值有了、心理学有了——为什么你做的跳跃还是「木」的？手感、果汁、原型与测试：从「能玩」到「好玩」的最后一公里。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./10-资源与经济系统.html">← 第 10 章 经济：水龙头与下水道</a>
+          <a href="./12-手感反馈与原型.html">第 12 章 手感与原型：从「能玩」到「好玩」 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var svg = document.getElementById("lvl-svg");
+    if (!svg) return;
+
+    var STEPS = [
+      {
+        q: "① 引入 · 为什么第一个弹簧放在平地上，旁边连一只敌人都没有？",
+        a: "安全的教室（第 4 章的老朋友）：没有任何威胁，玩家可以随便跳上去看看会发生什么——「弹簧会把我弹很高」这件事由玩家自己发现，不用任何文字。旁边的虚线弧和小红球是可选的诱饵：跳上高台有奖励，但不跳也能过。紧张度：接近零。",
+        dot: 85
+      },
+      {
+        q: "② 练习 · 三个弹簧为什么间隔渐大？下面为什么是浅水而不是深渊？",
+        a: "变体重复：同一动作、逐渐提高的精度要求，节奏感在三连中建立。浅水是刻意的低代价失败——掉下去湿身爬出来，三秒重来（失败要便宜，教学期尤其如此）。这一段的自查标准：玩家失败后是「再来」还是「叹气」。紧张度：小幅爬升。",
+        dot: 247
+      },
+      {
+        q: "③ 组合 · 为什么这里才第一次出现移动平台和敌人？",
+        a: "新机制 × 旧知识的乘法时刻：弹簧的起跳时机要对上平台的移动周期，落点还有一只巡逻敌人等着——玩家必须「理解」弹簧而不只是「会按」。组合是四步法里真正的理解检验：跳过它直接考试，玩家会在高压下第一次面对乘法，那就是新手墙。紧张度：中高。",
+        dot: 409
+      },
+      {
+        q: "④ 高潮 · 最后这段大坑上的弹簧链，和终点的旗帜在做什么？",
+        a: "考试与毕业典礼：连续弹簧跨越大坑，失败代价第一次变得真实（掉坑重来整段），前三步攒下的节奏感与时机判断在这里一次性支付。终点旗帜是仪式：冲顶之后紧张度骤降（看右侧曲线的收尾）——释放感是高潮的另一半，考完不给释放，等于乐曲停在属七和弦上。",
+        dot: 571
+      }
+    ];
+
+    var step = 0;
+    var qEl = document.getElementById("lvl-q");
+    var aEl = document.getElementById("lvl-a");
+    var stepEl = document.getElementById("lvl-step");
+    var btnPrev = document.getElementById("btn-prev");
+    var btnNext = document.getElementById("btn-next");
+    var dot = document.getElementById("tension-dot");
+    var DOT_Y = [278, 262, 240, 220];
+
+    function show(i) {
+      step = Math.min(Math.max(i, 0), STEPS.length - 1);
+      for (var k = 0; k < 4; k++) {
+        var g = document.getElementById("seg-" + k);
+        if (g) g.setAttribute("opacity", k === step ? "1" : "0.28");
+      }
+      dot.setAttribute("cx", String(STEPS[step].dot));
+      dot.setAttribute("cy", String(DOT_Y[step]));
+      qEl.textContent = STEPS[step].q;
+      aEl.textContent = STEPS[step].a;
+      stepEl.textContent = (step + 1) + " / " + STEPS.length;
+      btnPrev.disabled = step === 0;
+      btnNext.disabled = step === STEPS.length - 1;
+    }
+
+    btnPrev.addEventListener("click", function () { show(step - 1); });
+    btnNext.addEventListener("click", function () { show(step + 1); });
+
+    show(0);
+  });
+  </script>
+</body>
+</html>

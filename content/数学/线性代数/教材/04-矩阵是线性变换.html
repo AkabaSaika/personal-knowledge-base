@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>04 矩阵是线性变换 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 4 章：矩阵的变换视角——矩阵的列就是基向量的去向，旋转/缩放/剪切/反射四大变换，配可调矩阵元素的网格变形演示。">
+  <meta name="kb:tags" content="线性代数,教材,矩阵,线性变换,基向量,jzsxxbh">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 4 章 · 矩阵是线性变换</h1>
+        <p class="kb-lead">矩阵篇开幕。从这一章起，请把“矩阵是一张数表”的印象暂时放到一边——我们要换一副眼镜：<strong>矩阵是一台机器，吃进一个向量，吐出一个新向量；它作用于整个平面，把网格整体搬动、旋转、拉伸</strong>。这副眼镜戴上之后，矩阵乘法、行列式、特征值……后面每一章都会突然变得“看得见”。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出线性变换的几何特征与代数定义；② 解释“矩阵的列 = 基向量的去向”，并据此在矩阵和几何效果之间双向翻译；③ 熟练计算矩阵乘向量，并用“列的线性组合”解读它；④ 写出旋转、缩放、剪切、反射的矩阵。</p>
+        </div>
+
+        <h2>换一副眼镜：函数，但吃向量</h2>
+        <p>中学的函数 <em class="kb-math">f</em>(<em class="kb-math">x</em>) 把一个数变成另一个数。<strong>变换</strong>无非是“吃向量的函数”：输入平面上一个向量（或点），输出另一个向量。修图软件把整张照片拉宽、游戏引擎旋转镜头里的世界、把数据整体标准化——都是变换。线性代数关心其中最规矩的一类：<strong>线性变换</strong>。</p>
+        <p>几何上，线性变换有两个招牌特征：<strong>网格线变换后仍是平行等距的直线</strong>（不弯曲、不扭曲），且<strong>原点不动</strong>。代数上，这等价于它尊重向量的两种基本运算：</p>
+        <pre><code>T(u + v) = T(u) + T(v)        （先加再变 = 先变再加）
+T(k·u)  = k·T(u)             （先缩放再变 = 先变再缩放）</code></pre>
+        <p>一句话：<strong>线性变换保持线性组合</strong>——T(<em class="kb-math">a</em><strong>u</strong> + <em class="kb-math">b</em><strong>v</strong>) = <em class="kb-math">a</em>T(<strong>u</strong>) + <em class="kb-math">b</em>T(<strong>v</strong>)。这个看似平淡的性质，马上会爆发出惊人的力量。</p>
+
+        <h2>两根柱子撑起整个变换</h2>
+        <p>回忆第 2 章：平面上任何向量都能唯一写成标准基的组合，<strong>v</strong> = (x, y) = x<strong>î</strong> + y<strong>ĵ</strong>。现在对它施加线性变换 T，用“保持线性组合”展开：</p>
+        <pre><code>T(v) = T(x·î + y·ĵ) = x·T(î) + y·T(ĵ)</code></pre>
+        <p>看清楚这句话的分量：<strong>只要知道两个基向量变到哪里（T(î) 和 T(ĵ)），任何向量的去向就完全确定了</strong>——照着同样的系数重新组合即可。整个平面无穷多个点的变换规则，被压缩成两个向量的信息。</p>
+        <p>把这两个“去向”竖着并排写成一个 2×2 数表，就是<strong>矩阵</strong>：</p>
+        <pre><code>       ⎡ a   b ⎤          第 1 列 (a, c) = î 的去向
+  A  =  ⎢       ⎥
+       ⎣ c   d ⎦          第 2 列 (b, d) = ĵ 的去向</code></pre>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 全书最重要的一句话</p>
+          <p><strong>矩阵的列，就是基向量变换后的落点。</strong>拿到任何矩阵，先竖着读它的两列，在脑中把 î、ĵ 挪到那两个位置，网格随之变形——你就“看见”了这个矩阵。</p>
+        </div>
+        <p>于是矩阵乘向量的公式，其实就是“按系数重新组合两列”：</p>
+        <pre><code>⎡ a  b ⎤ ⎡ x ⎤     ⎡ a ⎤      ⎡ b ⎤    ⎡ ax + by ⎤
+⎢      ⎥ ⎢   ⎥ = x·⎢   ⎥ + y·⎢   ⎥ = ⎢         ⎥
+⎣ c  d ⎦ ⎣ y ⎦     ⎣ c ⎦      ⎣ d ⎦    ⎣ cx + dy ⎦</code></pre>
+        <p>“行乘列”的机械口诀与“列的线性组合”的几何读法算出的结果相同——计算时用前者，理解时用后者。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 亲手变形：调矩阵，看整张网格如何跟着动</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="grid-canvas" height="400"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：矩阵的两列决定基向量去向，整张网格随之线性变形。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">a（î 去向的 x）<span class="kb-control-value" id="val-ma"></span>
+                <input type="range" id="ctl-ma" min="-2" max="2" step="0.1" value="1"></label>
+              <label class="kb-control">c（î 去向的 y）<span class="kb-control-value" id="val-mc"></span>
+                <input type="range" id="ctl-mc" min="-2" max="2" step="0.1" value="0"></label>
+              <label class="kb-control">b（ĵ 去向的 x）<span class="kb-control-value" id="val-mb"></span>
+                <input type="range" id="ctl-mb" min="-2" max="2" step="0.1" value="0"></label>
+              <label class="kb-control">d（ĵ 去向的 y）<span class="kb-control-value" id="val-md"></span>
+                <input type="range" id="ctl-md" min="-2" max="2" step="0.1" value="1"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" data-preset="1,0,0,1" type="button">单位（不变）</button>
+              <button class="kb-btn" data-preset="0.71,-0.71,0.71,0.71" type="button">旋转 45°</button>
+              <button class="kb-btn" data-preset="1,1,0,1" type="button">剪切</button>
+              <button class="kb-btn" data-preset="1,0,0,-1" type="button">上下反射</button>
+              <button class="kb-btn" data-preset="1.5,0,0,0.6" type="button">拉宽压扁</button>
+              <button class="kb-btn" data-preset="1,1,1,1" type="button">压成直线!</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 最后一个按钮出事了</p>
+          <p>“压成直线!”让两列（两个落点）挤到同一方向——整个平面被拍扁成一条直线。二维的信息被压掉了一维，而且<strong>再也复原不回去</strong>。这种“降维事故”正是第 6 章行列式（det = 0）与第 8 章零空间的主角，先留个印象。</p>
+        </div>
+
+        <h2>四大基本变换</h2>
+        <p>用“列 = 基向量去向”读下面四个矩阵，对照图中单位方块的变形：</p>
+        <figure>
+          <svg viewBox="0 0 640 190" width="640" height="190" role="img" aria-label="旋转、缩放、剪切、反射四种变换对单位方块的作用">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="13" fill="var(--kb-fg-muted)">
+              <text x="80" y="180" text-anchor="middle">旋转 90°</text>
+              <text x="240" y="180" text-anchor="middle">缩放 ×2</text>
+              <text x="400" y="180" text-anchor="middle">剪切</text>
+              <text x="560" y="180" text-anchor="middle">反射（沿 y 轴）</text>
+            </g>
+            <g stroke-width="1" stroke="var(--kb-border-strong)" fill="none">
+              <rect x="80" y="100" width="45" height="45" stroke-dasharray="4 3"/>
+              <rect x="240" y="100" width="45" height="45" stroke-dasharray="4 3"/>
+              <rect x="400" y="100" width="45" height="45" stroke-dasharray="4 3"/>
+              <rect x="560" y="100" width="45" height="45" stroke-dasharray="4 3"/>
+            </g>
+            <g fill="var(--kb-accent)" opacity="0.30">
+              <rect x="35" y="100" width="45" height="45"/>
+              <rect x="240" y="55" width="90" height="90"/>
+              <polygon points="400,145 445,145 490,100 445,100"/>
+              <rect x="515" y="100" width="45" height="45"/>
+            </g>
+            <g stroke="var(--kb-accent)" stroke-width="1.5" fill="none">
+              <rect x="35" y="100" width="45" height="45"/>
+              <rect x="240" y="55" width="90" height="90"/>
+              <polygon points="400,145 445,145 490,100 445,100"/>
+              <rect x="515" y="100" width="45" height="45"/>
+            </g>
+            <g font-family="ui-monospace, Menlo, monospace" font-size="11.5" fill="var(--kb-fg)">
+              <text x="80" y="30" text-anchor="middle">⎡0 −1⎤</text>
+              <text x="80" y="44" text-anchor="middle">⎣1 　0⎦</text>
+              <text x="240" y="30" text-anchor="middle">⎡2 0⎤</text>
+              <text x="240" y="44" text-anchor="middle">⎣0 2⎦</text>
+              <text x="400" y="30" text-anchor="middle">⎡1 1⎤</text>
+              <text x="400" y="44" text-anchor="middle">⎣0 1⎦</text>
+              <text x="560" y="30" text-anchor="middle">⎡−1 0⎤</text>
+              <text x="560" y="44" text-anchor="middle">⎣　0 1⎦</text>
+            </g>
+          </svg>
+          <figcaption>虚线为原单位方块，蓝色为变换后的像。剪切矩阵中 î 不动、ĵ 斜移——正是“列 = 去向”的直接体现。</figcaption>
+        </figure>
+        <p>一般角度的旋转矩阵也能“看”出来：把 î = (1, 0) 转 <em class="kb-math">θ</em> 角落到 (cos<em class="kb-math">θ</em>, sin<em class="kb-math">θ</em>)，把 ĵ = (0, 1) 落到 (−sin<em class="kb-math">θ</em>, cos<em class="kb-math">θ</em>)，两列一拼：</p>
+        <pre><code>R(θ) = ⎡ cosθ  −sinθ ⎤
+       ⎣ sinθ   cosθ ⎦</code></pre>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 两种读法算同一件事</p>
+          <p>设 A 的列为 (2, 0) 与 (1, 3)，求 A 作用在 <strong>v</strong> = (1, 1) 上的结果。</p>
+          <p><strong>解</strong>：列组合读法：A<strong>v</strong> = 1·(2, 0) + 1·(1, 3) = <strong>(3, 3)</strong>。行乘列读法：(2×1 + 1×1, 0×1 + 3×1) = (3, 3)，一致。几何含义：<strong>v</strong> 原本是“î 走一步、ĵ 走一步”，变换后照方抓药——“新 î 走一步、新 ĵ 走一步”。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 由几何效果反写矩阵</p>
+          <p>写出“逆时针旋转 90°”的矩阵，并求点 (3, 2) 旋转后的位置。</p>
+          <p><strong>解</strong>：î = (1, 0) 旋转后落到 (0, 1)；ĵ = (0, 1) 落到 (−1, 0)。两列一拼：A = [(0, 1), (−1, 0)] 即上图第一个矩阵。作用于 (3, 2)：3·(0, 1) + 2·(−1, 0) = <strong>(−2, 3)</strong>。可在坐标纸上验证。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 不是谁都配叫“线性”</p>
+          <p>判断平移 T(x, y) = (x + 1, y) 是否线性变换。</p>
+          <p><strong>解</strong>：不是。最快的检验：线性变换必须保持原点不动（T(<strong>0</strong>) = 0·T(<strong>0</strong>) = <strong>0</strong>），而平移把原点挪到了 (1, 0)。也可验证 T(2<strong>u</strong>) ≠ 2T(<strong>u</strong>)。平移虽简单却不线性——这正是计算机图形学引入“齐次坐标”的原因（此处按下不表）。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>A 的列为 (1, 2) 与 (3, −1)。分别用“列的线性组合”和“行乘列”计算 A(2, 1) 与 A(−1, 3)，确认两种算法结果一致。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A(2, 1) = 2(1, 2) + 1(3, −1) = <strong>(5, 3)</strong>；A(−1, 3) = −1(1, 2) + 3(3, −1) = <strong>(8, −5)</strong>。行乘列结果相同。</p>
+            <p><strong>解析</strong>：建议在练习阶段坚持先用列组合读法算一遍——它慢一点，但每算一次都在强化“矩阵的列是去向”的直觉；熟练后行乘列自然接管。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>某线性变换把 î 变到 (2, 1)，把 ĵ 变到 (0, −1)。写出它的矩阵，并求 (1, 2) 的像。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>矩阵两列即两个去向：A = ⎡2 0; 1 −1⎤（第 1 列 (2,1)，第 2 列 (0,−1)）。像 = 1·(2, 1) + 2·(0, −1) = <strong>(2, −1)</strong>。</p>
+            <p><strong>解析</strong>：这是“列 = 去向”的正向使用。注意去向 (2, 1) 是<strong>竖着</strong>放进第一列的——初学最常见的错误是把它横着写成第一行。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出下列变换的矩阵：(a) 沿 x 轴反射（上下翻转）；(b) 所有向量放大为 3 倍；(c) 水平方向拉伸 2 倍、竖直方向不变。分别求 (1, 2) 的像。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) ⎡1 0; 0 −1⎤，(1, 2) ↦ (1, −2)；(b) ⎡3 0; 0 3⎤ = 3I，(1, 2) ↦ (3, 6)；(c) ⎡2 0; 0 1⎤，(1, 2) ↦ (2, 2)。</p>
+            <p><strong>解析</strong>：三个都是对角矩阵——两个基向量各自沿自己的方向伸缩、互不打扰。对角矩阵是“最省心的变换”，第 10 章对角化的目标就是把一般矩阵改造成这种形态。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>剪切矩阵 S = ⎡1 1; 0 1⎤。求 (0, 1)、(1, 1)、(2, 3) 的像，并用一句话描述 S 的几何效果。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(0, 1) ↦ (1, 1)；(1, 1) ↦ (2, 1)；(2, 3) ↦ (5, 3)。</p>
+            <p><strong>解析</strong>：S 保持 î 不动，把 ĵ 斜推到 (1, 1)：每个点的 y 坐标不变，x 坐标被推移了 y 的量——像一摞扑克牌被推歪。注意所有像的 y 分量都没变，这类“有方向不动”的现象将在第 10 章（特征向量）成为主角。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>判断下列变换是否线性：(a) T(x, y) = (2x − y, x + 3y)；(b) T(x, y) = (x², y)；(c) T(x, y) = (x + 1, 2y)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) <strong>线性</strong>：每个输出分量都是输入的“常数×分量相加”，可写成矩阵 ⎡2 −1; 1 3⎤。(b) <strong>不线性</strong>：T(2, 0) = (4, 0) ≠ 2·T(1, 0) = (2, 0)，平方破坏了数乘。(c) <strong>不线性</strong>：T(0, 0) = (1, 0) ≠ (0, 0)，原点被挪动。</p>
+            <p><strong>解析</strong>：速判三板斧——①输出分量必须是输入分量的一次齐次式（无平方、无乘积、无常数项）；②原点必须不动；③存疑时用定义验证 T(<strong>u</strong>+<strong>v</strong>) 与 T(k<strong>u</strong>)。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用“列 = 基向量去向”推导旋转 <em class="kb-math">θ</em> = 60° 的矩阵（写出精确值），并求 (1, 0) 与 (0, 2) 的像。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>cos60° = 1/2，sin60° = √3/2。R(60°) = ⎡1/2 −√3/2; √3/2 1/2⎤。(1, 0) ↦ <strong>(1/2, √3/2)</strong>（就是第一列）；(0, 2) ↦ 2·(−√3/2, 1/2) = <strong>(−√3, 1)</strong>。</p>
+            <p><strong>解析</strong>：“求 (1, 0) 的像”不用任何计算——它就是矩阵第一列本身。反过来这也是检验旋转矩阵是否写对的最快方法：第一列应落在角度 θ 的单位圆位置上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：线性变换 T 把任何直线映成直线或一个点；特别地，过原点的直线映成过原点的直线或原点本身。提示：直线可写成 { <strong>p</strong> + t<strong>d</strong> : t ∈ ℝ }。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>直线上的点为 <strong>p</strong> + t<strong>d</strong>（<strong>d</strong> ≠ <strong>0</strong> 是方向向量）。由线性：T(<strong>p</strong> + t<strong>d</strong>) = T(<strong>p</strong>) + t·T(<strong>d</strong>)。若 T(<strong>d</strong>) ≠ <strong>0</strong>，这是过 T(<strong>p</strong>)、方向 T(<strong>d</strong>) 的直线；若 T(<strong>d</strong>) = <strong>0</strong>，所有点都映到同一点 T(<strong>p</strong>)。过原点直线取 <strong>p</strong> = <strong>0</strong>，而 T(<strong>0</strong>) = <strong>0</strong>，故像仍过原点。∎</p>
+            <p><strong>解析</strong>：这就是“网格线变换后仍是直线”的严格版本——本章开头的几何招牌特征，两行代数即证。注意 T(<strong>d</strong>) = <strong>0</strong> 的退化情形恰是“压成直线/压成点”事故的局部版本：某个方向被整个吞进原点，这个方向的集合就是第 8 章的<strong>零空间</strong>。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 线性变换 = 保持线性组合的变换，几何上网格平行等距、原点不动；② <strong>矩阵的列 = 基向量的去向</strong>，两列信息决定全平面；③ A<strong>v</strong> = 按 <strong>v</strong> 的坐标组合 A 的列；④ 旋转/缩放/剪切/反射各有标准矩阵，对角矩阵 = 各轴独立伸缩。<br><strong>下一章预告</strong>：先旋转再剪切，等价于哪一个矩阵？变换的<strong>复合</strong>将揭示矩阵乘法公式的真正来历——以及它为什么不能交换顺序。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./03-点积长度夹角与投影.html">← 第 3 章 点积：长度、夹角与投影</a>
+          <a href="./05-矩阵乘法变换的复合.html">第 5 章 矩阵乘法：变换的复合 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("grid-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 400, SCALE = 44, RANGE = 8;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var inputs = {
+      a: document.getElementById("ctl-ma"), b: document.getElementById("ctl-mb"),
+      c: document.getElementById("ctl-mc"), d: document.getElementById("ctl-md")
+    };
+    var vals = {
+      a: document.getElementById("val-ma"), b: document.getElementById("val-mb"),
+      c: document.getElementById("val-mc"), d: document.getElementById("val-md")
+    };
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function m() {
+      return {
+        a: parseFloat(inputs.a.value), b: parseFloat(inputs.b.value),
+        c: parseFloat(inputs.c.value), d: parseFloat(inputs.d.value)
+      };
+    }
+    function origin() { return { x: canvas.clientWidth / 2, y: H / 2 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function apply(M, p) { return { x: M.a * p.x + M.b * p.y, y: M.c * p.x + M.d * p.y }; }
+
+    function seg(p, q, color, width, dash) {
+      var a = toPx(p), b = toPx(q);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash || []);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.lineWidth = 1;
+    }
+
+    function arrowV(vec, color) {
+      var o = { x: 0, y: 0 };
+      var a = toPx(o), b = toPx(vec);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      if (len > 4) {
+        var ux = dx / len, uy = dy / len, s = 11;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - s * ux - s * 0.5 * uy, b.y - s * uy + s * 0.5 * ux);
+        ctx.lineTo(b.x - s * ux + s * 0.5 * uy, b.y - s * uy - s * 0.5 * ux);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var M = m();
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      // 原网格（淡）
+      for (var k = -RANGE; k <= RANGE; k++) {
+        seg({ x: k, y: -RANGE }, { x: k, y: RANGE }, css("--kb-border"), 1);
+        seg({ x: -RANGE, y: k }, { x: RANGE, y: k }, css("--kb-border"), 1);
+      }
+      // 变换后的网格（蓝，线性变换保持直线，映两端点即可）
+      ctx.globalAlpha = 0.55;
+      for (k = -RANGE; k <= RANGE; k++) {
+        seg(apply(M, { x: k, y: -RANGE }), apply(M, { x: k, y: RANGE }), "#2563eb", k === 0 ? 2 : 1);
+        seg(apply(M, { x: -RANGE, y: k }), apply(M, { x: RANGE, y: k }), "#2563eb", k === 0 ? 2 : 1);
+      }
+      ctx.globalAlpha = 1;
+      // 单位方块的像
+      var sq = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }].map(function (p) {
+        return toPx(apply(M, p));
+      });
+      ctx.fillStyle = "#9466de";
+      ctx.globalAlpha = 0.28;
+      ctx.beginPath();
+      ctx.moveTo(sq[0].x, sq[0].y);
+      for (var i = 1; i < 4; i++) ctx.lineTo(sq[i].x, sq[i].y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      // 基向量的像
+      arrowV({ x: M.a, y: M.c }, "#2563eb");
+      arrowV({ x: M.b, y: M.d }, "#16a34a");
+      var pi = toPx({ x: M.a, y: M.c }), pj = toPx({ x: M.b, y: M.d });
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("î→(" + M.a.toFixed(1) + "," + M.c.toFixed(1) + ")", pi.x + 8, pi.y - 8);
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("ĵ→(" + M.b.toFixed(1) + "," + M.d.toFixed(1) + ")", pj.x + 8, pj.y - 8);
+      // 矩阵读数
+      ctx.font = "600 14px ui-monospace, Menlo, monospace";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText("A = [" + M.a.toFixed(1) + "  " + M.b.toFixed(1) + "]", 16, 26);
+      ctx.fillText("    [" + M.c.toFixed(1) + "  " + M.d.toFixed(1) + "]", 16, 44);
+    }
+
+    ["a", "b", "c", "d"].forEach(function (k) {
+      inputs[k].addEventListener("input", function () {
+        vals[k].textContent = parseFloat(inputs[k].value).toFixed(1);
+        draw();
+      });
+      vals[k].textContent = parseFloat(inputs[k].value).toFixed(1);
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-preset]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = btn.getAttribute("data-preset").split(",");
+        inputs.a.value = p[0]; inputs.b.value = p[1];
+        inputs.c.value = p[2]; inputs.d.value = p[3];
+        ["a", "b", "c", "d"].forEach(function (k) {
+          vals[k].textContent = parseFloat(inputs[k].value).toFixed(1);
+        });
+        draw();
+      });
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

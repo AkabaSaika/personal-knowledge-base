@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>09 数值入门：成长曲线的手感 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 9 章：线性、指数、幂三种成长曲线的体感差异，攻防血最小战斗模型与减法/乘除公式，成本曲线与付出回报比，配可调成长率的击杀耗时曲线演示。">
+  <meta name="kb:tags" content="游戏设计,教材,数值设计,成长曲线,平衡,战斗公式,szyczqx">
+  <meta name="kb:created" content="2026-08-06">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 9 章 · 数值入门：成长曲线的手感</h1>
+        <p class="kb-lead">系统篇开幕。前两篇搞懂了玩家要什么，从这一章起我们动手「造」——而所有系统的地基都是数值。别怕：这里没有高深数学，只有几条曲线和它们的<strong>手感</strong>。为什么 10 攻打 8 防和 100 攻打 98 防感觉完全不同？为什么前期升级如流水、后期一级熬一周，玩家反而觉得合理？数值不是数学作业，是<strong>体验的配方表</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出线性、指数、幂三种成长曲线的体感差异与适用场景；② 搭出攻防血的最小战斗模型，说清减法公式与乘除公式的手感区别；③ 用「击杀耗时」和「付出回报比」读懂数值的真实体验；④ 接受并实践行规——<strong>平衡不是算出来的，是调出来的</strong>。</p>
+        </div>
+
+        <h2>数值是体验的配方</h2>
+        <p>第二篇讲的每一种心理，最终都要靠数字兑现：心流的难度爬坡是数字（第 5 章那条斜率），奖励的大小是数字，选择的取舍是数字（第 7 章的期望）。数值策划改一个小数点，玩家那边就是「变肉了」「变爽了」——MDA 的单行道在这里最短也最直。</p>
+        <p>入门第一课是一条心理学常识：<strong>人感受的不是绝对值，是相对变化</strong>（心理物理学称韦伯定律）。给 20 攻的新手 +5 攻，是立竿见影的 25%；给 500 攻的老玩家 +5 攻，是彻底无感的 1%。所以数值设计的第一个思维转换：<strong>别用加法思维，用倍率思维</strong>——设计成长时问「这次提升是百分之几」，而不是「加了多少点」。「+5」会随着成长贬值，「+10%」永远值 10%。</p>
+
+        <h2>三条成长曲线：线性、指数、幂</h2>
+        <p>把「等级 → 数值」的关系画出来，常用的只有三族曲线，各有各的脾气：</p>
+        <figure>
+          <svg viewBox="0 0 660 250" width="660" height="250" role="img" aria-label="线性、指数、幂函数三条成长曲线的形状与体感对比">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <line x1="46" y1="210" x2="630" y2="210" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <line x1="46" y1="210" x2="46" y2="24" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <text x="620" y="230" text-anchor="end" font-size="11.5" fill="var(--kb-fg-muted)">等级 →</text>
+              <text x="40" y="18" font-size="11.5" fill="var(--kb-fg-muted)">数值</text>
+              <path d="M 46 200 L 610 96" stroke="#2563eb" stroke-width="2.5" fill="none"/>
+              <path d="M 46 204 Q 380 196 500 140 T 610 30" stroke="#ef4444" stroke-width="2.5" fill="none"/>
+              <path d="M 46 206 Q 200 130 380 106 T 610 76" stroke="#16a34a" stroke-width="2.5" fill="none"/>
+              <text x="560" y="90" font-size="12" font-weight="700" fill="#2563eb">线性</text>
+              <text x="560" y="26" font-size="12" font-weight="700" fill="#ef4444">指数</text>
+              <text x="560" y="66" font-size="12" font-weight="700" fill="#16a34a">幂（k&lt;1）</text>
+              <text x="200" y="238" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">线性：每级 +固定值，体感逐级贬值</text>
+              <text x="470" y="238" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">指数：每级 +固定百分比，体感恒定但数字爆炸</text>
+            </g>
+          </svg>
+          <figcaption>同一坐标系下的三族曲线：蓝为线性（稳定但体感贬值），红为指数（体感恒定但迟早爆炸），绿为幂函数 k&lt;1（前快后慢，天然的收益递减）。</figcaption>
+        </figure>
+        <ul>
+          <li><strong>线性</strong>（每级 +10）：简单、可预期、好心算。缺点正是韦伯定律：同样的 +10，第 5 级是惊喜，第 50 级是噪音——线性成长的体感必然逐级贬值；</li>
+          <li><strong>指数</strong>（每级 ×1.15）：体感恒定——「每一级都明显变强」，这是成长快感的黄金配方。代价是数字迟早爆炸：放置游戏敢让伤害涨到 10³⁰，普通游戏几十级后数字就没法看了；</li>
+          <li><strong>幂函数</strong>（k&lt;1，如平方根）：前快后慢，天然的收益递减——适合「堆同一属性越堆越不划算」的场景（防御、暴击率），逼玩家换维度投资（呼应 7.1：好选择在不同维度之间）。</li>
+        </ul>
+        <p>经典组合拳是「<strong>经验需求指数涨、属性收益近线性涨</strong>」：升级需要的经验越来越多（10、15、23、34……），每级给的属性却差不多——结果就是你熟悉的那条体验：前期一天升五级（高频的胜任反馈，新手期的蜜糖），后期一周升一级（升级从日常变成事件，稀缺性反而抬高了它的情绪价值）。两条曲线一快一慢的<strong>赛跑</strong>，跑出了整个成长节奏——这正是接下来演示要让你亲手调的东西。</p>
+
+        <h2>最小战斗模型：攻、防、血</h2>
+        <p>数值落地的主战场是战斗。最小模型只有三个量：攻击、防御、血量，外加一条伤害公式。公式主要两派：</p>
+        <pre><code>减法公式：  伤害 = 攻击 − 防御            （火纹、许多策略游戏）
+乘除公式：  伤害 = 攻击 × 攻击 ÷ (攻击 + 防御)   （许多 MMO 与 MOBA 的变体）</code></pre>
+        <p>减法公式简单、可心算，但有一道<strong>悬崖</strong>：防御逼近攻击时，伤害断崖式归零——90 防挨 100 攻掉 10 血，101 防直接免疫。悬崖是双刃剑：小数值策略游戏里它是深度（多 1 点防能不能白嫖这一刀，算得清清楚楚）；大数值长线游戏里它是灾难（数值膨胀一点点，整个战斗从刮痧跳到免疫）。乘除公式则处处平滑：防御永远有用、但收益递减，永远打得动、也永远打不满——代价是玩家没法心算，伤害变成黑箱。<strong>选公式就是选体验：要算得清的博弈，还是要调得稳的长线。</strong></p>
+        <p>而玩家真正「感受」到的既不是攻击也不是防御，是<strong>击杀耗时（TTK，Time to Kill）</strong>：砍死一只怪要几秒。它是攻防血三个数除出来的结果，也是数值手感的第一仪表。下面亲手调那场「玩家成长 vs 怪物成长」的赛跑，看 TTK 曲线怎么变：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 击杀耗时曲线：两条成长率的赛跑，决定五十级的手感</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="ttk-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：玩家攻击成长率与怪物血量成长率同为指数时，击杀耗时只取决于两者之比——同速则手感恒定，怪物快则越打越肉（疲劳劝退），玩家快则越打越爽但内容被加速消耗。</p></noscript>
+            <p id="ttk-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);"></p>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">玩家攻击成长 / 级<span class="kb-control-value" id="val-atk"></span>
+                <input type="range" id="ctl-atk" min="0" max="20" step="1" value="8"></label>
+              <label class="kb-control">怪物血量成长 / 级<span class="kb-control-value" id="val-hp"></span>
+                <input type="range" id="ctl-hp" min="0" max="20" step="1" value="8"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" data-ttk="8,8" type="button">恒定手感</button>
+              <button class="kb-btn" data-ttk="6,10" type="button">越打越肉</button>
+              <button class="kb-btn" data-ttk="12,6" type="button">后期无双</button>
+            </div>
+          </div>
+        </div>
+        <p>三个预设对应三种真实的运营局面：<strong>恒定手感</strong>——两条指数同速，TTK 一条直线，五十级如一日（安全但也单调）；<strong>越打越肉</strong>——怪物成长快过玩家，TTK 指数上升，玩家的原话是「练度不够」「数值墙」（第 3 章的卡关断裂，在这里露出了数学原形）；<strong>后期无双</strong>——玩家成长更快，越来越爽，但每小时消耗的内容也越来越多，版本末期「无怪可打」。实际游戏常做成<strong>分段</strong>：新手期让玩家略快（蜜糖），中期同速（陪跑），版本末期让怪略快（把玩家顶在「差一点」的位置等新版本）——TTK 曲线就是这么一段段焊出来的。</p>
+
+        <h2>成本曲线与付出回报比</h2>
+        <p>成长的另一半是价格。第 3 章「伐木工」演示里你已经亲手拧过那个旋钮：升级涨价系数决定飞轮是「毕业」还是「卡关」。现在给它正式的名字：<strong>付出回报比</strong>——每单位投入（时间/金币/体力）换来多少强度。两条设计准则：</p>
+        <ul>
+          <li><strong>整体递减</strong>：同一条线上越练越贵是常态（+10 强化费用远超 +1），既控制后期数值失控，也温和地把玩家推向新维度投资；</li>
+          <li><strong>节点反弹</strong>：一路递减太丧气，要在关键节点安排回报的跳变——突破、转职、新装备档位开放，让「熬」有盼头。你发现了吗？<strong>这又是锯齿</strong>——第 5 章难度的锯齿、第 3 章循环的节奏，到了数值这里变成回报率的锯齿。紧张与释放的交替，是贯穿全书的同一条心跳。</li>
+        </ul>
+        <p>还有一条容易被理科生忽略的准则：<strong>感知的台阶胜过数学的连续</strong>。+9 到 +10 的属性差可能只有 2%，但武器发光了、名字变金了、称号出现了——玩家记住的是台阶，不是斜率。数值给骨架，表现给台阶（第 2 章的老话：机制负责事实，美术负责喊出来）。</p>
+
+        <h2>平衡是迭代出来的</h2>
+        <p>最后破除一个迷思：数值策划不是坐在 Excel 前一次算出完美数值的数学家。真实的工作流是<strong>实验科学</strong>：</p>
+        <ol>
+          <li><strong>先定体验目标，再反推数值</strong>：不是「攻击该是多少」，而是「新手杀小怪应该 5 秒、Boss 战应该 3 分钟、满强化要肝两周」——体验指标先行，数字是解方程解出来的；</li>
+          <li><strong>锚定法</strong>：定一个基准单位（1 级小怪 = 100 血 = 5 秒击杀），其余一切相对它定义（精英 = 3 只小怪，Boss = 20 只小怪）。锚一换全表重算，所以锚要选最常被体验的那个单位；</li>
+          <li><strong>一次只拧一个旋钮</strong>：同时改攻击和血量，手感变了你不知道该归因谁——实验科学的基本纪律（第 4 章拆解时你已经在用它的反向版）；</li>
+          <li><strong>每版留手感笔记</strong>：「1.3 版：TTK 8 秒，偏肉，下版攻击 +10%」——数值的历史就是体验的病历。</li>
+        </ol>
+        <p>Excel 负责初稿，手柄负责定稿。<strong>算得再漂亮的表，没在真人手里跑过就只是假设</strong>——这句话同时预告了第 12 章：原型与测试，就是数值假设的实验室。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 一点防御的天壤之别：两个公式实算</p>
+          <p>玩家 100 攻。用减法公式与乘除公式分别计算怪物 90 防、99 防、101 防时的每击伤害，并回答：什么游戏该用哪个公式？</p>
+          <p><strong>分析</strong>：减法公式：90 防 → 10 伤害；99 防 → 1 伤害；101 防 → 0（通常保底 1）。防御从 99 到 101 只差 2 点，体验却从「刮痧」跳到「免疫」——这就是悬崖。乘除公式（伤害 = 100×100÷(100+防)）：90 防 → 52.6；99 防 → 50.3；101 防 → 49.8——三种情况几乎无感，防御的作用被摊成了平滑的坡。<strong>选择逻辑</strong>>：火纹这类战棋敢用减法，因为数值个位数、回合制可心算——「他 12 攻我 10 防，挨一下掉 2 血，扛得住」正是策略乐趣的原材料（第 7 章：信息充分才有真选择）；MMO 必须用乘除或类似的平滑公式，因为数值以千计、装备逐版本膨胀，减法悬崖会让每次版本更新都在「免疫」与「秒杀」之间蹦极。<strong>结论</strong>：公式没有优劣，只有和「数值规模 + 可算性需求」的匹配。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 放置游戏：把指数爆炸做成商品</p>
+          <p>放置/挂机游戏的伤害数字动辄 1e30，为什么玩家不觉得荒谬反而上瘾？它们围绕指数成长做了哪些配套设计？</p>
+          <p><strong>分析</strong>：核心洞见还是韦伯定律——<strong>体感只看倍率，绝对值无意义</strong>：从 1e28 涨到 2e28 的爽感，和从 100 涨到 200 完全相同；既然如此，为什么不让数字一直爆炸下去？配套设计有三件：① 单位压缩（K/M/B/T 或科学计数法）——把不可读的数字重新变成可比较的短符号，保住「涨了多少倍」的可读性；② <strong>转生系统（Prestige）</strong>——数值清零、换取永久乘数再来一遍：把无限的指数切成一段段有终点的循环（第 3 章局外环的极致形态——「重来」本身成了成长）；③ 瓶颈轮换——每隔几个数量级设一道墙（新资源、新机制解锁），让「等墙破」成为节奏（回报率锯齿的放置版）。<strong>结论</strong>：放置游戏是数值设计的显微镜：它把「成长的快感可以脱离一切内容独立存在」这件事证明到了极致——也因此最值得警惕：只剩数字在涨的游戏，离第 8 章那条红线只有一步。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 战力通胀：每个长线游戏的慢性病</p>
+          <p>长线运营游戏的新版本装备总要比旧的强（否则没人买账），于是数值只涨不跌。推演这条路的终点，并分析「等级压缩」这剂猛药。</p>
+          <p><strong>分析</strong>：链条推演——新版本必须更强（商业卖点）→ 全服数值上移 → 旧内容被碾压作废（新玩家 10 分钟跑完老团本，老玩家的青春回忆变成快递路线）→ 数字规模失控（伤害百万计，韦伯定律下「涨了 5 万」毫无感觉）→ 新玩家看着 120 级的距离直接劝退。这是<strong>指数发行的债</strong>：每个版本借一点「更强」，利息滚在数字规模上。<strong>等级压缩（squish）</strong>是 WoW 等游戏的还债方式：全服数值等比缩小（120 级压成 60 级，伤害除以千），关键是<strong>保住相对关系</strong>——你杀同级怪的 TTK 一秒不变，只是数字变小了。风险照样真实：玩家对「我的数字变小了」有本能的损失厌恶（哪怕相对强度未变——韦伯定律这次站在设计师的对立面），每次压缩都伴随一轮舆情。<strong>结论</strong>：通胀债务没有免费的解法，最好的策略是少借——回报率整体递减、横向成长（新维度而非更大数字）都是控制欠债速度的手段。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>某游戏的「力量药水」永久 +5 攻击，定价固定。用韦伯定律分析它对 20 攻新手和 500 攻老玩家分别意味着什么，并把它改造成对两者体感一致的设计。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：对新手是 +25%（一件大事），对老玩家是 +1%（无感的噪音）——同一件商品在不同阶段的体验价值差 25 倍，后期它会从商店里「情绪性消失」（没人再买）。改造：改为百分比（+2% 攻击），或分级定价（药水强度随玩家等级缩放）。</p>
+            <p><strong>解析</strong>：这道题的通用结论：<strong>凡是「固定数值」的奖励，都会被成长曲线稀释</strong>——固定金币奖励、固定伤害的道具、固定数值的 buff 全在此列。检查一个长线游戏的奖励表，把所有绝对值圈出来问一遍「50 级时它还剩几个百分点」，是数值评审最快的第一轮。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>给下面四个量各选一条合适的成长曲线（线性 / 指数 / 幂 k&lt;1），说明理由：升级所需经验、玩家攻击力、移动速度加成、防御带来的减伤率。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：升级经验——指数（拉开升级节奏，前密后疏）；攻击力——近线性或缓指数（强度稳步走，避免数字失控）；移动速度——幂 k&lt;1 且必须封顶（移速的体验影响是超线性的，快 50% 就可能破坏所有关卡的追逐设计——收益必须递减+硬上限）；减伤率——幂 k&lt;1（天然递减：从 0% 到 30% 减伤是质变，从 60% 到 90% 是把有效血量翻三倍——同样的百分点后期价值暴涨，必须用递减曲线压住）。</p>
+            <p><strong>解析</strong>：移速与减伤是两个著名的「非线性价值」陷阱：属性面板上的一个点，换算到体验上的价值并不均匀。数值设计真正要平衡的从来不是面板数字，而是<strong>每个点换来的体验价值</strong>——这也是为什么几乎所有游戏的移速与减伤都做了递减或封顶。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>1 级：玩家每秒伤害 10，小怪 50 血。两边都按每级 8% 指数成长。问：1 级和 30 级的击杀耗时各是多少？若怪物成长改为 12%，30 级的 TTK 大约变成多少？（提示：TTK = 血量 ÷ 每秒伤害；(1.12/1.08)²⁹ ≈ 2.9。）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：同速成长时，TTK = 50/10 = 5 秒，且 30 级依然是 5 秒——两条同底数指数相除，成长率互相抵消，TTK 恒定。怪物改 12% 后：30 级 TTK ≈ 5 × 2.9 ≈ <strong>14.5 秒</strong>——涨了近三倍，「越打越肉」。</p>
+            <p><strong>解析</strong>：这道题揭示了演示背后的数学：<strong>指数成长体系里，手感只取决于成长率之差，与绝对数值无关</strong>。攻击 10 还是 10000 不重要，8% 对 8% 就是恒定，8% 对 12% 就是每级肉 3.7%。这也是数值排查的捷径：玩家抱怨「版本越来越肝」，第一件事不是看数值表的绝对值，是把两边的成长率拉出来对减。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>减法公式的游戏里，为什么几乎都有「最低伤害保底 1 点」的规则？除了避免尴尬，它还保住了哪条更根本的设计原则？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：表层原因：防御 ≥ 攻击时伤害为 0，出现「怎么打都不掉血」的死局。深层原因：伤害为 0 意味着<strong>玩家的行动失去了任何效果</strong>——反馈链条被彻底切断（第 1 章四特征之「反馈」的底线），战斗从「艰难」变成「无意义」，这两者天差地别：艰难是焦虑区（还在通道图上），无意义是直接退出了游戏的定义。保底 1 点保住的是「你的每次行动都作数」这条底线——哪怕只作数一点点。</p>
+            <p><strong>解析</strong>：推而广之，一切系统都该有「保底反馈」：抽卡不中也给碎片（第 8 章保底的兄弟）、比赛垫底也有参与分（3.2 为失败者设计奖励）。<strong>玩家可以接受收益小，不能接受行动无效</strong>——这是横跨数值、随机、循环三章的同一条公理。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为一个 1–30 级的 RPG 设计经验与属性双曲线（写出公式或造表思路即可），满足三个体验目标：前 10 级平均每天升 2 级以上；20 级后每级需要数天；任何一级的属性提升体感都「可感」（≥5%）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：经验需求 EXP(L) = 100 × 1.25^(L−1)（指数，每级贵 25%）——按玩家日均经验产出恒定估算，前 10 级每级只要零点几天，25 级后每级需要 3–5 天，满足前密后疏；属性收益 ATK(L) = ATK(L−1) × 1.06（缓指数，每级 +6%）——用倍率而非加法，保证 30 级时的一级和 3 级时的一级同样「可感」（≥5% 达标）。再加一个台阶层：每 10 级一次「进阶」，属性额外 +15% 并解锁新技能——回报率锯齿的峰。</p>
+            <p><strong>解析</strong>：自查三点：① 是否先写体验目标再挑公式（顺序反了就是在做数学不是做设计）；② 属性用没用倍率思维（+固定值必被稀释，见 9.1）；③ 有没有留「台阶」（连续曲线之上的可感知节点）。另外注意隐含假设「日均经验产出恒定」——实际产出会随等级变化，所以这张表上线后必然要按真实数据回调：又回到了本章结论，<strong>表是初稿，调是定稿</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>装备强化 +1 到 +15：多数游戏在 +9→+10、+14→+15 这类节点安排外观特效、称号乃至全服公告。从「感知台阶」与第二篇的心理学（动机、随机）解释这套设计，同时指出它常与哪个危险机制捆绑。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：台阶的作用：① 感知层——2% 的属性差肉眼不可见，发光的武器全服可见：把连续数值折成离散的「身份等级」，玩家记住的是「我是 +10」而不是「我多了 47 点攻击」；② 动机层——外观与公告服务胜任的展示需求（第 6 章：被看见），台阶间距还形成了阶段性目标（固定比率时间表：冲击下一个台阶）；③ 台阶越高越稀有，稀缺性本身抬高身价（第 10 章预告）。<strong>危险捆绑</strong>：高段强化几乎总是配上「强化失败掉级/碎装」的赌博机制——可变比率时间表 + 损失厌恶 + 台阶的身份价值，三种最强的心理钩子拧在一起，是第 8 章红线测试的高危区（把随机撤掉，「点强化按钮」这个行为本身毫无乐趣）。</p>
+            <p><strong>解析</strong>：同一个台阶设计，从三章的角度看是三样东西（数值折断点 / 动机装置 / 斯金纳箱外壳）——到了系统篇，你应该开始习惯这种多镜头审视：<strong>每个系统都同时活在好几章里</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>你是某 15 年历史 MMO 的数值负责人，等级 120、伤害以百万计，决定做等级压缩（120→60，数值除以 1000）。写一份要点备忘：压缩要保住哪三条不变量？最大的玩家情绪风险是什么、怎么对冲？哪些东西趁机一并修正？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三条不变量</strong>：① 相对强度——同级玩家杀同级怪的 TTK 前后一致（手感仪表不动）；② 进度资产——玩家已有的相对位置不变（你压缩前比我强 20%，压缩后还是 20%——动的是尺子不是排名）；③ 里程碑记忆——曾经的成就（首杀称号、绝版外观）原样保留，数字可以缩，荣誉不能缩。</p>
+            <p><strong>情绪风险与对冲</strong>：最大风险是损失厌恶——「我的百万伤害变成一千了」，哪怕相对强度分毫未动（韦伯定律的报复：玩家对数字大小本身有感情）。对冲手段：提前数月预告并反复解释「相对不变」；上线首日给全服发一次性纪念礼包（把「失去感」的当天覆盖成「收获感」）；保留旧数字的可查档案（战绩博物馆）。<strong>趁机修正</strong>：压缩是千载难逢的还债窗口——顺手修掉历代版本攒下的公式悬崖、把散乱的成长率统一到新锚点、废弃再也没人去的旧数值孤岛。</p>
+            <p><strong>解析</strong>：这道题的真正考点是「数值资产的社会性」：数字在玩家心里不只是强度，是<strong>时间的凭证</strong>。任何动玩家存量资产的操作（压缩、重做、合服）都同时是数值工程和社区工程——备忘录里技术方案和情绪方案必须一样厚。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>给你在 4.8 设计的纸笔游戏（或任选一个简单对战游戏）做一次完整的数值流程：先写三条体验目标（每局时长、翻盘概率、单回合决策时间），再反推数值与规则参数，标明你的「锚」，最后写出你上手实测后最可能要调的第一个旋钮。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考流程</strong>（基于 4.8「盖数字比大小」）：体验目标——每局 10 分钟内；落后方直到最后两轮仍有翻盘可能；每回合思考不超过 30 秒。反推：每局 10 轮（10 分钟 ÷ 每轮约 1 分钟）；计分用「数字差」而非「胜场数」（差值计分天然保留翻盘空间——最后两轮的大数对决足以逆转 10 分以内的落差，翻盘目标达成）；数字池 1–10（决策空间 10 选 1，30 秒可算——池子扩到 1–20 决策时间会翻倍，违背目标三）。<strong>锚</strong>：单轮平均分差约 3 分（由 1–10 均匀分布推出）——「最后两轮可翻 10 分」的判断就是从这个锚推的。<strong>预测要调的第一个旋钮</strong>：星标奖励的 +3（8.8 加的随机系统）——它相对 3 分的锚可能过重（一个随机奖励 = 一轮胜负），实测若「得星标者几乎必胜」，就降为 +2 或改为只在平局时生效。</p>
+            <p><strong>解析</strong>：麻雀虽小，流程五脏俱全：体验目标 → 反推参数 → 立锚 → 预判首个回调点。注意最后一步的姿态——<strong>交表的时候就该知道哪个数字最可疑</strong>：数值设计师和其他实验科学家一样，最重要的产出不是答案，是带着优先级的假设清单。第 12 章的原型与测试，就是验证这张清单的地方。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 体感只看相对变化（韦伯定律）：用倍率思维设计成长，固定数值的奖励必被稀释；② 三条曲线三种脾气：线性会贬值、指数体感恒定但数字爆炸、幂函数天然递减——经验指数涨＋属性近线性涨是节奏的经典配方；③ 减法公式有悬崖（可心算的策略深度），乘除公式平滑（长线的稳定），选公式就是选体验；<strong>TTK 是手感的第一仪表</strong>，指数体系下它只取决于成长率之差；④ 回报率整体递减、节点反弹——锯齿又一次出现；感知的台阶胜过数学的连续；⑤ 平衡是迭代出来的：体验目标先行、锚定法、一次一个旋钮、每版留病历——<strong>Excel 出初稿，手柄定终稿</strong>。<br><strong>下一章预告</strong>：单个数值会调了，数值在玩家之间流动起来就成了经济——金币从哪来、到哪去、为什么会通胀？水龙头与下水道，开阀。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./08-随机性与奖励.html">← 第 8 章 随机与奖励：惊喜、保底与斯金纳箱</a>
+          <a href="./10-资源与经济系统.html">第 10 章 经济：水龙头与下水道 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("ttk-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 360, LMAX = 50, TTK0 = 5, YCAP = 40;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var msg = document.getElementById("ttk-msg");
+
+    var ready = false; /* bindRange 绑定时会立即回调一次 */
+    var getAtk = KB.bindRange(document.getElementById("ctl-atk"),
+      document.getElementById("val-atk"), function (v) { return "+" + v + "%"; }, function () { if (ready) draw(); });
+    var getHp = KB.bindRange(document.getElementById("ctl-hp"),
+      document.getElementById("val-hp"), function (v) { return "+" + v + "%"; }, function () { if (ready) draw(); });
+
+    var inputs = { atk: document.getElementById("ctl-atk"), hp: document.getElementById("ctl-hp") };
+    var vals = { atk: document.getElementById("val-atk"), hp: document.getElementById("val-hp") };
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function ttk(level) {
+      var r = (1 + getHp() / 100) / (1 + getAtk() / 100);
+      return TTK0 * Math.pow(r, level - 1);
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var x0 = 52, y0 = H - 40, plotW = w - x0 - 20, plotH = H - 70;
+      function px(l) { return x0 + ((l - 1) / (LMAX - 1)) * plotW; }
+      function py(t) { return y0 - (Math.min(t, YCAP) / YCAP) * plotH; }
+
+      /* 坐标轴与参考带 */
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.beginPath();
+      ctx.moveTo(x0, y0 - plotH);
+      ctx.lineTo(x0, y0);
+      ctx.lineTo(x0 + plotW, y0);
+      ctx.stroke();
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("击杀耗时（秒）", x0 + 6, y0 - plotH + 14);
+      ctx.fillText("等级 →", x0 + plotW - 52, y0 + 26);
+      /* 目标手感带 4–8 秒 */
+      ctx.fillStyle = "#16a34a";
+      ctx.globalAlpha = 0.12;
+      ctx.fillRect(x0, py(8), plotW, py(4) - py(8));
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("目标手感带 4–8 秒", x0 + plotW - 150, py(8) - 6);
+      /* 刻度 */
+      ctx.fillStyle = css("--kb-fg-muted");
+      [10, 20, 30, 40].forEach(function (t) {
+        ctx.fillText(String(t), x0 - 26, py(t) + 4);
+      });
+      [10, 20, 30, 40, 50].forEach(function (l) {
+        ctx.fillText("Lv" + l, px(l) - 12, y0 + 16);
+      });
+
+      /* TTK 曲线 */
+      ctx.strokeStyle = "#2563eb";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (var l = 1; l <= LMAX; l++) {
+        var x = px(l), y = py(ttk(l));
+        if (l === 1) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.lineWidth = 1;
+
+      /* 判词 */
+      var t50 = ttk(LMAX);
+      var atk = getAtk(), hp = getHp();
+      if (atk === hp) {
+        msg.textContent = "两条成长率同速：TTK 恒定 " + TTK0 + " 秒——五十级如一日的稳定手感（也可能单调）。";
+      } else if (hp > atk) {
+        var lHeavy = null;
+        for (var i = 1; i <= LMAX; i++) { if (ttk(i) > 15) { lHeavy = i; break; } }
+        msg.textContent = "怪物成长快过玩家：TTK 一路上涨，50 级要 " + (t50 > 999 ? "999+" : t50.toFixed(1)) +
+          " 秒" + (lHeavy ? "，约 Lv" + lHeavy + " 起超过 15 秒——「越打越肉」的疲劳区" : "") + "。";
+      } else {
+        var lTrivial = null;
+        for (var j = 1; j <= LMAX; j++) { if (ttk(j) < 1) { lTrivial = j; break; } }
+        msg.textContent = "玩家成长快过怪物：TTK 一路下降，50 级只要 " + t50.toFixed(2) +
+          " 秒" + (lTrivial ? "，约 Lv" + lTrivial + " 起不足 1 秒——爽是爽，内容被加速消耗" : "") + "。";
+      }
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-ttk]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = btn.getAttribute("data-ttk").split(",");
+        inputs.atk.value = p[0]; inputs.hp.value = p[1];
+        vals.atk.textContent = "+" + p[0] + "%";
+        vals.hp.textContent = "+" + p[1] + "%";
+        draw();
+      });
+    });
+
+    ready = true;
+    draw();
+  });
+  </script>
+</body>
+</html>

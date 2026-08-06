@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>04 像设计师一样玩：拆解实战 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 4 章：拆解模板「设计师五问」，俄罗斯方块与马里奥 1-1 两份完整示范拆解，区分口味与设计批评，配 1-1 关卡步进拆解演示。">
+  <meta name="kb:tags" content="游戏设计,教材,拆解,设计师五问,无字教学,目标玩家,xsjsyyw">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 4 章 · 像设计师一样玩：拆解实战</h1>
+        <p class="kb-lead">影迷看电影看的是剧情，影评人第二遍看的是运镜和剪辑——手艺总要看第二遍才看得见。前三章给了你三件工具：四特征（第 1 章）、四元素与 MDA（第 2 章）、循环图（第 3 章）。这一章把它们合并成一张随身清单——<strong>设计师五问</strong>，然后真刀真枪拆两个游戏：一个极简的完美，一个不说话的老师。拆完之后，你玩任何游戏都会多出一双眼睛。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 背下拆解模板「设计师五问」，并知道每一问该动用哪一章的工具；② 照着两份示范，独立写出一份 300 字的书面拆解笔记；③ 区分「我不喜欢」与「设计有问题」这两种完全不同的陈述；④ 把「拆着玩」变成习惯——这是观察篇的毕业能力。</p>
+        </div>
+
+        <h2>设计师的五个问题</h2>
+        <p>拆解不需要天赋，需要清单。面对任何游戏，依次回答五个问题：</p>
+        <figure>
+          <svg viewBox="0 0 660 160" width="660" height="160" role="img" aria-label="设计师五问卡片：核心动词、循环、挑战曲线、四元素配合、最爽与最烦的一刻">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <g>
+                <rect x="8" y="20" width="120" height="104" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+                <rect x="8" y="20" width="120" height="104" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+                <text x="68" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-accent)">①</text>
+                <text x="68" y="74" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">核心动词？</text>
+                <text x="68" y="98" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">用第 1 章·第 3 章</text>
+              </g>
+              <g>
+                <rect x="140" y="20" width="120" height="104" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+                <rect x="140" y="20" width="120" height="104" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+                <text x="200" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-accent)">②</text>
+                <text x="200" y="74" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">循环怎么转？</text>
+                <text x="200" y="98" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">用第 3 章</text>
+              </g>
+              <g>
+                <rect x="272" y="20" width="120" height="104" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+                <rect x="272" y="20" width="120" height="104" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+                <text x="332" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-accent)">③</text>
+                <text x="332" y="74" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">挑战怎么升？</text>
+                <text x="332" y="98" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">第 5 章将深化</text>
+              </g>
+              <g>
+                <rect x="404" y="20" width="120" height="104" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+                <rect x="404" y="20" width="120" height="104" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+                <text x="464" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-accent)">④</text>
+                <text x="464" y="74" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">四元素配合？</text>
+                <text x="464" y="98" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">用第 2 章</text>
+              </g>
+              <g>
+                <rect x="536" y="20" width="120" height="104" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+                <rect x="536" y="20" width="120" height="104" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+                <text x="596" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-accent)">⑤</text>
+                <text x="596" y="74" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kb-fg)">最爽与最烦？</text>
+                <text x="596" y="98" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">用 MDA 反推</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption>五问按「从骨到肉」排序：先找动词与循环（骨架），再看挑战与元素（血肉），最后落到情绪峰谷（体验）。</figcaption>
+        </figure>
+        <ol>
+          <li><strong>核心动词是什么？</strong>玩家 90% 的时间在做的那一两个动作。找不到它，后面全拆不动。</li>
+          <li><strong>循环怎么转、转多快？</strong>画出循环图，分清秒/分钟/小时三层，标出奖励和闸门。</li>
+          <li><strong>挑战和技能怎么一起升级？</strong>游戏变难的手段是什么？玩家变强靠练度（存档里）还是靠熟练（手上）？</li>
+          <li><strong>四元素怎么互相配合？</strong>谁负责拉新、谁负责留存、谁在给谁抬轿——有没有明显的短板和补位。</li>
+          <li><strong>最爽的一刻和最烦的一刻在哪、机制上为什么？</strong>用 MDA 从体验反推机制：那个瞬间是哪条规则造出来的？</li>
+        </ol>
+        <p>第⑤问是五问里最锋利的一把刀：<strong>爽与烦都不是玄学，都有机制上的地址</strong>。能说出「烦，是因为死亡惩罚要求重跑五分钟无聊路段」的人，已经在像设计师一样思考了。</p>
+
+        <h2>实战一：俄罗斯方块——极简的完美</h2>
+        <p>第一份示范拆解，目标是让你看到「一份合格的拆解笔记长什么样」。全文如下，五问逐条作答：</p>
+        <ol>
+          <li><strong>核心动词</strong>：「放」。旋转与平移都是为最终那一下「放到哪」服务的微决策。全游戏没有第二个动词，纯度 100%。</li>
+          <li><strong>循环</strong>：单层秒级环——落块 → 消行或垫高 → 空间与速度变化 → 下一块。没有跨局成长，是纯执行乐趣型（第 3 章例 1 的分类）。特别的是环的转速会自己踩油门：消行越多速度越快，游戏自带难度引擎。</li>
+          <li><strong>挑战与技能</strong>：挑战升级靠速度递增与自己堆出来的烂摊子；技能全长在玩家手上——预判形状、规划深井、极限速度下的肌肉记忆。删档零损失，熟练度就是全部存档。</li>
+          <li><strong>四元素</strong>：机制独扛大梁；技术（1984 年的字符终端）倒逼美术极简；故事为零。短板由「随时可开一局」的轻量补位——四元素不必均衡，但缺的角要有人补。</li>
+          <li><strong>最爽</strong>：留了很久的深井等来长条，一次四消——蓄了几十秒的势能一次兑现，是延迟满足的教科书。<strong>最烦</strong>：想要长条偏偏不来——随机序列制造的渴望与折磨（现代版本用「七种方块循环发牌」的规则驯化了这一点，第 8 章再会）。</li>
+        </ol>
+        <p>合格的拆解还差两样东西——<strong>一个反直觉洞见</strong>：这个游戏最重要的 UI 不是分数，是「下一块」预告窗：没有它，预判无从谈起，游戏从策略退化成碰运气；1984 年的初版就有这个窗口，是真正的天才之笔。<strong>一个真实缺点</strong>：纯执行型循环有天花板——没有长期成长可供期待，玩家一旦离开就没有钩子拉回（现代版本补赛季、段位、对战，全是在给它焊小时级环）。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 拆解笔记的标准格式</p>
+          <p><strong>五问各答一两句 ＋ 一张循环图 ＋ 一个反直觉洞见 ＋ 一个真实缺点 ＋ 一句话结论，全文 300 字以内。</strong>洞见和缺点是防水剂：写不出洞见，说明只是在复述表面；写不出缺点，说明还在当粉丝而不是当设计师——神作也有账单，找不到就再玩一遍。</p>
+        </div>
+
+        <h2>实战二：超级马里奥 1-1——不说话的老师</h2>
+        <p>第二份示范换一个拆解对象：不拆系统，拆<strong>空间</strong>。超级马里奥兄弟第一关（1-1）被公认为关卡设计史上最伟大的教学关——它在没有一行文字提示的情况下，教会了 1985 年的玩家（很多人生平第一次拿手柄）所有基本操作。下面的演示把这一关压缩成六站，每一站请<strong>先自己想答案，再点开设计意图</strong>——这个「先答再看」的过程，本身就是五问的训练。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 马里奥 1-1 步进拆解：每一块砖的位置都是一句教学</div>
+          <div class="kb-interactive-body">
+            <svg id="mario-svg" viewBox="0 0 640 260" width="640" height="260" role="img" aria-label="马里奥 1-1 关卡示意图，色块表示地面、问号块、敌人、水管与旗杆，按六个站点步进讲解">
+              <g id="mario-world">
+                <rect x="0" y="210" width="2600" height="40" fill="var(--kb-border-strong)" opacity="0.45"/>
+                <rect x="60" y="186" width="22" height="24" rx="4" fill="#ef4444"/>
+                <text x="71" y="180" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">你</text>
+                <circle cx="660" cy="199" r="11" fill="#92400e"/>
+                <path d="M 640 178 l -16 0 4 -5 m -4 5 4 5" stroke="#92400e" stroke-width="1.6" fill="none"/>
+                <g font-family="-apple-system, PingFang SC, sans-serif">
+                  <rect x="900" y="128" width="26" height="26" rx="3" fill="#f59e0b"/>
+                  <text x="913" y="147" text-anchor="middle" font-size="15" font-weight="700" fill="#7c2d12">?</text>
+                  <rect x="984" y="128" width="26" height="26" rx="3" fill="#b45309"/>
+                  <rect x="1012" y="128" width="26" height="26" rx="3" fill="#f59e0b"/>
+                  <text x="1025" y="147" text-anchor="middle" font-size="15" font-weight="700" fill="#7c2d12">?</text>
+                  <rect x="1040" y="128" width="26" height="26" rx="3" fill="#b45309"/>
+                  <rect x="1068" y="128" width="26" height="26" rx="3" fill="#f59e0b"/>
+                  <text x="1081" y="147" text-anchor="middle" font-size="15" font-weight="700" fill="#7c2d12">?</text>
+                  <rect x="1096" y="128" width="26" height="26" rx="3" fill="#b45309"/>
+                </g>
+                <circle cx="1310" cy="199" r="11" fill="#ef4444"/>
+                <circle cx="1305" cy="195" r="2.6" fill="#fff"/>
+                <circle cx="1315" cy="197" r="2.2" fill="#fff"/>
+                <path d="M 1250 140 C 1270 160 1285 185 1306 196" stroke="#ef4444" stroke-width="1.6" fill="none" stroke-dasharray="5 4"/>
+                <rect x="1650" y="170" width="44" height="40" fill="#16a34a"/>
+                <rect x="1644" y="160" width="56" height="12" rx="3" fill="#16a34a"/>
+                <rect x="1770" y="140" width="44" height="70" fill="#16a34a"/>
+                <rect x="1764" y="130" width="56" height="12" rx="3" fill="#16a34a"/>
+                <rect x="1890" y="110" width="44" height="100" fill="#16a34a"/>
+                <rect x="1884" y="100" width="56" height="12" rx="3" fill="#16a34a"/>
+                <g fill="#b45309">
+                  <rect x="2210" y="184" width="26" height="26"/>
+                  <rect x="2238" y="158" width="26" height="52"/>
+                  <rect x="2266" y="132" width="26" height="78"/>
+                  <rect x="2294" y="106" width="26" height="104"/>
+                </g>
+                <line x1="2450" y1="60" x2="2450" y2="210" stroke="var(--kb-fg-muted)" stroke-width="4"/>
+                <path d="M 2450 60 l -38 14 38 14 z" fill="#ef4444"/>
+                <circle cx="2450" cy="56" r="6" fill="#f59e0b"/>
+              </g>
+            </svg>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：1-1 的每个元素摆放都是教学——空地教跳、缓行的敌人教危险、跳跃弧线上的问号块教顶砖、躲不掉的蘑菇教道具是好东西、渐高的水管做微型难度曲线、旗杆把结算变成表演。好关卡是一位不说话的老师。</p></noscript>
+            <p id="mario-q" style="margin:10px 0 4px; font-weight:600;"></p>
+            <p id="mario-a" style="margin:4px 0 6px; font-size:0.93em; color:var(--kb-fg-muted);" hidden></p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-prev" type="button">← 上一站</button>
+              <span class="kb-control-value" id="mario-step" style="align-self:center;"></span>
+              <button class="kb-btn" id="btn-next" type="button">下一站 →</button>
+              <button class="kb-btn" id="btn-reveal" type="button">看设计意图</button>
+            </div>
+          </div>
+        </div>
+        <p>六站看完，回到五问的语言总结：1-1 的核心动词「跳」，是被<strong>空间</strong>一步步教出来的——引入（空地自由试）、示范（敌人与问号块制造使用场景）、练习（水管三连）、考试（终段阶梯与旗杆）。这套「用关卡结构代替教程文字」的手艺，行话叫<strong>无字教学</strong>，第 11 章会给出它的完整四步法。此刻只需记住一句：<strong>玩家讨厌被教，但热爱学会</strong>——好教学让玩家以为一切都是自己发现的。</p>
+
+        <h2>「我不喜欢」不等于「设计得差」</h2>
+        <p>工具用得越熟，越容易犯一个错误：把自己的口味当成设计的裁决。看两组陈述的区别：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>口味陈述（关于我）</th><th>设计陈述（关于游戏）</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>「太难了，垃圾游戏。」</td>
+                <td>「第三关难度陡增且无预警，而前两关没有教过应对手段——新手墙。」</td>
+              </tr>
+              <tr>
+                <td>「抽卡就是赌博，恶心。」</td>
+                <td>「90 抽保底但 30–80 抽区间毫无安慰奖，长空档期的挫败感没有缓冲设计。」</td>
+              </tr>
+              <tr>
+                <td>「回合制我玩不下去。」</td>
+                <td>「每回合结算动画不可跳过，把 10 秒的决策稀释进 40 秒的等待。」</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>口味陈述没有错——你完全有权讨厌高难度——但它是<strong>关于你的信息</strong>，不是关于游戏的判断。设计陈述则指认具体机制、说明它如何背离了游戏自己想给的体验，别人可以验证、可以反驳。从前者走到后者，中间隔着一个关键概念：<strong>目标玩家</strong>。魂类游戏的难从来不是失误，是对特定人群的承诺——「这里的成就感专卖给愿意撞墙五十次的人」；用「劝退了我」去指控它，就像用「我不爱吃辣」指控一家川菜馆。</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 批评的纪律：先问三件事</p>
+          <p>评价任何设计前先回答：<strong>它想服务谁？想给这些人什么体验？机制有没有兑现这个体验？</strong>三问之后，你的「不喜欢」依然成立——但它会变成一条有坐标的信息（「我不在它的目标人群里」），而不是一记无处着力的审判。设计师之间的讨论之所以高效，全靠这条纪律托底。</p>
+        </div>
+
+        <h2>建立你的拆解习惯</h2>
+        <p>观察篇到此收官。四章的工具要变成能力，只差一个习惯：<strong>每周拆一个游戏，写 300 字笔记</strong>（格式见实战一的提示框）。给你一份入门拆解清单——全部短小、免费、人人玩过，拆起来没有心理负担：</p>
+        <ul>
+          <li><strong>2048</strong>：核心动词只有「推」，但循环图藏着一个精妙的毕业点，值得一画；</li>
+          <li><strong>扫雷</strong>：信息推理如何制造「一步一悬念」？它的最烦一刻（五五开猜雷）为什么至今无解？</li>
+          <li><strong>Flappy Bird</strong>：把「一条规则 + 一个动词」推到极限的样本，顺便想想它爆红的传播机制；</li>
+          <li><strong>贪吃蛇</strong>：奖励（吃）与惩罚（变长）是同一件事——教科书级的风险回报捆绑；</li>
+          <li><strong>跳一跳</strong>：蓄力跳的手感为什么「差一点就上瘾」？第 12 章学完手感再回来拆一次。</li>
+        </ul>
+        <p>下一篇预告：五问的第⑤问——最爽与最烦——目前你只能指认现象，还解释不了成因。<strong>为什么难度刚好时人会忘记时间？为什么抽卡前的心跳比抽中更爽？为什么有的选择让人纠结有的让人麻木？</strong>答案都在玩家的脑子里。第二篇·体验篇，从心流开始。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 五问拆糖豆人（第三份完整范文）</p>
+          <p>用设计师五问完整拆解糖豆人，供你对照模仿。</p>
+          <p><strong>分析</strong>：①核心动词——「笨拙地跑与扑」，笨拙本身是设计（第 2 章例 2 已论证）。②循环——分钟级淘汰环为主（起跑→过关或翻车→晋级名单→下一关），跨局皮肤收集为辅；转速快，一关三分钟，翻车的沉没成本极低。③挑战与技能——关卡池轮换 + 人数逐轮压缩制造难度阶梯；技能上限被笨拙操控故意压低，保证菜鸟永远有翻盘概率。④四元素——美术（软糖造型）与机制（物理闹剧）咬合极紧：同一次摔倒，画风严肃就是挫败，画风软萌就是笑料——美术在给机制的失败兜底。⑤最爽——压哨挤过终点线的绝处逢生；最烦——被人抓住衣角拖下平台（他人造成的失败最难消化，这是所有对抗游戏的公共账单）。<strong>洞见</strong>：它把「失败」做成了内容本身。<strong>缺点</strong>：纯乐子循环缺深度，热度衰减快——上线火爆后留存跳水，后续靠联动皮肤续命。<strong>一句话结论</strong>：一个用美术给机制上保险的社交喜剧。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 拆一个「放大版 1-1」：旷野之息的初始台地</p>
+          <p>塞尔达旷野之息的开局区域（初始台地）常被称为「开放世界的 1-1」。用无字教学的眼光拆它。</p>
+          <p><strong>分析</strong>：结构上它就是放大一百倍的 1-1——① 台地四面悬崖，把无边的开放世界暂时收进一间「教室」（对应 1-1 的线性通道：先限制，才好教学）；② 四个试炼神庙各教一种核心能力（磁铁、炸弹、时停、冰柱），拿全四个才发滑翔伞——离开教室的「毕业证」；③ 远处的海拉鲁城堡从开局就可见，充当全书主线的视觉锚点（对应 1-1 结尾可见的旗杆：目标先于路径出现）；④ 寒冷的雪山区域教「环境需要装备应对」，一锅辣椒料理就能过——用一次轻微的受挫教会系统，而不是用一段文字。<strong>结论</strong>：无字教学不挑体量——线性小关和开放大世界用的是同一套语法：限制空间、制造顺路的发现、让目标先于路径可见。<strong>缺点</strong>也照写：台地教了物理化学系统，却几乎没教武器耐久机制，后者成为全游戏被抱怨最多的点——教学漏掉的地方，日后都会变成客服工单。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 反例诊断：用五问找病灶</p>
+          <p>虚构设计：「回合制跑酷」——角色自动向前跑，但每跳一步游戏暂停，玩家从菜单选择「小跳 / 大跳 / 滑铲」后再继续。用五问诊断它哪里有病。</p>
+          <p><strong>分析</strong>：①核心动词——表面是「跳」，实际变成了「选菜单」。②循环——秒级环被暂停切碎：行动与结果之间隔着一次菜单操作，反馈不再即时。③挑战与技能——跑酷的技能本体是<strong>节奏与反应</strong>，暂停把这两样全部废除，剩下的选择又太浅（三选一有明显最优解），两头落空。⑤爽点检查——跑酷的爽来自连续不断的险胜节奏，本设计的机制在系统性地消灭自己的爽点：<strong>核心动词的乐趣来源（连续性）与核心机制（强制打断）自相矛盾</strong>，这就是病灶。<strong>开方</strong>：二选一——要么保留暂停、把决策做深（每步考虑资源与路线，成为解谜游戏，参考《Braid》的时停思路）；要么删掉暂停回归节奏本体。<strong>结论</strong>：五问的价值不只是夸经典，更是给病游戏开诊断书——而多数失败设计的病根，都是「机制在对抗自己想给的体验」。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>用五问拆解贪吃蛇。前两问已给出参考：①核心动词——转向（只有方向可控）；②循环——吃食物 → 变长 → 空间更挤、转向更险 → 找下一个食物。请补全 ③④⑤。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>：③挑战与技能——难度由自己的身长堆出来（和俄罗斯方块的「自作自受」同款），技能是提前规划路线与盘蛇走位，全在手上；④四元素——机制独扛，美术技术极简，故事为零，靠「一分钟一局」的轻量补位；⑤最爽——在千钧一发的缝隙里穿过自己的身体；最烦——手滑按反方向、瞬间撞死（一次输入失误 = 整局清零，惩罚陡峭）。</p>
+            <p><strong>解析</strong>：贪吃蛇最值得偷学的一手在②里：<strong>奖励与惩罚是同一个东西</strong>——吃（奖励）导致变长（惩罚），你追求的正是杀死你的。这种捆绑让难度曲线全自动、且完全公平（长度全是你自己吃出来的）。对照第 1 章俄罗斯方块的「每次失败都怪自己」，你会发现经典小游戏共享同一条设计公理：<strong>让玩家成为自己难度的作者</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>演示里讲了六站。请再举出 1-1 里（或任何你熟悉的教学关里）两处「没有文字的教学」，并各用一句话说明它教了什么、靠什么手段教的。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（1-1 内）：① 第一个隐藏蘑菇藏在一块看不见的砖里，位置恰在玩家躲板栗仔的起跳路径上——教「世界里有隐藏要素，值得乱顶试试」，手段是让发现「顺路」发生；② 中段的坑先给一个窄的（跳不过去也就掉下去重来，代价小），后给宽的——教「坑会死人」用的是一次低成本的失败，而不是警告牌。</p>
+            <p><strong>解析</strong>：归纳这些手段会发现共同配方：<strong>把「正确行为」放在玩家本来就会走的路线上，把「失败教训」的第一次代价压到最低</strong>。教学关的失败要便宜，后面的失败才有资格昂贵——难度是赚来的信任。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断下列陈述是口味陈述还是设计陈述，是口味的请改写成设计陈述：A「这游戏节奏太慢了」；B「教学关强制走 20 分钟不能跳过，重开二周目也一样」；C「画风太幼稚，不玩」；D「Boss 血条三管但招式只有四个，后两管纯粹重复」。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 口味（改写：「前三小时没有出现任何新机制，分钟级循环里只有重复的采集任务」）；B 设计陈述（指认了具体机制与场景）；C 口味（改写方向：若目标玩家是硬核人群，低龄画风与机制调性错位——注意这句必须先查它的目标玩家才能成立）；D 设计陈述（招式池与血量的配比问题，可验证）。</p>
+            <p><strong>解析</strong>：改写的诀窍是把「形容词」换成「机制 + 场景 + 后果」：慢 → 什么循环在多长时间里没有变化；幼稚 → 哪个元素与哪类目标玩家错位。改写不是让你放弃感受——感受是侦探的线索，机制才是结案的证据。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为 2048 画循环图，并指出它的「毕业点」在哪里——什么时刻起，玩家会突然不想再开新的一局？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：循环——推动方块（行动）→ 相同数字合并、出新块（结果）→ 棋盘更挤但数字更大（新局面）→ 再推。毕业点：<strong>第一次合成 2048 的那一刻</strong>——游戏标题写死了这个目标，达成后虽可继续（冲 4096），但「名义目标」已耗尽，多数玩家在这里体面退场。</p>
+            <p><strong>解析</strong>：2048 是罕见的「故意让你毕业」的设计：一个明确、有限、写在标题里的目标，让它像谜题多过像游戏（回看第 1 章光谱）。这解释了它的传播曲线：爆红极快（目标清晰人人想试）、退潮也极快（人人毕业）。<strong>把毕业点定在哪里，就是把游戏的寿命定在哪里</strong>——无限目标换长寿命但招重复断裂，有限目标换体面收场但寿命封顶，两条路都通，只是要自觉地选。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>实战：从你手机里任选一款休闲游戏，写一份完整的拆解笔记（五问 + 洞见 + 缺点 + 一句话结论，300 字以内）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>自查清单</strong>（无标准答案，按此检查）：① 核心动词是不是动词（「抽卡」是，「变强」不是——后者是结果）；② 循环图是否闭合、有没有标出闸门（体力？每日次数？）；③ 第⑤问有没有落到机制地址（「烦」的旁边必须跟着「因为哪条规则」）；④ 洞见是否反直觉（读起来「哦？」而不是「哦。」）；⑤ 缺点是否具体到可以提给它的设计师。</p>
+            <p><strong>解析</strong>：第一份自己写的拆解通常有两个通病：把宣传语当洞见（「画风精美」不是拆解）、把情绪当缺点（「肝」要落成「日常任务清单 40 分钟且无加速手段」）。写完隔一天再读一遍，把所有形容词换成机制名词——这一遍修订的价值大于初稿。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>《俄罗斯方块 99》把单机俄罗斯方块改成 99 人对战（消行可以给别人「发垃圾行」，被淘汰到最后一人夺冠）。对比单机版：加了什么机制？动态与体验被怎样改写？吸引的玩家群体有何不同？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：加的机制——发垃圾行（攻击）、目标选择（集火谁）、淘汰晋级结构。动态改写——多消行从「为了分数」变成「为了武器」，留深井等长条从个人优化变成军备竞赛；终盘阶段幸存者互相集火，浮现出「苟到决赛圈」的策略（规则没写，全是动态）。体验改写——单机的冥想式心流变成吃鸡式的心跳：紧张、报复、夺冠的稀缺荣耀（1/99）。玩家群体——单机版服务消遣与挑战（自己对自己），99 版叠加了竞技与社交人群；同时劝退了一部分只想安静玩方块的老玩家。</p>
+            <p><strong>解析</strong>：这是观察篇工具链的综合演练：一条新机制（发垃圾行）→ 动态连锁改写 → 体验换血 → 目标玩家平移。注意最后一环：<strong>机制改动会重新划定「这游戏是给谁的」</strong>——设计不只是调游戏，也在悄悄换观众。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>选一个口碑两极分化的游戏（魂类、某抽卡手游、或你自己选），分别以「目标玩家」和「圈外玩家」的双视角各写一份 100 字迷你拆解，然后回答：分歧为什么必然存在？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以魂类为例）：目标玩家视角——死亡惩罚（掉魂可捡回）是赌注设计，让每次推进都有重量；不标地图逼你阅读空间；Boss 的难是承诺，打过的成就感无可替代。圈外视角——同一套机制读出来完全相反：惩罚 = 浪费时间，不标地图 = 不尊重玩家，难 = 傲慢。<strong>分歧为什么必然</strong>：因为这些机制在两类人身上产出的<strong>体验真的不同</strong>——愿意撞墙的人收获的是「重量」，不愿意的人收获的是「墙」。MDA 的最后一环发生在玩家心里，而玩家不是同一种人。</p>
+            <p><strong>解析</strong>：结论可以说得更狠一点：<strong>让所有人都舒服的设计，往往对谁都不够好</strong>——锋利的设计必然切开人群。设计师的责任不是抹平分歧，而是诚实地标价：让目标玩家一眼认出「这是给我的」，也让圈外人早点知道「这不是给我的」（试玩、评测、难度标签都是标价手段）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>倒转模板：这次不拆解，而是用五问「正向设计」一个纸笔小游戏——先定核心动词与循环，再写规则。完成后与你在习题 1.7 设计的硬币游戏对比：四章工具在手，设计过程有什么不同？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>（示范流程）：①先定动词——「押注」；②再定循环——双方各写一个 1–10 的数字盖住（行动）→ 同时翻开，大者得两数之差的分（结果）→ 已写过的数字不能再写（新局面：手牌越来越少，信息越来越多）→ 十轮后总分定胜负；③挑战设计——后期猜对手剩什么数，技能是读人与手牌管理；④元素——纸笔承载，无需其他；⑤预判爽点——算准对手出 10 时自己出 1（弃小保大）的瞬间；预判烦点——首轮纯盲猜（可开方：首轮双方明牌，作为教学轮）。</p>
+            <p><strong>解析</strong>：对比习题 1.7 的典型差异：当时你大概率是「先想点子再补规则」，现在的流程是「动词 → 循环 → 挑战 → 爽点预判」的顺序施工，而且每一步都自带检查项（循环闭不闭合？技能有没有落点？烦点有没有预案？）。<strong>拆解与设计是同一张地图的两个行进方向</strong>——这正是观察篇让你拆四章的原因：拆过的游戏，都会变成你设计时的砖。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 设计师五问：核心动词 → 循环 → 挑战与技能 → 四元素配合 → 最爽与最烦（用 MDA 反推到机制地址）；② 合格拆解 = 五问 + 洞见 + 缺点 + 一句话结论，300 字以内——写不出缺点说明还在当粉丝；③ 无字教学：把正确行为放在顺路的位置，把第一次失败的代价压到最低，<strong>玩家讨厌被教但热爱学会</strong>；④ 口味陈述关于你，设计陈述关于游戏；评价前先问「它想服务谁」——锋利的设计必然切开人群；⑤ 每周拆一个小游戏，观察篇的工具才会长进手里。<br><strong>下一篇预告</strong>：体验篇开幕——为什么难度刚好时人会忘记时间？第 5 章「心流」，从那条著名的通道说起。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./03-核心循环.html">← 第 3 章 核心循环：为什么想「再来一局」</a>
+          <a href="./05-心流与难度.html">第 5 章 心流：难度与技能的赛跑 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var svg = document.getElementById("mario-svg");
+    if (!svg || !window.KB) return;
+
+    var VIEW_W = 640, VIEW_H = 260;
+    var STEPS = [
+      {
+        x: 0,
+        q: "第 1 站 · 开场为什么是一大片空地，而不是马上给敌人？",
+        a: "空地是一间安全的教室：没有任何威胁，你可以随便按按钮，自己发现「跳」。没有一行文字，基本操作已经教完。再看构图：马里奥出生在画面最左端，大片留白全在右边——画面本身在说「往右走」。"
+      },
+      {
+        x: 380,
+        q: "第 2 站 · 第一个敌人为什么从远处慢慢走来，而不是从天而降？",
+        a: "从天而降是不可预防的死亡，玩家只会觉得被坑；缓缓走来则看得清、来得及反应。而且它的移动路线恰好演示了两种互动：迎面碰到会死，从上方踩下会赢——第一个敌人是一件会走路的教具。"
+      },
+      {
+        x: 760,
+        q: "第 3 站 · 第一组问号块为什么恰好悬在跳跃的弧线上？",
+        a: "你为了躲板栗仔起跳，头正好撞上问号块——「顶砖有奖」不需要任何提示，自己就发生了。好教学让正确行为「顺路」发生：把要教的东西放在玩家本来就会经过的路径上。发光的「?」则是视觉钩子：没撞到的人也会好奇地回来补一下。"
+      },
+      {
+        x: 1140,
+        q: "第 4 站 · 顶出来的蘑菇，为什么设计成几乎躲不掉？",
+        a: "第一次见蘑菇，多数人会当它是敌人而急着躲开——所以它被顶出后撞墙折返、贴地滑向你，想躲也躲不掉。被迫吃到 → 变大 → 「哦，原来这是好东西」。一次不可避免的邂逅，胜过一页道具说明书。"
+      },
+      {
+        x: 1520,
+        q: "第 5 站 · 三根水管为什么一根比一根高？",
+        a: "同一个挑战（跳过水管）连考三次，难度递增：矮管热身、中管练习、高管小考——一条 10 秒钟走完的微型难度曲线。玩家在不知不觉中完成了「引入 → 练习 → 考试」，这是第 11 章「无字教学四步法」的最小样本。"
+      },
+      {
+        x: 1960,
+        q: "第 6 站 · 终点为什么是一根「跳得越高分越多」的旗杆，而不是一扇门？",
+        a: "门只有「过 / 没过」两种结果；旗杆把结算变成表演——助跑、起跳、抓杆的高度直接换成分数与音效。终点前的阶梯正是为最后一跳搭的跳台。这一关所有跳跃练习，在此汇报演出：离开时你觉得「变强的是我」，而不是角色。"
+      }
+    ];
+
+    var step = 0, viewX = 0, animId = null;
+    var qEl = document.getElementById("mario-q");
+    var aEl = document.getElementById("mario-a");
+    var stepEl = document.getElementById("mario-step");
+    var btnPrev = document.getElementById("btn-prev");
+    var btnNext = document.getElementById("btn-next");
+    var btnReveal = document.getElementById("btn-reveal");
+
+    function setView(x) {
+      viewX = x;
+      svg.setAttribute("viewBox", x.toFixed(1) + " 0 " + VIEW_W + " " + VIEW_H);
+    }
+    function panTo(x) {
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+      if (!KB.motionOK) { setView(x); return; }
+      var from = viewX, start = null, DUR = 380;
+      function frame(now) {
+        if (start === null) start = now;
+        var t = Math.min((now - start) / DUR, 1);
+        var e = 1 - Math.pow(1 - t, 3); /* easeOutCubic */
+        setView(from + (x - from) * e);
+        if (t < 1) animId = requestAnimationFrame(frame);
+        else animId = null;
+      }
+      animId = requestAnimationFrame(frame);
+    }
+
+    function show(i) {
+      step = Math.min(Math.max(i, 0), STEPS.length - 1);
+      panTo(STEPS[step].x);
+      qEl.textContent = STEPS[step].q;
+      aEl.hidden = true;
+      aEl.textContent = "";
+      btnReveal.disabled = false;
+      btnReveal.textContent = "看设计意图";
+      stepEl.textContent = (step + 1) + " / " + STEPS.length;
+      btnPrev.disabled = step === 0;
+      btnNext.disabled = step === STEPS.length - 1;
+    }
+
+    btnPrev.addEventListener("click", function () { show(step - 1); });
+    btnNext.addEventListener("click", function () { show(step + 1); });
+    btnReveal.addEventListener("click", function () {
+      aEl.textContent = STEPS[step].a;
+      aEl.hidden = false;
+      btnReveal.disabled = true;
+      btnReveal.textContent = "✓ 已揭示";
+    });
+
+    show(0);
+  });
+  </script>
+</body>
+</html>

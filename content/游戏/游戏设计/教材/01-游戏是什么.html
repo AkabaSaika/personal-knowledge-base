@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 游戏是什么：从「好玩」说起 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 1 章：游戏的四个特征——目标、规则、反馈、自愿参与，魔法圈与「游戏—玩具—谜题—故事」光谱，配「点击的进化」交互演示。">
+  <meta name="kb:tags" content="游戏设计,教材,四特征,魔法圈,规则,反馈,yxssm">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 1 章 · 游戏是什么：从「好玩」说起</h1>
+        <p class="kb-lead">观察篇开幕。人人都玩过游戏，却很少有人停下来问：把「随便玩玩」变成「一个游戏」的，到底是哪几样东西？这一章不背定义——我们先亲手把一个<strong>刻意无聊</strong>的东西一步步改造成让你想「再来一局」的东西，再回头给每一步起名字。整本书追问的大问题「这个游戏为什么好玩」，就从这里开始。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出游戏区别于一般活动的四个特征；② 用「目标 / 规则 / 反馈 / 自愿参与」拆解任何一个游戏或日常活动；③ 解释魔法圈是什么，以及作弊为什么比输更招人恨；④ 在「玩具—游戏—谜题—故事」光谱上给一部作品定位。</p>
+        </div>
+
+        <h2>从一个无聊的点开始</h2>
+        <p>先想想你干过的这些事：走楼梯故意不踩缝、坐车时数路上的红色汽车、关灯后必须在门合上前跳上床「否则会被抓住」。没有人教过，也没有任何奖励——<strong>人天生就会给自己发明游戏</strong>。问题是：我们到底往「无聊的事」里加了什么，它就变好玩了？</p>
+        <p>下面这个演示把「加东西」的过程拆成了四步。它一开始烂得理直气壮：一个点，点它，毫无反应。请按顺序解锁四层结构，每解锁一层，停下来体会一下感觉的变化。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 点击的进化：把一个无聊的点，改造成一个游戏</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="dot-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一个点、同一根手指，逐层加上反馈、目标、计分、限时之后，「无聊」就变成了「想再来一局」——乐趣不在物件里，在结构里。</p></noscript>
+            <p id="dot-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);">现在：点它……什么也没发生。这就是没有结构的「玩」。</p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-feedback" type="button">① ＋反馈</button>
+              <button class="kb-btn" id="btn-goal" type="button">② ＋目标</button>
+              <button class="kb-btn" id="btn-score" type="button">③ ＋计分</button>
+              <button class="kb-btn" id="btn-timer" type="button">④ ＋限时</button>
+              <button class="kb-btn" id="btn-round" type="button" hidden>▶ 开始 20 秒挑战</button>
+              <button class="kb-btn" id="btn-reset" type="button">重置为无聊</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">圆点速度<span class="kb-control-value" id="val-speed"></span>
+                <input type="range" id="ctl-speed" min="60" max="320" step="10" value="150"></label>
+            </div>
+          </div>
+        </div>
+        <p>整个过程里，那个点没有变过，你的手指也没有变过。变的只是围绕它的<strong>结构</strong>：一个要追的目标、一套限制你的规则、一串告诉你「刚才那下有没有用」的反应。<strong>乐趣不在物件里，在结构里</strong>——这就是本章（也是整本书）的起点。</p>
+
+        <h2>四个特征：目标、规则、反馈、自愿参与</h2>
+        <p>刚才你亲手加进去的东西，正是学界公认的游戏四个特征。用一个零剧情、零美术、却让全世界上瘾四十年的游戏——俄罗斯方块——来逐条对照：</p>
+        <ul>
+          <li><strong>目标（Goal）</strong>：玩家努力的方向，它让「乱按」变成「行动」。俄罗斯方块：别让方块堆到顶，多消行、拿高分。</li>
+          <li><strong>规则（Rules）</strong>：对行为的限制——你只能这样做、不能那样做。俄罗斯方块：方块只能旋转和平移，不能悬停、不能反悔，堆满即死。</li>
+          <li><strong>反馈（Feedback）</strong>：系统对你每个动作的回应，让你知道自己离目标更近还是更远。俄罗斯方块：落块声、消行闪光、分数跳动、速度渐增。</li>
+          <li><strong>自愿参与（Voluntary participation）</strong>：玩家主动选择进入并接受以上一切。没人逼你打方块——被逼着做的，再像游戏也不是游戏。</li>
+        </ul>
+        <figure>
+          <svg viewBox="0 0 640 240" width="640" height="240" role="img" aria-label="游戏的四个特征环绕图：目标、规则、反馈、自愿参与，各配俄罗斯方块的对照">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <line x1="212" y1="78" x2="278" y2="105" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <line x1="428" y1="78" x2="362" y2="105" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <line x1="212" y1="168" x2="278" y2="138" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <line x1="428" y1="168" x2="362" y2="138" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <circle cx="320" cy="120" r="46" fill="var(--kb-accent)" opacity="0.14"/>
+              <circle cx="320" cy="120" r="46" fill="none" stroke="var(--kb-accent)" stroke-width="1.8"/>
+              <text x="320" y="127" text-anchor="middle" font-size="17" font-weight="700" fill="var(--kb-fg)">游戏</text>
+
+              <rect x="42" y="28" width="172" height="58" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+              <rect x="42" y="28" width="172" height="58" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+              <text x="128" y="52" text-anchor="middle" font-size="14" font-weight="700" fill="var(--kb-fg)">目标</text>
+              <text x="128" y="72" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">别让方块堆到顶</text>
+
+              <rect x="426" y="28" width="172" height="58" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+              <rect x="426" y="28" width="172" height="58" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+              <text x="512" y="52" text-anchor="middle" font-size="14" font-weight="700" fill="var(--kb-fg)">规则</text>
+              <text x="512" y="72" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">只能旋转与平移</text>
+
+              <rect x="42" y="160" width="172" height="58" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+              <rect x="42" y="160" width="172" height="58" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+              <text x="128" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="var(--kb-fg)">反馈</text>
+              <text x="128" y="204" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">消行闪光 · 逐渐加速</text>
+
+              <rect x="426" y="160" width="172" height="58" rx="12" fill="var(--kb-accent)" opacity="0.10"/>
+              <rect x="426" y="160" width="172" height="58" rx="12" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+              <text x="512" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="var(--kb-fg)">自愿参与</text>
+              <text x="512" y="204" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">没人逼你打方块</text>
+            </g>
+          </svg>
+          <figcaption>四个特征缺一不可：少了目标是闲逛，少了规则是撒欢，少了反馈是对空气挥拳，少了自愿是任务。</figcaption>
+        </figure>
+        <p>四条里最容易被忽略的是<strong>自愿参与</strong>。同一件事，自己选的就是游戏，被逼着做的就是负担——体育课上被要求跳绳一百下的孩子，和课间自发比赛跳绳的孩子，做的是同一个动作，玩的却不是同一个东西。这条特征后面还会反复回来：它是「魔法圈」成立的前提，也是第 6 章讨论玩家动机的起点。</p>
+
+        <h2>魔法圈：游戏世界的边界</h2>
+        <p>下象棋输了，不用真的割地赔款；在游戏里破产、阵亡、输光家当，站起来喝口水就没事了。游戏仿佛罩在一个看不见的圈里——圈内规则生效、输赢作数；圈外一切照旧。这个边界，设计圈称为<strong>魔法圈（Magic circle）</strong>。</p>
+        <figure>
+          <svg viewBox="0 0 640 230" width="640" height="230" role="img" aria-label="魔法圈示意：内圈是游戏世界，外部是现实世界，边界上有开始一局与退出一局两个出入口">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="14" y="14" width="612" height="202" rx="16" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <text x="40" y="44" font-size="13" fill="var(--kb-fg-muted)">现实世界：输了棋不用赔钱，阵亡了不用住院</text>
+              <ellipse cx="320" cy="132" rx="176" ry="66" fill="var(--kb-accent)" opacity="0.12"/>
+              <ellipse cx="320" cy="132" rx="176" ry="66" fill="none" stroke="var(--kb-accent)" stroke-width="1.8" stroke-dasharray="7 5"/>
+              <text x="320" y="122" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--kb-fg)">游戏世界</text>
+              <text x="320" y="144" text-anchor="middle" font-size="12" fill="var(--kb-fg-muted)">规则在此生效 · 输赢只在此作数</text>
+              <text x="320" y="164" text-anchor="middle" font-size="12" fill="var(--kb-fg-muted)">所以你才敢在这里冒险</text>
+              <text x="150" y="80" text-anchor="middle" font-size="12" fill="#16a34a">开始一局 ↘</text>
+              <text x="492" y="80" text-anchor="middle" font-size="12" fill="#ef4444">↗ 退出一局</text>
+            </g>
+          </svg>
+          <figcaption>魔法圈是一道双向门：自愿走进去，规则才对你生效；随时能走出来，圈内的失败才不可怕。</figcaption>
+        </figure>
+        <p>魔法圈解释了游戏最反直觉的一面：<strong>规则不是乐趣的敌人，而是乐趣的原料</strong>。高尔夫球员把球送进洞最高效的办法，是走过去用手放进去——但他们自愿只用球杆、站在几百米外打。哲学家伯尔纳德·舒兹（Bernard Suits）把这总结成一句妙语：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一句话定义游戏</p>
+          <p><strong>「玩游戏，就是自愿去克服并非必要的障碍。」</strong>障碍本可以绕开（用手放球、开修改器、直接看攻略），但玩家偏不——因为克服障碍的过程本身，才是他们要买的东西。设计游戏，很大程度上就是<strong>设计值得克服的障碍</strong>。</p>
+        </div>
+        <p>魔法圈还顺手解开一个老疑问：<strong>为什么作弊比输更招人恨？</strong>输是圈内事件——按规则较量、技不如人，无损尊严。作弊却是把圈踩破了：他人还站在圈里认真扮演，你却单方面宣布「这些规则对我无效」。被破坏的不是一局棋，而是「大家一起假装这很重要」的默契。（多人游戏里作弊会毁掉所有人的圈；单机开金手指自娱，圈里只有你自己，性质完全不同。）</p>
+
+        <h2>游戏、玩具、谜题与故事</h2>
+        <p>有了四特征，就能把几类常被混为一谈的东西摆上同一条光谱。光谱的坐标是<strong>玩家对结果的影响力</strong>：从「结果完全开放」到「结果完全固定」。</p>
+        <figure>
+          <svg viewBox="0 0 660 180" width="660" height="180" role="img" aria-label="玩具、游戏、谜题、故事四类作品按结果开放程度排成一条光谱">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <text x="60" y="32" font-size="12" fill="var(--kb-fg-muted)">← 结果开放</text>
+              <text x="600" y="32" text-anchor="end" font-size="12" fill="var(--kb-fg-muted)">结果固定 →</text>
+              <line x1="40" y1="90" x2="608" y2="90" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 620 90 l -10 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+              <g stroke="var(--kb-accent)" stroke-width="2">
+                <line x1="90" y1="82" x2="90" y2="98"/>
+                <line x1="250" y1="82" x2="250" y2="98"/>
+                <line x1="410" y1="82" x2="410" y2="98"/>
+                <line x1="560" y1="82" x2="560" y2="98"/>
+              </g>
+              <g text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--kb-fg)">
+                <text x="90" y="70">玩具</text>
+                <text x="250" y="70">游戏</text>
+                <text x="410" y="70">谜题</text>
+                <text x="560" y="70">故事</text>
+              </g>
+              <g text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">
+                <text x="90" y="118">无目标，怎么玩都行</text>
+                <text x="90" y="136">乐高 · MC 创造模式</text>
+                <text x="250" y="118">有目标，结局可变</text>
+                <text x="250" y="136">马里奥 · 糖豆人</text>
+                <text x="410" y="118">有目标，唯一解</text>
+                <text x="410" y="136">数独 · 拼图</text>
+                <text x="560" y="118">无交互，结局固定</text>
+                <text x="560" y="136">电影 · 小说</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption>光谱不是优劣排名，只是结构化程度不同。谜题解开一次就「用完了」，游戏每局都能不一样——这是二者可重玩性的根本差别。</figcaption>
+        </figure>
+        <ul>
+          <li><strong>玩具</strong>有互动没有目标：一盒乐高、Minecraft 创造模式、一堆沙子。给玩具加上目标和规则，它就升格为游戏——「用乐高比赛搭最高的塔」。</li>
+          <li><strong>游戏</strong>有目标、有规则，且结局可变：这一局你可能赢也可能输，下一局又是新的。</li>
+          <li><strong>谜题</strong>是「答案固定的游戏」：数独有唯一解，解开的那一刻它就被消耗掉了。</li>
+          <li><strong>故事</strong>结局写死、无法干预——但它擅长游戏不擅长的事：精确控制每一分钟的情绪。</li>
+        </ul>
+        <p>真实作品大多是混合体：塞尔达是一个大游戏里嵌满小谜题，再用故事串起来；很多游戏通关之后，会变成你讲给朋友听的故事。光谱的意义不是贴标签，而是帮你看清一部作品的<strong>骨架里各种成分的配比</strong>——以及加一个目标、减一条规则，会把它推向光谱的哪一端。</p>
+
+        <h2>「好玩」是设计出来的</h2>
+        <p>回到俄罗斯方块。1984 年的初版没有剧情、没有角色，画面是字符拼的，音乐后来才加上——按今天的眼光，它「什么都没有」。但它有的东西，每一样都被调校到了刀刃上：</p>
+        <ul>
+          <li>目标极其清晰：任何人看十秒钟就明白要干什么；</li>
+          <li>规则极其简单：七种方块、旋转平移，十秒钟学会，一辈子玩不腻；</li>
+          <li>反馈零延迟：每一次落块、每一次消行，回应立刻到账；</li>
+          <li>每次失败都怪自己：方块是随机的，但堆歪的每一块都是你亲手放的——所以你不怨游戏，只想「再来一局」。</li>
+        </ul>
+        <p>这就是本章想留下的最重要的观念：<strong>好玩不是运气，也不靠堆料，而是几样朴素的东西被设计到位的结果。</strong>从下一章开始，我们把游戏拆开，看看设计师的手到底伸在哪里：第 2 章给你两件拆解工具（四元素与 MDA），第 3 章看清让你「想再来一局」的那个循环，第 4 章把工具合起来实战拆解。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 跳绳，和跳绳比赛</p>
+          <p>课间自由跳绳是锻炼；「一分钟内谁跳得多」是游戏。用四特征说明比赛版加入了什么，又是什么会让它瞬间不好玩。</p>
+          <p><strong>分析</strong>：比赛版加入了三样东西——<strong>目标</strong>（跳得比别人多）、<strong>规则</strong>（限时一分钟、绊绳不算）、<strong>反馈</strong>（计数、领先或落后的实时感受）。第四个特征「自愿参与」原本就在：孩子们是自己凑过来玩的。而体育老师宣布「全班测试跳绳，计入成绩」的那一刻，动作分毫未变，游戏却死了——自愿没了，魔法圈塌了，圈外的现实利害（成绩）压了进来。<strong>同一套目标规则反馈，装在自愿里是游戏，装在强制里是考核。</strong></p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 俄罗斯方块：一份四特征对照笔记</p>
+          <p>用四特征完整拆解俄罗斯方块，示范「用框架读游戏」的书面写法。</p>
+          <p><strong>分析</strong>：<strong>目标</strong>——短期：消掉眼前几行；长期：活得更久、分更高。注意它是「生存型」目标，没有终点，所以每局的结束都来自失败，而失败又天然带着「差一点」的不甘。<strong>规则</strong>——方块从七种中随机来、只能旋转平移、速度只增不减、堆满即死。规则清单不到五条，全部十秒可学。<strong>反馈</strong>——分层次：每次按键有位移（即时），每次消行有闪光与得分（短延迟），速度阶梯式上升（长期），死亡时的高度就是你失败的可视化。<strong>自愿参与</strong>——一局三分钟、随时可开随时可停，进出魔法圈的成本低到忽略不计，这正是它成为「全世界的游戏」的重要原因。<strong>一句话结论</strong>：四个特征全部做到极简且极清晰，是它跨越文化与年龄的根本。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 无敌修改器为什么三分钟就腻</p>
+          <p>很多人开了无敌、无限金币的修改器之后，兴奋不过三分钟就把游戏关了。用本章概念解释这个现象。</p>
+          <p><strong>分析</strong>：按舒兹的定义倒推——玩游戏是自愿克服<strong>不必要的障碍</strong>；修改器把障碍整个搬走了。链条是：障碍消失 → 目标失去意义（反正必赢，「赢」不再是成就）→ 规则形同虚设 → 反馈变成噪音（分数再高也不说明什么）→ 魔法圈塌陷，剩下一个不再是游戏的软件。三分钟的兴奋，其实是「验证修改器生效」这个新目标带来的——验证完，它也耗尽了。值得补一句：单机开修改器不涉及道德问题，圈里只有你，你只是亲手结束了这局游戏；多人游戏开挂则是踩破别人的圈，性质完全不同（见魔法圈一节）。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断下列活动是不是游戏；对不是（或不完全是）的，指出它缺了哪个特征：拼图、彩票抽奖、过家家、期末考试、广场舞。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：拼图＝谜题（游戏的近亲）；彩票＝不是（缺规则性互动，玩家无行动空间）；过家家＝玩具式游玩（缺明确目标与胜负）；期末考试＝不是（缺自愿参与）；广场舞＝不是游戏（无目标无胜负，是社交活动）。</p>
+            <p><strong>解析</strong>：拼图有目标（复原）、规则（只能拼不能剪）、反馈（对上一块的咔哒感），但结果唯一，属于光谱上的「谜题」。彩票有目标有反馈，但你唯一的「行动」是购买——没有可施展技能的规则空间，结果与你的行为无关，这是赌博与游戏的分界线之一（第 8 章讨论随机性时会回来）。过家家有规则（角色扮演的约定）有自愿，但没有要达成的目标，更接近「玩具」端。考试的问题在自愿与魔法圈（见大纲页样题）。广场舞可以被改造成游戏——加一个「动作整齐度评分」立刻就是体感游戏的雏形。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出糖豆人（Fall Guys）的目标、规则、反馈、自愿参与各是什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：目标——在每轮淘汰赛中活下来，最终夺冠；规则——只能跑、跳、扑、抓，物理引擎故意笨拙，人数逐轮压缩；反馈——实时排名、晋级/淘汰提示、角色摔倒翻滚的滑稽动画；自愿参与——一局十几分钟，随时可退。</p>
+            <p><strong>解析</strong>：注意糖豆人的反馈里有一类特别的东西：<strong>摔倒本身是搞笑的</strong>。多数游戏里失败反馈是惩罚性的，它却把失败做成了内容——这让「被淘汰」也不太难受，保护了「再来一局」的意愿。一条反馈的情绪设计，撑起了整个游戏的欢乐气质，这是第 2 章 MDA 框架的绝佳预习。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>回忆一个你小时候自己发明的小游戏（走路不踩线、和同学比谁先看到某种车……），用四特征把它拆解一遍。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以「走路不踩地砖缝」为例）：目标——走完这段路，一次都不踩线；规则——步幅可调但不能停、不能跳着走（自己规定的）；反馈——每一步的成功感，踩到线的懊恼，「重开一局」；自愿参与——完全自发，无聊了随时不玩。</p>
+            <p><strong>解析</strong>：做这道题时你可能已经注意到：<strong>规则是你自己加给自己的，而且加了规则反而变好玩了</strong>。这是舒兹定义的亲身版——你自愿给自己制造了不必要的障碍。所有游戏设计师做的事，本质上和当年那个不踩线的你是同一件事：为别人设计值得自找的麻烦。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>把下面六个作品放到「玩具—游戏—谜题—故事」光谱上：Minecraft 创造模式、数独、超级马里奥、一部电影、乐高积木、狼人杀。有落在两格之间的吗？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：乐高积木、Minecraft 创造模式 → 玩具；超级马里奥、狼人杀 → 游戏；数独 → 谜题；电影 → 故事。</p>
+            <p><strong>解析</strong>：狼人杀值得多看一眼：它是游戏，但每一局都会自然生成一段「故事」（谁骗了谁、哪一票翻了盘），散场后被反复讲述——这是游戏和故事的奇妙关系：<strong>故事由作者写好，游戏让玩家自己活出一段故事</strong>。Minecraft 则横跨光谱：创造模式是玩具，生存模式加入了目标（活下去、打末影龙）就成了游戏——同一个软件，结构不同，类别就不同。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「背英语单词」对多数人是苦差事。请给它加三条规则，把它改造成一个游戏，并标注每条规则对应四特征里的哪一个。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>：① 每天抽 20 个旧词自测，答对 16 个才算「过关」——给了明确<strong>目标</strong>；② 连续过关天数是「连击数」，中断清零——制造持续<strong>反馈</strong>与损失厌恶；③ 自测只许凭记忆，不许先翻书——<strong>规则</strong>，让「过关」值得骄傲。</p>
+            <p><strong>解析</strong>：注意第四个特征没法用规则「加」出来——<strong>自愿参与只能被吸引，不能被规定</strong>。这正是市面上背单词 App 都在做签到、连击、排行榜的原因：用反馈结构把「今天也来一下」变成玩家自己的选择。至于这些手段的心理机制（以及它们的副作用），第 8 章「随机与奖励」会给出硬核解释。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>反馈有快有慢。把超级马里奥里的这些反馈按「从即时到延迟」排序，并说说每一层各起什么作用：吃金币的音效、踩敌人的弹跳、通关时的旗杆高度分、按跳跃键角色起跳、变大变小。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>（由快到慢）：按键起跳（约 0.02 秒）→ 踩敌弹跳、金币音效（当下）→ 变大变小（数秒内的状态变化）→ 旗杆高度分（一关一次的结算）。</p>
+            <p><strong>解析</strong>：每层反馈管一个时间尺度的问题——最快的一层告诉你「操作有没有生效」（它慢了游戏就「手感差」，见第 12 章）；中间层告诉你「这个行为是赚是亏」；最慢的结算层告诉你「这一关打得怎么样」，并喂给你下一关的动力。好游戏的反馈像套娃，每个尺度都有回应在等你——这个「多层时间尺度」的观念，第 3 章讲循环时会正式登场。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>只用一枚硬币和纸笔，设计一个两人游戏。写清目标、规则、反馈，然后预判：它最可能在哪里「不好玩」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：「猜硬币·加倍局」。目标：先赢到 10 分。规则：A 掷硬币盖住，B 猜正反；猜对得 1 分，猜错 A 得 1 分；每人每局有一次「加倍」权，喊了加倍这一把算 2 分；每五回合交换掷硬币方。反馈：纸上画正字记分，加倍时刻的紧张感就是天然反馈。</p>
+            <p><strong>预判弱点与解析</strong>：猜硬币本身 50/50，纯随机——<strong>玩家的技能无处施展</strong>，玩久了会觉得「结果和我无关」（这正是习题 1.1 里彩票的毛病）。「加倍」是本设计唯一的救赎：什么时候加倍是一个真决策，围绕它才有心理博弈。改进方向都应该沿这条线走：增加决策点、减少纯随机占比——比如允许「连猜两次翻倍再翻倍」。你刚刚体验了设计师最日常的工作循环：设计 → 预判哪里会塌 → 加一条规则去救。第 7 章「选择」会给这套直觉一个完整框架。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>塞尔达旷野之息开场不久就告诉你「去打败灾厄加农」，但绝大多数玩家上百小时都在爬山、做饭、逛地图。目标如此松散，它违反「游戏要有目标」的特征吗？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：不违反。它提供了一个远景目标（打加农）作为「兜底」，同时把世界做成了一台<strong>目标发生器</strong>：远处冒烟的山、地图上的问号、一个够不着的宝箱——玩家每时每刻都在自己生成小目标（「先去那儿看看」）。</p>
+            <p><strong>解析</strong>：这类设计的学名叫<strong>玩家自设目标（Player-authored goals）</strong>。回看光谱：旷野之息故意向「玩具」端挪了一步——给你一堆可组合的东西（火、风、金属、斜坡），让目标从玩家的好奇心里长出来，而不是从任务列表里发下来。它没有取消「目标」这个特征，而是把<strong>制定目标的权力</strong>交给了玩家——这恰恰服务了第 6 章将要讲的三大心理需求之首：自主感。顺带一提：这种自由的代价是部分玩家会「不知道该干嘛」而流失，任何设计选择都有它的账单，这个观念请从第一章就带上。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 游戏 = 目标 + 规则 + 反馈 + 自愿参与，四者缺一不可，其中「自愿」最易被忽略也最根本；② 魔法圈隔开游戏与现实，圈内的失败才敢被尝试——作弊招恨是因为踩破了所有人的圈；③ 玩游戏就是自愿克服不必要的障碍，<strong>规则制造的障碍正是乐趣的原料</strong>；④ 玩具、游戏、谜题、故事是一条「结果开放程度」的光谱，加减目标与规则就能在光谱上移动；⑤ 好玩不是运气，是朴素的结构被调校到位。<br><strong>下一章预告</strong>：四特征能判断「它是不是游戏」，还回答不了「它为什么好玩」。下一章把游戏的身体拆开——机制、故事、美术、技术四元素，以及贯穿全书的传导链：<strong>机制 → 动态 → 体验</strong>。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./00-大纲与学习路线.html">← 大纲与学习路线</a>
+          <a href="./02-游戏由什么构成.html">第 2 章 游戏由什么构成：四元素与 MDA →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("dot-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 360, R = 24, ROUND_TIME = 20;
+    var ctx = KB.fitCanvas(canvas, H, function () { clampDot(); draw(); });
+
+    var layers = { feedback: false, goal: false, score: false, timer: false };
+    var dot = { x: 200, y: H / 2, vx: 90, vy: 70 };
+    var ripples = [];            /* {x, y, age} */
+    var score = 0, combo = 0;
+    var timeLeft = 0, roundOver = false, lastRoundScore = 0;
+
+    var msg = document.getElementById("dot-msg");
+    var btns = {
+      feedback: document.getElementById("btn-feedback"),
+      goal: document.getElementById("btn-goal"),
+      score: document.getElementById("btn-score"),
+      timer: document.getElementById("btn-timer")
+    };
+    var btnRound = document.getElementById("btn-round");
+    var btnReset = document.getElementById("btn-reset");
+    var ready = false; /* bindRange 绑定时会立即回调一次，此时 getSpeed 尚未赋值 */
+    var getSpeed = KB.bindRange(
+      document.getElementById("ctl-speed"),
+      document.getElementById("val-speed"),
+      function (v) { return v + " px/s"; },
+      function () { if (ready) retarget(); }
+    );
+
+    var MESSAGES = {
+      none: "现在：点它……什么也没发生。这就是没有结构的「玩」。",
+      feedback: "有反应了！仅仅是「被听见」，手感就完全不同——这就是反馈。",
+      goal: "圆点开始逃了——现在你有了目标：追上它。试试调快它的速度。",
+      score: "数字开始涨了——你开始在意「这次比上次好」。连续命中有连击加成，点空清零。",
+      timer: "有了终点，才有「再来一局」。点「开始 20 秒挑战」冲一次高分。"
+    };
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function clampDot() {
+      var w = canvas.clientWidth;
+      dot.x = Math.min(Math.max(dot.x, R), Math.max(w - R, R));
+      dot.y = Math.min(Math.max(dot.y, R), H - R);
+    }
+    function retarget() {
+      var s = getSpeed();
+      var ang = rand(0, Math.PI * 2);
+      dot.vx = Math.cos(ang) * s;
+      dot.vy = Math.sin(ang) * s;
+    }
+    function teleport() {
+      var w = canvas.clientWidth;
+      dot.x = rand(R + 10, w - R - 10);
+      dot.y = rand(R + 10, H - R - 10);
+      retarget();
+    }
+
+    var loop = KB.makeLoop(function (dt) {
+      var w = canvas.clientWidth;
+      if (layers.goal && KB.motionOK) {
+        dot.x += dot.vx * dt;
+        dot.y += dot.vy * dt;
+        if (dot.x < R || dot.x > w - R) { dot.vx *= -1; clampDot(); }
+        if (dot.y < R || dot.y > H - R) { dot.vy *= -1; clampDot(); }
+      }
+      for (var i = ripples.length - 1; i >= 0; i--) {
+        ripples[i].age += dt;
+        if (ripples[i].age > 0.6) ripples.splice(i, 1);
+      }
+      if (layers.timer && timeLeft > 0) {
+        timeLeft -= dt;
+        if (timeLeft <= 0) {
+          timeLeft = 0;
+          roundOver = true;
+          lastRoundScore = score;
+          msg.textContent = "时间到！本轮 " + lastRoundScore + " 分。调高圆点速度，再来一局？";
+        }
+      }
+      draw();
+      if (!needsLoop()) loop.stop();
+    });
+
+    function needsLoop() {
+      return (layers.goal && KB.motionOK) || ripples.length > 0 || (layers.timer && timeLeft > 0);
+    }
+    function ensureLoop() { if (needsLoop() && !loop.running()) loop.start(); }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      /* 涟漪 */
+      ripples.forEach(function (rp) {
+        var k = KB.motionOK ? rp.age / 0.6 : 0.35;
+        ctx.strokeStyle = "#2563eb";
+        ctx.globalAlpha = 1 - k;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(rp.x, rp.y, R + 6 + k * 34, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = 1;
+      /* 圆点 */
+      ctx.fillStyle = "#2563eb";
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, R, 0, Math.PI * 2);
+      ctx.fill();
+      /* 读数 */
+      ctx.font = "600 15px -apple-system, PingFang SC, sans-serif";
+      if (layers.score) {
+        ctx.fillStyle = css("--kb-fg");
+        ctx.fillText("得分 " + score + (combo > 1 ? "　连击 ×" + combo : ""), 14, 26);
+      }
+      if (layers.timer) {
+        ctx.fillStyle = timeLeft > 0 && timeLeft < 5 ? "#ef4444" : css("--kb-fg-muted");
+        var t = timeLeft > 0 ? timeLeft.toFixed(1) + " s" : (roundOver ? "0.0 s" : ROUND_TIME + " s");
+        ctx.fillText("⏱ " + t, w - 84, 26);
+      }
+      if (roundOver) {
+        ctx.fillStyle = css("--kb-fg");
+        ctx.font = "700 22px -apple-system, PingFang SC, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("本轮 " + lastRoundScore + " 分", w / 2, H / 2 - 40);
+        ctx.textAlign = "start";
+      }
+    }
+
+    canvas.addEventListener("pointerdown", function (e) {
+      var r = canvas.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (layers.timer && (roundOver || timeLeft <= 0)) return; /* 限时模式下，局外点击无效 */
+      var hit = Math.hypot(x - dot.x, y - dot.y) <= R + 6;
+      if (hit) {
+        if (layers.feedback) ripples.push({ x: dot.x, y: dot.y, age: 0 });
+        if (layers.score) { combo += 1; score += combo; }
+        if (layers.goal) teleport();
+      } else if (layers.score) {
+        combo = 0;
+      }
+      ensureLoop();
+      draw();
+    });
+
+    var btnLabels = {};
+    Object.keys(btns).forEach(function (k) { btnLabels[k] = btns[k].textContent; });
+
+    function enable(key) {
+      if (layers[key]) return;
+      layers[key] = true;
+      btns[key].textContent = "✓ " + btnLabels[key].slice(2);
+      btns[key].disabled = true;
+      msg.textContent = MESSAGES[key];
+      if (key === "goal") { retarget(); if (!KB.motionOK) teleport(); }
+      if (key === "timer") { btnRound.hidden = false; }
+      ensureLoop();
+      draw();
+    }
+    Object.keys(btns).forEach(function (key) {
+      btns[key].addEventListener("click", function () { enable(key); });
+    });
+
+    btnRound.addEventListener("click", function () {
+      score = 0; combo = 0;
+      timeLeft = ROUND_TIME;
+      roundOver = false;
+      msg.textContent = "计时开始！20 秒内能拿多少分？";
+      teleport();
+      ensureLoop();
+      draw();
+    });
+
+    btnReset.addEventListener("click", function () {
+      Object.keys(layers).forEach(function (k) { layers[k] = false; });
+      Object.keys(btns).forEach(function (k) {
+        btns[k].disabled = false;
+        btns[k].textContent = btnLabels[k];
+      });
+      btnRound.hidden = true;
+      score = 0; combo = 0; timeLeft = 0; roundOver = false;
+      ripples.length = 0;
+      dot.x = canvas.clientWidth / 2; dot.y = H / 2;
+      msg.textContent = MESSAGES.none;
+      loop.stop();
+      draw();
+    });
+
+    ready = true;
+    dot.x = canvas.clientWidth / 2;
+    draw();
+  });
+  </script>
+</body>
+</html>

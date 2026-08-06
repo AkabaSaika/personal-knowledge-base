@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>08 逆矩阵、列空间、零空间与秩 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 8 章：逆变换的几何意义与 2×2 求逆，列空间=可达之地、零空间=被压扁的方向，秩与秩-零化度定理，Ax=b 解的完整结构。">
+  <meta name="kb:tags" content="线性代数,教材,逆矩阵,列空间,零空间,秩,njz">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 8 章 · 逆矩阵、列空间、零空间与秩</h1>
+        <p class="kb-lead">矩阵篇收官。四个新名词，其实是同一个问题的四个侧面：<strong>变换 A 丢掉信息了吗？</strong>没丢——可以倒放（逆矩阵）；丢了——丢到哪儿去了（零空间）、还剩多少（秩）、能到达哪里（列空间）。看懂这一章，A<strong>x</strong> = <strong>b</strong> 何时有解、解长什么样，将获得终极答案。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释逆矩阵的几何意义，用公式求 2×2 逆并解方程；② 求出矩阵的列空间与零空间，并说出各自的几何身份；③ 用消元求秩，运用秩-零化度定理；④ 给出 A<strong>x</strong> = <strong>b</strong> 解的存在性与结构的完整判据。</p>
+        </div>
+
+        <h2>逆矩阵：把录像倒着放</h2>
+        <p>变换 A 把平面揉了一遍；<strong>逆变换 A⁻¹ 就是把这段录像倒放</strong>——把每个落点送回出发点。两段连播等于什么都没发生：</p>
+        <pre><code>A⁻¹A = A A⁻¹ = I</code></pre>
+        <p>并非所有变换都能倒放。第 4 章“压成直线!”那种把平面拍扁的变换，无数个点挤到了同一个落点，倒放时“该回到哪儿”无从回答——信息永久丢失。判据正是第 6 章备好的：</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📐 可逆判据</p>
+          <p>A 可逆 ⇔ det(A) ≠ 0 ⇔ A 的列线性无关 ⇔ 变换没有压扁降维。此时 A 称为<strong>可逆矩阵</strong>（或非奇异矩阵）；det(A) = 0 的矩阵称<strong>奇异矩阵</strong>，没有逆。</p>
+        </div>
+        <p>2×2 的求逆公式（值得背下）：主对角线对调、副对角线变号、整体除以 det：</p>
+        <pre><code>⎡a  b⎤⁻¹     1    ⎡ d  −b⎤
+⎢    ⎥   = ————— · ⎢      ⎥
+⎣c  d⎦     ad−bc  ⎣−c   a⎦</code></pre>
+        <p>有了逆矩阵，A<strong>x</strong> = <strong>b</strong> 形式上一步可解：<strong>x</strong> = A⁻¹<strong>b</strong>（两边左乘 A⁻¹）。更大的矩阵用“高斯–约当法”求逆：把 [A | I] 一路消元化成 [I | A⁻¹]——本质是对 I 重演一遍“解方程”的所有动作。实际数值计算中直接消元比先求逆更快更稳，逆矩阵更多是<strong>理论推导的语言</strong>。</p>
+
+        <h2>列空间：变换能到达的地方</h2>
+        <p>A 的<strong>列空间</strong> C(A) = 所有列向量的张成 = 所有可能的输出 A<strong>x</strong> 构成的集合。它直接回答方程组的<strong>存在性</strong>：</p>
+        <pre><code>Ax = b 有解  ⇔  b ∈ C(A)      （b 是列的某个线性组合）</code></pre>
+        <p>2×2 时只有两档：列无关 → C(A) 是整个平面，任何 b 都可达；列相关 → C(A) 缩成一条过原点的直线（或原点），直线外的 b 一概无解——第 7 章习题 7.7 的无解方程组正是这么造出来的。</p>
+
+        <h2>零空间：被吞进原点的方向</h2>
+        <p>A 的<strong>零空间</strong> N(A) = 所有满足 A<strong>x</strong> = <strong>0</strong> 的输入集合——<strong>被变换压到原点的全部向量</strong>。求法：解齐次方程组 A<strong>x</strong> = <strong>0</strong>（消元 + 自由变量）。</p>
+        <p>可逆矩阵的零空间只有 {<strong>0</strong>}（谁也没被吞掉）；一旦发生压扁，整条直线的向量被吞进原点，零空间就“胖”起来。零空间的胖瘦决定解的<strong>唯一性</strong>：若 <strong>x</strong>₀ 是 A<strong>x</strong> = <strong>b</strong> 的一个解，那么全部解恰为：</p>
+        <pre><code>通解 = x₀（特解） + 零空间里的任意向量</code></pre>
+        <p>理由一行：A(<strong>x</strong>₀ + <strong>n</strong>) = A<strong>x</strong>₀ + A<strong>n</strong> = <strong>b</strong> + <strong>0</strong> = <strong>b</strong>。第 7 章“特解 + 自由参数×方向”的通解结构，方向向量正是零空间的基。</p>
+
+        <figure>
+          <svg viewBox="0 0 640 250" width="640" height="250" role="img" aria-label="满秩变换与降秩变换对比：满秩把网格变成平行四边形网格，降秩把整个平面压到一条直线上">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="13.5" fill="var(--kb-fg-muted)">
+              <text x="160" y="238" text-anchor="middle">满秩（rank 2）：C(A) = 全平面，N(A) = {0}</text>
+              <text x="490" y="238" text-anchor="middle">降秩（rank 1）：C(A) = 一条线，N(A) = 一条线</text>
+            </g>
+            <g stroke="var(--kb-border-strong)" stroke-width="1" fill="none">
+              <path d="M 40 40 h 90 M 40 70 h 90 M 40 100 h 90 M 40 130 h 90 M 40 40 v 90 M 70 40 v 90 M 100 40 v 90 M 130 40 v 90"/>
+              <path d="M 370 40 h 90 M 370 70 h 90 M 370 100 h 90 M 370 130 h 90 M 370 40 v 90 M 400 40 v 90 M 430 40 v 90 M 460 40 v 90"/>
+            </g>
+            <g stroke="var(--kb-fg-muted)" stroke-width="2">
+              <line x1="140" y1="85" x2="175" y2="85"/>
+              <path d="M 175 85 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+              <line x1="470" y1="85" x2="505" y2="85"/>
+              <path d="M 505 85 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+            </g>
+            <text x="157" y="76" font-size="12" fill="var(--kb-fg-muted)" font-style="italic">A</text>
+            <text x="487" y="76" font-size="12" fill="var(--kb-fg-muted)" font-style="italic">A</text>
+            <!-- 满秩：平行四边形网格 -->
+            <g stroke="#2563eb" stroke-width="1" fill="none" opacity="0.8">
+              <path d="M 190 120 l 84 -18 M 199 145 l 84 -18 M 208 170 l 84 -18 M 217 195 l 84 -18"/>
+              <path d="M 190 120 l 27 75 M 218 114 l 27 75 M 246 108 l 27 75 M 274 102 l 27 75"/>
+            </g>
+            <!-- 降秩：压到一条线 -->
+            <line x1="520" y1="170" x2="628" y2="60" stroke="#2563eb" stroke-width="2.5"/>
+            <g stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 3">
+              <line x1="530" y1="70" x2="574" y2="114"/>
+              <line x1="560" y1="60" x2="595" y2="95"/>
+              <line x1="590" y1="150" x2="614" y2="174"/>
+            </g>
+            <text x="536" y="60" font-size="12" fill="#ef4444">整条方向被压扁 → 零空间</text>
+          </svg>
+          <figcaption>左：列无关，网格变形但仍铺满平面。右：列相关，网格被压上一条直线（蓝 = 列空间）；与它“横交”的方向（红虚线）整体坍缩进原点，构成零空间。</figcaption>
+        </figure>
+
+        <h2>秩：还剩几维</h2>
+        <p><strong>秩</strong> rank(A) = 列空间的维数 = 变换后“幸存”的维数，计算上等于<strong>消元后主元的个数</strong>。2×2 满秩是 2（没压扁），秩 1 是压成线，秩 0 只剩原点（零矩阵）。被压掉的维数去哪了？进了零空间——这笔账恰好守恒：</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📐 秩–零化度定理</p>
+          <p>对 <em class="kb-math">m</em>×<em class="kb-math">n</em> 矩阵 A：<strong>rank(A) + dim N(A) = n</strong>（输入维数）。读法：n 维输入中，rank 维幸存为输出，其余 dim N(A) 维被压进原点，一维都不多、一维都不少。</p>
+        </div>
+        <p>消元语言的对应版本你已在第 7 章用过：主元个数（= 秩）+ 自由变量个数（= 零空间维数）= 未知数个数。</p>
+
+        <h2>A x = b 的终极判决表</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>条件</th><th>存在性</th><th>唯一性</th><th>解集形状</th></tr></thead>
+            <tbody>
+              <tr><td>b ∉ C(A)</td><td>无解</td><td>—</td><td>空集</td></tr>
+              <tr><td>b ∈ C(A)，N(A) = {0}</td><td>有解</td><td>唯一</td><td>一个点</td></tr>
+              <tr><td>b ∈ C(A)，N(A) ≠ {0}</td><td>有解</td><td>不唯一</td><td>特解 + 零空间（点/线/面…平移）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>方阵且可逆时永远落在第二行：任何 b 都有唯一解 A⁻¹b——这就是“可逆”在方程组语言里的全部含义。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 求逆并解方程</p>
+          <p>A = ⎡2 1; 1 1⎤。求 A⁻¹，并解 A<strong>x</strong> = (3, 2)。</p>
+          <p><strong>解</strong>：det = 2 − 1 = 1 ≠ 0，可逆。套公式：A⁻¹ = ⎡1 −1; −1 2⎤。验证 AA⁻¹ = I ✓。<strong>x</strong> = A⁻¹(3, 2) = (3−2, −3+4) = <strong>(1, 1)</strong>。代回：A(1,1) = (3, 2) ✓。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 求列空间与零空间</p>
+          <p>A = ⎡1 2; 2 4⎤。求 C(A)、N(A) 与 rank(A)，并验证秩–零化度定理。</p>
+          <p><strong>解</strong>：两列 (1, 2)、(2, 4) 共线 ⇒ C(A) = span((1, 2))，一条直线，<strong>rank = 1</strong>。零空间：解 x + 2y = 0（第二个方程是它的 2 倍），x = −2y，故 N(A) = span((−2, 1))，也是一条直线，维数 1。验证：1 + 1 = 2 = 列数 ✓。几何图景：方向 (−2, 1) 被压进原点，全平面坍缩到直线 span((1, 2)) 上。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 消元求秩</p>
+          <p>求 A = ⎡1 2 1; 2 4 0; 3 6 1⎤ 的秩。</p>
+          <p><strong>解</strong>：R2 ← R2 − 2R1 → (0, 0, −2)；R3 ← R3 − 3R1 → (0, 0, −2)；R3 ← R3 − R2 → (0, 0, 0)。阶梯形有两个主元（第 1、3 列），<strong>rank = 2</strong>。顺带读出：第 2 列没有主元 ⇒ 零空间维数 = 3 − 2 = 1，且第 2 列 = 2×第 1 列的相关性清晰可见。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>求 ⎡3 1; 5 2⎤ 的逆矩阵，并验证乘积为 I。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>det = 6 − 5 = 1。A⁻¹ = <strong>⎡2 −1; −5 3⎤</strong>。验证：⎡3 1; 5 2⎤⎡2 −1; −5 3⎤ = ⎡6−5, −3+3; 10−10, −5+6⎤ = I ✓。</p>
+            <p><strong>解析</strong>：det = 1 时逆矩阵不产生分数，是出题人最爱。口诀复述一遍：主对调、副变号、除以 det。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>用逆矩阵解方程组：2x + y = 4；3x + 2y = 7。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A = ⎡2 1; 3 2⎤，det = 1，A⁻¹ = ⎡2 −1; −3 2⎤。<strong>x</strong> = A⁻¹(4, 7) = (8−7, −12+14) = <strong>(1, 2)</strong>。</p>
+            <p><strong>解析</strong>：与高斯消元殊途同归。要解<strong>同一个 A、许多个不同 b</strong> 时，先求一次 A⁻¹ 再反复乘，才显出逆矩阵的效率优势。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断下列矩阵是否可逆：(a) ⎡1 2; 3 6⎤；(b) ⎡0 1; 1 0⎤；(c) ⎡2 0; 0 0⎤。对不可逆者，说出它把平面压成了什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) det = 0，<strong>不可逆</strong>：两列共线，平面压成直线 span((1, 3))。(b) det = −1 ≠ 0，<strong>可逆</strong>（交换 x、y 的反射，倒放就是再照一次镜子，B⁻¹ = B）。(c) det = 0，<strong>不可逆</strong>：第二列是零向量，ĵ 被吞进原点，平面压成 x 轴。</p>
+            <p><strong>解析</strong>：判可逆 = 算 det = 检查列相关，三件事是一件事。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>求 A = ⎡1 3; 2 6⎤ 的零空间，并写出 A<strong>x</strong> = (1, 2) 的通解（提示：先验证 (1, 0) 是一个特解）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>零空间：x + 3y = 0 ⇒ N(A) = <strong>span((−3, 1))</strong>。特解验证：A(1, 0) = (1, 2) ✓。通解 = <strong>(1, 0) + t·(−3, 1)</strong>，t ∈ ℝ——一条不过原点的直线。</p>
+            <p><strong>解析</strong>：“特解 + 零空间”结构的最小实例。注意解集是零空间这条直线的<strong>平移</strong>：方向相同、错开一个特解。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>求 A = ⎡1 1 2; 2 1 3; 3 2 5⎤ 的秩，并求零空间的一组基。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>消元：R2 ← R2 − 2R1 → (0, −1, −1)；R3 ← R3 − 3R1 → (0, −1, −1)；R3 ← R3 − R2 → 全零行。两个主元 ⇒ <strong>rank = 2</strong>。零空间：由阶梯形 x + y + 2z = 0、−y − z = 0 得 y = −z，x = −y − 2z = −z。令 z = 1：基为 <strong>(−1, −1, 1)</strong>，dim N(A) = 1 = 3 − 2 ✓。</p>
+            <p><strong>解析</strong>：验证可代回原矩阵：第 3 列 = 第 1 列 + 第 2 列，恰对应 (−1, −1, 1) 这个“配平系数”——零空间的每个向量都是列之间的一条“相关性记录”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>A 是 3×5 矩阵且 rank(A) = 2。(a) 零空间维数是多少？(b) 方程 A<strong>x</strong> = <strong>b</strong> 有解时，解集是几维的？(c) 是否存在使方程无解的 b？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 5 − 2 = <strong>3</strong> 维。(b) 特解 + 3 维零空间 ⇒ <strong>3 维</strong>（5 个未知数、2 个主元、3 个自由变量）。(c) <strong>存在</strong>：C(A) 是 3 维空间中的 2 维平面，平面外的 b（“大多数”b）都无解。</p>
+            <p><strong>解析</strong>：全程只用维数记账，不碰任何具体数字——这正是秩–零化度定理的威力：不解方程就能预知解集的“形状规格”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>设 A、B 均可逆。证明 (AB)⁻¹ = B⁻¹A⁻¹。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>只需验证候选者与 AB 乘积为 I：(B⁻¹A⁻¹)(AB) = B⁻¹(A⁻¹A)B = B⁻¹IB = B⁻¹B = I；同理 (AB)(B⁻¹A⁻¹) = I。由逆的唯一性，(AB)⁻¹ = B⁻¹A⁻¹。∎</p>
+            <p><strong>解析</strong>：又见“逆序原理”：AB 是先 B 后 A，倒放自然先撤 A、再撤 B——与 (AB)ᵀ = BᵀAᵀ（习题 5.7）同款结构。证明手法也值得记：<strong>要证某物是逆，乘一下看是否得 I</strong>，全程只用结合律。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：A<strong>x</strong> = <strong>b</strong> 的任意两个解之差必属于零空间；并由此说明——若零空间只有 {<strong>0</strong>}，则解（若存在）必唯一。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>设 A<strong>x</strong>₁ = <strong>b</strong> 且 A<strong>x</strong>₂ = <strong>b</strong>。相减：A(<strong>x</strong>₁ − <strong>x</strong>₂) = <strong>b</strong> − <strong>b</strong> = <strong>0</strong>，故 <strong>x</strong>₁ − <strong>x</strong>₂ ∈ N(A)。若 N(A) = {<strong>0</strong>}，则 <strong>x</strong>₁ − <strong>x</strong>₂ = <strong>0</strong>，即 <strong>x</strong>₁ = <strong>x</strong>₂，解唯一。∎</p>
+            <p><strong>解析</strong>：两行代数把全章焊成一体——<strong>存在性归列空间管，唯一性归零空间管</strong>，互不越界。“判决表”三行的理论根基就在这道题里。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点 · 矩阵篇完结</p>
+          <p>① 可逆 = 可倒放 ⇔ det ≠ 0 ⇔ 列无关；2×2 逆：主对调、副变号、除 det；② C(A) 管存在性（b 可达吗），N(A) 管唯一性（谁被压扁）；③ rank + dim N(A) = n，维数记账永远守恒；④ 通解 = 特解 + 零空间。<br><strong>下一章预告</strong>：进入结构篇。同一个变换，换一组基来描述会是什么样？“换语言”的艺术——基变换，将为特征值与对角化铺平道路。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./07-线性方程组与高斯消元.html">← 第 7 章 线性方程组与高斯消元</a>
+          <a href="./09-基变换与坐标.html">第 9 章 基变换与坐标 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+</body>
+</html>

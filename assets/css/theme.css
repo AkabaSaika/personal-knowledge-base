@@ -1,0 +1,140 @@
+/* theme.css — 设计令牌（颜色/字体/间距/圆角/阴影）
+ * 主题由 <html data-theme="light|dark"> 控制，head 内联脚本在首帧前设置。 */
+
+:root {
+  /* 颜色 — 浅色 */
+  --kb-bg: #f8fafc;
+  --kb-surface: #ffffff;
+  --kb-surface-alt: #f1f5f9;
+  --kb-fg: #1e293b;
+  --kb-fg-muted: #64748b;
+  --kb-fg-faint: #94a3b8;
+  --kb-border: #e2e8f0;
+  --kb-border-strong: #cbd5e1;
+  --kb-accent: #2563eb;
+  --kb-accent-strong: #1d4ed8;
+  --kb-accent-soft: #eff6ff;
+  --kb-accent-border: #bfdbfe;
+  --kb-mark-bg: #fef08a;
+  --kb-mark-fg: #713f12;
+  --kb-ok: #059669;
+  --kb-ok-soft: #ecfdf5;
+  --kb-warn: #d97706;
+  --kb-warn-soft: #fffbeb;
+  --kb-danger: #dc2626;
+  --kb-danger-soft: #fef2f2;
+  --kb-code-bg: #f1f5f9;
+  --kb-pre-bg: #0f172a;
+  --kb-pre-fg: #e2e8f0;
+  --kb-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --kb-shadow-md: 0 4px 16px rgba(15, 23, 42, 0.1);
+  --kb-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.16);
+  --kb-header-bg: rgba(255, 255, 255, 0.85);
+
+  /* 字体 */
+  --kb-font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --kb-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+    "PingFang SC", monospace;
+
+  /* 尺寸 */
+  --kb-radius-sm: 8px;
+  --kb-radius: 12px;
+  --kb-radius-lg: 16px;
+  --kb-header-h: 58px;
+  --kb-sidebar-w: 284px;
+  --kb-content-max: 1240px;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --kb-bg: #0f172a;
+  --kb-surface: #1e293b;
+  --kb-surface-alt: #26334a;
+  --kb-fg: #e2e8f0;
+  --kb-fg-muted: #94a3b8;
+  --kb-fg-faint: #64748b;
+  --kb-border: #334155;
+  --kb-border-strong: #475569;
+  --kb-accent: #60a5fa;
+  --kb-accent-strong: #93c5fd;
+  --kb-accent-soft: #1e3a8a33;
+  --kb-accent-border: #1e40af;
+  --kb-mark-bg: #854d0e;
+  --kb-mark-fg: #fef9c3;
+  --kb-ok: #34d399;
+  --kb-ok-soft: #064e3b4d;
+  --kb-warn: #fbbf24;
+  --kb-warn-soft: #78350f33;
+  --kb-danger: #f87171;
+  --kb-danger-soft: #7f1d1d33;
+  --kb-code-bg: #26334a;
+  --kb-pre-bg: #0b1120;
+  --kb-pre-fg: #cbd5e1;
+  --kb-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --kb-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --kb-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --kb-header-bg: rgba(15, 23, 42, 0.85);
+
+  color-scheme: dark;
+}
+
+/* 基础重置 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--kb-font-sans);
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--kb-fg);
+  background: var(--kb-bg);
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--kb-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--kb-accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--kb-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

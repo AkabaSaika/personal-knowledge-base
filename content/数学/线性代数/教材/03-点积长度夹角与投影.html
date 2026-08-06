@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>03 点积：长度、夹角与投影 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 3 章：点积的代数式与几何式、模长与单位向量、用符号判断夹角、投影公式与余弦相似度应用，配可拖拽的点积演示。">
+  <meta name="kb:tags" content="线性代数,教材,点积,内积,投影,夹角,余弦相似度">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 3 章 · 点积：长度、夹角与投影</h1>
+        <p class="kb-lead">前两章的加法和数乘能让我们“到达”任何位置，却回答不了两个最基本的几何问题：这个向量<strong>有多长</strong>？两个向量<strong>夹角多大</strong>？点积一次补齐这两块拼图——它把两个向量变成一个数，而这个数里同时编码着长度与角度的信息。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 熟练计算点积、模长和单位向量；② 只看点积符号就说出夹角是锐角、直角还是钝角；③ 计算一个向量在另一个向量上的投影，并把向量分解成平行 + 垂直两部分；④ 用余弦相似度比较两组数据的“方向”。</p>
+        </div>
+
+        <h2>从影子说起</h2>
+        <p>傍晚的阳光斜照，你手中的杆子在地面投下影子：杆子越贴近地面，影子越长；杆子竖直时，影子缩成一点。“<strong>一个向量在另一个方向上占了多少分量</strong>”——这个日常直觉，正是点积要度量的东西。物理里它早有名字：力沿位移方向做的功 <em class="kb-math">W</em> = <em class="kb-math">F</em>·<em class="kb-math">d</em>·cos<em class="kb-math">θ</em>，只有“顺着走的那部分力”才算数。</p>
+
+        <h2>点积的代数定义</h2>
+        <p>两个同维向量的<strong>点积</strong>（又称内积）：对应分量相乘再求和，结果是一个<strong>数</strong>（标量），不再是向量：</p>
+        <pre><code>u · v = u₁v₁ + u₂v₂ + ⋯ + uₙvₙ
+例：(2, 3) · (4, 1) = 2×4 + 3×1 = 11</code></pre>
+        <p>点积满足交换律 <strong>u</strong>·<strong>v</strong> = <strong>v</strong>·<strong>u</strong>、分配律 <strong>u</strong>·(<strong>v</strong> + <strong>w</strong>) = <strong>u</strong>·<strong>v</strong> + <strong>u</strong>·<strong>w</strong>，数乘可自由进出：(<em class="kb-math">k</em><strong>u</strong>)·<strong>v</strong> = <em class="kb-math">k</em>(<strong>u</strong>·<strong>v</strong>)。这让点积式子可以像多项式一样展开——本章两道挑战题全靠它。</p>
+
+        <h2>模长与单位向量</h2>
+        <p>向量与自己做点积，得到的是各分量平方和——由勾股定理，这正是长度的平方。于是<strong>模长</strong>（长度）：</p>
+        <pre><code>|v| = √(v · v) = √(v₁² + v₂² + ⋯ + vₙ²)      例：|(3, 4)| = √25 = 5</code></pre>
+        <p>长度为 1 的向量称<strong>单位向量</strong>，只表示“方向”。把任何非零向量除以自己的模长（数乘 1/|<strong>v</strong>|），就得到同方向的单位向量，这一步叫<strong>归一化</strong>：(3, 4) 归一化为 (3/5, 4/5)。</p>
+
+        <h2>几何式：点积藏着夹角</h2>
+        <p>点积还有第二张面孔。设 <em class="kb-math">θ</em> 为 <strong>u</strong>、<strong>v</strong> 的夹角（0° ≤ <em class="kb-math">θ</em> ≤ 180°），则：</p>
+        <pre><code>u · v = |u| |v| cosθ</code></pre>
+        <p>两个式子算的是同一个数：代数式负责<strong>快速计算</strong>，几何式负责<strong>解读含义</strong>。由于 |<strong>u</strong>|、|<strong>v</strong>| 恒正，点积的<strong>符号完全由 cos<em class="kb-math">θ</em> 决定</strong>：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>点积符号</th><th>夹角</th><th>直觉</th></tr></thead>
+            <tbody>
+              <tr><td><strong>u</strong>·<strong>v</strong> &gt; 0</td><td>锐角（&lt; 90°）</td><td>两向量“大体同向”</td></tr>
+              <tr><td><strong>u</strong>·<strong>v</strong> = 0</td><td>直角（= 90°）</td><td><strong>垂直（正交）</strong>，互不沾边</td></tr>
+              <tr><td><strong>u</strong>·<strong>v</strong> &lt; 0</td><td>钝角（&gt; 90°）</td><td>两向量“大体反向”</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>把几何式变形，就得到求夹角的万能公式：cos<em class="kb-math">θ</em> = <strong>u</strong>·<strong>v</strong> / (|<strong>u</strong>||<strong>v</strong>|)。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 拖一拖：点积、夹角与影子</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas kb-canvas-drag" id="dot-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：点积为正是锐角、为零是垂直、为负是钝角；橙色“影子”就是 u 在 v 方向上的投影。</p></noscript>
+            <div class="kb-interactive-controls">
+              <span class="kb-control" style="min-width:260px">拖动 <strong style="color:#2563eb">u</strong>、<strong style="color:#16a34a">v</strong> 端点。橙色线段是 u 在 v 上的<strong style="color:#d97706">投影</strong><span class="kb-control-value" id="dot-readout"></span></span>
+              <button class="kb-btn" id="dot-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 试试这三个位置</p>
+          <p>① 把 <strong>u</strong> 转到与 <strong>v</strong> 垂直——点积读数会掠过 0，影子缩成一点；② 转到钝角侧——点积变负，影子跑到 <strong>v</strong> 的<strong>反方向</strong>；③ 与 <strong>v</strong> 完全同向——点积达到最大值 |<strong>u</strong>||<strong>v</strong>|。</p>
+        </div>
+
+        <h2>投影：把“影子”算出来</h2>
+        <p><strong>u</strong> 在 <strong>v</strong> 方向上的“影子”有两种表述：</p>
+        <ul>
+          <li><strong>标量投影</strong>（影子的带符号长度）：comp<sub>v</sub> <strong>u</strong> = <strong>u</strong>·<strong>v</strong> / |<strong>v</strong>|，负号表示影子落在 <strong>v</strong> 的反方向；</li>
+          <li><strong>向量投影</strong>（影子本身，作为向量）：proj<sub>v</sub> <strong>u</strong> = (<strong>u</strong>·<strong>v</strong> / |<strong>v</strong>|²) <strong>v</strong>，即“影子长度 × <strong>v</strong> 方向的单位向量”。</li>
+        </ul>
+        <figure>
+          <svg viewBox="0 0 460 240" width="460" height="240" role="img" aria-label="向量 u 在 v 方向上的投影示意：从 u 终点垂直落到 v 所在直线">
+            <line x1="40" y1="190" x2="430" y2="190" stroke="var(--kb-fg-faint)" stroke-width="1.2"/>
+            <g stroke-width="3">
+              <line x1="70" y1="190" x2="390" y2="190" stroke="#16a34a" opacity="0.25"/>
+              <line x1="70" y1="190" x2="310" y2="190" stroke="#16a34a"/>
+              <path d="M 310 190 l -12 -5 v 10 z" fill="#16a34a" stroke="none"/>
+              <line x1="70" y1="190" x2="250" y2="60" stroke="#2563eb"/>
+              <path d="M 250 60 l -12.5 2 l 5.5 9.5 z" fill="#2563eb" stroke="none"/>
+            </g>
+            <line x1="250" y1="60" x2="250" y2="190" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <line x1="70" y1="190" x2="250" y2="190" stroke="#d97706" stroke-width="5"/>
+            <rect x="238" y="178" width="12" height="12" fill="none" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+            <g font-family="Times New Roman, serif" font-style="italic" font-size="17">
+              <text x="140" y="105" fill="#2563eb" font-weight="bold">u</text>
+              <text x="350" y="212" fill="#16a34a" font-weight="bold">v</text>
+              <text x="130" y="215" fill="#d97706">proj_v u（影子）</text>
+            </g>
+            <path d="M 70 190 A 34 34 0 0 0 97 170" fill="none" stroke="var(--kb-fg-muted)" stroke-width="1.5" transform="rotate(3 70 190)"/>
+            <text x="108" y="176" font-family="Times New Roman, serif" font-style="italic" font-size="14" fill="var(--kb-fg-muted)">θ</text>
+          </svg>
+          <figcaption>从 <strong>u</strong> 的终点向 <strong>v</strong> 所在直线作垂线，落脚点截出的橙色线段就是向量投影；其长度 |<strong>u</strong>|cos<em class="kb-math">θ</em> 即标量投影。</figcaption>
+        </figure>
+        <p>投影立刻带来一个常用操作——<strong>正交分解</strong>：<strong>u</strong> = proj<sub>v</sub> <strong>u</strong> + (<strong>u</strong> − proj<sub>v</sub> <strong>u</strong>)，前者平行于 <strong>v</strong>，后者垂直于 <strong>v</strong>（可用点积验证）。斜面上的重力分解、把数据拆成“趋势 + 噪声”，用的都是它。第 11 章的最小二乘法，本质就是一次大型投影。</p>
+
+        <h2>应用一瞥</h2>
+        <ul>
+          <li><strong>余弦相似度</strong>：把两篇文章、两个用户的行为各编码成向量，cos<em class="kb-math">θ</em> = <strong>u</strong>·<strong>v</strong>/(|<strong>u</strong>||<strong>v</strong>|) 越接近 1 方向越一致——推荐系统“猜你喜欢”的入门原理。它只比方向、不比长短：评分习惯偏严的用户照样能匹配到同好。</li>
+          <li><strong>物理做功</strong>：<em class="kb-math">W</em> = <strong>F</strong>·<strong>s</strong>。力垂直于位移时不做功（点积为零），逆着位移时做负功。</li>
+          <li><strong>游戏 AI 的方向感</strong>：设角色朝向 <strong>f</strong>，指向敌人的向量 <strong>e</strong>，则 <strong>f</strong>·<strong>e</strong> &gt; 0 说明敌人在前方，&lt; 0 在背后——一次乘加就完成“视野判断”。</li>
+        </ul>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 求夹角</p>
+          <p>求 <strong>u</strong> = (1, 2) 与 <strong>v</strong> = (3, 1) 的夹角。</p>
+          <p><strong>解</strong>：<strong>u</strong>·<strong>v</strong> = 3 + 2 = 5；|<strong>u</strong>| = √5，|<strong>v</strong>| = √10。cos<em class="kb-math">θ</em> = 5/(√5·√10) = 5/√50 = 1/√2，故 <em class="kb-math">θ</em> = <strong>45°</strong>。<br>流程固定：先代数式算点积，再套 cos<em class="kb-math">θ</em> 公式。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 求投影并分解</p>
+          <p>求 <strong>u</strong> = (3, 4) 在 <strong>v</strong> = (2, 1) 上的向量投影，并把 <strong>u</strong> 分解为平行与垂直于 <strong>v</strong> 的两部分。</p>
+          <p><strong>解</strong>：<strong>u</strong>·<strong>v</strong> = 10，|<strong>v</strong>|² = 5，故 proj<sub>v</sub> <strong>u</strong> = (10/5)<strong>v</strong> = <strong>(4, 2)</strong>。垂直部分 = <strong>u</strong> − (4, 2) = (−1, 2)。验证：(−1, 2)·(2, 1) = −2 + 2 = 0 ✓。于是 (3, 4) = (4, 2) + (−1, 2)，前者沿 <strong>v</strong>，后者垂直于 <strong>v</strong>。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 构造垂直向量</p>
+          <p>求与 <strong>a</strong> = (3, 4) 垂直的所有单位向量。</p>
+          <p><strong>解</strong>：平面上把 (x, y) 换成 (−y, x)（逆时针转 90°）必与原向量垂直：得 (−4, 3)，检验 3×(−4) + 4×3 = 0 ✓。归一化：|(−4, 3)| = 5，故答案为 <strong>(−4/5, 3/5) 与 (4/5, −3/5)</strong> 两个（顺、逆时针各一）。“交换分量、给一个添负号”是平面内造垂直向量的速记法。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>设 <strong>u</strong> = (2, −3)，<strong>v</strong> = (4, 1)，<strong>w</strong> = (1, 2, 2)。计算：(a) <strong>u</strong>·<strong>v</strong>；(b) |<strong>u</strong>|；(c) |<strong>w</strong>|。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 8 − 3 = <strong>5</strong>；(b) √(4+9) = <strong>√13</strong>；(c) √(1+4+4) = <strong>3</strong>。</p>
+            <p><strong>解析</strong>：点积=对应相乘再相加；模长=自点积开根号，维数多少都一样。(1, 2, 2) 这类“勾股整数组”在习题里很常见，见到分量 1,2,2 或 3,4 可直接反应出模长。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>只用点积符号，判断下列各对向量的夹角是锐角、直角还是钝角：(a) (1, 3) 与 (2, 1)；(b) (2, −1) 与 (1, 2)；(c) (1, 1) 与 (−3, 1)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 点积 = 5 &gt; 0，<strong>锐角</strong>；(b) 点积 = 0，<strong>直角</strong>；(c) 点积 = −2 &lt; 0，<strong>钝角</strong>。</p>
+            <p><strong>解析</strong>：判断角的类型不需要算出角度本身——符号就够了。这也是工程代码里最高频的点积用法（快、且避免反三角函数）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>把 <strong>v</strong> = (6, 8) 归一化。再求与 <strong>v</strong> 同方向、长度为 2.5 的向量。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>|<strong>v</strong>| = 10，单位向量 = <strong>(0.6, 0.8)</strong>；长度 2.5 的同向向量 = 2.5 × (0.6, 0.8) = <strong>(1.5, 2)</strong>。</p>
+            <p><strong>解析</strong>：“先归一化拿到纯方向，再按需伸缩”是图形学与物理引擎的日常操作（如把移动速度限定为常值）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>t 取什么值时，(2, t) 与 (3, 6) 垂直？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>垂直 ⇔ 点积为零：2×3 + 6t = 0，解得 <strong>t = −1</strong>。</p>
+            <p><strong>解析</strong>：“垂直”翻译成方程就是一次点积。对比第 2 章习题 2.5 的“共线求参”，你已经能把两种最重要的几何关系（平行、垂直）都转成代数方程了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>设 <strong>u</strong> = (4, 2)，<strong>v</strong> = (3, 0)。(a) 求标量投影与向量投影 proj<sub>v</sub> <strong>u</strong>；(b) 把 <strong>u</strong> 分解为平行与垂直于 <strong>v</strong> 的两部分并验证。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) <strong>u</strong>·<strong>v</strong> = 12，|<strong>v</strong>| = 3，标量投影 = 12/3 = <strong>4</strong>；proj<sub>v</sub> <strong>u</strong> = (12/9)(3, 0) = <strong>(4, 0)</strong>。(b) 垂直部分 = (4, 2) − (4, 0) = (0, 2)；验证 (0, 2)·(3, 0) = 0 ✓，且 (4, 0) + (0, 2) = <strong>u</strong> ✓。</p>
+            <p><strong>解析</strong>：<strong>v</strong> 沿 x 轴，所以“影子”就是 <strong>u</strong> 的 x 分量——坐标分量本来就是在标准基方向上的投影！这个观察把“坐标”与“投影”两个概念焊在了一起。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>两位用户对三部电影的评分：甲 = (5, 4, 1)，乙 = (4, 5, 2)，丙 = (1, 2, 5)。用余弦相似度判断：乙的口味更接近甲还是丙？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>cos(甲, 乙) = (20+20+2)/(√42·√45) ≈ 42/43.5 ≈ <strong>0.966</strong>；cos(乙, 丙) = (4+10+10)/(√45·√30) ≈ 24/36.7 ≈ <strong>0.653</strong>。乙与甲更相似。</p>
+            <p><strong>解析</strong>：甲乙都“爱前两部、冷落第三部”，方向接近；丙的偏好几乎相反。注意余弦相似度只看比例结构：把甲的评分整体翻倍，相似度不变——这正是我们想要的“口味”而非“打分尺度”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>用点积证明：|<strong>u</strong> + <strong>v</strong>|² = |<strong>u</strong>|² + |<strong>v</strong>|² 当且仅当 <strong>u</strong> ⊥ <strong>v</strong>（即勾股定理及其逆定理）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>展开：|<strong>u</strong> + <strong>v</strong>|² = (<strong>u</strong> + <strong>v</strong>)·(<strong>u</strong> + <strong>v</strong>) = <strong>u</strong>·<strong>u</strong> + 2<strong>u</strong>·<strong>v</strong> + <strong>v</strong>·<strong>v</strong> = |<strong>u</strong>|² + |<strong>v</strong>|² + 2<strong>u</strong>·<strong>v</strong>。因此等式成立 ⇔ 2<strong>u</strong>·<strong>v</strong> = 0 ⇔ <strong>u</strong>·<strong>v</strong> = 0 ⇔ 垂直。∎</p>
+            <p><strong>解析</strong>：把模长写成自点积，再用分配律像乘法公式一样展开——(a+b)² 的向量版。两千年前的勾股定理在点积语言里只是两行代数；这套展开技巧在第 11 章（正交性）会反复出现。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明柯西–施瓦茨不等式：|<strong>u</strong>·<strong>v</strong>| ≤ |<strong>u</strong>||<strong>v</strong>|，并说明等号何时成立。提示：可从几何式出发，或考虑函数 <em class="kb-math">f</em>(<em class="kb-math">t</em>) = |<strong>u</strong> + <em class="kb-math">t</em><strong>v</strong>|² ≥ 0。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>几何式证法</strong>：<strong>u</strong>·<strong>v</strong> = |<strong>u</strong>||<strong>v</strong>|cos<em class="kb-math">θ</em>，而 |cos<em class="kb-math">θ</em>| ≤ 1，两边取绝对值即得。等号 ⇔ cos<em class="kb-math">θ</em> = ±1 ⇔ <strong>u</strong>、<strong>v</strong> <strong>共线</strong>。</p>
+            <p><strong>代数证法</strong>（不依赖“夹角”概念，任意维都严格）：<em class="kb-math">f</em>(<em class="kb-math">t</em>) = |<strong>v</strong>|²<em class="kb-math">t</em>² + 2(<strong>u</strong>·<strong>v</strong>)<em class="kb-math">t</em> + |<strong>u</strong>|² 是恒非负的二次函数（<strong>v</strong> ≠ <strong>0</strong> 时），判别式必须 ≤ 0：4(<strong>u</strong>·<strong>v</strong>)² − 4|<strong>v</strong>|²|<strong>u</strong>|² ≤ 0，整理即得。∎</p>
+            <p><strong>解析</strong>：高维空间里“夹角”本是未定义的——正是这条不等式保证 <strong>u</strong>·<strong>v</strong>/(|<strong>u</strong>||<strong>v</strong>|) 落在 [−1, 1]，反过来让我们<strong>用点积去定义</strong>高维夹角。余弦相似度对 500 维的用户向量有意义，靠的就是它。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 点积两张面孔：分量乘加（算）= |<strong>u</strong>||<strong>v</strong>|cos<em class="kb-math">θ</em>（想）；② 模长 = √(自点积)，归一化提取纯方向；③ 符号定角：正锐、零直、负钝；④ 投影 proj<sub>v</sub> <strong>u</strong> = (<strong>u</strong>·<strong>v</strong>/|<strong>v</strong>|²)<strong>v</strong>，由此可作正交分解。<br><strong>下一章预告</strong>：向量篇完结，矩阵篇开幕。我们将换一副全新的眼镜看矩阵——它不是数表，而是把整个平面搬动、旋转、拉伸的<strong>变换</strong>。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./02-线性组合张成与线性无关.html">← 第 2 章 线性组合、张成与线性无关</a>
+          <a href="./04-矩阵是线性变换.html">第 4 章 矩阵是线性变换 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("dot-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 42;
+    var u0 = { x: 1.5, y: 2.5 }, v0 = { x: 3, y: 0.5 };
+    var u = { x: u0.x, y: u0.y }, v = { x: v0.x, y: v0.y };
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("dot-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2 - 30, y: H / 2 + 40 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function toVec(x, y) {
+      var o = origin();
+      return { x: Math.round((x - o.x) / SCALE * 4) / 4, y: Math.round((o.y - y) / SCALE * 4) / 4 };
+    }
+
+    function arrow(from, to, color, width, dash) {
+      var a = toPx(from), b = toPx(to);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash || []);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      if (len < 4) return;
+      var ux = dx / len, uy = dy / len, s = 11;
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(b.x - s * ux - s * 0.5 * uy, b.y - s * uy + s * 0.5 * ux);
+      ctx.lineTo(b.x - s * ux + s * 0.5 * uy, b.y - s * uy - s * 0.5 * ux);
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var dot = u.x * v.x + u.y * v.y;
+      var lu = Math.hypot(u.x, u.y), lv = Math.hypot(v.x, v.y);
+      var deg = (lu > 1e-9 && lv > 1e-9)
+        ? Math.acos(Math.max(-1, Math.min(1, dot / (lu * lv)))) * 180 / Math.PI
+        : 0;
+
+      // v 所在直线（淡）与 u 的投影（橙）
+      if (lv > 1e-9) {
+        var ext = 8;
+        ctx.strokeStyle = css("--kb-border-strong");
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 5]);
+        var pA = toPx({ x: -v.x / lv * ext, y: -v.y / lv * ext });
+        var pB = toPx({ x: v.x / lv * ext, y: v.y / lv * ext });
+        ctx.beginPath();
+        ctx.moveTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        var k = dot / (lv * lv);
+        var proj = { x: k * v.x, y: k * v.y };
+        var pu = toPx(u), pp = toPx(proj);
+        ctx.strokeStyle = css("--kb-fg-muted");
+        ctx.setLineDash([5, 4]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(pu.x, pu.y);
+        ctx.lineTo(pp.x, pp.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        var po = toPx({ x: 0, y: 0 });
+        ctx.strokeStyle = "#d97706";
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(po.x, po.y);
+        ctx.lineTo(pp.x, pp.y);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+
+      arrow({ x: 0, y: 0 }, v, "#16a34a", 3);
+      arrow({ x: 0, y: 0 }, u, "#2563eb", 3);
+      [u, v].forEach(function (p, i) {
+        var q = toPx(p);
+        ctx.fillStyle = i === 0 ? "#2563eb" : "#16a34a";
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = css("--kb-surface");
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      var pu2 = toPx(u), pv2 = toPx(v);
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("u", pu2.x + 9, pu2.y - 9);
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("v", pv2.x + 9, pv2.y - 9);
+
+      // 读数与判角
+      var kind, color;
+      if (Math.abs(dot) < 0.05) { kind = "垂直 ⊥"; color = "#d97706"; }
+      else if (dot > 0) { kind = "锐角"; color = "#16a34a"; }
+      else { kind = "钝角"; color = "#ef4444"; }
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = color;
+      ctx.fillText("u · v = " + dot.toFixed(2) + "　θ ≈ " + deg.toFixed(1) + "°　" + kind, 16, 26);
+      readout.textContent = "　u·v = " + dot.toFixed(2) + "，θ ≈ " + deg.toFixed(1) + "°（" + kind + "）";
+    }
+
+    KB.enableDrag(canvas,
+      function (x, y) {
+        var pu = toPx(u), pv = toPx(v);
+        if (Math.hypot(x - pu.x, y - pu.y) < 20) return "u";
+        if (Math.hypot(x - pv.x, y - pv.y) < 20) return "v";
+        return null;
+      },
+      function (target, x, y) {
+        var nv = toVec(x, y);
+        if (Math.abs(nv.x) > 6 || Math.abs(nv.y) > 4) return;
+        if (Math.hypot(nv.x, nv.y) < 0.25) return; // 避免拖到原点导致夹角无定义
+        if (target === "u") u = nv; else v = nv;
+        draw();
+      });
+
+    document.getElementById("dot-reset").addEventListener("click", function () {
+      u = { x: u0.x, y: u0.y };
+      v = { x: v0.x, y: v0.y };
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

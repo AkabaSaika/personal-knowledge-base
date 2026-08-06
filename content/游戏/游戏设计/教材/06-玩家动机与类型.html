@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>06 动机：玩家为什么开始玩、为什么留下 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 6 章：内在与外在动机、自主胜任归属三需求、Bartle 四类玩家，成就与收集系统的动机设计，配四类玩家视角切换的地图演示。">
+  <meta name="kb:tags" content="游戏设计,教材,动机,自我决定理论,玩家类型,成就系统,wjdjylx">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 6 章 · 动机：玩家为什么开始玩、为什么留下</h1>
+        <p class="kb-lead">同一张地图：有人直奔 Boss，有人把每个角落翻个底朝天，有人蹲在营地和朋友聊了一晚上，还有人守在吊桥边劫杀过路的倒霉蛋。他们玩的是同一个游戏吗？机制只有一套，<strong>动机却各不相同</strong>。上一章解决了「怎么让人玩进去」，这一章解决更早的问题：<strong>人为什么来、为什么留下</strong>——以及设计师那些催人上线的手段，什么时候是助燃剂，什么时候是慢性毒药。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用 Bartle 四类玩家的视角审视同一个设计对不同人群的意义；② 区分内在动机与外在动机，解释「奖励挤出」为什么危险；③ 用自主、胜任、归属三种心理需求给游戏做「动机体检」；④ 评估成就、收集、签到这类外在装置的收益与代价。</p>
+        </div>
+
+        <h2>同一张地图，四种玩家</h2>
+        <p>上世纪 90 年代，文字网游（MUD）的作者理查德·巴图（Richard Bartle）研究自己的玩家为什么吵架吵个不停，发现他们根本是四种人，各要各的东西。这套<strong>Bartle 四类玩家</strong>分类粗糙但极其耐用，先亲眼看看——点击按钮，看同一张地图在四种玩家眼里各是什么样：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 一张地图，四种读法：切换玩家视角，看各自眼中的「重点」</div>
+          <div class="kb-interactive-body">
+            <svg id="map-svg" viewBox="0 0 640 320" width="640" height="320" role="img" aria-label="游戏地图示意：Boss 城堡、刷怪谷、隐藏洞穴、小岛、营地、集市、吊桥与竞技场，可按四类玩家视角高亮">
+              <rect x="8" y="8" width="624" height="304" rx="14" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <g stroke="var(--kb-border-strong)" stroke-width="1.2" stroke-dasharray="4 5" fill="none" opacity="0.55">
+                <path d="M 110 255 C 170 250 200 255 225 260"/>
+                <path d="M 290 255 C 340 250 380 235 405 215"/>
+                <path d="M 455 205 C 490 170 510 140 530 118"/>
+                <path d="M 310 130 C 340 165 380 195 405 208"/>
+              </g>
+              <g id="poi-cave">
+                <polygon points="50,110 100,40 150,110" fill="var(--kb-border-strong)" opacity="0.5"/>
+                <ellipse cx="100" cy="108" rx="15" ry="11" fill="var(--kb-fg)" opacity="0.5"/>
+                <ellipse cx="100" cy="108" rx="20" ry="15" fill="none" stroke="var(--kb-fg-muted)" stroke-width="1.2" stroke-dasharray="3 3"/>
+                <text x="100" y="132" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">隐藏洞穴</text>
+              </g>
+              <g id="poi-isle">
+                <ellipse cx="230" cy="48" rx="44" ry="17" fill="#2563eb" opacity="0.22"/>
+                <circle cx="230" cy="46" r="9" fill="#16a34a" opacity="0.8"/>
+                <text x="230" y="82" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">够不着的小岛</text>
+              </g>
+              <g id="poi-boss">
+                <rect x="490" y="38" width="16" height="72" fill="#9466de" opacity="0.55"/>
+                <rect x="594" y="38" width="16" height="72" fill="#9466de" opacity="0.55"/>
+                <rect x="502" y="50" width="96" height="60" fill="#9466de" opacity="0.35"/>
+                <rect x="502" y="50" width="96" height="60" fill="none" stroke="#9466de" stroke-width="1.5"/>
+                <line x1="550" y1="50" x2="550" y2="26" stroke="#9466de" stroke-width="2"/>
+                <polygon points="550,26 574,32 550,40" fill="#ef4444"/>
+                <text x="550" y="128" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">Boss 城堡</text>
+              </g>
+              <g id="poi-farm">
+                <circle cx="280" cy="115" r="10" fill="#ef4444" opacity="0.55"/>
+                <circle cx="312" cy="100" r="10" fill="#ef4444" opacity="0.55"/>
+                <circle cx="338" cy="120" r="10" fill="#ef4444" opacity="0.55"/>
+                <text x="308" y="148" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">精英刷怪谷</text>
+              </g>
+              <g id="poi-bridge">
+                <rect x="380" y="195" width="28" height="42" fill="var(--kb-border-strong)" opacity="0.5"/>
+                <rect x="442" y="195" width="28" height="42" fill="var(--kb-border-strong)" opacity="0.5"/>
+                <line x1="408" y1="205" x2="442" y2="205" stroke="var(--kb-fg-muted)" stroke-width="2.5"/>
+                <line x1="412" y1="205" x2="412" y2="212" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+                <line x1="424" y1="205" x2="424" y2="212" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+                <line x1="436" y1="205" x2="436" y2="212" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+                <text x="425" y="255" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">必经吊桥</text>
+              </g>
+              <g id="poi-camp">
+                <polygon points="50,272 80,228 110,272" fill="#2563eb" opacity="0.32"/>
+                <polygon points="50,272 80,228 110,272" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+                <circle cx="136" cy="264" r="7" fill="#f59e0b"/>
+                <line x1="126" y1="272" x2="146" y2="272" stroke="#b45309" stroke-width="3"/>
+                <text x="95" y="294" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">营地篝火</text>
+              </g>
+              <g id="poi-market">
+                <rect x="210" y="246" width="38" height="28" fill="#16a34a" opacity="0.35"/>
+                <rect x="206" y="238" width="46" height="10" rx="3" fill="#16a34a" opacity="0.6"/>
+                <rect x="262" y="246" width="38" height="28" fill="#16a34a" opacity="0.35"/>
+                <rect x="258" y="238" width="46" height="10" rx="3" fill="#16a34a" opacity="0.6"/>
+                <text x="256" y="294" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">集市</text>
+              </g>
+              <g id="poi-arena">
+                <ellipse cx="550" cy="230" rx="48" ry="27" fill="none" stroke="#ef4444" stroke-width="3" opacity="0.75"/>
+                <ellipse cx="550" cy="230" rx="27" ry="13" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.75"/>
+                <text x="550" y="282" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)" font-family="-apple-system, PingFang SC, sans-serif">竞技场</text>
+              </g>
+            </svg>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：成就者盯着 Boss 与最高效的刷怪点，探索者被隐藏洞穴和够不着的小岛吸引，社交家的内容在营地与集市，杀手的内容是吊桥上的其他玩家——同一套机制，四种动机各取所需。</p></noscript>
+            <p id="map-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);"></p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-view-all" type="button">全部</button>
+              <button class="kb-btn" id="btn-view-ach" type="button">🏆 成就者</button>
+              <button class="kb-btn" id="btn-view-exp" type="button">🧭 探索者</button>
+              <button class="kb-btn" id="btn-view-soc" type="button">💬 社交家</button>
+              <button class="kb-btn" id="btn-view-kil" type="button">⚔️ 杀手</button>
+            </div>
+          </div>
+        </div>
+        <p>四类玩家一句话画像：<strong>成就者（Achiever）</strong>要赢过游戏——等级、排名、全成就；<strong>探索者（Explorer）</strong>要理解游戏——地图边缘、隐藏机制、「这面墙后面有什么」；<strong>社交家（Socializer）</strong>要通过游戏接触人——游戏是话题和广场；<strong>杀手（Killer）</strong>要作用于其他玩家——竞技、压制、恶作剧。两个使用须知：第一，<strong>这是模式不是人格标签</strong>——同一个人晚上八点是社交家、十一点是成就者；第二，四类会互相供养——探索者写攻略喂成就者，成就者是杀手的猎物，社交家把所有人黏在一起。砍掉任何一类的内容，生态都会失衡。</p>
+
+        <h2>内在动机与外在动机</h2>
+        <p>玩游戏原本是一件奇怪的事：没有报酬、没有文凭，还要倒贴钱和时间——它是纯粹<strong>内在动机</strong>的活动：做这件事本身就是回报（好奇、掌握感、和朋友在一起的快乐）。与之相对，<strong>外在动机</strong>来自活动之外的奖励或压力：工资、分数、签到礼包、排行榜名次。</p>
+        <p>心理学有个著名的警告叫<strong>奖励挤出（过度理由效应）</strong>：给本来就爱画画的孩子发「画画奖金」，一段时间后取消奖金，孩子画得比从来没拿过奖金时更少了——外在奖励一旦到位，人会悄悄把行为的理由从「我喜欢」改写成「我为了奖励」；奖励停止，理由也就没了。游戏里的同款剧情你已在第 3 章见过：为了日常任务上线的玩家，「玩」已经变成「上班」——签到、日常、通行证这些装置<strong>放大</strong>已有的兴趣时是助燃剂，<strong>替代</strong>兴趣时是慢性毒药，而且毒发时玩家自己会说出那句标准台词：「不知道为什么还在玩，就是停不下来，也不开心。」</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 一条实用红线</p>
+          <p>设计外在奖励前先问：<strong>假如把这个奖励撤掉，玩家还会做这件事吗？</strong>会——奖励是锦上添花，安全；不会——你正在给一个不好玩的行为付费续命，账单（口碑与倦怠）晚点会到。不好玩的行为，正确的处理是修行为本身（第 3 章：重复断裂修的是行动），而不是加钱。</p>
+        </div>
+
+        <h2>三种心理需求：自主、胜任、归属</h2>
+        <p>内在动机从哪来？心理学家德西与瑞安（Deci &amp; Ryan）的<strong>自我决定理论（Self-Determination Theory）</strong>给出被引用最多的答案：人有三种与生俱来的心理需求，被满足时内在动机旺盛，被剥夺时枯萎——这三样东西恰好是好游戏的三根柱子：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>需求</th><th>一句话</th><th>游戏里的供给</th><th>缺失时的症状</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>自主</strong>（Autonomy）</td>
+                <td>「这是我自己选的」</td>
+                <td>开放世界的自定路线、build 流派、捏脸、玩家自设目标（回看 1.8 旷野之息）</td>
+                <td>「全程被牵着鼻子走」「一本道」「playable 电影」</td>
+              </tr>
+              <tr>
+                <td><strong>胜任</strong>（Competence）</td>
+                <td>「我做到了，而且在变强」</td>
+                <td>心流（第 5 章的全部）、成长曲线、掌握一个 Boss 的招式表</td>
+                <td>「怎么打都打不过」或「毫无挑战」——通道两侧的老朋友</td>
+              </tr>
+              <tr>
+                <td><strong>归属</strong>（Relatedness）</td>
+                <td>「有人看见我、需要我」</td>
+                <td>公会、组队、双人成行式的强制协作、送礼与串门</td>
+                <td>「一个人玩着玩着就淡了」——单机感的网游</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>三根柱子给了我们一张「动机体检表」：拿到任何游戏，问三需求各被喂到几分。旷野之息：自主满分（去哪、怎么玩全自选）、胜任高分（呀哈哈到人马的完整难度谱系）、归属零分（纯单机）——两根柱子够粗，第三根可以为零；原神：胜任与归属中等，自主靠大世界与队伍搭配供给。多数长寿游戏至少两根柱子结实；<strong>三根全细的游戏，靠外在奖励输血也活不长</strong>——这正是上一节红线的理论版。</p>
+        <p>顺手交代 Bartle 与三需求的关系：四类玩家大致是三需求的不同权重配比——成就者重胜任、探索者重自主（+一点独享的胜任）、社交家重归属、杀手重「以他人为参照的胜任」。两套框架不冲突：<strong>三需求解释「为什么」，四类型描述「表现为什么样」</strong>。</p>
+
+        <h2>成就与收集：外在装置的正确用法</h2>
+        <p>说完风险，说用法——成就、图鉴这些外在装置用对了依然是利器。成就设计有一条光谱，按危险程度递增：</p>
+        <ul>
+          <li><strong>里程碑型</strong>（通关第一章、首次钓到鱼）：顺路即得，无副作用；最佳用法是<strong>指路</strong>——「用盾反弹弓箭 ×1」这种成就其实在悄悄教玩法，是伪装成奖杯的教程；</li>
+          <li><strong>挑战型</strong>（一命通关、无伤打 Boss）：给胜任需求一个自选的高峰，服务通道上沿的玩家（呼应 5.6：凭证可以绑难度）；</li>
+          <li><strong>肝度型</strong>（击杀一万只鸡、登录 365 天）：不考验任何技能与决策，纯粹用时长换图标——最接近「为奖励而奖励」，挤出效应的高发区。</li>
+        </ul>
+        <p>收集系统（图鉴、皮肤、卡册）的心理引擎是<strong>完成主义</strong>：一套东西集到 80% 时，「差的那几件」会开始发光——边际快感随缺口缩小而暴涨，「最后一件」入库的瞬间是收集玩家的至高时刻。它的阴面同样来自这股力量：<strong>完成主义绑架</strong>——为清掉地图上的问号图标而玩，乐趣早没了还停不下来，玩家的自主感被自己的强迫感吃掉。设计上的分寸是：让收集品<strong>本身有内容</strong>（每个呀哈哈是一个小谜题、每张卡有一段图鉴文字），收集就还在喂好奇与胜任；收集品只是计数器时（1000/1000 个罐子），它就只剩绑架功能了。</p>
+
+        <h2>把动机写进设计流程</h2>
+        <p>本章工具落成一个习惯：设计或评审任何系统时，过一遍<strong>动机三问</strong>——① 这个系统喂三需求里的哪一根柱子？② 喂的是内在动机还是外在代偿？③ 四类玩家各会怎么用它（以及谁会被它伤到）？</p>
+        <p>拿「全服排行榜」走一遍流程：① 喂胜任（名次证明实力）；② 对前 1% 是内在动机放大器，对其余 99% 是一面「你不行」的镜子——同一个设计在不同人群身上内外性质不同；③ 成就者狂喜、杀手把榜单当猎物名单、社交家无感、探索者无感，低名次大盘玩家持续受挫。诊断结论：裸的全服榜是给 1% 玩家的设计。药方：好友榜（把参照系换成熟人，归属顺带被喂）、分段位榜（每个段位都有自己的前列可争）、赛季重置（给后来者翻盘窗口）。——你会发现市面上的排行榜几乎都长这样：那是被动机三问毒打过的形状。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 签到系统的完整病理报告</p>
+          <p>连续签到送大奖是手游标配。用本章工具完整分析它：喂什么、挤出什么、厂商为什么明知有毒还做，以及怎么做能少毒一点。</p>
+          <p><strong>分析</strong>：动机三问过一遍——① 它不喂任何心理需求：签到无技能（不喂胜任）、无选择（不喂自主）、无他人（不喂归属），是纯外在装置；② 它的目标行为「打开游戏」本该由内在动机驱动，签到把理由改写成「为了第 7 天的大奖」，挤出效应教科书现场；断签的损失厌恶（连续 29 天断在第 30 天）还会把「想来」进一步改写成「怕断」——第 3 章习题 3.8 的弃坑前兆正是它。③ 厂商为什么做：留存指标（次日留存、七日留存）是行业的硬通货，签到是拉这些数字最便宜的杠杆——<strong>指标度量的是行为，挤出侵蚀的是动机，而动机的恶化要几个月后才反映到指标上</strong>，短视由此制度化。<strong>减毒方案</strong>：断签不清零（只累计不连续，动森式宽容）；奖励发「加速内在乐趣的东西」（体力、双倍卡）而非独占内容——让签到锦上添花而不是绑架。<strong>结论</strong>：评价这类系统，看它把「你为什么打开游戏」这个问题的答案往哪个方向改写。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 双人成行：几乎没有外在奖励的黏性怪物</p>
+          <p>《双人成行》没有成就商店、没有签到、没有数值养成，为什么两个人开了头就想一口气打完？用三需求分析。</p>
+          <p><strong>分析</strong>：它把三根柱子全部焊死在核心机制上。<strong>归属</strong>是主引擎：强制双人且机制不对称——你拿钉子我拿锤头，谁离了谁都过不去，「被需要」不是社交系统的功能而是过关的前提；笑点与失误共享（你把我弹飞的那下会被笑一晚上），共同经历持续沉淀成关系资产。<strong>自主</strong>：每章更换一套全新玩法（磁铁、时间回溯、音乐），选择感来自持续的新鲜——「下一章会给我们什么玩具？」<strong>胜任</strong>：谜题难度贴通道下沿（配合本身已是认知负荷，谜题就不再为难人），确保任何组合（情侣、亲子）都能推进。<strong>结论</strong>：当核心机制直接喂饱心理需求时，外在装置根本不需要——反过来读，一个游戏堆满签到与通行证，往往正说明它的机制喂不饱人。外在装置的密度，是内在动机健康度的反向指标。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 用四类玩家审一个世界 Boss 设计</p>
+          <p>某 MMO 设计：世界 Boss 每晚八点刷新，全服玩家共同攻打，按伤害排名发奖励，前十名额外获得称号。用四类玩家逐一过堂，找出被喂饱的和被饿着的，并提出改良。</p>
+          <p><strong>分析</strong>：<strong>成就者</strong>——伤害排名与称号正中下怀，狂喜；但只有练度顶尖者有戏，中游成就者卷不动只能陪跑。<strong>杀手</strong>——若开放 PvP，Boss 战外围会变成猎场（打人比打 Boss 有趣）；不开放则他们无事可做。<strong>社交家</strong>——「全服一起做一件事」的氛围是他们的节日，但按伤害排名的规则没给他们任何角色（奶妈与指挥的贡献不计入伤害）。<strong>探索者</strong>——完全被饿着：机制一目了然，无秘密可挖。<strong>改良</strong>：参与即保底奖励（接住大盘与社交家）；贡献度多维计算——治疗、增益、复活队友折算贡献（给辅助位一个名字）；Boss 带隐藏机制（特定条件触发稀有形态，掉限定材料——给探索者一个传说可考据、顺便产出社区内容）；称号保留给前十（成就者的尖峰不动，呼应 5.6 凭证原则）。<strong>结论</strong>：四类过堂是设计评审的廉价利器——多数「大部分人不参与」的活动，病根都是只喂了一类玩家。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>用最近两周你自己的游戏行为当证据，判断你当前的主导类型（可以是混合），并举一个你在不同游戏（或不同时段）切换类型的实例。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（示例）：「在 MMO 里我每晚先清完日常再练副本输出手法——成就者为主；但周末和朋友上线就整晚挂在主城聊天钓鱼——切到社交家；玩新买的单机时我会翻遍每个房间找文本碎片——探索者模式。」</p>
+            <p><strong>解析</strong>：做完这道题你应该对「模式不是标签」有了体感：类型跟着<strong>情境、同伴与游戏</strong>切换。这对设计的推论是：别给玩家建档案（「他是探索者」），要给<strong>每种模式</strong>都留内容入口——同一个玩家今晚是谁，取决于你的游戏今晚给他开了哪扇门。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>把下列系统归入它主要供给的心理需求（自主 / 胜任 / 归属，可多选）：捏脸系统、装备数值成长、公会捐献、多结局剧情分支、无伤成就、师徒系统。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：捏脸——自主（自我表达是自主的分支）；装备成长——胜任（数值是胜任的代币）；公会捐献——归属（被组织需要）；多结局分支——自主（选择有后果）；无伤成就——胜任（挑战型凭证）；师徒系统——归属为主、兼喂师父的胜任（「教得动人」是高级的能力证明）。</p>
+            <p><strong>解析</strong>：师徒系统是个好样本：一个系统同时喂两根柱子、覆盖两类人群（新手得归属与指导，老玩家得胜任与被需要），成本只是一套匹配与奖励规则——<strong>单位开发成本喂到的需求数，是评估系统性价比的好指标</strong>。对照反面：肝度型成就开发同样便宜，但一根柱子都不喂。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断内在还是外在动机，说明理由：A 为了看完剧情通关；B 为了白金奖杯把不喜欢的收集内容清完；C 为了和朋友开黑而上线；D 为了不断掉 200 天的连续签到而上线。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 内在（剧情体验本身是回报）；B 外在（行为「清收集」不被喜欢，回报在行为之外的图标上）；C 内在（与朋友相处本身是回报，游戏是媒介）；D 外在，且是最危险的一种——回报甚至不是获得什么，而是<strong>避免损失</strong>。</p>
+            <p><strong>解析</strong>：B 和 D 合起来正是「玩得不开心又停不下来」的两大来源：完成主义绑架与损失厌恶绑架。注意判断标准不在行为本身而在<strong>回报的位置</strong>：同样是清收集，享受探索过程的人是内在动机——所以动机诊断必须问人，不能只看行为。这也是玩家问卷与访谈在行业里不可替代的原因：后台数据看得见 D 的登录，看不见 D 的疲惫。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>给成就三类型（里程碑 / 挑战 / 肝度）各设计一个具体成就（游戏自选），并指出你设计的肝度型成就可以怎么改造脱毒。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以一款动作 RPG 为例）：里程碑型——「初次盾反成功」（顺路指路型，教核心机制）；挑战型——「不使用治疗打败最终 Boss」；肝度型——「累计击杀 5000 只史莱姆」。<strong>脱毒改造</strong>：把纯计数改成覆盖条件——例如「用 10 种不同属性的攻击各击杀过一次史莱姆」：数量骤减，但每一杀都要求玩家换打法，计数器变成了玩法探索的清单。</p>
+            <p><strong>解析</strong>：脱毒公式：<strong>把「重复 N 次」改写成「覆盖 N 种」</strong>——时长换图标升级为探索换图标，喂的需求从零变成自主与胜任。很多优秀成就系统（如杀戮尖塔的每角色挑战）本质都是这条公式的应用。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一个孩子本来自发爱读课外书。家长引入奖励制度：「读完一本奖励 10 元」。用挤出效应预测三个月后的情形，再把这个案例逐项映射到游戏设计上（爱玩的玩家 / 通行证经验值制度）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>预测</strong>：短期读书量上升（奖励生效）；随后行为变形——挑薄的书读、跳读凑数（行为向度量指标优化，而不是向原目标优化）；三个月后若取消奖励，读书量跌破引入奖励前的水平（理由已被改写为「为了钱」）；即使不取消，「读书=任务」的心理定势也已形成。</p>
+            <p><strong>映射</strong>：爱玩的玩家=爱读书的孩子；通行证经验=每本 10 元；挑薄书凑数=挑最速刷的模式刷经验（哪怕它无聊）——玩家开始向任务清单优化而不是向乐趣优化；赛季结束的空窗=取消奖励——「没有通行证任务，居然不知道上线干什么」，这句话在玩家社区的出现频率就是挤出程度的体温计。<strong>解析</strong>：两个场景共享同一条机制链：<strong>外在奖励 → 行为向指标优化 → 原始乐趣被绕开 → 理由被改写</strong>。设计通行证时的自检：任务清单是否把玩家引向游戏本来最好玩的部分（「完成三场排位」尚可）还是引向乐趣荒漠（「累计使用道具 50 次」）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一款休闲手游只有全服总分排行榜，运营发现 95% 的玩家从不点开它。用本章工具诊断，并按「动机三问」提出三个改造方案，说明各救哪类玩家、喂哪根柱子。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>诊断</strong>：全服榜只对头部玩家是胜任供给，对 95% 的人是持续的「你不行」信号——不点开是心理自保，系统等于不存在。</p>
+            <p><strong>方案</strong>：① 好友榜/微信关系链榜——参照系换成熟人，中游玩家也有「赢过老王」的胜任时刻，顺带喂归属（话题）；② 分段赛区＋赛季重置——每个分段都有可争的前列（胜任的阶梯化），重置给新人窗口（防止阶层固化劝退）；③ 换维度立榜——除总分外设「本周进步榜」「花式过关榜」：进步榜让付出可见（喂大盘的胜任），花式榜给探索者与表达型玩家一个上榜理由（喂自主）。</p>
+            <p><strong>解析</strong>：三个方案共享一个原理：<strong>排行榜的动机效果取决于「我与参照系的距离」</strong>——距离在够得着的范围内是燃料，太远就是劝退书。设计任何比较系统（排名、战力、进度条对比）都适用这条：先设计参照系，再设计榜单。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>给你正在玩（或最熟悉）的一款游戏做完整「动机体检」：三需求各打 0–5 分并各举一条证据；指出被喂得最差的一类 Bartle 玩家；最后开一个针对性最强的改造方案。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以吸血鬼幸存者为例，供对照格式）：自主 4 分——角色、武器进化路线、地图自选，build 空间大；胜任 4 分——难度曲线陡但清晰，30 分钟存活是明确的能力凭证；归属 0 分——纯单机无任何社交面。最饿的类型：社交家（其次杀手）。<strong>改造方案</strong>：加异步社交而非实时联机（成本低且贴品类调性）——每日种子挑战＋好友成绩对比＋一键分享 build 图——喂归属与话题，不动核心玩法。</p>
+            <p><strong>解析</strong>：体检的价值在「打分必须举证」——分数逼你把模糊印象换成具体机制。注意结论不必是「补齐所有短板」：吸血鬼幸存者归属 0 分也大获成功（两根柱子够粗即可，见正文）；改造方案的正确姿势是<strong>低成本补一根、绝不动粗柱子</strong>——为了社交把单机改联机，多半是把命根子改没了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>设计一个「反签到」的回归机制：不惩罚断签、不制造损失厌恶，但让玩家隔几天就想回来看看。写出机制细节，并用本章理论说明它为什么成立。（提示：动物森友会做到了。）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：「你的园子在你不在时继续生长」——玩家种下的植物按现实时间生长结果，离开三天回来会看到花开了、果子熟了、NPC 留了一封「前几天有只候鸟来过你的岛」的信；果子熟了不摘也<strong>不会烂</strong>（无惩罚），只是安静地等着；偶尔有低概率的现实时间事件（流星雨、稀有访客）通过站内信温和预告。</p>
+            <p><strong>为什么成立</strong>：回归的钩子从「怕失去」（损失厌恶，外在）换成了「想看看」（好奇与牵挂，内在）——世界的持续生长制造了<strong>正向的未知</strong>：回来一定有新东西，且不回来也不受罚，自主感完好无损；「候鸟来过」这类记录喂归属（世界记得你）；这正是动森「无惩罚设计」的原理——它的日活黏性证明温柔钩子留人的能力不输惩罚钩子。<strong>解析</strong>：终极对照：签到说「不来你就亏了」，反签到说「来了你会有惊喜」——前者透支动机，后者积累好感。两者的留存曲线短期相似，长期分岔；哪条是你想要的用户关系，是价值观问题，也是（拉长看的）商业问题。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① Bartle 四类玩家（成就者/探索者/社交家/杀手）是模式不是标签，四类互相供养，设计评审拿他们逐一过堂；② 玩游戏是内在动机活动，外在奖励<strong>放大</strong>兴趣是助燃剂、<strong>替代</strong>兴趣是慢性毒药——撤掉奖励还做不做，是一条实用红线；③ 内在动机的三根柱子：自主、胜任、归属——至少两根要粗，三根全细的游戏输血也活不长；④ 成就按里程碑/挑战/肝度分级，脱毒公式是「重复 N 次」改「覆盖 N 种」；收集品要自带内容，否则只剩绑架；⑤ 动机三问：喂哪根柱子？内在还是外在？四类玩家各怎么用？<br><strong>下一章预告</strong>：动机把人带到桌前，真正留住人的还有桌上那些让人纠结的决定——为什么以撒的三选一让人抓头发，满级号选新手装备看都不看？下一章：选择的解剖学。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./05-心流与难度.html">← 第 5 章 心流：难度与技能的赛跑</a>
+          <a href="./07-有趣的选择.html">第 7 章 选择：一连串有趣的决定 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var svg = document.getElementById("map-svg");
+    if (!svg) return;
+
+    var POIS = ["poi-boss", "poi-farm", "poi-cave", "poi-isle", "poi-camp", "poi-market", "poi-bridge", "poi-arena"];
+    var VIEWS = {
+      all: {
+        pois: POIS,
+        msg: "一张地图，四种读法——点击按钮切换视角，被高亮的才是那类玩家眼中的「内容」。"
+      },
+      ach: {
+        pois: ["poi-boss", "poi-farm", "poi-arena"],
+        msg: "成就者眼中只有变强路线：Boss、经验效率最高的刷怪谷、能证明排名的竞技场——其余都是背景板。"
+      },
+      exp: {
+        pois: ["poi-cave", "poi-isle"],
+        msg: "探索者被「问号」吸引：山后的洞穴、看似去不了的小岛。奖励是什么不重要，「那里有什么」才重要。"
+      },
+      soc: {
+        pois: ["poi-camp", "poi-market"],
+        msg: "社交家把游戏当广场：篝火边的闲聊和集市的人流才是内容，Boss 只是今晚的话题。"
+      },
+      kil: {
+        pois: ["poi-bridge", "poi-arena"],
+        msg: "杀手寻找「有猎物的地方」：必经吊桥是劫道点，竞技场是合法狩猎场——他们的内容是其他玩家。"
+      }
+    };
+    var msg = document.getElementById("map-msg");
+    var btns = {
+      all: document.getElementById("btn-view-all"),
+      ach: document.getElementById("btn-view-ach"),
+      exp: document.getElementById("btn-view-exp"),
+      soc: document.getElementById("btn-view-soc"),
+      kil: document.getElementById("btn-view-kil")
+    };
+
+    function show(key) {
+      var view = VIEWS[key];
+      POIS.forEach(function (id) {
+        var g = document.getElementById(id);
+        if (g) g.setAttribute("opacity", view.pois.indexOf(id) >= 0 ? "1" : "0.15");
+      });
+      msg.textContent = view.msg;
+      Object.keys(btns).forEach(function (k) {
+        btns[k].disabled = (k === key);
+        btns[k].setAttribute("aria-pressed", String(k === key));
+      });
+    }
+
+    Object.keys(btns).forEach(function (k) {
+      btns[k].addEventListener("click", function () { show(k); });
+    });
+
+    show("all");
+  });
+  </script>
+</body>
+</html>

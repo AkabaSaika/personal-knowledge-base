@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- 知识页模板：复制到 content/ 下的目标目录后，把所有 {{ROOT}} 替换为 "../" × 目录深度。
+     对照表：content/分类/页面.html → ../../   content/分类/子分类/页面.html → ../../../
+     其余 {{…}} 占位符按内容填写。详细约定见项目根目录 CLAUDE.md。 -->
+<html lang="zh-CN" data-kb-root="{{ROOT}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{标题}} · 知识库</title>
+  <meta name="kb:summary" content="{{一句话摘要，120 字以内}}">
+  <meta name="kb:tags" content="{{标签1,标签2}}">
+  <meta name="kb:created" content="{{YYYY-MM-DD}}">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="{{ROOT}}assets/css/theme.css">
+  <link rel="stylesheet" href="{{ROOT}}assets/css/layout.css">
+  <link rel="stylesheet" href="{{ROOT}}assets/css/components.css">
+  <link rel="stylesheet" href="{{ROOT}}assets/css/content.css">
+</head>
+<body class="kb-page">
+  <!-- 页头（logo/搜索/主题按钮）由 app.js 注入 -->
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <!-- 面包屑由 app.js 注入到 article 之前 -->
+      <article>
+        <h1>{{标题}}</h1>
+        <p class="kb-lead">{{导语：两三句话说明这一页讲什么、为什么值得学。}}</p>
+
+        <h2>{{小节标题}}</h2>
+        <p>{{正文…… 术语可用 <strong>加粗</strong>，行内数学量用 <em class="kb-math">x</em>。}}</p>
+
+        <!-- 图示（推荐内联 SVG 或 _media/ 下的图片，img 必须写 alt 与宽高） -->
+        <figure>
+          <img src="./_media/{{图片文件名}}" alt="{{图片描述}}" width="800" height="450" loading="lazy">
+          <figcaption>{{图注}}</figcaption>
+        </figure>
+
+        <!-- 提示框（可选）：kb-info / kb-tip / kb-warn / kb-danger -->
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 要点</p>
+          <p>{{一句话总结要点。}}</p>
+        </div>
+
+        <!-- 交互演示（可选）：脚本放 _media/*.js 或页尾内联，辅助函数见 assets/js/interactive.js -->
+        <!--
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 {{演示标题}}</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="demo-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript 才能运行。</p></noscript>
+            <div class="kb-interactive-controls">…滑块与按钮…</div>
+          </div>
+        </div>
+        -->
+
+        <!-- 3D 模型（可选，需在页尾追加 model-viewer 的 script 标签）：
+        <model-viewer src="./_media/{{模型}}.glb" poster="./_media/{{海报图}}"
+          camera-controls auto-rotate ar-status="not-presenting"
+          alt="{{模型描述}}"></model-viewer>
+        -->
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="{{ROOT}}assets/generated/site-index.js" defer></script>
+  <script src="{{ROOT}}assets/js/theme.js" defer></script>
+  <script src="{{ROOT}}assets/js/nav.js" defer></script>
+  <script src="{{ROOT}}assets/js/toc.js" defer></script>
+  <script src="{{ROOT}}assets/js/search.js" defer></script>
+  <script src="{{ROOT}}assets/js/interactive.js" defer></script>
+  <script src="{{ROOT}}assets/js/app.js" defer></script>
+  <!-- 仅含 3D 模型的页面追加：
+  <script src="{{ROOT}}assets/vendor/model-viewer-umd.min.js" defer></script>
+  -->
+</body>
+</html>

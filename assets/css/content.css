@@ -1,0 +1,370 @@
+/* content.css — 知识页正文排版：标题/段落/图表/代码/提示框/交互演示容器 */
+
+.kb-content article {
+  max-width: 76ch;
+}
+
+/* ===== 标题 ===== */
+.kb-content h1 {
+  margin: 18px 0 8px;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.kb-content .kb-lead {
+  margin: 0 0 28px;
+  font-size: 1.05rem;
+  color: var(--kb-fg-muted);
+  line-height: 1.8;
+}
+
+.kb-content h2 {
+  margin: 44px 0 14px;
+  padding-bottom: 8px;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  border-bottom: 1px solid var(--kb-border);
+}
+
+.kb-content h3 {
+  margin: 30px 0 10px;
+  font-size: 1.12rem;
+}
+
+/* 锚点跳转时给 sticky 顶栏留位 */
+.kb-content h2,
+.kb-content h3 {
+  scroll-margin-top: calc(var(--kb-header-h) + 16px);
+}
+
+.kb-content p {
+  margin: 0 0 16px;
+}
+
+.kb-content strong {
+  font-weight: 650;
+}
+
+/* ===== 列表 ===== */
+.kb-content ul,
+.kb-content ol {
+  margin: 0 0 16px;
+  padding-left: 1.6em;
+}
+
+.kb-content li {
+  margin-bottom: 6px;
+}
+
+.kb-content li::marker {
+  color: var(--kb-fg-faint);
+}
+
+/* ===== 图片 / figure ===== */
+.kb-content figure {
+  margin: 28px 0;
+  text-align: center;
+}
+
+.kb-content figure img,
+.kb-content figure svg,
+.kb-content figure video {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--kb-radius);
+  border: 1px solid var(--kb-border);
+  background: var(--kb-surface);
+}
+
+.kb-content figcaption {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--kb-fg-muted);
+}
+
+/* ===== 表格 ===== */
+.kb-content .kb-table-wrap {
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.kb-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: var(--kb-surface);
+  border: 1px solid var(--kb-border);
+  border-radius: var(--kb-radius);
+  overflow: hidden;
+}
+
+.kb-content th,
+.kb-content td {
+  padding: 9px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--kb-border);
+}
+
+.kb-content th {
+  background: var(--kb-surface-alt);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.kb-content tr:last-child td {
+  border-bottom: none;
+}
+
+.kb-content tbody tr:hover {
+  background: var(--kb-accent-soft);
+}
+
+/* ===== 代码 ===== */
+.kb-content code {
+  font-family: var(--kb-font-mono);
+  font-size: 0.85em;
+  background: var(--kb-code-bg);
+  border: 1px solid var(--kb-border);
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+
+.kb-content pre {
+  margin: 24px 0;
+  padding: 16px 20px;
+  overflow-x: auto;
+  background: var(--kb-pre-bg);
+  color: var(--kb-pre-fg);
+  border-radius: var(--kb-radius);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.kb-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ===== 数学式（行内用 <em class="kb-math">，简单场景不引 MathJax） ===== */
+.kb-math {
+  font-family: "Times New Roman", "STIX Two Math", serif;
+  font-style: italic;
+}
+
+/* ===== 提示框 callout =====
+ * 用法：<div class="kb-callout kb-info"><p class="kb-callout-title">💡 提示</p><p>…</p></div>
+ * 变体：kb-info（蓝）kb-tip（绿）kb-warn（黄）kb-danger（红） */
+.kb-callout {
+  margin: 24px 0;
+  padding: 14px 18px;
+  border-radius: var(--kb-radius);
+  border: 1px solid var(--kb-border);
+  border-left: 4px solid var(--kb-accent);
+  background: var(--kb-accent-soft);
+  font-size: 0.95rem;
+}
+
+.kb-callout p {
+  margin: 0 0 8px;
+}
+
+.kb-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.kb-callout-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.kb-callout.kb-tip {
+  border-left-color: var(--kb-ok);
+  background: var(--kb-ok-soft);
+}
+
+.kb-callout.kb-warn {
+  border-left-color: var(--kb-warn);
+  background: var(--kb-warn-soft);
+}
+
+.kb-callout.kb-danger {
+  border-left-color: var(--kb-danger);
+  background: var(--kb-danger-soft);
+}
+
+/* ===== 交互演示容器 =====
+ * 用法：
+ * <div class="kb-interactive">
+ *   <div class="kb-interactive-header">🧪 演示标题</div>
+ *   <div class="kb-interactive-body">
+ *     <canvas class="kb-canvas" …></canvas>
+ *     <noscript><p>此演示需要启用 JavaScript。</p></noscript>
+ *     <div class="kb-interactive-controls"> <label class="kb-control">…</label> <button class="kb-btn">…</button> </div>
+ *   </div>
+ * </div> */
+.kb-interactive {
+  margin: 28px 0;
+  border: 1px solid var(--kb-border);
+  border-radius: var(--kb-radius-lg);
+  background: var(--kb-surface);
+  box-shadow: var(--kb-shadow-sm);
+  overflow: hidden;
+}
+
+.kb-interactive-header {
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 650;
+  background: var(--kb-surface-alt);
+  border-bottom: 1px solid var(--kb-border);
+}
+
+.kb-interactive-body {
+  padding: 18px;
+}
+
+.kb-canvas {
+  display: block;
+  width: 100%;
+  border-radius: var(--kb-radius-sm);
+  background: var(--kb-surface-alt);
+}
+
+/* 可拖拽画布：禁用触屏滚动手势，显示抓取光标 */
+.kb-canvas-drag {
+  touch-action: none;
+  cursor: grab;
+}
+
+.kb-canvas-drag:active {
+  cursor: grabbing;
+}
+
+.kb-interactive-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 22px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--kb-border);
+}
+
+.kb-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--kb-fg-muted);
+  min-width: 130px;
+}
+
+.kb-control .kb-control-value {
+  color: var(--kb-fg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.kb-control input[type="range"] {
+  width: 100%;
+  accent-color: var(--kb-accent);
+}
+
+/* ===== 习题 =====
+ * 用法：
+ * <section class="kb-exercise">
+ *   <p class="kb-exercise-title">✏️ 习题 1.1 <span class="kb-exercise-badge">基础</span></p>
+ *   <p>题目……</p>
+ *   <details class="kb-answer"><summary>查看答案与解析</summary><p>……</p></details>
+ * </section>
+ * 难度徽章：基础(默认蓝) / kb-adv 进阶(黄) / kb-hard 挑战(红) */
+.kb-exercise {
+  margin: 18px 0;
+  padding: 14px 18px;
+  border: 1px solid var(--kb-border);
+  border-left: 4px solid var(--kb-accent);
+  border-radius: var(--kb-radius);
+  background: var(--kb-surface);
+}
+
+.kb-exercise-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.kb-exercise-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 1px 9px;
+  border-radius: 999px;
+  color: var(--kb-accent);
+  background: var(--kb-accent-soft);
+  border: 1px solid var(--kb-accent-border);
+}
+
+.kb-exercise-badge.kb-adv {
+  color: var(--kb-warn);
+  background: var(--kb-warn-soft);
+  border-color: var(--kb-warn);
+}
+
+.kb-exercise-badge.kb-hard {
+  color: var(--kb-danger);
+  background: var(--kb-danger-soft);
+  border-color: var(--kb-danger);
+}
+
+.kb-exercise > p:last-of-type {
+  margin-bottom: 0;
+}
+
+.kb-answer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--kb-border);
+}
+
+.kb-answer summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--kb-accent);
+  user-select: none;
+}
+
+.kb-answer[open] summary {
+  margin-bottom: 10px;
+}
+
+.kb-answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== 3D 模型 ===== */
+model-viewer {
+  width: 100%;
+  height: 420px;
+  border-radius: var(--kb-radius);
+  border: 1px solid var(--kb-border);
+  background: var(--kb-surface-alt);
+  --poster-color: transparent;
+}
+
+/* ===== 上一篇/下一篇等页尾导航（预留） ===== */
+.kb-page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--kb-border);
+  font-size: 0.9rem;
+}

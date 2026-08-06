@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>07 选择：一连串有趣的决定 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 7 章：有意义选择的三个条件、上位策略为何杀死乐趣、期望与方差的风险回报设计、机会成本与决策节奏，配「双宝箱」概率模拟器。">
+  <meta name="kb:tags" content="游戏设计,教材,选择,上位策略,风险回报,机会成本,yqdxz">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 7 章 · 选择：一连串有趣的决定</h1>
+        <p class="kb-lead">《文明》之父席德·梅尔（Sid Meier）有句被引用了三十年的话：<strong>「游戏是一连串有趣的选择。」</strong>但什么让一个选择有趣？为什么以撒道具房的三选一让人抓头发，而满级号面对新手装备看都不看？为什么有的「选择」点下去毫无感觉，有的却在按下确认前手心冒汗？这一章解剖「选择」——它是玩家智力参与游戏的接口，也是设计里最容易做假的部件。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出有意义选择的三个条件，并识别三种「假选择」；② 解释上位策略为什么杀死乐趣、削弱为什么必要；③ 用期望与方差的语言分析风险回报设计，说出「期望接近时最纠结」的原理；④ 用机会成本给选择「加重」，并管理一局游戏的决策节奏。</p>
+        </div>
+
+        <h2>什么样的选择才算数</h2>
+        <p>先看三种<strong>不算数的选择</strong>——它们长着选择的外表，玩家的手会点，脑子却不会转：</p>
+        <ul>
+          <li><strong>假选择</strong>：选项通向同一个结果。某些剧情游戏的对话分支，选哪句 NPC 都回同一段话——玩家很快学会随便点，选择感随之报废；</li>
+          <li><strong>明选择</strong>：有一个选项明显最优。「+10 攻击」和「+2 攻击」摆在一起，这不是选择，是阅读理解；</li>
+          <li><strong>盲选择</strong>：信息少到无从权衡。开局让新手在三个看不懂的流派里定终身——玩家只能瞎蒙，蒙错了还要怪自己。</li>
+        </ul>
+        <p>反过来，<strong>有意义的选择</strong>要同时满足三个条件：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>条件</th><th>一句话</th><th>对应的病</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 真实取舍</strong></td><td>选项各有得失，没有全赢的一项</td><td>缺了它 → 明选择</td></tr>
+              <tr><td><strong>② 信息充分</strong></td><td>玩家有足够依据形成自己的偏好</td><td>缺了它 → 盲选择</td></tr>
+              <tr><td><strong>③ 后果作数</strong></td><td>选了有真实影响，且玩家能感知到影响来自自己的选择</td><td>缺了它 → 假选择</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>三条齐备时，玩家会在选项前<strong>停顿</strong>——那个停顿就是智力在参与，是「有趣的选择」的生理指标。杀戮尖塔每张卡牌三选一能让人停十几秒，正是三条全中：卡牌各有代价（取舍）、效果写得明明白白且你了解自己的卡组（信息）、选错一张可能毁掉整局（后果）。</p>
+
+        <h2>上位策略：乐趣杀手</h2>
+        <p>三条件里最常被打破的是第一条，凶手有个名字：<strong>上位策略（Dominant strategy）</strong>——在任何情况下都不劣于其他选项的选项。它一旦被玩家发现，灾难是链式的：其他选项瞬间变成「陷阱选项」，选择消失，构筑变模板，攻略只剩一行字——「无脑选 X」。格斗游戏的无限连、卡牌游戏天梯上清一色的同一套牌、单机里那把拿了就再没换过的超模武器，都是上位策略的作案现场。</p>
+        <p>这解释了一件玩家总在骂的事：<strong>削弱（nerf）为什么必要</strong>。削弱砍的从来不是那件武器的强度，而是在赎回<strong>其他所有选项的存在权</strong>——超模的 X 被压回去，Y 和 Z 才重新变成值得考虑的答案。当然，玩家的愤怒也有正当成分：他们为 X 投入的练习与资源被贬值了——所以成熟的平衡团队更偏爱「补强弱势项」与「加入克制项」，代价是数值整体膨胀（这笔账第 9 章细算）。</p>
+        <p>反上位策略的最古老结构是<strong>剪刀石头布</strong>：三个选项互相克制、没有必胜项，选择永远不塌。它至今仍是无数系统的骨架——兵种克制（枪克骑、骑克刀、刀克枪）、属性克制（水火草）、战术克制（rush 克发育、防守克 rush、发育克防守）。克制环的本质是：<strong>让「最优解」取决于对手的选择</strong>，于是永远没有独立于局面的最优解。</p>
+
+        <h2>风险与回报：纠结的数学</h2>
+        <p>取舍最经典的形态是<strong>稳妥与冒险之争</strong>：100% 拿 50 金币，还是 25% 拿 200？这类选择背后有一套朴素的数学——<strong>期望值（EV）</strong>：平均下来一次值多少（25% × 200 = 50）。刚才那两个选项期望完全相同，这正是设计师故意调的。亲手试试：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 双宝箱：把两个选项调到势均力敌，纠结就出现了</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="chest-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：稳妥箱与冒险箱期望值相等时玩家最纠结（怎么选都对也都不对，这份纠结正是乐趣）；一旦一边期望明显更高，它就成为上位选项，另一边形同虚设，选择消失。</p></noscript>
+            <p id="chest-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);"></p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-safe" type="button">开稳妥箱</button>
+              <button class="kb-btn" id="btn-risk" type="button">开冒险箱</button>
+              <button class="kb-btn" id="btn-auto" type="button">各自动开 100 次</button>
+              <button class="kb-btn" id="btn-reset" type="button">重置</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">稳妥箱金额<span class="kb-control-value" id="val-safe"></span>
+                <input type="range" id="ctl-safe" min="10" max="100" step="5" value="50"></label>
+              <label class="kb-control">冒险箱概率<span class="kb-control-value" id="val-prob"></span>
+                <input type="range" id="ctl-prob" min="5" max="95" step="5" value="25"></label>
+              <label class="kb-control">冒险箱金额<span class="kb-control-value" id="val-big"></span>
+                <input type="range" id="ctl-big" min="20" max="1000" step="10" value="200"></label>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三组实验</p>
+          <p>① <strong>默认参数</strong>（期望都是 50）：各开 100 次，长期平均几乎一样——怎么选都「对」，也都「不对」，这份纠结就是设计的成品。② <strong>把冒险金额拉到 400</strong>（期望 100 对 50）：冒险箱成了上位选项，稳妥箱形同虚设——期望一失衡，选择就死了。③ <strong>概率降到 5%、金额拉到 1000</strong>（期望依然 50）：数学上和稳妥箱等价，但看着那串灰点你还敢选吗？——期望之外还有<strong>方差</strong>（波动的剧烈程度），而人天生厌恶波动。</p>
+        </div>
+        <p>实验 ③ 引出风险设计的两条实用定律。<strong>其一：冒险选项的期望要略高于稳妥项才有人碰</strong>——玩家天生风险厌恶，等期望时多数人选稳，设计师通常给冒险 10%–20% 的「风险溢价」补贴。<strong>其二：局面应当改变最优解</strong>——血量健康时选稳（保住优势），濒死落后时选浪（只有高方差能翻盘）；卡牌手游的「赌怪」卡、格斗游戏的一搏大招，都是给落后者准备的高方差工具。局面变，答案变，同一个选择每次遇到都值得重想——<strong>这是让选择保鲜的最便宜的办法</strong>。</p>
+
+        <h2>机会成本：放弃才是价格</h2>
+        <p>三选一的痛，从来不在「选了什么」，而在<strong>「放弃了那两个」</strong>——经济学称之为机会成本。设计师给选择加重量，加的都是机会成本：</p>
+        <ul>
+          <li><strong>稀缺造价</strong>：资源不够才有取舍。金币管够时商店没有选择可言；杀戮尖塔的「三选一、只能拿一张」，稀缺是规则写死的（连「三张都不要」也是选项——放弃本身被做成了选择）；</li>
+          <li><strong>资源的性质决定痛感</strong>：以撒的恶魔房用<strong>血上限</strong>换道具，比金币购买痛得多——金币会再赚，血上限近乎不可再生，你付出的是「未来的容错」；</li>
+          <li><strong>反悔的价格</strong>：不可逆的选择更重。洗点便宜的游戏里，加点是草稿；洗点昂贵或不可洗时，每一点都是签字画押。反悔成本是个旋钮：拧太紧，玩家因怕错而不敢选（决策瘫痪）、只敢照抄攻略；拧太松，选择轻如儿戏。多数现代游戏选择「首次免费洗点、之后递增收费」——先让你敢试，再让承诺渐渐变贵。</li>
+        </ul>
+        <p>一个自检问题送给未来的你：<strong>你的玩家最近一次「疼」是什么时候？</strong>长期没有痛感的选择系统，多半是资源溢出或反悔免费——选择还在菜单上，重量已经没了。</p>
+
+        <h2>决策的节奏：多重选择怎么排班</h2>
+        <p>单个选择讲完，还差排班表。一局游戏的选择应该<strong>大小分层、疏密有致</strong>：</p>
+        <ul>
+          <li><strong>大选择低频</strong>：开局选角色、选流派——影响全局、允许玩家慢慢想；</li>
+          <li><strong>小选择高频</strong>：每回合出什么牌、每个房间走哪扇门——单次不重，累积成势；</li>
+          <li><strong>自动化不重要的</strong>：一键装备、扫荡券、重复战斗跳过——次要决策每省一次，重要决策就多一分注意力。「移除玩家不需要动脑的操作」不是偷工减料，是给真选择让路。</li>
+        </ul>
+        <p>反面是<strong>决策疲劳</strong>：4X 策略游戏后期一回合要微操上百个单位，每个决策都「不难但要做」——注意力被碎决策磨光，玩家在「再一回合」的天堂里突然感到上班般的疲惫然后弃档。这是选择过载的经典事故：选择是乐趣的来源，也遵守边际递减，<strong>决策的预算和金币一样需要管理</strong>。</p>
+        <p>最后收一条线：选择为什么会「用旧」？因为解空间会被穷尽——下一章的主角<strong>随机</strong>，正是给选择保鲜的另一味主药：每局资源重洗，「最优解」永远在漂移。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 杀戮尖塔的三选一为什么百选不腻</p>
+          <p>《杀戮尖塔》每场战斗后从三张随机卡牌里选一张（或都不要）。用本章全部工具解释这个几秒钟的界面为什么是当代卡牌设计的标杆。</p>
+          <p><strong>分析</strong>：三条件逐项满分——取舍：每张卡都占抽牌位，好卡也可能稀释卡组，「加牌」本身有代价（信息量大的设计前提）；信息：卡面效果完全公开，你对自己卡组、当前血量、下一层的 Boss 都有认知，权衡有据可依；后果：选错一张，二十分钟后的 Boss 房会找你算账，且你能清楚归因。再看进阶技巧：<strong>「跳过」被做成第四个选项</strong>——放弃三张保持卡组精简常是最优解，机会成本被摆上了台面；<strong>局面驱动答案漂移</strong>——同一张卡在血少时、在毒流卡组里、在打到第三幕时价值完全不同，攻略只能教原则不能给答案；<strong>随机保鲜</strong>——三张从卡池里抽，本局没有的卡逼你走出舒适区（输入随机制造问题，下一章展开）。<strong>结论</strong>：一个选择界面浓缩了本章全部原理——它耐玩不是因为选项多，而是因为每次选择都被局面重新定价。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 削弱风波：为什么挨骂也要削</p>
+          <p>某动作游戏一把武器强度超模，全服使用率 70%。官方削弱后玩家大规模抗议「辛苦练的武器被砍」。用上位策略理论评价这次削弱，并讨论替代方案。</p>
+          <p><strong>分析</strong>：使用率 70% 是上位策略的铁证——其余所有武器沦为陷阱选项，武器系统事实上已死；削弱不是针对这把武器，是给整个武器池做心肺复苏，长期看必要。玩家的愤怒也真实：投入被贬值、肌肉记忆作废——这是「存量玩家利益」与「系统健康」的经典冲突。<strong>替代方案盘点</strong>：① 补强其余武器——不动存量利益，但全体数值上移，怪物血量被迫跟涨，几轮之后数字通胀（第 9 章的账）；② 加克制项——新 Boss 对该武器抗性高，温和但治标，玩家换个副本继续 70%；③ 微调多刀——每次只砍 5%，分几个版本到位，给玩家适应期（实践中最常用）。<strong>结论</strong>：没有无痛方案，只有分期付款的方案。判断削弱好坏的标准不是「有没有人骂」，而是削完之后<strong>使用率分布是否重新散开</strong>——选择面回来了，手术就是成功的。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 井字棋为什么被成年人抛弃</p>
+          <p>井字棋规则完备、公平、零随机，为什么没有成年人认真玩它？用选择的语言解释，并对比围棋。</p>
+          <p><strong>分析</strong>：井字棋的解空间小到可以被人脑穷尽——双方都会玩时必然平局，每一步的「最优解」已知且唯一。用三条件检查：取舍消失（每个局面只有一个正确答案，其余是失误）、后果失效（结果注定平局）——它退化成了「谁先犯错」的检查表，选择已死，只剩执行。围棋的规则同样简单，但状态空间大到宇宙原子数量级，穷尽无望，「最优解」永远在人类认知边界之外——每一手都仍是真实的取舍。<strong>结论</strong>：<strong>选择的寿命 = 解空间被穷尽的速度，而游戏的寿命 = 选择的寿命</strong>。所谓「策略深度」，就是解空间对穷尽的抵抗力。这也解释了随机与对抗为什么是长寿游戏的标配：随机重洗局面（斗地主的牌永远新），对手改写答案（第 5 章：棋逢对手是自动难度）——两者都在给解空间续命。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>诊断下列选择各得了什么病（假 / 明 / 盲，或健康）：A 对话选「愤怒回答」或「冷静回答」，NPC 反应相同；B 新手第一关就选终身职业，说明文字只有名字和立绘；C 商店里同价格的「+10 攻击剑」与「+10 防御盾」；D 升级时「+5% 暴击」与「+3% 暴击」二选一。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 假选择（后果不作数）；B 盲选择（信息不足以形成偏好）；C 健康——攻与防是真取舍，答案取决于你的打法与当前短板；D 明选择（同类数值直接比大小）。</p>
+            <p><strong>解析</strong>：C 与 D 的对比值得记住：<strong>好选择往往是「不同维度之间」的，坏选择是「同一维度上」的</strong>——不同维度无法直接比大小，玩家必须动用自己的处境和偏好来裁决，选择因此因人因时而异。设计三选一时的速查：如果三个选项能排成一列比大小，回炉。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>三个宝箱：A 100% 得 60 金币；B 50% 得 130 金币；C 10% 得 500 金币。算出各自期望，指出有没有上位/劣位选项，并说说三者各适合什么处境的玩家。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：EV(A)=60，EV(B)=65，EV(C)=50。没有严格上位项（B 期望最高但有 50% 空手，A 稳但上限低），C 是期望上的劣位项——但仍可能被理性选择：当玩家「只差 500 金币能买关键道具、60 和 130 都无意义」时，C 是唯一有用的箱子。</p>
+            <p><strong>解析</strong>：C 的辩护揭示了期望值的局限：<strong>玩家最大化的不是金币期望，是「效用」——金币对当前目标的价值</strong>。门槛效应（不够 500 就等于零）会让低期望高方差选项翻身。设计彩票型奖励时故意制造这类门槛（500 金币的传说装备），就能让「不理性」的冒险变得理性——纠结感于是覆盖到更多玩家。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>有人给剪刀石头布加了第四手「井」：井赢石头和剪刀（掉进去），输给布（盖住井口）。这个扩展会发生什么？动手画克制图分析。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：画出克制图会发现：井赢两项输一项（净 +1），石头赢一输二（净 −1）——<strong>井严格优于石头</strong>（凡石头能赢的剪刀，井也赢；石头输的布和井，石头无一还手）。理性玩家永远不出石头，游戏退化回「井、剪、布」的新三角。「井」的加入不但没有丰富选择，反而杀死了石头。</p>
+            <p><strong>解析</strong>：这是「加内容 ≠ 加选择」的最小证明：新增选项必须与既有选项形成<strong>互有胜负</strong>的关系，否则要么它是上位项（杀死旧选项）、要么是劣位项（自己是死内容）。往克制环里加东西的正确姿势是保持每项胜负数平衡（如五行：各赢二输二）——每次游戏加新职业、新兵种，平衡团队画的第一张图就是这张克制图。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>以撒的商店用金币买道具，恶魔房用血上限换道具。玩家普遍反映恶魔房「纠结得多」。用机会成本与资源性质解释这个差异。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：两种货币的再生性完全不同：金币持续掉落、可再生，花掉的机会成本是「过会儿再攒」；血上限几乎不可再生，且它是<strong>生存资本</strong>——付出的不是资源，是未来每一场战斗的容错率。恶魔房实际在问：「用确定的未来风险，换现在的战力，赌不赌？」——一次交易同时踩中机会成本（不可再生）、风险回报（当前收益 vs 未来风险）和后果作数（少一颗心可能就是这局的死因）。</p>
+            <p><strong>解析</strong>：可提炼成设计公式：<strong>选择的重量 ≈ 所付资源的不可再生程度 × 后果的持续时间</strong>。想让某个选择变重，不必加大数额，改付「再也回不来」的货币即可——血上限、永久属性、唯一道具的让渡，都比金币贵一个量级。反向亦然：想让新手敢试，就让学费用可再生货币支付。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「落后时应该选高方差」——用一个具体场景（MOBA 落后方偷大龙、卡牌残血打赌怪、足球最后五分钟换上三前锋皆可）展开论证，并说明为什么设计师应该主动给落后方提供高方差工具。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>论证</strong>（以偷大龙为例）：落后方正面团战胜率假设只有 20%——稳扎稳打的期望是持续落后直到输。偷大龙成功率或许只有 35%，但成功即改写局势：<strong>当「稳妥线」的终点是必输时，稳妥的真实期望是零，任何有翻盘概率的高方差选项都严格更优</strong>。领先方逻辑对称：任何高方差事件都在给对面送翻盘概率，故领先方应压缩变数（控图、避战、滚雪球）。</p>
+            <p><strong>设计层面</strong>：为什么要主动供给高方差工具（大龙、赌怪卡、大乱斗模式的随机）？因为它同时买到三样东西——落后方有事可做（希望是留存的氧气，第 5 章：进步可感知的变体）、领先方不敢躺赢（必须持续做防守决策）、观众有悬念。代价是「运营优势被一波偷掉」的挫败与争议——方差工具的成功率与收益要仔细定价：让翻盘<strong>可能但昂贵</strong>（35% 而不是 60%），逆转才既有戏剧性又不亵渎前期优势。<strong>解析</strong>：注意这题把第 5、6、7 三章串起来了——翻盘机制同时是难度调节（隐形橡皮筋）、动机供给（落后方的胜任希望）与选择设计（方差工具箱）。好设计常常一件东西同时干三份活。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一款 4X 策略游戏后期单位过百，玩家平均在第 150 回合弃档（游戏设计里程碑约在 300 回合）。诊断问题，开三个药方，并写明每个药方牺牲了什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>诊断</strong>：决策疲劳——后期每回合上百个「不难但要做」的微决策（单个单位移动、每城造什么），碎决策淹没了真正的战略选择，「再一回合」的甜变成了「还有一百个单位没动」的苦。</p>
+            <p><strong>药方</strong>：① 自动化——单位编队与自动执行（工人自动改良、部队设巡逻），牺牲：极限微操的上限，硬核玩家抱怨 AI 代打不够优；② 聚合决策——军团系统（多个单位合并为一个棋子移动作战），牺牲：战术粒度，单兵种走位的深度消失；③ 决策分级 UI——回合开始只弹「需要你拍板的三件大事」，其余默认沿用上回合策略，牺牲：玩家对帝国的全知掌控感，且「什么算大事」的判定本身要做对。</p>
+            <p><strong>解析</strong>：三个药方共享的原则：<strong>保住高价值决策的密度，压缩低价值决策的数量</strong>——注意力预算固定，砍的必须是「决策价值/耗时比」最低的那批。文明系列二十年的改版史（工人自动化、军团、政策卡）就是这条原则的编年史。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>把你在习题 4.8（或 1.7）设计的纸笔游戏拿出来，用三条件逐一体检每个决策点，找出最弱的一条，出一版修改，并预判修改的副作用。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考流程</strong>（以 4.8 的「盖数字比大小」为例）：决策点是每轮写哪个数。体检——取舍✓（大数现在赢但后程乏力）；后果✓（写过的数不能再写）；<strong>信息最弱</strong>：首轮双方零信息纯盲猜（正是当时预判的烦点）。修改：首轮双方明牌出（教学轮 + 建立初始信息），且每轮结束公示双方已用数字清单（把记牌负担变成公开信息，聚焦决策本身）。<strong>副作用预判</strong>：公示清单降低了记忆型玩家的优势——擅长记牌的人失去一个技能维度；明牌首轮少了一轮悬念。是否值得取决于目标玩家：休闲局值得，硬核局可改为「只公示数量不公示数值」的折中。</p>
+            <p><strong>解析</strong>：注意「信息充分」不等于「信息全公开」——扑克的魅力恰在信息不对称。准确的表述是：<strong>玩家应有足够信息形成有依据的判断，而剩下的不确定性应该是设计选择而非设计疏忽</strong>。体检时问的不是「玩家知道一切吗」，而是「玩家的猜测有据可依吗」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>「平衡就是把所有选项调到胜率五五开」——请反驳这句话。用非对称对抗游戏（黎明杀机的屠夫对求生者、RTS 的不同种族、狼人杀的狼与民）说明「平衡」的更好定义，并论证强行拉平所有选项胜率会伤害什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>反驳</strong>：五五开只在「镜像对称」的对抗里是平衡的必要形态（同英雄内战）。非对称游戏的平衡对象根本不是单选项胜率：狼人杀狼胜率天然不是 50%，玩家也不在乎——他们在乎的是<strong>每个位置都有戏可演、每种阵容都有争胜的路径</strong>。更好的定义：平衡 = ① 无上位策略（没有一项让其他项失去存在意义）；② 各选项在其目标场景下都有可行的取胜路线；③ 强弱差异在玩家的技能与决策可补偿的范围内。</p>
+            <p><strong>强行拉平的代价</strong>：把所有英雄/种族/武器调到胜率 50%，最省事的路径是<strong>同质化</strong>——磨平极端特性（超远程削射程、高爆发削伤害），选项之间的差异缩小，「选谁都一样」达成了数字平衡，杀死了选择本身（回看 7.1 的结论：好选择在不同维度之间——同质化正是把维度磨掉）。极端个性 + 相互克制 + 场景分工，比全员 50% 更健康：让每个选项在自己的主场闪耀，在客场挣扎，选择的乐趣恰恰住在这些不平衡里。<strong>解析</strong>：一句话收束：<strong>平衡的目标不是消灭差异，而是保卫选择</strong>——胜率表是仪表盘，不是方向盘。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 有意义选择三条件：真实取舍、信息充分、后果作数——对应假/盲/明三种病；好选择在不同维度之间，能排成一列比大小的选择该回炉；② 上位策略杀死的不是对手而是其他选项，削弱是给选择面做的手术，克制环是最古老的疫苗；③ 期望接近时最纠结，冒险项需要风险溢价，<strong>局面改变最优解</strong>是选择保鲜的最便宜手段；④ 选择的重量 = 所付资源的不可再生度 × 后果持续时间——玩家多久没「疼」过了？⑤ 决策要分层排班：大选择低频、小选择高频、不重要的自动化——注意力和金币一样要做预算。<br><strong>下一章预告</strong>：给选择保鲜的另一味主药是随机——但随机也是最危险的调料：为什么 95% 命中的落空让人摔手柄，0.6% 的抽卡却让人上头？体验篇终章：随机与奖励。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./06-玩家动机与类型.html">← 第 6 章 动机：玩家为什么开始玩、为什么留下</a>
+          <a href="./08-随机性与奖励.html">第 8 章 随机与奖励：惊喜、保底与斯金纳箱 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("chest-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 360;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var msg = document.getElementById("chest-msg");
+
+    var safe = { opens: 0, total: 0 };
+    var risk = { opens: 0, total: 0, hits: 0, recent: [], streak: 0 };
+
+    var ready = false; /* bindRange 绑定时会立即回调一次 */
+    var getSafe = KB.bindRange(document.getElementById("ctl-safe"),
+      document.getElementById("val-safe"), function (v) { return "🪙 " + v; }, function () { if (ready) draw(); });
+    var getProb = KB.bindRange(document.getElementById("ctl-prob"),
+      document.getElementById("val-prob"), function (v) { return v + "%"; }, function () { if (ready) draw(); });
+    var getBig = KB.bindRange(document.getElementById("ctl-big"),
+      document.getElementById("val-big"), function (v) { return "🪙 " + v; }, function () { if (ready) draw(); });
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function openSafe() {
+      safe.opens += 1;
+      safe.total += getSafe();
+    }
+    function openRisk() {
+      risk.opens += 1;
+      var hit = Math.random() * 100 < getProb();
+      if (hit) {
+        risk.total += getBig();
+        risk.hits += 1;
+        risk.streak = 0;
+      } else {
+        risk.streak += 1;
+      }
+      risk.recent.push(hit);
+      if (risk.recent.length > 60) risk.recent.shift();
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var mid = w / 2;
+      var evSafe = getSafe();
+      var evRisk = getProb() * getBig() / 100;
+
+      /* 分栏线 */
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.beginPath();
+      ctx.moveTo(mid, 14);
+      ctx.lineTo(mid, H - 44);
+      ctx.stroke();
+
+      ctx.font = "600 15px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText("🧰 稳妥箱：100% 得 " + evSafe, 16, 32);
+      ctx.fillText("🎁 冒险箱：" + getProb() + "% 得 " + getBig(), mid + 16, 32);
+
+      ctx.font = "12.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("期望：每开一次平均 " + evSafe.toFixed(1), 16, 56);
+      ctx.fillText("期望：每开一次平均 " + evRisk.toFixed(1), mid + 16, 56);
+
+      /* 统计 */
+      ctx.fillStyle = css("--kb-fg");
+      ctx.font = "13px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("已开 " + safe.opens + " 次 · 累计 " + safe.total, 16, 92);
+      ctx.fillText("实际平均 " + (safe.opens ? (safe.total / safe.opens).toFixed(1) : "—"), 16, 114);
+      ctx.fillText("已开 " + risk.opens + " 次 · 中 " + risk.hits + " 次 · 累计 " + risk.total, mid + 16, 92);
+      ctx.fillText("实际平均 " + (risk.opens ? (risk.total / risk.opens).toFixed(1) : "—") +
+        "　当前连空 " + risk.streak, mid + 16, 114);
+
+      /* 冒险箱近 60 次结果条 */
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("冒险箱最近结果（金=中，灰=空）：", mid + 16, 146);
+      var bx = mid + 16, by = 158, s = 9;
+      risk.recent.forEach(function (hit, i) {
+        var col = i % 20, row = Math.floor(i / 20);
+        ctx.fillStyle = hit ? "#f59e0b" : css("--kb-border-strong");
+        ctx.fillRect(bx + col * (s + 3), by + row * (s + 3), s, s);
+      });
+
+      /* 累计对比条形 */
+      var maxT = Math.max(safe.total, risk.total, 1);
+      var barY = H - 78, barH = 20, barMax = Math.min(w / 2 - 60, 240);
+      ctx.fillStyle = "#2563eb";
+      ctx.fillRect(16, barY, Math.max(safe.total / maxT * barMax, 2), barH);
+      ctx.fillStyle = "#f59e0b";
+      ctx.fillRect(mid + 16, barY, Math.max(risk.total / maxT * barMax, 2), barH);
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("累计对比", 16, barY - 8);
+
+      /* 判词 */
+      var diff = Math.abs(evSafe - evRisk);
+      if (diff <= Math.max(evSafe, evRisk) * 0.08) {
+        msg.textContent = "两箱期望几乎相同（" + evSafe.toFixed(0) + " vs " + evRisk.toFixed(1) + "）——最纠结的调法：怎么选都对，也都不对。";
+      } else if (evRisk > evSafe) {
+        msg.textContent = "冒险箱期望明显更高（" + evRisk.toFixed(1) + " vs " + evSafe + "）——它成了上位选项，稳妥箱形同虚设。";
+      } else {
+        msg.textContent = "稳妥箱期望更高（" + evSafe + " vs " + evRisk.toFixed(1) + "）——除非玩家需要豪赌门槛，冒险箱无人问津。";
+      }
+    }
+
+    document.getElementById("btn-safe").addEventListener("click", function () { openSafe(); draw(); });
+    document.getElementById("btn-risk").addEventListener("click", function () { openRisk(); draw(); });
+    document.getElementById("btn-auto").addEventListener("click", function () {
+      for (var i = 0; i < 100; i++) { openSafe(); openRisk(); }
+      draw();
+    });
+    document.getElementById("btn-reset").addEventListener("click", function () {
+      safe.opens = 0; safe.total = 0;
+      risk.opens = 0; risk.total = 0; risk.hits = 0; risk.streak = 0;
+      risk.recent.length = 0;
+      draw();
+    });
+
+    ready = true;
+    draw();
+  });
+  </script>
+</body>
+</html>

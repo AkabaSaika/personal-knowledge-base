@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>09 基变换与坐标 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 9 章：坐标是基下的组合系数，换基矩阵 P 的双向翻译，相似矩阵 P⁻¹AP 的含义，配可拖拽基向量的坐标演示。">
+  <meta name="kb:tags" content="线性代数,教材,基变换,坐标,相似矩阵,jbh">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 9 章 · 基变换与坐标</h1>
+        <p class="kb-lead">结构篇开幕。一个向量是客观存在的“箭头”，而坐标 (3, 2) 只是它在某门“语言”（某组基）里的名字。换一组基，同一支箭头就换一个名字。这一章练习在语言之间自由翻译——它本身不难，却是打开特征值、对角化这些重头戏的钥匙：<strong>很多难题换一门语言描述，就变成了简单题</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释“坐标 = 基下的组合系数”；② 用换基矩阵 P 在新旧坐标间双向翻译（并且不搞反方向）；③ 解释相似矩阵 P⁻¹AP 是“同一变换的另一种语言描述”；④ 说出换基的动机——挑一门让问题变简单的语言。</p>
+        </div>
+
+        <h2>坐标其实是一份“配方”</h2>
+        <p>写下 <strong>v</strong> = (3, 2) 时，我们默认了一份约定：<strong>v</strong> = 3<strong>î</strong> + 2<strong>ĵ</strong>——坐标是<strong>标准基的组合系数</strong>。但第 2 章说过，任何两个不共线的向量 <strong>b</strong>₁、<strong>b</strong>₂ 都能当基：同一个 <strong>v</strong> 总能唯一写成 <em class="kb-math">c</em>₁<strong>b</strong>₁ + <em class="kb-math">c</em>₂<strong>b</strong>₂，于是 (<em class="kb-math">c</em>₁, <em class="kb-math">c</em>₂) 就是 <strong>v</strong> 在新基下的坐标。<strong>箭头没变，变的只是记账方式。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 拖一拖：同一个点，两套坐标</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas kb-canvas-drag" id="basis-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：向量不变，基一变坐标就变；基共线时坐标系瘫痪。</p></noscript>
+            <div class="kb-interactive-controls">
+              <span class="kb-control" style="min-width:300px">拖动基向量 <strong style="color:#2563eb">b₁</strong>、<strong style="color:#16a34a">b₂</strong> 和红点 <strong style="color:#ef4444">v</strong>，对照两套坐标<span class="kb-control-value" id="basis-readout"></span></span>
+              <button class="kb-btn" id="basis-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 两个实验</p>
+          <p>① 只拖红点 v：两套坐标一起变，但各自按各自的网格记账；② 只拖基向量：<strong>红点纹丝不动，新坐标却在变</strong>——“改语言不改事实”。试着把 b₂ 拖到与 b₁ 共线：网格塌成一族平行线，坐标失效（这就是基必须线性无关的原因）。</p>
+        </div>
+
+        <h2>换基矩阵：两个方向的翻译</h2>
+        <p>把新基向量（用标准语言写下的）按列拼成矩阵 P = [<strong>b</strong>₁ <strong>b</strong>₂]，翻译就是矩阵乘法：</p>
+        <pre><code>v_标准 = P · v_新       （新坐标 → 标准坐标：按配方组合，自然方向）
+v_新   = P⁻¹ · v_标准    （标准坐标 → 新坐标：反向翻译要用逆）</code></pre>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 方向最容易搞反</p>
+          <p>记忆锚点：P 的列本身就是<strong>用标准语言写的新基向量</strong>，所以 P 吃“新语言”吐“标准语言”。拿基向量自查一次即可校准：<strong>b</strong>₁ 在新基下的坐标显然是 (1, 0)，而 P·(1, 0) = 第一列 = <strong>b</strong>₁ 的标准坐标 ✓。方向反了这个检验立刻穿帮。</p>
+        </div>
+
+        <h2>变换也要翻译：相似矩阵</h2>
+        <p>矩阵 A 描述一个变换时，用的也是标准语言（它的列是 <strong>î</strong>、<strong>ĵ</strong> 的去向）。同一个变换在新基下的矩阵是什么？走一条“翻译三部曲”：拿到新坐标 → 先翻译成标准语言（乘 P）→ 做变换（乘 A）→ 再翻译回新语言（乘 P⁻¹）：</p>
+        <pre><code>A_新 = P⁻¹ A P        （读法：右起——翻进来、变换、翻回去）</code></pre>
+        <p>形如 P⁻¹AP 的矩阵与 A 互称<strong>相似矩阵</strong>：同一个几何动作、不同语言的两份描述。既然动作相同，那些不依赖语言的“客观量”必然一致——比如行列式（面积缩放倍数不因记账方式而变，证明见习题 9.7）。</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 一次令人心动的换基</p>
+          <p>取 A = ⎡3 1; 0 2⎤，新基 <strong>b</strong>₁ = (1, 0)、<strong>b</strong>₂ = (−1, 1)，即 P = ⎡1 −1; 0 1⎤（det = 1，P⁻¹ = ⎡1 1; 0 1⎤）。计算：AP = ⎡3 −2; 0 2⎤，P⁻¹AP = ⎡1 1; 0 1⎤⎡3 −2; 0 2⎤ = <strong>⎡3 0; 0 2⎤</strong>——对角矩阵！在这门语言里，“复杂”的 A 露出真身：沿 <strong>b</strong>₁ 拉伸 3 倍、沿 <strong>b</strong>₂ 拉伸 2 倍，仅此而已。</p>
+          <p>为什么偏偏这组基有此奇效？验证一下：A<strong>b</strong>₁ = (3, 0) = 3<strong>b</strong>₁，A<strong>b</strong>₂ = (−3+1, 2) = (−2, 2) = 2<strong>b</strong>₂——<strong>这两个方向被 A 变换后方向不变，只是伸缩</strong>。这样的方向如何系统地找出来？正是下一章的全部内容。</p>
+        </div>
+
+        <h2>为什么要换基</h2>
+        <ul>
+          <li><strong>让变换变简单</strong>：对角矩阵下，求幂、解方程都是逐轴独立的小学算术（第 10 章展开）。</li>
+          <li><strong>让数据变简单</strong>：JPEG 把图像换到“频率基”后大量系数接近零，砍掉就是压缩；PCA 把数据换到“主方向基”实现降维（第 12 章）。</li>
+          <li><strong>让物理变简单</strong>：斜面问题选“沿斜面 + 垂直斜面”的基，受力分解一步到位。</li>
+        </ul>
+        <p>一句话：<strong>基是视角，换基是选择对问题最友好的视角。</strong></p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 新 → 标准</p>
+          <p>新基 <strong>b</strong>₁ = (2, 1)、<strong>b</strong>₂ = (−1, 1)。某向量在新基下的坐标为 (2, 1)，求它的标准坐标。</p>
+          <p><strong>解</strong>：按配方组合：2·(2, 1) + 1·(−1, 1) = <strong>(3, 3)</strong>。矩阵写法：P = ⎡2 −1; 1 1⎤，P·(2, 1) = (3, 3)，一致。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 标准 → 新</p>
+          <p>沿用例 1 的基，求标准坐标 (5, 1) 在新基下的坐标。</p>
+          <p><strong>解</strong>：解 <em class="kb-math">c</em>₁(2, 1) + <em class="kb-math">c</em>₂(−1, 1) = (5, 1)：由 2<em class="kb-math">c</em>₁ − <em class="kb-math">c</em>₂ = 5 与 <em class="kb-math">c</em>₁ + <em class="kb-math">c</em>₂ = 1 相加得 3<em class="kb-math">c</em>₁ = 6，<em class="kb-math">c</em>₁ = 2，<em class="kb-math">c</em>₂ = −1。新坐标 <strong>(2, −1)</strong>。也可先算 P⁻¹ = ⅓⎡1 1; −1 2⎤ 再乘——反向翻译=解方程组=乘逆矩阵，三位一体（第 7、8 章在此会师）。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>新基 <strong>b</strong>₁ = (1, 2)、<strong>b</strong>₂ = (3, 1)。向量 <strong>w</strong> 的新基坐标为 (2, −1)，求其标准坐标。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>2(1, 2) − 1(3, 1) = <strong>(−1, 3)</strong>。</p>
+            <p><strong>解析</strong>：新 → 标准永远是“无脑组合”，不需要解方程也不需要逆矩阵——先分清方向再动笔。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>沿用 9.1 的基，求标准坐标 (5, 5) 在新基下的坐标。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>解 <em class="kb-math">c</em>₁(1, 2) + <em class="kb-math">c</em>₂(3, 1) = (5, 5)：<em class="kb-math">c</em>₁ + 3<em class="kb-math">c</em>₂ = 5，2<em class="kb-math">c</em>₁ + <em class="kb-math">c</em>₂ = 5。解得 <em class="kb-math">c</em>₁ = 2，<em class="kb-math">c</em>₂ = 1，新坐标 <strong>(2, 1)</strong>。</p>
+            <p><strong>解析</strong>：验算走反方向：2(1, 2) + 1(3, 1) = (5, 5) ✓。一来一回互为检验，是换基计算的标准自查动作。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>下列向量组能否作平面的基？(a) (2, 1) 与 (4, 2)；(b) (1, 1) 与 (1, −1)；(c) (0, 3) 与 (2, 0)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) det = 4 − 4 = 0，共线，<strong>不能</strong>。(b) det = −2 ≠ 0，<strong>能</strong>。(c) det = −6 ≠ 0，<strong>能</strong>。</p>
+            <p><strong>解析</strong>：基的资格审查 = 一个行列式。演示里把 b₂ 拖到与 b₁ 共线时坐标失效，就是 (a) 的下场——P 不可逆，反向翻译 P⁻¹ 不存在。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>基为 <strong>b</strong>₁ = (1, 2)、<strong>b</strong>₂ = (0, 1)。写出 P 与 P⁻¹，并把标准坐标 (3, 8) 翻译成新坐标。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>P = ⎡1 0; 2 1⎤，det = 1，P⁻¹ = ⎡1 0; −2 1⎤。新坐标 = P⁻¹(3, 8) = <strong>(3, 2)</strong>。</p>
+            <p><strong>解析</strong>：验算：3(1, 2) + 2(0, 1) = (3, 8) ✓。det = 1 的基翻译时不产生分数，手算最舒服。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>新基取旋转 45° 后的标准基：<strong>b</strong>₁ = (√2/2, √2/2)，<strong>b</strong>₂ = (−√2/2, √2/2)。求标准坐标 (1, 0) 的新坐标，并观察 P⁻¹ 与 Pᵀ 的关系。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>P 就是旋转矩阵 R(45°)。P⁻¹ = R(−45°) = ⎡√2/2 √2/2; −√2/2 √2/2⎤ = <strong>Pᵀ</strong>！新坐标 = Pᵀ(1, 0) = <strong>(√2/2, −√2/2)</strong>。</p>
+            <p><strong>解析</strong>：几何上显然：旋转的逆就是反向旋转。代数上这不是巧合——基向量<strong>标准正交</strong>时恒有 P⁻¹ = Pᵀ，反向翻译从“解方程”降价为“做点积”（新坐标第 i 个分量 = <strong>v</strong>·<strong>b</strong>ᵢ）。这类“黄金基”是第 11 章的主角。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>A = ⎡2 1; 1 2⎤，P = ⎡1 −1; 1 1⎤。计算 P⁻¹AP，并解读结果。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>det(P) = 2，P⁻¹ = ½⎡1 1; −1 1⎤。AP = ⎡3 −1; 3 1⎤，P⁻¹AP = ½⎡6 0; 0 2⎤ = <strong>⎡3 0; 0 1⎤</strong>。</p>
+            <p><strong>解析</strong>：又是对角！在基 {(1, 1), (1, −1)} 眼中，A 只是“沿 (1, 1) 拉伸 3 倍、沿 (1, −1) 原地不动”。验证：A(1, 1) = (3, 3) = 3(1, 1)，A(1, −1) = (1, −1) ✓。注意这两个方向互相垂直——对称矩阵的特征方向总是如此，伏笔埋到第 12 章。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明相似矩阵行列式相等：det(P⁻¹AP) = det(A)。再用一句几何语言解释为什么这是“必然的”。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>由乘积性质与 det(P⁻¹) = 1/det(P)（第 6 章习题 6.7）：det(P⁻¹AP) = det(P⁻¹)·det(A)·det(P) = (1/det P)·det(A)·det(P) = det(A)。∎</p>
+            <p><strong>几何解释</strong>：行列式是“面积缩放倍数”，这是变换本身的客观属性；相似矩阵只是同一变换换了记账语言，客观属性当然不变。（同样对语言免疫的还有特征值与迹——下一章见。）</p>
+            <p><strong>解析</strong>：注意 det(P) 在算式中一约而空：翻译工作“进来一次、出去一次”，对面积的影响恰好抵消。这类“共轭不变量”的论证模式在数学中随处可见。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 坐标 = 基下的组合系数，箭头客观、名字随基而变；② P 列 = 新基向量（标准语言书写），v_标准 = P·v_新，反向用 P⁻¹；③ 变换的翻译：A_新 = P⁻¹AP，相似矩阵 = 同一动作的不同描述，det 等客观量不变；④ 换基的意义：挑对语言，难题变简单题。<br><strong>下一章预告</strong>：例题里那种“方向不变、只是伸缩”的神奇方向叫<strong>特征向量</strong>。如何系统地找到它们、找到后能解锁什么超能力——线性代数最著名的一章来了。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./08-逆矩阵列空间零空间与秩.html">← 第 8 章 逆矩阵、列空间、零空间与秩</a>
+          <a href="./10-特征值与特征向量.html">第 10 章 特征值与特征向量 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("basis-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 44;
+    var d0 = { b1: { x: 2, y: 0.5 }, b2: { x: 0.5, y: 1.5 }, v: { x: 3, y: 2 } };
+    var b1 = { x: d0.b1.x, y: d0.b1.y }, b2 = { x: d0.b2.x, y: d0.b2.y }, v = { x: d0.v.x, y: d0.v.y };
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("basis-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2 - 40, y: H / 2 + 50 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function toVec(x, y) {
+      var o = origin();
+      return { x: Math.round((x - o.x) / SCALE * 4) / 4, y: Math.round((o.y - y) / SCALE * 4) / 4 };
+    }
+
+    function seg(p, q, color, width, dash) {
+      var a = toPx(p), b = toPx(q);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash || []);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.lineWidth = 1;
+    }
+
+    function arrowV(vec, color) {
+      var a = toPx({ x: 0, y: 0 }), b = toPx(vec);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      if (len > 4) {
+        var ux = dx / len, uy = dy / len, s = 11;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - s * ux - s * 0.5 * uy, b.y - s * uy + s * 0.5 * ux);
+        ctx.lineTo(b.x - s * ux + s * 0.5 * uy, b.y - s * uy - s * 0.5 * ux);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.lineWidth = 1;
+    }
+
+    function handle(p, color) {
+      var q = toPx(p);
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(q.x, q.y, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = css("--kb-surface");
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var det = b1.x * b2.y - b2.x * b1.y;
+
+      // 新基网格：沿 b1 / b2 方向的平行线族
+      if (Math.abs(det) > 0.08) {
+        ctx.globalAlpha = 0.5;
+        for (var k = -6; k <= 6; k++) {
+          seg({ x: k * b2.x - 8 * b1.x, y: k * b2.y - 8 * b1.y },
+              { x: k * b2.x + 8 * b1.x, y: k * b2.y + 8 * b1.y }, css("--kb-border-strong"), 1);
+          seg({ x: k * b1.x - 8 * b2.x, y: k * b1.y - 8 * b2.y },
+              { x: k * b1.x + 8 * b2.x, y: k * b1.y + 8 * b2.y }, css("--kb-border-strong"), 1);
+        }
+        ctx.globalAlpha = 1;
+      }
+      // 标准坐标轴
+      var o = origin();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var text;
+      if (Math.abs(det) > 0.08) {
+        // 新坐标 c = P⁻¹ v
+        var c1 = (v.x * b2.y - v.y * b2.x) / det;
+        var c2 = (v.y * b1.x - v.x * b1.y) / det;
+        // 配方路径：先 c1·b1，再 + c2·b2
+        seg({ x: 0, y: 0 }, { x: c1 * b1.x, y: c1 * b1.y }, "#2563eb", 2, [6, 4]);
+        seg({ x: c1 * b1.x, y: c1 * b1.y }, v, "#16a34a", 2, [6, 4]);
+        text = "标准坐标 (" + v.x.toFixed(1) + ", " + v.y.toFixed(1) + ")　新坐标 (" +
+          c1.toFixed(2) + ", " + c2.toFixed(2) + ")";
+        ctx.fillStyle = css("--kb-fg");
+      } else {
+        text = "⚠️ b₁、b₂ 接近共线：不构成基，坐标失效";
+      }
+
+      arrowV(b1, "#2563eb");
+      arrowV(b2, "#16a34a");
+      handle(b1, "#2563eb");
+      handle(b2, "#16a34a");
+      handle(v, "#ef4444");
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      var p1 = toPx(b1), p2 = toPx(b2), pv = toPx(v);
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("b₁", p1.x + 9, p1.y - 9);
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("b₂", p2.x + 9, p2.y - 9);
+      ctx.fillStyle = "#ef4444";
+      ctx.fillText("v", pv.x + 10, pv.y - 10);
+
+      ctx.font = "600 13.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = Math.abs(det) > 0.08 ? css("--kb-fg") : css("--kb-warn");
+      ctx.fillText(text, 16, 26);
+      readout.textContent = "　" + text;
+    }
+
+    KB.enableDrag(canvas,
+      function (x, y) {
+        var targets = [["v", v], ["b1", b1], ["b2", b2]];
+        for (var i = 0; i < targets.length; i++) {
+          var q = toPx(targets[i][1]);
+          if (Math.hypot(x - q.x, y - q.y) < 20) return targets[i][0];
+        }
+        return null;
+      },
+      function (target, x, y) {
+        var nv = toVec(x, y);
+        if (Math.abs(nv.x) > 6 || Math.abs(nv.y) > 4) return;
+        if (target === "v") v = nv;
+        else if (target === "b1") { if (Math.hypot(nv.x, nv.y) > 0.4) b1 = nv; }
+        else { if (Math.hypot(nv.x, nv.y) > 0.4) b2 = nv; }
+        draw();
+      });
+
+    document.getElementById("basis-reset").addEventListener("click", function () {
+      b1 = { x: d0.b1.x, y: d0.b1.y };
+      b2 = { x: d0.b2.x, y: d0.b2.y };
+      v = { x: d0.v.x, y: d0.v.y };
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

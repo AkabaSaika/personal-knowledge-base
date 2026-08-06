@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>05 心流：难度与技能的赛跑 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 5 章：心流通道模型——难度与技能的赛跑，锯齿难度曲线与紧张缓和节奏，动态难度与辅助选项的取舍，配可调难度曲线的心流通道演示。">
+  <meta name="kb:tags" content="游戏设计,教材,心流,难度曲线,动态难度,辅助选项,xlynd">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 5 章 · 心流：难度与技能的赛跑</h1>
+        <p class="kb-lead">体验篇开幕。你一定经历过：抬起头，窗外天黑了；回过神，地铁坐过了站。玩到忘记时间的那种状态有名字、有成因、也有配方——而游戏恰好是人类发明过的最擅长制造它的机器。这一章回答观察篇留下的第一个「为什么」：<strong>为什么难度「刚好」的时候，人会忘记自己？</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 画出心流通道图，解释焦虑与无聊两侧的成因；② 把难度曲线理解为「陪玩家技能赛跑」，并判断一条曲线会在哪里把人甩出通道；③ 说出锯齿形节奏为什么优于单调爬升；④ 评估难度档位、动态难度、辅助选项这些工具各自的代价。</p>
+        </div>
+
+        <h2>玩到忘记时间的那种状态</h2>
+        <p>心理学家米哈里·契克森米哈赖（Mihaly Csikszentmihalyi）花了几十年研究一件事：人在什么时候最幸福？他访谈的对象里有外科医生、攀岩者、棋手、作曲家——这些人反复描述同一种体验：<strong>全神贯注到忘记时间、忘记自己，每一步都清楚知道下一步该做什么，行动与意识融为一体</strong>。他把这种状态命名为<strong>心流（Flow）</strong>。</p>
+        <p>进入心流有三个条件，你应该觉得眼熟：</p>
+        <ul>
+          <li><strong>目标清晰</strong>——每一刻都知道自己该干什么；</li>
+          <li><strong>反馈即时</strong>——每个动作立刻知道做对没有；</li>
+          <li><strong>挑战与能力匹配</strong>——不太难，也不太易。</li>
+        </ul>
+        <p>前两条正是第 1 章四特征里的「目标」和「反馈」——换句话说，<strong>游戏天生就是按心流的配方造的</strong>。攀岩者要爬到悬崖上才能获得的状态，游戏玩家在沙发上就能进入，这是游戏这种媒介最深的秘密。而三个条件里前两条是结构问题（第 1 章已解决），真正难伺候的是第三条——它是一个<strong>移动的靶子</strong>。</p>
+
+        <h2>心流通道：焦虑与无聊之间</h2>
+        <p>把「挑战与能力匹配」画成图：横轴是玩家技能，纵轴是挑战难度。难度远超技能 → <strong>焦虑</strong>（挫败、想摔手柄）；技能远超难度 → <strong>无聊</strong>（刷新手村的满级号）；两者相当的那条斜向走廊，就是<strong>心流通道</strong>。</p>
+        <p>麻烦在于：<strong>玩家的技能只涨不跌</strong>。开局刚好的难度，两小时后就变无聊；所以挑战必须跟着涨——难度曲线的本质，是一场设计师安排的<strong>陪跑</strong>。跑快了把人甩进焦虑区（弃坑），跑慢了让人跌进无聊区（毕业流失）。下面的演示让你亲手调这场赛跑：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 心流通道：调一条难度曲线，看玩家在哪一小时被甩出通道</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="flow-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：玩家技能随游戏时间稳定增长，难度曲线必须贴着技能线「陪跑」——起点过高是新手墙（开局即焦虑弃坑），斜率过低则中后期跌入无聊区（毕业流失），全程贴身才能维持心流。</p></noscript>
+            <p id="flow-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);"></p>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">起始难度<span class="kb-control-value" id="val-d0"></span>
+                <input type="range" id="ctl-d0" min="0" max="4" step="0.1" value="1.2"></label>
+              <label class="kb-control">难度成长斜率<span class="kb-control-value" id="val-slope"></span>
+                <input type="range" id="ctl-slope" min="0" max="1.2" step="0.05" value="0.45"></label>
+              <label class="kb-control">玩家学习速度<span class="kb-control-value" id="val-learn"></span>
+                <input type="range" id="ctl-learn" min="0.1" max="0.9" step="0.05" value="0.45"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" data-flow="3.4,0.45,0.45" type="button">新手墙</button>
+              <button class="kb-btn" data-flow="1.2,0.1,0.6" type="button">后期无聊</button>
+              <button class="kb-btn" data-flow="1.2,0.45,0.45" type="button">贴身陪跑</button>
+            </div>
+          </div>
+        </div>
+        <p>三个预设对应三种真实的失败与成功：<strong>新手墙</strong>——起始难度压过新玩家的起点技能，前两小时就把人甩进焦虑区（评测区高频词：「劝退」）；<strong>后期无聊</strong>——难度增速跟不上学习速度，中期玩家「毕业」流失（高频词：「腻了」）；<strong>贴身陪跑</strong>——曲线贴着技能线微微偏上，玩家始终「踮脚够得着」。注意第三条曲线的位置：<strong>通道内偏上沿</strong>是最佳位置——略高于当前能力的挑战最能催人成长，这正是「踮脚」的学问。</p>
+
+        <h2>好的难度曲线是锯齿形</h2>
+        <p>演示里的曲线是直线，真实的好曲线不是——它是<strong>锯齿形</strong>：爬升、冲顶、回落，再爬升。看一条典型的关卡难度曲线：</p>
+        <figure>
+          <svg viewBox="0 0 660 240" width="660" height="240" role="img" aria-label="锯齿形难度曲线：挑战线在玩家技能线上方锯齿状爬升，Boss 战为峰，安全屋为谷">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <line x1="46" y1="200" x2="630" y2="200" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <line x1="46" y1="200" x2="46" y2="24" stroke="var(--kb-fg-muted)" stroke-width="1.5"/>
+              <text x="620" y="220" text-anchor="end" font-size="11.5" fill="var(--kb-fg-muted)">游戏进程 →</text>
+              <text x="40" y="20" font-size="11.5" fill="var(--kb-fg-muted)">难度</text>
+              <path d="M 46 186 L 630 96" stroke="#16a34a" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+              <text x="600" y="86" text-anchor="end" font-size="11.5" fill="#16a34a">玩家技能</text>
+              <path d="M 46 182 L 140 150 L 168 166 L 260 118 L 292 138 L 396 84 L 430 106 L 540 52 L 578 78 L 630 60"
+                    stroke="#2563eb" stroke-width="2.5" fill="none"/>
+              <text x="140" y="140" text-anchor="middle" font-size="11" fill="#2563eb">小 Boss</text>
+              <text x="260" y="108" text-anchor="middle" font-size="11" fill="#2563eb">新机制考试</text>
+              <text x="396" y="74" text-anchor="middle" font-size="11" fill="#2563eb">章节 Boss</text>
+              <text x="540" y="42" text-anchor="middle" font-size="11" fill="#2563eb">最终试炼</text>
+              <g fill="var(--kb-fg-muted)" font-size="10.5">
+                <text x="172" y="182" text-anchor="middle">安全屋</text>
+                <text x="296" y="154" text-anchor="middle">补给站</text>
+                <text x="434" y="122" text-anchor="middle">篝火</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption>蓝线（挑战）绕着绿线（技能）锯齿上升：峰是考试，谷是喘息。谷的位置在技能线之下——故意让玩家「无聊」一小会儿。</figcaption>
+        </figure>
+        <p>为什么不干脆一路爬升？三个理由：</p>
+        <ul>
+          <li><strong>人不能持续紧张</strong>——紧张是消耗品，Boss 战后的安全屋、魂类的篝火、传送门每组谜题间的电梯，都是给情绪回血的谷；</li>
+          <li><strong>回落段是消化学习的时间</strong>——刚学会的新技巧在低压力环境里练熟，下一个峰才接得住（回想 1-1 的三根水管：考试之前必有练习）；</li>
+          <li><strong>峰值靠对比才显得高</strong>——一直响的音乐等于没有高潮。Boss 战的压迫感，一半是之前那段安静走廊给的。</li>
+        </ul>
+        <p>这条「紧张—缓和交替」的原理超越难度本身，它同样支配关卡节奏与叙事节奏——第 11 章的「紧张度曲线」会再次请出这张图。</p>
+
+        <h2>一条通道装不下所有人：难度工具箱</h2>
+        <p>到目前为止我们假装「玩家」是一个人。现实是一万个玩家有一万条技能线：手残党和速通选手买的是同一份游戏。一条固定曲线必然同时制造焦虑和无聊——于是有了难度工具箱：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工具</th><th>做法</th><th>优点</th><th>代价</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>难度档位</strong></td>
+                <td>简单 / 普通 / 困难，开局自选</td>
+                <td>直白、玩家有掌控感</td>
+                <td>玩家开局并不了解自己；「简单」这个词自带贬义，刺伤自尊</td>
+              </tr>
+              <tr>
+                <td><strong>动态难度（DDA）</strong></td>
+                <td>系统暗中监测表现并调整（连死放宽、连胜收紧）</td>
+                <td>无感、每个人都被贴身陪跑</td>
+                <td>一旦被发现，成就感崩塌——「原来是游戏在让我」</td>
+              </tr>
+              <tr>
+                <td><strong>辅助选项</strong></td>
+                <td>把难度拆成可单独调节的维度（速度、伤害、无敌……）</td>
+                <td>精准、尊重玩家、无障碍友好</td>
+                <td>选项多、做起来贵；需要设计者明确「原版意图」</td>
+              </tr>
+              <tr>
+                <td><strong>玩法自选难度</strong></td>
+                <td>难度藏在玩家自己的选择里（build 强度、挑战路线、自我约束）</td>
+                <td>难度与玩法融为一体，无需菜单</td>
+                <td>需要系统深度支撑，新手未必意识到选项存在</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>值得单独一说的是辅助选项的典范——《蔚蓝》（Celeste）的辅助模式：它不给「简单档」，而是让你分别调游戏速度、无限体力、免死……并附上一段话，大意是：<em>本游戏按原设计最佳，但游戏属于每一位玩家</em>。不评判、不奖惩、把裁量权和尊严同时交给玩家——这段菜单文案被公认为难度设计史上的一个高光时刻。</p>
+
+        <h2>挫折的价值：魂类难度哲学</h2>
+        <p>心流模型有一种天真的读法：「挫折 = 设计失败」。魂类游戏用商业与口碑的双重成功证明这个读法是错的——在魂类里，<strong>反复失败本身是体验的一部分</strong>：被同一个 Boss 杀死二十次，第二十一次终于打过，那种成就感的爆发是「贴身陪跑」永远给不了的。</p>
+        <p>但魂类的「难」绝不是乱难，它有三根支柱，缺一根就从「硬核」塌成「粪作」：</p>
+        <ul>
+          <li><strong>失败必须公平</strong>——每次死你都知道为什么：贪刀、忘了看体力条、没记招式。死于自己的错误让人不服，死于镜头、判定或随机让人卸载（第 8 章将展开「死于随机」的账）；</li>
+          <li><strong>重试成本可控</strong>——篝火离 Boss 不远，跑尸不至于磨光耐心；失败的代价要痛但不能贵（回想 4.2 的结论：教学关的失败要便宜——魂类只是把「便宜」的定义调高了）；</li>
+          <li><strong>进步可感知</strong>——哪怕没打过，「这次摸到二阶段了」也是反馈。技能的增长必须能被玩家自己看见，煎熬才有方向。</li>
+        </ul>
+        <p>用第 4 章的语言收束：魂类的难是写给目标玩家的<strong>承诺</strong>——「这里的成就感专卖给愿意撞墙的人」。它没有背离心流模型，而是选择了通道的<strong>上沿贴着焦虑区飞行</strong>：挫折是投资，爆发性的胜任感是回报——但这笔交易只对自愿签约的人成立。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 俄罗斯方块：自适应难度的鼻祖</p>
+          <p>用心流三条件分析俄罗斯方块为什么是「心流机器」，并指出它的难度匹配机制妙在哪里。</p>
+          <p><strong>分析</strong>：目标清晰（别堆满）、反馈即时（每块落地都有回应）——前两条件满分，第 1 章已论证。妙在第三条：它的速度随消行数上升，而<strong>消行速度本身就是玩家技能的函数</strong>——你消得越快，说明你越强，游戏就变得越快。难度不是按时间表涨的，是按你的表现涨的：手残玩家在低速区慢慢玩，高手几分钟就被推进高速区，<strong>每个人都被自动送到自己通道的上沿</strong>。这是不需要监测代码的动态难度——难度与技能被同一个变量（消行数）驱动，匹配是数学上自动成立的。<strong>结论</strong>：最优雅的 DDA 不是暗中观察玩家，而是让难度与技能共享同一个引擎。1984 年的设计，至今仍是自适应难度的天花板。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 同是暗中调难度，为什么一个被赞一个被骂</p>
+          <p>生化危机 4 会根据玩家表现暗中增减敌人数量与掉落，多年后被发现，玩家普遍称赞；马里奥赛车的「橡皮筋 AI」（落后者拿好道具、领先者拿香蕉皮）人尽皆知，抱怨不断。同是 DDA，为什么待遇相反？</p>
+          <p><strong>分析</strong>：三个差别。① <strong>作用对象</strong>：生化 4 调的是环境（PvE），没有第二个玩家受损；橡皮筋惩罚的是「跑得好」这件事本身——领先者被系统针对，公平感受损。② <strong>可感知性</strong>：生化 4 藏得深，玩家体验到的只是「刚刚好的紧张」；橡皮筋每局都肉眼可见（第一名永远在躲红龟壳），玩家能清晰归因「我输给了系统而不是对手」。③ <strong>服务目标</strong>：生化 4 服务个体的心流；橡皮筋服务的是「全场紧咬的派对氛围」——它故意压缩技能差距，本质上和糖豆人的笨拙操控同款（回看例 2.2），代价是硬核玩家的胜任感。<strong>结论</strong>：DDA 的红线不在「调」而在「被感知为不公平」——单人 PvE 里几乎怎么调都行，一旦涉及竞争与排名，暗手就会变成明患。顺带：马里奥赛车其实是自觉的取舍——它本来就是派对游戏，骂声来自把它当竞技玩的那群人（目标玩家错位，回看 4.7）。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 魂类玩家的「自选难度」藏在哪里</p>
+          <p>魂类游戏没有难度菜单，但老玩家常说「难度其实可以自己调」。找出这些藏在玩法里的难度旋钮。</p>
+          <p><strong>分析</strong>：至少四个旋钮。① <strong>build 强度</strong>：法师远程风筝显著易于近战无盾——职业选择就是难度选择；② <strong>练级自由</strong>：卡关了可以去别处刷魂升级，用时间换数值——数值是给非硬核玩家留的「场外求助」；③ <strong>召唤系统</strong>：NPC 与联机协助大幅降低 Boss 难度——社交即简单模式；④ <strong>自我约束</strong>：一周目裸装、不升级通关是社区自发的「困难模式」。<strong>结论</strong>：这就是工具箱里的「玩法自选难度」——菜单上没有难度选项，不等于没有难度设计；它把选择权藏进系统，好处是不打断幻想（没有「简单档」刺伤自尊），代价是新手可能不知道这些旋钮存在而白白撞墙（多少人不知道可以去刷魂？）。藏得优雅与藏得太深，只隔一层引导。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>回忆你最近一次「玩到忘记时间」的经历（不限游戏：运动、编程、拼图都算），用心流三条件逐条检查它为什么发生。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以「深夜写代码停不下来」为例）：目标清晰——就差这一个 bug 修完；反馈即时——每次运行立刻知道改对没有；挑战匹配——难度恰好在「够得着但要踮脚」的位置，每个小突破都带来下一个小目标。</p>
+            <p><strong>解析</strong>：注意反例更有诊断价值：同样是写代码，「需求不明的会议后」进不了心流（目标不清晰），「等 CI 跑二十分钟」进不了心流（反馈不即时）。心流三条件是通用的体验诊断表——这也是心流研究本来就不是从游戏出发的原因：游戏只是把三个条件工业化生产得最好的行业。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断以下场景各处于通道图的哪个区（焦虑 / 心流 / 无聊），并说明技能线与挑战线的相对位置：A 新手第一次打魂类 Boss，团灭十次没摸到二阶段；B 满级号回新手村做日常；C 棋逢对手的一盘棋；D 全程照着攻略视频通关解谜游戏。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 焦虑区（挑战远高于技能，且「进步可感知」支柱缺失——连二阶段都没见过，煎熬没有方向）；B 无聊区（技能远超挑战）；C 心流通道正中（双方技能即对方挑战，天然匹配——对弈类游戏经久不衰的结构原因）；D 无聊区——容易误判为心流：照抄攻略把「挑战」外包给了视频，实际挑战趋近于零，剩下的是执行。</p>
+            <p><strong>解析</strong>：D 最值得咀嚼：攻略没有改游戏一行代码，却把玩家从通道里挪了出去——<strong>挑战不是游戏的属性，是游戏与玩家之间的关系</strong>。这解释了为什么解谜游戏特别怕剧透（挑战一次性蒸发），也解释了 C 为什么是网游长寿的秘诀：PvP 的难度曲线由匹配系统代管，永远有「棋逢对手」可供应——前提是匹配算法够准（拉胯的匹配一次制造两个踏出通道的人）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>某横版动作游戏把八个 Boss 无间隔地连排在一起（打完立刻下一个）。用锯齿曲线的三个理由诊断它的问题，并开出修改方案。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>诊断</strong>：① 紧张无法回血——八连战等于要求玩家保持四十分钟峰值专注，生理上做不到，后段必然疲惫走形；② 没有消化时间——每个 Boss 教的应对技巧来不及沉淀就进下一场；③ 峰值互相抵消——场场都是高潮等于没有高潮，第八个 Boss 的登场毫无重量。</p>
+            <p><strong>方案</strong>：Boss 间插入低压力段（补给房、一段轻松的杂兵路、甚至纯环境叙事的走廊）；按「小 Boss → 谷 → 中 Boss → 谷 → 大 Boss」重排强度顺序；若「连战」是核心卖点（Boss Rush 模式确实存在），则把它做成通关后的挑战模式——面向已在通道上沿的玩家，并配排行榜给足回报。<strong>解析</strong>：最后一点是关键转折：同一个设计，放在主线是节奏事故，放在挑战模式是硬核福利——<strong>设计的对错常常不在设计本身，而在它被放在曲线的哪个位置、卖给哪批玩家</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>把四种难度工具（难度档位 / 动态难度 / 辅助选项 / 玩法自选）各配一个你知道的真实游戏例子，并各写一句它在该游戏里付出的代价。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>：难度档位——多数单机 RPG（代价：玩家开局盲选，选错要么弃坑要么无聊完 40 小时）；动态难度——生化危机 4（代价：被拆包发现后，部分玩家回头质疑自己当年的成就）；辅助选项——蔚蓝（代价：开发成本高，每个可调维度都要单独测试平衡）；玩法自选——魂类的 build 与召唤（代价：新手不知道旋钮存在，「不知道可以简单」地硬撞）。</p>
+            <p><strong>解析</strong>：四个工具不互斥，现代大作常常全家桶：给档位兜底、暗中 DDA 微调、辅助选项保无障碍、build 深度留给核心玩家。工具箱思维的要点是——<strong>没有最好的工具，只有和目标玩家群分布匹配的组合</strong>：单一硬核人群的游戏（魂类）可以只用第四种，全年龄大盘游戏（马里奥）则档位＋辅助（白狸猫套装）都得上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>经典俄罗斯方块允许玩家开局自选起始等级（Level 0–9，速度不同）。例 1 说过它已有完美的自适应难度，为什么还要手动选级？两种机制并存说明了什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：自适应机制解决的是「玩着玩着匹配」，解决不了「起点匹配」——高手若从 Level 0 开始，要忍受十几分钟的无聊区爬坡才能被系统送到自己的通道位置。自选起级让玩家<strong>跳过爬坡直接空降</strong>到自己的上沿附近；此外高起级有分数加成，把「自我评估」变成一次风险回报选择（第 7 章预告：评估准了赚，高估了自己就焦虑区见）。</p>
+            <p><strong>解析</strong>：并存说明难度匹配有两个独立子问题——<strong>起点在哪</strong>与<strong>之后怎么跟</strong>。自适应管后者，自选管前者。很多游戏只解决其一：有档位没成长调节（中盘开始失配），或有 DDA 但开局一刀切（前两小时劝退）。诊断难度问题时，先问是起点病还是跟随病。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「简单模式通关不给白金奖杯 / 隐藏结局」——这个常见做法有拥护者也有反对者。请各写两条最有力的论据，然后给出你的裁决与理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>拥护方</strong>：① 奖杯的价值在稀缺与证明，人人可得则对高难度完成者不公平——胜任感需要「作数」的凭证；② 奖励差异是对「原版体验」的引导，鼓励玩家至少尝试设计意图内的难度。<strong>反对方</strong>：① 内容（隐藏结局）与凭证（奖杯）性质不同——用叙事内容惩罚低难度玩家，是把无障碍需求者也一并惩罚了；② 玩家为什么选简单模式，游戏无从知晓（时间少？手部障碍？只爱剧情？），一刀切的价值判断必然误伤。</p>
+            <p><strong>参考裁决</strong>：拆开凭证与内容——<strong>挑战凭证（奖杯、称号、皮肤）可以绑定难度，叙事内容不应该</strong>。凭证的意义就是区分表现，内容的意义是被体验。蔚蓝给出了同款答案：辅助模式不锁任何剧情，但速通榜单另立。<strong>解析</strong>：这道题的方法论比结论重要——遇到设计争议，先问「被绑定的东西的价值来源是什么」：价值来自稀缺（凭证）就允许区分，价值来自体验本身（内容）就不该设卡。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一款音乐节奏游戏设计完整的难度体系：谱面分级、局内失败机制、辅助选项各至少一项，并在心流通道图上标出每个部件负责把哪类玩家送回通道。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：① 谱面分级 1–14 级且同曲多谱——解决「起点匹配」，每人按自评入场；② 段位推荐：根据近期成绩推荐「略高于当前」的谱面——把玩家持续推向通道上沿（跟随问题）；③ 局内失败：血条模式（漏音掉血，归零中断）与体验模式（永不中断，只记分）并行——前者给胜任感「作数」的重量，后者接住焦虑区玩家；④ 辅助选项：降速练习模式（0.8 倍速，成绩不入榜）——把「这一段总过不去」的玩家送回通道，且用「不入榜」保护凭证价值（呼应 5.6 的裁决）；⑤ 锯齿节奏藏在歌单结构里：段位考核（峰）之间穿插自由点歌（谷）。</p>
+            <p><strong>解析</strong>：自查两点：每个部件是否明确回答「起点还是跟随」；凭证与内容是否分离（降速模式能练习但不抢榜）。音游是难度设计的绝佳练习场——它的技能维度纯粹（读谱与手速），通道窄而清晰，任何失配立刻体现为「这歌打不动/没意思」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>假设魂类游戏加入一条规则：「同一 Boss 死亡五次后，Boss 血量自动下调 20%，且不通知玩家」。用本章与前四章的工具推演后果，并给出更好的替代方案。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>推演</strong>：短期数据会变好（卡关流失下降）；但它同时锯断魂类难度的三根支柱之外的第四根暗柱——<strong>成就的真实性</strong>。玩家迟早从拆包或社区得知此机制（暗调必然曝光，见例 2），此后每一次胜利都蒙上「是我打过的，还是系统放水的？」的怀疑——对一个把「撞墙后的爆发」当核心商品的游戏，这是在商品里掺水。更糟的是它无差别生效：想要放水的玩家得到了，但以纯度为荣的目标玩家也被强制掺水，承诺被单方面撕毁（第 4 章：难是承诺）。</p>
+            <p><strong>替代方案</strong>（实际魂类的做法）：把「降难度」做成<strong>玩家主动、代价可见</strong>的选择——召唤 NPC 或其他玩家协助（Boss 血量反而增加，但多打一削韧性，净效果是变简单）、消耗品增益、场外练级。共同点：帮助要伸手去拿，胜利的归因权始终在玩家手里——「我叫了帮手」是自己的选择，不是系统的怜悯。<strong>解析</strong>：终极原则一句话：<strong>难度可以让，但归因权不能偷</strong>。心流的第三条件调的是挑战高度，而成就感的地基是「这是我做到的」——动任何难度旋钮前，先确认没有拧松这颗螺丝。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 心流三条件：目标清晰、反馈即时、挑战匹配——前两条是游戏的出厂配置，第三条是移动靶；② 玩家技能只涨不跌，难度曲线的本质是<strong>陪跑</strong>：起点过高是新手墙，斜率不足是毕业流失，最佳位置在通道上沿「踮脚够得着」；③ 好曲线是锯齿形——峰是考试、谷是消化，峰值靠对比才成立；④ 难度工具箱四件套各有代价，组合要匹配玩家群分布；凭证可绑难度，内容不应设卡；⑤ 挫折不是敌人：失败公平、重试便宜、进步可见，焦虑区边缘就能飞——但<strong>难度可以让，归因权不能偷</strong>。<br><strong>下一章预告</strong>：心流解释了「玩进去了」，但为什么当初点开的是这个游戏而不是那个？为什么有人为 Boss 而来、有人为角落里的宝箱、有人只为朋友还在线？下一章：动机与玩家类型。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./04-像设计师一样玩.html">← 第 4 章 像设计师一样玩：拆解实战</a>
+          <a href="./06-玩家动机与类型.html">第 6 章 动机：玩家为什么开始玩、为什么留下 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("flow-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 360, HOURS = 10, BAND = 0.9, SKILL0 = 0.8, YMAX = 8;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var msg = document.getElementById("flow-msg");
+
+    var ready = false; /* bindRange 绑定时会立即回调一次 */
+    var getD0 = KB.bindRange(document.getElementById("ctl-d0"),
+      document.getElementById("val-d0"), function (v) { return v.toFixed(1); }, function () { if (ready) draw(); });
+    var getSlope = KB.bindRange(document.getElementById("ctl-slope"),
+      document.getElementById("val-slope"), function (v) { return v.toFixed(2); }, function () { if (ready) draw(); });
+    var getLearn = KB.bindRange(document.getElementById("ctl-learn"),
+      document.getElementById("val-learn"), function (v) { return v.toFixed(2); }, function () { if (ready) draw(); });
+
+    var inputs = {
+      d0: document.getElementById("ctl-d0"),
+      slope: document.getElementById("ctl-slope"),
+      learn: document.getElementById("ctl-learn")
+    };
+    var vals = {
+      d0: document.getElementById("val-d0"),
+      slope: document.getElementById("val-slope"),
+      learn: document.getElementById("val-learn")
+    };
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function skill(t) { return SKILL0 + getLearn() * t; }
+    function diff(t) { return getD0() + getSlope() * t; }
+
+    function verdict() {
+      var step = 0.05;
+      for (var t = 0; t <= HOURS; t += step) {
+        if (diff(t) > skill(t) + BAND) {
+          return { t: t, type: "anx", text: "约第 " + t.toFixed(1) + " 小时踏入焦虑区——难度甩开了技能，劝退风险。" };
+        }
+        if (diff(t) < skill(t) - BAND) {
+          return { t: t, type: "bore", text: "约第 " + t.toFixed(1) + " 小时跌入无聊区——技能甩开了难度，毕业流失。" };
+        }
+      }
+      return { t: -1, type: "flow", text: "全程贴身陪跑，玩家始终在心流通道内——理想曲线。" };
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var x0 = 52, y0 = H - 40, plotW = w - x0 - 20, plotH = H - 70;
+      function px(t) { return x0 + (t / HOURS) * plotW; }
+      function py(v) { return y0 - (Math.min(v, YMAX) / YMAX) * plotH; }
+
+      /* 坐标轴 */
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.beginPath();
+      ctx.moveTo(x0, y0 - plotH);
+      ctx.lineTo(x0, y0);
+      ctx.lineTo(x0 + plotW, y0);
+      ctx.stroke();
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("挑战 / 技能水平", x0 + 6, y0 - plotH + 14);
+      ctx.fillText("游戏进程（小时）→", x0 + plotW - 118, y0 + 26);
+
+      /* 心流通道（技能线 ± BAND 的绿带） */
+      ctx.fillStyle = "#16a34a";
+      ctx.globalAlpha = 0.14;
+      ctx.beginPath();
+      ctx.moveTo(px(0), py(skill(0) + BAND));
+      ctx.lineTo(px(HOURS), py(skill(HOURS) + BAND));
+      ctx.lineTo(px(HOURS), py(skill(HOURS) - BAND));
+      ctx.lineTo(px(0), py(Math.max(skill(0) - BAND, 0)));
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      /* 技能线 */
+      ctx.strokeStyle = "#16a34a";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(px(0), py(skill(0)));
+      ctx.lineTo(px(HOURS), py(skill(HOURS)));
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("玩家技能（±带宽=通道）", px(HOURS) - 150, py(skill(HOURS)) - 8);
+
+      /* 难度线 */
+      ctx.strokeStyle = "#2563eb";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(px(0), py(diff(0)));
+      ctx.lineTo(px(HOURS), py(diff(HOURS)));
+      ctx.stroke();
+      ctx.lineWidth = 1;
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("难度曲线", px(0.4), py(diff(0.4)) - 10);
+
+      /* 区域标注 */
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("焦虑区", x0 + 12, y0 - plotH + 34);
+      ctx.fillText("无聊区", x0 + plotW - 56, y0 - 12);
+
+      /* 判定与出界点 */
+      var v = verdict();
+      msg.textContent = v.text;
+      if (v.t >= 0) {
+        var mx = px(v.t), my = py(diff(v.t));
+        ctx.fillStyle = "#ef4444";
+        ctx.beginPath();
+        ctx.arc(mx, my, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = "600 12px -apple-system, PingFang SC, sans-serif";
+        ctx.fillText(v.type === "anx" ? "弃坑点" : "流失点", Math.min(mx + 10, x0 + plotW - 48), my + 4);
+      }
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-flow]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = btn.getAttribute("data-flow").split(",");
+        inputs.d0.value = p[0]; inputs.slope.value = p[1]; inputs.learn.value = p[2];
+        vals.d0.textContent = parseFloat(p[0]).toFixed(1);
+        vals.slope.textContent = parseFloat(p[1]).toFixed(2);
+        vals.learn.textContent = parseFloat(p[2]).toFixed(2);
+        draw();
+      });
+    });
+
+    ready = true;
+    draw();
+  });
+  </script>
+</body>
+</html>

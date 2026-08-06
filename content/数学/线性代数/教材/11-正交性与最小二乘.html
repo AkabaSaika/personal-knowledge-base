@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11 正交性与最小二乘 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 11 章：标准正交基的点积快捷键、正交矩阵与刚体变换、Gram-Schmidt 正交化、正规方程与最小二乘直线拟合，配可拖数据点的拟合演示。">
+  <meta name="kb:tags" content="线性代数,教材,正交,最小二乘,回归,拟合,zxec">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 11 章 · 正交性与最小二乘</h1>
+        <p class="kb-lead">为什么标准坐标系用起来那么顺手？因为坐标轴<strong>互相垂直</strong>——各方向互不干扰，坐标一人一个点积就能算。这一章把“垂直的好处”开发到极致：正交基、正交矩阵、Gram-Schmidt 流水线；然后用它兑现第 7 章的欠账——<strong>方程无解时，如何找出“最不错”的答案</strong>。数据科学的回归拟合，正是这道题。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用点积直接读出向量在标准正交基下的坐标；② 说出正交矩阵的判据 QᵀQ = I 及其“刚体变换”身份；③ 执行 Gram-Schmidt 把歪基扶正；④ 推导并使用正规方程 AᵀA<strong>x̂</strong> = Aᵀ<strong>b</strong>，完成最小二乘直线拟合。</p>
+        </div>
+
+        <h2>标准正交基：自带快捷键的语言</h2>
+        <p>一组基若两两垂直且长度全为 1，称<strong>标准正交基</strong>（记 <strong>q</strong>₁, <strong>q</strong>₂, …）。它的超能力：求坐标不用解方程组（第 9 章的日常），<strong>一个点积搞定</strong>。设 <strong>v</strong> = <em class="kb-math">c</em>₁<strong>q</strong>₁ + <em class="kb-math">c</em>₂<strong>q</strong>₂，两边点乘 <strong>q</strong>₁：交叉项 <strong>q</strong>₂·<strong>q</strong>₁ = 0 自动消失，|<strong>q</strong>₁|² = 1，剩下：</p>
+        <pre><code>cᵢ = v · qᵢ        （坐标 = 投影，回想第 3 章习题 3.5）</code></pre>
+        <p>“各分量互不干扰”正是垂直的全部含义——这也是傅里叶级数、JPEG 等一切“系数分解”技术选正交基的原因。</p>
+
+        <h2>正交矩阵：保形状的变换</h2>
+        <p>把标准正交基按列拼成 Q，则 QᵀQ 的第 (i, j) 元 = <strong>q</strong>ᵢ·<strong>q</strong>ⱼ = 0 或 1，即：</p>
+        <pre><code>QᵀQ = I        ⇔        Q⁻¹ = Qᵀ      （求逆免费！）</code></pre>
+        <p>这样的 Q 称<strong>正交矩阵</strong>。它保长度、保点积、保角度（证明见习题 11.6）——图形不变形，只被<strong>旋转或反射</strong>，故又称刚体变换；det(Q) = ±1（面积必须不变）。第 9 章习题 9.5 发现的“旋转基 P⁻¹ = Pᵀ”正是它的实例。</p>
+
+        <h2>Gram-Schmidt：把歪基扶正</h2>
+        <p>手里只有一组歪斜的基，想要正交的怎么办？<strong>逐个减掉投影</strong>（第 3 章的正交分解连环用）：</p>
+        <ol>
+          <li>第一个方向直接归一化：<strong>q</strong>₁ = <strong>a</strong>₁ / |<strong>a</strong>₁|；</li>
+          <li>第二个向量减去它在 <strong>q</strong>₁ 上的影子，剩下的必与 <strong>q</strong>₁ 垂直，再归一化：<strong>u</strong>₂ = <strong>a</strong>₂ − (<strong>a</strong>₂·<strong>q</strong>₁)<strong>q</strong>₁，<strong>q</strong>₂ = <strong>u</strong>₂ / |<strong>u</strong>₂|；</li>
+          <li>更高维依此类推：每个新向量减去在<strong>所有已完工方向</strong>上的影子。</li>
+        </ol>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · Gram-Schmidt 实算</p>
+          <p>把基 <strong>a</strong>₁ = (3, 1)、<strong>a</strong>₂ = (2, 2) 正交化。</p>
+          <p><strong>解</strong>：|<strong>a</strong>₁| = √10，<strong>q</strong>₁ = (3, 1)/√10。投影系数：<strong>a</strong>₂·<strong>a</strong>₁ / |<strong>a</strong>₁|² = 8/10 = 0.8，故 <strong>u</strong>₂ = (2, 2) − 0.8(3, 1) = (−0.4, 1.2)。检验 (−0.4, 1.2)·(3, 1) = −1.2 + 1.2 = 0 ✓。归一化：<strong>q</strong>₂ = (−1, 3)/√10。所得 {<strong>q</strong>₁, <strong>q</strong>₂} 标准正交。</p>
+        </div>
+
+        <h2>无解方程的最优答案：投影</h2>
+        <p>第 7 章的判决：A<strong>x</strong> = <strong>b</strong> 无解 ⇔ <strong>b</strong> 不在列空间 C(A) 里。现实数据几乎总是如此——三个以上带噪声的点很难恰好共线。放弃“精确解”，改问：<strong>哪个 x̂ 让 Ax̂ 与 b 的距离 |b − Ax̂| 最小？</strong></p>
+        <p>几何答案一目了然：A<strong>x̂</strong> 只能在列空间里跑，离 <strong>b</strong> 最近的点就是 <strong>b</strong> 在 C(A) 上的<strong>投影</strong>；此时误差向量 <strong>b</strong> − A<strong>x̂</strong> 必<strong>垂直于整个列空间</strong>（影子的残差垂直于地面）。“垂直于每一列”翻译成矩阵语言 Aᵀ(<strong>b</strong> − A<strong>x̂</strong>) = <strong>0</strong>，整理得：</p>
+        <pre><code>AᵀA x̂ = Aᵀ b        （正规方程 / normal equation）</code></pre>
+        <p>无解的长方形方程组 A<strong>x</strong> = <strong>b</strong>，两边左乘 Aᵀ 变成方形可解的方程组——这就是<strong>最小二乘法</strong>，“二乘”即“平方”：它最小化的是误差平方和。</p>
+
+        <h2>用最小二乘拟合直线</h2>
+        <p>给 n 个数据点 (xᵢ, yᵢ) 找最佳直线 y = kx + m：希望每个点满足 kxᵢ + m = yᵢ，写成矩阵是 A(k, m)ᵀ = <strong>y</strong>，其中 A 的第 i 行是 (xᵢ, 1)。点不共线时无解，套正规方程即得最优 k、m。亲手拖一拖：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 拖一拖：最小二乘直线如何追着数据跑</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas kb-canvas-drag" id="lsq-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：最小二乘直线最小化竖直误差的平方和，对离群点敏感。</p></noscript>
+            <div class="kb-interactive-controls">
+              <span class="kb-control" style="min-width:300px">拖动数据点，直线与虚线（残差）实时更新<span class="kb-control-value" id="lsq-readout"></span></span>
+              <button class="kb-btn" id="lsq-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 两个实验</p>
+          <p>① 把某个点竖直拖远变成“离群点”：直线被明显拽偏——平方惩罚放大了大误差，最小二乘对离群点敏感（统计学为此发明了稳健回归）；② 把所有点拖到近似一条线上：残差虚线几乎消失，误差平方和趋近 0——“有解”是“最小二乘”的特例。</p>
+        </div>
+
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 手算一次拟合</p>
+          <p>用最小二乘给三个点 (0, 1)、(1, 3)、(2, 4) 拟合直线 y = kx + m。</p>
+          <p><strong>解</strong>：A = ⎡0 1; 1 1; 2 1⎤，<strong>y</strong> = (1, 3, 4)。AᵀA = ⎡0²+1²+2², 0+1+2; 0+1+2, 3⎤ = ⎡5 3; 3 3⎤，Aᵀ<strong>y</strong> = (0·1+1·3+2·4, 1+3+4) = (11, 8)。解 ⎡5 3; 3 3⎤(k, m) = (11, 8)：相减得 2k = 3，k = 1.5；m = (8 − 4.5)/3 = 7/6 ≈ 1.17。最佳直线 <strong>y = 1.5x + 7/6</strong>。三点残差 (−1/6, 1/3, −1/6)，和为零且平方和已是全体直线中最小。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>验证 <strong>q</strong>₁ = (0.6, 0.8)、<strong>q</strong>₂ = (−0.8, 0.6) 是标准正交基，并用点积求 <strong>v</strong> = (2, 1) 在该基下的坐标。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>|<strong>q</strong>₁| = |<strong>q</strong>₂| = 1，<strong>q</strong>₁·<strong>q</strong>₂ = −0.48 + 0.48 = 0 ✓。坐标：<em class="kb-math">c</em>₁ = <strong>v</strong>·<strong>q</strong>₁ = 1.2 + 0.8 = <strong>2</strong>；<em class="kb-math">c</em>₂ = <strong>v</strong>·<strong>q</strong>₂ = −1.6 + 0.6 = <strong>−1</strong>。即 <strong>v</strong> = 2<strong>q</strong>₁ − <strong>q</strong>₂（可展开验算）。</p>
+            <p><strong>解析</strong>：对比第 9 章“歪基要解方程组”，正交基两个点积完事——这就是“快捷键”的含金量。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>Q = ⎡0.6 −0.8; 0.8 0.6⎤。验证 QᵀQ = I，写出 Q⁻¹，并说出 Q 的几何身份。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>QᵀQ：对角元 0.36+0.64 = 1，交叉元 −0.48+0.48 = 0 ⇒ I ✓。Q⁻¹ = Qᵀ = ⎡0.6 0.8; −0.8 0.6⎤。det(Q) = 0.36+0.64 = 1，且列是 (cosθ, sinθ) 形式：Q 是<strong>旋转</strong>（θ ≈ 53.1°，即 3-4-5 三角形的那个角）。</p>
+            <p><strong>解析</strong>：det = +1 的正交矩阵是纯旋转，det = −1 的是反射。判别正交矩阵永远用 QᵀQ = I，比逐列验长度、验垂直更机械可靠。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>对基 <strong>a</strong>₁ = (1, 1)、<strong>a</strong>₂ = (1, 0) 执行 Gram-Schmidt。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>q</strong>₁ = (1, 1)/√2。投影系数 = (1, 0)·(1, 1)/2 = 1/2，<strong>u</strong>₂ = (1, 0) − ½(1, 1) = (½, −½)，归一化 <strong>q</strong>₂ = <strong>(1, −1)/√2</strong>。</p>
+            <p><strong>解析</strong>：注意顺序有影响——先处理谁，谁就原方向保留。垂直检验 (1, 1)·(1, −1) = 0 一秒完成，Gram-Schmidt 每一步都自带验算点。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>求 <strong>b</strong> = (3, 4) 到直线 span((1, 1)) 的最近点 <strong>p</strong>，并验证残差 <strong>b</strong> − <strong>p</strong> 垂直于该直线。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>投影：<strong>p</strong> = ((3, 4)·(1, 1) / 2)(1, 1) = (7/2)(1, 1) = <strong>(3.5, 3.5)</strong>。残差 (−0.5, 0.5)，与 (1, 1) 点积 = 0 ✓。最短距离 = |(−0.5, 0.5)| = √2/2。</p>
+            <p><strong>解析</strong>：这是最小二乘的一维原型：C(A) 是一条直线时，正规方程退化成第 3 章的投影公式。看懂这个特例，正规方程只是它的“多列版”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用正规方程给点 (0, 0)、(1, 1)、(2, 3) 拟合直线 y = kx + m。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A = ⎡0 1; 1 1; 2 1⎤，<strong>y</strong> = (0, 1, 3)。AᵀA = ⎡5 3; 3 3⎤，Aᵀ<strong>y</strong> = (7, 4)。解得 2k = 3 ⇒ k = <strong>1.5</strong>，m = (4 − 4.5)/3 = <strong>−1/6</strong>。直线 y = 1.5x − 1/6。</p>
+            <p><strong>解析</strong>：残差 = (1/6, −1/3, 1/6)：与例 2 一样呈“小、大、小”且相加为零——残差和为零是正规方程第二行（m 的方程）的直接推论，可作快速验算。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>证明正交矩阵保长度：|Q<strong>v</strong>| = |<strong>v</strong>| 对一切 <strong>v</strong> 成立。（提示：把模长平方写成 <strong>v</strong>ᵀ<strong>v</strong>。）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>|Q<strong>v</strong>|² = (Q<strong>v</strong>)ᵀ(Q<strong>v</strong>) = <strong>v</strong>ᵀQᵀQ<strong>v</strong> = <strong>v</strong>ᵀI<strong>v</strong> = |<strong>v</strong>|²。∎（用到第 5 章的 (AB)ᵀ = BᵀAᵀ。）</p>
+            <p><strong>解析</strong>：同一套展开可证保点积：(Q<strong>u</strong>)·(Q<strong>v</strong>) = <strong>u</strong>·<strong>v</strong>，长度与夹角全保 ⇒ 刚体。反向也成立：保长度的线性变换必是正交矩阵——“QᵀQ = I”恰好是“不变形”的代数全权代表。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>投影到列空间的矩阵为 P = A(AᵀA)⁻¹Aᵀ（A 列无关）。证明 P² = P，并解释这个等式的几何必然性。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>P² = A(AᵀA)⁻¹<u>AᵀA(AᵀA)⁻¹</u>Aᵀ = A(AᵀA)⁻¹Aᵀ = P（下划线部分 = I）。∎</p>
+            <p><strong>几何解释</strong>：P 把任何向量拍到列空间上；已经躺在列空间里的向量再拍一次<strong>不会动</strong>。“投影两次 = 投影一次”，故 P² = P。满足此式的矩阵统称幂等矩阵，投影是其几何原型。</p>
+            <p><strong>解析</strong>：顺带一提，P 还满足 Pᵀ = P（对称）——第 12 章开幕的主角正是对称矩阵，而投影矩阵是它最亲切的实例：特征值只有 1（列空间方向，拍上去不动）和 0（垂直方向，拍没了）。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 标准正交基：坐标 = 点积，各分量互不干扰；② 正交矩阵 QᵀQ = I ⇔ Q⁻¹ = Qᵀ，保长保角 = 旋转/反射；③ Gram-Schmidt：逐个减影子再归一化；④ 无解时求最优：误差 ⊥ 列空间 ⇒ 正规方程 AᵀA<strong>x̂</strong> = Aᵀ<strong>b</strong>，直线拟合即其应用。<br><strong>下一章预告</strong>：全书大结局。对称矩阵的特征方向为何总是互相垂直（谱定理）？任意矩阵能否也享受“旋转–伸缩–旋转”的完美分解（SVD）？压缩一张图片，来作为十二章旅程的告别礼物。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./10-特征值与特征向量.html">← 第 10 章 特征值与特征向量</a>
+          <a href="./12-对称矩阵二次型与SVD.html">第 12 章 对称矩阵、二次型与 SVD →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("lsq-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 42;
+    var init = [
+      { x: -3, y: -2.2 }, { x: -1.5, y: -0.6 }, { x: 0, y: 0.4 },
+      { x: 1.5, y: 1.8 }, { x: 3, y: 2.6 }
+    ];
+    var pts = init.map(function (p) { return { x: p.x, y: p.y }; });
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("lsq-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2, y: H / 2 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function toVec(x, y) {
+      var o = origin();
+      return { x: Math.round((x - o.x) / SCALE * 4) / 4, y: Math.round((o.y - y) / SCALE * 4) / 4 };
+    }
+
+    /* 最小二乘 y = kx + m：正规方程的闭式解 */
+    function fit() {
+      var n = pts.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+      pts.forEach(function (p) { sx += p.x; sy += p.y; sxx += p.x * p.x; sxy += p.x * p.y; });
+      var denom = n * sxx - sx * sx;
+      if (Math.abs(denom) < 1e-9) return null; // 所有 x 相同，竖直线无法用 y=kx+m 表示
+      var k = (n * sxy - sx * sy) / denom;
+      var m = (sy - k * sx) / n;
+      return { k: k, m: m };
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var f = fit();
+      var sse = 0;
+      if (f) {
+        // 残差虚线
+        pts.forEach(function (p) {
+          var yHat = f.k * p.x + f.m;
+          sse += (p.y - yHat) * (p.y - yHat);
+          var a = toPx(p), b = toPx({ x: p.x, y: yHat });
+          ctx.strokeStyle = "#ef4444";
+          ctx.setLineDash([4, 4]);
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        });
+        // 拟合直线
+        var xL = -(o.x / SCALE) - 1, xR = (w - o.x) / SCALE + 1;
+        var p1 = toPx({ x: xL, y: f.k * xL + f.m }), p2 = toPx({ x: xR, y: f.k * xR + f.m });
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+      // 数据点
+      pts.forEach(function (p) {
+        var q = toPx(p);
+        ctx.fillStyle = "#16a34a";
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = css("--kb-surface");
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      });
+
+      var text = f
+        ? "y = " + f.k.toFixed(2) + "x " + (f.m >= 0 ? "+ " : "− ") + Math.abs(f.m).toFixed(2) +
+          "　误差平方和 = " + sse.toFixed(2)
+        : "所有点的 x 相同，y = kx + m 拟合不了竖直线";
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText(text, 16, 26);
+      readout.textContent = "　" + text;
+    }
+
+    KB.enableDrag(canvas,
+      function (x, y) {
+        for (var i = 0; i < pts.length; i++) {
+          var q = toPx(pts[i]);
+          if (Math.hypot(x - q.x, y - q.y) < 20) return i;
+        }
+        return null;
+      },
+      function (idx, x, y) {
+        var nv = toVec(x, y);
+        if (Math.abs(nv.x) > 7 || Math.abs(nv.y) > 4.2) return;
+        pts[idx] = nv;
+        draw();
+      });
+
+    document.getElementById("lsq-reset").addEventListener("click", function () {
+      pts = init.map(function (p) { return { x: p.x, y: p.y }; });
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

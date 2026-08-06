@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>正方体 · 知识库</title>
+  <meta name="kb:summary" content="正方体的顶点、棱、面数量与对称性，表面积、体积、对角线公式，配可旋转 3D 模型和展开图。">
+  <meta name="kb:tags" content="立体几何,正方体,3D">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>正方体</h1>
+        <p class="kb-lead">正方体（立方体）是六个面都是正方形的正多面体，也是最常见的空间几何体。下面的 3D 模型可以用鼠标拖拽旋转、滚轮缩放，直观感受它的结构。</p>
+
+        <h2>转一转：3D 模型</h2>
+        <model-viewer src="./_media/cube.glb" poster="./_media/cube-poster.svg"
+          camera-controls auto-rotate shadow-intensity="1" camera-orbit="35deg 65deg 105%"
+          alt="可交互的正方体 3D 模型，六个面分别着不同颜色">
+        </model-viewer>
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🖱️ 操作</p>
+          <p>拖拽旋转，滚轮/双指缩放。模型六个面着不同颜色，旋转时可以数一数：任意时刻最多只能同时看到 <strong>3 个面</strong>。若模型未加载，请通过 start.command 启动后访问（直接双击 HTML 文件时浏览器会拦截模型资源）。</p>
+        </div>
+
+        <h2>基本性质</h2>
+        <p>设棱长为 <em class="kb-math">a</em>，正方体有 <strong>8 个顶点、12 条棱、6 个面</strong>。每个顶点恰好汇聚 3 条棱、3 个面；顶点数 − 棱数 + 面数 = 8 − 12 + 6 = 2，正是欧拉公式 <em class="kb-math">V − E + F</em> = 2 的一个实例。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>量</th><th>公式</th><th>说明</th></tr></thead>
+            <tbody>
+              <tr><td>表面积</td><td><em class="kb-math">S</em> = 6<em class="kb-math">a</em>²</td><td>6 个全等正方形面之和</td></tr>
+              <tr><td>体积</td><td><em class="kb-math">V</em> = <em class="kb-math">a</em>³</td><td>“立方”一词的由来</td></tr>
+              <tr><td>面对角线</td><td><em class="kb-math">a</em>√2</td><td>正方形面内的对角线</td></tr>
+              <tr><td>体对角线</td><td><em class="kb-math">a</em>√3</td><td>穿过内部连接相对顶点，共 4 条</td></tr>
+              <tr><td>外接球半径</td><td>(√3/2)<em class="kb-math">a</em></td><td>球面过 8 个顶点</td></tr>
+              <tr><td>内切球半径</td><td><em class="kb-math">a</em>/2</td><td>球面切于 6 个面心</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>体对角线为什么是 a√3</h3>
+        <p>两次勾股定理：底面对角线为 √(<em class="kb-math">a</em>² + <em class="kb-math">a</em>²) = <em class="kb-math">a</em>√2；再与竖直棱构成直角三角形，得体对角线 √(2<em class="kb-math">a</em>² + <em class="kb-math">a</em>²) = <em class="kb-math">a</em>√3。这个“先在面内、再立起来”的两步法，是求空间距离的通用套路。</p>
+
+        <h2>展开图</h2>
+        <p>沿棱剪开可以把正方体摊平成 6 个相连的正方形，共有 <strong>11 种</strong>本质不同的展开图。最常见的是“十字形”：</p>
+        <figure>
+          <svg viewBox="0 0 300 220" width="300" height="220" role="img" aria-label="正方体十字形展开图，颜色与上方 3D 模型的面对应">
+            <g stroke="var(--kb-fg-muted)" stroke-width="1.5">
+              <rect x="120" y="10"  width="52" height="52" fill="#9466de" opacity="0.85"/>
+              <rect x="68"  y="62"  width="52" height="52" fill="#f5b836" opacity="0.85"/>
+              <rect x="120" y="62"  width="52" height="52" fill="#3b78eb" opacity="0.85"/>
+              <rect x="172" y="62"  width="52" height="52" fill="#4dbf6b" opacity="0.85"/>
+              <rect x="120" y="114" width="52" height="52" fill="#59c7d4" opacity="0.85"/>
+              <rect x="120" y="166" width="52" height="52" fill="#ee5951" opacity="0.85"/>
+            </g>
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12" fill="#fff" text-anchor="middle">
+              <text x="146" y="41">上</text>
+              <text x="94"  y="93">左</text>
+              <text x="146" y="93">前</text>
+              <text x="198" y="93">右</text>
+              <text x="146" y="145">下</text>
+              <text x="146" y="197">后</text>
+            </g>
+          </svg>
+          <figcaption>十字形展开图：折回去时，“上”与“下”、“左”与“右”、“前”与“后”两两相对。颜色与 3D 模型一致，可对照验证。</figcaption>
+        </figure>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 判断技巧</p>
+          <p>展开图折成正方体后，<strong>相对的两个面在展开图中一定不相邻</strong>——中间恰好隔一个面（同行/同列隔一格），或呈“Z 字”两端。考试里排除错误展开图，用这条最快。</p>
+        </div>
+
+        <h2>对称性</h2>
+        <p>正方体是对称性最丰富的常见几何体之一：9 个对称平面、13 条旋转对称轴（3 条过面心的四重轴、4 条过对角顶点的三重轴、6 条过棱中点的二重轴），旋转对称群共 24 个元素。骰子能“怎么放都一样”，正是这种对称性的日常体现。</p>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../assets/js/theme.js" defer></script>
+  <script src="../../../assets/js/nav.js" defer></script>
+  <script src="../../../assets/js/toc.js" defer></script>
+  <script src="../../../assets/js/search.js" defer></script>
+  <script src="../../../assets/js/interactive.js" defer></script>
+  <script src="../../../assets/js/app.js" defer></script>
+  <script src="../../../assets/vendor/model-viewer-umd.min.js" defer></script>
+</body>
+</html>

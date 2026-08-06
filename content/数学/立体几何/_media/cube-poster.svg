@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" fill="none"/>
+  <g stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round">
+    <polygon points="120,30 190,70 120,110 50,70" fill="#9466de"/>
+    <polygon points="50,70 120,110 120,190 50,150" fill="#3b78eb"/>
+    <polygon points="190,70 120,110 120,190 190,150" fill="#4dbf6b"/>
+  </g>
+  <text x="120" y="222" text-anchor="middle" font-family="-apple-system, PingFang SC, sans-serif"
+    font-size="13" fill="#64748b">加载 3D 模型需通过 start.command 启动</text>
+</svg>

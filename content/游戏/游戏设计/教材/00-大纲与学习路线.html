@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>00 大纲与学习路线 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计入门教材总纲：围绕「这个游戏为什么好玩」的三篇十二章学习路线，每章的内容要点、配套交互演示与习题设计规范。">
+  <meta name="kb:tags" content="游戏设计,教材,大纲,学习路线,yxsj">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：章节状态徽章 */
+    .toc-status {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 1px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .toc-todo {
+      color: var(--kb-fg-muted);
+      background: var(--kb-surface-alt);
+      border: 1px solid var(--kb-border);
+    }
+    .toc-done {
+      color: var(--kb-ok);
+      background: var(--kb-ok-soft);
+      border: 1px solid var(--kb-ok);
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>游戏设计教材：大纲与学习路线</h1>
+        <p class="kb-lead">这是一套写给<strong>零基础爱好者</strong>的游戏设计入门教材。整本书只围绕一个问题：<strong>这个游戏为什么好玩？</strong>三篇十二章依次递进——先学会像设计师一样<strong>看懂</strong>一个游戏，再理解玩家<strong>为什么玩</strong>，最后动手把「好玩」<strong>做出来</strong>。每章配内联图示、可亲手调参数的交互演示，以及带完整解析的分层习题。</p>
+
+        <h2>教材定位与用法</h2>
+        <ul>
+          <li><strong>适合谁</strong>：对游戏感兴趣的任何人。不需要会编程、不需要会画画、不需要玩过很多游戏——玩过俄罗斯方块或超级马里奥级别的国民游戏，就能跟上全部内容。</li>
+          <li><strong>核心理念</strong>：先体验后术语——每个概念先通过案例和亲手玩的演示建立体感，再告诉你它在设计圈叫什么名字（四元素、MDA、心流、可变比率奖励……）。每章新名词不超过五个，首次出现附英文原名，之后只用中文。</li>
+          <li><strong>怎么用</strong>：每章约 30–50 分钟读完正文。习题分「基础 / 进阶 / 挑战」三档，全部附可折叠的完整解析，先做再看。习题不要求去玩指定游戏，实拆类题目用你手机里的任何一款即可。</li>
+          <li><strong>范围取舍</strong>：十二章容量下不设叙事设计、多人网络与 UI/UX 专章，相关内容分别融入第 2、6、12 章的对应小节；第 9 章数值设计只看曲线、不推公式。想深入的方向在末章给出后续路径。</li>
+        </ul>
+
+        <h2>学习路线图</h2>
+        <figure>
+          <svg viewBox="0 0 660 190" width="660" height="190" role="img" aria-label="三篇学习路线：观察篇、体验篇、系统篇依次递进">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="10" y="35" width="180" height="120" rx="14" fill="var(--kb-accent)" opacity="0.12"/>
+              <rect x="10" y="35" width="180" height="120" rx="14" fill="none" stroke="var(--kb-accent)" stroke-width="1.5"/>
+              <text x="100" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第一部分 · 观察篇</text>
+              <text x="100" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 1–4 章</text>
+              <text x="100" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">是什么 · 四元素与MDA</text>
+              <text x="100" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">核心循环 · 拆解实战</text>
+
+              <path d="M 196 95 h 32" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 228 95 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="236" y="35" width="188" height="120" rx="14" fill="#16a34a" opacity="0.10"/>
+              <rect x="236" y="35" width="188" height="120" rx="14" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="330" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第二部分 · 体验篇</text>
+              <text x="330" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 5–8 章</text>
+              <text x="330" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">心流 · 动机</text>
+              <text x="330" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">选择 · 随机与奖励</text>
+
+              <path d="M 430 95 h 32" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 462 95 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="470" y="35" width="180" height="120" rx="14" fill="#9466de" opacity="0.12"/>
+              <rect x="470" y="35" width="180" height="120" rx="14" fill="none" stroke="#9466de" stroke-width="1.5"/>
+              <text x="560" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第三部分 · 系统篇</text>
+              <text x="560" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 9–12 章</text>
+              <text x="560" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">数值 · 经济</text>
+              <text x="560" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">关卡 · 手感与原型</text>
+            </g>
+          </svg>
+          <figcaption>三篇依次递进：先学会看懂游戏，再理解玩家为什么玩，最后动手把「好玩」做出来。第一篇是后两篇的公共语言，不建议跳过。</figcaption>
+        </figure>
+
+        <h2>第一部分 · 观察篇（学会看懂一个游戏）</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>01</td><td><a href="./01-游戏是什么.html">游戏是什么：从「好玩」说起</a></td>
+                <td>游戏的四个特征（目标、规则、反馈、自愿参与）；魔法圈与「自愿克服不必要的障碍」；游戏、玩具、谜题、故事的光谱；「好玩」是被设计出来的</td>
+                <td>交互：「点击的进化」——给一个无聊的点逐层叠加反馈、目标、计分、限时，亲身感受乐趣随结构出现</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>02</td><td><a href="./02-游戏由什么构成.html">游戏由什么构成：四元素与 MDA</a></td>
+                <td>四元素（机制、故事、美术、技术）及其配合；MDA 传导链——机制生成动态、动态产生体验；八种乐趣的分类</td>
+                <td>交互：「接方块」小游戏——调下落速度、生成频率、挡板宽度，观察玩法与情绪随一条规则剧变</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>03</td><td><a href="./03-核心循环.html">核心循环：为什么想「再来一局」</a></td>
+                <td>行动—奖励—成长的核心循环；秒、分钟、小时三层时间尺度；循环断裂的三种模式（毕业、卡关、重复）；循环图的画法</td>
+                <td>交互：「伐木工的循环」增量小游戏——调升级涨价系数，看循环在何处断裂</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>04</td><td><a href="./04-像设计师一样玩.html">像设计师一样玩：拆解实战</a></td>
+                <td>拆解模板「设计师五问」；俄罗斯方块与马里奥 1-1 的完整示范拆解；「我不喜欢」不等于「设计得差」；建立拆解笔记习惯</td>
+                <td>交互：马里奥 1-1 示意图步进拆解——每步先抛问题、再揭示设计意图</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第二部分 · 体验篇（玩家心理与乐趣的来源）</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>05</td><td><a href="./05-心流与难度.html">心流：难度与技能的赛跑</a></td>
+                <td>心流通道模型（焦虑—心流—无聊）；难度曲线与紧张缓和的节奏；动态难度与辅助选项；挫折的价值与「魂类」难度哲学</td>
+                <td>交互：心流通道图——调难度曲线的起点与斜率，观察玩家何时踏出通道</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>06</td><td><a href="./06-玩家动机与类型.html">动机：玩家为什么开始玩、为什么留下</a></td>
+                <td>内在动机与外在动机；自主、胜任、归属三种心理需求；Bartle 四类玩家（成就、探索、社交、杀手）；成就与收集系统的动机设计</td>
+                <td>交互：同一张示意地图，点击切换四类玩家视角，高亮各自眼中的「重点」</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>07</td><td><a href="./07-有趣的选择.html">选择：一连串有趣的决定</a></td>
+                <td>有意义选择的三个条件；上位策略为什么杀死乐趣；风险与回报的权衡；机会成本与资源分配</td>
+                <td>交互：「双宝箱」模拟器——稳妥箱 vs 冒险箱，调概率与赔率跑多轮统计</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>08</td><td><a href="./08-随机性与奖励.html">随机与奖励：惊喜、保底与斯金纳箱</a></td>
+                <td>输入随机与输出随机；斯金纳箱与可变比率奖励时间表；伪随机与保底机制；随机的公平感设计</td>
+                <td>交互：「开箱」模拟器——固定比率 vs 可变比率两条奖励流并排对比，附保底开关</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第三部分 · 系统篇（把「好玩」做出来）</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>09</td><td><a href="./09-数值与成长曲线.html">数值入门：成长曲线的手感</a></td>
+                <td>线性、指数、幂函数成长的体感差异；攻、防、血的最小数值模型；成本曲线与付出回报比；平衡是迭代出来的</td>
+                <td>交互：调「玩家攻击成长率」与「怪物血量成长率」，实时显示各等级击杀耗时曲线</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>10</td><td><a href="./10-资源与经济系统.html">经济：水龙头与下水道</a></td>
+                <td>产出与回收（源与汇）；稀缺性如何制造价值；多资源的兑换链与瓶颈资源；通货膨胀与体力闸门</td>
+                <td>交互：调产出与回收速率，观察货币池水位与「物价指数」随时间演化</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>11</td><td><a href="./11-关卡设计入门.html">关卡：用空间教学与讲故事</a></td>
+                <td>无字教学四步法（引入—练习—组合—高潮）；节奏与紧张度曲线；引导技巧（路径、地标、光线、诱饵）；马里奥关卡与塞尔达神庙的结构</td>
+                <td>交互：四步法关卡分段步进讲解，同步标注紧张度曲线</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>12</td><td><a href="./12-手感反馈与原型.html">手感与原型：从「能玩」到「好玩」</a></td>
+                <td>游戏手感与「果汁」（缓动、挤压拉伸、顿帧、震屏）；反馈的层次；纸面原型与最小可玩版本；游戏测试的观察方法</td>
+                <td>交互：方块跳跃小场景，逐项开关挤压拉伸、粒子、顿帧、震屏，对比手感差异</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>每章的固定结构</h2>
+        <ol>
+          <li><strong>学习目标</strong>：3–5 条「学完你能……」。</li>
+          <li><strong>直觉引入</strong>：从游戏之外的生活经验或一个亲手玩的演示切入，回答「为什么值得学这个概念」。</li>
+          <li><strong>正文</strong>：现象与案例在前、命名在后——概念 → 图示/交互演示 → 分析框架，重要结论用提示框标出。</li>
+          <li><strong>例题</strong>：2–3 道案例分析式例题，带完整分析过程，示范「怎么用框架读游戏」。</li>
+          <li><strong>习题</strong>：基础 3–4 题、进阶 2–3 题、挑战 1–2 题，全部附可折叠详解。</li>
+          <li><strong>要点回顾</strong>：kb-tip 提示框收束全章，并预告下一章。</li>
+        </ol>
+
+        <h2>习题设计与样例</h2>
+        <p>习题分三档：<span class="kb-exercise-badge">基础</span> 直接套用本章框架保证会用；<span class="kb-exercise-badge kb-adv">进阶</span> 需要把两个以上概念连起来；<span class="kb-exercise-badge kb-hard">挑战</span> 引向真实的设计与批评实践。所有习题不要求去玩指定游戏。答案默认折叠，鼓励先做再看。呈现形式如下（可展开试试）：</p>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 样例习题 <span class="kb-exercise-badge">基础</span></p>
+          <p>「跳房子」和「期末考试」都有目标、有规则、有结果反馈。哪个是游戏？为什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：跳房子是游戏，期末考试不是。</p>
+            <p><strong>解析</strong>：两者都具备目标（跳完全程 / 考高分）、规则（单脚跳不踩线 / 考纲与考场纪律）、反馈（跳到第几格 / 分数）。差别在第四个特征——<strong>自愿参与</strong>：跳房子随时可以不玩，输了拍拍灰就走；考试通常由不得你，而且失败的代价会延伸到现实生活里。教材第 1 章会展开这四个特征，以及「游戏世界与现实之间那道看不见的边界」。</p>
+          </details>
+        </section>
+
+        <h2>编写约定（供后续章节遵守）</h2>
+        <ul>
+          <li>文件名与页面标题都用 <code>NN 章名</code> 编号（如 <code>01 游戏是什么：从「好玩」说起</code>），保证导航树按学习顺序排列。</li>
+          <li>章节文件放本目录（<code>content/游戏/游戏设计/教材/</code>），每章一个 HTML 文件；示意图全部内联 SVG（颜色用 CSS 变量适配深浅色），交互演示脚本内联在各章页尾，不建 <code>_media/</code>、不放游戏截图，案例一律文字描述。</li>
+          <li>案例选择保证覆盖面：每章至少一个「人人玩过」的国民案例（俄罗斯方块、超级马里奥等），术语中英对照只出现一次。</li>
+          <li>每写完一章：把本页对应行的状态改为 <span class="toc-status toc-done">已上线</span> 并加上链接，章末「下一章」指向后继章节，最后重跑索引。</li>
+        </ul>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📌 当前进度</p>
+          <p>🎉 全书十二章已全部上线！从<a href="./01-游戏是什么.html">第 1 章</a>开始顺序学习，或按需跳读任意章节；终章附有全书结语与后续学习路径。</p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+</body>
+</html>

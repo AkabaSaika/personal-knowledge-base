@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>07 线性方程组与高斯消元 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 7 章：方程组的行图景与列图景、增广矩阵与行变换、高斯消元流水线、解的三种情况与通解，配两直线交点交互演示。">
+  <meta name="kb:tags" content="线性代数,教材,线性方程组,高斯消元,增广矩阵,gsxy">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 7 章 · 线性方程组与高斯消元</h1>
+        <p class="kb-lead">“鸡兔同笼”是你解过的第一个线性方程组。这一章把中学的消元法升级成一条<strong>对任何规模都不出错的流水线</strong>——高斯消元，并回答一个更深的问题：方程组什么时候恰有一个解、什么时候无解、什么时候有无穷多个解？两幅几何图景会让答案一目了然。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用“行图景”（直线相交）和“列图景”（配线性组合）双重解读 A<strong>x</strong> = <strong>b</strong>；② 写增广矩阵并熟练执行三种行变换；③ 按流水线完成高斯消元 + 回代；④ 从行阶梯形一眼判断解的三种情况，并写出含自由变量的通解。</p>
+        </div>
+
+        <h2>同一个方程组，两幅图景</h2>
+        <p>以最简单的二元方程组为例：</p>
+        <pre><code>x + y = 3
+x − y = 1        （解：x = 2, y = 1）</code></pre>
+        <p><strong>行图景</strong>（一行一条线）：每个方程是平面上一条直线，解 = 所有直线的<strong>公共交点</strong>。三元方程组则是三张平面找公共点。</p>
+        <p><strong>列图景</strong>（一列一根向量）：把方程组竖着读，它问的是——“系数矩阵的列如何组合出右端向量？”</p>
+        <pre><code>x·⎡1⎤ + y·⎡ 1⎤ = ⎡3⎤
+  ⎣1⎦     ⎣−1⎦   ⎣1⎦</code></pre>
+        <p>这正是第 2 章例 1 做过的“配出目标向量”！A<strong>x</strong> = <strong>b</strong> 的三种身份从此打通：<strong>解方程组 = 求线性组合系数 = 反求变换的输入</strong>。行图景直观、列图景深刻，判断“有没有解”时列图景尤其有力（见习题 7.7）。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 两条直线的三种命运：唯一解 / 无解 / 无穷多解</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="lines-canvas" height="360"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：两直线相交=唯一解，平行=无解，重合=无穷多解。</p></noscript>
+            <div class="kb-interactive-controls">
+              <span class="kb-control" style="min-width:150px">固定：<strong style="color:#2563eb">x + y = 3</strong><br>可调：<strong style="color:#16a34a">x + b·y = c</strong></span>
+              <label class="kb-control">系数 b <span class="kb-control-value" id="val-lb"></span>
+                <input type="range" id="ctl-lb" min="-2" max="3" step="0.05" value="-1"></label>
+              <label class="kb-control">常数 c <span class="kb-control-value" id="val-lc"></span>
+                <input type="range" id="ctl-lc" min="-2" max="8" step="0.1" value="1"></label>
+              <span class="kb-control-value" id="lines-status" style="min-width:200px"></span>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 亲手制造三种命运</p>
+          <p>① 默认 b = −1, c = 1：两线相交于 (2, 1)，唯一解；② 把 b 滑到 1、c ≠ 3（比如 5）：两线<strong>平行</strong>——方程“x + y = 3 且 x + y = 5”自相矛盾，无解；③ b = 1 且 c = 3：两线<strong>重合</strong>，整条线上的点都是解，无穷多。三种情况之间只隔一次滑动。</p>
+        </div>
+
+        <h2>增广矩阵与行变换</h2>
+        <p>消元时真正参与运算的只有系数和右端数，把它们抄进一张表——<strong>增广矩阵</strong> [A | <strong>b</strong>]，解方程就变成对行的操作。合法操作只有三种（都不改变解集，因为每步可逆）：</p>
+        <ol>
+          <li><strong>交换</strong>两行（方程排列顺序无关紧要）；</li>
+          <li>某行<strong>乘非零常数</strong>（方程两边同乘）；</li>
+          <li>某行<strong>加上另一行的倍数</strong>（消元的主力）。</li>
+        </ol>
+
+        <h2>消元流水线：一个 3×3 全过程</h2>
+        <p>目标形态是<strong>行阶梯形</strong>：像下楼梯一样，每行第一个非零数（<strong>主元</strong>）都比上一行更靠右，主元下方全是 0。到位后从最后一行往回代入。完整走一遍：</p>
+        <pre><code>  x +  y +  z = 6            ⎡ 1  1  1 | 6 ⎤
+ 2x −  y +  z = 3     增广 → ⎢ 2 −1  1 | 3 ⎥
+  x + 2y −  z = 2            ⎣ 1  2 −1 | 2 ⎦
+
+① R2 ← R2 − 2·R1（消掉第 2 行的 x）
+   R3 ← R3 − 1·R1（消掉第 3 行的 x）
+                             ⎡ 1  1  1 |  6 ⎤
+                             ⎢ 0 −3 −1 | −9 ⎥
+                             ⎣ 0  1 −2 | −4 ⎦
+
+② R2 ↔ R3（把系数简单的行换上来当主元行）
+                             ⎡ 1  1  1 |  6 ⎤
+                             ⎢ 0  1 −2 | −4 ⎥
+                             ⎣ 0 −3 −1 | −9 ⎦
+
+③ R3 ← R3 + 3·R2（消掉第 3 行的 y）
+                             ⎡ 1  1  1 |  6 ⎤      ← 行阶梯形，
+                             ⎢ 0  1 −2 | −4 ⎥        主元 1, 1, −7
+                             ⎣ 0  0 −7 | −21⎦
+
+④ 回代：−7z = −21 ⇒ z = 3
+        y − 2z = −4 ⇒ y = −4 + 6 = 2
+        x + y + z = 6 ⇒ x = 6 − 2 − 3 = 1</code></pre>
+        <p>解为 (x, y, z) = (1, 2, 3)。代回原方程组逐条验证 ✓。流水线要诀：<strong>自上而下逐列清零，自下而上逐个回代</strong>；遇到主元位置是 0 就先换行。</p>
+
+        <h2>解的三种情况：看阶梯形一眼定案</h2>
+        <p>消元结束后，答案写在阶梯形的脸上：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>阶梯形特征</th><th>结论</th><th>几何图景（二元情形）</th></tr></thead>
+            <tbody>
+              <tr><td>出现 [0 0 … 0 | 非零] 行</td><td><strong>无解</strong>（0 = 非零，矛盾）</td><td>直线平行不相交</td></tr>
+              <tr><td>无矛盾行，主元数 = 未知数个数</td><td><strong>唯一解</strong></td><td>直线交于一点</td></tr>
+              <tr><td>无矛盾行，主元数 &lt; 未知数个数</td><td><strong>无穷多解</strong>（有自由变量）</td><td>直线重合</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>无穷多解时，没分到主元的未知数称<strong>自由变量</strong>：给它随便赋一个值，其余未知数就被唯一确定。把自由变量记作参数 t，就得到<strong>通解</strong>——一条“解的直线”（见习题 7.6）。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 二元小试</p>
+          <p>解方程组：2x + y = 7；x − y = 2。</p>
+          <p><strong>解</strong>：增广矩阵 ⎡2 1 | 7; 1 −1 | 2⎤。R1 ↔ R2（让主元为 1 更省心）→ ⎡1 −1 | 2; 2 1 | 7⎤；R2 ← R2 − 2R1 → ⎡1 −1 | 2; 0 3 | 3⎤。回代：3y = 3 ⇒ y = 1；x = 2 + y = 3。解 (3, 1)。行图景：两直线交于 (3, 1)；列图景：3·(2, 1) + 1·(1, −1) = (7, 2) ✓。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 一眼判型</p>
+          <p>下面两个增广矩阵已是阶梯形，各判断解的情况：(a) ⎡1 2 | 4; 0 0 | 5⎤；(b) ⎡1 2 −1 | 3; 0 1 4 | 1; 0 0 0 | 0⎤。</p>
+          <p><strong>解</strong>：(a) 第二行读作 0 = 5，<strong>无解</strong>。(b) 无矛盾行；3 个未知数只有 2 个主元（x、y 列），z 是自由变量，<strong>无穷多解</strong>。全零行 [0 0 0 | 0] 只是“废话方程 0 = 0”，不添乱也不帮忙。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>用增广矩阵和行变换解：x + 2y = 5；3x − y = 1。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>⎡1 2 | 5; 3 −1 | 1⎤，R2 ← R2 − 3R1 → ⎡1 2 | 5; 0 −7 | −14⎤。y = 2，x = 5 − 4 = 1。解 <strong>(1, 2)</strong>。</p>
+            <p><strong>解析</strong>：养成“先写增广矩阵、每步标注行变换”的习惯——三元以上时这份纪律就是你不出错的保险。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>解三元方程组：x + y + z = 2；2x + 3y + z = 5；x − y + 2z = −1。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>消元：R2 ← R2 − 2R1 → (0, 1, −1 | 1)；R3 ← R3 − R1 → (0, −2, 1 | −3)；R3 ← R3 + 2R2 → (0, 0, −1 | −1)。回代：z = 1，y = 1 + z = 2，x = 2 − y − z = −1。解 <strong>(−1, 2, 1)</strong>。</p>
+            <p><strong>解析</strong>：与正文例子完全同一套流水线。做完务必代回第 3 个原方程验证（−1 − 2 + 2 = −1 ✓）——回代验证的成本远低于重算一遍。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断下列阶梯形增广矩阵对应方程组的解情况（不必求解）：(a) ⎡1 0 2 | 1; 0 1 3 | 2; 0 0 1 | 4⎤；(b) ⎡1 5 | 2; 0 0 | 0⎤；(c) ⎡1 1 1 | 1; 0 1 2 | 3; 0 0 0 | 7⎤。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 3 主元 = 3 未知数，无矛盾行：<strong>唯一解</strong>。(b) 1 主元 &lt; 2 未知数，无矛盾行：<strong>无穷多解</strong>（y 自由）。(c) 末行 0 = 7：<strong>无解</strong>。</p>
+            <p><strong>解析</strong>：判型三步：①找矛盾行；②数主元；③与未知数个数比较。顺序固定，永不失手。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>把方程组 x + 2y − z = 3；2x + 4y − 2z = 6 化成阶梯形，说明几何图景（提示：这是三维空间中的两张平面）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>R2 ← R2 − 2R1 → ⎡1 2 −1 | 3; 0 0 0 | 0⎤。第二个方程是第一个的 2 倍——两张<strong>重合的平面</strong>。1 个主元、3 个未知数：无穷多解，y、z 都是自由变量，解集就是这张平面本身（二维的解集）。</p>
+            <p><strong>解析</strong>：自由变量的个数 = 解集的“维数”：0 个 → 一个点，1 个 → 一条线，2 个 → 一张面。这个计数在第 8 章将正名为“零空间的维数”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>讨论参数 k：方程组 kx + y = 1；x + ky = 1 何时唯一解、无穷多解、无解？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>系数行列式 det = k² − 1。<strong>k ≠ ±1</strong>：det ≠ 0，<strong>唯一解</strong>（可解出 x = y = 1/(k+1)）。<strong>k = 1</strong>：两方程都是 x + y = 1，<strong>无穷多解</strong>。<strong>k = −1</strong>：−x + y = 1 与 x − y = 1 相加得 0 = 2，<strong>无解</strong>。</p>
+            <p><strong>解析</strong>：参数题的高效路径——先算 det 锁定“唯一解”的范围，再把临界值逐个代入细判。det 在这里扮演“预警器”：det = 0 处正是几何上两直线变平行/重合的时刻，也呼应第 6 章“det = 0 ⇔ 降维”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>求方程组 x + y + z = 3；x − y + z = 1 的通解，并把它写成“特解 + 参数×方向”的形式。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>两式相减：2y = 2 ⇒ y = 1；于是 x + z = 2，z 自由。令 z = t：<strong>(x, y, z) = (2 − t, 1, t) = (2, 1, 0) + t·(−1, 0, 1)</strong>。</p>
+            <p><strong>解析</strong>：解集是三维空间中一条直线：过“特解” (2, 1, 0)，沿方向 (−1, 0, 1) 无限延伸。这个方向向量恰满足“代入方程组右端得 0”（齐次解）——<strong>通解 = 特解 + 齐次解</strong> 的结构下一章将升级为“特解 + 零空间”。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>构造一个 2×2 方程组使其无解，并分别用行图景与列图景解释“为什么无解”。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>例如：x + y = 1；2x + 2y = 5。消元得 0 = 3，无解。</p>
+            <p><strong>行图景</strong>：两条直线斜率相同（都是 −1）而截距不同——平行线永不相交，不存在公共点。</p>
+            <p><strong>列图景</strong>：问 x·(1, 2) + y·(1, 2) 能否等于 (1, 5)。两列共线，一切组合都被困在直线 span((1, 2)) 上，而 (1, 5) 不在这条直线上（5 ≠ 2×1）——<strong>右端向量落在列张成之外</strong>，故无解。∎</p>
+            <p><strong>解析</strong>：列图景把“无解”翻译成一句话：<strong>b 不在 A 的列所张成的空间里</strong>。这句话在第 8 章有专名——b ∉ 列空间 C(A)；第 11 章的最小二乘法则回答“无解时怎么办”：在列空间里找离 b 最近的点。一条线索贯穿三章。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① A<strong>x</strong> = <strong>b</strong> 三重身份：直线找交点（行）、列配组合（列）、变换反求输入；② 三种行变换不改变解集，流水线 = 消成阶梯形 + 回代；③ 判型三步：矛盾行 → 数主元 → 比未知数；④ 无穷多解时通解 = 特解 + 自由参数×方向。<br><strong>下一章预告</strong>：什么时候 A<strong>x</strong> = <strong>b</strong> 对<strong>任何</strong> b 都恰有一解？答案牵出四个互相咬合的概念：逆矩阵、列空间、零空间与秩——矩阵篇的收官之战。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./06-行列式变换的缩放因子.html">← 第 6 章 行列式：变换的缩放因子</a>
+          <a href="./08-逆矩阵列空间零空间与秩.html">第 8 章 逆矩阵、列空间、零空间与秩 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("lines-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 360, SCALE = 40;
+    var b = -1, c = 1;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var statusEl = document.getElementById("lines-status");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2 - 30, y: H / 2 + 40 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+
+    /* 画直线 x + B·y = C：取原点在直线上的投影为基点，沿方向向量两端延伸 */
+    function drawLine(B, C, color, width) {
+      var n2 = 1 + B * B;
+      var p = { x: C / n2, y: C * B / n2 };
+      var d = { x: -B, y: 1 };
+      var t = 20;
+      var p1 = toPx({ x: p.x - t * d.x, y: p.y - t * d.y });
+      var p2 = toPx({ x: p.x + t * d.x, y: p.y + t * d.y });
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var coincident = Math.abs(b - 1) < 0.03 && Math.abs(c - 3) < 0.15;
+      var parallel = Math.abs(b - 1) < 0.03 && !coincident;
+
+      drawLine(1, 3, "#2563eb", coincident ? 5 : 2.5);
+      drawLine(b, c, "#16a34a", 2.5);
+
+      var msg, color;
+      if (coincident) {
+        msg = "两线重合：无穷多解";
+        color = "#9466de";
+      } else if (parallel) {
+        msg = "两线平行：无解";
+        color = "#ef4444";
+      } else {
+        var y = (c - 3) / (b - 1), x = 3 - y;
+        var q = toPx({ x: x, y: y });
+        ctx.fillStyle = "#ef4444";
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = css("--kb-surface");
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        msg = "唯一解 (" + x.toFixed(2) + ", " + y.toFixed(2) + ")";
+        color = "#16a34a";
+      }
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = color;
+      ctx.fillText(msg, 16, 26);
+      statusEl.textContent = msg;
+      statusEl.style.color = color;
+    }
+
+    KB.bindRange(document.getElementById("ctl-lb"), document.getElementById("val-lb"),
+      function (x) { return x.toFixed(2); }, function (x) { b = x; draw(); });
+    KB.bindRange(document.getElementById("ctl-lc"), document.getElementById("val-lc"),
+      function (x) { return x.toFixed(1); }, function (x) { c = x; draw(); });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

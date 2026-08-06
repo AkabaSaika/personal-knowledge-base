@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>00 大纲与学习路线 · 知识库</title>
+  <meta name="kb:summary" content="线性代数系统教材总纲：三篇十二章由浅入深的学习路线，每章的内容要点、配套交互演示与习题设计规范。">
+  <meta name="kb:tags" content="线性代数,教材,大纲,学习路线,xxds">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：章节状态徽章 */
+    .toc-status {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 1px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .toc-todo {
+      color: var(--kb-fg-muted);
+      background: var(--kb-surface-alt);
+      border: 1px solid var(--kb-border);
+    }
+    .toc-done {
+      color: var(--kb-ok);
+      background: var(--kb-ok-soft);
+      border: 1px solid var(--kb-ok);
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>线性代数教材：大纲与学习路线</h1>
+        <p class="kb-lead">这是一套<strong>由浅入深</strong>的线性代数系统教材：从“向量是什么”出发，先建立几何直觉，再掌握矩阵与方程组的计算，最后深入特征值、正交性与 SVD 这些揭示矩阵内在结构的内容。全书三篇十二章，每章配图示、交互演示与带详解的分层习题。</p>
+
+        <h2>教材定位与用法</h2>
+        <ul>
+          <li><strong>适合谁</strong>：有中学代数与平面几何基础即可，不要求微积分。既可零基础顺序学，也可按需跳读单章补漏。</li>
+          <li><strong>核心理念</strong>：先直觉后计算——每个概念先回答“它在几何上是什么、为什么需要它”，再练“怎么算”。矩阵不是数表，是<strong>变换</strong>；这个视角会贯穿全书。</li>
+          <li><strong>怎么用</strong>：每章约 30–50 分钟读完正文，习题分“基础 / 进阶 / 挑战”三档，基础题保证会算，进阶题连接概念，挑战题引向应用。所有习题都带可折叠的完整解析，先做再看。</li>
+          <li><strong>前置速查</strong>：矩阵的记法与四则运算可先看已有的 <a href="../矩阵.html">《矩阵》速查页</a>，教材第 4 章会从变换视角重新建立它。</li>
+        </ul>
+
+        <h2>学习路线图</h2>
+        <figure>
+          <svg viewBox="0 0 660 190" width="660" height="190" role="img" aria-label="三篇学习路线：向量篇、矩阵篇、结构篇依次递进">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="10" y="35" width="180" height="120" rx="14" fill="var(--kb-accent)" opacity="0.12"/>
+              <rect x="10" y="35" width="180" height="120" rx="14" fill="none" stroke="var(--kb-accent)" stroke-width="1.5"/>
+              <text x="100" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第一部分 · 向量篇</text>
+              <text x="100" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 1–3 章</text>
+              <text x="100" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">向量 · 线性组合</text>
+              <text x="100" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">点积与投影</text>
+
+              <path d="M 196 95 h 32" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 228 95 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="236" y="35" width="188" height="120" rx="14" fill="#16a34a" opacity="0.10"/>
+              <rect x="236" y="35" width="188" height="120" rx="14" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="330" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第二部分 · 矩阵篇</text>
+              <text x="330" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 4–8 章</text>
+              <text x="330" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">变换 · 行列式</text>
+              <text x="330" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">方程组 · 秩与逆</text>
+
+              <path d="M 430 95 h 32" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 462 95 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="470" y="35" width="180" height="120" rx="14" fill="#9466de" opacity="0.12"/>
+              <rect x="470" y="35" width="180" height="120" rx="14" fill="none" stroke="#9466de" stroke-width="1.5"/>
+              <text x="560" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第三部分 · 结构篇</text>
+              <text x="560" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 9–12 章</text>
+              <text x="560" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">基变换 · 特征值</text>
+              <text x="560" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">正交 · SVD</text>
+            </g>
+          </svg>
+          <figcaption>三篇依次递进：几何直觉 → 计算工具 → 内在结构。篇内各章顺序编排，篇间不建议跳跃。</figcaption>
+        </figure>
+
+        <h2>第一部分 · 向量篇（几何直觉打底）</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>01</td><td><a href="./01-向量从箭头到数组.html">向量：从箭头到数组</a></td>
+                <td>向量的三种视角（物理箭头 / 数据列表 / 抽象对象）；加法、数乘及其几何意义；坐标系</td>
+                <td>交互：拖动向量看加法平行四边形</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>02</td><td><a href="./02-线性组合张成与线性无关.html">线性组合、张成与线性无关</a></td>
+                <td>线性组合；span 的几何图景（直线/平面/全空间）；线性相关与无关；基与维数的第一次亮相</td>
+                <td>交互：调两个向量的系数，观察组合点扫出的区域</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>03</td><td><a href="./03-点积长度夹角与投影.html">点积：长度、夹角与投影</a></td>
+                <td>点积的代数式与几何式；模长与单位向量；正交；投影公式；应用：余弦相似度</td>
+                <td>SVG：投影“影子”图；交互：拖动向量实时显示点积正负</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第二部分 · 矩阵篇（变换的语言）</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>04</td><td><a href="./04-矩阵是线性变换.html">矩阵是线性变换</a></td>
+                <td>线性变换的定义；矩阵列 = 基向量的去向；旋转/缩放/剪切/反射四大例子；矩阵乘向量</td>
+                <td>交互：调 2×2 矩阵四个元素，看整张网格变形（本篇核心演示）</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>05</td><td><a href="./05-矩阵乘法变换的复合.html">矩阵乘法：变换的复合</a></td>
+                <td>复合变换 = 矩阵相乘；从右往左读；不可交换的几何原因；转置与几种特殊矩阵</td>
+                <td>交互：先旋转后剪切 vs 先剪切后旋转对比动画</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>06</td><td><a href="./06-行列式变换的缩放因子.html">行列式：变换的缩放因子</a></td>
+                <td>det 的几何定义（面积/体积缩放率）；负号与定向翻转；det=0 意味着降维；2×2/3×3 计算与性质</td>
+                <td>交互：拖矩阵看单位正方形变成的平行四边形面积实时变化</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>07</td><td><a href="./07-线性方程组与高斯消元.html">线性方程组与高斯消元</a></td>
+                <td>方程组的行图景与列图景；增广矩阵与行变换；行阶梯形；解的三种情况（唯一/无穷/无解）</td>
+                <td>分步图解：一个 3×3 消元全过程；交互：两直线交点随系数移动</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>08</td><td><a href="./08-逆矩阵列空间零空间与秩.html">逆矩阵、列空间、零空间与秩</a></td>
+                <td>逆变换的几何意义与求法；列空间 = 能到达的地方，零空间 = 被压扁的方向；秩与秩-零化度定理；Ax=b 解的完整结构</td>
+                <td>SVG：满秩 vs 降秩变换对比图；零空间“压扁”示意</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第三部分 · 结构篇（矩阵的内在结构）</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>09</td><td><a href="./09-基变换与坐标.html">基变换与坐标</a></td>
+                <td>同一向量在不同基下的坐标；换基矩阵；相似矩阵 P⁻¹AP 的含义：换个语言描述同一变换</td>
+                <td>交互：切换基向量，看同一点的坐标数字如何变化</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>10</td><td><a href="./10-特征值与特征向量.html">特征值与特征向量</a></td>
+                <td>“变换中方向不变的向量”；特征方程与求解；对角化及其威力（矩阵快速求幂）；应用：斐波那契通项、PageRank 思想</td>
+                <td>交互：拖动向量绕一圈，特征方向上高亮显示（经典演示）</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>11</td><td><a href="./11-正交性与最小二乘.html">正交性与最小二乘</a></td>
+                <td>正交基的好处；正交矩阵 = 刚体变换；Gram-Schmidt 正交化；投影矩阵；最小二乘拟合直线（回归的线代本质）</td>
+                <td>交互：散点图上拖数据点，最小二乘直线实时更新</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>12</td><td><a href="./12-对称矩阵二次型与SVD.html">对称矩阵、二次型与 SVD</a></td>
+                <td>谱定理（对称矩阵可正交对角化）；二次型与主轴；奇异值分解：任何矩阵 = 旋转·缩放·旋转；应用：PCA 降维与图像压缩</td>
+                <td>SVG：SVD 三步分解图；交互：椭圆主轴演示</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>每章的固定结构</h2>
+        <ol>
+          <li><strong>学习目标</strong>：3–5 条“学完你能……”。</li>
+          <li><strong>直觉引入</strong>：从一个几何图景或实际问题切入，回答“为什么需要这个概念”。</li>
+          <li><strong>正文</strong>：概念 → 图示/交互演示 → 计算方法，重要结论用提示框标出。</li>
+          <li><strong>例题</strong>：2–3 道带完整解答的例题，覆盖本章核心算法。</li>
+          <li><strong>习题</strong>：基础 3–4 题、进阶 2–3 题、挑战 1–2 题，全部附可折叠详解。</li>
+          <li><strong>要点回顾</strong>：kb-tip 提示框收束全章，并预告下一章。</li>
+        </ol>
+
+        <h2>习题设计与样例</h2>
+        <p>习题分三档：<span class="kb-exercise-badge">基础</span> 直接套用本章方法保证会算；<span class="kb-exercise-badge kb-adv">进阶</span> 需要把两个以上概念连起来；<span class="kb-exercise-badge kb-hard">挑战</span> 引向证明或真实应用。答案默认折叠，鼓励先做再看。呈现形式如下（可展开试试）：</p>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 样例习题 <span class="kb-exercise-badge">基础</span></p>
+          <p>设 <em class="kb-math">u</em> = (1, 2)，<em class="kb-math">v</em> = (3, −1)，求 2<em class="kb-math">u</em> − <em class="kb-math">v</em>，并说明它的几何意义。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：2<em class="kb-math">u</em> − <em class="kb-math">v</em> = (2·1 − 3, 2·2 − (−1)) = <strong>(−1, 5)</strong>。</p>
+            <p><strong>解析</strong>：先把 <em class="kb-math">u</em> 拉长为原来的 2 倍得 (2, 4)，再加上 −<em class="kb-math">v</em> = (−3, 1)（即 <em class="kb-math">v</em> 反向）。几何上，这是“沿 <em class="kb-math">u</em> 方向走两步，再沿 <em class="kb-math">v</em> 的反方向走一步”到达的位置——任何线性组合都可以这样读成一段“行走路线”。</p>
+          </details>
+        </section>
+
+        <h2>编写约定（供后续章节遵守）</h2>
+        <ul>
+          <li>文件名与页面标题都用 <code>NN 章名</code> 编号（如 <code>01 向量：从箭头到数组</code>），保证导航树按学习顺序排列。</li>
+          <li>章节文件放本目录（<code>content/数学/线性代数/教材/</code>），每章一个 HTML 文件；交互演示脚本内联在各章页尾。</li>
+          <li>每写完一章：把本页对应行的状态改为 <span class="toc-status toc-done">已上线</span> 并加上链接，章末“下一章”指向后继章节，最后重跑索引。</li>
+        </ul>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📌 当前进度</p>
+          <p>🎉 全书十二章已全部上线！从<a href="./01-向量从箭头到数组.html">第 1 章</a>开始顺序学习，或按需跳读任意章节。</p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+</body>
+</html>

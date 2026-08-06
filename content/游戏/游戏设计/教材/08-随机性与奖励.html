@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>08 随机与奖励：惊喜、保底与斯金纳箱 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 8 章：输入与输出随机、斯金纳箱与四种奖励时间表、伪随机与保底等驯化随机的手段、随机的公平感设计，配固定与随机奖励流对比的开箱模拟器。">
+  <meta name="kb:tags" content="游戏设计,教材,随机,保底,斯金纳箱,伪随机,sjxyjl">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 8 章 · 随机与奖励：惊喜、保底与斯金纳箱</h1>
+        <p class="kb-lead">为什么抽卡前的心跳比抽中那一刻更响？为什么 95% 的命中率落空一次就想摔手柄，0.6% 的出货率却让人「再来十连」？骰子比文字还古老，随机是游戏最古老的香料——也是最危险的成分。体验篇终章，我们把随机拆成两种、把奖励拆成四张时间表，最后看设计师如何<strong>驯化</strong>随机：让它保留惊喜，交出残忍。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 区分输入随机与输出随机，说出各自的适用场景与风险；② 解释可变比率奖励时间表为什么最「上头」，并守住斯金纳箱的伦理边界；③ 说出保底、伪随机分布、洗牌算法这些驯化手段各治什么病；④ 用「结果可以随机，理解不能随机」的原则评价一个随机设计。</p>
+        </div>
+
+        <h2>两种随机：发牌的与掷骰的</h2>
+        <p>随机按它落在决策的哪一侧，分成性格迥异的两种：</p>
+        <figure>
+          <svg viewBox="0 0 660 210" width="660" height="210" role="img" aria-label="输入随机发生在玩家决策之前，输出随机发生在决策之后">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="20" y="48" width="180" height="72" rx="14" fill="#16a34a" opacity="0.12"/>
+              <rect x="20" y="48" width="180" height="72" rx="14" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="110" y="78" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--kb-fg)">输入随机 🎴</text>
+              <text x="110" y="100" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">发牌 · 地图生成 · 道具池</text>
+
+              <path d="M 206 84 h 26" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 232 84 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="240" y="48" width="180" height="72" rx="14" fill="var(--kb-accent)" opacity="0.12"/>
+              <rect x="240" y="48" width="180" height="72" rx="14" fill="none" stroke="var(--kb-accent)" stroke-width="1.5"/>
+              <text x="330" y="78" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--kb-fg)">玩家决策 🧠</text>
+              <text x="330" y="100" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">面对局面，权衡出手</text>
+
+              <path d="M 426 84 h 26" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 452 84 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="460" y="48" width="180" height="72" rx="14" fill="#ef4444" opacity="0.10"/>
+              <rect x="460" y="48" width="180" height="72" rx="14" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+              <text x="550" y="78" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--kb-fg)">输出随机 🎲</text>
+              <text x="550" y="100" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">命中判定 · 暴击 · 掉落</text>
+
+              <text x="110" y="158" text-anchor="middle" font-size="12" fill="#16a34a">给玩家出「新题」</text>
+              <text x="110" y="178" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">决策权仍在玩家手里</text>
+              <text x="550" y="158" text-anchor="middle" font-size="12" fill="#ef4444">给答案「掷骰」</text>
+              <text x="550" y="178" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">决策可能被骰子推翻</text>
+            </g>
+          </svg>
+          <figcaption>同一颗骰子，掷在决策之前是出题人，掷在决策之后是判卷人——玩家对两者的容忍度天差地别。</figcaption>
+        </figure>
+        <ul>
+          <li><strong>输入随机（Input randomness）</strong>发生在决策之前：斗地主发什么牌、以撒这局刷什么道具、Roguelike 的地图长什么样。它制造<strong>新问题</strong>，而解题的权力完整地留在玩家手里——这正是第 7 章结尾说的「选择保鲜剂」：每局的题不同，最优解永远在漂移。输入随机被普遍喜爱，整个 Roguelike 品类就建在它上面。</li>
+          <li><strong>输出随机（Output randomness）</strong>发生在决策之后：你已经做完了所有正确的事，骰子再决定成不成——命中率、暴击、闪避。它制造<strong>心跳</strong>，但代价是玩家的决策可能被骰子当面推翻。XCOM 玩家人人讲得出「95% 命中打空」的血泪段子——概率上每 20 枪必有 1 次，但那次落空毁掉的是「我明明都做对了」的公正感。</li>
+        </ul>
+        <p>设计口诀由此而来：<strong>输入随机可以当主粮，输出随机只能当辣椒</strong>——小剂量提味，且最好配「解药」（提高命中的手段、保命的容错、可预期的兜底），让玩家对骰子保有还手之力。</p>
+
+        <h2>斯金纳箱：奖励的四张时间表</h2>
+        <p>随机的另一半故事在奖励侧。心理学家斯金纳（B. F. Skinner）把鸽子放进装有按钮的箱子，研究「什么样的发奖节奏最能让按按钮的行为持续」——这套<strong>操作性条件反射</strong>实验给出的答案，今天支配着每一个游戏的掉落表。按「奖励何时到来」分四种时间表：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>时间表</th><th>规则</th><th>游戏例子</th><th>产生的行为</th></tr></thead>
+            <tbody>
+              <tr><td><strong>固定间隔</strong></td><td>每隔固定时间发一次</td><td>体力每 8 分钟回 1 点、每日刷新</td><td>踩点上线，间隔中段无人问津</td></tr>
+              <tr><td><strong>可变间隔</strong></td><td>平均隔一段时间，具体不定</td><td>世界 Boss 随机刷新</td><td>反复回来「看一眼」</td></tr>
+              <tr><td><strong>固定比率</strong></td><td>做满 N 次必发</td><td>集满 10 张兑换、里程碑奖励</td><td>临近完成时冲刺，兑现后低谷</td></tr>
+              <tr><td><strong>可变比率</strong></td><td>每次都可能发，概率恒定</td><td>杀怪掉落、抽卡、开箱</td><td><strong>最高频最持久的重复，最难停手</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>斯金纳的核心发现：<strong>可变比率的行为黏性远超其他三种，且最抗「戒断」</strong>——因为每一次尝试都可能是「那一次」，行为永远差一步就到奖励，手就永远停不下来。老虎机、抽卡、开箱用的都是这张表。「差一点就中」（near miss）还会火上浇油：转轮停在大奖旁边一格，大脑的反应接近真的中奖——懊悔转化成「再来一次」的燃料。下面亲手对比固定比率与可变比率这两条奖励流的「质感」：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 开箱模拟器：同样的期望，两种完全不同的人生</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="box-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：固定比率（每 10 次必出）可预测像发工资，拆开就没有惊喜；可变比率（每次 10%）平均相同却会连着出也会旱 30 次——干旱的煎熬正是保底机制要治的病：截断最坏情况，保留中间的心跳。</p></noscript>
+            <p id="box-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);">两个箱子期望相同：固定箱每 10 次必出 1 金；随机箱每次 10% 出金。点「开一次」感受差别。</p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-open" type="button">两箱各开一次</button>
+              <button class="kb-btn" id="btn-auto" type="button">自动 ×50</button>
+              <button class="kb-btn" id="btn-pity" type="button" aria-pressed="false">保底：关</button>
+              <button class="kb-btn" id="btn-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三组观察</p>
+          <p>① 各自动开 50 次：固定箱的金点像走路，每 10 格一步——可预测、可规划，但拆开毫无心跳；随机箱像抽奖，会连着来也会旱很久——<strong>同样的期望，完全不同的体验</strong>。② 盯住随机箱的「最长干旱」：10% 概率连旱 22 次以上的概率约 10%——真随机的干旱比直觉长得多，总有玩家会撞上。③ 打开保底（25 次不出必出，绿色标记）再跑：最长干旱被硬生生截断——这就是抽卡保底在数学上做的全部事情：<strong>砍掉分布的尾巴，保留中间的心跳</strong>。</p>
+        </div>
+        <p>最后必须把伦理的话说直白。斯金纳箱本身是中性的行为学工具，分界线在<strong>它和乐趣的关系</strong>：用可变比率给本来就好玩的行为<strong>加噪</strong>（打 Boss 顺手掉落的惊喜），是调味；当游戏的全部动机只剩「下一次抽取」，玩法沦为拉杆的仪式，那就是老虎机穿了游戏的皮——第 6 章的红线测试在这里同样适用：<strong>把随机奖励撤掉，这个行为还有人做吗？</strong>做游戏的人迟早要在某次会议上回答这个问题，最好现在就想好自己的答案。</p>
+
+        <h2>驯化随机：保底、伪随机与洗牌</h2>
+        <p>真随机在数学上无辜，在体验上残忍：连续不出（干旱）与连续爆出（通胀）都是它的必然产物，但玩家的体感是「这游戏坏了」或「概率造假」。更麻烦的是，<strong>人类对随机的直觉本来就是错的</strong>——赌徒谬误（连黑五次觉得「该红了」，其实硬币没有记忆）、热手错觉（连中三次觉得「手感来了」）——玩家拿着一套错误的直觉来审判你的正确概率，输的一定是你。于是现代游戏几乎不再使用裸的真随机，而是层层驯化：</p>
+        <ul>
+          <li><strong>硬保底（Pity）</strong>：N 次不出必出（原神 90 抽）。数学本质：把分布的最坏尾巴一刀截掉。治的病：极端干旱的绝望与舆情。</li>
+          <li><strong>软保底</strong>：失败越多，下次概率越高（原神约 74 抽起概率陡升）。比硬保底平滑，玩家画出的「出货分布图」在 75–85 抽间隆起一座山。</li>
+          <li><strong>伪随机分布（PRD）</strong>：Dota 2 的 25% 暴击实际首刀约 8.5%，之后逐刀递增，暴击后重置。长期频率仍是 25%，但连续暴击与长期干旱都被强力压制——序列变得<strong>更像人类想象中的随机</strong>。治的病：运气一波流决定拼刀胜负。</li>
+          <li><strong>洗牌算法</strong>：把「每次独立掷骰」改成「一袋子摸完再装袋」。俄罗斯方块的现代规则七种方块装袋轮抽——任意连续 7 块里每种恰好一次，「长条永远不来」被制度性消灭（第 4 章实战一埋的钩子，在此兑现）。</li>
+          <li><strong>暗中补偿</strong>：连续不顺时系统悄悄拉偏——XCOM 在低难度暗中提高连败玩家的命中。有效，但记住例 5.2 的教训：暗手一旦被发现，信任连本带利扣回。</li>
+        </ul>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 驯化的共同思想</p>
+          <p><strong>玩家要的从来不是数学上正确的随机，而是感觉公平的随机。</strong>驯化手段全都在做同一件事：压缩方差、截断尾巴，让实际序列贴近人类（错误但顽固）的随机直觉。设计师与其纠正玩家的直觉，不如让骰子迁就它——这不是讨好，这是把「体验」当成真正的交付物（MDA 第一课，第 2 章）。</p>
+        </div>
+
+        <h2>随机的公平感</h2>
+        <p>驯化之外，随机设计还有三条公平感戒律：</p>
+        <ul>
+          <li><strong>结果可以随机，理解不能随机</strong>：概率要可公示、规则要可解释（抽卡概率公示如今已是多国法规）。玩家可以接受「我运气差」，不能接受「我不知道发生了什么」；</li>
+          <li><strong>失败要留下「我本可以」</strong>：死于随机之前，必须先有玩家自己的可指认失误。以撒被怪围死前总有一步走位可以更好——锅里有自己的份，玩家就会点「再来一局」；纯骰运处死玩家的游戏，差评会写满「不公平」；</li>
+          <li><strong>随机的善意要不对称</strong>：奖励玩家时方差可以大（超额惊喜人人喜欢），惩罚玩家时方差要小（随机的暴击你可以给玩家，尽量少给怪物）。同一颗骰子，向上掷是惊喜，向下掷是事故——好设计让骰子偏心。</li>
+        </ul>
+        <p>至此，体验篇四块拼图集齐：<strong>心流</strong>管「玩进去」，<strong>动机</strong>管「为什么来、为什么留」，<strong>选择</strong>管智力的乐趣，<strong>随机</strong>管情绪的波澜。第三篇·系统篇，我们把这些心理学原理翻译成数字、经济、关卡与手感——从「懂玩家」走向「造系统」。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · XCOM 的 95% 与杀戮尖塔的「明牌」</p>
+          <p>XCOM 的 95% 命中落空被骂了十年；杀戮尖塔敌人头顶直接写明「下回合攻击 12 点」，被赞是策略游戏的伟大发明。两者对随机的处理差在哪里？</p>
+          <p><strong>分析</strong>：XCOM 把随机放在<strong>输出侧</strong>：瞄准、绕后、架枪全做对，最后一步交给骰子——失败无法归因于任何决策，公正感崩塌（其实 XCOM 也知道疼，低难度里暗补命中，只是不敢声张）。杀戮尖塔的革命是把随机<strong>整体搬回输入侧</strong>：敌人下回合干什么明牌告诉你（意图系统），你抽到什么牌是随机的——但抽完之后，打不打得过全是你的运算，结算零随机。随机负责出题（这手牌怎么解这个意图），不再负责判卷。<strong>结论</strong>：「把输出随机改写成输入随机」是近十年策略游戏最重要的设计迁移之一——心跳少了一点，公正感和策略深度翻倍；哪种取舍更好没有标准答案（XCOM 的紧张感也是真商品），但设计师必须知道自己把骰子放在了决策的哪一侧。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 原神抽卡的四层驯化</p>
+          <p>原神的限定角色抽取规则：公示概率 0.6%；约 74 抽起概率逐抽陡升（软保底）；90 抽必出五星（硬保底）；若出的五星不是当期限定（歪了），下一个五星必是限定（大保底）。逐层分析每层各治什么病，以及这套系统付出的代价。</p>
+          <p><strong>分析</strong>：四层各有靶子——<strong>公示概率</strong>治「理解随机」：0.6% 白纸黑字，玩家骂穷不骂骗（合规也要求如此）；<strong>软保底</strong>治长干旱的绝望：让实际出货集中在 75–85 抽，体验上「熬到八十总会好」；<strong>硬保底</strong>治最坏情况与舆情：任何人 90 抽封顶，「万一永远不出」的恐惧被制度性消灭；<strong>大保底</strong>治 near miss 的懊悔——「出金却歪了」是整个系统情绪最烈的时刻，大保底把这份懊悔改写成「下次必中」的期票，负面情绪当场转化为继续投入的理由（就伦理而言，这一层最精明也最值得警惕）。<strong>代价</strong>：驯化到这个程度，抽卡在数学上已接近「分期付款购买」——资深玩家按 180 抽做预算、攒抽如攒钱，惊喜感让位给确定性。<strong>结论</strong>：驯化随机的尽头是消灭随机——保留多少野性，是每个抽卡系统的定位选择，没有白吃的午餐。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 七块一袋：俄罗斯方块驯化输入随机</p>
+          <p>初版俄罗斯方块每块独立随机，「等长条等到死」是全球玩家的集体记忆；现代规则改为「七种方块装进袋子轮流摸完再重装」（7-bag）。分析这个改动保住了什么、消灭了什么、付出了什么。</p>
+          <p><strong>分析</strong>：<strong>保住</strong>：短期不可预测性——袋内顺序仍随机，下一块依然未知，「下一块是什么」的期待完好；<strong>消灭</strong>：极端干旱——任意连续 7 块内长条必出现一次，最坏等待被数学封顶在 12 块（上一袋第一个、下一袋最后一个），「永远不来」成为不可能事件；<strong>付出</strong>：高手可以数袋——顶级玩家追踪袋子边界推算剩余方块，随机性对他们进一步坍缩成计算题。竞技社区接受这笔交易：电竞化恰恰需要低方差（比赛输给发牌不体面），7-bag 同时服务了休闲玩家的公平感与竞技玩家的可计算性。<strong>结论</strong>：这是「洗牌代替掷骰」的教科书应用——输入随机同样需要驯化，且驯化的方向与输出侧一致：<strong>压方差、断尾巴、保留中段的未知</strong>。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>分类输入随机还是输出随机：A 以撒每层随机生成的道具房；B 攻击 20% 概率暴击；C 斗地主的发牌；D 宝可梦草丛里随机遇到的野怪；E 命中率 80% 的技能没打中。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：A 输入（随机给局面，怎么用道具是你的事）；B 输出（决策后骰子加成）；C 输入（牌发完才开始斗智）；D 输入为主（遇到什么是随机的，打不打、怎么打是你的）；E 输出（决策被骰子否决）。</p>
+            <p><strong>解析</strong>：判据只有一条——<strong>骰子掷完之后，还轮不轮得到你说话</strong>。掷完你才开始决策 = 输入随机；你决策完它才掷 = 输出随机。B 里藏着一个细分：给玩家自己的暴击是「惊喜型输出随机」（善意向上），给敌人的暴击是「事故型输出随机」（恶意向下）——回看正文第三戒律：同一机制，方向不同，设计待遇就该不同。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>把四个设计连到对应的奖励时间表，并指出哪个最容易「上头」、哪个最像「上班」：每日签到、世界 Boss 随机刷新、集满 30 个碎片兑换角色、打怪随机掉装备。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：每日签到——固定间隔；世界 Boss 随机刷——可变间隔；碎片兑换——固定比率；随机掉装备——可变比率。最上头：随机掉装备（可变比率，每一刀都可能出货）；最像上班：每日签到（固定间隔，行为被时刻表绑定，无期待只有义务）。</p>
+            <p><strong>解析</strong>：四张表不是选一张，成熟游戏是叠着用的：签到保次日留存（固定间隔）、碎片给确定性的长线目标（固定比率）、掉落负责每一刻的心跳（可变比率）。诊断一个游戏的奖励结构，先把它所有奖励各归入四张表，再看比例——<strong>可变比率占比过高的游戏值得警惕：它可能在用心跳掩盖玩法的贫血</strong>（红线测试见正文）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>玩家说：「我连歪了三次，下一次大概率不会歪了。」在没有保底机制的纯随机抽卡里，这句话对吗？在有「大保底」机制的原神里呢？两个答案为什么不同？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：纯随机下——错，这是标准的赌徒谬误：每次抽取独立，硬币没有记忆，连歪一百次后下次歪的概率分毫不变。原神里——对：大保底是明文机制，歪过一次后下个五星必为限定，玩家的「该我了」有制度兜底。</p>
+            <p><strong>解析</strong>：这道题的真正含义：<strong>驯化机制把玩家的错误直觉「变成了对的」</strong>。赌徒谬误是人类的出厂设置，纯随机系统里它让玩家做出错误预期然后受伤；保底系统干脆把世界改造得符合这个直觉——「连着不出就该出了」从谬误变成规则。这是「让骰子迁就直觉」最极致的形态，也再次印证：驯化的本质不是修玩家，是修系统。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>某 MMO 装备掉率 10%，官方数据无假。粗略计算：连刷 20 次一无所获的概率约是多少？这个数字如何解释「客服天天收到概率造假投诉」？（提示：0.9 的 20 次方 ≈ 0.12。）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：0.9²⁰ ≈ 12%——大约每 8 个刷满 20 次的玩家里就有 1 个颗粒无收。若十万玩家在刷，注定有上万人经历这种干旱，其中愤怒的那部分就是投诉的来源——概率没造假，<strong>是分布的尾巴天然「量产」倒霉蛋</strong>。</p>
+            <p><strong>解析</strong>：两个推论。其一，玩家的「体感掉率」由自己的样本决定，而个体样本必然偏离总体——没有驯化的真随机等于把一部分玩家随机分配到糟糕体验组；其二，投诉成本最终由客服与舆情部门支付——<strong>保底机制的开发成本，通常远低于不做保底的舆情成本</strong>。这也是保底从「良心设计」迅速变成「行业标配」的真实原因：它不只是善意，它是划算。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>Dota 2 的 25% 暴击用 PRD 实现：首刀实际约 8.5%，每不暴一刀概率递增，暴击后重置，长期频率仍为 25%。分析：它牺牲了什么、换来了什么？为什么这笔交易对「拼刀」游戏特别值得？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>牺牲</strong>：开局连暴的可能性（首刀 8.5% 远低于 25%）——「一波运气秒人」的戏剧性上限被砍掉；老玩家还能利用「攒概率」微操（先打小兵垫刀攒暴击再进场），产生一层非直觉的进阶技巧。<strong>换来</strong>：双向的方差压缩——连续暴击的「被运气处刑」与长期不暴的「被运气抛弃」同时被压制，拼刀结果更多由装备与操作决定。<strong>为什么值得</strong>：MOBA 的对拼在几秒内定生死且高频发生，输出随机的方差直接兑换成胜负——玩家输给操作服气，输给三连暴会怒喷系统（回看戒律二：失败要留「我本可以」）。PRD 把暴击从「判卷人」降格为「调味料」，正是「输出随机当辣椒」的量化实现。</p>
+            <p><strong>解析</strong>：注意 PRD 与保底的家族相似性：都是「失败递增补偿」，一个用在战斗、一个用在抽卡。识别出抽象结构（方差压缩 + 尾部截断），你就能把它迁移到任何随机系统——这正是学框架而不是学案例的意义。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为一个掉率 2% 的 MMO 稀有坐骑设计软保底：写出具体规则（概率如何递增、何时封顶、出货后如何重置），算出最坏情况，并回答：为什么不干脆把掉率改成 5%？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：基础掉率 2%；从第 51 次未出开始，每次失败 +1%（第 51 次 3%、第 52 次 4%……）；第 100 次强制掉落（硬保底封顶）；出货后一切重置回 2%。<strong>最坏情况</strong>：100 次必得，且 60–90 次区间概率已相当可观，体感「刷到八十把总会出」。</p>
+            <p><strong>为什么不直接改 5%</strong>：三个理由。① 5% 的真随机依然有残忍的尾巴（0.95⁶⁰ ≈ 4.6%，仍有玩家旱 60 次）——问题在方差不在均值，抬均值治不了尾巴；② 前 50 次维持 2% 保住了「稀有感」：坐骑的身价来自多数人要刷几十次，直接 5% 让它掉价一半（稀缺性即价值，第 10 章展开）；③ 软保底把资源集中补贴给最倒霉的人——同样的总掉出量，分配给尾部玩家的体验改善远大于全员提价。<strong>解析</strong>：这是「均值与方差分开调」的实战：<strong>均值定身价，方差定体感</strong>——两个旋钮各管各的，混着拧就会像「直接改 5%」一样两头不讨好。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>写下你自己的「斯金纳箱红线」：一条判断随机奖励设计是否越界的个人准则。然后用它裁决两个真实存在的设计：A 打 Boss 后随机掉落材料（掉什么随机，但 Boss 战本身好玩）；B 装备词条无限随机重铸（每次花钱重掷词条，极小概率完美，玩法核心即重掷）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考红线</strong>（示例，允许不同）：「随机奖励只能给<strong>本身值得做的行为</strong>加噪；如果把随机奖励换成固定奖励后没人再做这个行为，该设计越界。」（正文红线测试的书面化。）</p>
+            <p><strong>裁决 A</strong>：通过。把随机掉落换成固定材料表，Boss 战照样有人打（战斗本身是内容）——随机在这里是锦上添花的调味。<strong>裁决 B</strong>：越界。把「随机词条」换成「固定进度强化」，重铸玩法瞬间无人问津——说明它的全部吸引力就是可变比率时间表本身，行为内核（点按钮扣钱）零乐趣，这是老虎机结构穿了装备系统的皮。<strong>解析</strong>：注意 B 在商业上往往极其成功，这正是这道题存在的原因——红线不是用来判断「赚不赚钱」，是用来判断「我做不做」。写下它的价值在于：等你入行后在会议室里被问到「为什么反对这个方案」时，你有一条早就想清楚的原则，而不是一句临时的「感觉不好」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>体验篇毕业设计：给你在 4.8 设计的纸笔游戏（或任选一个简单游戏）加一套随机系统。要求：至少一处输入随机、最多一处输出随机、为可变比率奖励配一个驯化机制，并对每个随机点标注类型与理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>（基于 4.8 的「盖数字比大小」）：① <strong>输入随机</strong>：开局双方从 1–10 中随机抽走 2 个数字弃置（本局不可用）——每局手牌池不同，「最优策略」随抽弃结果漂移（选择保鲜）；骰子掷在所有决策之前，胜负仍纯凭博弈。② <strong>输出随机（限一处、小剂量）</strong>：每局仅一次「骰子回合」——第 5 轮双方比点前各掷一枚 d6 加到己方数字上——位置固定可预期（玩家能围绕它规划），且骰子最大摆动 5 点，不足以推翻全局优势（辣椒不是主菜）。③ <strong>可变比率＋驯化</strong>：赢下一轮有 1/3 概率获得「星标」，集 2 个星标本局总分 +3；驯化：连续 3 轮未获星标则下一次获胜必得（软保底），防止整局旱到底的挫败。</p>
+            <p><strong>解析</strong>：自查四点：输入随机是否发生在决策前（是——抽弃在博弈前）；输出随机是否可预期、低摆幅、有还手余地（固定在第 5 轮，可规划）；可变比率是否绑在「本来就想做的行为」上（赢轮次本就是目标，星标只是加噪——通过红线测试）；驯化是否治了具体的病（治整局无星标的干旱）。四点全过，你已经能像职业策划一样使用这一章——体验篇毕业。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 输入随机出题、输出随机判卷：前者可当主粮（Roguelike 的根基），后者只能当辣椒且要配解药；② 奖励四张时间表里可变比率最上头也最危险——红线测试：撤掉随机奖励，这个行为还有人做吗？③ 真随机数学无辜、体验残忍：干旱与通胀必然量产倒霉蛋，而玩家用错误的直觉审判正确的概率；④ 驯化工具箱：硬保底截尾、软保底爬坡、PRD 压方差、洗牌代替掷骰——共同思想是<strong>让骰子迁就人类直觉</strong>，均值定身价、方差定体感，两个旋钮分开拧；⑤ 公平感三戒律：理解不能随机、失败要留「我本可以」、骰子的善意要不对称。<br><strong>下一篇预告</strong>：体验篇四块拼图（心流、动机、选择、随机）集齐。第三篇·系统篇开工：先从所有系统的地基说起——数值。为什么 10 攻打 8 防和 100 攻打 98 防感觉完全不同？成长曲线的手感藏在哪条公式里？</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./07-有趣的选择.html">← 第 7 章 选择：一连串有趣的决定</a>
+          <a href="./09-数值与成长曲线.html">第 9 章 数值入门：成长曲线的手感 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("box-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, RATE = 10, PITY_AT = 25, KEEP = 60;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var msg = document.getElementById("box-msg");
+
+    var fixed = { opens: 0, hits: 0, recent: [] };
+    var rand = { opens: 0, hits: 0, recent: [], sinceHit: 0, maxDrought: 0, pityHits: 0 };
+    var pityOn = false;
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function openOnce() {
+      /* 固定比率箱：每 10 次必出 */
+      fixed.opens += 1;
+      var fHit = fixed.opens % RATE === 0;
+      if (fHit) fixed.hits += 1;
+      fixed.recent.push(fHit ? 1 : 0);
+      if (fixed.recent.length > KEEP) fixed.recent.shift();
+
+      /* 可变比率箱：每次 10%，可选保底 */
+      rand.opens += 1;
+      var forced = pityOn && rand.sinceHit >= PITY_AT - 1;
+      var rHit = forced || Math.random() * 100 < RATE;
+      if (rHit) {
+        rand.hits += 1;
+        if (forced) rand.pityHits += 1;
+        rand.sinceHit = 0;
+      } else {
+        rand.sinceHit += 1;
+        if (rand.sinceHit > rand.maxDrought) rand.maxDrought = rand.sinceHit;
+      }
+      rand.recent.push(rHit ? (forced ? 2 : 1) : 0);
+      if (rand.recent.length > KEEP) rand.recent.shift();
+    }
+
+    function drawStrip(list, x, y) {
+      var s = 9, gap = 3, perRow = 30;
+      list.forEach(function (v, i) {
+        var col = i % perRow, row = Math.floor(i / perRow);
+        ctx.fillStyle = v === 2 ? "#16a34a" : (v === 1 ? "#f59e0b" : css("--kb-border-strong"));
+        ctx.fillRect(x + col * (s + gap), y + row * (s + gap), s, s);
+      });
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+
+      ctx.font = "600 15px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText("📦 固定比率箱：每 " + RATE + " 次必出 1 金", 16, 30);
+      ctx.font = "12.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("已开 " + fixed.opens + " 次 · 出金 " + fixed.hits +
+        " 次 · 实际率 " + (fixed.opens ? (fixed.hits / fixed.opens * 100).toFixed(1) : "0") + "%", 16, 52);
+      drawStrip(fixed.recent, 16, 64);
+
+      var y2 = 176;
+      ctx.font = "600 15px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText("🎰 可变比率箱：每次 " + RATE + "% 出金" + (pityOn ? "（保底 " + PITY_AT + " 次）" : ""), 16, y2);
+      ctx.font = "12.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("已开 " + rand.opens + " 次 · 出金 " + rand.hits +
+        " 次 · 实际率 " + (rand.opens ? (rand.hits / rand.opens * 100).toFixed(1) : "0") + "%" +
+        " · 当前干旱 " + rand.sinceHit + " · 最长干旱 " + rand.maxDrought +
+        (rand.pityHits ? " · 保底触发 " + rand.pityHits + " 次" : ""), 16, y2 + 22);
+      drawStrip(rand.recent, 16, y2 + 34);
+
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("金 = 出货　灰 = 落空" + (pityOn ? "　绿 = 保底强制出货" : "") + "　（显示最近 " + KEEP + " 次）", 16, H - 16);
+    }
+
+    function comment() {
+      if (rand.opens < 20) {
+        msg.textContent = "多开几次再看规律——固定箱像走路，随机箱像抽奖。";
+      } else if (pityOn) {
+        msg.textContent = "保底把最长干旱截断在 " + PITY_AT + " 次以内（本次实测最长 " + rand.maxDrought +
+          "）——砍掉分布的尾巴，保留中间的心跳。";
+      } else {
+        msg.textContent = "同样 10% 的期望：固定箱每 10 格一步可预测；随机箱最长旱了 " + rand.maxDrought +
+          " 次——这份煎熬就是保底要治的病，点开保底试试。";
+      }
+    }
+
+    document.getElementById("btn-open").addEventListener("click", function () {
+      openOnce();
+      comment();
+      draw();
+    });
+    document.getElementById("btn-auto").addEventListener("click", function () {
+      for (var i = 0; i < 50; i++) openOnce();
+      comment();
+      draw();
+    });
+    var btnPity = document.getElementById("btn-pity");
+    btnPity.addEventListener("click", function () {
+      pityOn = !pityOn;
+      btnPity.textContent = "保底：" + (pityOn ? "开" : "关");
+      btnPity.setAttribute("aria-pressed", String(pityOn));
+      comment();
+      draw();
+    });
+    document.getElementById("btn-reset").addEventListener("click", function () {
+      fixed.opens = 0; fixed.hits = 0; fixed.recent.length = 0;
+      rand.opens = 0; rand.hits = 0; rand.recent.length = 0;
+      rand.sinceHit = 0; rand.maxDrought = 0; rand.pityHits = 0;
+      msg.textContent = "已重置。两箱期望相同：固定箱每 " + RATE + " 次必出，随机箱每次 " + RATE + "%。";
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

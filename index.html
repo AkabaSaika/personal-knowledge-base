@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>个人知识库</title>
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/content.css">
+</head>
+<body class="kb-home">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-hero">
+    <h1>📚 个人知识库</h1>
+    <p class="kb-hero-sub">把想学的知识做成图文并茂的页面，随存随查。</p>
+    <div class="kb-search">
+      <span class="kb-search-icon" aria-hidden="true">🔍</span>
+      <input id="kb-hero-search" class="kb-search-input" type="search"
+        placeholder="搜索知识库 — 支持拼音首字母与模糊搜索（按 / 聚焦）" aria-label="搜索知识库">
+      <button id="kb-hero-mode" class="kb-search-mode" type="button"></button>
+      <div id="kb-hero-panel" class="kb-search-panel"></div>
+    </div>
+  </div>
+
+  <main class="kb-home-main">
+    <h2 class="kb-section-title">分类总览</h2>
+    <div id="kb-home-categories" class="kb-card-grid">
+      <noscript><p>首页总览需要启用 JavaScript。也可以直接进入 content/ 目录浏览各页面。</p></noscript>
+    </div>
+
+    <h2 class="kb-section-title">最近更新</h2>
+    <ul id="kb-home-recent" class="kb-recent"></ul>
+
+    <footer class="kb-footer">
+      <p id="kb-home-meta"></p>
+      <p>双击 start.command 启动 · 新增内容后重跑 scripts/build_index.py</p>
+    </footer>
+  </main>
+
+  <script src="assets/generated/site-index.js" defer></script>
+  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/nav.js" defer></script>
+  <script src="assets/js/toc.js" defer></script>
+  <script src="assets/js/search.js" defer></script>
+  <script src="assets/js/interactive.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>

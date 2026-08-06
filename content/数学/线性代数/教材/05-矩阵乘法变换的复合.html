@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>05 矩阵乘法：变换的复合 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 5 章：矩阵乘法的来历——变换的先后复合，从右往左读，不可交换的几何原因，转置与特殊矩阵，配分步复合演示。">
+  <meta name="kb:tags" content="线性代数,教材,矩阵乘法,复合变换,转置">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 5 章 · 矩阵乘法：变换的复合</h1>
+        <p class="kb-lead">“先旋转 90°，再剪切”——两步变换连着做，净效果仍是一个线性变换，因此必定对应<strong>某一个</strong>矩阵。这个矩阵怎么由原来两个算出来？答案就是矩阵乘法。这一章你会看到：教科书里那条拗口的“行乘列”公式不是人为规定，而是复合变换的必然结果。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 把矩阵乘积 AB 读成“先做 B、再做 A”；② 从复合的角度推出行乘列公式并熟练计算（含非方阵）；③ 用几何例子解释 AB ≠ BA；④ 说明结合律为何在变换视角下不证自明；⑤ 掌握转置及 (AB)ᵀ = BᵀAᵀ。</p>
+        </div>
+
+        <h2>复合：两台机器串联</h2>
+        <p>把变换想成机器：向量 <strong>v</strong> 先进机器 B，输出 B<strong>v</strong>；再进机器 A，输出 A(B<strong>v</strong>)。两台串联仍是“吃向量、吐向量”的线性机器，把它记作一台新机器 AB：</p>
+        <pre><code>(AB)v = A(Bv)        —— AB 读作“先 B 后 A”</code></pre>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 从右往左读</p>
+          <p>乘积 AB 中<strong>先执行的是右边的 B</strong>。原因藏在记号里：AB<strong>v</strong> 中离 <strong>v</strong> 最近的是 B，向量先碰到谁就先被谁处理——和复合函数 <em class="kb-math">f</em>(<em class="kb-math">g</em>(<em class="kb-math">x</em>)) 先算 <em class="kb-math">g</em> 一个道理。</p>
+        </div>
+
+        <h2>乘法公式从哪来</h2>
+        <p>要写出 AB 这台合成机器的矩阵，按第 4 章的方法：<strong>追踪基向量</strong>。î 先被 B 送到“B 的第 1 列”，这个向量再进机器 A——用 A 去乘它。所以：</p>
+        <pre><code>AB 的第 j 列 = A × (B 的第 j 列)</code></pre>
+        <p>展开“矩阵乘向量”，就得到熟悉的行乘列公式：AB 的第 <em class="kb-math">i</em> 行第 <em class="kb-math">j</em> 列元素 = A 的第 <em class="kb-math">i</em> 行与 B 的第 <em class="kb-math">j</em> 列的点积。以旋转 90°（R）和剪切（S）为例：</p>
+        <pre><code>S·R = ⎡1 1⎤⎡0 −1⎤ = ⎡1 −1⎤        （先旋转，后剪切）
+      ⎣0 1⎦⎣1 　0⎦   ⎣1 　0⎦
+
+R·S = ⎡0 −1⎤⎡1 1⎤ = ⎡0 −1⎤        （先剪切，后旋转）
+      ⎣1 　0⎦⎣0 1⎦   ⎣1 　1⎦</code></pre>
+        <p>两个结果不一样——先做哪个，真的有区别。亲眼看一遍：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 分步执行：先旋转后剪切 vs 先剪切后旋转</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="comp-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：矩阵乘法即变换复合，交换先后次序一般得到不同结果。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control" style="flex-direction:row;align-items:center;gap:6px;min-width:0">
+                <input type="radio" name="comp-order" value="RS" checked style="accent-color:var(--kb-accent)"> 先旋转 90°，再剪切（S·R）</label>
+              <label class="kb-control" style="flex-direction:row;align-items:center;gap:6px;min-width:0">
+                <input type="radio" name="comp-order" value="SR" style="accent-color:var(--kb-accent)"> 先剪切，再旋转 90°（R·S）</label>
+              <button class="kb-btn kb-btn-primary" id="comp-step" type="button">下一步 ▸</button>
+              <button class="kb-btn" id="comp-reset" type="button">重置</button>
+              <span class="kb-control-value" id="comp-status" style="min-width:180px"></span>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么不能交换：一个物理直觉</p>
+          <p>“先把地图逆时针转 90° 再向右推歪”，和“先推歪再转”——推歪的方向在旋转前后指向不同的地方，效果自然不同。日常动作也如此：先穿袜子再穿鞋 ≠ 先穿鞋再穿袜子。<strong>顺序敏感是变换世界的常态</strong>，能交换（如两次旋转）反而是特例。</p>
+        </div>
+
+        <h2>矩阵乘法的性质</h2>
+        <ul>
+          <li><strong>不满足交换律</strong>：一般 AB ≠ BA（如上）。甚至维度都可能只允许一个方向相乘。</li>
+          <li><strong>满足结合律</strong>：(AB)C = A(BC)。变换视角下无需计算就能看穿：两边都是“先 C，再 B，再 A”这同一串动作，只是加括号的方式不同。</li>
+          <li><strong>分配律</strong>：A(B + C) = AB + AC。</li>
+          <li><strong>单位矩阵 I</strong>（对角线全 1）是“什么都不做”的变换：AI = IA = A，充当乘法中的数字 1。</li>
+        </ul>
+        <p>非方阵也能乘，只要“接口对得上”：<em class="kb-math">m</em>×<em class="kb-math">n</em> 矩阵乘 <em class="kb-math">n</em>×<em class="kb-math">p</em> 矩阵得 <em class="kb-math">m</em>×<em class="kb-math">p</em>——B 输出 <em class="kb-math">n</em> 维向量，A 恰好吃 <em class="kb-math">n</em> 维向量。计算细节与 2×2 完全同理（行乘列），可参考<a href="../矩阵.html">《矩阵》速查页</a>。</p>
+
+        <h2>转置：行列互换</h2>
+        <p><strong>转置</strong> Aᵀ 把 A 的行与列对调：(Aᵀ)<sub>ij</sub> = A<sub>ji</sub>。两条常用性质：</p>
+        <ul>
+          <li>(Aᵀ)ᵀ = A；</li>
+          <li><strong>(AB)ᵀ = BᵀAᵀ</strong>——顺序反过来（证明见习题 5.7；先穿的袜子后脱）。</li>
+        </ul>
+        <p>转置眼下像纯记号游戏，但它与点积暗中勾连：<strong>u</strong>·<strong>v</strong> 可写成 <strong>u</strong>ᵀ<strong>v</strong>（1×n 乘 n×1 得 1×1）。第 11 章的正交矩阵（Qᵀ = Q⁻¹）与第 12 章的对称矩阵（Aᵀ = A），主角都是它。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 复合出旋转 180°</p>
+          <p>用矩阵乘法验证：旋转 90° 连做两次 = 旋转 180°。</p>
+          <p><strong>解</strong>：R = ⎡0 −1; 1 0⎤。R·R = ⎡0·0+(−1)·1, 0·(−1)+(−1)·0; 1·0+0·1, 1·(−1)+0·0⎤ = ⎡−1 0; 0 −1⎤ = −I。而 −I 把每个向量变成其相反向量——正是旋转 180° 的效果 ✓。顺带得到一个漂亮的等式：R² = −I（这让 R 像一个“矩阵版的虚数 i”）。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 非方阵相乘</p>
+          <p>A = ⎡1 2 0; −1 1 3⎤（2×3），B 的列为 (1, 0, 2)、(2, 1, 0)（3×2）。求 AB。</p>
+          <p><strong>解</strong>：AB 的第 1 列 = A×(1, 0, 2) = (1×1+2×0+0×2, −1×1+1×0+3×2) = (1, 5)；第 2 列 = A×(2, 1, 0) = (4, −1)。故 AB = ⎡1 4; 5 −1⎤（2×2）。接口检查：2×<u>3</u> · <u>3</u>×2 ✓。“逐列算”比死记 i 行 j 列更不容易串行。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 转置性质数值验证</p>
+          <p>取 A = ⎡1 2; 0 1⎤，B = ⎡0 1; 3 0⎤，验证 (AB)ᵀ = BᵀAᵀ。</p>
+          <p><strong>解</strong>：AB = ⎡6 1; 3 0⎤，故 (AB)ᵀ = ⎡6 3; 1 0⎤。另一边：Bᵀ = ⎡0 3; 1 0⎤，Aᵀ = ⎡1 0; 2 1⎤，BᵀAᵀ = ⎡0·1+3·2, 0·0+3·1; 1·1+0·2, 0⎤ = ⎡6 3; 1 0⎤ ✓。若误用 AᵀBᵀ 会得到不同结果——顺序必须反转。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>A = ⎡1 1; 0 2⎤，B = ⎡2 0; 1 1⎤。分别计算 AB 与 BA，确认二者不同。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>AB = ⎡1·2+1·1, 1·0+1·1; 0·2+2·1, 0·0+2·1⎤ = <strong>⎡3 1; 2 2⎤</strong>；BA = ⎡2 2; 1 3⎤。确实不同。</p>
+            <p><strong>解析</strong>：练乘法建议用“AB 的第 j 列 = A 乘 B 的第 j 列”逐列计算，天然与变换视角一致，也方便检查。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>C 是 3×2 矩阵，D 是 2×4 矩阵。CD 与 DC 各自是否有定义？若有，是几乘几？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>CD 有定义：3×<u>2</u> · <u>2</u>×4 = <strong>3×4</strong>。DC 无定义：2×<u>4</u> · <u>3</u>×2，接口 4 ≠ 3 对不上。</p>
+            <p><strong>解析</strong>：机器视角——D 吃 4 维吐 2 维，C 吃 2 维吐 3 维；串联 CD（先 D 后 C）接口吻合，反过来 C 吐出的 3 维塞不进 D 的 4 维入口。“AB ≠ BA”最极端的形式就是一边根本不存在。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>剪切 S = ⎡1 1; 0 1⎤。计算 S²，并解释结果的几何含义。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>S² = ⎡1 2; 0 1⎤——“推移量翻倍”的剪切。</p>
+            <p><strong>解析</strong>：剪切一次把 ĵ 推到 (1, 1)；再剪切一次，推移量累加，ĵ 落到 (2, 1)。复合同类变换时效果叠加，这为下一题的规律铺路。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>A = ⎡2 1; 1 3⎤，B = ⎡1 0; 4 1⎤。计算 (AB)ᵀ 与 BᵀAᵀ，验证二者相等。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>AB = ⎡2+4, 1; 1+12, 3⎤ = ⎡6 1; 13 3⎤，(AB)ᵀ = <strong>⎡6 13; 1 3⎤</strong>。Bᵀ = ⎡1 4; 0 1⎤，Aᵀ = ⎡2 1; 1 3⎤（A 对称，Aᵀ = A），BᵀAᵀ = ⎡2+4, 1+12; 1, 3⎤ = ⎡6 13; 1 3⎤ ✓。</p>
+            <p><strong>解析</strong>：注意本题 A 恰是对称矩阵（Aᵀ = A）——转置后不变的矩阵，第 12 章的主角在此露了一面。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>求所有与 D = ⎡1 0; 0 2⎤ 交换的 2×2 矩阵（即满足 MD = DM 的全部 M）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>设 M = ⎡a b; c d⎤。MD = ⎡a 2b; c 2d⎤，DM = ⎡a b; 2c 2d⎤。相等要求 2b = b 且 c = 2c，故 b = c = 0：<strong>M 必须是对角矩阵</strong> ⎡a 0; 0 d⎤（a、d 任意）。</p>
+            <p><strong>解析</strong>：几何解释——D 沿 x、y 轴做不同倍率的伸缩；只有同样“各轴独立行动”的变换（对角矩阵）才与它谁先谁后无所谓。一旦 M 把两个轴的方向搅在一起（b 或 c 非零），顺序就有影响。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>A = ⎡1 1; 0 1⎤。计算 A²、A³，猜出 Aⁿ 的一般形式并用几何语言说明理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A² = ⎡1 2; 0 1⎤，A³ = ⎡1 3; 0 1⎤，一般地 <strong>Aⁿ = ⎡1 n; 0 1⎤</strong>。</p>
+            <p><strong>解析</strong>：A 是推移量为 1 的水平剪切，做 n 次推移量累计为 n。严格证明可用归纳法：Aⁿ⁺¹ = A·Aⁿ = ⎡1 1; 0 1⎤⎡1 n; 0 1⎤ = ⎡1 n+1; 0 1⎤。“先看几何猜答案、再用归纳法补严格”是处理矩阵幂的高效路线；第 10 章将给出更强大的通用武器（对角化）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>用元素下标证明 (AB)ᵀ = BᵀAᵀ（A 为 <em class="kb-math">m</em>×<em class="kb-math">n</em>，B 为 <em class="kb-math">n</em>×<em class="kb-math">p</em>）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>左边第 <em class="kb-math">i</em> 行 <em class="kb-math">j</em> 列：((AB)ᵀ)<sub>ij</sub> = (AB)<sub>ji</sub> = Σ<sub>k</sub> A<sub>jk</sub>B<sub>ki</sub>。右边：(BᵀAᵀ)<sub>ij</sub> = Σ<sub>k</sub> (Bᵀ)<sub>ik</sub>(Aᵀ)<sub>kj</sub> = Σ<sub>k</sub> B<sub>ki</sub>A<sub>jk</sub>。两个求和逐项相同。∎</p>
+            <p><strong>解析</strong>：为什么顺序必须反转？维度就能说明：AB 是 m×p，故 (AB)ᵀ 是 p×m；右边只有 Bᵀ(p×n) 在前、Aᵀ(n×m) 在后才能拼出 p×m。直觉版本：复合动作的“逆序原理”——穿衣是先袜后鞋，脱的时候必然先鞋后袜。同样的反转还会出现在 (AB)⁻¹ = B⁻¹A⁻¹（第 8 章）。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① AB = “先 B 后 A”，从右往左读；② 乘法公式来自追踪基向量：AB 的第 j 列 = A×(B 的第 j 列)；③ 交换律不成立（几何顺序有别），结合律天然成立（同一串动作）；④ 接口规则 m×n · n×p = m×p；⑤ (AB)ᵀ = BᵀAᵀ，逆序原理。<br><strong>下一章预告</strong>：每个变换都会把面积放大或缩小某个倍数——这个倍数就是行列式。“压成直线”的事故，将在那里得到一个精确的数值刻画：det = 0。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./04-矩阵是线性变换.html">← 第 4 章 矩阵是线性变换</a>
+          <a href="./06-行列式变换的缩放因子.html">第 6 章 行列式：变换的缩放因子 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("comp-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 42, RANGE = 8;
+    var R = { a: 0, b: -1, c: 1, d: 0 };  // 旋转 90°
+    var S = { a: 1, b: 1, c: 0, d: 1 };   // 剪切
+    var I = { a: 1, b: 0, c: 0, d: 1 };
+    var stage = 0; // 0 未开始 / 1 已做第一步 / 2 已做第二步
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var statusEl = document.getElementById("comp-status");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function order() {
+      return document.querySelector('input[name="comp-order"]:checked').value; // "RS"=先旋转
+    }
+    function mul(M, N) { // M·N
+      return {
+        a: M.a * N.a + M.b * N.c, b: M.a * N.b + M.b * N.d,
+        c: M.c * N.a + M.d * N.c, d: M.c * N.b + M.d * N.d
+      };
+    }
+    function current() {
+      var first = order() === "RS" ? R : S;
+      var second = order() === "RS" ? S : R;
+      if (stage === 0) return I;
+      if (stage === 1) return first;
+      return mul(second, first);
+    }
+    function origin() { return { x: canvas.clientWidth / 2, y: H / 2 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function apply(M, p) { return { x: M.a * p.x + M.b * p.y, y: M.c * p.x + M.d * p.y }; }
+
+    function seg(p, q, color, width) {
+      var a = toPx(p), b = toPx(q);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var M = current();
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      for (var k = -RANGE; k <= RANGE; k++) {
+        seg({ x: k, y: -RANGE }, { x: k, y: RANGE }, css("--kb-border"), 1);
+        seg({ x: -RANGE, y: k }, { x: RANGE, y: k }, css("--kb-border"), 1);
+      }
+      ctx.globalAlpha = 0.55;
+      for (k = -RANGE; k <= RANGE; k++) {
+        seg(apply(M, { x: k, y: -RANGE }), apply(M, { x: k, y: RANGE }), "#2563eb", k === 0 ? 2 : 1);
+        seg(apply(M, { x: -RANGE, y: k }), apply(M, { x: RANGE, y: k }), "#2563eb", k === 0 ? 2 : 1);
+      }
+      ctx.globalAlpha = 1;
+      // 一个 F 形参照物（三条线段），帮助看出旋转与翻转
+      var pts = [[0, 0], [0, 2], [0, 2], [1.4, 2], [0, 1.2], [1, 1.2]];
+      ctx.strokeStyle = "#9466de";
+      ctx.lineWidth = 3.5;
+      for (var s = 0; s < pts.length; s += 2) {
+        var p1 = toPx(apply(M, { x: pts[s][0], y: pts[s][1] }));
+        var p2 = toPx(apply(M, { x: pts[s + 1][0], y: pts[s + 1][1] }));
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+      ctx.lineWidth = 1;
+      ctx.font = "600 14px ui-monospace, Menlo, monospace";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText("当前矩阵 [" + M.a.toFixed(1) + "  " + M.b.toFixed(1) + "]", 16, 26);
+      ctx.fillText("        [" + M.c.toFixed(1) + "  " + M.d.toFixed(1) + "]", 16, 44);
+
+      var names = order() === "RS" ? ["旋转 90°", "剪切"] : ["剪切", "旋转 90°"];
+      var texts = ["尚未变换（紫色 F 是参照物）",
+        "已应用第 1 步：" + names[0],
+        "已应用第 2 步：" + names[1] + "（复合完成）"];
+      statusEl.textContent = texts[stage];
+    }
+
+    document.getElementById("comp-step").addEventListener("click", function () {
+      stage = (stage + 1) % 3;
+      draw();
+    });
+    document.getElementById("comp-reset").addEventListener("click", function () {
+      stage = 0;
+      draw();
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="comp-order"]'), function (r) {
+      r.addEventListener("change", function () {
+        stage = 0;
+        draw();
+      });
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

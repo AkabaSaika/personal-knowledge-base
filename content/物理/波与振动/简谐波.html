@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>简谐波 · 知识库</title>
+  <meta name="kb:summary" content="波的四个基本量（振幅、周期、频率、波长）与波速公式 v=λf，配纯 CSS 动画演示行波传播与质点振动。">
+  <meta name="kb:tags" content="波动,简谐波,振动,动画">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../assets/css/content.css">
+  <style>
+    /* 本页专属：纯 CSS 波动动画（prefers-reduced-motion 时由全局规则自动停止） */
+    .wave-window {
+      overflow: hidden;
+      border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface-alt);
+    }
+    .wave-strip {
+      display: block;
+      width: 1000px;
+      animation: wave-travel 2s linear infinite;
+    }
+    @keyframes wave-travel {
+      to { transform: translateX(-200px); } /* 恰好平移一个波长，视觉上无缝循环 */
+    }
+    .dots-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 120px;
+      padding: 0 8px;
+      border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface-alt);
+    }
+    .dots-row .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--kb-accent);
+      animation: dot-osc 2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    .dots-row .dot.dot-marked {
+      background: #ef4444;
+      width: 18px;
+      height: 18px;
+    }
+    @keyframes dot-osc {
+      0%, 100% { transform: translateY(34px); }
+      50% { transform: translateY(-34px); }
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>简谐波</h1>
+        <p class="kb-lead">往平静水面丢一颗石子，涟漪一圈圈荡开——振动在介质中的传播就是波。最基本的波形是正弦形的“简谐波”。这一页用两个动画搞清楚一件常被误解的事：<strong>波向前跑，介质里的质点并不跟着跑</strong>。</p>
+
+        <h2>波的传播：动画演示</h2>
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🌊 行波向右传播（纯 CSS 动画）</div>
+          <div class="kb-interactive-body">
+            <div class="wave-window">
+              <svg class="wave-strip" viewBox="0 0 1000 140" width="1000" height="140" aria-hidden="true">
+                <path d="M 0 70 Q 50 -10 100 70 T 200 70 T 300 70 T 400 70 T 500 70 T 600 70 T 700 70 T 800 70 T 900 70 T 1000 70"
+                  fill="none" stroke="var(--kb-accent)" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="0" y1="70" x2="1000" y2="70" stroke="var(--kb-fg-faint)" stroke-width="1" stroke-dasharray="4 6"/>
+              </svg>
+            </div>
+            <p style="margin:10px 0 0;font-size:0.82rem;color:var(--kb-fg-muted)">整条波形以波速 <em class="kb-math">v</em> 向右平移：波形每前进一个波长 λ，恰好用时一个周期 T，因此 <em class="kb-math">v</em> = λ/T = λ<em class="kb-math">f</em>。</p>
+          </div>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🔴 介质中的质点只上下振动，不向前移动</div>
+          <div class="kb-interactive-body">
+            <div class="dots-row" aria-hidden="true">
+              <span class="dot" style="animation-delay:0s"></span>
+              <span class="dot" style="animation-delay:-0.2s"></span>
+              <span class="dot" style="animation-delay:-0.4s"></span>
+              <span class="dot dot-marked" style="animation-delay:-0.6s"></span>
+              <span class="dot" style="animation-delay:-0.8s"></span>
+              <span class="dot" style="animation-delay:-1.0s"></span>
+              <span class="dot" style="animation-delay:-1.2s"></span>
+              <span class="dot" style="animation-delay:-1.4s"></span>
+              <span class="dot" style="animation-delay:-1.6s"></span>
+              <span class="dot" style="animation-delay:-1.8s"></span>
+              <span class="dot" style="animation-delay:-2.0s"></span>
+              <span class="dot" style="animation-delay:-2.2s"></span>
+              <span class="dot" style="animation-delay:-2.4s"></span>
+              <span class="dot" style="animation-delay:-2.6s"></span>
+              <span class="dot" style="animation-delay:-2.8s"></span>
+            </div>
+            <p style="margin:10px 0 0;font-size:0.82rem;color:var(--kb-fg-muted)">每个质点都做同样的上下简谐振动，只是<strong>起振时间依次落后</strong>——这些“错峰”的振动连起来，看上去就是波峰在向右移动。盯住红色质点：它始终没有离开自己的位置。</p>
+          </div>
+        </div>
+
+        <h2>描述波的四个量</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>物理量</th><th>符号 / 单位</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><td>振幅</td><td><em class="kb-math">A</em> / m</td><td>质点偏离平衡位置的最大距离，决定波“多强”</td></tr>
+              <tr><td>周期</td><td><em class="kb-math">T</em> / s</td><td>一个质点完成一次全振动所需时间</td></tr>
+              <tr><td>频率</td><td><em class="kb-math">f</em> / Hz</td><td>每秒振动次数，<em class="kb-math">f</em> = 1/<em class="kb-math">T</em>，由<strong>波源</strong>决定</td></tr>
+              <tr><td>波长</td><td>λ / m</td><td>相邻两个波峰（或同相点）之间的距离</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>它们由一条核心公式联系起来：</p>
+        <pre><code>v = λ / T = λ · f      （波速 = 波长 × 频率）</code></pre>
+        <p>注意分工：<strong>频率由波源决定，波速由介质决定</strong>，波长则是两者“商量”的结果。波从空气进入水中时，频率不变、速度变快，于是波长被拉长。</p>
+
+        <h2>在波形图上认出它们</h2>
+        <figure>
+          <svg viewBox="0 0 560 220" width="560" height="220" role="img" aria-label="正弦波形图，标注振幅与波长">
+            <line x1="30" y1="110" x2="540" y2="110" stroke="var(--kb-fg-faint)" stroke-width="1.5"/>
+            <path d="M 30 110 Q 90 -10 150 110 T 270 110 T 390 110 T 510 110"
+              fill="none" stroke="var(--kb-accent)" stroke-width="3"/>
+            <g stroke="#16a34a" stroke-width="2">
+              <line x1="90" y1="110" x2="90" y2="50"/>
+              <path d="M 90 50 l -4 8 h 8 z" fill="#16a34a" stroke="none"/>
+            </g>
+            <text x="100" y="80" font-size="15" font-family="Times New Roman, serif" font-style="italic" fill="#16a34a">A</text>
+            <g stroke="#d97706" stroke-width="2">
+              <line x1="90" y1="180" x2="330" y2="180"/>
+              <path d="M 90 180 l 9 -5 v 10 z" fill="#d97706" stroke="none"/>
+              <path d="M 330 180 l -9 -5 v 10 z" fill="#d97706" stroke="none"/>
+              <line x1="90" y1="60" x2="90" y2="186" stroke-dasharray="3 4" stroke-width="1"/>
+              <line x1="330" y1="60" x2="330" y2="186" stroke-dasharray="3 4" stroke-width="1"/>
+            </g>
+            <text x="204" y="205" font-size="16" fill="#d97706" text-anchor="middle">λ（相邻波峰间距）</text>
+          </svg>
+          <figcaption>波形图是某一瞬间“给波拍的照片”：纵向量出振幅 <em class="kb-math">A</em>，横向量出波长 λ。</figcaption>
+        </figure>
+
+        <h2>横波与纵波</h2>
+        <ul>
+          <li><strong>横波</strong>：质点振动方向 ⟂ 传播方向，如绳波、光波。上面两个动画演示的就是横波。</li>
+          <li><strong>纵波</strong>：质点振动方向 ∥ 传播方向，介质交替压缩、疏开，如声波、弹簧波。</li>
+          <li>地震同时发出两种波：纵波（P 波）跑得快先到，横波（S 波）晃得凶后到——两者的时间差正是地震预警的原理。</li>
+        </ul>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本页要点</p>
+          <p>① 波传播的是<strong>振动状态和能量</strong>，不是介质本身；② <em class="kb-math">v</em> = λ<em class="kb-math">f</em>，频率随波源、波速随介质；③ 波形图看空间（λ），振动图看时间（T），别混淆两张图。</p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../assets/js/theme.js" defer></script>
+  <script src="../../../assets/js/nav.js" defer></script>
+  <script src="../../../assets/js/toc.js" defer></script>
+  <script src="../../../assets/js/search.js" defer></script>
+  <script src="../../../assets/js/interactive.js" defer></script>
+  <script src="../../../assets/js/app.js" defer></script>
+</body>
+</html>

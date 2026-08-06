@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10 经济：水龙头与下水道 · 知识库</title>
+  <meta name="kb:summary" content="游戏设计教材第 10 章：源/汇/池的水池模型、稀缺性如何制造价值、通货膨胀的机理与修复工具、多资源兑换链与瓶颈，配可调产出回收速率的货币池模拟演示。">
+  <meta name="kb:tags" content="游戏设计,教材,游戏经济,通货膨胀,稀缺性,资源系统,zyyjjxt">
+  <meta name="kb:created" content="2026-08-06">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 10 章 · 经济：水龙头与下水道</h1>
+        <p class="kb-lead">一款 MMO 常见的死法：金币多到没处花，玩家间物价一飞冲天，新人打一天工买不起第一把剑，骂一句「死服」转身离开。游戏经济和现实经济一样会通胀、会崩盘——不同的是，<strong>设计师同时是央行、财政部和全体商家</strong>。这一章用一个水池模型看懂游戏经济：钱从哪个龙头流进来，从哪个下水道流出去，池子的水位决定一切。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用「源 / 汇 / 池」模型画出任何游戏的资源流；② 解释稀缺性如何制造价值，以及「送太多」为什么是在给奖励下毒；③ 说出通胀的机理与修复工具箱（持续汇、奢侈汇、绑定、赛季重置）；④ 设计多资源兑换链并把瓶颈放在正确的位置。</p>
+        </div>
+
+        <h2>水池模型：源、汇、池</h2>
+        <p>把任何一种资源（金币、材料、体力）想象成一池水：</p>
+        <figure>
+          <svg viewBox="0 0 660 250" width="660" height="250" role="img" aria-label="水池模型：水龙头代表资源产出，水池代表玩家存量，下水道代表资源回收">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="60" y="24" width="150" height="52" rx="10" fill="#16a34a" opacity="0.12"/>
+              <rect x="60" y="24" width="150" height="52" rx="10" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="135" y="46" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--kb-fg)">源 🚰（水龙头）</text>
+              <text x="135" y="66" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">怪物掉落 · 任务奖励 · 签到</text>
+              <path d="M 135 80 V 116" stroke="#16a34a" stroke-width="3"/>
+              <path d="M 135 124 l -6 -10 h 12 z" fill="#16a34a"/>
+
+              <rect x="60" y="128" width="360" height="86" rx="12" fill="none" stroke="var(--kb-border-strong)" stroke-width="2"/>
+              <rect x="64" y="164" width="352" height="46" rx="8" fill="#2563eb" opacity="0.25"/>
+              <text x="240" y="152" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--kb-fg)">池：玩家手里的存量</text>
+              <text x="240" y="192" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">水位变化 ＝ 源 − 汇</text>
+
+              <path d="M 420 190 H 486" stroke="#ef4444" stroke-width="3"/>
+              <path d="M 494 190 l -10 -6 v 12 z" fill="#ef4444"/>
+              <rect x="498" y="160" width="150" height="60" rx="10" fill="#ef4444" opacity="0.10"/>
+              <rect x="498" y="160" width="150" height="60" rx="10" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+              <text x="573" y="184" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--kb-fg)">汇 🕳（下水道）</text>
+              <text x="573" y="204" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">商店 · 修理费 · 强化消耗 · 税</text>
+
+              <text x="500" y="60" font-size="11.5" fill="var(--kb-fg-muted)">⚠️ 玩家间交易不是汇：</text>
+              <text x="500" y="80" font-size="11.5" fill="var(--kb-fg-muted)">钱只是换了口袋，没有离开池子。</text>
+              <text x="500" y="100" font-size="11.5" fill="var(--kb-fg-muted)">真正的汇必须由系统回收。</text>
+            </g>
+          </svg>
+          <figcaption>核心等式简单到不好意思：水位变化 = 源 − 汇。游戏经济的一切病，都是这条等式长期失衡的症状。</figcaption>
+        </figure>
+        <ul>
+          <li><strong>源（Faucet）</strong>：资源进入世界的地方——怪物掉落、任务奖励、采集、签到礼包。每个源都有速率：金币/小时；</li>
+          <li><strong>汇（Sink）</strong>：资源离开世界的地方——NPC 商店、修理费、强化失败、拍卖行手续费、时装。注意「离开世界」四个字：<strong>玩家间交易不是汇</strong>，钱只是换了口袋；把交易当回收算，是经济设计最经典的新手错误；</li>
+          <li><strong>池（Pool）</strong>：全体玩家手里的存量总和。单人游戏也用同一套模型，只是池子只有一个人——以撒一局内的金币经济，同样有源（清房掉落）有汇（商店、赌博机）。</li>
+        </ul>
+        <p>拿到任何游戏，先画这张图：列出前三大源、前三大汇、估算净流量——三分钟就能看出这个经济体是在蓄水还是在漏水。</p>
+
+        <h2>稀缺性制造价值</h2>
+        <p>第二个地基是一条反直觉的定律：<strong>奖励的价值不来自数字大小，来自获取难度</strong>。2% 掉率的坐骑全服追捧，邮件白送的坐骑三天就被遗忘（第 8 章 8.6 已经算过这笔账：均值定身价）。由此推出运营活动最常犯的错——「<strong>礼物悖论</strong>」：为了拉留存天天邮件塞钻石，短期数据好看，长期钻石在玩家心里贬值，等你想用钻石当奖励时，它已经不再是奖励了。<strong>送出去的是资源，坏掉的是奖励的情绪价值</strong>——而后者才是运营真正的资产。</p>
+        <p>稀缺不是抠门，是一种维护：<strong>价值要靠汇来保卫</strong>——有地方花、花得肉疼，拿到才开心。下面这个模拟器让你亲手当一回央行行长，试试把水位管好有多难：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 央行模拟器：拧龙头、通下水道，管住物价</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="eco-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：产出速率长期大于回收速率时，货币池水位持续上涨、物价指数随之飙升（通胀，排斥新玩家）；回收大于产出则通缩（玩家觉得太肝赚不到钱）；源汇大致平衡时物价稳定——游戏经济的日常工作就是维护这条平衡。</p></noscript>
+            <p id="eco-msg" style="margin:8px 0 4px; font-size:0.92em; color:var(--kb-fg-muted);"></p>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-day" type="button">过 1 天</button>
+              <button class="kb-btn" id="btn-month" type="button">过 30 天</button>
+              <button class="kb-btn" id="btn-reset" type="button">重置</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">产出速率（源）<span class="kb-control-value" id="val-faucet"></span>
+                <input type="range" id="ctl-faucet" min="0" max="200" step="10" value="100"></label>
+              <label class="kb-control">回收速率（汇）<span class="kb-control-value" id="val-drain"></span>
+                <input type="range" id="ctl-drain" min="0" max="200" step="10" value="100"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" data-eco="100,100" type="button">均衡经济</button>
+              <button class="kb-btn" data-eco="100,40" type="button">只进不出</button>
+              <button class="kb-btn" data-eco="60,120" type="button">过度紧缩</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三组实验</p>
+          <p>① <strong>均衡经济</strong>（100/100）跑 30 天：水位与物价基本纹丝不动——央行的好日子，也是玩家感觉「赚的钱有用」的日子。② <strong>只进不出</strong>（100/40）跑 60 天：水位直线上涨，物价指数跟着翻倍——注意通胀伤害的分配极不均匀：老玩家池子里的钱也贬值了但他们有存量，<strong>被物价挡在门外的是没有存量的新玩家</strong>。③ <strong>过度紧缩</strong>（60/120）：水位见底，玩家的原话是「太肝了，打一天买不起一瓶药」——通缩同样劝退，只是骂的话不同。</p>
+        </div>
+
+        <h2>通胀：只进不出的必然结局</h2>
+        <p>为什么真实游戏的经济总是滑向实验②？因为源和汇天生不对称：<strong>源是持续的</strong>（打怪永远掉钱，玩家每天都在生产），<strong>而多数汇是一次性的</strong>（装备买齐就不再买，学费交完就不再交）。玩家等级越高、汇越枯竭，源却一刻不停——池子只涨不跌是默认结局，不是意外事故。修复工具箱四件套：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工具</th><th>做法</th><th>要点与代价</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>持续性汇</strong></td>
+                <td>修理费、药水等消耗品、拍卖行手续费、传送费</td>
+                <td>与游玩行为绑定，玩得越多回收越多——经济的日常排水管；调太狠就变成「玩游戏要交税」的怨气</td>
+              </tr>
+              <tr>
+                <td><strong>奢侈汇</strong></td>
+                <td>天价时装、称号、豪宅、坐骑染色</td>
+                <td>专抽富人存量的无底洞：纯外观不破坏平衡（不碰数值），让「有钱」有处可去；需要持续产出新奢侈品</td>
+              </tr>
+              <tr>
+                <td><strong>绑定</strong></td>
+                <td>资源拾取绑定/账号绑定，不可交易</td>
+                <td>从源头限制流通盘，抗工作室刷金；代价是玩家间互助与交易乐趣被削（社交家不高兴）</td>
+              </tr>
+              <tr>
+                <td><strong>赛季重置</strong></td>
+                <td>定期开新赛季/新服，经济清零重跑</td>
+                <td>最彻底的通胀解药（暗黑 3、流放之路）；只适合「过程比资产重要」的品类，动产型 MMO 这么干等于删档</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>还有一条来自玩家的教训值得敬畏：<strong>货币的本质是共识，你不发行合格的货币，玩家就自己选一个</strong>。暗黑 2 的金币因为回收乏力沦为废纸，玩家自发改用稀有戒指「乔丹之石」计价交易——例 1 会解剖这桩游戏史上最著名的「民间发币」事件。</p>
+
+        <h2>多资源与瓶颈</h2>
+        <p>为什么没有游戏只用一种货币？因为<strong>一种货币只有一个阀门</strong>：想控制强化节奏就得动金币，一动金币连买药水都受影响——所有系统在同一个池子里互相干扰。多资源就是多阀门：金币（日常流转）、强化材料（成长节奏）、体力（游玩时长）、荣誉点（PvP 节奏）……各自有独立的源和汇，一处失衡不至于全盘崩。</p>
+        <p>多资源串起来就是<strong>兑换链</strong>：时间 → 体力 → 副本 → 材料 → 装备 → 战力。链上最稀缺的一环叫<strong>瓶颈资源</strong>，它决定整条链的流速——其他资源囤成山，没有它一切白搭。两条设计准则：</p>
+        <ul>
+          <li><strong>瓶颈要放在你想控制节奏的位置</strong>：想控日活就把瓶颈放在体力（第 3 章的闸门，在经济里的学名就是瓶颈）；想控付费就放在稀有材料；瓶颈放错位置，玩家肝错方向，怨气就从那里冒出来；</li>
+          <li><strong>假设玩家会绕行</strong>：哪里有瓶颈哪里就有绕路——小号、工作室、以物易物的黑市。经济设计不是一次性的管道工程，是与百万玩家的持久博弈，上线那天才是设计的开始。</li>
+        </ul>
+        <p>最后把尺度缩小验证一次通用性：单机同样全套适用。杀戮尖塔的金币——源（战斗奖励）恒定、汇（商店买卡、删卡、开遗物箱）在每层商店等着你，「删一张卡 75 金还是存钱开箱」正是第 7 章机会成本的经济学表述；饥荒的食物会腐烂——<strong>腐烂是写进资源本身的强制汇</strong>，逼你吃新鲜的、不许囤积，资源焦虑（生存游戏的核心体验）由此长盛不衰。<strong>经济系统的最终产品从来不是数字平衡，而是玩家的欲望节奏</strong>：想要 → 暂时得不到 → 攒 → 得到 → 想要下一个——第 3 章的循环与第 6 章的动机，在经济里完成了合流。</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 乔丹之石本位：玩家自己发行的货币</p>
+          <p>暗黑 2 的交易市场长期不用金币计价，而用稀有戒指「乔丹之石（SOJ）」作为通货。解剖：金币为什么废了？玩家为什么选中 SOJ？这桩事故教给经济设计师什么？</p>
+          <p><strong>分析</strong>：金币之死是教科书级的源汇失衡——源汹涌（怪物海量掉金）而汇乏力：主要回收只有赌博和修理，赌博产出的装备本身有价值（等于把汇又变成了源），死亡掉金的惩罚微不足道；池子暴涨，金币购买力趋零。交易需求还在，玩家便自发选出新通货，SOJ 胜出的原因恰好是一份「良币资格清单」：<strong>稀有</strong>（供给天然受限，源头是低掉率）、<strong>需求普遍</strong>（本身是强力戒指，人人用得上，有「锚定价值」）、<strong>单位价值高</strong>（一枚顶一堆，便于大额交易）、<strong>易验真伪</strong>（属性固定，不像随机装备难估价）。<strong>教训</strong>：① 货币是共识，共识跟着稀缺与需求走，官方身份不提供任何豁免；② 汇的设计和源同等重要，且要警惕「假汇」（回收金币却吐出等值物品的赌博）；③ 玩家群体的经济智慧远超预期——你的经济系统上线第一天，就在和几十万业余经济学家博弈。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 大头菜：任天堂给休闲玩家装的股市</p>
+          <p>动物森友会的大头菜：周日固定价格买入，随后一周每天两次波动报价，周六夜里全部烂掉。分析这套系统的经济设计，以及它如何长出玩家自发的「跨岛金融」。</p>
+          <p><strong>分析</strong>：这是一个被精确驯化的投机市场。<strong>腐烂 = 硬期限的强制汇</strong>：一周必须出手，杜绝无限囤积，保证每周资金重新入场——没有这条，大头菜就会变成暗黑金币式的堰塞湖。<strong>价格波动 = 输入随机</strong>（第 8 章）：波动模式有几种走势（骤跌型、三段涨型……），玩家面对随机行情做卖出决策，紧张与期待全在决策侧。<strong>每周节奏 = 固定间隔时间表</strong>：周日买、平日盯盘、周六前清仓——一条为期七天的欲望循环，恰好覆盖手游最看重的周留存。<strong>浮现的动态</strong>：单岛行情有好有坏，玩家自发跨岛交易——「你岛炒到 500 了吗带我去卖」，甚至衍生出报价社区与「摆摊收小费」的民间市场：设计师只写了价格波动一条机制，玩家玩出了整个金融社交生态（第 2 章机制→动态的又一实证）。<strong>结论</strong>：好的经济玩法未必需要复杂系统——一个硬期限 + 一条随机价格线，足够让几百万从不炒股的人体验投机的全部情绪。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 双货币：免费手游的标准央行结构</p>
+          <p>几乎所有免费手游都是「金币 + 钻石」双货币起步。为什么一种不够？两种货币各自的源汇结构有什么讲究？</p>
+          <p><strong>分析</strong>：因为一种货币无法同时服务两个矛盾的目标——<strong>日常流转要求大源大汇</strong>（金币：打哪都掉、花哪都要，池子大流速快，个体通胀无所谓，反正主要汇是系统商店）；<strong>价值储藏要求严控稀缺</strong>（钻石：源被死死捏住——主要来自充值，少量来自成就与活动；汇则直指最想要的东西——抽卡、体力、限定礼包）。合在一起就自相矛盾：既要大量发又要保值，不可能。所以拆开：金币管节奏，钻石管稀缺与收入；钻石对金币常设单向兑换（钻换金可以，金换钻绝不），保证硬通货的地位不被软通货稀释。<strong>进一步分层</strong>：绑定钻石（送的）与非绑钻石（充的）再拆一层——送的只能花在指定汇上，防止运营赠送冲击付费价值，也让工作室刷不出能流通的硬通货。<strong>结论</strong>：每多一种货币就多一个可独立调控的阀门，但也多一份玩家的理解成本——货币数量的上限不是技术问题，是玩家钱包页面的认知预算（第 7 章决策疲劳在经济上的投影）。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>选一款你熟悉的游戏，列出它金币（或主资源）的三大源与三大汇，估计各自相对大小，判断池子的长期水位走向。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考答案</strong>（以一款典型 MMO 为例）：源——主线与日常任务奖励（大）、怪物掉落（中）、成就一次性奖励（小）；汇——装备强化（大，但高练度后趋零）、药水消耗（中）、修理费（小）。走向：前期汇>源（新手穷），毕业期源持续而大汇枯竭——水位转入长期上涨，通胀是时间问题。</p>
+            <p><strong>解析</strong>：注意按「持续性」给源汇分类比按大小分类更有诊断力：<strong>持续源配一次性汇，就是定时炸弹</strong>——引信长度等于玩家到达毕业期的时间。做这道题时若发现某个大汇是一次性的，你已经能预言这个游戏几个月后的经济新闻了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断下列哪些是真正的汇（资源离开世界）：A 玩家在拍卖行把剑卖给另一个玩家；B 拍卖行对这笔交易抽 5% 手续费；C 在 NPC 商店买药水；D 给公会捐金币，公会用它给成员发福利；E 强化失败，材料消失。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：真汇：B（手续费被系统销毁）、C（钱进 NPC 口袋=离开流通）、E（材料湮灭）。不是汇：A（钱换了口袋，池子没变）；D 视公会机制而定——若公会金库再分发给玩家，只是延迟的转移，不是汇；若有金库维护费/公会技能消耗被系统扣走，那部分才是汇。</p>
+            <p><strong>解析</strong>：判据一句话：<strong>追踪资源的最终去向，落进任何玩家（现在或将来）口袋的都不是汇</strong>。D 是最好的陷阱：很多「看起来在回收」的系统（公会捐献、师徒红包、摆摊）只是转移站。顺带记一个正例：拍卖行手续费是最优雅的汇之一——交易越活跃回收越多，等于给经济装了自动稳压器。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>运营为了冲季度留存，连续两个月每天送十连抽。短期数据上涨，半年后抽卡流水明显下滑。用稀缺性与礼物悖论完整解释这条因果链。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：因果链：天天送十连 → 抽卡的获取难度暴跌 → 「一次十连」的情绪价值贬值（原来要攒一周，现在是每日例行）→ 卡池新角色的稀缺感同步稀释（反正下次活动还送）→ 付费购买抽数的理由被自家运营拆掉 → 流水下滑。更深一层：玩家的「期待感」被重新校准了——奖励的价值是相对于获取习惯的（韦伯定律在经济侧的显灵），送得越多，「值得付费的量级」就被推得越高，想再制造惊喜只能加倍送，恶性循环。</p>
+            <p><strong>解析</strong>：这不是说不能送——而是送要动用「预算思维」：赠送在消耗一种看不见的资产（奖励的情绪价值），这项资产的再生速度极慢。成熟运营的送法：绑节点（周年庆，让赠送有叙事理由而非常态）、送体验而非送结果（送体力、送双倍，而不是直接送抽数）——花同样的成本，尽量少动稀缺性的根基。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>兑换链：时间 → 体力 → 副本 → 强化材料 → 装备强度。当前瓶颈在体力（材料充裕但体力天天见底）。回答：① 玩家的体感抱怨会是什么？② 若把瓶颈挪到强化材料（体力管够、材料稀缺），玩家行为与付费点会怎么变？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：① 瓶颈在体力时：抱怨集中在「想玩不让玩」（体力墙挡住的是游玩本身），付费点是买体力，玩家的肝集中在「体力怎么花最值」的效率计算上，材料囤积如山没有存在感。② 瓶颈挪到材料后：玩家可以无限刷副本（游玩时长上升，「肝」的抱怨取代「不让玩」的抱怨），付费点转向直购材料礼包；材料成为事实上的硬通货，副本掉落表变成全服最受关注的数值。</p>
+            <p><strong>解析</strong>：同一条链，瓶颈位置决定了玩家的注意力焦点、抱怨的措辞和付费的形态——<strong>玩家永远围着瓶颈生活</strong>。所以瓶颈的位置是个战略决策：想卖时间就把瓶颈放在体力，想卖进度就放在材料，想卖运气就放在随机掉率（并回去复习第 8 章的红线）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>MMO 的死亡惩罚常设计为「装备耐久损失，需花金币修理」。这个古老设计一石几鸟？修理费该定多高——用第 5 章（挫折）与本章（汇）的双重标准给出定价原则。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：一石至少三鸟：① 持续性汇——与战斗行为绑定，玩得越多修得越多，是全服最稳定的排水管；② 死亡惩罚——给失败定价，让「不死」有价值（回应第 1 章：风险让目标有重量）；③ 隐形难度调节——高强度内容修理费更高，变相给挑战定门槛。<strong>定价原则</strong>：从挫折侧看（第 5 章魂类三支柱之「重试成本可控」）：单次死亡的修理费应低到不阻止「再试一次」——它要制造「肉疼」而不是「打不起」；从汇侧看：单次虽小，全服累计要成规模——小额 × 高频是理想形态。参考做法：修理费与装备档次挂钩（高端玩家多排水，顺带累进「富人税」），并设新手免修期（穷人免税）。</p>
+            <p><strong>解析</strong>：一个数字同时被两章的标准约束——挫折标准给出上限（别劝退），经济标准给出下限（别失效）——好数值就住在这两条线之间的窄带里。多系统交叉定价，是系统篇最日常的工作形态。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>流放之路每三个月开新赛季：角色与经济全部清零重跑，赛季末角色转入「永久服」（事实上的养老院）。为什么玩家不但接受还翘首以盼？什么样的游戏绝对不能抄这个方案？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：玩家期待清零的原因：① 新鲜开局——Roguelike 式的重开快感（第 3 章：这类游戏的乐趣在过程与 build，不在资产存量）；② 公平起跑——通胀、垄断、工作室存货一夜归零，新人与老人同一起跑线（治通胀于无形，还顺手做了社交公平）；③ 赛季限定机制——每季新玩法让「重跑」有新内容可跑；④ 资产并未蒸发——转入永久服的「归档」设计给损失厌恶留了台阶（我的东西还在，只是退休了）。<strong>不能抄的游戏</strong>：资产型社交 MMO——玩家的核心动机是长期积累（房子、收藏、社交地位），清零等于删除玩家的人生存档；判据就一条：<strong>玩家爱的是过程还是存量？</strong>过程型（刷宝、竞技）可以重置，存量型（家园、收集、身份）碰都不能碰。</p>
+            <p><strong>解析</strong>：赛季制本质是把「通胀不可避免」从对抗改为接纳：既然池子终将溢出，就定期换个新池子。它是全书反复出现的主题的经济版——<strong>所有循环终会断裂（第 3 章），设计师能选的只是断得体面的方式</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>你接手一个通胀中的 MMO：金币池月增 40%，玩家间物价月涨 35%，新玩家 7 日流失率半年内从 40% 恶化到 55%（访谈显示「什么都买不起」是主因）。开一套组合药方（至少三味），说明每味药治哪个环节、预估玩家阻力，并给出实施顺序。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考药方</strong>：① <strong>先止血——堵最大的源</strong>：数据排查产金最猛的途径（多半是某个可无限重复的活动被工作室脚本化），砍产出或加频次上限。阻力：中——被砍的多是工作室与少数肝帝，大盘玩家无感甚至叫好。② <strong>再排水——上奢侈汇＋交易税</strong>：拍卖行手续费从 2% 提到 5%（交易越活跃回收越多的自动稳压器），同步上线天价外观拍卖（抽富人存量）。阻力：手续费中等（商人玩家骂）、奢侈品几乎零阻力。③ <strong>救新人——绕开存量市场</strong>：新手装备改为绑定直供（任务白给，不依赖玩家市场），等于给新人开一条不受通胀污染的补给线。阻力：低，但要防老玩家小号套利。④ 长期——把一次性汇改造成持续汇（装备耐久、消耗品化）。阻力：高，动核心习惯，放最后并配补偿。<strong>顺序逻辑</strong>：先堵源（止血最快）、再开汇（见效稍慢）、救新人与结构改革并行——而且②③的止痛效果给④的硬手术争取舆论空间。</p>
+            <p><strong>解析</strong>：真实经济救火的两条纪律都在这里：<strong>每味药都标注玩家阻力</strong>（经济问题的解全是社会问题）；<strong>顺序即策略</strong>——同样四味药，顺序错了（先动核心习惯）会在见效前先引爆舆情。另注意③的思路：治通胀不一定要消灭通胀，把最受伤的人群隔离出通胀区，往往比压平物价更快。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>给你的纸笔游戏（4.8/8.8/9.8 一路养大的那个）加一个最小经济系统：一种资源、明确的源与汇、一个瓶颈。写出规则，并说明这套经济服务于哪个体验目标（回顾 9.8 你写的那三条）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>参考设计</strong>：新资源「筹码」。<strong>源</strong>：每轮开始双方各领 2 枚（恒定小源）；赢下一轮额外 +1（表现源）。<strong>汇</strong>：可花 3 枚在亮牌前「偷看对方本轮数字的奇偶」（信息购买）；可花 5 枚把自己本轮数字 +2（数值购买，每局限一次）。<strong>瓶颈</strong>：筹码上限 6 枚，攒满不花就浪费（防囤积的软腐烂，向大头菜偷师）。<strong>服务的体验目标</strong>：主要服务 9.8 的目标二「落后方保有翻盘可能」——落后者往往攒了更多筹码（赢家的 +1 拿不到但基础源人人有），后程集中爆发买信息+买数值，正是第 7 章「落后选高方差」的资源化实现；上限 6 则服务目标三（决策时间可控）：资源状态数少，算得过来。</p>
+            <p><strong>解析</strong>：自查四点：源汇是否都明确速率（每轮 2、上限 6——可验证）；瓶颈是否在想控节奏的位置（上限逼迫「花不花」的高频决策）；汇是否创造真选择（信息 vs 数值，不同维度，7.1 达标）；以及最重要的——<strong>经济是否服务于既定体验而不是为了有而有</strong>。四章作业在同一个小游戏上层层叠加，你其实已经在做一件事：系统设计。最后一章，我们让它跑起来。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 水池模型：水位变化 = 源 − 汇；玩家间交易不是汇，真汇必须由系统回收；② 价值来自稀缺：送出去的是资源，坏掉的是奖励的情绪价值——赠送要用预算思维；③ 通胀是「持续源 × 一次性汇」的必然结局，工具箱：持续汇、奢侈汇、绑定、赛季重置；货币是共识，你不发行合格的，玩家就自己选（乔丹之石）；④ 多资源 = 多阀门，瓶颈决定整条链的流速与玩家的注意力焦点，<strong>瓶颈放在你想控制节奏的位置</strong>；⑤ 经济的最终产品是玩家的欲望节奏：想要 → 攒 → 得到 → 想要下一个。<br><strong>下一章预告</strong>：数值与经济管的是系统的「量」，玩家真正踩在脚下的是空间——第 4 章说好关卡是不说话的老师，下一章把那套手艺系统化：无字教学四步法、紧张度曲线与无形的引导。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./09-数值与成长曲线.html">← 第 9 章 数值入门：成长曲线的手感</a>
+          <a href="./11-关卡设计入门.html">第 11 章 关卡：用空间教学与讲故事 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("eco-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, POOL0 = 1000, KEEP = 120;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var msg = document.getElementById("eco-msg");
+
+    var day, pool, history; /* history: {pool, pi} */
+
+    var ready = false; /* bindRange 绑定时会立即回调一次 */
+    var getFaucet = KB.bindRange(document.getElementById("ctl-faucet"),
+      document.getElementById("val-faucet"), function (v) { return v + " 金/天"; }, function () { if (ready) draw(); });
+    var getDrain = KB.bindRange(document.getElementById("ctl-drain"),
+      document.getElementById("val-drain"), function (v) { return v + " 金/天"; }, function () { if (ready) draw(); });
+    var inputs = { f: document.getElementById("ctl-faucet"), d: document.getElementById("ctl-drain") };
+    var vals = { f: document.getElementById("val-faucet"), d: document.getElementById("val-drain") };
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function priceIndex() { return 100 * pool / POOL0; }
+
+    function reset() {
+      day = 0;
+      pool = POOL0;
+      history = [{ pool: pool, pi: 100 }];
+      updateMsg();
+      draw();
+    }
+    function stepDay() {
+      day += 1;
+      var noise = 0.9 + Math.random() * 0.2; /* 每日 ±10% 波动 */
+      pool += getFaucet() * noise - Math.min(pool, getDrain() * noise);
+      if (pool < 0) pool = 0;
+      history.push({ pool: pool, pi: priceIndex() });
+      if (history.length > KEEP) history.shift();
+    }
+
+    function updateMsg() {
+      var pi = priceIndex();
+      var f = getFaucet(), d = getDrain();
+      var trend = f > d * 1.1 ? "up" : (d > f * 1.1 ? "down" : "flat");
+      if (trend === "up") {
+        msg.textContent = "第 " + day + " 天 · 物价指数 " + pi.toFixed(0) +
+          "——源大于汇，水位持续上涨" + (pi > 150 ? "：新玩家已经开始买不起东西了" : "，通胀在路上") + "。";
+      } else if (trend === "down") {
+        msg.textContent = "第 " + day + " 天 · 物价指数 " + pi.toFixed(0) +
+          "——汇大于源，水位下探" + (pi < 60 ? "：玩家的原话是「太肝了，赚不到钱」" : "，紧缩中") + "。";
+      } else {
+        msg.textContent = "第 " + day + " 天 · 物价指数 " + pi.toFixed(0) + "——源汇大致平衡，物价稳定：央行的好日子。";
+      }
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var tankW = Math.min(150, w * 0.28);
+
+      /* 左：水池 */
+      var tx = 16, ty = 40, th = H - 120;
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.lineWidth = 2;
+      ctx.strokeRect(tx, ty, tankW, th);
+      ctx.lineWidth = 1;
+      var ratio = Math.min(pool / (POOL0 * 3), 1);
+      var wh = th * ratio;
+      ctx.fillStyle = ratio > 0.55 ? "#ef4444" : (ratio < 0.15 ? "#f59e0b" : "#2563eb");
+      ctx.globalAlpha = 0.45;
+      ctx.fillRect(tx + 2, ty + th - wh, tankW - 4, wh);
+      ctx.globalAlpha = 1;
+      /* 基准线（初始水位） */
+      var baseY = ty + th - th * (1 / 3);
+      ctx.strokeStyle = css("--kb-fg-muted");
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(tx, baseY);
+      ctx.lineTo(tx + tankW, baseY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText("池 " + Math.round(pool), tx, 28);
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.fillText("虚线 = 初始水位", tx, ty + th + 20);
+      var pi = priceIndex();
+      ctx.font = "600 13px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = pi > 150 || pi < 60 ? "#ef4444" : "#16a34a";
+      ctx.fillText("物价指数 " + pi.toFixed(0), tx, ty + th + 44);
+
+      /* 右：水位与物价双曲线 */
+      var x0 = tx + tankW + 40, y0 = H - 44, plotW = w - x0 - 16, plotH = H - 84;
+      if (plotW < 100) return;
+      ctx.strokeStyle = css("--kb-border-strong");
+      ctx.beginPath();
+      ctx.moveTo(x0, y0 - plotH);
+      ctx.lineTo(x0, y0);
+      ctx.lineTo(x0 + plotW, y0);
+      ctx.stroke();
+      ctx.fillStyle = css("--kb-fg-muted");
+      ctx.font = "11.5px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("最近 " + KEEP + " 天 →", x0 + plotW - 90, y0 + 20);
+      var maxPool = POOL0 * 3;
+      function px(i) { return x0 + (i / Math.max(history.length - 1, 1)) * plotW; }
+      function pyPool(v) { return y0 - Math.min(v / maxPool, 1) * plotH; }
+      function pyPi(v) { return y0 - Math.min(v / 300, 1) * plotH; }
+
+      ctx.strokeStyle = "#2563eb";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      history.forEach(function (h, i) {
+        if (i === 0) ctx.moveTo(px(i), pyPool(h.pool));
+        else ctx.lineTo(px(i), pyPool(h.pool));
+      });
+      ctx.stroke();
+      ctx.strokeStyle = "#f59e0b";
+      ctx.beginPath();
+      history.forEach(function (h, i) {
+        if (i === 0) ctx.moveTo(px(i), pyPi(h.pi));
+        else ctx.lineTo(px(i), pyPi(h.pi));
+      });
+      ctx.stroke();
+      ctx.lineWidth = 1;
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("■ 货币池水位", x0 + 8, y0 - plotH + 14);
+      ctx.fillStyle = "#f59e0b";
+      ctx.fillText("■ 物价指数", x0 + 110, y0 - plotH + 14);
+    }
+
+    document.getElementById("btn-day").addEventListener("click", function () {
+      stepDay();
+      updateMsg();
+      draw();
+    });
+    document.getElementById("btn-month").addEventListener("click", function () {
+      for (var i = 0; i < 30; i++) stepDay();
+      updateMsg();
+      draw();
+    });
+    document.getElementById("btn-reset").addEventListener("click", reset);
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-eco]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = btn.getAttribute("data-eco").split(",");
+        inputs.f.value = p[0]; inputs.d.value = p[1];
+        vals.f.textContent = p[0] + " 金/天";
+        vals.d.textContent = p[1] + " 金/天";
+        updateMsg();
+        draw();
+      });
+    });
+
+    ready = true;
+    reset();
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>06 行列式：变换的缩放因子 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 6 章：行列式的几何本质——面积缩放倍数，负号表示定向翻转，det=0 即降维，2×2/3×3 计算与性质，配拖拽基向量看面积演示。">
+  <meta name="kb:tags" content="线性代数,教材,行列式,det,面积,定向,hls">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 6 章 · 行列式：变换的缩放因子</h1>
+        <p class="kb-lead">上一章遗留了一个问题：变换把平面拉伸、挤压之后，<strong>面积变成了原来的多少倍</strong>？答案是一个随矩阵而定的数——行列式。它还免费附赠两条信息：符号告诉你空间有没有被“翻面”，取值为零则宣告发生了“压扁降维”事故。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出行列式的几何定义（带符号的面积缩放因子）；② 熟练计算 2×2 与 3×3 行列式；③ 解释 det &lt; 0 与 det = 0 各自的几何含义；④ 使用 det(AB) = det(A)·det(B) 等性质；⑤ 用行列式判共线、算多边形面积。</p>
+        </div>
+
+        <h2>盯住一块单位方块</h2>
+        <p>要量“面积放大几倍”，不必检查整个平面：线性变换对所有区域<strong>一视同仁</strong>（网格均匀变形），所以盯住一块样板就够了——就选 î、ĵ 张成的单位正方形（面积 1）。变换后它成为 A 的两列张成的平行四边形。这个平行四边形的面积，就是所有图形面积的公共缩放倍数，称为<strong>行列式</strong> det(A)。</p>
+        <p>2×2 的计算公式：</p>
+        <pre><code>det ⎡a  b⎤ = ad − bc
+    ⎣c  d⎦</code></pre>
+        <p>先动手感受，再谈符号与性质：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 拖一拖：平行四边形的面积就是行列式</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas kb-canvas-drag" id="det-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：det = 变换后单位方块的带符号面积；两列共线时 det = 0。</p></noscript>
+            <div class="kb-interactive-controls">
+              <span class="kb-control" style="min-width:280px">拖动 <strong style="color:#2563eb">î 的落点</strong>与 <strong style="color:#16a34a">ĵ 的落点</strong>，观察面积与符号<span class="kb-control-value" id="det-readout"></span></span>
+              <button class="kb-btn" id="det-reset" type="button">重置</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三个必做实验</p>
+          <p>① 把 ĵ 的落点拖过 î 所在直线的<strong>另一侧</strong>——平行四边形变红，det 变负：空间被“翻面”了（想象把一张纸翻过来）；② 让两个落点<strong>共线</strong>——面积归零，det = 0，平面被压扁成直线（上一章“压成直线!”按钮的定量版）；③ 把 î 拖到 (2, 0)、ĵ 拖到 (0, 3)——det = 6，正是 2×3 的矩形。</p>
+        </div>
+
+        <h2>符号：定向的翻转</h2>
+        <p>面积不该是负数，为什么 det 可以为负？因为它是<strong>带符号的面积</strong>：符号记录“定向”。原本从 î 逆时针转到 ĵ 经过 90°；若变换后“新 î 转到新 ĵ”变成了顺时针方向，说明平面被翻了面（像照镜子），det 记为负。反射矩阵 ⎡1 0; 0 −1⎤ 的 det = −1：面积不变、但翻了面。</p>
+
+        <h2>det = 0：降维事故的判决书</h2>
+        <p>det(A) = 0 ⇔ 平行四边形面积为零 ⇔ A 的两列<strong>共线</strong>（线性相关）⇔ 整个平面被压进一条直线（或一个点）。回看第 2 章习题 2.5 的“交叉相乘检验式” 1×6 − 2×t——它其实就是行列式！<strong>判共线/判线性相关，算一个 det 就够了。</strong>压扁意味着信息丢失、无法逆转，这将在第 8 章成为“矩阵不可逆”的判据。</p>
+
+        <h2>常用性质</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>性质</th><th>几何理由</th></tr></thead>
+            <tbody>
+              <tr><td><strong>det(AB) = det(A) · det(B)</strong></td><td>先缩放 det(B) 倍、再缩放 det(A) 倍，总倍数相乘</td></tr>
+              <tr><td>det(I) = 1</td><td>“什么都不做”不改变面积</td></tr>
+              <tr><td>det(kA) = k²·det(A)（2×2）</td><td>两列各放大 k 倍，面积放大 k×k 倍</td></tr>
+              <tr><td>三角矩阵：det = 对角元素之积</td><td>底×高：另一列的斜移（剪切）不改变面积</td></tr>
+              <tr><td>交换两列，det 变号</td><td>î 与 ĵ 互换位置恰是一次“翻面”</td></tr>
+              <tr><td>det(Aᵀ) = det(A)</td><td>行与列的地位在行列式里对称（结论不显然，先记住）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>旋转矩阵 det = 1（面积、定向都不变），剪切矩阵 det = 1（推歪但<strong>不改面积</strong>——底不变高不变）。“det = 1 的变换保面积”，这一类变换在物理与图形学里格外重要。</p>
+
+        <h2>3×3：体积的缩放</h2>
+        <p>三维同理：det 是单位立方体变换后（平行六面体）的带符号<strong>体积</strong>缩放因子。计算用<strong>按行展开</strong>（余子式展开）：沿第一行，每个元素乘上“划掉所在行列后剩下的 2×2 行列式”，符号按 +、−、+ 交替：</p>
+        <pre><code>det ⎡a₁ a₂ a₃⎤
+    ⎢b₁ b₂ b₃⎥ = a₁·det⎡b₂ b₃⎤ − a₂·det⎡b₁ b₃⎤ + a₃·det⎡b₁ b₂⎤
+    ⎣c₁ c₂ c₃⎦        ⎣c₂ c₃⎦        ⎣c₁ c₃⎦        ⎣c₁ c₂⎦</code></pre>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 计算与解读</p>
+          <p>求 det ⎡3 1; 1 2⎤ 并解读其几何含义。</p>
+          <p><strong>解</strong>：det = 3×2 − 1×1 = <strong>5</strong>。含义：该变换把一切图形的面积放大 5 倍，且不翻面（正号）；等价地，列向量 (3, 1) 与 (1, 2) 张成的平行四边形面积为 5。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 特殊变换的 det</p>
+          <p>不用公式硬算，直接说出旋转 R(θ)、剪切 ⎡1 k; 0 1⎤、反射 ⎡0 1; 1 0⎤ 的行列式。</p>
+          <p><strong>解</strong>：旋转不改面积不翻面，det = <strong>1</strong>（验证：cos²θ + sin²θ = 1）；剪切“推歪不改面积”，det = <strong>1</strong>；反射面积不变但翻面，det = <strong>−1</strong>。先几何判断、再公式验证，是行列式的正确打开方式。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 3×3 展开</p>
+          <p>求 det A，A = ⎡2 0 1; 1 3 0; 0 1 1⎤。</p>
+          <p><strong>解</strong>：沿第一行展开：2·det⎡3 0; 1 1⎤ − 0·(…) + 1·det⎡1 3; 0 1⎤ = 2×(3−0) − 0 + 1×(1−0) = <strong>7</strong>。技巧：优先沿含 0 多的行/列展开，可跳过整项计算。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>计算下列行列式，并各用一句话解读：(a) ⎡2 1; 3 4⎤；(b) ⎡1 2; 2 4⎤；(c) ⎡0 1; 1 0⎤。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 8 − 3 = <strong>5</strong>：面积放大 5 倍，不翻面。(b) 4 − 4 = <strong>0</strong>：两列共线，平面被压扁成直线。(c) 0 − 1 = <strong>−1</strong>：面积不变但定向翻转（这是交换 x、y 的反射）。</p>
+            <p><strong>解析</strong>：算完 det 养成“报三件事”的习惯——倍数、是否翻面、是否降维。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>用行列式判断 (2, 4) 与 (3, 6) 是否共线；再判断 (1, 2)、(3, 5) 是否线性无关。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>det ⎡2 3; 4 6⎤ = 12 − 12 = 0 ⇒ <strong>共线（相关）</strong>。det ⎡1 3; 2 5⎤ = 5 − 6 = −1 ≠ 0 ⇒ <strong>线性无关</strong>。</p>
+            <p><strong>解析</strong>：把向量竖着排进矩阵算 det：零 ⇔ 相关，非零 ⇔ 无关。第 2 章“解方程判相关”从此可以一步到位。注意判断相关性只看 det 是否为零，负号无妨。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>已知 det(A) = 3（A 为 2×2）。求 det(2A)、det(Aᵀ)、det(A⁵)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>det(2A) = 2²×3 = <strong>12</strong>；det(Aᵀ) = <strong>3</strong>；det(A⁵) = 3⁵ = <strong>243</strong>。</p>
+            <p><strong>解析</strong>：det(2A) 最易错——2A 是“每列都放大 2 倍”，面积按 2×2 = 4 倍走，不是 2 倍（3×3 矩阵则是 2³ = 8 倍）。det(A⁵) 用乘积性质连乘五次。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>求 det ⎡2 7 −3; 0 5 8; 0 0 4⎤。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>上三角矩阵：det = 2×5×4 = <strong>40</strong>。</p>
+            <p><strong>解析</strong>：对角线以外的元素只产生“剪切”，不影响体积。这个性质是第 7 章消元法的好搭档：把矩阵消成三角形，det 顺手就出来了（只需记录行交换的变号与倍乘）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>取 A = ⎡2 0; 1 1⎤，B = ⎡1 3; 0 2⎤。分别计算 det(A)、det(B)、det(AB)，验证乘积性质，并用“缩放因子”语言复述一遍。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>det(A) = 2，det(B) = 2。AB = ⎡2 6; 1 5⎤，det(AB) = 10 − 6 = <strong>4</strong> = 2×2 ✓。</p>
+            <p><strong>解析</strong>：先做 B 面积翻倍，再做 A 又翻倍，合计 4 倍——倍数与先后顺序无关，所以尽管 AB ≠ BA，恒有 det(AB) = det(BA)。这是从行列式眼里看“乘法交换性”的一个有趣补偿。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>三角形顶点为 (0, 0)、(4, 1)、(2, 3)。用行列式求其面积。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>两边向量 (4, 1)、(2, 3) 张成的平行四边形面积 = |det ⎡4 2; 1 3⎤| = |12 − 2| = 10；三角形是它的一半，面积 = <strong>5</strong>。</p>
+            <p><strong>解析</strong>：|det|/2 是计算几何的标准三角形面积公式（顶点不在原点时先平移一个顶点到原点）。det 的符号还能告诉你三点是逆时针还是顺时针排列——多边形算法里非常常用。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>(a) 用公式验证：交换 2×2 矩阵的两列，行列式变号。(b) 设 A 可逆（det(A) ≠ 0），利用 det(AB) = det(A)det(B) 证明 det(A⁻¹) = 1/det(A)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) det ⎡b a; d c⎤ = bc − ad = −(ad − bc)。✓（几何：î、ĵ 落点互换 = 翻面。）</p>
+            <p>(b) A⁻¹A = I 两边取 det：det(A⁻¹)·det(A) = det(I) = 1，故 det(A⁻¹) = 1/det(A)。∎</p>
+            <p><strong>解析</strong>：(b) 的几何读法：正变换把面积放大 k 倍，逆变换（倒放录像）必须缩回 1/k 倍。顺带注意：det(A) = 0 时 1/det(A) 无意义——再次印证“压扁的变换没有逆”。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① det = 带符号的面积（体积）缩放因子，2×2 公式 ad − bc；② 负号 = 翻面，det = 0 = 压扁降维 = 列相关；③ det(AB) = detA·detB，三角矩阵取对角积，交换两列变号；④ |det|/2 可算三角形面积。<br><strong>下一章预告</strong>：掉转方向解决老问题——已知变换结果反求输入，即解方程组 A<strong>x</strong> = <strong>b</strong>。两千年前中国《九章算术》就在用的消元法，将被整理成一套不会出错的流水线。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./05-矩阵乘法变换的复合.html">← 第 5 章 矩阵乘法：变换的复合</a>
+          <a href="./07-线性方程组与高斯消元.html">第 7 章 线性方程组与高斯消元 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("det-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 55;
+    var i0 = { x: 2, y: 0.5 }, j0 = { x: 0.5, y: 1.5 };
+    var vi = { x: i0.x, y: i0.y }, vj = { x: j0.x, y: j0.y };
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("det-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2 - 60, y: H / 2 + 70 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function toVec(x, y) {
+      var o = origin();
+      return { x: Math.round((x - o.x) / SCALE * 4) / 4, y: Math.round((o.y - y) / SCALE * 4) / 4 };
+    }
+
+    function arrowV(vec, color) {
+      var a = toPx({ x: 0, y: 0 }), b = toPx(vec);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      if (len > 4) {
+        var ux = dx / len, uy = dy / len, s = 11;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - s * ux - s * 0.5 * uy, b.y - s * uy + s * 0.5 * ux);
+        ctx.lineTo(b.x - s * ux + s * 0.5 * uy, b.y - s * uy - s * 0.5 * ux);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var det = vi.x * vj.y - vj.x * vi.y;
+      var fill = Math.abs(det) < 0.05 ? css("--kb-fg-faint") : (det > 0 ? "#2563eb" : "#ef4444");
+      // 平行四边形 0, î, î+ĵ, ĵ
+      var quad = [{ x: 0, y: 0 }, vi, { x: vi.x + vj.x, y: vi.y + vj.y }, vj].map(toPx);
+      ctx.fillStyle = fill;
+      ctx.globalAlpha = 0.28;
+      ctx.beginPath();
+      ctx.moveTo(quad[0].x, quad[0].y);
+      for (var i = 1; i < 4; i++) ctx.lineTo(quad[i].x, quad[i].y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = fill;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.lineWidth = 1;
+
+      arrowV(vi, "#2563eb");
+      arrowV(vj, "#16a34a");
+      [vi, vj].forEach(function (p, idx) {
+        var q = toPx(p);
+        ctx.fillStyle = idx === 0 ? "#2563eb" : "#16a34a";
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = css("--kb-surface");
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      var pi = toPx(vi), pj = toPx(vj);
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("î→(" + vi.x + "," + vi.y + ")", pi.x + 9, pi.y - 9);
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("ĵ→(" + vj.x + "," + vj.y + ")", pj.x + 9, pj.y - 9);
+
+      var msg, color;
+      if (Math.abs(det) < 0.05) { msg = "det ≈ 0：压扁降维！"; color = css("--kb-warn"); }
+      else if (det > 0) { msg = "det = " + det.toFixed(2) + "（面积 ×" + det.toFixed(2) + "，不翻面）"; color = "#2563eb"; }
+      else { msg = "det = " + det.toFixed(2) + "（面积 ×" + Math.abs(det).toFixed(2) + "，已翻面）"; color = "#ef4444"; }
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = color;
+      ctx.fillText(msg, 16, 26);
+      readout.textContent = "　" + msg;
+    }
+
+    KB.enableDrag(canvas,
+      function (x, y) {
+        var pi = toPx(vi), pj = toPx(vj);
+        if (Math.hypot(x - pi.x, y - pi.y) < 20) return "i";
+        if (Math.hypot(x - pj.x, y - pj.y) < 20) return "j";
+        return null;
+      },
+      function (target, x, y) {
+        var nv = toVec(x, y);
+        if (Math.abs(nv.x) > 5 || Math.abs(nv.y) > 3.5) return;
+        if (target === "i") vi = nv; else vj = nv;
+        draw();
+      });
+
+    document.getElementById("det-reset").addEventListener("click", function () {
+      vi = { x: i0.x, y: i0.y };
+      vj = { x: j0.x, y: j0.y };
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

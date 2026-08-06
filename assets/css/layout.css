@@ -1,0 +1,177 @@
+/* layout.css — 页面骨架：顶栏 / 主内容 / 右侧栏 + 响应式 */
+
+/* ===== 顶栏 ===== */
+.kb-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--kb-header-h);
+  background: var(--kb-header-bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--kb-border);
+}
+
+.kb-header-inner {
+  max-width: var(--kb-content-max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.kb-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--kb-fg);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.kb-logo:hover {
+  text-decoration: none;
+  color: var(--kb-accent);
+}
+
+.kb-header-search {
+  position: relative;
+  flex: 1;
+  max-width: 520px;
+  margin-left: auto;
+}
+
+.kb-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* 首页有 hero 搜索框时隐藏顶栏搜索，避免重复 */
+body.kb-home .kb-header-search {
+  visibility: hidden;
+}
+
+/* ===== 主体三段式 ===== */
+.kb-shell {
+  max-width: var(--kb-content-max);
+  margin: 0 auto;
+  padding: 0 24px 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--kb-sidebar-w);
+  gap: 48px;
+  align-items: start;
+}
+
+.kb-content {
+  min-width: 0;
+  padding-top: 20px;
+}
+
+/* 首页主体（无右侧栏的单列容器） */
+.kb-home-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+/* ===== 右侧栏 ===== */
+.kb-sidebar {
+  position: sticky;
+  top: calc(var(--kb-header-h) + 16px);
+  max-height: calc(100vh - var(--kb-header-h) - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 4px 24px 16px;
+  border-left: 1px solid var(--kb-border);
+  font-size: 0.875rem;
+  scrollbar-width: thin;
+}
+
+/* 侧栏抽屉开关（仅窄屏显示） */
+.kb-sidebar-fab {
+  display: none;
+}
+
+.kb-sidebar-backdrop {
+  display: none;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 900px) {
+  .kb-shell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 0 18px 96px;
+  }
+
+  .kb-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 300;
+    width: min(320px, 85vw);
+    max-height: none;
+    margin: 0;
+    padding: 20px;
+    background: var(--kb-surface);
+    border-left: 1px solid var(--kb-border);
+    box-shadow: var(--kb-shadow-lg);
+    transform: translateX(105%);
+    transition: transform 0.25s ease;
+  }
+
+  .kb-sidebar.kb-open {
+    transform: translateX(0);
+  }
+
+  .kb-sidebar-fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    z-index: 290;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--kb-border);
+    background: var(--kb-surface);
+    color: var(--kb-fg);
+    font-size: 1.2rem;
+    box-shadow: var(--kb-shadow-md);
+    cursor: pointer;
+  }
+
+  .kb-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 295;
+    background: rgba(15, 23, 42, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .kb-sidebar-backdrop.kb-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .kb-header-inner {
+    padding: 0 18px;
+    gap: 10px;
+  }
+
+  .kb-logo .kb-logo-text {
+    display: none; /* 窄屏只留 emoji，给搜索框让位 */
+  }
+}

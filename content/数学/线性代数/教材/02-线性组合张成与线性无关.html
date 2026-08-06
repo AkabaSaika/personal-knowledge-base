@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 线性组合、张成与线性无关 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 2 章：线性组合的含义、张成（span）的几何图景、线性相关与无关的判定，以及基与维数初识，配系数滑块交互演示。">
+  <meta name="kb:tags" content="线性代数,教材,线性组合,张成,线性无关,基">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 2 章 · 线性组合、张成与线性无关</h1>
+        <p class="kb-lead">上一章我们学会了向量仅有的两种运算：加法和数乘。这一章问一个自然的问题：<strong>把它们反复组合，能到达哪些地方？</strong>这个问题的答案（张成），以及“哪些向量是多余的”（线性相关），构成了线性代数最核心的一组概念。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 计算并从几何上解读线性组合 <em class="kb-math">a</em><strong>u</strong> + <em class="kb-math">b</em><strong>v</strong>；② 说出一组向量张成的空间是点、直线还是平面；③ 用定义和快捷判据判断向量组线性相关或无关；④ 解释“基”为什么恰好要“无关又张满”。</p>
+        </div>
+
+        <h2>调色盘：两种原料能配出什么</h2>
+        <p>想象你手里有两管颜料：红和蓝。取“2 份红 + 1 份蓝”“0.5 份红 + 3 份蓝”……不同配比能调出一整族紫色。向量也一样：给定 <strong>u</strong> 和 <strong>v</strong>，取遍所有系数 <em class="kb-math">a</em>、<em class="kb-math">b</em>，表达式</p>
+        <pre><code>a·u + b·v      （a、b 是任意实数）</code></pre>
+        <p>能“调配”出的所有向量，就是 <strong>u</strong>、<strong>v</strong> 的全部<strong>线性组合</strong>。用第 1 章的走路比喻：沿 <strong>u</strong> 方向走 <em class="kb-math">a</em> 步、再沿 <strong>v</strong> 方向走 <em class="kb-math">b</em> 步，所有能走到的位置。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 调一调：线性组合能扫出哪些点</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="combo-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：两个不共线向量的线性组合可以到达平面上任何一点；一旦共线，就只能在一条直线上移动。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">系数 a（沿 u 走） <span class="kb-control-value" id="val-a"></span>
+                <input type="range" id="ctl-a" min="-3" max="3" step="0.1" value="1"></label>
+              <label class="kb-control">系数 b（沿 v 走） <span class="kb-control-value" id="val-b"></span>
+                <input type="range" id="ctl-b" min="-3" max="3" step="0.1" value="1"></label>
+              <label class="kb-control" style="flex-direction:row;align-items:center;gap:8px;min-width:0">
+                <input type="checkbox" id="ctl-collinear" style="accent-color:var(--kb-accent)"> 让 v 与 u 共线</label>
+              <button class="kb-btn" id="combo-clear" type="button">清除痕迹</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 关键实验</p>
+          <p>先随意滑动 a、b——红点的“脚印”会逐渐铺满整个平面。然后勾选“让 v 与 u 共线”再滑：无论怎么调，红点都被<strong>困在一条直线上</strong>。整章的核心直觉就在这一勾之间。</p>
+        </div>
+
+        <h2>张成（span）：所有能到达的地方</h2>
+        <p>一组向量的<strong>张成</strong>，记作 span(<strong>u</strong>, <strong>v</strong>, …)，定义为它们全部线性组合构成的集合——即“反复用加法和数乘能到达的所有位置”。平面上只有三种可能：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>向量组</th><th>张成</th><th>几何图景</th></tr></thead>
+            <tbody>
+              <tr><td>只有零向量</td><td>一个点 {<strong>0</strong>}</td><td>哪儿也去不了</td></tr>
+              <tr><td>一个非零向量 <strong>u</strong>（或多个共线向量）</td><td>过原点的<strong>直线</strong></td><td>只能沿一个方向来回</td></tr>
+              <tr><td>两个不共线向量 <strong>u</strong>、<strong>v</strong></td><td><strong>整个平面</strong> ℝ²</td><td>任何点都可到达，且走法唯一</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>三维空间中同理多一档：两个不共线向量张成一张过原点的<strong>平面</strong>（薄薄一片，撑不满空间），三个“不共面”的向量才张成整个 ℝ³。注意：span 永远包含原点（取全部系数为 0），所以张成的直线、平面都<strong>过原点</strong>。</p>
+
+        <h2>线性相关：谁是多余的</h2>
+        <p>上面实验里，当 <strong>v</strong> 与 <strong>u</strong> 共线时，<strong>v</strong> 没有贡献任何新方向——它本来就在 span(<strong>u</strong>) 里，是<strong>冗余</strong>的。这就是线性相关的直观含义：</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📐 定义</p>
+          <p>一组向量<strong>线性相关</strong>，如果其中某个向量落在其余向量的张成里（可由其余向量线性组合而出）；否则称<strong>线性无关</strong>——每个向量都贡献了新方向，谁也替代不了谁。</p>
+        </div>
+        <p>教材里更常见的是等价的“官方定义”：向量组 <strong>v</strong>₁, …, <strong>v</strong>ₖ 线性相关，当且仅当存在<strong>不全为零</strong>的系数使 <em class="kb-math">c</em>₁<strong>v</strong>₁ + ⋯ + <em class="kb-math">c</em>ₖ<strong>v</strong>ₖ = <strong>0</strong>。两个说法是一回事：若 <em class="kb-math">c</em>₁ ≠ 0，移项即可把 <strong>v</strong>₁ 用其余向量表示出来。官方定义的好处是检验时<strong>只需解一个方程</strong>。</p>
+        <p>几个立刻可用的快捷判据：</p>
+        <ul>
+          <li><strong>两个向量</strong>：相关 ⇔ 共线（一个是另一个的数乘）。</li>
+          <li><strong>含零向量的组</strong>：必相关（零向量永远冗余）。</li>
+          <li><strong>平面上任意三个向量</strong>：必相关——平面只有两个独立方向，第三个向量一定能被前两个配出来（只要前两个不共线）。一般地：ℝⁿ 中超过 <em class="kb-math">n</em> 个向量必相关。</li>
+        </ul>
+
+        <h2>基与维数：恰到好处的一组向量</h2>
+        <p>要描述平面上的所有点，向量组需要满足两个条件：<strong>张成整个平面</strong>（够用）、<strong>线性无关</strong>（不浪费）。同时满足这两条的向量组称为<strong>基</strong>。最熟悉的例子是标准基 <strong>e</strong>₁ = (1, 0)、<strong>e</strong>₂ = (0, 1)：任何 (x, y) 都能唯一写成 x<strong>e</strong>₁ + y<strong>e</strong>₂——坐标本身就是“在标准基下的组合系数”。</p>
+        <p>但标准基不是唯一选择：<strong>任何两个不共线的向量都能当平面的基</strong>。不同的基好比不同的坐标语言，同一个点在不同语言里有不同“名字”（坐标）。所有基的向量个数都相同——这个不变的个数就是空间的<strong>维数</strong>：平面是 2 维，空间是 3 维。（“换语言”的完整故事在第 9 章。）</p>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 配出目标向量</p>
+          <p>把 <strong>w</strong> = (5, 4) 表示为 <strong>u</strong> = (1, 2) 与 <strong>v</strong> = (3, 0) 的线性组合。</p>
+          <p><strong>解</strong>：设 <em class="kb-math">a</em>(1, 2) + <em class="kb-math">b</em>(3, 0) = (5, 4)。按分量列方程：<em class="kb-math">a</em> + 3<em class="kb-math">b</em> = 5，2<em class="kb-math">a</em> = 4。由第二式 <em class="kb-math">a</em> = 2，代入第一式得 <em class="kb-math">b</em> = 1。所以 <strong>w</strong> = 2<strong>u</strong> + <strong>v</strong>。<br>“能否配出、怎样配出”永远归结为解方程组——第 7 章的高斯消元将把这件事做成流水线。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 判定相关性</p>
+          <p>判断向量组的相关性：(a) (1, 2) 与 (2, 4)；(b) (1, 2) 与 (2, 3)；(c) (1, 2)、(2, 3)、(3, 1)。</p>
+          <p><strong>解</strong>：(a) (2, 4) = 2(1, 2)，共线，<strong>相关</strong>。(b) 若 (2, 3) = k(1, 2)，则 k = 2 且 k = 1.5，矛盾，<strong>无关</strong>。(c) 平面上三个向量必<strong>相关</strong>；具体地，由 (b) 知前两个已张成整个平面，故 (3, 1) 必可被配出：解 a(1, 2) + b(2, 3) = (3, 1) 得 a = −7, b = 5，即 −7(1, 2) + 5(2, 3) − (3, 1) = 0。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>设 <strong>u</strong> = (2, −1)，<strong>v</strong> = (1, 3)。计算线性组合 3<strong>u</strong> − 2<strong>v</strong>，并用“走路”语言描述它。</p>
+            <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>3<strong>u</strong> − 2<strong>v</strong> = (6, −3) − (2, 6) = <strong>(4, −9)</strong>。</p>
+            <p><strong>解析</strong>：沿 <strong>u</strong> 方向走 3 步，再沿 <strong>v</strong> 的反方向走 2 步。任何线性组合都可以这样读，系数就是各方向的“步数”（可为负、可为小数）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断下列向量组线性相关还是无关：(a) (3, 6) 与 (1, 2)；(b) (1, 0) 与 (1, 1)；(c) (2, 5) 与 (0, 0)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) <strong>相关</strong>：(3, 6) = 3(1, 2)。(b) <strong>无关</strong>：显然不共线（一个水平，一个斜向）。(c) <strong>相关</strong>：含零向量的组必相关，例如 0·(2, 5) + 7·(0, 0) = 0 就是不全为零的系数组合。</p>
+            <p><strong>解析</strong>：两个向量看共线，含零向量直接判相关——先用快捷判据，再谈解方程。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.3 <span class="kb-exercise-badge">基础</span></p>
+          <p><strong>w</strong> = (1, 7) 能否写成 <strong>u</strong> = (1, 1) 与 <strong>v</strong> = (1, −1) 的线性组合？若能，求出系数。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>能：设 <em class="kb-math">a</em> + <em class="kb-math">b</em> = 1，<em class="kb-math">a</em> − <em class="kb-math">b</em> = 7，两式相加得 <em class="kb-math">a</em> = 4，故 <em class="kb-math">b</em> = −3。即 <strong>w</strong> = 4<strong>u</strong> − 3<strong>v</strong>。</p>
+            <p><strong>解析</strong>：<strong>u</strong>、<strong>v</strong> 不共线，张成整个平面，所以<strong>任何</strong>向量都必然能配出，且配法唯一。系数 (4, −3) 其实就是 <strong>w</strong> 在基 {<strong>u</strong>, <strong>v</strong>} 下的坐标。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>span((2, −4)) 是什么图形？再把 (1, −2) 加入向量组，张成变大了吗？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>span((2, −4)) 是过原点、方向为 (1, −2) 的一条<strong>直线</strong>。加入 (1, −2) 后张成<strong>不变</strong>——它与 (2, −4) 共线（(2, −4) = 2(1, −2)），本来就在这条直线上。</p>
+            <p><strong>解析</strong>：加入相关向量不改变 span。想让张成升级成整个平面，必须加入一个<strong>不在这条直线上</strong>的向量。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>t 取什么值时，(1, 2) 与 (t, 6) 线性相关？此时二者的 span 是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>相关 ⇔ 共线 ⇔ (t, 6) = k(1, 2)。由第二分量 k = 3，故 <strong>t = 3</strong>。此时 span 是过原点、方向 (1, 2) 的直线；t ≠ 3 时两向量无关，span 是整个平面。</p>
+            <p><strong>解析</strong>：也可用交叉相乘：共线 ⇔ 1×6 − 2×t = 0。这个“交叉相乘检验式”其实是 2×2 行列式——第 6 章会揭示它的几何身份（平行四边形面积为零）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>设 <strong>u</strong>、<strong>v</strong> 线性无关。证明 <strong>u</strong> + <strong>v</strong> 与 <strong>u</strong> − <strong>v</strong> 也线性无关。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>设 <em class="kb-math">a</em>(<strong>u</strong> + <strong>v</strong>) + <em class="kb-math">b</em>(<strong>u</strong> − <strong>v</strong>) = <strong>0</strong>。整理得 (<em class="kb-math">a</em> + <em class="kb-math">b</em>)<strong>u</strong> + (<em class="kb-math">a</em> − <em class="kb-math">b</em>)<strong>v</strong> = <strong>0</strong>。由 <strong>u</strong>、<strong>v</strong> 无关，系数必须全为零：<em class="kb-math">a</em> + <em class="kb-math">b</em> = 0 且 <em class="kb-math">a</em> − <em class="kb-math">b</em> = 0，解得 <em class="kb-math">a</em> = <em class="kb-math">b</em> = 0。只有平凡组合，故无关。∎</p>
+            <p><strong>解析</strong>：标准套路三步走：设组合为零 → 整理成已知无关组的组合 → 用无关性逼出系数全零。几何上看，对角线方向 <strong>u</strong>+<strong>v</strong> 与 <strong>u</strong>−<strong>v</strong> 显然不共线，代数证明正是这个直觉的严格化。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>三维向量 (1, 1, 0)、(0, 1, 1)、(1, 0, −1) 是否线性相关（即是否共面）？若相关，写出一个不全为零的零组合。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>相关</strong>。观察：(1, 1, 0) − (0, 1, 1) = (1, 0, −1)，即第三个向量 = 第一减第二。移项得零组合：(1, 1, 0) − (0, 1, 1) − (1, 0, −1) = <strong>0</strong>，系数 (1, −1, −1) 不全为零。</p>
+            <p><strong>解析</strong>：三个向量相关，几何上意味着它们挤在同一张过原点的平面里，撑不起三维空间。找不到明显关系时，通用做法是解方程组 <em class="kb-math">c</em>₁<strong>v</strong>₁ + <em class="kb-math">c</em>₂<strong>v</strong>₂ + <em class="kb-math">c</em>₃<strong>v</strong>₃ = <strong>0</strong>（第 7 章），或算行列式是否为零（第 6 章）。这道题是后面两章工具的“预告片”。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 线性组合 = 各方向按系数走步；② span = 能到达的全部位置，平面上只有点/直线/全平面三档；③ 相关 = 有向量冗余，官方判据是“存在不全为零的零组合”；④ 基 = 无关 + 张满，基向量个数 = 维数。<br><strong>下一章预告</strong>：加法和数乘让我们“到达”各个位置，但还量不了<strong>长度</strong>、判不了<strong>角度</strong>。第 3 章引入第三种运算——点积，几何测量将全面上线。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./01-向量从箭头到数组.html">← 第 1 章 向量：从箭头到数组</a>
+          <a href="./03-点积长度夹角与投影.html">第 3 章 点积：长度、夹角与投影 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("combo-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 36;
+    var u = { x: 2, y: 1 };
+    var vFree = { x: -1, y: 2 };       // 常规位置
+    var vLine = { x: 1, y: 0.5 };      // 与 u 共线（u 的一半）
+    var a = 1, b = 1, collinear = false;
+    var trail = [];                     // 组合点足迹
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function v() { return collinear ? vLine : vFree; }
+    function origin() { return { x: canvas.clientWidth / 2, y: H / 2 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+
+    function arrow(from, to, color, width, dash) {
+      var p = toPx(from), q = toPx(to);
+      var dx = q.x - p.x, dy = q.y - p.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash || []);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(q.x, q.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      if (len < 4) return;
+      var ux = dx / len, uy = dy / len, s = 10;
+      ctx.beginPath();
+      ctx.moveTo(q.x, q.y);
+      ctx.lineTo(q.x - s * ux - s * 0.5 * uy, q.y - s * uy + s * 0.5 * ux);
+      ctx.lineTo(q.x - s * ux + s * 0.5 * uy, q.y - s * uy - s * 0.5 * ux);
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      // 足迹
+      ctx.fillStyle = "#ef4444";
+      trail.forEach(function (p) {
+        var q = toPx(p);
+        ctx.globalAlpha = 0.22;
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      var vv = v();
+      var au = { x: a * u.x, y: a * u.y };
+      var p = { x: au.x + b * vv.x, y: au.y + b * vv.y };
+      arrow({ x: 0, y: 0 }, au, "#2563eb", 2, [6, 4]);          // a·u
+      arrow(au, p, "#16a34a", 2, [6, 4]);                       // 接着走 b·v
+      arrow({ x: 0, y: 0 }, u, "#2563eb", 3);
+      arrow({ x: 0, y: 0 }, vv, "#16a34a", 3);
+      var q = toPx(p);
+      ctx.fillStyle = "#ef4444";
+      ctx.beginPath();
+      ctx.arc(q.x, q.y, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = css("--kb-surface");
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      var pu = toPx(u), pv = toPx(vv);
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("u", pu.x + 8, pu.y - 8);
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("v", pv.x + 8, pv.y - 8);
+      ctx.fillStyle = "#ef4444";
+      ctx.font = "13px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText("a·u + b·v = (" + p.x.toFixed(1) + ", " + p.y.toFixed(1) + ")", q.x + 12, q.y + 4);
+    }
+
+    function record() {
+      var vv = v();
+      var p = { x: a * u.x + b * vv.x, y: a * u.y + b * vv.y };
+      var last = trail[trail.length - 1];
+      if (!last || Math.hypot(p.x - last.x, p.y - last.y) > 0.05) {
+        trail.push(p);
+        if (trail.length > 4000) trail.shift();
+      }
+    }
+
+    KB.bindRange(document.getElementById("ctl-a"), document.getElementById("val-a"),
+      function (x) { return x.toFixed(1); },
+      function (x) { a = x; record(); draw(); });
+    KB.bindRange(document.getElementById("ctl-b"), document.getElementById("val-b"),
+      function (x) { return x.toFixed(1); },
+      function (x) { b = x; record(); draw(); });
+    document.getElementById("ctl-collinear").addEventListener("change", function (e) {
+      collinear = e.target.checked;
+      trail = [];
+      draw();
+    });
+    document.getElementById("combo-clear").addEventListener("click", function () {
+      trail = [];
+      draw();
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

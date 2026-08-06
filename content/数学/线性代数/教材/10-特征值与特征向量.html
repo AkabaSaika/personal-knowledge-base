@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10 特征值与特征向量 · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 10 章：变换中方向不变的向量、特征方程求解、对角化与矩阵快速求幂，斐波那契与 PageRank 应用，配拖动找特征方向演示。">
+  <meta name="kb:tags" content="线性代数,教材,特征值,特征向量,对角化,tzz,tzxl">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 10 章 · 特征值与特征向量</h1>
+        <p class="kb-lead">变换把大多数向量又转又拉，但总有一些“天选方向”：变换之后<strong>方向不变，只是伸缩</strong>。这些方向叫特征向量，伸缩倍数叫特征值——它们是变换的骨架。摸清骨架，矩阵的百次幂可以口算，斐波那契有了通项公式，Google 靠它给网页排序。这是线性代数最著名的一章。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用几何语言解释 A<strong>v</strong> = λ<strong>v</strong>；② 通过特征方程 det(A − λI) = 0 求特征值与特征向量；③ 完成对角化 A = PDP⁻¹ 并用它快速计算 Aⁿ；④ 说出斐波那契通项与 PageRank 背后的特征值思想。</p>
+        </div>
+
+        <h2>寻找“不弯折的方向”</h2>
+        <p>回忆第 4 章的剪切 ⎡1 1; 0 1⎤：所有向量都被推歪了——除了 x 轴上的向量，纹丝不动。再看第 9 章的 ⎡3 1; 0 2⎤：方向 (1, 0) 被拉伸 3 倍、方向 (−1, 1) 被拉伸 2 倍，都没有偏转。正式定义：</p>
+        <pre><code>A v = λ v      （v ≠ 0）
+v：特征向量（方向不变的向量）    λ：特征值（该方向的伸缩倍数）</code></pre>
+        <p>λ 可以为负（方向调头、仍在同一条直线上）、可以为 0（该方向被压进原点——零空间！）。注意特征向量成“族”出现：<strong>v</strong> 是，2<strong>v</strong>、−<strong>v</strong> 也是，真正要找的是<strong>特征方向</strong>（一条过原点的直线）。先动手找找看：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 拖一拖：绕一圈，找出方向不变的“天选向量”</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas kb-canvas-drag" id="eigen-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：特征向量是变换后方向不变的向量；旋转没有实特征方向，剪切只有一个。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control" style="flex-direction:row;align-items:center;gap:6px;min-width:0">
+                <input type="radio" name="eig-mat" value="sym" checked style="accent-color:var(--kb-accent)"> 对称 ⎡2 1;1 2⎤</label>
+              <label class="kb-control" style="flex-direction:row;align-items:center;gap:6px;min-width:0">
+                <input type="radio" name="eig-mat" value="shear" style="accent-color:var(--kb-accent)"> 剪切 ⎡1 1;0 1⎤</label>
+              <label class="kb-control" style="flex-direction:row;align-items:center;gap:6px;min-width:0">
+                <input type="radio" name="eig-mat" value="rot" style="accent-color:var(--kb-accent)"> 旋转 90°</label>
+              <span class="kb-control-value" id="eigen-readout" style="min-width:230px"></span>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 拖出三个结论</p>
+          <p>① 对称矩阵：慢慢转一圈，会在<strong>两个互相垂直的方向</strong>上撞见金色高亮（λ = 3 和 λ = 1）；② 剪切：只有 x 轴一个特征方向（λ = 1）；③ 旋转 90°：转遍一圈也找不到——<strong>旋转没有实特征方向</strong>（每个向量都被转走了）。</p>
+        </div>
+
+        <h2>系统求解：特征方程</h2>
+        <p>把定义移项：A<strong>v</strong> = λ<strong>v</strong> ⇔ (A − λI)<strong>v</strong> = <strong>0</strong>。这要求矩阵 A − λI 有<strong>非零</strong>的零空间成员，即 A − λI 必须“压扁”——第 6 章的判据立刻接管：</p>
+        <pre><code>det(A − λI) = 0        （特征方程）</code></pre>
+        <p>对 2×2 矩阵这是一个关于 λ 的二次方程（展开得 λ² − (a+d)λ + det(A) = 0）。流程两步走：<strong>解特征方程得 λ → 对每个 λ 解 (A − λI)v = 0 得方向</strong>。完整示范：</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 全流程</p>
+          <p>求 A = ⎡2 1; 1 2⎤ 的特征值与特征向量。</p>
+          <p><strong>第一步</strong>：det(A − λI) = (2−λ)² − 1 = 0 ⇒ 2 − λ = ±1 ⇒ <strong>λ₁ = 3，λ₂ = 1</strong>。</p>
+          <p><strong>第二步</strong>：λ = 3 时，A − 3I = ⎡−1 1; 1 −1⎤，解 −x + y = 0 得方向 <strong>(1, 1)</strong>；λ = 1 时，A − I = ⎡1 1; 1 1⎤，解 x + y = 0 得方向 <strong>(1, −1)</strong>。</p>
+          <p><strong>验算</strong>：A(1, 1) = (3, 3) = 3(1, 1) ✓；A(1, −1) = (1, −1) ✓。与演示中金色方向一致。注意 (A − λI) 此时必然行相关（det 为零本就是这么要求的）——解方程时两行给出同一条件，是正常现象而非算错。</p>
+        </div>
+        <p>三类速判，考试与工程里高频使用：</p>
+        <ul>
+          <li><strong>三角/对角矩阵</strong>：特征值就是对角线元素（det(A − λI) 直接是对角连乘）。</li>
+          <li><strong>λ = 0 ⇔ det(A) = 0</strong>：有方向被压进原点 ⇔ 矩阵奇异。</li>
+          <li><strong>旋转矩阵</strong>：特征方程 λ² + 1 = 0 无实根——几何直觉“没有方向不被转走”的代数印证。</li>
+        </ul>
+
+        <h2>对角化：换到特征基去</h2>
+        <p>若 A 有两个独立的特征方向 <strong>v</strong>₁、<strong>v</strong>₂（伸缩倍数 λ₁、λ₂），拿它们当基（第 9 章！），P = [<strong>v</strong>₁ <strong>v</strong>₂]，则在这门语言里 A 只是“各轴独立伸缩”：</p>
+        <pre><code>P⁻¹AP = D = ⎡λ₁  0⎤        等价地  A = P D P⁻¹
+             ⎣0  λ₂⎦</code></pre>
+        <p>这就是<strong>对角化</strong>。它最立竿见影的超能力是求幂——中间的 P⁻¹P 成对湮灭：</p>
+        <pre><code>Aⁿ = (PDP⁻¹)(PDP⁻¹)⋯(PDP⁻¹) = P Dⁿ P⁻¹ = P ⎡λ₁ⁿ  0 ⎤ P⁻¹
+                                              ⎣0   λ₂ⁿ⎦</code></pre>
+        <p>百次幂从一百次矩阵乘法变成两个数各自求幂。几何读法：把输入翻译到特征基（P⁻¹），沿骨架各自伸缩 n 次（Dⁿ），再翻译回来（P）。</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 用对角化求 A⁵</p>
+          <p>沿用例 1 的 A = ⎡2 1; 1 2⎤，求 A⁵。</p>
+          <p><strong>解</strong>：P = ⎡1 1; 1 −1⎤，D = diag(3, 1)，P⁻¹ = ½⎡1 1; 1 −1⎤。A⁵ = P·diag(3⁵, 1)·P⁻¹ = P·diag(243, 1)·P⁻¹ = ½⎡243+1, 243−1; 243−1, 243+1⎤ = <strong>⎡122 121; 121 122⎤</strong>。手乘五次矩阵？没人愿意。</p>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 不是人人可对角化</p>
+          <p>剪切 ⎡1 1; 0 1⎤ 只有一个特征方向，凑不齐一组基——<strong>不可对角化</strong>。特征值互不相同时必可对角化；出现重复特征值时要具体检查方向够不够数。</p>
+        </div>
+
+        <h2>应用一瞥：特征值统治的世界</h2>
+        <ul>
+          <li><strong>斐波那契通项</strong>：数列 1, 1, 2, 3, 5, 8… 的递推可写成乘矩阵 F = ⎡1 1; 1 0⎤，第 n 项即 Fⁿ 的事。F 的特征值是黄金比例 φ = (1+√5)/2 与 ψ = (1−√5)/2，对角化直接给出通项 F(n) = (φⁿ − ψⁿ)/√5——相邻两项之比趋于 φ 的秘密就在“|φ| &gt; |ψ|，大特征值最终称王”（习题 10.8）。</li>
+          <li><strong>PageRank</strong>：把网络写成巨大的链接转移矩阵，网页的重要性排名 = 该矩阵<strong>最大特征值对应的特征向量</strong>。计算不靠解特征方程，而靠“幂迭代”：随便取初始向量反复乘矩阵，大特征值方向的分量增长最快，最终胜出——与斐波那契同一个原理。</li>
+          <li><strong>稳定性与振动</strong>：微分方程组、桥梁振动模态、人口模型的长期命运，全部由特征值的大小/正负决定：|λ| &gt; 1 增长，|λ| &lt; 1 衰减，λ = 1 恰是“稳态”（习题 10.6）。</li>
+        </ul>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>A = ⎡4 1; 2 3⎤。验证 (1, 1) 与 (1, −2) 都是 A 的特征向量，并求各自的特征值。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A(1, 1) = (5, 5) = 5(1, 1) ⇒ λ = <strong>5</strong>；A(1, −2) = (4−2, 2−6) = (2, −4) = 2(1, −2) ⇒ λ = <strong>2</strong>。</p>
+            <p><strong>解析</strong>：“验证”比“求解”容易得多——乘一下看是否共线。校验环节永远优先用定义本身。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>不解特征方程，直接写出 ⎡3 7; 0 2⎤ 与 ⎡5 0; 0 −1⎤ 的特征值；再求前者的特征向量。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>三角矩阵读对角线：前者 λ = <strong>3, 2</strong>；后者 λ = <strong>5, −1</strong>。前者方向：λ = 3 时解 ⎡0 7; 0 −1⎤v = 0 得 <strong>(1, 0)</strong>；λ = 2 时解 ⎡1 7; 0 0⎤v = 0 得 x = −7y，方向 <strong>(−7, 1)</strong>。</p>
+            <p><strong>解析</strong>：对角矩阵的特征方向就是坐标轴本身；上三角矩阵保住了 x 轴这一个“显然方向”，另一个则要动手解。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>求 A = ⎡1 2; 2 1⎤ 的特征值与特征向量，并说明负特征值的几何含义。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>特征方程 (1−λ)² − 4 = 0 ⇒ λ = <strong>3, −1</strong>。λ = 3：方向 <strong>(1, 1)</strong>；λ = −1：解 ⎡2 2; 2 2⎤v = 0 得方向 <strong>(1, −1)</strong>。</p>
+            <p><strong>解析</strong>：λ = −1 表示 (1, −1) 方向的向量被<strong>原样调头</strong>——仍在同一条直线上，所以合格。又一个对称矩阵、又一对垂直的特征方向，第 12 章将宣布这不是巧合。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>从几何和代数两个角度说明：旋转 90° 矩阵 ⎡0 −1; 1 0⎤ 没有实特征向量。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>几何</strong>：每个非零向量都被转过 90°，不可能与自己共线。<strong>代数</strong>：det(A − λI) = λ² + 1 = 0 无实根（λ = ±i）。</p>
+            <p><strong>解析</strong>：复数根 ±i 并非“无意义”——它们编码着“旋转 90°”这一事实本身（复平面上乘 i 恰是转 90°）。复特征值是通往更深理论的门，本教材在此止步、留个路标。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>对角化习题 10.3 的 A = ⎡1 2; 2 1⎤，并写出 Aⁿ 的显式公式。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>P = ⎡1 1; 1 −1⎤，D = diag(3, −1)，P⁻¹ = ½⎡1 1; 1 −1⎤。Aⁿ = P·diag(3ⁿ, (−1)ⁿ)·P⁻¹ = <strong>½⎡3ⁿ+(−1)ⁿ, 3ⁿ−(−1)ⁿ; 3ⁿ−(−1)ⁿ, 3ⁿ+(−1)ⁿ⎤</strong>。</p>
+            <p><strong>解析</strong>：抽查 n = 1：½⎡3−1, 3+1; …⎤ = ⎡1 2; 2 1⎤ ✓。注意 (−1)ⁿ 的振荡被 3ⁿ 迅速淹没——n 稍大时 Aⁿ ≈ (3ⁿ/2)⎡1 1; 1 1⎤，一切向量都被甩向主特征方向 (1, 1)。这就是幂迭代能找到主特征向量的原因。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>城乡人口每年迁移：留城概率 0.9、进城概率 0.2，转移矩阵 M = ⎡0.9 0.2; 0.1 0.8⎤（列为“今年城/乡”，行是“明年城/乡”）。求 M 的特征值，并求人口比例的长期稳态。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>特征方程：λ² − 1.7λ + 0.7 = 0 ⇒ <strong>λ = 1, 0.7</strong>。λ = 1 的特征向量：(M − I)v = 0 ⇒ −0.1x + 0.2y = 0 ⇒ x = 2y，方向 (2, 1)。归一化成比例：<strong>城 2/3、乡 1/3</strong>。</p>
+            <p><strong>解析</strong>：λ = 1 的方向是“乘一年不变”的分布——稳态；另一特征值 0.7 &lt; 1，其分量每年衰减 30%，无论初始分布如何终将消失。<strong>长期行为 = 主特征向量</strong>，这正是 PageRank 的数学核心（网页排名就是链接矩阵的稳态分布）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>对 2×2 矩阵证明：两特征值之和 = 迹（对角线之和 a + d），之积 = det(A)。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>特征方程展开为 λ² − (a+d)λ + (ad − bc) = 0。由韦达定理：λ₁ + λ₂ = a + d = tr(A)，λ₁λ₂ = ad − bc = det(A)。∎</p>
+            <p><strong>解析</strong>：两条即时妙用——①解题：先算 tr 与 det，特征值经常能心算凑出（如 tr = 4、det = 3 ⇒ λ = 1, 3）；②校验：解完特征方程用和与积回查。几何彩蛋：λ₁λ₂ = det 再自然不过——沿两条骨架分别伸缩 λ₁、λ₂ 倍，面积当然放大 λ₁λ₂ 倍。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>斐波那契递推 F(n+1) = F(n) + F(n−1) 可写成 (F(n+1), F(n)) = M·(F(n), F(n−1))，M = ⎡1 1; 1 0⎤。(a) 求 M 的特征值；(b) 解释为何 F(n+1)/F(n) → φ（黄金比例）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) 特征方程 λ² − λ − 1 = 0 ⇒ <strong>λ = (1 ± √5)/2</strong>，即 φ ≈ 1.618 与 ψ ≈ −0.618。</p>
+            <p>(b) 把初始向量按两个特征方向分解：(F(2), F(1)) = c₁<strong>v</strong>_φ + c₂<strong>v</strong>_ψ。乘 n 次 M：状态 = c₁φⁿ<strong>v</strong>_φ + c₂ψⁿ<strong>v</strong>_ψ。由 |ψ| &lt; 1，第二项指数消亡，状态向量的方向趋于 <strong>v</strong>_φ，而沿 <strong>v</strong>_φ 每乘一次放大 φ 倍，故相邻项之比 → <strong>φ</strong>。∎</p>
+            <p><strong>解析</strong>：整理成套路：<strong>递推 → 矩阵幂 → 特征分解 → 大特征值决定长期行为</strong>。同一套路通吃人口模型、马尔可夫链、幂迭代算法。顺带一提，把分解系数算全即得通项 F(n) = (φⁿ − ψⁿ)/√5——一个整数数列的通项里住着两个无理数，相减后无理部分恰好抵消。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① A<strong>v</strong> = λ<strong>v</strong>：特征向量方向不变、特征值是伸缩倍数；② 求解两步：det(A − λI) = 0 → 解 (A − λI)v = 0；③ 对角化 A = PDP⁻¹（特征向量当基），Aⁿ = PDⁿP⁻¹；④ tr = Σλ，det = Πλ；⑤ 长期行为由最大特征值统治（斐波那契、PageRank、稳态）。<br><strong>下一章预告</strong>：换基虽好，歪基算坐标却要解方程。有没有“自带点积快捷键”的完美基？正交基登场，并顺手解决第 7 章的遗留悬案——方程无解时怎么办。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./09-基变换与坐标.html">← 第 9 章 基变换与坐标</a>
+          <a href="./11-正交性与最小二乘.html">第 11 章 正交性与最小二乘 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("eigen-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 55;
+    var MATS = {
+      sym: { m: { a: 2, b: 1, c: 1, d: 2 }, eig: [{ x: 1, y: 1, l: 3 }, { x: 1, y: -1, l: 1 }] },
+      shear: { m: { a: 1, b: 1, c: 0, d: 1 }, eig: [{ x: 1, y: 0, l: 1 }] },
+      rot: { m: { a: 0, b: -1, c: 1, d: 0 }, eig: [] }
+    };
+    var v = { x: 1.8, y: 0.6 };
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("eigen-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function cur() {
+      return MATS[document.querySelector('input[name="eig-mat"]:checked').value];
+    }
+    function origin() { return { x: canvas.clientWidth / 2, y: H / 2 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+    function toVec(x, y) {
+      var o = origin();
+      return { x: (x - o.x) / SCALE, y: (o.y - y) / SCALE };
+    }
+
+    function arrowV(vec, color, width) {
+      var a = toPx({ x: 0, y: 0 }), b = toPx(vec);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width || 3;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      if (len > 4) {
+        var ux = dx / len, uy = dy / len, s = 11;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - s * ux - s * 0.5 * uy, b.y - s * uy + s * 0.5 * ux);
+        ctx.lineTo(b.x - s * ux + s * 0.5 * uy, b.y - s * uy - s * 0.5 * ux);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.lineWidth = 1;
+    }
+
+    function draw() {
+      var cfg = cur(), M = cfg.m;
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var Av = { x: M.a * v.x + M.b * v.y, y: M.c * v.x + M.d * v.y };
+      var lv = Math.hypot(v.x, v.y), lAv = Math.hypot(Av.x, Av.y);
+      var aligned = false, lam = 0;
+      if (lv > 1e-6 && lAv > 1e-6) {
+        var sin = (v.x * Av.y - v.y * Av.x) / (lv * lAv);
+        if (Math.abs(sin) < 0.045) {
+          aligned = true;
+          lam = (v.x * Av.x + v.y * Av.y) / (lv * lv);
+        }
+      }
+
+      // 命中特征方向：画出金色轴线
+      if (aligned) {
+        var ux = v.x / lv, uy = v.y / lv;
+        var p1 = toPx({ x: -8 * ux, y: -8 * uy }), p2 = toPx({ x: 8 * ux, y: 8 * uy });
+        ctx.strokeStyle = "#d97706";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([7, 5]);
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.lineWidth = 1;
+      }
+
+      arrowV(Av, "#9466de");
+      arrowV(v, "#2563eb");
+      var q = toPx(v);
+      ctx.fillStyle = "#2563eb";
+      ctx.beginPath();
+      ctx.arc(q.x, q.y, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = css("--kb-surface");
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.lineWidth = 1;
+
+      ctx.font = "bold italic 15px Times New Roman, serif";
+      ctx.fillStyle = "#2563eb";
+      ctx.fillText("v", q.x + 10, q.y - 10);
+      var qA = toPx(Av);
+      ctx.fillStyle = "#9466de";
+      ctx.fillText("Av", qA.x + 10, qA.y - 10);
+
+      var msg;
+      if (aligned) {
+        msg = "🌟 特征方向！λ ≈ " + lam.toFixed(2);
+        ctx.fillStyle = "#d97706";
+      } else {
+        msg = "Av 偏离了 v 的方向——继续转";
+        ctx.fillStyle = css("--kb-fg-muted");
+      }
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText(msg, 16, 26);
+      readout.textContent = msg;
+      readout.style.color = aligned ? "#d97706" : "";
+    }
+
+    KB.enableDrag(canvas,
+      function (x, y) {
+        var q = toPx(v);
+        return Math.hypot(x - q.x, y - q.y) < 24 ? "v" : null;
+      },
+      function (target, x, y) {
+        var nv = toVec(x, y);
+        var len = Math.hypot(nv.x, nv.y);
+        if (len < 0.3) return;
+        if (len > 2.6) { nv.x *= 2.6 / len; nv.y *= 2.6 / len; }
+        v = nv;
+        draw();
+      });
+
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="eig-mat"]'), function (r) {
+      r.addEventListener("change", draw);
+    });
+
+    draw();
+  });
+  </script>
+</body>
+</html>

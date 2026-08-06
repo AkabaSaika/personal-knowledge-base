@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12 对称矩阵、二次型与 SVD · 知识库</title>
+  <meta name="kb:summary" content="线性代数教材第 12 章（完结）：谱定理与正交对角化、二次型与主轴、奇异值分解 SVD = 旋转·伸缩·旋转，PCA 与图像压缩应用，配椭圆主轴演示。">
+  <meta name="kb:tags" content="线性代数,教材,对称矩阵,二次型,奇异值分解,SVD,PCA,谱定理">
+  <meta name="kb:created" content="2026-08-04">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 12 章 · 对称矩阵、二次型与 SVD</h1>
+        <p class="kb-lead">大结局。一路上对称矩阵反复现身，而且每次的特征方向都互相垂直——这一章宣布这是定理（谱定理），再用它看透椭圆的主轴（二次型），最后抵达线性代数的巅峰景观：<strong>任何</strong>矩阵都能分解成“旋转 · 伸缩 · 旋转”（SVD）。作为告别礼物，我们用它压缩一张图片。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 陈述谱定理并对 2×2 对称矩阵做正交对角化 A = QDQᵀ；② 把二次型写成矩阵形式、用特征值判别曲线类型并找出主轴；③ 说出 SVD 的几何意义与 AᵀA 的桥梁作用；④ 解释 PCA 与图像压缩为何是同一个数学动作。</p>
+        </div>
+
+        <h2>谱定理：对称矩阵的完美骨架</h2>
+        <p>第 9 章习题 9.6、第 10 章例 1、习题 10.3——三个对称矩阵，三对互相垂直的特征方向。这不是巧合：</p>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📐 谱定理（实对称矩阵）</p>
+          <p>若 Aᵀ = A，则：① 特征值全为实数；② 不同特征值的特征方向<strong>互相垂直</strong>；③ 总能选出一组由特征向量组成的<strong>标准正交基</strong>。于是 A = QDQᵀ，其中 Q 是正交矩阵（Q⁻¹ = Qᵀ，第 11 章），D 是特征值对角阵。</p>
+        </div>
+        <p>几何读法令人愉悦：<strong>对称变换 = 转到某组互相垂直的“主轴” → 沿各轴纯拉伸 → 转回来</strong>。像拉一块方形橡皮：无论怎么拉，总存在一组互相垂直的方向只被拉长压短、不被扭斜。垂直性的证明只需一行点积（习题 12.5）；“特征值全实”则保证这套骨架总是存在——旋转矩阵那种“无实特征方向”的尴尬，在对称世界里绝不发生。</p>
+
+        <h2>二次型：藏着矩阵的曲线</h2>
+        <p>形如 <em class="kb-math">f</em>(x, y) = <em class="kb-math">a</em>x² + 2<em class="kb-math">b</em>xy + <em class="kb-math">c</em>y² 的式子叫<strong>二次型</strong>，它天生是个对称矩阵的“外衣”：</p>
+        <pre><code>f(v) = vᵀ A v ，   A = ⎡a  b⎤   （对称！交叉项 2bxy 由两个 b 平分）
+                       ⎣b  c⎦</code></pre>
+        <p>麻烦全在交叉项 xy——它让曲线 <em class="kb-math">f</em> = 1 歪着长。谱定理的用法（<strong>主轴定理</strong>）：换到 A 的特征基（转正主轴），交叉项消失，<em class="kb-math">f</em> = λ₁u² + λ₂w²，曲线类型被特征值符号一锤定音：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>特征值符号</th><th>f = 1 的曲线</th><th>术语</th></tr></thead>
+            <tbody>
+              <tr><td>λ₁, λ₂ 全正</td><td>椭圆（半轴 1/√λ₁、1/√λ₂，方向 = 特征方向）</td><td>正定</td></tr>
+              <tr><td>一正一负</td><td>双曲线</td><td>不定</td></tr>
+              <tr><td>有 0</td><td>退化（平行直线等）</td><td>半定</td></tr>
+              <tr><td>全负</td><td>空集（f 恒 ≤ 0）</td><td>负定</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 调一调：二次型曲线与它的主轴</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="quad-canvas" height="380"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：二次型曲线的主轴 = 对称矩阵的特征方向，类型由特征值符号决定。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">a（x² 系数）<span class="kb-control-value" id="val-qa"></span>
+                <input type="range" id="ctl-qa" min="-3" max="3" step="0.1" value="2"></label>
+              <label class="kb-control">b（交叉项 ÷2）<span class="kb-control-value" id="val-qb"></span>
+                <input type="range" id="ctl-qb" min="-3" max="3" step="0.1" value="1"></label>
+              <label class="kb-control">c（y² 系数）<span class="kb-control-value" id="val-qc"></span>
+                <input type="range" id="ctl-qc" min="-3" max="3" step="0.1" value="2"></label>
+              <span class="kb-control-value" id="quad-readout" style="min-width:220px"></span>
+            </div>
+          </div>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三个实验</p>
+          <p>① 默认 (2, 1, 2)：歪椭圆，金色/青色主轴正是特征方向 (1, 1)、(1, −1)；② 把 b 滑到 0：交叉项消失，椭圆立刻“坐正”，主轴对齐坐标轴；③ 增大 b 越过 √(ac)（如 a = c = 1, b = 2）：det(A) 变负，一正一负，椭圆撕裂成<strong>双曲线</strong>。</p>
+        </div>
+        <p>二次型远不止解析几何：多元函数的极值判定（Hessian 正定 ⇒ 极小）、物理的能量函数（动能 ½mv² 的多维版）、统计的协方差结构，全是二次型的舞台。</p>
+
+        <h2>SVD：所有矩阵的终极分解</h2>
+        <p>谱定理只服务对称矩阵。一般矩阵（甚至非方阵）呢？答案是<strong>奇异值分解</strong>（SVD）——线性代数的“大一统定理”：</p>
+        <pre><code>A = U Σ Vᵀ      U、V 正交（旋转/反射），Σ 对角（非负奇异值 σ₁ ≥ σ₂ ≥ …）</code></pre>
+        <p>几何宣言：<strong>任何线性变换都 = 旋转 → 沿垂直轴伸缩 → 再旋转</strong>。哪怕是歪七扭八的剪切，也能这样体面地拆开。直观标志：任何矩阵都把单位圆变成一个椭圆（可能退化），椭圆的半轴长就是奇异值：</p>
+        <figure>
+          <svg viewBox="0 0 660 200" width="660" height="200" role="img" aria-label="SVD 三步分解：单位圆先旋转、再沿轴伸缩成椭圆、再旋转">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12.5" fill="var(--kb-fg-muted)">
+              <text x="80" y="188" text-anchor="middle">单位圆</text>
+              <text x="250" y="188" text-anchor="middle">Vᵀ：旋转对齐</text>
+              <text x="420" y="188" text-anchor="middle">Σ：沿轴伸缩</text>
+              <text x="590" y="188" text-anchor="middle">U：转到最终姿态</text>
+            </g>
+            <g stroke="var(--kb-fg-muted)" stroke-width="1.8">
+              <line x1="130" y1="100" x2="165" y2="100"/><path d="M 165 100 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+              <line x1="305" y1="100" x2="340" y2="100"/><path d="M 340 100 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+              <line x1="475" y1="100" x2="510" y2="100"/><path d="M 510 100 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+            </g>
+            <g fill="none" stroke="#2563eb" stroke-width="2">
+              <circle cx="80" cy="100" r="42"/>
+              <circle cx="250" cy="100" r="42"/>
+              <ellipse cx="420" cy="100" rx="62" ry="26"/>
+              <ellipse cx="590" cy="100" rx="62" ry="26" transform="rotate(-30 590 100)"/>
+            </g>
+            <g stroke-width="2">
+              <line x1="80" y1="100" x2="122" y2="100" stroke="#d97706"/>
+              <line x1="80" y1="100" x2="80" y2="58" stroke="#0d9488"/>
+              <line x1="250" y1="100" x2="280" y2="71" stroke="#d97706"/>
+              <line x1="250" y1="100" x2="221" y2="71" stroke="#0d9488"/>
+              <line x1="420" y1="100" x2="482" y2="100" stroke="#d97706"/>
+              <line x1="420" y1="100" x2="420" y2="74" stroke="#0d9488"/>
+              <line x1="590" y1="100" x2="644" y2="69" stroke="#d97706"/>
+              <line x1="590" y1="100" x2="577" y2="78" stroke="#0d9488"/>
+            </g>
+            <text x="452" y="92" font-family="Times New Roman, serif" font-style="italic" font-size="13" fill="#d97706">σ₁</text>
+            <text x="425" y="72" font-family="Times New Roman, serif" font-style="italic" font-size="13" fill="#0d9488">σ₂</text>
+          </svg>
+          <figcaption>三步看懂 SVD：先把“合适的输入方向”转正（Vᵀ），各自伸缩 σ₁、σ₂ 倍（Σ），再转到输出姿态（U）。</figcaption>
+        </figure>
+        <p>SVD 与谱定理的桥梁：AᵀA 永远是对称矩阵（(AᵀA)ᵀ = AᵀA），对它用谱定理——<strong>AᵀA 的特征值恰是奇异值的平方 σ²，特征向量恰是 V 的列</strong>（习题 12.7）。所以求 SVD 的常规路线就是“对 AᵀA 做正交对角化”。</p>
+
+        <h2>压缩一张图片：SVD 的告别演出</h2>
+        <p>灰度图片就是一个大矩阵（每个元素 = 一个像素亮度）。SVD 把它写成 σ₁<strong>u</strong>₁<strong>v</strong>₁ᵀ + σ₂<strong>u</strong>₂<strong>v</strong>₂ᵀ + ⋯ 的“分层叠加”，奇异值从大到小排——<strong>前几层携带了图像的绝大部分结构</strong>，后面的层多是细节与噪声。压缩 = 只保留前 k 层：</p>
+        <ul>
+          <li><strong>存储账本</strong>：1000×800 的图片原本要存 80 万个数；保留 50 层只需 50×(1000 + 800 + 1) ≈ 9 万个数，约 11%（习题 12.6）。</li>
+          <li><strong>PCA（主成分分析）</strong>：把每条数据记录看成一行，数据云的“主轴”= 协方差矩阵（对称！）的特征方向 = 数据矩阵的右奇异方向。降维 = 只保留方差最大的前几个主轴——与图像压缩是<strong>同一个数学动作</strong>：抓大放小。</li>
+          <li><strong>更多舞台</strong>：推荐系统的隐语义分解、搜索引擎的潜在语义索引、噪声过滤……凡是“在数据里找最重要的几个方向”，背后都是 SVD。</li>
+        </ul>
+
+        <h2>例题</h2>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 1 · 正交对角化</p>
+          <p>对 A = ⎡2 1; 1 2⎤ 写出 A = QDQᵀ。</p>
+          <p><strong>解</strong>：第 10 章已求出 λ = 3, 1，方向 (1, 1)、(1, −1)——互相垂直 ✓（谱定理兑现）。归一化排入 Q：Q = (1/√2)⎡1 1; 1 −1⎤，D = diag(3, 1)。由 Q 正交，Q⁻¹ = Qᵀ，故 A = QDQᵀ（可展开验证）。对比第 10 章的一般对角化 PDP⁻¹：这里连逆都不用算——对称矩阵的特权。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 2 · 二次型判型</p>
+          <p>判别曲线 2x² + 2xy + 2y² = 1 的类型并给出主轴与半轴长。</p>
+          <p><strong>解</strong>：矩阵 A = ⎡2 1; 1 2⎤（交叉项 2xy ⇒ b = 1），λ = 3, 1 全正 ⇒ <strong>椭圆</strong>（正定）。主轴方向 (1, 1) 与 (1, −1)；半轴长 1/√3 ≈ 0.58（短轴，沿 (1, 1)）与 1（长轴，沿 (1, −1)）。注意<strong>大特征值对应短半轴</strong>——λ 越大该方向“惩罚”越重，等高线被压得越扁。</p>
+        </div>
+        <div class="kb-callout">
+          <p class="kb-callout-title">📘 例 3 · 剪切的奇异值（一个漂亮的彩蛋）</p>
+          <p>求剪切 A = ⎡1 1; 0 1⎤ 的奇异值。</p>
+          <p><strong>解</strong>：AᵀA = ⎡1 1; 1 2⎤，特征方程 λ² − 3λ + 1 = 0，λ = (3 ± √5)/2。奇异值 σ = √λ：注意 (3+√5)/2 = φ²（φ 为黄金比例），故 <strong>σ₁ = φ ≈ 1.618，σ₂ = 1/φ ≈ 0.618</strong>。检验：σ₁σ₂ = 1 = |det A| ✓（面积不变的剪切，拉长与压扁恰好互补）。剪切明明“没有对角化的资格”（第 10 章），SVD 照样把它拆成旋转·伸缩·旋转——而且伸缩倍数是黄金比例。</p>
+        </div>
+
+        <h2>习题</h2>
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>对 A = ⎡1 2; 2 1⎤ 做正交对角化（写出 Q 与 D）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>λ = 3, −1，方向 (1, 1)、(1, −1)（习题 10.3）。<strong>Q = (1/√2)⎡1 1; 1 −1⎤，D = diag(3, −1)</strong>，A = QDQᵀ。</p>
+            <p><strong>解析</strong>：负特征值完全不妨碍谱定理——A 沿 (1, 1) 拉伸 3 倍、沿 (1, −1) 翻转。注意 Q 与例 1 相同：两个矩阵共享一副骨架，只是伸缩倍数不同。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出二次型 f(x, y) = x² + 4xy + y² 的矩阵，并判别曲线 f = 1 的类型。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A = ⎡1 2; 2 1⎤（4xy ⇒ b = 2）。λ = 3, −1 一正一负 ⇒ <strong>双曲线</strong>（不定型）。</p>
+            <p><strong>解析</strong>：换到主轴语言 f = 3u² − w²：沿 (1, 1) 方向是“山谷”、沿 (1, −1) 方向是“下坡”——鞍面的等高线正是双曲线。在演示里把 (a, b, c) 调到 (1, 2, 1) 可亲眼看到。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>判断 f(x, y) = 5x² + 2xy + y² 是否正定（对一切非零 v 有 f(v) &gt; 0）。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A = ⎡5 1; 1 1⎤。tr = 6 &gt; 0，det = 4 &gt; 0 ⇒ 两特征值之和为正、之积为正 ⇒ <strong>全正，正定</strong>。（精确值 λ = 3 ± √5 ≈ 5.24, 0.76。）</p>
+            <p><strong>解析</strong>：2×2 正定速判：<strong>det &gt; 0 且 tr &gt; 0</strong>（等价于教科书的顺序主子式判据 a &gt; 0, det &gt; 0）。正定二次型的等高线是一族同心椭圆，函数图像是“碗”——优化算法最爱的地形。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>求下列矩阵的奇异值：(a) diag(3, −2)；(b) ⎡0 2; 0 0⎤。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>(a) AᵀA = diag(9, 4) ⇒ σ = <strong>3, 2</strong>（注意取的是绝对值——奇异值永远非负）。(b) AᵀA = ⎡0 0; 0 4⎤ ⇒ σ = <strong>2, 0</strong>。</p>
+            <p><strong>解析</strong>：(b) 的 σ₂ = 0 泄露了秩亏：<strong>非零奇异值的个数 = 秩</strong>。单位圆的像退化成一条线段——第 8 章“压扁”的 SVD 版本。σ 与特征值别混淆：(a) 的特征值是 3, −2，奇异值是 3, 2；对一般矩阵二者更是两码事（例 3 的剪切：特征值 1, 1，奇异值 φ, 1/φ）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>证明谱定理的“垂直”部分：若 Aᵀ = A，A<strong>u</strong> = λ₁<strong>u</strong>，A<strong>v</strong> = λ₂<strong>v</strong>，且 λ₁ ≠ λ₂，则 <strong>u</strong> ⊥ <strong>v</strong>。（提示：对称矩阵满足 (A<strong>u</strong>)·<strong>v</strong> = <strong>u</strong>·(A<strong>v</strong>)。）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>提示中的恒等式先证一行：(A<strong>u</strong>)·<strong>v</strong> = (A<strong>u</strong>)ᵀ<strong>v</strong> = <strong>u</strong>ᵀAᵀ<strong>v</strong> = <strong>u</strong>ᵀA<strong>v</strong> = <strong>u</strong>·(A<strong>v</strong>)（用了 Aᵀ = A）。于是：λ₁(<strong>u</strong>·<strong>v</strong>) = (A<strong>u</strong>)·<strong>v</strong> = <strong>u</strong>·(A<strong>v</strong>) = λ₂(<strong>u</strong>·<strong>v</strong>)，即 (λ₁ − λ₂)(<strong>u</strong>·<strong>v</strong>) = 0。由 λ₁ ≠ λ₂ 得 <strong>u</strong>·<strong>v</strong> = 0。∎</p>
+            <p><strong>解析</strong>：三行搞定教科书级定理，核心武器全部来自前面章节：转置的乘法规则（第 5 章）+ 点积的矩阵写法（第 3、5 章）。“对称”之所以强大，就在于它允许 A 在点积中自由左右横跳。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一张 1000×800 的灰度图，用 SVD 保留前 50 个奇异值来压缩。存储量是原图的百分之几？（保留 k 层需存 k 个 σ、k 条 1000 维的 u、k 条 800 维的 v。）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>压缩后 = 50×(1000 + 800 + 1) = <strong>90 050</strong> 个数；原图 = 800 000 个数。比例 ≈ <strong>11.3%</strong>。</p>
+            <p><strong>解析</strong>：通用公式 k(m + n + 1)/(mn)——k 远小于 min(m, n) 时收益巨大。真实图片的奇异值衰减极快（往往前 5% 的层就占了 95% 的“能量”），这是该方法有效的经验基础；JPEG 用的变换基不同，但“换基后抓大放小”的哲学一模一样。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>设 A = UΣVᵀ 是 SVD。证明 AᵀA = VΣ²Vᵀ，并由此说明：AᵀA 的特征值 = 奇异值的平方，特征向量 = V 的列。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>AᵀA = (UΣVᵀ)ᵀ(UΣVᵀ) = VΣᵀ<u>UᵀU</u>ΣVᵀ = VΣᵀΣVᵀ = VΣ²Vᵀ（U 正交故 UᵀU = I；Σ 对角故 ΣᵀΣ = Σ²）。这恰是 AᵀA 的正交对角化：对角元 σᵢ² 是特征值，V 的列是标准正交特征向量。∎</p>
+            <p><strong>解析</strong>：这条桥梁把“任意矩阵的 SVD”化归为“对称矩阵的谱定理”——理论上闭环，计算上给出求 SVD 的路线（例 3 正是这么算的）。同理 AAᵀ = UΣ²Uᵀ 给出 U。全书的转置规则、正交矩阵、谱定理在最后一题里同台谢幕。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 谱定理：对称矩阵 = QDQᵀ，特征方向互相垂直、特征值全实；② 二次型 vᵀAv 的曲线类型由特征值符号决定，主轴 = 特征方向；③ SVD：任何矩阵 = UΣVᵀ = 旋转·伸缩·旋转，σ² = AᵀA 的特征值，非零 σ 的个数 = 秩；④ 压缩与 PCA = 保留大奇异值方向、抓大放小。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎓 全书结语：你已经走完的路，和可以继续走的路</p>
+          <p><strong>回望十二章</strong>：向量与它的两种运算（1–3）→ 矩阵即变换、乘法即复合、行列式量伸缩、方程组反求输入、四大空间理清信息去向（4–8）→ 换基选语言、特征值找骨架、正交造快捷键、SVD 大一统（9–12）。每个新概念都长在旧概念上——这门课真正的主角，是“线性”这一个想法。</p>
+          <p><strong>若想继续</strong>：① 抽象向量空间（把“向量”推广到多项式、函数，你会发现所有定理原封不动）；② 复特征值与若尔当形（补上旋转与不可对角化的完整故事）；③ 数值线性代数（大矩阵时代的算法与稳定性）；④ 概率统计与机器学习中的线代（协方差、回归、神经网络——本教材的应用伏笔都在那里开花）。经典资源：3Blue1Brown《线性代数的本质》视频系列（几何直觉的巅峰之作），Gilbert Strang 的 MIT 18.06 公开课与教材（计算与四大空间的标准参考）。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./11-正交性与最小二乘.html">← 第 11 章 正交性与最小二乘</a>
+          <a href="./00-大纲与学习路线.html">返回大纲与学习路线 ↩</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var canvas = document.getElementById("quad-canvas");
+    if (!canvas || !window.KB || !KB.fitCanvas) return;
+
+    var H = 380, SCALE = 90;
+    var a = 2, b = 1, c = 2;
+    var ctx = KB.fitCanvas(canvas, H, function () { draw(); });
+    var readout = document.getElementById("quad-readout");
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function origin() { return { x: canvas.clientWidth / 2, y: H / 2 }; }
+    function toPx(p) { var o = origin(); return { x: o.x + p.x * SCALE, y: o.y - p.y * SCALE }; }
+
+    /* 2×2 对称矩阵 [[a,b],[b,c]] 的特征分解（λ1 ≥ λ2） */
+    function eigen() {
+      var mean = (a + c) / 2;
+      var disc = Math.sqrt(((a - c) / 2) * ((a - c) / 2) + b * b);
+      var l1 = mean + disc, l2 = mean - disc;
+      var q1, q2;
+      if (Math.abs(b) < 1e-9) {
+        q1 = a >= c ? { x: 1, y: 0 } : { x: 0, y: 1 };
+        q2 = a >= c ? { x: 0, y: 1 } : { x: 1, y: 0 };
+      } else {
+        var v1 = { x: b, y: l1 - a }, n1 = Math.hypot(v1.x, v1.y);
+        q1 = { x: v1.x / n1, y: v1.y / n1 };
+        q2 = { x: -q1.y, y: q1.x }; // 谱定理：另一方向必与之垂直
+      }
+      return { l1: l1, l2: l2, q1: q1, q2: q2 };
+    }
+
+    function polyline(points, color, width) {
+      if (points.length < 2) return;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      points.forEach(function (p, i) {
+        var q = toPx(p);
+        if (i === 0) ctx.moveTo(q.x, q.y);
+        else ctx.lineTo(q.x, q.y);
+      });
+      ctx.stroke();
+      ctx.lineWidth = 1;
+    }
+
+    function axisArrow(q, lam, color, name) {
+      var L = 1.6;
+      var pA = toPx({ x: -L * q.x, y: -L * q.y }), pB = toPx({ x: L * q.x, y: L * q.y });
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([7, 5]);
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.lineWidth = 1;
+      ctx.fillStyle = color;
+      ctx.font = "600 13px -apple-system, PingFang SC, sans-serif";
+      ctx.fillText(name + " (λ=" + lam.toFixed(2) + ")", pB.x + 6, pB.y - 4);
+    }
+
+    function draw() {
+      var w = canvas.clientWidth;
+      ctx.clearRect(0, 0, w, H);
+      var o = origin();
+      ctx.strokeStyle = css("--kb-border");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = o.x % SCALE; gx < w; gx += SCALE) { ctx.moveTo(gx, 0); ctx.lineTo(gx, H); }
+      for (var gy = o.y % SCALE; gy < H; gy += SCALE) { ctx.moveTo(0, gy); ctx.lineTo(w, gy); }
+      ctx.stroke();
+      ctx.strokeStyle = css("--kb-fg-faint");
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, o.y); ctx.lineTo(w, o.y);
+      ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H);
+      ctx.stroke();
+
+      var e = eigen(), EPS = 0.04;
+      var kind;
+      if (e.l1 > EPS && e.l2 > EPS) {
+        kind = "椭圆（正定）";
+        var pts = [];
+        for (var t = 0; t <= 128; t++) {
+          var th = t / 128 * Math.PI * 2;
+          var u = Math.cos(th) / Math.sqrt(e.l1), v2 = Math.sin(th) / Math.sqrt(e.l2);
+          pts.push({ x: u * e.q1.x + v2 * e.q2.x, y: u * e.q1.y + v2 * e.q2.y });
+        }
+        polyline(pts, "#2563eb", 2.5);
+      } else if (e.l1 > EPS && e.l2 < -EPS) {
+        kind = "双曲线（不定）";
+        [1, -1].forEach(function (sgn) {
+          var pts2 = [];
+          for (var s = -2.4; s <= 2.4; s += 0.05) {
+            var u2 = sgn * Math.cosh(s) / Math.sqrt(e.l1);
+            var w2 = Math.sinh(s) / Math.sqrt(-e.l2);
+            pts2.push({ x: u2 * e.q1.x + w2 * e.q2.x, y: u2 * e.q1.y + w2 * e.q2.y });
+          }
+          polyline(pts2, "#2563eb", 2.5);
+        });
+      } else if (e.l1 < -EPS) {
+        kind = "空集（负定：f ≤ 0，永远到不了 1）";
+      } else {
+        kind = "退化（有特征值 ≈ 0）";
+        if (e.l1 > EPS) { // f = λ1·u² = 1：一对平行线
+          [1, -1].forEach(function (sgn) {
+            var d = sgn / Math.sqrt(e.l1);
+            polyline([
+              { x: d * e.q1.x - 3 * e.q2.x, y: d * e.q1.y - 3 * e.q2.y },
+              { x: d * e.q1.x + 3 * e.q2.x, y: d * e.q1.y + 3 * e.q2.y }
+            ], "#2563eb", 2.5);
+          });
+        }
+      }
+
+      axisArrow(e.q1, e.l1, "#d97706", "主轴1");
+      axisArrow(e.q2, e.l2, "#0d9488", "主轴2");
+
+      var msg = "λ₁=" + e.l1.toFixed(2) + ", λ₂=" + e.l2.toFixed(2) + " → " + kind;
+      ctx.font = "600 14px -apple-system, PingFang SC, sans-serif";
+      ctx.fillStyle = css("--kb-fg");
+      ctx.fillText(msg, 16, 26);
+      readout.textContent = msg;
+    }
+
+    KB.bindRange(document.getElementById("ctl-qa"), document.getElementById("val-qa"),
+      function (x) { return x.toFixed(1); }, function (x) { a = x; draw(); });
+    KB.bindRange(document.getElementById("ctl-qb"), document.getElementById("val-qb"),
+      function (x) { return x.toFixed(1); }, function (x) { b = x; draw(); });
+    KB.bindRange(document.getElementById("ctl-qc"), document.getElementById("val-qc"),
+      function (x) { return x.toFixed(1); }, function (x) { c = x; draw(); });
+
+    draw();
+  });
+  </script>
+</body>
+</html>
