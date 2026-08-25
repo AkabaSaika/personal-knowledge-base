@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>04 读懂业务：As-Is / To-Be 与業務フロー · 知识库</title>
+  <meta name="kb:summary" content="业务调查的三种手段、業務一覧与业务编号、スイムレーン業務フロー図的画法，以及从 As-Is 到課題再到 To-Be 的推导，附例外业务的挖掘问句。">
+  <meta name="kb:tags" content="上流工程,要件定义,业务流程图,AsIs,ToBe,泳道图,业务调查,现行踏袭,例外业务,slgc,ywlc,ywdc">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：业务流程切换演示 */
+    .bf-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .bf-btn {
+      font: inherit; font-size: 0.84rem; padding: 5px 14px; cursor: pointer;
+      border-radius: 999px; border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .bf-btn:hover { border-color: var(--kb-accent); }
+    .bf-btn[aria-pressed="true"] { background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600; }
+    .bf-hint { font-size: 0.78rem; color: var(--kb-fg-muted); }
+    .bf-stage { overflow-x: auto; }
+    .bf-pin { cursor: pointer; }
+    .bf-pin circle { fill: var(--kb-danger); stroke: var(--kb-surface); stroke-width: 2; }
+    .bf-pin.ok circle { fill: var(--kb-ok); }
+    .bf-pin text { fill: #fff; font-weight: 700; font-size: 10px; }
+    .bf-pin.sel circle { stroke: var(--kb-fg); stroke-width: 2.5; }
+    .bf-panel {
+      margin-top: 12px; border: 1px solid var(--kb-border-strong);
+      border-radius: var(--kb-radius-sm); background: var(--kb-surface-alt);
+      padding: 10px 13px; font-size: 0.86rem;
+    }
+    .bf-panel h4 { margin: 0 0 6px; font-size: 0.95rem; }
+    .bf-row { display: flex; gap: 10px; padding: 4px 0; }
+    .bf-key { flex: 0 0 4.6em; color: var(--kb-fg-muted); font-size: 0.8rem; }
+    .bf-val { flex: 1; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 4 章 · 读懂业务：As-Is / To-Be 与業務フロー</h1>
+        <p class="kb-lead">要件定義的第一步不是问「どんな機能が欲しいですか」，而是<strong>去看他们现在到底怎么干活</strong>。这一章讲三种业务调查手段、業務一覧怎么编号、スイムレーン業務フロー図怎么画到能用的程度，以及从 As-Is 推导 To-Be 时那句最贵的四个字——「<ruby>現行踏襲<rt>げんこうとうしゅう</rt></ruby>」为什么是陷阱，还有为什么真正的雷永远埋在「例外的なケース」里。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出業務調査的三种手段各自能拿到什么、拿不到什么；② 编出一份带業務ID、件数与频度的業務一覧；③ 画出可用的スイムレーン業務フロー図，并说明レーン的划分原则与箱子的粒度；④ 从 As-Is 提取課題（現象・原因・影響三段式）并推导 To-Be，同时标出系统化范围的边界；⑤ 用一组固定问句挖出例外・イレギュラー業務——那才是工数真正的去处。</p>
+        </div>
+
+        <h2>为什么不能直接问「どんな機能が欲しいですか」</h2>
+        <p>新人SE最常见的开场白是：「今回のシステムで、どんな機能をご希望ですか？」。这句话有三个问题。</p>
+        <ul>
+          <li><strong>客户答不上来。</strong>経理部の高橋課長是会计专家，不是系统专家。让他列举功能，就像让病人开处方。</li>
+          <li><strong>勉强答出来的，是「現行システムの機能一覧」。</strong>于是你得到一份「現行踏襲」的清单，把二十年前的不合理原样复制到新系统里，还多花了钱。</li>
+          <li><strong>最关键的那些永远不会被主动提起。</strong>「拠点から社内便で送るので 3 日かかる」「月末は 50 件まとめて承認する」「間違えたら電話して直してもらう」——这些是<em>业务本身</em>，不是<em>功能</em>，客户不觉得需要说。而它们恰恰决定了系统的形状。</li>
+        </ul>
+        <p>所以正确的第一问是：<strong>「今、経費精算はどうやって行われていますか。最初から最後まで、順を追って教えていただけますか。」</strong>——先把现实拿到手，功能是从现实里推导出来的。</p>
+
+        <h2>業務調査的三种手段</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>手段</th><th>能拿到什么</th><th>拿不到什么</th><th>实务要点</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>現行資料の分析</strong><br>（帳票・マニュアル・Excel・現行システムの画面・社内規程・法令）</td>
+                <td>项目名、编码体系、数据结构、金额桁数、承认阶数的「建前」</td>
+                <td>实际怎么用、谁在绕过规则</td>
+                <td>最先做，成本最低。<strong>「実際に使われている帳票の現物」を必ずもらう</strong>——空白のフォーマットではなく、記入済みのサンプル（マスキングして）。手書きの追記こそが情報の宝庫</td>
+              </tr>
+              <tr>
+                <td><strong>ヒアリング</strong><br>（管理者 → 実務者の順）</td>
+                <td>业务的目的、判断基准、例外、痛点</td>
+                <td>本人が意識していない手順（無意識の作業）</td>
+                <td>管理者に先に聞いて<strong>全体像と用語</strong>を掴み、実務者に聞いて<strong>実態</strong>を掴む。逆順だと全体が見えないまま細部に溺れる</td>
+              </tr>
+              <tr>
+                <td><strong>現地観察</strong><br>（実際の作業を見せてもらう）</td>
+                <td>「聞いた業務」と「実際の業務」の差、裏マニュアル、秘伝のExcel</td>
+                <td>年に数回しか起きない例外</td>
+                <td>最も効果が高く、最も省略されがち。<strong>月末に半日だけ経理部に座らせてもらう</strong>——それだけで要件の質が変わる</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「秘伝のExcel」を必ず探せ</p>
+          <p>ほぼすべての現場に、<strong>公式システムには存在しないExcelファイル</strong>がある。誰か一人が十年前に作り、以来ずっとメンテされ、業務の要になっているのに、システム化の話には出てこない——なぜなら「それはシステムじゃないから」。<br>探し方は簡単：<strong>「そのデータ、システムから出したあと何かされますか？」</strong>と聞く。ほぼ必ず「あー、いったんExcelに落として、こっちの表と突き合わせて…」が出てくる。<strong>そこに業務要件が丸ごと隠れている。</strong></p>
+        </div>
+
+        <h2>業務一覧：先给业务编号</h2>
+        <p>在画流程图之前，先把「有哪些业务」列成一张表。这张表有三个用途：<strong>①保证不漏（MECE的第一道关）②给业务编号，后面机能ID、テストケースID都挂在它上面 ③件数与频度是第 7 章非機能与第 8 章見積的原始数据。</strong></p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>業務一覧（要件定義書 第 3 章 抜粋）</span><span class="kb-doc-id">DOC-201 / v1.2</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>業務ID</th><th>大分類</th><th>業務名</th><th>担当</th><th>頻度</th><th>件数（月）</th><th>システム化</th></tr></thead>
+              <tbody>
+                <tr><td>B-010</td><td>申請</td><td>経費精算の申請</td><td>全社員</td><td>随時</td><td>約 1,600</td><td>◯</td></tr>
+                <tr><td>B-011</td><td>申請</td><td>領収書の貼付・保管</td><td>全社員 / 経理部</td><td>随時</td><td>約 1,600</td><td>△（電子添付のみ。紙原本の保管は対象外）</td></tr>
+                <tr><td>B-020</td><td>承認</td><td>上長による内容承認</td><td>部門長 18 名</td><td>随時／月末集中</td><td>約 1,600</td><td>◯</td></tr>
+                <tr><td>B-021</td><td>承認</td><td>差戻しと再申請</td><td>全社員 / 部門長</td><td>随時</td><td>約 190</td><td>◯</td></tr>
+                <tr><td>B-030</td><td>経理処理</td><td>経理部による内容チェック</td><td>経理部 4 名</td><td>随時／月末集中</td><td>約 1,600</td><td>◯</td></tr>
+                <tr><td>B-031</td><td>経理処理</td><td>会計システムへの仕訳入力</td><td>経理部 2 名</td><td>月次</td><td>約 1,600 明細</td><td>◯（自動連携）</td></tr>
+                <tr><td>B-032</td><td>経理処理</td><td>振込データ作成・給与連携</td><td>経理部 1 名</td><td>月次</td><td>1 回</td><td>×（現行の給与システム側で継続）</td></tr>
+                <tr><td>B-040</td><td>照会</td><td>申請状況の問い合わせ対応</td><td>経理部</td><td>随時</td><td>約 80 件</td><td>◯（申請者自身が照会可能とすることで削減）</td></tr>
+                <tr><td>B-050</td><td>管理</td><td>費目マスタ・承認ルートの保守</td><td>経理部</td><td>年数回</td><td>約 10</td><td>◯</td></tr>
+                <tr><td>B-060</td><td>例外</td><td>仮払金の精算</td><td>営業部 / 経理部</td><td>随時</td><td>約 40</td><td><strong>次期対応（今回スコープ外）</strong></td></tr>
+                <tr><td>B-061</td><td>例外</td><td>締め後に判明した経費の追加処理</td><td>経理部</td><td>月数回</td><td>約 12</td><td>◯</td></tr>
+                <tr><td>B-062</td><td>例外</td><td>退職者の未精算経費の処理</td><td>人事部 / 経理部</td><td>年数回</td><td>約 5</td><td>△（画面から手動処理）</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ システム化欄　◯：本システムで実現／△：一部のみ／×：対象外（現行運用を継続）<br>※ 件数は 2026 年 4–9 月の実績平均。月末 3 営業日に約 6 割が集中する。</p>
+          </div>
+        </div>
+
+        <p>注意三件事：<strong>① 「システム化 ×」の業務も必ず載せる</strong>——载了才叫「合意的スコープ外」，不载就是「漏れ」（第 8 章）。<strong>② 「例外」大分類を最初から立てる</strong>——後から追加するのではなく、枠を作って埋めさせる。<strong>③ 件数と頻度を必ず入れる</strong>——「月 1,600 件、うち月末 3 日に 6 割」という一行が、第 7 章の性能要件の根拠になる。</p>
+
+        <h2>スイムレーン業務フロー図の画法</h2>
+        <p>業務フロー図有很多流派（BPMN、UMLアクティビティ図、各社独自）。日本SI现场最通用的是<strong>スイムレーン（泳道）形式</strong>：横向分成若干条レーン，每条レーン是一个<strong>役割</strong>，作业箱按时间从左到右排列。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 130" width="700" height="130" role="img" aria-label="业务流程图常用记号图例：圆角框为处理、菱形为判断、折角方框为帐票纸质文件、圆柱为数据存储、虚线框为系统处理、实线箭头为流程、虚线箭头为差回">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11">
+              <rect x="14" y="24" width="84" height="34" rx="8" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="56" y="45" text-anchor="middle" fill="var(--kb-fg)">処理（人）</text>
+              <text x="56" y="74" text-anchor="middle" fill="var(--kb-fg-muted)">誰かが行う作業</text>
+
+              <path d="M 168 24 h 84 v 34 h -84 z" fill="none" stroke="var(--kb-accent)" stroke-dasharray="4 3"/>
+              <text x="210" y="45" text-anchor="middle" fill="var(--kb-fg)">処理（システム）</text>
+              <text x="210" y="74" text-anchor="middle" fill="var(--kb-fg-muted)">自動で行われる</text>
+
+              <path d="M 322 41 l 34 -17 l 34 17 l -34 17 z" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="356" y="45" text-anchor="middle" fill="var(--kb-fg)">判断</text>
+              <text x="356" y="74" text-anchor="middle" fill="var(--kb-fg-muted)">条件で分岐</text>
+
+              <path d="M 448 24 h 84 v 28 q -21 8 -42 0 q -21 -8 -42 0 z" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="490" y="43" text-anchor="middle" fill="var(--kb-fg)">帳票・紙</text>
+              <text x="490" y="74" text-anchor="middle" fill="var(--kb-fg-muted)">現物のやり取り</text>
+
+              <g fill="var(--kb-surface)" stroke="var(--kb-border-strong)">
+                <ellipse cx="620" cy="28" rx="34" ry="6"/>
+                <path d="M 586 28 v 24 a 34 6 0 0 0 68 0 v -24"/>
+              </g>
+              <text x="620" y="46" text-anchor="middle" fill="var(--kb-fg)" font-size="10">データ</text>
+              <text x="620" y="74" text-anchor="middle" fill="var(--kb-fg-muted)">保存先</text>
+
+              <g stroke="var(--kb-fg-muted)" stroke-width="1.6">
+                <path d="M 120 100 h 60"/><path d="M 180 100 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+              </g>
+              <text x="196" y="104" fill="var(--kb-fg-muted)">正常な流れ</text>
+
+              <g stroke="var(--kb-danger)" stroke-width="1.6" stroke-dasharray="5 4">
+                <path d="M 360 100 h 60"/>
+              </g>
+              <path d="M 420 100 l -8 -4 v 8 z" fill="var(--kb-danger)"/>
+              <text x="436" y="104" fill="var(--kb-danger)">差戻し・例外</text>
+            </g>
+          </svg>
+          <figcaption>業務フロー図の基本記号。厳密な標準はないので、<strong>凡例（レジェンド）を図の中に必ず入れる</strong>ことのほうが重要。読む人が経理部の課長であることを忘れない。</figcaption>
+        </figure>
+
+        <h3>三条铁律</h3>
+        <ol>
+          <li><strong>レーンは「役割」であって「人名」ではない。</strong>「田中さん」ではなく「経理担当」。人は異動するが役割は残る。ただし<strong>システムも一つのレーンにする</strong>——誰がやるのか（人か機械か）が一目で分かるのが、この図の最大の価値。</li>
+          <li><strong>一つの箱＝一人が連続して行う一まとまりの作業。</strong>細かすぎると読めず、粗すぎると設計に使えない。目安は「1 画面 1 操作」より少し大きい単位。迷ったら<strong>「担当者が変わるところ」「日をまたぐところ」で必ず箱を切る</strong>——そこが業務の継ぎ目であり、システム化の効き所。</li>
+          <li><strong>例外・差戻しを必ず描く。</strong>正常系だけの美しいフローは、要件定義では役に立たない。差戻しの矢印がどこへ戻るか、その時に何が起きるか（電話するのか、紙が戻るのか）を描くと、課題が自動的に浮かび上がる。</li>
+        </ol>
+
+        <h2>亲手切换：As-Is と To-Be</h2>
+        <p>下面是山田製作所の経費精算業務。先看 As-Is，点红色的编号看每个痛点的实态；再切到 To-Be，看同一个位置变成了什么、以及新的注意点。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 経費精算業務フロー：As-Is ⇄ To-Be</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：As-Is 的五个痛点分别是——手写纸质单据、纸张在拠点间物理移动、差戻し靠电话没有记录、経理の目視チェックが月末に集中、会計システムへの手入力による転記ミス。To-Be 用「Web/スマホ申請＋入力チェック＋画面上の差戻し（理由必須）＋一覧承認＋月次バッチでの仕訳自動連携」逐一对应，但同时带来新的注意点：紙原本の保管義務、月末のアクセス集中、会計側との連携タイミング。</p></noscript>
+            <div class="bf-bar">
+              <button type="button" class="bf-btn" id="bf-asis" aria-pressed="true">As-Is（現行）</button>
+              <button type="button" class="bf-btn" id="bf-tobe" aria-pressed="false">To-Be（新業務）</button>
+              <span class="bf-hint">図中の丸数字をクリック</span>
+            </div>
+            <div class="bf-stage">
+              <svg viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="经费精算业务的泳道流程图，可在现行流程与新流程之间切换，图中带编号的圆点标出各处课题">
+                <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11">
+                  <g>
+                    <rect x="8" y="40" width="744" height="70" fill="var(--kb-accent)" opacity="0.05"/>
+                    <rect x="8" y="180" width="744" height="70" fill="var(--kb-accent)" opacity="0.05"/>
+                    <g stroke="var(--kb-border)" stroke-width="1">
+                      <path d="M 8 40 H 752"/><path d="M 8 110 H 752"/><path d="M 8 180 H 752"/>
+                      <path d="M 8 250 H 752"/><path d="M 8 320 H 752"/><path d="M 96 40 V 320"/>
+                    </g>
+                    <g fill="var(--kb-fg)" font-weight="600" font-size="11.5">
+                      <text x="52" y="79" text-anchor="middle">申請者</text>
+                      <text x="52" y="149" text-anchor="middle">上長</text>
+                      <text x="52" y="219" text-anchor="middle">経理部</text>
+                      <text x="52" y="289" text-anchor="middle">システム</text>
+                    </g>
+                  </g>
+
+                  <g id="bf-g-asis">
+                    <g fill="var(--kb-surface)" stroke="var(--kb-border-strong)">
+                      <rect x="104" y="55" width="112" height="40" rx="7"/>
+                      <rect x="236" y="55" width="112" height="40" rx="7"/>
+                      <rect x="368" y="125" width="112" height="40" rx="7"/>
+                      <rect x="500" y="195" width="112" height="40" rx="7"/>
+                      <rect x="632" y="195" width="112" height="40" rx="7"/>
+                      <rect x="632" y="265" width="112" height="40" rx="7"/>
+                    </g>
+                    <g fill="var(--kb-fg)" text-anchor="middle">
+                      <text x="160" y="72">① 精算書を</text><text x="160" y="86">手書き</text>
+                      <text x="292" y="72">② 領収書貼付</text><text x="292" y="86">上長へ提出（紙）</text>
+                      <text x="424" y="142">③ 内容確認</text><text x="424" y="156">押印</text>
+                      <text x="556" y="212">④ 受領・目視</text><text x="556" y="226">チェック</text>
+                      <text x="688" y="212">⑤ 会計へ</text><text x="688" y="226">手入力</text>
+                      <text x="688" y="282">⑥ 振込データ</text><text x="688" y="296">作成</text>
+                    </g>
+                    <g stroke="var(--kb-fg-muted)" stroke-width="1.5" fill="none">
+                      <path d="M 216 75 H 232"/><path d="M 236 75 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 348 75 H 358 V 145 H 364"/><path d="M 368 145 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 480 145 H 490 V 215 H 496"/><path d="M 500 215 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 612 215 H 628"/><path d="M 632 215 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 688 235 V 261"/><path d="M 688 265 l -4 -8 h 8 z" fill="var(--kb-fg-muted)"/>
+                    </g>
+                    <g stroke="var(--kb-danger)" stroke-width="1.4" fill="none" stroke-dasharray="5 4">
+                      <path d="M 424 125 V 30 H 160 V 51"/>
+                      <path d="M 556 195 V 20 H 148 V 51"/>
+                    </g>
+                    <text x="300" y="26" fill="var(--kb-danger)" font-size="10">電話で差戻し（記録なし）</text>
+
+                    <g class="bf-pin" data-k="a1" tabindex="0" role="button" aria-label="課題1">
+                      <circle cx="112" cy="52" r="10"/><text x="112" y="56" text-anchor="middle">1</text>
+                    </g>
+                    <g class="bf-pin" data-k="a2" tabindex="0" role="button" aria-label="課題2">
+                      <circle cx="352" cy="98" r="10"/><text x="352" y="102" text-anchor="middle">2</text>
+                    </g>
+                    <g class="bf-pin" data-k="a3" tabindex="0" role="button" aria-label="課題3">
+                      <circle cx="424" cy="118" r="10"/><text x="424" y="122" text-anchor="middle">3</text>
+                    </g>
+                    <g class="bf-pin" data-k="a4" tabindex="0" role="button" aria-label="課題4">
+                      <circle cx="508" cy="190" r="10"/><text x="508" y="194" text-anchor="middle">4</text>
+                    </g>
+                    <g class="bf-pin" data-k="a5" tabindex="0" role="button" aria-label="課題5">
+                      <circle cx="740" cy="190" r="10"/><text x="740" y="194" text-anchor="middle">5</text>
+                    </g>
+                  </g>
+
+                  <g id="bf-g-tobe" style="display:none">
+                    <g fill="var(--kb-surface)" stroke="var(--kb-border-strong)">
+                      <rect x="104" y="55" width="112" height="40" rx="7"/>
+                      <rect x="368" y="125" width="112" height="40" rx="7"/>
+                      <rect x="500" y="195" width="112" height="40" rx="7"/>
+                    </g>
+                    <g fill="none" stroke="var(--kb-accent)" stroke-dasharray="4 3">
+                      <rect x="236" y="265" width="112" height="40" rx="7"/>
+                      <rect x="632" y="265" width="112" height="40" rx="7"/>
+                    </g>
+                    <g fill="var(--kb-fg)" text-anchor="middle">
+                      <text x="160" y="72">① スマホ/PCで</text><text x="160" y="86">申請・写真添付</text>
+                      <text x="292" y="282">② 入力チェック</text><text x="292" y="296">（必須・金額・費目）</text>
+                      <text x="424" y="142">③ 一覧から承認</text><text x="424" y="156">差戻しは理由必須</text>
+                      <text x="556" y="212">④ 内容確認</text><text x="556" y="226">・確定</text>
+                      <text x="688" y="282">⑤ 月次バッチで</text><text x="688" y="296">仕訳を自動連携</text>
+                    </g>
+                    <g stroke="var(--kb-fg-muted)" stroke-width="1.5" fill="none">
+                      <path d="M 216 75 H 226 V 285 H 232"/><path d="M 236 285 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 348 285 H 358 V 145 H 364"/><path d="M 368 145 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 480 145 H 490 V 215 H 496"/><path d="M 500 215 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                      <path d="M 612 215 H 622 V 285 H 628"/><path d="M 632 285 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    </g>
+                    <g stroke="var(--kb-ok)" stroke-width="1.4" fill="none" stroke-dasharray="5 4">
+                      <path d="M 424 125 V 30 H 160 V 51"/>
+                    </g>
+                    <text x="286" y="26" fill="var(--kb-ok)" font-size="10">画面上で差戻し（理由・履歴が残る）</text>
+
+                    <g class="bf-pin ok" data-k="b1" tabindex="0" role="button" aria-label="改善1">
+                      <circle cx="112" cy="52" r="10"/><text x="112" y="56" text-anchor="middle">1</text>
+                    </g>
+                    <g class="bf-pin ok" data-k="b2" tabindex="0" role="button" aria-label="改善2">
+                      <circle cx="240" cy="262" r="10"/><text x="240" y="266" text-anchor="middle">2</text>
+                    </g>
+                    <g class="bf-pin ok" data-k="b3" tabindex="0" role="button" aria-label="改善3">
+                      <circle cx="424" cy="118" r="10"/><text x="424" y="122" text-anchor="middle">3</text>
+                    </g>
+                    <g class="bf-pin ok" data-k="b4" tabindex="0" role="button" aria-label="改善4">
+                      <circle cx="508" cy="190" r="10"/><text x="508" y="194" text-anchor="middle">4</text>
+                    </g>
+                    <g class="bf-pin ok" data-k="b5" tabindex="0" role="button" aria-label="改善5">
+                      <circle cx="740" cy="260" r="10"/><text x="740" y="264" text-anchor="middle">5</text>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <div class="bf-panel" id="bf-panel" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h2>从 As-Is 到 To-Be：中间必须经过「課題」</h2>
+        <p>很多人画完 As-Is 就直接画 To-Be，结果 To-Be 只是把纸换成了屏幕。<strong>中间必须显式地经过一层「課題」</strong>，而且課題要按三段式写：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>課題ID</th><th>現象（何が起きているか）</th><th>原因（なぜ起きるか）</th><th>影響（誰がどれだけ困るか）</th></tr></thead>
+            <tbody>
+              <tr><td>K-01</td><td>申請書の記入不備による差戻しが月 190 件発生</td><td>手書きのため計算誤り・記入漏れを機械的に防げない</td><td>申請者・上長・経理の三者に再作業。1 件あたり平均 15 分 → 月 約 47 時間</td></tr>
+              <tr><td>K-02</td><td>拠点からの申請が本社到着まで最大 3 日かかる</td><td>紙原本を社内便で物理的に送付している</td><td>月末締めに間に合わず翌月回しが月 約 30 件</td></tr>
+              <tr><td>K-03</td><td>差戻しの経緯が残らず「言った言わない」が発生</td><td>差戻しが電話・口頭で行われている</td><td>経理部が同じ説明を繰り返す。監査時に経緯を示せない</td></tr>
+              <tr><td>K-04</td><td>月末 3 営業日に業務が集中し経理 2 名が連日残業</td><td>紙の到着が月末に偏り、目視チェックも手入力も同時に発生</td><td>月 約 40 時間の時間外。繁忙期のミス率も上昇</td></tr>
+              <tr><td>K-05</td><td>会計システムへの転記ミスが月 2–3 件</td><td>1,600 明細を人が手入力している</td><td>月次決算の締め直しが発生。1 件あたり平均 40 分の調査</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>为什么必须写「影響」这一栏？</strong>因为它是<strong>投资判断的依据</strong>，也是将来スコープ争议的裁决基准。「月 47 時間の再作業」这个数字，既能说服システムオーナー掏钱（第 1 章），也能在有人要求追加一个花 200 万日元却只省 1 小时的功能时，提供拒绝的语言。</p>
+
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚨 「現行踏襲」——上流工程最贵的四个字</p>
+          <p>客户经常说：「基本的には現行踏襲でお願いします」。这句话听起来是在帮你省事，实际上是三个陷阱叠在一起：</p>
+          <p><strong>① 谁也说不清「現行」是什么。</strong>現行システムの仕様書は 10 年前のもので、その後の改修が反映されていない。「現行どおり」に作れと言われても、正解が文書として存在しない。<br><strong>② 現行の不合理まで引き継ぐ。</strong>「なぜ承認が 3 段階なのか」を誰も説明できないのに、3 段階のまま作る。改善のために金を出したはずが、20 年前の業務をコピーしただけになる。<br><strong>③ 責任の所在が消える。</strong>「現行踏襲」で作ったものが業務に合わなかったとき、誰の責任か決められない。</p>
+          <p><strong>対処法</strong>：「現行踏襲」を要件として受け取らない。必ず<strong>「現行の何を、どこまで」を業務単位で明示する</strong>——業務一覧の各行に「現行どおり／改善／廃止」を付けてもらうのが最も実務的。そして<strong>現行の仕様は、こちらが調査して文書化し、それを承認してもらう</strong>——「現行踏襲」の正体は、多くの場合<em>現行を誰も知らない</em>という状態であり、その調査工数は最初から見積に入れておくべきもの（第 8 章）。</p>
+        </div>
+
+        <h2>雷区在「例外」里</h2>
+        <p>正常系のフローは、ヒアリング 2 回で描ける。工数を食い、炎上を招くのは<strong>例外</strong>——そして例外は<strong>聞かないと絶対に出てこない</strong>。相手にとっては「たまにあること」で、わざわざ言うほどのことではないからだ。</p>
+        <p>だから固定の問いをぶつける。以下は経費精算に限らず使える汎用の問句集：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>切り口</th><th>問い</th><th>この案件で出てきたもの</th></tr></thead>
+            <tbody>
+              <tr><td>失敗したら</td><td>「間違えたときは、どう直しますか？」</td><td>承認後の取消・修正（誰が権限を持つか）</td></tr>
+              <tr><td>いない人</td><td>「承認する人が出張・休暇のときは？」</td><td><strong>代理承認</strong>（第 1 章の例題 2 のあれ）</td></tr>
+              <tr><td>期限切れ</td><td>「締めに間に合わなかった分は？」</td><td>締め後の追加処理（B-061）</td></tr>
+              <tr><td>特別な人</td><td>「役員や、出向者の場合も同じですか？」</td><td>役員は承認ルートが別、出向者は費用負担部門が異なる</td></tr>
+              <tr><td>特別な金額</td><td>「金額が大きい場合、扱いは変わりますか？」</td><td>10 万円以上は本部長承認（これも第 1 章のあれ）</td></tr>
+              <tr><td>去る人</td><td>「退職する人の未精算はどうなりますか？」</td><td>退職者処理（B-062）</td></tr>
+              <tr><td>時期</td><td>「年度末や決算期は、何か変わりますか？」</td><td>期末は締め日が前倒し、翌期計上の判断が発生</td></tr>
+              <tr><td>過去の事故</td><td>「これまでで一番困ったことは何ですか？」</td><td><strong>最強の質問</strong>。相手の記憶に残っている＝実害があった＝要件として重要</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 例外は「発生頻度」ではなく「実装コスト」で評価する</p>
+          <p>年に 5 件しか起きない退職者処理を、どこまで作り込むか。判断軸は<strong>頻度ではなく、①起きたときの困り方 ②手作業で回避できるか ③作った場合のコスト</strong>の三つ。<br>年 5 件なら「専用画面は作らず、管理者がデータを直接修正する運用でカバー」が正解のことが多い。<strong>ただしその判断を要件定義書に明記する</strong>——「B-062 は管理者による手動処理とし、専用機能は設けない」。書いておかないと、稼働後に「なんでこれ対応してないの」になる。<br>逆に、月 190 件の差戻しは<strong>頻度が高いので徹底的に作り込む</strong>価値がある。<strong>例外を全部作るのでも全部捨てるのでもなく、一件ずつ判断して記録する</strong>——これが上流の腕の見せどころ。</p>
+        </div>
+
+        <h2>成果物样例</h2>
+        <p>業務フロー図そのものは上の演示が実物。ここでは、フロー図に必ず添える<strong>業務説明表</strong>を示す。図だけでは「その箱の中で具体的に何をしているか」が伝わらないため、両方セットで一つの成果物になる。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>業務フロー補足説明表（To-Be）</span><span class="kb-doc-id">DOC-202 / v0.4</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>No</th><th>業務ID</th><th>担当</th><th>作業内容</th><th>インプット</th><th>アウトプット</th><th>業務ルール</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>①</td><td>B-010</td><td>申請者</td>
+                  <td>経費精算を申請する。費目・金額・日付・支払先・目的を入力し、領収書画像を添付して提出する。</td>
+                  <td>領収書（現物）</td><td>申請データ（状態＝承認待ち）</td>
+                  <td>・領収書は 1 申請あたり 10 件まで<br>・発生日から 60 日以内の申請に限る<br>・1 件 3 万円以上は目的欄の入力を必須とする</td>
+                </tr>
+                <tr>
+                  <td>②</td><td>B-010</td><td>システム</td>
+                  <td>入力内容を検証する。必須項目・金額の桁・費目と税区分の整合・重複申請の有無をチェックする。</td>
+                  <td>申請データ</td><td>エラーメッセージ または 提出完了</td>
+                  <td>・同一日・同一金額・同一支払先の申請が既に存在する場合は警告を表示する（提出は可能とする）</td>
+                </tr>
+                <tr>
+                  <td>③</td><td>B-020<br>B-021</td><td>上長</td>
+                  <td>承認待ち一覧から内容を確認し、承認または差戻しを行う。差戻し時は理由の入力を必須とする。</td>
+                  <td>申請データ</td><td>承認済データ／差戻しデータ（理由付き）</td>
+                  <td>・承認は 2 段階（課長 → 部長）※部門別の段数は課題 No.013 で確認中<br>・承認者不在時の代理承認は本スコープ外（次期対応）</td>
+                </tr>
+                <tr>
+                  <td>④</td><td>B-030</td><td>経理部</td>
+                  <td>承認済の申請を一覧で確認し、経理確定を行う。不備があれば申請者へ差戻す。</td>
+                  <td>承認済データ</td><td>確定データ</td>
+                  <td>・確定後の修正は経理部のみ可能とし、変更履歴を残す</td>
+                </tr>
+                <tr>
+                  <td>⑤</td><td>B-031</td><td>システム</td>
+                  <td>月次バッチで、確定済データから仕訳データを生成し会計システムへ連携する。</td>
+                  <td>確定データ（前月末まで）</td><td>仕訳連携ファイル</td>
+                  <td>・毎月第一営業日 2:00 に実行<br>・連携後の取消は会計側の逆仕訳で対応（本システムでは再連携しない）</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 「業務ルール」欄は、後工程で機能要件・入力チェック・権限設計に展開される（第 5・6・11 章）。<br>※ 未確定の事項は課題管理表の No を明記し、空欄のまま放置しない。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · ヒアリングで「特に困っていることはないです」と言われた</p>
+          <p><strong>これは「課題がない」ではなく「言語化されていない」。</strong>人は慣れた不便を不便と認識しない——毎月 40 時間残業していても、10 年続いていれば「そういうもの」になる。</p>
+          <p><strong>掘り方の三手</strong>：<br>① <strong>時間を聞く</strong>「この作業、月にどれくらい時間がかかりますか？」——数字にすると本人が驚くことがある。<br>② <strong>一日を追う</strong>「月末の 3 日間、何時に出社して何時に帰りますか？」——抽象的な「困りごと」より、具体的な一日のほうが実態が出る。<br>③ <strong>過去の事故を聞く</strong>「これまでで一番大変だったのはいつですか？」——記憶に残っている＝実害があった。<br>それでも出てこない場合は、<strong>現地観察に切り替える</strong>。見れば分かる。「あ、それ毎回手で突き合わせてるんですね」と言った瞬間に「そうなんですよ！」が返ってくる。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 業務フロー図のレーンをどう切るか迷った</p>
+          <p>ケース：経費の承認は「課長」「部長」の 2 段階。レーンを 2 本に分けるべきか、「上長」1 本にまとめるべきか。</p>
+          <p><strong>判断基準は「やっている作業が違うか」</strong>。課長と部長がまったく同じ画面で同じ判断をするなら <strong>1 本（上長）</strong>でよい。承認段階の違いは、フロー図ではなく<strong>業務ルール欄</strong>に書けば足りる。<br>逆に、部長だけが金額の妥当性を判断し、課長は事実確認だけ、というように<strong>判断の中身が異なるなら 2 本に分ける</strong>——分けないと「誰が何を見るのか」が設計に落とせない。</p>
+          <p><strong>より一般的な指針</strong>：レーンが 6 本を超えたら図が読めなくなる。その場合は<strong>業務を分割して複数の図にする</strong>（「申請〜承認」と「経理処理〜連携」で 2 枚）。<strong>1 枚の図で全部を説明しようとしないこと</strong>——業務フロー図の読者は経理部の課長であって、システムの専門家ではない。<strong>読めない図は、無い図と同じ。</strong></p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · To-Be を描いたら、客が「これだと経理の仕事がなくなる」と渋い顔をした</p>
+          <p><strong>これは技術問題ではなく組織問題だが、無視すると要件定義が失敗する。</strong>業務改善は必ず誰かの仕事を減らし、それは当人にとっては「自分の存在意義が減る」ことでもある。抵抗は自然な反応であって、悪意ではない。</p>
+          <p><strong>やってはいけない</strong>：「効率化なので仕方ないです」と正論で押す。押しても表面上は合意されるが、受入テストと稼働後に必ず「使いにくい」「運用が回らない」という形で返ってくる。</p>
+          <p><strong>実務的な対処</strong>：<br>① <strong>減る仕事と、増える／変わる仕事を並べて示す</strong>——転記と目視チェックは減るが、代わりに「マスタの保守」「例外案件の判断」「経費の分析・改善提案」が経理の仕事になる。<strong>To-Be の業務フローに、経理部のレーンをちゃんと残す。</strong><br>② <strong>チェック権限は残す</strong>——全自動にせず、経理の「確定」操作を業務フローに置く（本案例の④）。これは技術的には省略できるが、業務上の責任の所在として意味がある。<br>③ <strong>この議論自体をシステムオーナーに上げる</strong>——業務のあり方を決めるのは発注者。第 3 章の例題 3 と同じ構造で、SEは選択肢と影響を示し、決定は返す。<br><strong>教訓</strong>：To-Be は技術的な最適解ではなく、<strong>組織が受け入れられる最適解</strong>でなければ稼働しない。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>業務調査の三手段（現行資料・ヒアリング・現地観察）について、次の情報はどれで得るのが最も適切か。① 費目コードの体系　② 月末に作業が集中する実態　③ 承認が形骸化していて実質ノーチェックであること　④ 経費精算の社内規程上の上限金額</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①現行資料　②ヒアリング（＋現地観察）　③現地観察　④現行資料</p>
+            <p><strong>解析</strong>：①④は<strong>文書化されている事実</strong>——聞くより読むほうが速く、正確。ヒアリングの時間をこれに使うのは無駄（そして相手も正確には覚えていない）。<br>②は<strong>量的な実態</strong>。ヒアリングで「月末は忙しい」と聞き、現行システムのデータや実績から件数の分布を確認して裏を取る。<strong>感覚と数字の両方を取る</strong>のがコツ。<br>③が最も重要な例。<strong>「承認が形骸化している」は絶対にヒアリングでは出てこない</strong>——本人が「私はちゃんと見ていません」と言うはずがないし、そもそも無自覚のことも多い。現地で「承認、いつもどれくらい時間かけて見てます？」と聞きながら実際の操作を見ると、「あー、基本的には金額だけ見て押してますね」が出る。<br>この事実は設計に直結する：形骸化しているなら承認段数を減らす提案ができるし、逆に<strong>システム化によって「本当にチェックさせる」設計にすると、業務時間が増えて反発を招く</strong>。実態を知らずに理想の To-Be を描くと、必ずこの落とし穴に落ちる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>業務一覧に「件数」と「頻度」の列を入れる理由を三つ挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：① <strong>非機能要件の根拠になる</strong>（第 7 章）——「月 1,600 件、月末 3 日に 6 割集中」から、ピーク時の同時アクセス数とレスポンス目標が導かれる。② <strong>優先度と作り込み度の判断材料になる</strong>——月 190 件の差戻しは作り込む価値があり、年 5 件の退職者処理は手運用でよい。③ <strong>見積の根拠になる</strong>（第 8 章）——データ量はDB設計・移行工数・テストデータ準備に直結する。</p>
+            <p><strong>補足</strong>：四つ目の理由として<strong>効果測定の基準になる</strong>点も重要。稼働後に「差戻しが月 190 件 → 40 件に減った」と言えるのは、稼働前の数字を持っているからだけ。<strong>要件定義で取った数字は、一年後にシステムの価値を証明する唯一の材料になる。</strong>これはシステムオーナー（第 1 章）に対する報告で効いてくる。<br>実務上の注意：件数は<strong>必ず出典と期間を書く</strong>（「2026 年 4–9 月の実績平均」）。「だいたい 1,500 件くらいですかね」という記憶ベースの数字と、システムから抽出した実績値では、後で問題になったときの説得力がまったく違う。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の業務フロー図の問題点を三つ指摘せよ。<br>「レーンが『田中さん』『鈴木さん』『システム』の 3 本。正常系のみ描かれており、差戻しの矢印はない。箱は『経費精算を行う』の 1 個だけ。」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>問題点</strong>：<br>① <strong>レーンが人名になっている</strong>——「田中さん」は異動する。役割（申請者・経理担当）で切るべき。人名レーンの図は、担当者が変わった瞬間に読めなくなる。<br>② <strong>差戻し・例外が描かれていない</strong>——正常系だけのフローからは課題が見えない。本章の演示で分かるとおり、痛みの多くは差戻し経路にある。<br>③ <strong>箱の粒度が粗すぎる</strong>——「経費精算を行う」1 個では、誰が何をしているのかが分からず、機能の導出（第 5 章）に使えない。担当者が変わるところ、日をまたぐところで切って、6〜10 個程度に分解すべき。</p>
+            <p><strong>逆方向の失敗にも触れておく</strong>：粒度を細かくしすぎる失敗も同じくらい多い。「金額欄をクリックする」「金額を入力する」「Tab キーを押す」まで書いた図を見たことがあるが、それは業務フローではなく<strong>操作手順書</strong>であり、要件定義の段階では有害（設計が固まる前に操作を固定してしまう）。<br><strong>目安</strong>：業務フロー図の箱の数は、1 枚あたり 6〜12 個。それを超えるなら業務を分割する。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>本章の例外掘り出し問句集を使って、「社員の勤怠管理システム」の要件定義で聞くべき例外を 5 つ挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>解答例</strong>：<br>① <strong>失敗したら</strong>「打刻を忘れたときはどうしますか？」→ 事後修正の申請・承認フロー（実は勤怠システムで最も使われる機能）。<br>② <strong>いない人</strong>「承認者が長期休職中の場合は？」→ 代理承認・承認者の一時変更。<br>③ <strong>特別な人</strong>「管理職・パート・派遣・出向者も同じ扱いですか？」→ 雇用形態別の勤務ルール（管理監督者は残業の概念が異なる、派遣は派遣元への報告が必要）。<br>④ <strong>時期</strong>「年末年始や、締め日が土日の場合は？」→ 締め日の前倒し、休日カレンダーの管理。<br>⑤ <strong>過去の事故</strong>「これまでで一番大変だったのは？」→ 労基署の調査対応、36 協定の上限超過アラート、といった<strong>法令由来の要件</strong>が出てくることが多い。</p>
+            <p><strong>この演習の狙い</strong>：例外の掘り出しは<strong>業務知識ではなく問いの型</strong>で行えると知ること。経費精算も勤怠も購買も、「失敗したら／いない人／期限切れ／特別な人／特別な金額／去る人／時期／過去の事故」という同じ切り口で 8 割方カバーできる。<br>そして重要なのは、これらの例外の多くが<strong>正常系より実装コストが高い</strong>という事実。勤怠システムなら、打刻の記録自体は簡単だが、事後修正の申請・承認・履歴・監査証跡は正常系の数倍の工数になる。<strong>見積の前に例外を洗い出さないと、見積は必ず外れる</strong>（第 8 章）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>本章の課題一覧（K-01〜K-05）から、それぞれ To-Be でどう解決されるかを対応付けよ。また、<strong>To-Be によって新たに生じる課題</strong>を三つ挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>対応付け</strong>：K-01（記入不備）→ 入力チェックによる機械的な検証。K-02（社内便 3 日）→ Web/スマホ申請により物理的移動を排除。K-03（口頭の差戻し）→ 画面上の差戻し＋理由必須入力＋履歴保存。K-04（月末集中）→ 差戻しの削減と一覧承認による処理時間短縮（ただし集中そのものは残る）。K-05（転記ミス）→ 月次バッチによる仕訳の自動連携。</p>
+            <p><strong>新たに生じる課題（解答例）</strong>：<br>① <strong>紙原本の保管義務が残る</strong>——電子帳簿保存法の要件を満たさない限り、領収書の紙原本は保管が必要。「電子化したのに紙も送る」という二重運用になりかねない。これは<strong>法令要件</strong>であり、要件定義で必ず確認すべき事項（誰に聞くか？ 経理部と、必要なら顧問税理士）。<br>② <strong>月末のアクセス集中</strong>——紙が電子になっても、月末に集中する事実は変わらない。むしろ全員が同時にアクセスできるようになる分、システム負荷としては厳しくなる。第 7 章の性能要件に直結。<br>③ <strong>ITに不慣れな社員のサポート</strong>——工場勤務者や年配社員が申請できないと、結局誰かが代行することになり、業務は減らない。<strong>これは要件（操作性・ヘルプ機能）でもあり、移行時の教育計画（第 14 章）でもある。</strong><br>④（追加）<strong>システム障害時の代替手段</strong>——紙のときは止まらなかった業務が、システムが落ちると完全に止まる。月末に半日落ちたらどうするか。これは非機能要件（可用性）と運用設計の話（第 7・14 章）。</p>
+            <p><strong>この問題の本質</strong>：To-Be は課題を消すのではなく<strong>課題の形を変える</strong>。優秀なSEとそうでないSEの差は、「To-Be が生む新しい課題」を要件定義の時点で列挙できるかどうかに出る。列挙できていれば設計で手当てできるし、できなくても「想定される課題」として合意しておける。<strong>予見していた問題と、予見していなかった問題では、稼働後の扱いがまったく違う。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>客から「基本的に現行踏襲でお願いします。ただし紙をなくしたいだけです」と言われた。この要望をそのまま受けると何が起きるか。あなたはどう返すか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>そのまま受けると起きること</strong>：<br>① <strong>現行の仕様が文書として存在しない</strong>ため、「現行どおり」の判定基準がない。受入テストで「これは現行と違う」と言われても反論できず、無限に修正が発生する。<br>② 現行の紙運用に最適化された手順（一枚の紙に複数の経費をまとめて書く、上長がまとめて押印する等）を画面にそのまま移すと、<strong>紙より使いにくいシステム</strong>ができる。<br>③ 「紙をなくす」だけなら達成されても、月末の残業も転記ミスも減らない——<strong>投資目的（第 1 章のシステムオーナーの目的）が達成されない</strong>。稼働後に「何のために金を出したのか」という話になる。</p>
+            <p><strong>返し方（実務的な三段）</strong>：<br>① <strong>否定せず、定義を求める</strong>——「承知しました。認識合わせのため、『現行』の範囲を業務単位で確認させてください。」そして業務一覧を出し、各行に「現行どおり／改善／廃止」を付けてもらう。<strong>抽象的な合意を具体的な作業に変換する</strong>のがポイント。<br>② <strong>現行の調査工数を明示する</strong>——「現行の仕様書が最新化されていない場合、現行仕様の調査自体に工数が必要です。調査結果を文書化し、それをご承認いただく形でよろしいでしょうか。」これで「現行踏襲＝タダで楽」という誤解を解く。<br>③ <strong>目的に立ち返る</strong>——「今回の目的は月末の負荷削減と転記ミスの撲滅と伺っています。紙の電子化だけでは K-04・K-05 は解決しないため、この二点については業務の見直しをご相談させてください。」<strong>客の言葉（現行踏襲）ではなく、客の目的（第 2 章の「要求」）に対して応答する。</strong></p>
+            <p><strong>注意</strong>：「現行踏襲」が正しい選択である場合もある。予算が限られている、業務変更の合意形成コストが高すぎる、法令で手順が決まっている——そういう場合は現行踏襲でよい。<strong>問題は「現行踏襲」が思考停止の合言葉として使われること</strong>であって、現行踏襲という選択そのものではない。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたの職場の業務（開発プロセスでもよい：例「バグ報告から修正リリースまで」）を一つ選び、As-Is のスイムレーン業務フロー図を描き、課題を三段式（現象・原因・影響）で 3 つ以上抽出し、To-Be を描け。To-Be で新たに生じる課題も書くこと。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>自己採点の観点を挙げる。</p>
+            <p><strong>観点① レーンに「システム」があるか</strong>——人だけのレーンで描くと、どこが自動化されていて、どこが人力なのかが見えない。自動化の余地はレーンの境目に現れる。</p>
+            <p><strong>観点② 差戻し・やり直しの矢印があるか</strong>——「バグ報告から修正リリース」なら、再現しない差戻し、情報不足の差戻し、修正がレビューで戻る、リリース後に再発する——少なくとも 3 本の逆流があるはず。逆流の無いフロー図は、現実を描いていない。</p>
+            <p><strong>観点③ 課題の「影響」が数字になっているか</strong>——「再現情報が足りず差戻しが発生する」だけでは弱い。「月 12 件、1 件あたり往復 2 日 → リリースが平均 3 日遅延」まで書けると、改善提案が意思決定の俎上に載る。数字が取れないなら「取れない」こと自体が課題（計測されていない業務は改善できない）。</p>
+            <p><strong>観点④ To-Be が「人の善意」に依存していないか</strong>——「報告時に再現手順を必ず書く」というTo-Beは、たいてい定着しない。<strong>仕組みで縛る</strong>（テンプレート必須入力、未記入なら登録できない）か、<strong>そもそも不要にする</strong>（自動でログとスクリーンショットを添付）か。業務改善の To-Be は、意志ではなく構造で解くのが原則——これはシステム化の要件を考えるときも同じ。</p>
+            <p><strong>観点⑤ 新たな課題を書いたか</strong>——書けていれば、あなたはもう習題 4.5 の教訓を実践できている。典型的には「入力項目を増やすと報告のハードルが上がり、報告数そのものが減る（＝バグが闇に葬られる）」といったトレードオフが出るはず。<strong>これに気づける人が、要件定義で信頼される。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 第一问不是「どんな機能が欲しいか」而是「今どうやっているか」——机能是从现实推导出来的；② 業務調査三手段各有盲区：資料读得到「建前」、ヒアリング问得到「目的与痛点」、<strong>現地観察才能看到实态与「秘伝のExcel」</strong>；③ 業務一覧要带業務ID・担当・頻度・件数・システム化可否，「システム化 ×」的业务也必须列出来才叫合意的スコープ外；④ スイムレーン三铁律：レーンは役割（含システム）不是人名、箱在「担当が変わる／日をまたぐ」处切、<strong>例外与差戻し必须画</strong>；⑤ As-Is → To-Be 中间必须经过「課題（現象・原因・影響）」，影響要写成数字——它既是投资依据也是将来的裁决基准；⑥ 「現行踏襲」是最贵的四个字，对策是逼出「現行の何を、どこまで」并把现行调查工数明确计入；⑦ 例外靠固定问句挖（失敗／不在／期限切れ／特別な人・金額／退職／時期／過去の事故），并按「起きたときの困り方・手作業で回避できるか・作るコスト」逐条判断并<strong>把判断结果写进文档</strong>。<br><strong>下一章预告</strong>：业务看懂了。下一章把業務フロー的每一步榨成機能一覧——用「画面・帳票・バッチ・IF」四分类堵漏，给机能编号，并第一次画出権限矩阵。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./03-上流的作法与合意形成.html">← 第 3 章 上流的作法：合意是怎么造出来的</a>
+          <a href="./05-洗出机能要件.html">第 5 章 洗出机能要件：从要求一覧到機能一覧 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var panel = document.getElementById("bf-panel");
+      var gA = document.getElementById("bf-g-asis");
+      var gB = document.getElementById("bf-g-tobe");
+      var btnA = document.getElementById("bf-asis");
+      var btnB = document.getElementById("bf-tobe");
+      if (!panel || !gA || !gB) return;
+
+      var INFO = {
+        a1: {
+          title: "課題 1 · 手書きの精算書",
+          rows: [["現象", "記入漏れ・計算誤り・判読不能により差戻しが月 190 件発生"],
+                 ["原因", "紙に手書きのため、機械的な検証が一切かからない"],
+                 ["影響", "申請者・上長・経理の三者に再作業。1 件平均 15 分 → 月 約 47 時間"],
+                 ["対応", "K-01：入力チェックで機械的に防ぐ（To-Be ②）"]]
+        },
+        a2: {
+          title: "課題 2 · 紙が物理的に移動する",
+          rows: [["現象", "拠点から本社まで社内便で最大 3 日"],
+                 ["原因", "領収書を貼った紙原本を現物で回付している"],
+                 ["影響", "月末締めに間に合わない申請が月 約 30 件、翌月回しに"],
+                 ["対応", "K-02：Web/スマホ申請で移動そのものを消す（To-Be ①）"]]
+        },
+        a3: {
+          title: "課題 3 · 差戻しが電話・口頭",
+          rows: [["現象", "誰がいつ何を理由に差戻したかが残らない"],
+                 ["原因", "紙を戻しながら電話で説明する運用"],
+                 ["影響", "同じ説明の繰り返し、監査時に経緯を示せない、「言った言わない」"],
+                 ["対応", "K-03：画面上の差戻し＋理由必須＋履歴保存（To-Be ③）"]]
+        },
+        a4: {
+          title: "課題 4 · 目視チェックが月末に集中",
+          rows: [["現象", "月末 3 営業日に約 6 割（約 960 件）が集中"],
+                 ["原因", "紙の到着が月末に偏る＋全件を人が目で確認している"],
+                 ["影響", "経理 2 名が連日残業、月 約 40 時間の時間外。繁忙期はミス率も上昇"],
+                 ["対応", "K-04：差戻し削減と一覧承認で処理時間を短縮。ただし集中そのものは残る（→ 第 7 章の性能要件へ）"]]
+        },
+        a5: {
+          title: "課題 5 · 会計システムへの手入力",
+          rows: [["現象", "月 1,600 明細を人が転記、転記ミスが月 2–3 件"],
+                 ["原因", "両システム間に連携が存在しない"],
+                 ["影響", "月次決算の締め直し。1 件あたり平均 40 分の原因調査"],
+                 ["対応", "K-05：月次バッチで仕訳データを自動連携（To-Be ⑤ → 第 13 章）"]]
+        },
+        b1: {
+          title: "改善 1 · スマホ/PC からの申請",
+          rows: [["対応", "Web 画面から申請。領収書はその場で撮影して添付"],
+                 ["効果", "K-01・K-02 を同時に解決。移動時間ゼロ、記入不備は次の②で防ぐ"],
+                 ["注意", "紙原本の保管義務は残る（電子帳簿保存法の要件確認が必要）。ITに不慣れな社員の操作性・教育も要件になる"],
+                 ["次章", "画面の項目と入力チェックは第 11 章で設計書に落とす"]]
+        },
+        b2: {
+          title: "改善 2 · 入力チェック（システム処理）",
+          rows: [["対応", "必須項目・金額桁・費目と税区分の整合・重複申請を機械的に検証"],
+                 ["効果", "差戻しの主因（記入不備）を提出前に潰す"],
+                 ["注意", "厳しくしすぎると現場が申請できない（第 3 章 例題 3 の論点）。「弾く」か「警告して通す」かは業務ルールとして決める"],
+                 ["次章", "チェック内容は第 6 章で検証可能な要件に、第 11 章で項目定義書に展開"]]
+        },
+        b3: {
+          title: "改善 3 · 一覧からの承認・差戻し",
+          rows: [["対応", "承認待ち一覧から複数件を確認。差戻し時は理由入力を必須とする"],
+                 ["効果", "K-03 解決。誰がいつ何を理由に差戻したかが履歴として残る"],
+                 ["注意", "承認段数は部門により異なる可能性あり（課題 No.013 で確認中）。承認者不在時の代理承認は本スコープ外と明記済み"],
+                 ["次章", "承認ルートと権限は第 5 章の権限マトリクス、第 12 章の履歴テーブルへ"]]
+        },
+        b4: {
+          title: "改善 4 · 経理による確定",
+          rows: [["対応", "承認済データを一覧で確認し、経理確定を行う"],
+                 ["効果", "経理のチェック権限を業務上残しつつ、目視の負荷を下げる"],
+                 ["注意", "全自動にしないのは意図的な設計。責任の所在としての「経理が確定した」という行為を残す（例題 3 参照）"],
+                 ["次章", "確定後の修正権限と変更履歴は第 11・12 章"]]
+        },
+        b5: {
+          title: "改善 5 · 月次バッチで仕訳を自動連携",
+          rows: [["対応", "毎月第一営業日 2:00 に、確定済データから仕訳ファイルを生成し会計システムへ連携"],
+                 ["効果", "K-05 解決。転記作業そのものが消滅する"],
+                 ["注意", "会計側の受入時間帯との競合、連携失敗時のリラン、連携後の取消の扱い（逆仕訳）を決める必要がある"],
+                 ["次章", "第 13 章（IF設計・バッチ設計）でファイル仕様とジョブネットに落とす"]]
+        }
+      };
+
+      var pins = Array.prototype.slice.call(document.querySelectorAll(".bf-pin"));
+
+      function show(k) {
+        var d = INFO[k];
+        pins.forEach(function (p) { p.classList.toggle("sel", p.getAttribute("data-k") === k); });
+        panel.textContent = "";
+        var h = document.createElement("h4");
+        h.textContent = d.title;
+        panel.appendChild(h);
+        d.rows.forEach(function (r) {
+          var row = document.createElement("div");
+          row.className = "bf-row";
+          var a = document.createElement("div");
+          a.className = "bf-key";
+          a.textContent = r[0];
+          var b = document.createElement("div");
+          b.className = "bf-val";
+          b.textContent = r[1];
+          row.appendChild(a); row.appendChild(b);
+          panel.appendChild(row);
+        });
+      }
+
+      pins.forEach(function (p) {
+        var k = p.getAttribute("data-k");
+        p.addEventListener("click", function () { show(k); });
+        p.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(k); }
+        });
+      });
+
+      function mode(isAsIs) {
+        gA.style.display = isAsIs ? "" : "none";
+        gB.style.display = isAsIs ? "none" : "";
+        btnA.setAttribute("aria-pressed", String(isAsIs));
+        btnB.setAttribute("aria-pressed", String(!isAsIs));
+        show(isAsIs ? "a1" : "b1");
+      }
+
+      btnA.addEventListener("click", function () { mode(true); });
+      btnB.addEventListener("click", function () { mode(false); });
+
+      mode(true);
+    });
+  </script>
+</body>
+</html>

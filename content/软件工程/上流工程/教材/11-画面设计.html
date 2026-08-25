@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11 画面設計 · 知识库</title>
+  <meta name="kb:summary" content="画面设计的五件套：画面一覧与画面ID、画面遷移図、ワイヤーフレーム、画面項目定義書、イベント定義，附输入检查、排他与权限的可见行为与消息一覧。">
+  <meta name="kb:tags" content="上流工程,基本设计,画面设计,项目定义书,画面迁移图,输入检查,消息一览,排他控制,slgc,hmsj,xmdy">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：画面遷移図と入力チェック実験室 */
+    .fl-node { cursor: pointer; }
+    .fl-node rect { fill: var(--kb-surface); stroke: var(--kb-border-strong); stroke-width: 1.2; }
+    .fl-node text { fill: var(--kb-fg); }
+    .fl-node:hover rect { stroke: var(--kb-accent); }
+    .fl-node.sel rect { fill: var(--kb-accent); stroke: var(--kb-accent); }
+    .fl-node.sel text { fill: #fff; }
+    .fl-node:focus rect { stroke: var(--kb-accent); stroke-width: 2.4; }
+    .fl-panel {
+      margin-top: 12px; border: 1px solid var(--kb-border-strong);
+      border-radius: var(--kb-radius-sm); background: var(--kb-surface); padding: 12px 14px;
+    }
+    .fl-panel h4 { margin: 0 0 3px; font-size: 1rem; }
+    .fl-id { font-family: var(--kb-font-mono); font-size: 0.76rem; color: var(--kb-fg-muted); margin: 0 0 10px; }
+    .fl-row { display: flex; gap: 10px; padding: 5px 0; font-size: 0.85rem; }
+    .fl-row + .fl-row { border-top: 1px solid var(--kb-border); }
+    .fl-k { flex: 0 0 6.2em; color: var(--kb-fg-muted); font-size: 0.79rem; }
+    .fl-v { flex: 1; }
+    /* ワイヤーフレーム */
+    .wf {
+      border: 1px solid var(--kb-border-strong); border-radius: 6px;
+      background: var(--kb-surface-alt); padding: 8px; font-size: 0.76rem; margin-top: 8px;
+    }
+    .wf-bar { background: var(--kb-border-strong); color: var(--kb-surface); padding: 3px 7px; border-radius: 3px; margin-bottom: 6px; font-weight: 600; }
+    .wf-line { background: var(--kb-surface); border: 1px solid var(--kb-border); border-radius: 3px; padding: 4px 7px; margin-bottom: 4px; color: var(--kb-fg-muted); }
+    .wf-btns { display: flex; gap: 5px; margin-top: 6px; }
+    .wf-btn { background: var(--kb-accent); color: #fff; border-radius: 3px; padding: 3px 10px; font-size: 0.74rem; }
+    .wf-btn.sub { background: var(--kb-surface); color: var(--kb-fg-muted); border: 1px solid var(--kb-border-strong); }
+    /* 入力チェック実験室 */
+    .ic-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+    .ic-f { display: flex; flex-direction: column; gap: 3px; font-size: 0.82rem; }
+    .ic-f label { color: var(--kb-fg-muted); font-size: 0.78rem; }
+    .ic-f label b { color: var(--kb-danger); }
+    .ic-f input, .ic-f select {
+      font: inherit; font-size: 0.85rem; padding: 5px 8px;
+      border: 1px solid var(--kb-border-strong); border-radius: 6px;
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .ic-f.err input, .ic-f.err select { border-color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .ic-msg {
+      margin-top: 12px; border: 1px solid var(--kb-border); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface-alt); padding: 10px 12px; font-size: 0.84rem;
+    }
+    .ic-msg p { margin: 0 0 4px; }
+    .ic-msg p:last-child { margin-bottom: 0; }
+    .ic-e { color: var(--kb-danger); }
+    .ic-w { color: var(--kb-warn); }
+    .ic-o { color: var(--kb-ok); font-weight: 700; }
+    .ic-mid { font-family: var(--kb-font-mono); font-size: 0.78rem; opacity: 0.85; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 11 章 · 画面設計</h1>
+        <p class="kb-lead">画面設計は、客が最も強い関心を持ち、最も指摘が飛んでくる成果物。そして基本設計で最も分厚くなる。この章は五つの成果物——<strong>画面一覧・画面遷移図・レイアウト・画面項目定義書・イベント定義</strong>——の書き方と、入力チェック・排他制御・権限による表示制御という「見えない要件が画面上でどう見えるか」を扱う。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出画面設計の五つの成果物とそれぞれの役割；② 设计画面ID体系并画出带遷移条件的画面遷移図；③ 写出可以直接实现的<strong>画面項目定義書</strong>（型・桁・必須・初期値・編集可否・入力チェック）；④ 用一覧・検索・登録・更新・削除の定番パターン统一全画面；⑤ 把排他制御・権限制御・エラー表示这些「见不到的方式」落到画面上的具体行为。</p>
+        </div>
+
+        <h2>評審会では頷いていたのに、稼働後に「これじゃない」</h2>
+        <p>画面設計書のレビューで、経理部長は 40 ページの項目定義書に目を通し、「はい、大丈夫です」と言った。稼働後、同じ人がこう言った——<strong>「これ、月末に 50 件処理するの、ものすごく大変なんですけど」。</strong></p>
+        <p>設計書には嘘は無かった。項目も、チェックも、遷移も、要件どおりだった。<strong>足りなかったのは「実際に触ったときの感触」</strong>——1 件承認するのに 4 クリック必要で、承認後は一覧の先頭に戻り、また探し直す。40 ページの表からは、この痛みは読み取れない。</p>
+        <p>だから画面設計には二つの仕事がある。<strong>①実装できる精度で書くこと（項目定義書）②客が「触った感じ」を想像できるようにすること（ワイヤーフレーム、できればモック）。</strong>片方だけでは、必ずどちらかの事故が起きる。</p>
+
+        <h2>画面設計の五つの成果物</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>成果物</th><th>答える問い</th><th>主な読者</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 画面一覧</strong></td><td>画面は全部で何本あるか、誰が使うか</td><td>PM（見積）・情シス</td></tr>
+              <tr><td><strong>② 画面遷移図</strong></td><td>どこからどこへ行けるか、戻れるか</td><td>ユーザー部門</td></tr>
+              <tr><td><strong>③ 画面レイアウト</strong>（ワイヤーフレーム）</td><td>どう見えるか、どこに何があるか</td><td>ユーザー部門</td></tr>
+              <tr><td><strong>④ 画面項目定義書</strong></td><td>各項目の型・桁・必須・初期値・チェック内容</td><td>製造者・テスト設計者</td></tr>
+              <tr><td><strong>⑤ イベント定義</strong></td><td>ボタンを押すと何が起きるか</td><td>製造者</td></tr>
+              <tr><td>（＋ メッセージ一覧）</td><td>どんな文言がいつ出るか</td><td>全員（横断成果物）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>①②③はユーザー部門向け、④⑤は製造者向け</strong>。レビューの観点を分けるべき理由がここにある（第 3 章・第 9 章）——経理部長に項目定義書 40 ページを読ませても、有効な指摘は出てこない。</p>
+
+        <h2>画面一覧と画面ID</h2>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>画面一覧（抜粋）</span><span class="kb-doc-id">DOC-302 / v0.6</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>画面ID</th><th>画面名</th><th>機能ID</th><th>利用ロール</th><th>種別</th><th>遷移元</th></tr></thead>
+              <tbody>
+                <tr><td>SC-Z010</td><td>ログイン</td><td>Z-010</td><td>全員</td><td>認証</td><td>—（起点）</td></tr>
+                <tr><td>SC-A010</td><td>申請一覧</td><td>F-011</td><td>全社員</td><td>一覧</td><td>SC-Z010, 各画面のメニュー</td></tr>
+                <tr><td>SC-A020</td><td>経費申請 登録・編集</td><td>F-010, F-012, F-013</td><td>全社員</td><td>登録／更新</td><td>SC-A010</td></tr>
+                <tr><td>SC-A030</td><td>経費申請 内容確認</td><td>F-010</td><td>全社員</td><td>確認</td><td>SC-A020</td></tr>
+                <tr><td>SC-A040</td><td>申請状況照会</td><td>F-015</td><td>全社員</td><td>照会</td><td>SC-A010</td></tr>
+                <tr><td>SC-B010</td><td>承認待ち一覧</td><td>F-020, F-021</td><td>承認者</td><td>一覧</td><td>メニュー</td></tr>
+                <tr><td>SC-B020</td><td>承認 内容確認</td><td>F-020, F-022</td><td>承認者</td><td>確認／更新</td><td>SC-B010</td></tr>
+                <tr><td>SC-C010</td><td>経理チェック一覧</td><td>F-030</td><td>経理担当</td><td>一覧</td><td>メニュー</td></tr>
+                <tr><td>SC-H010</td><td>費目マスタ保守</td><td>F-070</td><td>経理担当・管理者</td><td>マスタ</td><td>メニュー</td></tr>
+                <tr><td>SC-Z090</td><td>システムエラー</td><td>Z-030</td><td>全員</td><td>共通</td><td>全画面</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 画面ID は SC ＋ 機能分類 1 桁 ＋ 連番 3 桁（10 飛ばし）。分類は機能ID の接頭辞（A：申請／B：承認／C：経理／H：マスタ／Z：共通）と揃える。<br>※ 「利用ロール」は権限マトリクス（DOC-205）と一致していること。<strong>ここが食い違うと、実装のどこかで必ず穴が空く。</strong></p>
+          </div>
+        </div>
+        <p><strong>画面一覧は見積の単位でもある</strong>（第 8 章の見積内訳「画面 18 本で 27 人日」）。だから<strong>複雑度の列</strong>（単純／標準／複雑）を持たせておくと、そのまま工数根拠になる。</p>
+
+        <h2>亲手点一点：画面遷移図</h2>
+        <p>点图里的任意画面，右边显示这个画面的角色、遷移条件与ワイヤーフレーム。<strong>注意「戻る」の矢印と、遷移条件の書き方</strong>——ここが甘いと、実装者は毎回質問することになる。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 画面遷移図：クリックして各画面の役割とワイヤを見る</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：画面遷移図は「箱と矢印」だけでは足りず、<strong>各矢印に遷移条件（どのボタンで／どんな状態のとき）</strong>を書いて初めて実装できる。また<strong>戻る経路・エラー時の遷移先・権限が無い場合の挙動</strong>を描き落とすと、実装者は必ず質問することになる。</p></noscript>
+            <div style="overflow-x:auto">
+              <svg viewBox="0 0 700 300" width="700" height="300" role="img" aria-label="经费精算系统的画面迁移图：登录、申请一览、申请登录编辑、内容确认、申请状况照会、承认待一览、承认内容确认之间的迁移关系">
+                <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11.5">
+                  <g class="fl-node" data-k="z010" tabindex="0" role="button" aria-label="ログイン画面">
+                    <rect x="14" y="118" width="108" height="42" rx="8"/>
+                    <text x="68" y="136" text-anchor="middle" font-weight="600">ログイン</text>
+                    <text x="68" y="151" text-anchor="middle" font-size="9.5">SC-Z010</text>
+                  </g>
+                  <g class="fl-node" data-k="a010" tabindex="0" role="button" aria-label="申請一覧画面">
+                    <rect x="168" y="118" width="118" height="42" rx="8"/>
+                    <text x="227" y="136" text-anchor="middle" font-weight="600">申請一覧</text>
+                    <text x="227" y="151" text-anchor="middle" font-size="9.5">SC-A010</text>
+                  </g>
+                  <g class="fl-node" data-k="a020" tabindex="0" role="button" aria-label="経費申請登録編集画面">
+                    <rect x="332" y="42" width="128" height="42" rx="8"/>
+                    <text x="396" y="60" text-anchor="middle" font-weight="600">申請 登録・編集</text>
+                    <text x="396" y="75" text-anchor="middle" font-size="9.5">SC-A020</text>
+                  </g>
+                  <g class="fl-node" data-k="a030" tabindex="0" role="button" aria-label="内容確認画面">
+                    <rect x="510" y="42" width="118" height="42" rx="8"/>
+                    <text x="569" y="60" text-anchor="middle" font-weight="600">内容確認</text>
+                    <text x="569" y="75" text-anchor="middle" font-size="9.5">SC-A030</text>
+                  </g>
+                  <g class="fl-node" data-k="a040" tabindex="0" role="button" aria-label="申請状況照会画面">
+                    <rect x="332" y="196" width="128" height="42" rx="8"/>
+                    <text x="396" y="214" text-anchor="middle" font-weight="600">申請状況照会</text>
+                    <text x="396" y="229" text-anchor="middle" font-size="9.5">SC-A040</text>
+                  </g>
+                  <g class="fl-node" data-k="b010" tabindex="0" role="button" aria-label="承認待ち一覧画面">
+                    <rect x="168" y="248" width="118" height="42" rx="8"/>
+                    <text x="227" y="266" text-anchor="middle" font-weight="600">承認待ち一覧</text>
+                    <text x="227" y="281" text-anchor="middle" font-size="9.5">SC-B010</text>
+                  </g>
+                  <g class="fl-node" data-k="b020" tabindex="0" role="button" aria-label="承認内容確認画面">
+                    <rect x="510" y="248" width="118" height="42" rx="8"/>
+                    <text x="569" y="266" text-anchor="middle" font-weight="600">承認 内容確認</text>
+                    <text x="569" y="281" text-anchor="middle" font-size="9.5">SC-B020</text>
+                  </g>
+
+                  <g stroke="var(--kb-fg-muted)" stroke-width="1.4" fill="none">
+                    <path d="M 122 139 H 164"/><path d="M 168 139 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 286 130 C 310 130, 312 63, 328 63"/><path d="M 332 63 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 460 63 H 506"/><path d="M 510 63 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 286 150 C 310 150, 312 217, 328 217"/><path d="M 332 217 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 286 269 H 506"/><path d="M 510 269 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                  </g>
+                  <g stroke="var(--kb-accent)" stroke-width="1.2" fill="none" stroke-dasharray="4 4">
+                    <path d="M 569 42 C 569 12, 300 8, 227 14 C 200 17, 200 100, 214 114"/>
+                    <path d="M 510 84 C 480 100, 470 84, 462 72"/>
+                    <path d="M 569 290 C 569 296, 300 298, 240 292"/>
+                  </g>
+                  <path d="M 214 118 l 2 -9 l -8 5 z" fill="var(--kb-accent)"/>
+                  <path d="M 462 72 l 8 3 l -3 -8 z" fill="var(--kb-accent)"/>
+                  <path d="M 240 292 l 8 3 l -3 -8 z" fill="var(--kb-accent)"/>
+
+                  <text x="298" y="94" font-size="9.5" fill="var(--kb-fg-muted)">［新規作成］［編集］</text>
+                  <text x="466" y="55" font-size="9.5" fill="var(--kb-fg-muted)">［確認画面へ］</text>
+                  <text x="298" y="188" font-size="9.5" fill="var(--kb-fg-muted)">［状況を見る］</text>
+                  <text x="330" y="262" font-size="9.5" fill="var(--kb-fg-muted)">［明細を開く］</text>
+                  <text x="330" y="20" font-size="9.5" fill="var(--kb-accent)">［提出する］→ 一覧へ戻る</text>
+                  <text x="478" y="100" font-size="9.5" fill="var(--kb-accent)">［修正する］</text>
+                  <text x="330" y="298" font-size="9.5" fill="var(--kb-accent)">［承認］［差戻し］→ 一覧へ</text>
+                </g>
+              </svg>
+            </div>
+            <div class="fl-panel" id="fl-panel" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h2>画面項目定義書</h2>
+        <p>基本設計で最も分厚く、最も価値のある一枚。<strong>この表が書ければ、実装者は質問せずに作れる</strong>——逆に言えば、質問が来る箇所がこの表の穴。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>画面項目定義書　SC-A020 経費申請 登録・編集</span><span class="kb-doc-id">DOC-303 / v0.5</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>No</th><th>項目名</th><th>物理名</th><th>種別</th><th>型・桁</th><th>必須</th><th>初期値</th><th>編集</th><th>入力チェック</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>申請番号</td><td>application_no</td><td>ラベル</td><td>文字 12</td><td>—</td><td>新規時は空欄<br>（提出時に採番）</td><td>不可</td><td>—</td></tr>
+                <tr><td>2</td><td>申請者</td><td>applicant_name</td><td>ラベル</td><td>文字 60</td><td>—</td><td>ログインユーザー名</td><td>不可</td><td>—</td></tr>
+                <tr><td>3</td><td>所属部門</td><td>department_name</td><td>ラベル</td><td>文字 40</td><td>—</td><td>ログインユーザーの所属</td><td>不可</td><td>—</td></tr>
+                <tr><td>4</td><td>費目</td><td>expense_type_cd</td><td>プルダウン</td><td>文字 4</td><td>◯</td><td>未選択</td><td>可</td><td>未選択の場合エラー（E0001）<br>選択肢は M_EXPENSE_TYPE の有効なものを表示順に</td></tr>
+                <tr><td>5</td><td>金額（税込）</td><td>amount</td><td>数値入力</td><td>整数 8</td><td>◯</td><td>空欄</td><td>可</td><td>未入力：E0001／数値以外：E0002<br>0 以下：E0003／1,000,000 超：E0004（上限は業務ルール B-010-04）</td></tr>
+                <tr><td>6</td><td>消費税額</td><td>tax_amount</td><td>ラベル</td><td>整数 8</td><td>—</td><td>0</td><td>不可</td><td>金額入力時に自動計算<br>＝金額 ÷ (1+税率) の小数点以下切捨てを金額から減じた額（方式設計 3.10）</td></tr>
+                <tr><td>7</td><td>発生日</td><td>expense_date</td><td>日付</td><td>日付</td><td>◯</td><td>本日</td><td>可</td><td>未入力：E0001／未来日：E0005<br>本日から 61 日以上前：E0006（業務ルール B-010-01）</td></tr>
+                <tr><td>8</td><td>支払先</td><td>payee_name</td><td>テキスト</td><td>文字 60</td><td>◯</td><td>空欄</td><td>可</td><td>未入力：E0001／60 文字超：E0007<br><strong>Shift_JIS に変換できない文字：W0002（警告・提出は可）</strong></td></tr>
+                <tr><td>9</td><td>目的</td><td>purpose</td><td>テキストエリア</td><td>文字 200</td><td>△</td><td>空欄</td><td>可</td><td><strong>金額が 30,000 以上の場合は必須</strong>：E0008（業務ルール B-010-02）<br>200 文字超：E0007</td></tr>
+                <tr><td>10</td><td>領収書</td><td>—</td><td>ファイル</td><td>—</td><td>◯</td><td>—</td><td>可</td><td>0 件：E0009／11 件以上：E0010<br>1 件 5MB 超：E0011／JPEG・PNG 以外：E0012</td></tr>
+                <tr><td>11</td><td>状態</td><td>status</td><td>ラベル</td><td>文字 2</td><td>—</td><td>10（下書き）</td><td>不可</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 必須欄　◯：常に必須／△：条件付き必須（条件は入力チェック欄に記載）<br>※ 編集可否は状態により変わる：状態 10（下書き）・30（差戻し）のときのみ編集可。20 以降は参照のみ（イベント定義参照）。<br>※ エラーメッセージの文言はメッセージ一覧（DOC-305）による。本書にはメッセージIDのみ記載する。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 項目定義書に必ず入れる 3 つの列</p>
+          <p><strong>①「初期値」</strong>——書き忘れると、実装者が空欄にするか本日日付にするかで迷う。「ログインユーザーの所属」のように<strong>どこから取るか</strong>まで書く。<br><strong>②「編集可否」</strong>——しかも<strong>状態によって変わる</strong>ことを書く。上表の注記のように「状態 10・30 のときのみ編集可」と書かないと、差戻し後に編集できないシステムができる。<br><strong>③「入力チェック」にメッセージID</strong>——文言を直接書かず、メッセージ一覧を参照させる。同じ「必須です」が 200 箇所に散らばるのを防ぎ、文言変更が 1 箇所で済む（方式設計 3.5）。</p>
+        </div>
+
+        <h2>亲手试一试：入力チェック実験室</h2>
+        <p>上の項目定義書のチェック内容を、そのまま動くようにしたのが下のフォーム。<strong>わざと間違った値を入れて、どのメッセージIDが出るか確かめてほしい</strong>——項目定義書が「実装できる粒度」で書けているかどうかは、これができるかどうかで判定できる。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 入力チェック実験室：項目定義書どおりに動く申請フォーム</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：項目定義書の「入力チェック」列は、<strong>①どの条件で ②どのメッセージIDを ③エラー（提出不可）か警告（提出可）か</strong>の三点が揃って初めて実装できる。特に「金額 30,000 円以上なら目的が必須」のような<strong>項目間の条件</strong>と、「Shift_JIS 変換不可なら警告」のような<strong>業務判断を伴うチェック</strong>は、書き落とすと実装者が勝手に決めることになる。</p></noscript>
+            <div class="ic-form">
+              <div class="ic-f" id="f-type">
+                <label>費目 <b>*</b></label>
+                <select id="in-type">
+                  <option value="">（未選択）</option>
+                  <option value="1010">旅費交通費</option>
+                  <option value="1020">会議費</option>
+                  <option value="1030">交際費</option>
+                  <option value="1040">消耗品費</option>
+                </select>
+              </div>
+              <div class="ic-f" id="f-amount">
+                <label>金額（税込・円） <b>*</b></label>
+                <input type="text" id="in-amount" inputmode="numeric" placeholder="例）32000">
+              </div>
+              <div class="ic-f" id="f-date">
+                <label>発生日 <b>*</b></label>
+                <input type="date" id="in-date">
+              </div>
+              <div class="ic-f" id="f-payee">
+                <label>支払先 <b>*</b></label>
+                <input type="text" id="in-payee" placeholder="例）髙田商事株式会社">
+              </div>
+              <div class="ic-f" id="f-purpose">
+                <label>目的（30,000 円以上は必須）</label>
+                <input type="text" id="in-purpose" placeholder="例）A社との打合せ">
+              </div>
+              <div class="ic-f" id="f-file">
+                <label>領収書の添付枚数 <b>*</b></label>
+                <input type="text" id="in-file" inputmode="numeric" value="1">
+              </div>
+            </div>
+            <div class="kb-interactive-controls" style="margin-top:12px">
+              <button type="button" class="kb-btn kb-btn-primary" id="ic-submit">提出する</button>
+              <button type="button" class="kb-btn" id="ic-reset">クリア</button>
+            </div>
+            <div class="ic-msg" id="ic-msg" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h2>イベント定義と定番パターン</h2>
+        <p>項目が決まっても、<strong>ボタンを押したときに何が起きるか</strong>が書かれていなければ作れない。</p>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>イベント定義　SC-A020</span><span class="kb-doc-id">DOC-303 §5</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>イベント</th><th>表示条件</th><th>処理概要</th><th>遷移先</th></tr></thead>
+              <tbody>
+                <tr><td>画面表示</td><td>—</td><td>新規時：初期値を設定。編集時：申請番号をキーに取得し、<strong>状態が 10・30 以外なら参照モードで表示</strong>し、E0020 を表示</td><td>—</td></tr>
+                <tr><td>［一時保存］</td><td>状態 10・30 のとき</td><td>入力チェックのうち<strong>桁・型のみ</strong>を実施（必須チェックは行わない）。状態 10 で保存</td><td>SC-A010（I0001 表示）</td></tr>
+                <tr><td>［確認画面へ］</td><td>状態 10・30 のとき</td><td>全入力チェックを実施。エラー時は当画面に留まりメッセージ表示、入力値は保持</td><td>SC-A030</td></tr>
+                <tr><td>［キャンセル］</td><td>常時</td><td>入力内容を破棄。<strong>変更がある場合は確認ダイアログ（W0001）</strong></td><td>SC-A010</td></tr>
+                <tr><td>［削除］</td><td>状態 10 かつ登録済のとき</td><td>確認ダイアログ後、論理削除（削除者・削除日時を記録／方式設計 3.6）</td><td>SC-A010（I0002 表示）</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ ［一時保存］で必須チェックを行わないのは、入力途中の保存を可能にするため（要件 F-010-05）。<strong>この「なぜ」を書いておかないと、実装者が善意で必須チェックを入れてしまう。</strong></p>
+          </div>
+        </div>
+
+        <p>そして<strong>定番パターン</strong>——一覧・検索・登録・更新・削除の振る舞いは、全画面で統一する。方式設計（第 10 章）で決めてもよいし、画面設計の冒頭に「共通ルール」として書いてもよい：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>パターン</th><th>統一しておくこと</th></tr></thead>
+            <tbody>
+              <tr><td>一覧</td><td>1 ページ件数、ソートの初期順、0 件のときの表示（I0010「該当するデータがありません」）、件数表示の形式、ページ送りの位置</td></tr>
+              <tr><td>検索</td><td>検索条件の保持（一覧に戻ったとき条件が残るか——<strong>残らないと月末に地獄を見る</strong>）、部分一致か前方一致か、日付範囲の指定方法</td></tr>
+              <tr><td>登録・更新</td><td>確認画面を挟むか否か、成功時の遷移先とメッセージ、エラー時に入力値を保持すること</td></tr>
+              <tr><td>削除</td><td>確認ダイアログの有無、論理削除か物理削除か、削除後の遷移先</td></tr>
+              <tr><td>共通</td><td>必須項目の表示方法（<b style="color:var(--kb-danger)">*</b> か「必須」ラベルか）、エラーの表示位置、ボタンの配置順（左が主操作か右か）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>見えない要件が、画面上でどう見えるか</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方式（第 10 章）</th><th>画面上の見え方</th><th>設計書に書くこと</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>楽観ロック</td>
+                <td>更新ボタンを押したときに「他の利用者により更新されています。再読込してください」</td>
+                <td>メッセージID（E0030）、そのときの遷移先（当画面に留まる）、入力値を保持するか（<strong>保持しないと再入力になる</strong>）</td>
+              </tr>
+              <tr>
+                <td>機能権限</td>
+                <td>メニューに表示しない／ボタンを表示しない</td>
+                <td><strong>ボタンを隠すのは利便性のためであり、権限の担保ではない</strong>（方式設計 3.2）。URL 直接指定時は E0040 とエラー画面へ</td>
+              </tr>
+              <tr>
+                <td>データ権限</td>
+                <td>一覧に他部門のデータが出ない</td>
+                <td>「表示対象＝自部門の申請のみ」を画面ごとに明記。<strong>他人のIDを直接指定した場合は E0041</strong></td>
+              </tr>
+              <tr>
+                <td>セッションタイムアウト</td>
+                <td>30 分無操作後に操作すると、ログイン画面へ</td>
+                <td><strong>入力中のデータをどうするか</strong>——破棄か、下書き自動保存か。破棄なら「入力途中でタイムアウトして全部消えた」という最も嫌われる事象になる</td>
+              </tr>
+              <tr>
+                <td>システムエラー</td>
+                <td>エラー専用画面（SC-Z090）へ遷移し、エラーIDを表示</td>
+                <td>エラーIDを表示する理由——問い合わせ時にログと突き合わせるため（第 14 章の運用設計）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>メッセージ一覧（抜粋）</span><span class="kb-doc-id">DOC-305 / v0.4</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>ID</th><th>種別</th><th>文言</th><th>備考</th></tr></thead>
+              <tbody>
+                <tr><td>E0001</td><td>エラー</td><td>{0}を入力してください。</td><td>{0}＝項目名。必須チェック共通</td></tr>
+                <tr><td>E0004</td><td>エラー</td><td>{0}は{1}以下で入力してください。</td><td>上限チェック共通</td></tr>
+                <tr><td>E0006</td><td>エラー</td><td>発生日から 60 日を超えた経費は申請できません。経理部にご相談ください。</td><td><strong>対処方法まで書く</strong></td></tr>
+                <tr><td>E0008</td><td>エラー</td><td>30,000 円以上の申請には目的の入力が必要です。</td><td>条件付き必須</td></tr>
+                <tr><td>E0030</td><td>エラー</td><td>他の利用者により更新されています。お手数ですが、再読込のうえ操作をやり直してください。</td><td>楽観ロック競合時</td></tr>
+                <tr><td>W0001</td><td>警告</td><td>入力内容が保存されていません。破棄してよろしいですか？</td><td>確認ダイアログ</td></tr>
+                <tr><td>W0002</td><td>警告</td><td>支払先に、会計システムで扱えない文字が含まれています。連携時に確認が必要になる場合があります。</td><td>提出は可能（方式設計 3.9）</td></tr>
+                <tr><td>I0001</td><td>情報</td><td>一時保存しました。</td><td>—</td></tr>
+                <tr><td>I0010</td><td>情報</td><td>該当するデータがありません。</td><td>一覧共通</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 文言中の {0} {1} は埋め込みパラメータ。<strong>「エラーが発生しました」のような、原因も対処も分からないメッセージを作らないこと。</strong><br>※ 全メッセージは発注者のレビュー・承認対象とする（第 6 章 習題 6.1 の N-U02）。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 冒頭の「月末に 50 件処理するのが大変」をどう防ぐか</p>
+          <p><strong>設計段階で打てる手は三つ。</strong></p>
+          <p><strong>① 業務のリズムを画面設計に持ち込む</strong>——第 4 章の業務調査で「月末に 50 件まとめて承認する」と分かっていた。ならば承認画面の設計は「1 件を丁寧に見る画面」ではなく<strong>「50 件を速く捌く画面」</strong>であるべき。具体的には：一覧上で金額・費目・申請者が見える／一覧から直接承認できる（詳細を開かなくてよい）／一括選択／<strong>承認後に一覧の同じ位置に戻る</strong>（先頭に戻らない）／キーボードで次の明細へ移動できる。</p>
+          <p><strong>② 操作回数を数える</strong>——設計レビューの観点に「1 件あたりの操作回数」を入れる。「承認 1 件につき 4 クリック × 50 件＝200 クリック」と数値で示すと、客も「それは辛い」と判断できる。<strong>これは第 6 章の「使いやすさを測れる形にする」の実践形</strong>（N-U 系の非機能要件として「承認者は一覧から 3 クリック以内で承認を完了できること」）。</p>
+          <p><strong>③ 触れるものを見せる</strong>——ワイヤーフレームは静止画で、操作感は伝わらない。<strong>主要画面 3〜5 本だけ HTML のモックを作って触ってもらう</strong>（第 9 章 例題 3）。工数は数人日、防げる手戻りは数十人日。<br>本教材のこの演示自体がその実例——項目定義書を読むより、実際にエラーを出してみるほうが速く理解できる。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 「エラーが発生しました」というメッセージ</p>
+          <p>実装者が善意で入れる、最も役に立たないメッセージ。利用者は<strong>何が悪かったのかも、どうすればよいのかも分からない</strong>。そして経理部に電話がかかってくる。</p>
+          <p><strong>良いメッセージの三要素</strong>：<br>① <strong>何が起きたか</strong>——「発生日から 60 日を超えた経費は申請できません」<br>② <strong>なぜか（必要なら）</strong>——業務ルールに基づくものなら、その旨が伝わる文言に<br>③ <strong>どうすればよいか</strong>——「経理部にご相談ください」「再読込のうえ操作をやり直してください」</p>
+          <p><strong>システムエラーの場合は別扱い</strong>：利用者に技術的詳細（スタックトレース、SQL エラー）を見せてはいけない（セキュリティ上も、心理的にも）。代わりに<strong>エラーIDを表示する</strong>——「システムエラーが発生しました。エラーID：E-20270115-0032。お手数ですが情報システム部にご連絡ください。」<br>このIDでログを検索すれば原因が特定できる。<strong>第 10 章のログ方式と、第 14 章の問い合わせ対応が、この一行で繋がる。</strong></p>
+          <p><strong>設計上のルール</strong>：メッセージ一覧に「エラーが発生しました」という汎用文言を<strong>一つも作らない</strong>。作ると必ず濫用される。システムエラー用の文言だけは例外として、エラーID付きの形式で一つだけ用意する。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 検索条件が保持されず、月末の経理が発狂した</p>
+          <p>経理チェック一覧（SC-C010）で「今月・未確定」で絞り込み、1 件目を開いて確定し、一覧に戻ると——<strong>検索条件がクリアされ、全件表示に戻っている</strong>。もう一度条件を入れ直す。50 回繰り返す。</p>
+          <p><strong>なぜ起きるか</strong>：項目定義書には検索条件の項目が書かれているが、<strong>「一覧に戻ったときに条件を保持するか」がどこにも書かれていない</strong>。実装者は書かれていないことを実装しないので、保持されない。</p>
+          <p><strong>設計書に書くべきこと</strong>：<br>・検索条件を保持する範囲（同一セッション内／ブラウザを閉じるまで／次回ログイン時も）<br>・保持する条件（ページ番号・ソート順も含むか。<strong>ページ 3 から詳細を開いて戻ったらページ 1、も同じ苦痛</strong>）<br>・クリアされる契機（メニューから開き直したとき、明示的な［条件クリア］ボタン）</p>
+          <p><strong>一般化した教訓</strong>：<strong>「戻ったときにどうなるか」は、画面設計で最も落ちやすい</strong>。遷移図の矢印は「進む」ばかり描かれ、「戻る」の矢印には条件が書かれない。<br>チェック方法：<strong>画面遷移図のすべての矢印に、逆向きの矢印があるかを確認し、あるなら「戻ったときの状態」を書く</strong>。これを習慣にすると、この種の事故は激減する。<br>そして本章の定番パターン表に「検索条件の保持」を入れておけば、<strong>全画面で一度に解決できる</strong>——個別画面で考えるのではなく、共通ルールとして一度決める。これが第 10 章の方式設計の思想の、画面レベルでの応用。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>画面設計の五つの成果物を挙げ、それぞれ主な読者が誰かを答えよ。また、経理部長にレビューしてもらうべきものはどれか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>五つの成果物と読者</strong>：①画面一覧（PM・情シス）②画面遷移図（ユーザー部門）③画面レイアウト／ワイヤーフレーム（ユーザー部門）④画面項目定義書（製造者・テスト設計者）⑤イベント定義（製造者）。＋メッセージ一覧（全員）。</p>
+            <p><strong>経理部長にレビューしてもらうべきもの</strong>：<strong>②画面遷移図と③レイアウト</strong>、それと<strong>メッセージ一覧の一部</strong>（業務に関わる文言）。</p>
+            <p><strong>理由</strong>：経理部長が判断できるのは「業務が回るか」であって、「桁数が 8 で足りるか」ではない。項目定義書 40 ページを渡しても、有効な指摘は出ない——出るのは誤字の指摘だけ（第 3 章の観点指定）。<br>ただし<strong>項目定義書の一部は業務判断を含む</strong>：金額の上限、必須の条件、保持する日数。これらは<strong>抜き出して「業務ルール確認シート」として見てもらう</strong>と有効な指摘が得られる。<strong>成果物を読者に合わせて切り出す</strong>のは、レビュー設計の実践的なテクニック。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>画面項目定義書の「初期値」「編集可否」の列が無いと、実装時にどんな問題が起きるか。本章の項目定義書から具体例を挙げて説明せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>初期値が無い場合</strong>：<br>・「発生日」——空欄か本日か。空欄なら毎回入力が必要で、月末に 10 件申請する人には苦痛。本日ならほとんどのケースで入力不要。<strong>業務の頻度を知らないと決められない判断</strong>なので、実装者に委ねると必ず間違う。<br>・「所属部門」——ログインユーザーの所属を自動設定するのか、選択させるのか。自動なら「どこから取るか」（社員マスタか、前回申請時の値か）まで書く必要がある。<br>・「費目」——未選択にするか、前回使った費目を初期表示するか。後者は便利だが、間違いも増える（業務判断）。</p>
+            <p><strong>編集可否が無い場合</strong>：<br>・「申請番号」を編集可にしてしまう実装（通常あり得ないが、書いていなければ入力欄として作られる可能性はある）。<br>・より深刻なのは<strong>状態による編集可否</strong>。本章の注記「状態 10・30 のときのみ編集可」が無いと、(a) 承認待ちの申請を申請者が書き換えられてしまう（承認済の内容が変わる＝統制上の重大な欠陥）(b) 逆に差戻し後に編集できず、業務が回らない——のどちらかが起きる。<strong>どちらも実装者の裁量では決められない業務ルール。</strong></p>
+            <p><strong>一般化</strong>：項目定義書の列は<strong>「実装者が迷う点」を先回りして埋めるためにある</strong>。列が足りているかどうかは、「この表だけ見て迷わず作れるか」で判定する（第 10 章の粒度の基準と同じ）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>入力チェックを「エラー（提出不可）」にするか「警告（提出可）」にするかは、何を基準に判断すべきか。本章の例（重複申請の警告、Shift_JIS 変換不可の警告）を使って説明せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>基準</strong>：<strong>「その値が絶対に間違いだと言い切れるか」</strong>。言い切れるならエラー、正当なケースがあり得るなら警告。</p>
+            <p><strong>重複申請（W）の場合</strong>：同一日・同一金額・同一支払先の申請が既にある。多くは二重申請のミスだが、<strong>正当なケースもある</strong>——同じ日に同じ店で 2 回会議をした、同じ金額の交通費が往復である。エラーで弾くと、正当な申請ができなくなる。だから警告にして、利用者の確認操作で通す。</p>
+            <p><strong>Shift_JIS 変換不可（W）の場合</strong>：「髙田商事」は正しい社名。<strong>利用者は何も間違っていない</strong>。エラーで弾いたら、その人は正しい社名を入力できない。だから警告にして、連携時に経理が対応する運用にする。</p>
+            <p><strong>逆にエラーにすべきもの</strong>：必須項目の未入力、数値でない金額、未来の発生日、60 日超過（業務ルールで明確に禁止）、5MB を超えるファイル（システム制約）。<strong>いずれも「正当なケースが存在しない」</strong>。</p>
+            <p><strong>設計上の注意</strong>：警告を多用すると、利用者は<strong>読まずに OK を押す</strong>ようになり、警告の意味が失われる。だから警告は少数精鋭にする。<br>そして<strong>この判断は業務判断であって技術判断ではない</strong>——「重複を弾くか通すか」は経理部に確認すべき事項（第 3 章の QA表）。第 4 章の「厳しくすると現場が申請できない」というトレードオフが、ここで具体的な設計になる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>画面遷移図で、矢印に必ず書くべき情報を三つ挙げよ。また、描き落とされやすい遷移を三つ挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>矢印に書くべき情報</strong>：① <strong>遷移の契機</strong>（どのボタン・どの操作か。「［確認画面へ］」）② <strong>遷移条件</strong>（どの状態・どの権限のときか。「状態 10・30 のときのみ」）③ <strong>遷移時のデータの扱い</strong>（入力値を引き継ぐか、保存するか）。</p>
+            <p><strong>描き落とされやすい遷移</strong>：<br>① <strong>戻る経路</strong>——確認画面から編集画面へ、詳細から一覧へ。しかも「戻ったときに何が残っているか」（例題 3 の検索条件）。<br>② <strong>エラー時の遷移</strong>——入力エラーは当画面に留まる、システムエラーはエラー画面へ、権限が無ければどこへ。<strong>正常系だけの遷移図は、実装できない遷移図</strong>（第 4 章の業務フローと同じ構造）。<br>③ <strong>セッションタイムアウトとログアウト</strong>——どの画面からでも発生し、ログイン画面へ戻る。全部の矢印を描くと図が汚れるので、「全画面共通の遷移」として別枠に書くのが定石。<br>④（追加）<strong>メニューからの直接遷移</strong>——一覧を経由せずメニューから直接開ける画面。ブックマークやURL直打ちで開かれた場合の挙動も含む。</p>
+            <p><strong>実務的なコツ</strong>：遷移図が複雑になりすぎたら、<strong>「正常系の遷移図」と「共通・例外の遷移ルール（表）」に分ける</strong>。図は業務の流れを伝えるために、表は実装の網羅性のために——読者が違うので、分けたほうが両方の目的を果たせる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>承認待ち一覧（SC-B010）を、「月末に 50 件を捌く」ことに最適化して設計せよ。表示項目、絞り込み条件、操作方法、承認後の挙動を具体的に述べ、それぞれの根拠を第 4 章の業務調査結果と結びつけよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>表示項目</strong>：申請番号／申請者／所属／発生日／費目／<strong>金額</strong>／目的（先頭 20 文字）／領収書の有無／申請日時。<br>根拠：<strong>承認者が実際に見ているのは金額と費目</strong>（第 4 章 習題 4.1 の「基本的には金額だけ見て押してますね」）。詳細画面を開かずに判断できる項目を一覧に出すことで、クリック数が激減する。</p>
+            <p><strong>絞り込み・並べ替え</strong>：既定は「申請日時の古い順」（先入先出で滞留を防ぐ）。絞り込みは 費目・金額範囲・申請者・期間。<strong>金額の降順ソート</strong>を用意すると、「高額なものだけ丁寧に見る」という実際の運用に合う。</p>
+            <p><strong>操作方法</strong>：<br>・一覧の各行に［承認］［差戻し］ボタンを配置（詳細を開かずに承認できる）。<br>・チェックボックスで複数選択 →［一括承認］（F-021）。<strong>ただし一括差戻しは作らない</strong>——差戻しには個別の理由が必要だから（F-022）。<br>・領収書は<strong>一覧上でサムネイル表示、クリックで拡大</strong>（別画面に遷移しない）。<br>・キーボード操作（次の行へ移動、承認）に対応。</p>
+            <p><strong>承認後の挙動</strong>：<strong>一覧の同じ位置に留まる</strong>（先頭に戻らない）。承認した行は一覧から消えるか、グレーアウトして残す（<strong>消えると「今何を承認したか」が分からなくなるので、グレーアウトのほうが安心感がある</strong>——ただし件数が多い場合は消すほうが速い。客に確認すべき点）。検索条件・ソート順・ページ位置を保持（例題 3）。</p>
+            <p><strong>非機能要件との接続</strong>：この画面は月末ピーク時（同時 50 ユーザー・第 7 章 N-P02）に使われる。<strong>1 ページ 50 件の一覧に領収書サムネイルを 50 枚読み込むと、3 秒以内（N-P01）を満たせない可能性がある</strong>——サムネイルの遅延読み込みや、既定は非表示にする設計が必要。<strong>画面の使いやすさと性能要件はトレードオフになることがあり、その調整も画面設計の仕事。</strong></p>
+            <p><strong>この問題の核心</strong>：良い画面設計は<strong>業務調査（第 4 章）の情報量に比例する</strong>。「月末に 50 件」「金額しか見ていない」「領収書は一応確認する」——これらを知らずに設計すると、要件は満たすが使えない画面ができる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>セッションタイムアウト（30 分無操作）が、経費申請の入力中に発生した場合の挙動を設計せよ。複数の案を挙げ、それぞれの利点・欠点・実装コストを比較し、推奨案を選べ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>案 A：入力内容を破棄し、ログイン画面へ</strong><br>利点：実装が最も簡単。セキュリティ上も明快。<br>欠点：<strong>利用者が最も嫌う挙動</strong>。10 分かけて入力した内容が消える。しかも「なぜ消えたか」が分からないと、システム不信につながる。<br>コスト：ほぼゼロ。</p>
+            <p><strong>案 B：タイムアウト前に警告を出す</strong>（残り 5 分で「まもなくタイムアウトします。［継続する］」）<br>利点：実装が比較的簡単で、事故を大幅に減らせる。<br>欠点：席を外している間に警告が出て消える場合は救えない。<br>コスト：小（共通処理として全画面に適用可能）。</p>
+            <p><strong>案 C：入力中の内容を自動的に下書き保存する</strong><br>利点：確実に救える。「一時保存」機能（F-010-05）が既にあるので、それを定期実行するだけ。<br>欠点：未完成のデータが下書きとして残る（利用者が混乱する可能性）。自動保存のタイミング設計が必要。<br>コスト：中。</p>
+            <p><strong>案 D：ログイン後に元の画面と入力内容を復元する</strong><br>利点：利用者体験は最良。<br>欠点：実装が複雑。認証前に入力データを保持する必要があり、<strong>セキュリティ設計が難しい</strong>（第三者が同じ端末で操作した場合など）。<br>コスト：大。</p>
+            <p><strong>推奨案：B ＋ C</strong>。警告で大半を救い、それでも取り逃したものを自動下書き保存で拾う。実装コストに対する効果が最も高い。<br>合わせて<strong>再ログイン後のメッセージ</strong>を設計する：「セッションの有効期限が切れたため、入力内容を下書きとして保存しました。申請一覧からご確認ください。」——<strong>何が起きて、どうすればよいかを伝える</strong>（例題 2）。</p>
+            <p><strong>この設計判断が示すこと</strong>：セッションタイムアウトは方式設計（第 10 章）で「30 分」と決めた。しかし<strong>「30 分後に何が起きるか」は画面設計の仕事</strong>。方式設計は枠を決め、画面設計はその枠が利用者にどう見えるかを決める——この分業が、第 10 章で述べた二層構造の実際の姿。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたが日常的に使っているシステムの画面を一つ選び、本章の画面項目定義書の形式で書き起こせ。書けない項目（初期値がどこから来るのか分からない、チェック条件が推測できない）が出たら、それを列挙し、「利用者から見て挙動が予測できない設計」がどこにあるかを考察せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>この演習で典型的に見つかることを挙げる。</p>
+            <p><strong>発見①「エラーメッセージから条件が逆算できない」</strong>——「入力内容に誤りがあります」とだけ出て、どの項目のどの条件が違反したのか分からない。<strong>これは項目定義書のメッセージID設計が甘い（あるいは存在しない）証拠</strong>。良いシステムは、エラーを見れば項目定義が推測できる。</p>
+            <p><strong>発見②「同じ入力なのに、画面によって挙動が違う」</strong>——ある画面では全角数字が自動変換され、別の画面ではエラーになる。<strong>方式設計の不在</strong>（第 10 章）が、利用者から見える形で現れている。</p>
+            <p><strong>発見③「初期値の由来が分からない」</strong>——なぜこの値が入っているのか（前回値？ マスタの既定値？ 本日？）が予測できない。予測できないと、利用者は毎回確認することになり、それ自体が業務負荷。</p>
+            <p><strong>発見④「必須かどうかが操作してみないと分からない」</strong>——<b style="color:var(--kb-danger)">*</b> が付いていない項目が、提出時に必須エラーになる。<strong>条件付き必須（本章の「目的」欄）で特に起きやすい</strong>。良い設計は、金額を 30,000 円以上入力した瞬間に目的欄に <b style="color:var(--kb-danger)">*</b> を付ける。</p>
+            <p><strong>発見⑤「戻ると状態が失われる」</strong>——例題 3 そのもの。ブラウザの戻るボタンを押したときの挙動が設計されていない。</p>
+            <p><strong>この演習の狙い</strong>：<strong>「使いにくい」という感覚の正体が、設計書のどの欄の空白なのかを特定できるようになる</strong>こと。第 6 章で「使いやすさを測れる形に翻訳する」と述べたが、その翻訳先は最終的に<strong>項目定義書の一つ一つのセル</strong>である。逆に言えば、項目定義書を丁寧に埋めるという地味な作業が、使いやすさの大部分を決めている。<br>そして良い設計者は、この表を埋めながら<strong>「利用者はここで何を考えるだろう」</strong>と想像している——40 ページの表は、実は 40 ページ分の想像の記録なのだ。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 画面設計には二つの仕事——<strong>実装できる精度で書く（項目定義書）</strong>と<strong>客が触った感じを想像できるようにする（ワイヤ／モック）</strong>。片方だけでは必ず事故る；② 五つの成果物のうち①②③はユーザー部門向け、④⑤は製造者向け——<strong>レビューの読者を分ける</strong>；③ 画面IDは機能IDの分類と揃え、画面一覧に複雑度を持たせて見積根拠にする；④ 画面遷移図は矢印ごとに<strong>契機・条件・データの扱い</strong>を書き、<strong>戻る経路・エラー時・タイムアウト</strong>を描き落とさない；⑤ 項目定義書に必ず入れる三列は<strong>初期値（どこから取るか）・編集可否（状態によって変わる）・入力チェック（メッセージIDで参照）</strong>；⑥ チェックのエラー／警告は<strong>「絶対に間違いだと言い切れるか」</strong>で判断し、警告は少数精鋭に；⑦ 一覧・検索・登録・更新・削除は<strong>定番パターンとして全画面で統一</strong>——特に<strong>検索条件・ソート・ページ位置の保持</strong>；⑧ 楽観ロック・権限・タイムアウトといった「見えない方式」は、画面上の具体的な振る舞いとして設計書に落とす。<br><strong>下一章预告</strong>：画面に映るデータは、どこに、どんな形で置かれているのか。次章はデータ設計——ER図、正規化、テーブル定義書、そして CRUD図で漏れを機械的に見つける方法。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./10-基本设计全景与方式设计.html">← 第 10 章 基本设计全景与方式設計</a>
+          <a href="./12-数据设计.html">第 12 章 データ設計 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      /* ---------- 画面遷移図 ---------- */
+      var panel = document.getElementById("fl-panel");
+      var nodes = Array.prototype.slice.call(document.querySelectorAll(".fl-node"));
+
+      var SCREENS = {
+        z010: {
+          name: "ログイン", id: "SC-Z010 / 機能 Z-010",
+          role: "全員", from: "—（起点）", to: "SC-A010 申請一覧",
+          note: "SSO 認証基盤へリダイレクトし、認証後に戻る。本システムはパスワードを保持しない（方式設計 3.1）。未認証で他画面のURLを直接指定した場合も、この画面を経由する。",
+          wire: [["bar", "経費精算システム"], ["line", "全社 SSO でログインします"], ["btn", "SSO でログイン"]]
+        },
+        a010: {
+          name: "申請一覧", id: "SC-A010 / 機能 F-011",
+          role: "全社員（データ範囲：自分の申請のみ）", from: "SC-Z010、各画面のメニュー", to: "SC-A020（新規／編集）、SC-A040（状況照会）",
+          note: "検索条件・ソート順・ページ位置を同一セッション内で保持する。0 件のときは I0010 を表示。状態 10・30 の行にのみ［編集］［削除］を表示する。",
+          wire: [["bar", "申請一覧"], ["line", "期間 [    ] 状態 [▼] 費目 [▼]  〈検索〉"], ["line", "EX2026000012  10/05  旅費交通費  ¥3,200  差戻し"], ["line", "EX2026000011  10/03  会議費      ¥8,400  承認待ち"], ["btn", "新規作成"], ["btnsub", "編集"], ["btnsub", "削除"]]
+        },
+        a020: {
+          name: "経費申請 登録・編集", id: "SC-A020 / 機能 F-010, F-012, F-013",
+          role: "全社員（自分の申請のみ）", from: "SC-A010", to: "SC-A030（確認画面へ）、SC-A010（一時保存・キャンセル）",
+          note: "状態 10（下書き）・30（差戻し）のときのみ編集可。それ以外は参照モードで表示し E0020 を出す。［一時保存］は必須チェックを行わない（F-010-05）。下の「入力チェック実験室」がこの画面。",
+          wire: [["bar", "経費申請 登録"], ["line", "費目 [▼]  金額 [      ] 円"], ["line", "発生日 [2027/01/15]  支払先 [          ]"], ["line", "目的 [                              ]"], ["line", "領収書 〈ファイルを選択〉 (0/10 件)"], ["btn", "確認画面へ"], ["btnsub", "一時保存"], ["btnsub", "キャンセル"]]
+        },
+        a030: {
+          name: "経費申請 内容確認", id: "SC-A030 / 機能 F-010",
+          role: "全社員", from: "SC-A020", to: "SC-A010（提出する）、SC-A020（修正する）",
+          note: "入力内容を参照表示し、［提出する］で採番・状態 20 へ遷移・承認者へ通知（Z-020）。［修正する］で SC-A020 へ戻り、入力内容を保持する。二重送信を防ぐため、提出後はボタンを非活性化する。",
+          wire: [["bar", "内容確認"], ["line", "以下の内容で申請します"], ["line", "費目：会議費　金額：¥8,400（うち消費税 ¥763）"], ["line", "発生日：2027/01/12　支払先：株式会社サンプル"], ["btn", "提出する"], ["btnsub", "修正する"]]
+        },
+        a040: {
+          name: "申請状況照会", id: "SC-A040 / 機能 F-015",
+          role: "全社員（自分の申請のみ）", from: "SC-A010", to: "SC-A010（戻る）",
+          note: "現在の状態と、承認履歴（日時・実施者・差戻し理由）を時系列で表示する（F-023）。要求 R-005 の目的は「経理への問い合わせを減らす」ことなので、支払予定日の表示要否が課題 No.031 として残っている。",
+          wire: [["bar", "申請状況照会"], ["line", "EX2026000011　状態：承認待ち（課長承認済）"], ["line", "01/12 10:03  提出　（本人）"], ["line", "01/13 09:20  承認　鈴木課長"], ["line", "01/13 09:20  → 部長承認待ち"], ["btnsub", "一覧へ戻る"]]
+        },
+        b010: {
+          name: "承認待ち一覧", id: "SC-B010 / 機能 F-020, F-021",
+          role: "承認者（データ範囲：自部門）", from: "メニュー", to: "SC-B020（明細を開く）",
+          note: "月末に 50 件を捌く前提で設計する（習題 11.5）。一覧上に金額・費目を表示し、行から直接［承認］できる。複数選択による一括承認あり。一括差戻しは作らない（理由の個別入力が必要なため）。",
+          wire: [["bar", "承認待ち一覧（12 件）"], ["line", "☐ 田中  10/05  旅費交通費  ¥3,200  〈承認〉〈差戻し〉"], ["line", "☐ 佐藤  10/03  会議費      ¥8,400  〈承認〉〈差戻し〉"], ["btn", "選択した 2 件を一括承認"]]
+        },
+        b020: {
+          name: "承認 内容確認", id: "SC-B020 / 機能 F-020, F-022",
+          role: "承認者（自部門）", from: "SC-B010", to: "SC-B010（承認・差戻し後）",
+          note: "領収書画像を拡大表示できる。［差戻し］は理由の入力を必須とする（F-022）。楽観ロックにより、他の承認者が先に処理していた場合は E0030 を表示して当画面に留まる（方式設計 3.8）。",
+          wire: [["bar", "承認 内容確認"], ["line", "申請者：田中　費目：旅費交通費　¥3,200"], ["line", "［領収書画像］"], ["line", "差戻し理由 [                        ]"], ["btn", "承認"], ["btnsub", "差戻し"], ["btnsub", "一覧へ戻る"]]
+        }
+      };
+
+      function row(k, v) {
+        var r = document.createElement("div");
+        r.className = "fl-row";
+        var a = document.createElement("div");
+        a.className = "fl-k";
+        a.textContent = k;
+        var b = document.createElement("div");
+        b.className = "fl-v";
+        b.textContent = v;
+        r.appendChild(a); r.appendChild(b);
+        return r;
+      }
+
+      function selectScreen(k) {
+        var d = SCREENS[k];
+        nodes.forEach(function (n) { n.classList.toggle("sel", n.getAttribute("data-k") === k); });
+        panel.textContent = "";
+        var h = document.createElement("h4");
+        h.textContent = d.name;
+        var id = document.createElement("p");
+        id.className = "fl-id";
+        id.textContent = d.id;
+        panel.appendChild(h);
+        panel.appendChild(id);
+        panel.appendChild(row("利用ロール", d.role));
+        panel.appendChild(row("遷移元", d.from));
+        panel.appendChild(row("遷移先", d.to));
+        panel.appendChild(row("設計メモ", d.note));
+
+        var wf = document.createElement("div");
+        wf.className = "wf";
+        var btns = null;
+        d.wire.forEach(function (w) {
+          if (w[0] === "bar") {
+            var b = document.createElement("div");
+            b.className = "wf-bar";
+            b.textContent = w[1];
+            wf.appendChild(b);
+          } else if (w[0] === "line") {
+            var l = document.createElement("div");
+            l.className = "wf-line";
+            l.textContent = w[1];
+            wf.appendChild(l);
+          } else {
+            if (!btns) { btns = document.createElement("div"); btns.className = "wf-btns"; wf.appendChild(btns); }
+            var bt = document.createElement("div");
+            bt.className = "wf-btn" + (w[0] === "btnsub" ? " sub" : "");
+            bt.textContent = w[1];
+            btns.appendChild(bt);
+          }
+        });
+        panel.appendChild(wf);
+      }
+
+      nodes.forEach(function (n) {
+        var k = n.getAttribute("data-k");
+        n.addEventListener("click", function () { selectScreen(k); });
+        n.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectScreen(k); }
+        });
+      });
+      selectScreen("a020");
+
+      /* ---------- 入力チェック実験室 ---------- */
+      var msgBox = document.getElementById("ic-msg");
+      var btnSubmit = document.getElementById("ic-submit");
+      var btnReset = document.getElementById("ic-reset");
+      if (!msgBox) return;
+
+      var FIELDS = {
+        type: { el: document.getElementById("in-type"), box: document.getElementById("f-type"), label: "費目" },
+        amount: { el: document.getElementById("in-amount"), box: document.getElementById("f-amount"), label: "金額" },
+        date: { el: document.getElementById("in-date"), box: document.getElementById("f-date"), label: "発生日" },
+        payee: { el: document.getElementById("in-payee"), box: document.getElementById("f-payee"), label: "支払先" },
+        purpose: { el: document.getElementById("in-purpose"), box: document.getElementById("f-purpose"), label: "目的" },
+        file: { el: document.getElementById("in-file"), box: document.getElementById("f-file"), label: "領収書の枚数" }
+      };
+
+      // Shift_JIS に含まれない代表的な文字（デモ用）
+      var NON_SJIS = ["髙", "﨑", "\u{20BB7}", "①", "\u{1F600}"];
+
+      function todayStr() {
+        var d = new Date();
+        var m = ("0" + (d.getMonth() + 1)).slice(-2);
+        var day = ("0" + d.getDate()).slice(-2);
+        return d.getFullYear() + "-" + m + "-" + day;
+      }
+
+      function clearErrors() {
+        Object.keys(FIELDS).forEach(function (k) { FIELDS[k].box.classList.remove("err"); });
+      }
+
+      function validate() {
+        clearErrors();
+        var errs = [], warns = [];
+        function err(f, id, text) {
+          FIELDS[f].box.classList.add("err");
+          errs.push([id, text]);
+        }
+
+        if (!FIELDS.type.el.value) err("type", "E0001", "費目を入力してください。");
+
+        var raw = FIELDS.amount.el.value.trim();
+        var amount = NaN;
+        if (!raw) {
+          err("amount", "E0001", "金額を入力してください。");
+        } else if (!/^[0-9]+$/.test(raw)) {
+          err("amount", "E0002", "金額は半角数字で入力してください。");
+        } else {
+          amount = parseInt(raw, 10);
+          if (amount <= 0) err("amount", "E0003", "金額は 1 以上で入力してください。");
+          else if (amount > 1000000) err("amount", "E0004", "金額は 1,000,000 以下で入力してください。");
+        }
+
+        var dv = FIELDS.date.el.value;
+        if (!dv) {
+          err("date", "E0001", "発生日を入力してください。");
+        } else {
+          var d = new Date(dv + "T00:00:00");
+          var now = new Date(todayStr() + "T00:00:00");
+          var diff = Math.round((now - d) / 86400000);
+          if (diff < 0) err("date", "E0005", "発生日に未来の日付は指定できません。");
+          else if (diff > 60) err("date", "E0006", "発生日から 60 日を超えた経費は申請できません。経理部にご相談ください。（" + diff + " 日前）");
+        }
+
+        var payee = FIELDS.payee.el.value.trim();
+        if (!payee) err("payee", "E0001", "支払先を入力してください。");
+        else if (payee.length > 60) err("payee", "E0007", "支払先は 60 文字以内で入力してください。");
+        else {
+          var hit = NON_SJIS.filter(function (c) { return payee.indexOf(c) >= 0; });
+          if (hit.length) warns.push(["W0002", "支払先に、会計システムで扱えない文字（" + hit.join(" ") + "）が含まれています。連携時に確認が必要になる場合があります。"]);
+        }
+
+        var purpose = FIELDS.purpose.el.value.trim();
+        if (!isNaN(amount) && amount >= 30000 && !purpose) {
+          err("purpose", "E0008", "30,000 円以上の申請には目的の入力が必要です。");
+        } else if (purpose.length > 200) {
+          err("purpose", "E0007", "目的は 200 文字以内で入力してください。");
+        }
+
+        var fv = FIELDS.file.el.value.trim();
+        if (!/^[0-9]+$/.test(fv)) {
+          err("file", "E0002", "領収書の枚数は半角数字で入力してください。");
+        } else {
+          var n = parseInt(fv, 10);
+          if (n === 0) err("file", "E0009", "領収書を 1 件以上添付してください。");
+          else if (n > 10) err("file", "E0010", "領収書は 1 申請あたり 10 件までです。");
+        }
+
+        msgBox.textContent = "";
+        if (errs.length === 0 && warns.length === 0) {
+          var ok = document.createElement("p");
+          ok.className = "ic-o";
+          var tax = !isNaN(amount) ? amount - Math.floor(amount / 1.1) : 0;
+          ok.textContent = "◯ 入力チェックを通過しました。消費税額 " + tax.toLocaleString() + " 円（金額 ÷ 1.1 の小数点以下切捨てを金額から減じた額／方式設計 3.10）。確認画面 SC-A030 へ遷移します。";
+          msgBox.appendChild(ok);
+          return;
+        }
+        errs.forEach(function (e) {
+          var p = document.createElement("p");
+          p.className = "ic-e";
+          var m = document.createElement("span");
+          m.className = "ic-mid";
+          m.textContent = "[" + e[0] + "] ";
+          p.appendChild(m);
+          p.appendChild(document.createTextNode(e[1]));
+          msgBox.appendChild(p);
+        });
+        warns.forEach(function (w) {
+          var p = document.createElement("p");
+          p.className = "ic-w";
+          var m = document.createElement("span");
+          m.className = "ic-mid";
+          m.textContent = "[" + w[0] + "] ";
+          p.appendChild(m);
+          p.appendChild(document.createTextNode(w[1]));
+          msgBox.appendChild(p);
+        });
+        if (errs.length === 0) {
+          var okw = document.createElement("p");
+          okw.className = "ic-o";
+          okw.textContent = "◯ 警告はありますが、提出は可能です（確認操作を経て SC-A030 へ）。";
+          msgBox.appendChild(okw);
+        } else {
+          var ng = document.createElement("p");
+          ng.textContent = "エラーが " + errs.length + " 件あるため提出できません。入力値は保持され、該当項目が強調表示されます（方式設計 3.4）。";
+          msgBox.appendChild(ng);
+        }
+      }
+
+      function reset() {
+        FIELDS.type.el.value = "";
+        FIELDS.amount.el.value = "";
+        FIELDS.date.el.value = todayStr();
+        FIELDS.payee.el.value = "";
+        FIELDS.purpose.el.value = "";
+        FIELDS.file.el.value = "1";
+        clearErrors();
+        msgBox.textContent = "";
+        var p = document.createElement("p");
+        p.textContent = "項目定義書 DOC-303 のチェック内容をそのまま実装しています。わざと間違えて［提出する］を押し、どのメッセージIDが出るか確かめてください（例：金額 32000 で目的を空欄、発生日を 3 か月前、支払先に「髙」を入力）。";
+        msgBox.appendChild(p);
+      }
+
+      btnSubmit.addEventListener("click", validate);
+      btnReset.addEventListener("click", reset);
+      reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>14 运用・移行設計与向詳細設計的交棒 · 知识库</title>
+  <meta name="kb:summary" content="终章：运用设计（监视・备份・障害对应・问合窗口）、移行设计（方式选择・数据移行・リハーサル・切戻し）、向详细设计的交棒，以及全书总结与后续学习路线。">
+  <meta name="kb:tags" content="上流工程,基本设计,运用设计,移行设计,监视,备份,切戻,详细设计,交接,总结,slgc,yysj,yxsj">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：移行リハーサル */
+    .mg-steps { margin-top: 12px; }
+    .mg-step {
+      display: flex; align-items: center; gap: 8px; font-size: 0.82rem;
+      padding: 4px 0; border-bottom: 1px solid var(--kb-border);
+    }
+    .mg-step:last-child { border-bottom: none; }
+    .mg-nm { flex: 0 0 12em; }
+    .mg-b { flex: 1; height: 14px; background: var(--kb-surface-alt); border-radius: 7px; overflow: hidden; position: relative; }
+    .mg-b i { position: absolute; top: 0; height: 100%; background: var(--kb-accent); border-radius: 7px; }
+    .mg-b i.pnr { background: var(--kb-danger); }
+    .mg-b i.chk { background: var(--kb-ok); }
+    .mg-t { flex: 0 0 8.5em; text-align: right; color: var(--kb-fg-muted); font-size: 0.77rem; }
+    .mg-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; }
+    .mg-card { border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm); background: var(--kb-surface); padding: 9px 11px; }
+    .mg-card .mg-k { font-size: 0.73rem; color: var(--kb-fg-muted); display: block; margin-bottom: 2px; }
+    .mg-card .mg-v { font-size: 1.05rem; font-weight: 700; }
+    .mg-verdict {
+      margin-top: 12px; border-left: 3px solid var(--kb-ok); background: var(--kb-ok-soft);
+      padding: 10px 13px; font-size: 0.86rem; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+    }
+    .mg-verdict.warn { border-left-color: var(--kb-warn); background: var(--kb-warn-soft); }
+    .mg-verdict.bad { border-left-color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .mg-verdict p { margin: 0 0 5px; }
+    .mg-verdict p:last-child { margin-bottom: 0; }
+    /* 全書まとめ表 */
+    .sum td:first-child { white-space: nowrap; font-weight: 600; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 14 章 · 运用・移行設計与向詳細設計的交棒</h1>
+        <p class="kb-lead">終章。設計書ができても、システムは<strong>本番に載って、動き続けて</strong>初めて価値を持つ。この章は運用設計（監視・バックアップ・障害対応・問い合わせ）と移行設計（方式・データ移行・リハーサル・切戻し）、そして詳細設計への交棒を扱う。最後に、第 1 章からここまでの十四章を一本の線として振り返る。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 写出运用設計書（運用作業一覧・監視項目・障害対応フロー・問い合わせ体制）；② 选择移行方式并设计数据移行的现新映射与检证；③ 从切替窗口倒推移行リハーサル的时间轴，并定出<strong>切戻し判断点</strong>；④ 把基本設計書交棒给詳細設計，并说明「どこまで書けば製造できるか」；⑤ 把全书十四章串成一条线，并知道接下来学什么。</p>
+        </div>
+
+        <h2>稼働当日の朝、誰も業務を始められなかった</h2>
+        <p>移行は完璧だった。土曜の夜に切り替え、日曜の検証も通り、月曜の朝を迎えた。</p>
+        <p>そして 9 時、社員から問い合わせが殺到した——<strong>「ログインできません」</strong>。SSO 認証基盤への登録は済んでいたが、<strong>新システムの URL が社内ポータルに掲載されていなかった</strong>。そもそも「今日から新システムです」という通知が、全社に届いていなかった。</p>
+        <p>情シスの電話は鳴り止まず、経理部は自分の業務ができず、ベンダーは「システムは正常です」としか言えなかった。<strong>システムは動いていた。業務が動いていなかった。</strong></p>
+        <p>移行とは<strong>データを移すことではなく、業務を移すこと</strong>。そして運用とは<strong>システムを動かすことではなく、業務を回し続けること</strong>。この章の全体を貫くのは、この二つの区別である。</p>
+
+        <h2>運用設計</h2>
+        <h3>運用作業一覧</h3>
+        <p>まず「稼働後、誰が何を定期的にやるのか」を洗い出す。<strong>これが無いと、運用は「何か起きたら対応する」だけの受け身になる。</strong></p>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>運用作業一覧（運用設計書 §2 抜粋）</span><span class="kb-doc-id">DOC-308 / v0.4</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>No</th><th>作業</th><th>頻度</th><th>担当</th><th>時間帯</th><th>失敗したら</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>バッチ実行結果の確認（BT-D001, BT-M00x）</td><td>日次</td><td>情シス</td><td>始業時</td><td>当日の申請に旧マスタが使われる</td></tr>
+                <tr><td>2</td><td>バックアップ完了の確認</td><td>日次</td><td>情シス</td><td>始業時</td><td>障害時に復旧できない</td></tr>
+                <tr><td>3</td><td>ディスク使用率の確認</td><td>週次</td><td>情シス</td><td>—</td><td>添付ファイルで枯渇し、申請できなくなる</td></tr>
+                <tr><td>4</td><td>仕訳連携の件数・金額突合</td><td>月次</td><td>経理担当</td><td>連携翌営業日</td><td>決算の締めで発覚（第 13 章）</td></tr>
+                <tr><td>5</td><td>費目マスタ・承認ルートの保守</td><td>随時／年数回</td><td>経理担当</td><td>—</td><td>新費目が使えない／異動後の承認が回らない</td></tr>
+                <tr><td>6</td><td><strong>権限の棚卸し</strong></td><td>半期</td><td>情シス＋経理</td><td>—</td><td>退職者や異動者の権限が残り続ける</td></tr>
+                <tr><td>7</td><td>ログの削除・アーカイブ</td><td>月次（自動）</td><td>—（バッチ）</td><td>—</td><td>ディスク枯渇</td></tr>
+                <tr><td>8</td><td><strong>SSL 証明書の更新</strong></td><td>年次</td><td>情シス</td><td>期限 1 か月前</td><td><strong>ある日突然、全社がアクセスできなくなる</strong></td></tr>
+                <tr><td>9</td><td>稼働率・性能の測定と報告</td><td>月次</td><td>ベンダー保守</td><td>—</td><td>非機能要件の達成有無が誰にも分からない（第 7 章）</td></tr>
+                <tr><td>10</td><td><strong>バックアップからのリストア訓練</strong></td><td>年次</td><td>情シス＋ベンダー</td><td>—</td><td>いざというとき戻せないことが本番で判明する</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ No.8（証明書更新）と No.10（リストア訓練）は、忘れられる頻度が高く、忘れたときの被害が大きい代表例。<strong>カレンダー登録と担当者の明示まで運用設計に含める。</strong><br>※ 各作業について「失敗したら何が起きるか」を書くのは、運用担当が優先度を判断できるようにするため。</p>
+          </div>
+        </div>
+
+        <h3>監視設計</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>監視対象</th><th>閾値・条件</th><th>通知先</th><th>意味</th></tr></thead>
+            <tbody>
+              <tr><td>サーバ死活</td><td>3 回連続で応答なし</td><td>情シス（メール）</td><td>止まったことに誰も気づかない、を防ぐ（第 7 章の冒頭）</td></tr>
+              <tr><td>バッチの異常終了</td><td>戻り値 ≠ 0</td><td>情シス（メール）</td><td>—</td></tr>
+              <tr><td><strong>バッチの遅延</strong></td><td>時間窓を超過（BT-M002 は 2:40）</td><td>情シス（メール）</td><td><strong>「動いているが終わらない」を検知する</strong>（第 13 章）</td></tr>
+              <tr><td>ディスク使用率</td><td>80% 超で警告、90% で警報</td><td>情シス</td><td>添付ファイルの増加を早期に把握</td></tr>
+              <tr><td>応答時間</td><td>主要画面の平均が 5 秒超</td><td>ベンダー保守</td><td>性能要件（N-P01）の劣化検知</td></tr>
+              <tr><td>外部連携の失敗</td><td>FTPS 送信の 3 回リトライ後失敗</td><td>情シス＋経理担当</td><td><strong>経理にも通知する</strong>——業務判断が必要になるため</td></tr>
+              <tr><td>エラーログ</td><td>ERROR レベルが 1 時間に 10 件超</td><td>ベンダー保守</td><td>個別のエラーではなく、傾向の異常を捉える</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 通知は「届いて、読まれて、動ける」まで設計する</p>
+          <p>監視の設計で失敗する三段階：<br>① <strong>届かない</strong>——通知先が個人アドレスで、その人が退職している（第 7 章・第 13 章で繰り返し出た論点）。<strong>グループアドレスにする。</strong><br>② <strong>読まれない</strong>——警告が多すぎて日常的に無視されるようになる（アラート疲れ）。<strong>「必ず対応が必要なもの」だけを通知にし、傾向監視はダッシュボードに回す。</strong><br>③ <strong>動けない</strong>——通知は届いたが、何をすればよいか書いていない。<strong>通知にバッチID・エラーコード・対処手順書の参照先を含める</strong>（第 13 章 例題 2）。<br>この三つを満たして初めて、監視は「システムが止まった時間」を短くする——つまり<strong>第 7 章の RTO を実現する手段</strong>になる。</p>
+        </div>
+
+        <h3>障害対応フローと問い合わせ体制</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>段階</th><th>やること</th><th>設計で決めること</th></tr></thead>
+            <tbody>
+              <tr><td>① 検知</td><td>監視通知、または利用者からの申告</td><td>受付窓口（情シス）、受付時間、受付手段</td></tr>
+              <tr><td>② 一次切り分け</td><td>影響範囲（全社／一部）、緊急度の判定</td><td>判定基準（レベル 1〜3）、判定者</td></tr>
+              <tr><td>③ 連絡</td><td>関係者への第一報</td><td><strong>何分以内に、誰に、何を</strong>。「原因不明のまま第一報を出す」ことを許容するルール</td></tr>
+              <tr><td>④ 対処</td><td>復旧作業</td><td>手順書、ベンダーへのエスカレーション基準と連絡先</td></tr>
+              <tr><td>⑤ 業務側の代替運用</td><td>システムが使えない間、業務をどう回すか</td><td><strong>これが最も抜けやすい</strong>——紙で受け付けて後から入力するのか、締めを延ばすのか</td></tr>
+              <tr><td>⑥ 報告・再発防止</td><td>障害報告書</td><td>提出期限、様式、報告先</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>⑤について</strong>：第 7 章の可用性シミュレータで「止まったときに業務をどう回すか」から議論を始めるべきだと述べた。その答えが、ここで<strong>具体的な代替運用手順</strong>になる。<strong>「月末 3 営業日に半日止まったら、紙の申請書で受け付け、復旧後に経理が代理入力する」</strong>——これを事前に決め、様式まで用意しておけば、稼働率 99.9% は要らなくなる。<strong>運用設計は、非機能要件のコストを下げる手段でもある。</strong></p>
+
+        <h2>移行設計</h2>
+        <h3>移行方式の選択</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方式</th><th>やり方</th><th>利点 / 欠点</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>一括移行</strong><br>（ビッグバン）</td>
+                <td>ある日を境に全社・全機能を切り替える</td>
+                <td>利点：期間が短く、二重運用が無い／欠点：<strong>失敗したときの影響が全社に及ぶ</strong>。切戻しの判断が重い</td>
+              </tr>
+              <tr>
+                <td>段階移行</td>
+                <td>拠点別・部門別・機能別に順次切り替える</td>
+                <td>利点：影響を限定できる、学習しながら進められる／欠点：<strong>移行期間中は新旧両方を運用</strong>し、データの整合をとる仕組みが要る</td>
+              </tr>
+              <tr>
+                <td>並行稼働</td>
+                <td>一定期間、新旧両方に同じ入力をして結果を突合</td>
+                <td>利点：検証としては最強／欠点：<strong>現場の負荷が二倍</strong>。長く続けると必ず形骸化する</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>本案例は一括移行</strong>——全社 320 名・単一業務・拠点別に分ける意味が薄く、二重運用の負荷のほうが大きいため。ただし<strong>会計連携だけは最初の 1 か月、経理が件数と金額を手で突合する</strong>（部分的な並行検証）。第 13 章 例題 3 の④がこれにあたる。</p>
+
+        <h3>データ移行</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工程</th><th>内容</th><th>落とし穴</th></tr></thead>
+            <tbody>
+              <tr><td>① 移行対象の決定</td><td>どのデータを、どの範囲・期間で移すか</td><td><strong>「全部」と言われがち</strong>。過去 2 年分・確定済のみ、添付画像は対象外（N-M01）のように<strong>絞る判断を明文化</strong>する</td></tr>
+              <tr><td>② 現新マッピング</td><td>旧システムの項目 → 新テーブルの列の対応表</td><td>1 対 1 で対応しない項目（分割・結合・コード変換）。<strong>新システムにしか無い必須項目をどう埋めるか</strong></td></tr>
+              <tr><td>③ データクレンジング</td><td>不正・欠損・重複データの整理</td><td><strong>ここが一番時間を食う</strong>。旧システムには制約が無く、想定外の値が入っている（全角数字、空の必須項目、存在しない部門コード）</td></tr>
+              <tr><td>④ 移行ツールの作成</td><td>抽出・変換・投入のプログラム</td><td>移行ツール自体のテストが必要。<strong>使い捨てだからと品質を落とすと、当日に破綻する</strong></td></tr>
+              <tr><td>⑤ 検証</td><td>件数・金額の突合、サンプル抽出による目視確認</td><td>「投入できた」≠「正しい」。<strong>突合の基準（何と何を突き合わせるか）を事前に決める</strong></td></tr>
+              <tr><td>⑥ リハーサル</td><td>本番と同じ手順・同じデータ量で通しで実施</td><td><strong>最低 2 回</strong>。1 回目で問題を洗い出し、2 回目で時間を測る</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚨 クレンジングは「誰が決めるか」が最大の論点</p>
+          <p>旧データに「部門コード D099（現存しない部門）の申請が 43 件」あった。どうするか——D099 のまま移行する（新システムでエラーになる）／最も近い現行部門に寄せる（誰が判断する？）／移行対象から外す（過去データが欠ける）。<br><strong>これは技術判断ではなく業務判断であり、しかも 43 件を一件ずつ見る必要がある。</strong>誰がやるのか、いつまでにやるのか、その工数は見積に入っているのか。<br><strong>データクレンジングの工数が見積から漏れるのは、移行が失敗する典型パターン</strong>。第 8 章の見積で「移行」を一式で置いてはいけない理由がここにある。早めに<strong>旧データの実態調査</strong>（不正データが何件あるか）をやっておくと、この工数が読める。</p>
+        </div>
+
+        <h2>亲手算一算：移行リハーサル的时间轴</h2>
+        <p>切替は土曜の夜から日曜にかけて行い、<strong>月曜 9:00 の始業までに終わらせる</strong>。データ量と要員を動かして、間に合うか、そして<strong>いつまでなら引き返せるか</strong>を見てほしい。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 移行リハーサル：月曜 9:00 に間に合うか、いつまで引き返せるか</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：移行の所要時間は<strong>データ量にほぼ比例</strong>し、要員を増やしても短縮できるのは検証・確認の工程だけ（抽出・変換・投入は機械の時間）。そして最も重要なのは<strong>切戻し判断点（Point of No Return）</strong>——新システムへのデータ投入が完了し、旧システムを停止した後は、引き返すのに別途 1〜2 時間かかる。<strong>「何時までに問題が見つからなければ続行、それ以降に問題が出たら前進あるのみ」という線を、事前に合意しておく</strong>のが移行計画の核心。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">移行データ量 <span class="kb-control-value" id="val-vol"></span>
+                <input type="range" id="ctl-vol" min="2" max="20" step="1" value="4"></label>
+              <label class="kb-control">作業要員 <span class="kb-control-value" id="val-mem"></span>
+                <input type="range" id="ctl-mem" min="2" max="6" step="1" value="3"></label>
+              <label class="kb-control">切替開始（土） <span class="kb-control-value" id="val-st"></span>
+                <input type="range" id="ctl-st" min="18" max="30" step="1" value="22"></label>
+            </div>
+            <div class="mg-steps" id="mg-steps"></div>
+            <div class="mg-out" id="mg-out"></div>
+            <div class="mg-verdict" id="mg-verdict"></div>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 切戻し判断点（Point of No Return）</p>
+          <p>移行計画で最も重要な一行は、<strong>「何時までに問題が見つからなければ、もう戻らない」</strong>という時刻の合意。<br>この線を引かないと、日曜の深夜に「まだ戻れるかもしれない」と議論が始まり、結果として<strong>戻ることも進むこともできない最悪の状態</strong>で月曜の朝を迎える。<br>決めるべきは三つ：<strong>①判断時刻 ②判断基準（何が起きたら切り戻すか）③判断者（誰が決めるか——ベンダーではなく発注者）</strong>。<br>そして<strong>切戻し手順そのものもリハーサルする</strong>。「戻せるはず」で戻せた例は少ない。</p>
+        </div>
+
+        <h3>業務移行——冒頭の事故を防ぐ</h3>
+        <p>データが移っても業務は移らない。<strong>業務移行として設計すべきもの</strong>：</p>
+        <ul>
+          <li><strong>周知</strong>——いつから何が変わるかを全社に。<strong>URL・ログイン方法・問い合わせ先</strong>を含めて、複数の手段で（メール、ポータル、部門長経由）。冒頭の事故はここ。</li>
+          <li><strong>研修・マニュアル</strong>——申請者向け（15 分で足りる）、承認者向け、経理向け（半日）。<strong>ITに不慣れな社員への配慮</strong>（第 4 章 習題 4.5 の③）。</li>
+          <li><strong>問い合わせ体制の増強</strong>——稼働直後の 2 週間は問い合わせが集中する。<strong>誰が受けるのか、FAQ は用意したか、ベンダーの立会いはあるか</strong>。</li>
+          <li><strong>旧システムの扱い</strong>——いつ止めるか、参照用にいつまで残すか、誰が見られるか。<strong>「念のため残す」と永久に残る</strong>ので、停止日を決めて合意する。</li>
+          <li><strong>移行期間中のルール</strong>——切替直前に提出された申請はどちらで処理するか。<strong>締めのタイミングと移行日をずらす</strong>のが定石（月初に切り替える）。</li>
+        </ul>
+
+        <h2>詳細設計への交棒</h2>
+        <p>基本設計書が承認されたら、詳細設計・製造へ引き継ぐ。第 1 章の商流を思い出してほしい——<strong>引き継ぐ相手は、客に会ったことがない</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>引き継ぐもの</th><th>ポイント</th></tr></thead>
+            <tbody>
+              <tr><td>基本設計書一式</td><td>版数と承認状態を明示。<strong>未確定箇所は「未確定」と書く</strong>——空欄にすると「書き忘れ」と区別がつかない</td></tr>
+              <tr><td>方式設計書</td><td><strong>最初に読ませる</strong>。個別の画面設計より先に、共通の決め事を頭に入れてもらう（第 10 章）</td></tr>
+              <tr><td>用語集</td><td>業務用語が分からないと設計書が読めない（第 6 章 例題 3）</td></tr>
+              <tr><td>課題管理表の残件</td><td>未決事項と決定期限。<strong>「これから決まること」を渡す</strong></td></tr>
+              <tr><td>質問の受け口</td><td>誰に、どう聞くか。<strong>QA表の様式と回答期限</strong>（第 3 章の作法をそのまま下流にも適用する）</td></tr>
+              <tr><td>結合テスト観点の種</td><td>IF設計・バッチ設計に書いた異常系が、そのまま結合テストの試験項目になる（第 2 章の V 字）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>交棒時に必ずやること</strong>：<strong>製造担当のリーダーに、設計レビューへ参加してもらう</strong>（第 10 章 習題 10.6）。彼らの「これ、どう作るんですか」という質問が、設計の穴を正確に指している。<strong>設計書を投げて終わりにすると、質問は 3 か月後に「仕様の解釈違い」として返ってくる。</strong></p>
+
+        <h2>成果物样例</h2>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>移行計画書　切替タイムライン（抜粋）</span><span class="kb-doc-id">DOC-309 / v0.3</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>時刻</th><th>作業</th><th>担当</th><th>完了条件</th></tr></thead>
+              <tbody>
+                <tr><td>金 18:00</td><td>旧システムへの新規申請を停止（お知らせ掲示）</td><td>情シス</td><td>掲示完了</td></tr>
+                <tr><td>土 20:00</td><td>移行判定会議（要員・環境・前提条件の確認）</td><td>全員</td><td><strong>実施 / 延期の決定</strong></td></tr>
+                <tr><td>土 22:00</td><td>旧システム停止・最終バックアップ取得</td><td>ベンダー</td><td>バックアップ完了確認</td></tr>
+                <tr><td>土 23:00</td><td>旧データ抽出</td><td>ベンダー</td><td>件数ログの出力</td></tr>
+                <tr><td>日 01:00</td><td>データ変換・クレンジング適用</td><td>ベンダー</td><td>変換エラー 0 件</td></tr>
+                <tr><td>日 03:00</td><td>新システムへ投入</td><td>ベンダー</td><td>投入件数＝抽出件数</td></tr>
+                <tr style="background:var(--kb-danger-soft)"><td><strong>日 06:00</strong></td><td><strong>切戻し判断点</strong>（Point of No Return）</td><td><strong>情シス部長</strong></td><td><strong>ここまでに重大な問題が無ければ続行。以降は切戻ししない</strong></td></tr>
+                <tr><td>日 06:00</td><td>件数・金額の突合検証</td><td>ベンダー＋経理</td><td>差異 0 件</td></tr>
+                <tr><td>日 09:00</td><td>疎通確認（ログイン・申請・承認・帳票出力）</td><td>情シス＋経理</td><td>チェックリスト全項目 OK</td></tr>
+                <tr><td>日 12:00</td><td>会計システム連携の疎通確認（テストファイル送信）</td><td>ベンダー＋会計保守</td><td>相手側で取込成功</td></tr>
+                <tr><td>日 15:00</td><td>稼働判定会議</td><td>全員</td><td><strong>本番公開 / 切戻しの決定</strong></td></tr>
+                <tr><td>日 16:00</td><td>本番公開・全社への稼働開始通知</td><td>情シス</td><td>ポータル掲載・メール送信完了</td></tr>
+                <tr><td>月 08:30</td><td>問い合わせ対応体制の立ち上げ（ベンダー立会い）</td><td>情シス＋ベンダー</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 切戻し手順書は別紙。切戻しの所要は約 2 時間（旧システム再起動＋データ復元＋疎通確認）。<br>※ 各作業に <strong>予定時刻と、遅延した場合の判断基準</strong>（+1 時間で報告、+2 時間で判定会議を前倒し）を定める。<br>※ 稼働開始通知には、<strong>URL・ログイン方法・簡易マニュアルの場所・問い合わせ先</strong>を必ず含めること。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 「バックアップは取っています」で安心してはいけない</p>
+          <p>第 7 章 習題 7.7 でも出た論点を、運用設計として具体化する。</p>
+          <p><strong>確認すべきこと</strong>：<br>① <strong>取得できているか</strong>——ジョブが正常終了しているか、毎日確認する作業が運用作業一覧にあるか（No.2）。<br>② <strong>戻せるか</strong>——実際にリストアを試したことがあるか。<strong>年 1 回の訓練を運用作業一覧に入れる</strong>（No.10）。<br>③ <strong>時間内に戻せるか</strong>——600GB のリストアに何時間かかるか。<strong>RTO（第 7 章 N-A03：月末は 2 時間）を超えていないか。</strong>超えているなら、バックアップ方式そのものを見直す必要がある。<br>④ <strong>何が戻るか</strong>——DB は戻るが、<strong>添付ファイル（オブジェクトストレージ）は別管理</strong>になっていないか。両者の時点が揃うか（第 12 章 例題 3）。<br>⑤ <strong>誰が戻すか</strong>——手順書はあるか、ベンダーしかできないなら夜間・休日の連絡がつくか。</p>
+          <p><strong>教訓</strong>：バックアップは<strong>「取ること」ではなく「戻せること」</strong>が目的。そして戻せるかどうかは、試さない限り分からない。<strong>設計書に「年 1 回リストア訓練を実施する」と一行書くだけで、この差は埋まる</strong>——書かなければ、10 年間一度も試されない。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 移行リハーサルで、本番の 3 倍時間がかかった</p>
+          <p>リハーサルで、データ投入に想定 2 時間のところ 6 時間かかった。切替の窓に収まらない。</p>
+          <p><strong>まず原因を切り分ける</strong>：<br>・<strong>データ量</strong>——リハーサルは本番相当のデータ量でやったか。少ないデータで測ると本番で破綻する（逆に、多すぎるデータで測って無駄に悲観することもある）。<br>・<strong>環境</strong>——リハーサル環境が本番より非力ではないか。<br>・<strong>処理方式</strong>——1 件ずつ INSERT していないか。一括ロード（バルクインサート）、インデックスを外してから投入して後で作り直す、といった手が使える。<br>・<strong>制約とトリガ</strong>——外部キー制約や監査トリガが 1 件ごとに走っていないか。</p>
+          <p><strong>取りうる対策</strong>：<br>① <strong>処理を速くする</strong>（バルクロード、インデックス後付け、並列化）——効果が大きく、最初に検討すべき。<br>② <strong>移行対象を絞る</strong>——過去 2 年を 1 年にできないか。<strong>これは業務判断</strong>で、経理部と合意が要る。<br>③ <strong>切替窓を広げる</strong>——金曜夜から始める、連休を使う。<strong>業務停止時間が延びるので、これも業務判断。</strong><br>④ <strong>事前移行</strong>——切替前に過去データだけ先に投入しておき、当日は差分だけ移行する。<strong>最も効果的だが、差分の管理が必要で設計が複雑になる。</strong></p>
+          <p><strong>この例が示すこと</strong>：<strong>リハーサルの目的は「時間を測ること」</strong>。問題が見つかったなら、リハーサルは成功している。<strong>リハーサルをやらずに本番を迎えると、同じ問題が「取り返しのつかないタイミング」で起きる。</strong>だからリハーサルは最低 2 回——1 回目で問題を出し、2 回目で改善後の時間を測る。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 稼働 2 週間後、「前のシステムのほうが良かった」と言われた</p>
+          <p>これは技術的な障害ではないが、プロジェクトの成否を左右する。</p>
+          <p><strong>よくある原因</strong>：<br>① <strong>慣れの問題</strong>——新しい操作を覚えるコストが、まだ効果を上回っている。<strong>時間が解決する</strong>が、放置すると不満が定着する。<br>② <strong>本当に使いにくい</strong>——第 11 章の冒頭の事故（月末に 50 件処理するのが大変）。設計段階の見落とし。<br>③ <strong>業務が変わったことへの抵抗</strong>——第 4 章 例題 3。経理の仕事が減ることへの不安。<br>④ <strong>期待値の不一致</strong>——「システム化すれば全部楽になる」と思っていたが、入力の手間は増えた（申請者にとっては、紙に書くより項目が多い）。</p>
+          <p><strong>やるべきこと</strong>：<br>・<strong>具体的に何が不便かを聞く</strong>（第 3 章 例題 2 の三問：どの操作／今までどうしていたか／誰が困るか）。<br>・<strong>数字を見せる</strong>——第 4 章で測った課題の数値（差戻し月 190 件、経理の残業 40 時間）が、稼働後どうなったかを測って報告する。<strong>個人の体感は悪くても、全体としては改善していることが多い。</strong>これが要件定義で数値を取った四つ目の理由（第 4 章 習題 4.2 の補足）。<br>・<strong>小さな改善を早く出す</strong>——稼働直後の 1〜2 か月は、軽微な改修を優先的に回す枠を保守契約に確保しておくと効く。<br>・<strong>そして次期開発の材料にする</strong>——第 5 章で Won't にした要求（仮払金の精算）が、ここで初めて具体的な優先度をもって戻ってくる。</p>
+          <p><strong>最後に</strong>：システムの価値は稼働日ではなく、<strong>その後の数年で決まる</strong>。上流工程で書いた文書——業務フロー、要件定義書、設計書——は、その数年間ずっと読まれ続ける。<strong>あなたが書いた一行の「なぜ」が、3 年後の誰かを助ける。</strong></p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>運用作業一覧に「失敗したら何が起きるか」の列を設ける理由を述べよ。また、忘れられやすく被害の大きい定期作業を三つ挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>理由</strong>：運用担当が<strong>優先度を判断できるようにするため</strong>。作業一覧に 20 項目並んでいても、忙しい日にどれを飛ばしてよいかが分からない。「失敗したら何が起きるか」が書いてあれば、「バックアップ確認は飛ばせないが、ディスク使用率の確認は明日でよい」と判断できる。<br>もう一つの理由：<strong>作業の意味が伝わる</strong>。意味の分からない作業は、担当者が変わったときに真っ先に省略される。</p>
+            <p><strong>忘れられやすく被害の大きい作業</strong>：<br>① <strong>SSL 証明書の更新</strong>——年 1 回（または数年に 1 回）なので、担当者が代わると引き継がれない。切れた瞬間に<strong>全社がアクセス不能</strong>になる。しかも「昨日まで動いていた」ので原因究明に時間がかかる。<br>② <strong>バックアップからのリストア訓練</strong>——やらなくても日常は困らないが、必要になったときに「戻せない」ことが判明する。<br>③ <strong>権限の棚卸し</strong>——退職者・異動者の権限が残り続ける。セキュリティ監査で必ず指摘される項目。<br>④（追加）<strong>ログ・ワークテーブルの削除</strong>——自動化されていないと、数年後にディスクが枯渇する。<br>⑤（追加）<strong>ミドルウェア・OS のサポート期限</strong>——5 年後に突然「サポート切れなので使えません」となる。</p>
+            <p><strong>実務的な対策</strong>：年次・数年次の作業は<strong>カレンダーに登録し、担当を組織（個人ではなく）に割り当てる</strong>。そして<strong>運用設計書に「次回実施予定日」の欄を作る</strong>——文書に日付が書いてあると、引き継ぎのときに気づかれる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>移行方式の三つ（一括・段階・並行稼働）について、それぞれが向くケースを述べよ。本案例が一括移行を選んだ理由も説明せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>一括移行</strong>が向く：規模が小さい／単一業務／段階に分ける自然な単位が無い／二重運用の負荷が大きい／切戻しが現実的にできる。</p>
+            <p><strong>段階移行</strong>が向く：拠点・部門・機能で自然に分けられる／規模が大きく一度に切り替えるリスクが高い／先行部門で学習してから展開したい。<strong>注意点</strong>：移行期間中は新旧のデータをどう扱うか（新システムの申請と旧システムの申請が混在する期間、集計はどうするか）を設計する必要がある。</p>
+            <p><strong>並行稼働</strong>が向く：計算結果の正しさが極めて重要（給与計算、会計）／旧システムの仕様が文書化されておらず、動作を突合でしか検証できない。<strong>注意点</strong>：現場の負荷が二倍になるので、<strong>期間を区切る</strong>（1 か月など）。長引くと必ず形骸化し、「新システムには入力していない」状態になる。</p>
+            <p><strong>本案例が一括を選んだ理由</strong>：① 全社 320 名・単一業務で、拠点別に分ける意味が薄い ② 経費精算は月次のサイクルなので、月初に切り替えれば境界がきれい ③ 二重運用は経理部の負荷（既に月末残業 40 時間）を考えると非現実的 ④ 切戻し手順が現実的に用意できる規模。<br><strong>ただし会計連携だけは部分的に並行検証</strong>——ここは間違うと決算に影響し、しかも相手システムの検証環境が無い（第 13 章 例題 3）ため、最初の 1 か月は人が突合する。<strong>方式は全体で一つに決める必要はなく、リスクの高い部分だけ厚くする</strong>のが実務的。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>切戻し判断点（Point of No Return）とは何か。設定するときに決めるべき三つのことを挙げ、決めなかった場合に何が起きるかを述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>定義</strong>：移行作業の中で、「ここを過ぎたら旧システムには戻さない」と事前に合意した時刻。</p>
+            <p><strong>決めるべき三つ</strong>：<br>① <strong>判断時刻</strong>——切戻しに要する時間（本案例では約 2 時間）＋疎通確認の時間を、業務開始時刻から逆算して決める。<br>② <strong>判断基準</strong>——何が起きていたら切り戻すか。「データ検証で差異が 1 件でもあれば」なのか「業務が回らないレベルの不具合があれば」なのか。<strong>曖昧だと、その場の空気で決まってしまう。</strong><br>③ <strong>判断者</strong>——<strong>発注者側の責任者</strong>（本案例では情シス部長）。ベンダーが決めることではない——業務を止める判断だから。</p>
+            <p><strong>決めなかった場合</strong>：日曜の深夜に「まだ戻れるのでは」「いや、戻すと月曜に旧システムで業務を回す準備ができていない」という議論が始まり、<strong>戻ることも進むこともできないまま時間だけが過ぎる</strong>。そして中途半端な状態で月曜の朝を迎える——これが移行の失敗の典型的な形。<br><strong>判断は疲れているときほど難しい</strong>。だから元気なうちに、紙の上で決めておく。<strong>移行計画書とは、疲れた自分たちのために書く文書である。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>冒頭の事故（稼働当日にログインできないという問い合わせが殺到）を防ぐために、業務移行として何を設計すべきだったか。5 つ以上挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>設計すべきだったこと</strong>：<br>① <strong>全社への事前周知</strong>——いつから、何が変わり、どこにアクセスし、どうログインするか。<strong>複数手段で複数回</strong>（1 か月前・1 週間前・前日・当日朝）。<br>② <strong>社内ポータルへのリンク掲載</strong>——URL を探せないという最も単純な障壁。<strong>掲載作業を移行タイムラインの作業項目にする</strong>（本章の成果物样例の最終行）。<br>③ <strong>簡易マニュアル</strong>——申請者向け 1 ページ（画面写真つき）。「まずこれを見て」と言えるものを、周知メールに添付する。<br>④ <strong>問い合わせ窓口の明示と体制強化</strong>——誰に聞けばよいかが分かっていれば、情シスの電話に殺到しない。稼働直後 2 週間はベンダー立会い。<br>⑤ <strong>FAQ の事前作成</strong>——受入テストや研修で出た質問をそのまま FAQ にする。<strong>問い合わせは事前に予測できる。</strong><br>⑥ <strong>部門長・キーユーザーへの先行研修</strong>——各部門に「聞ける人」を作っておくと、問い合わせが分散する。<br>⑦ <strong>旧システムからの誘導</strong>——旧 URL にアクセスしたら新システムへ案内するページを出す。<strong>これだけで問い合わせが激減する</strong>ことも多い。</p>
+            <p><strong>この習題の要点</strong>：これらは全部<strong>技術的には簡単で、工数もほとんどかからない</strong>。にもかかわらず抜けるのは、<strong>「システムを作ること」に集中して「業務を移すこと」が誰の仕事にもなっていない</strong>から。<br>だから移行設計書に<strong>業務移行の章を立て、作業項目・担当・期限を書く</strong>。書けば実行される。書かなければ、誰かが気づくのを祈ることになる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>システムが月末の 10:00 に停止した。復旧見込みは 4 時間後。あなたは情シス担当として何をするか。時系列で書け。また、この状況に備えて設計段階で何を用意しておくべきだったかを述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>時系列の行動</strong>：<br><strong>10:00–10:10 検知と一次切り分け</strong>——全社か一部か、いつからか、何ができないか。<strong>原因が分からなくても、影響範囲だけは 10 分で把握する。</strong><br><strong>10:10 第一報</strong>——「経費精算システムが 10:00 頃から利用できません。原因調査中です。11:00 に続報します」。<strong>原因不明のまま出す</strong>のが正しい。分かってから出すと、その間に問い合わせが殺到する。<br><strong>10:15 ベンダーへエスカレーション</strong>——保守契約の連絡先へ。月末なので RTO 2 時間の待機体制（第 7 章 N-A03）が効く場面。<br><strong>10:30 業務側との調整</strong>——経理部長に連絡し、<strong>代替運用を発動するか</strong>を協議。月末の締めに影響するなら、紙の申請書での受付を開始する。<br><strong>11:00 続報</strong>——原因、復旧見込み、代替運用の案内。<br><strong>復旧後</strong>——動作確認、代替運用分のデータ投入、利用者への復旧連絡。<br><strong>翌営業日</strong>——障害報告書の提出、再発防止策の検討。</p>
+            <p><strong>設計段階で用意しておくべきだったもの</strong>：<br>① <strong>障害対応フロー</strong>——上の時系列そのもの。<strong>第一報を何分以内に出すかを決めておく</strong>（決めておかないと、原因が分かるまで報告しない人が必ずいる）。<br>② <strong>連絡体制表</strong>——誰から誰へ、どの手段で。夜間・休日を含む。<br>③ <strong>代替運用手順と様式</strong>——紙の申請書のフォーマット、後から入力する手順、承認をどう記録するか。<strong>これが最も抜けやすく、最も効く。</strong><br>④ <strong>利用者向けの告知文テンプレート</strong>——障害時に文面を考える時間はない。<strong>穴埋め式のテンプレートを用意しておく。</strong><br>⑤ <strong>エラーID とログの対応</strong>——問い合わせてきた利用者からエラーIDを聞けば、ログから即座に状況が分かる（第 11 章 例題 2）。<br>⑥ <strong>月末の待機体制</strong>——第 7 章 N-A03 で決めた「月末 3 営業日は RTO 2 時間」を、実際の保守契約と要員配置に落とし込んであるか。</p>
+            <p><strong>この習題の核心</strong>：<strong>障害時にやるべきことは、障害時には考えられない</strong>。全部、平時に紙の上で決めておく。そして第 7 章の非機能要件（RTO 2 時間）は、こうした運用設計と保守契約に落ちて初めて実現される——<strong>数値を書いただけでは、何も実現しない。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>基本設計書を、業務を知らない製造チーム（二次請け・オフショア）に引き継ぐ。引き継ぎの進め方を設計せよ。何を、どの順で、どう渡すか。質問はどう受けるか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>引き継ぎの設計例</strong>：</p>
+            <p><strong>① 事前（設計中）</strong>——<strong>製造チームのリーダーを、基本設計のレビューに参加させる</strong>。これが最も効果が高い。設計が固まってから初めて見せるのではなく、途中から関与してもらう。彼らの「これ、どう作るんですか」が設計の穴を突く（第 10 章 習題 10.6）。</p>
+            <p><strong>② 引き継ぎ会（第 1 回）：背景と全体像</strong>——<strong>いきなり画面設計書を渡さない。</strong>まず「この会社は何に困っていて、このシステムで何を解決しようとしているか」（要件定義書 第 2 章）と、業務フロー（To-Be）を説明する。<strong>背景を知っている実装者は、設計書の曖昧な箇所を正しい方向に解釈できる</strong>——第 1 章で見た「商流を下るほど『なぜ』が消える」への対抗策。</p>
+            <p><strong>③ 引き継ぎ会（第 2 回）：方式設計と用語集</strong>——共通の決め事を先に。ここを飛ばすと、担当者ごとにバラバラな実装になる（第 10 章の冒頭の 18 画面）。</p>
+            <p><strong>④ 引き継ぎ会（第 3 回以降）：個別の設計書</strong>——画面／データ／IF・バッチ。担当割りに応じて分割する。</p>
+            <p><strong>⑤ 質問の受け方</strong>——<strong>QA表の様式と回答期限を決める</strong>（第 3 章の作法をそのまま下流に適用）。口頭やチャットだけで答えると、同じ質問が何度も来て、しかも回答が記録に残らない。<strong>回答は設計書に反映し、版を上げる</strong>——「QA表を見れば分かる」状態は、次の人には引き継がれない。</p>
+            <p><strong>⑥ 未確定事項の明示</strong>——「未確定」と書いた箇所と、その決定予定日を一覧で渡す。<strong>空欄と未確定は違う</strong>——空欄は書き忘れに見える。</p>
+            <p><strong>⑦ 最初の 1 本を一緒に作る</strong>——代表的な画面を 1 本、設計者が立ち会って作ってもらう。<strong>設計書の読み方の認識合わせが、実物で一度できる</strong>。ここでのズレが最も多く、最も安く直せる。</p>
+            <p><strong>よくある失敗</strong>：<strong>設計書一式をファイルサーバに置いて「読んでおいてください」で終わる</strong>。数か月後、解釈違いの実装が大量に上がってくる。<strong>引き継ぎは文書の受け渡しではなく、理解の移転</strong>——第 3 章の合意形成と同じ構造が、社内・下流に対しても必要になる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>全書の総まとめ。あなたが関わる（または今後関わりたい）システムを一つ選び、第 4 章から第 14 章までの成果物のうち<strong>今すぐ作るべき三つ</strong>を選んで実際に作れ。選んだ理由と、作ってみて分かったことを書くこと。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>選び方の考え方と、この教材の締めくくりを書く。</p>
+            <p><strong>選び方①「痛みの大きいところから」</strong>——毎週スコープで揉めているならスコープ定義、権限で毎回止まるなら権限マトリクス、障害のたびに右往左往するなら運用設計。<strong>理想の完備ではなく、今の痛みを起点にする。</strong></p>
+            <p><strong>選び方②「コストが低く効果が高いものから」</strong>——用語集（半日）、権限マトリクス（1〜2 日）、方式設計の九項目の書き起こし（数日）。<strong>いずれも新しく決めるのではなく、既にあるものを書き取る作業</strong>なので、合意も反対も要らない。</p>
+            <p><strong>選び方③「鎖の切れているところから」</strong>——第 9 章 習題 9.7 で書いたとおり、上流の成果物は一本の鎖になっている。業務一覧 → 業務フロー → 課題 → 要求 → 機能 → 要件 → 非機能 → スコープ・見積 → トレーサビリティ → 方式 → 画面・データ・IF → 運用・移行。<strong>「なんとなく決まらない」ことがあるなら、この鎖のどこが切れているかを探す。</strong></p>
+            <p><strong>作ってみて分かること（多くの人が経験すること）</strong>：<br>・<strong>書こうとすると、知らないことが見つかる</strong>——件数を書こうとして誰も数えていないことに気づく、初期値を書こうとしてどこから来るのか分からないことに気づく。<strong>文書は情報の欠落を可視化する装置</strong>である。<br>・<strong>書くと、聞けるようになる</strong>——「どうしますか」ではなく「〜という理解でよいか」と聞ける（第 3 章）。たたき台があると、議論が具体的になる。<br>・<strong>書いたものは、思ったより読まれる</strong>——そして思ったより長く残る。3 年後に誰かが読む。</p>
+            <p><strong>この教材の締めくくりとして</strong>：上流工程の仕事は、突き詰めると<strong>「決まっていないことを、決まった状態にすること」</strong>の一点に尽きる。業務の実態、機能の範囲、性能の目標、責任の所在、例外の扱い、止まったときの動き方——これらは放っておいても決まらない。誰かが問い、書き、確認し、合意を残す。<strong>その誰かが、あなたである。</strong><br>技術は変わる。ウォーターフォールも変わるかもしれない。しかし「曖昧なものを、関係者が納得する形で確定させる」という仕事は、どんな開発手法になっても消えない。<strong>この教材で身につけてほしかったのは、Excel の書き方ではなく、その仕事のやり方である。</strong></p>
+          </details>
+        </section>
+
+        <h2>全書のまとめ：十四章を一本の線として</h2>
+        <div class="kb-table-wrap">
+          <table class="sum">
+            <thead><tr><th>章</th><th>この章が残した一つのこと</th></tr></thead>
+            <tbody>
+              <tr><td>第 1 章</td><td>発注者側には要件を書ける人がいない。だから作法のすべては<strong>「客が認めたことを証明する」</strong>ために存在する</td></tr>
+              <tr><td>第 2 章</td><td>V 字の戒律——<strong>テストできない要件は書いてはいけない</strong>。要件は合意の対象、仕様は受注者の裁量</td></tr>
+              <tr><td>第 3 章</td><td>合意は自然には発生しない。<strong>議事録・確認依頼・課題管理・レビュー・承認</strong>という閉環で作る</td></tr>
+              <tr><td>第 4 章</td><td>機能は業務から導かれる。そして<strong>雷は例外に埋まっている</strong>。「現行踏襲」は最も高くつく四文字</td></tr>
+              <tr><td>第 5 章</td><td>四分類で洗い出しても、<strong>業務フローに出てこない二割</strong>が残る。それを捕まえるのはチェックリスト</td></tr>
+              <tr><td>第 6 章</td><td>曖昧さは<strong>偽の合意の製造装置</strong>。明確に書くと揉める——その揉め事こそが要件定義の仕事</td></tr>
+              <tr><td>第 7 章</td><td>非機能は感覚で議論せず<strong>グレード表で機械的に潰す</strong>。数値を書き、その意味を客の言葉で説明する</td></tr>
+              <tr><td>第 8 章</td><td>変更管理は断るための制度ではなく、<strong>受けたことを見えるようにする制度</strong></td></tr>
+              <tr><td>第 9 章</td><td>承認印が確定させるのは<strong>スコープ・見積根拠・受入判定基準</strong>の三つ</td></tr>
+              <tr><td>第 10 章</td><td>全設計書に共通して効く決め事を<strong>先に潰す</strong>。それが方式設計であり、基本設計で最も価値が高い工程</td></tr>
+              <tr><td>第 11 章</td><td>実装できる精度で書き、かつ<strong>触った感じを想像できるようにする</strong>。両方要る</td></tr>
+              <tr><td>第 12 章</td><td>データ設計の誤りは工数ではなく<strong>失われた情報</strong>になる。「そのとき何だったか」を常に問う</td></tr>
+              <tr><td>第 13 章</td><td>外に出したデータは取り消せない。<strong>「正常に動くこと」より「落ちたときにどうするか」</strong>が設計の本体</td></tr>
+              <tr><td>第 14 章</td><td>移行はデータではなく<strong>業務</strong>を移すこと。運用はシステムではなく<strong>業務</strong>を回し続けること</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>この先の学習路線</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方向</th><th>次に学ぶこと</th><th>なぜ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>下流へ</strong></td><td>詳細設計・テスト設計（テスト観点の作り方、境界値・同値分割、不具合管理）</td><td>V 字の右側を知ると、左側の書き方が変わる</td></tr>
+              <tr><td><strong>上流へ</strong></td><td>企画・要求定義、業務改革（BPR）、投資対効果の評価</td><td>「なぜこのシステムを作るのか」を決める側へ</td></tr>
+              <tr><td><strong>管理へ</strong></td><td>プロジェクトマネジメント（PMBOK、リスク管理、要員計画）</td><td>第 8 章の見積・WBS・変更管理の体系的な背景</td></tr>
+              <tr><td><strong>技術へ</strong></td><td>アーキテクチャ設計、性能設計、セキュリティ設計</td><td>第 7・10 章で扱った方式設計を深める</td></tr>
+              <tr><td>資格</td><td>基本情報／応用情報技術者、<strong>システムアーキテクト試験</strong>、プロジェクトマネージャ試験</td><td>特にシステムアーキテクト試験は、本教材の範囲とほぼ重なる</td></tr>
+              <tr><td>公的資料</td><td>IPA「非機能要求グレード」「モデル取引・契約書」「共通フレーム」</td><td>本教材で参照した日本の標準そのもの。原典に当たると精度が上がる</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 運用作業一覧には<strong>「失敗したら何が起きるか」</strong>を書く——優先度の判断と、作業の意味の継承のため。忘れやすく被害が大きいのは<strong>証明書更新・リストア訓練・権限棚卸し</strong>；② 監視は<strong>届いて・読まれて・動ける</strong>まで設計する。異常終了だけでなく<strong>「終わらない」</strong>も監視；③ 障害対応で最も抜けやすいのは<strong>⑤業務側の代替運用</strong>——ここを用意すれば、高い稼働率を買わずに済む；④ 移行方式は 一括／段階／並行稼働 から選び、<strong>リスクの高い部分だけ厚くする</strong>；⑤ データ移行で工数を食うのは<strong>クレンジング</strong>で、しかもそれは業務判断を伴う。リハーサルは<strong>最低 2 回</strong>——問題を出す回と、時間を測る回；⑥ <strong>切戻し判断点</strong>は 時刻・基準・判断者（発注者側）の三つを事前に決める。決めないと、戻ることも進むこともできなくなる；⑦ <strong>移行はデータではなく業務を移すこと</strong>——周知・研修・問い合わせ体制・旧システムの停止日；⑧ 詳細設計への交棒は文書の受け渡しではなく<strong>理解の移転</strong>。背景 → 方式 → 個別設計の順で渡し、QA表で質問を受け、<strong>回答は設計書に反映する</strong>。<br><strong>🎉 全十四章、これで完結です。</strong>付録の<a href="./15-附录日中术语对照表.html">日中IT术语对照表</a>は、現場で辞書として使ってください。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./13-接口批处理与帐票设计.html">← 第 13 章 外部接口、批处理与帳票設計</a>
+          <a href="./15-附录日中术语对照表.html">附录 · 日中IT术语对照表 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var stepsBox = document.getElementById("mg-steps");
+      var outBox = document.getElementById("mg-out");
+      var verdict = document.getElementById("mg-verdict");
+      if (!stepsBox || !window.KB) return;
+
+      var vol = 4, mem = 3, st = 22;
+      var DEADLINE = 33 * 60; // 土 0:00 起点 → 月 9:00 = 33 時間後
+
+      function fmt(min) {
+        var d = Math.floor(min / (24 * 60));
+        var h = Math.floor(min / 60) % 24;
+        var m = Math.round(min % 60);
+        var day = ["土", "日", "月", "火"][d] || "?";
+        return day + " " + ("0" + h).slice(-2) + ":" + ("0" + m).slice(-2);
+      }
+
+      function calc() {
+        // 機械の時間（要員では短縮できない）と、人の時間（要員で短縮できる）
+        var steps = [
+          { n: "旧システム停止・最終バックアップ", d: 60 + vol * 3, human: false },
+          { n: "旧データ抽出", d: 30 + vol * 8, human: false },
+          { n: "変換・クレンジング適用", d: 20 + vol * 12, human: false },
+          { n: "新システムへ投入", d: 30 + vol * 15, human: false, pnr: true },
+          { n: "件数・金額の突合検証", d: 40 + vol * 6, human: true },
+          { n: "疎通確認（業務シナリオ）", d: 180, human: true },
+          { n: "会計連携の疎通確認", d: 60, human: false },
+          { n: "稼働判定・本番公開・全社周知", d: 60, human: false }
+        ];
+        var t = st * 60, acc = [];
+        steps.forEach(function (s) {
+          var d = s.human ? Math.round(s.d * 3 / mem) : s.d;
+          acc.push({ n: s.n, start: t, dur: d, end: t + d, pnr: !!s.pnr });
+          t += d;
+        });
+        return { steps: acc, end: t };
+      }
+
+      function card(k, v, color) {
+        var d = document.createElement("div");
+        d.className = "mg-card";
+        var kk = document.createElement("span");
+        kk.className = "mg-k";
+        kk.textContent = k;
+        var vv = document.createElement("span");
+        vv.className = "mg-v";
+        vv.textContent = v;
+        if (color) vv.style.color = color;
+        d.appendChild(kk); d.appendChild(vv);
+        return d;
+      }
+
+      function render() {
+        var r = calc();
+        var span = Math.max(r.end, DEADLINE) - st * 60;
+        stepsBox.textContent = "";
+        r.steps.forEach(function (s) {
+          var row = document.createElement("div");
+          row.className = "mg-step";
+          var nm = document.createElement("div");
+          nm.className = "mg-nm";
+          nm.textContent = s.n;
+          var bar = document.createElement("div");
+          bar.className = "mg-b";
+          var i = document.createElement("i");
+          i.style.left = ((s.start - st * 60) / span * 100) + "%";
+          i.style.width = Math.max(1, s.dur / span * 100) + "%";
+          if (s.pnr) i.className = "pnr";
+          else if (s.n.indexOf("確認") >= 0 || s.n.indexOf("検証") >= 0) i.className = "chk";
+          bar.appendChild(i);
+          var t = document.createElement("div");
+          t.className = "mg-t";
+          t.textContent = fmt(s.start) + "→" + fmt(s.end);
+          row.appendChild(nm); row.appendChild(bar); row.appendChild(t);
+          stepsBox.appendChild(row);
+        });
+
+        var pnrEnd = r.steps[3].end;
+        var rollback = 60 + vol * 8; // 切戻し所要
+        var lastRollback = DEADLINE - rollback - 90; // 月 9:00 から逆算（+疎通確認 90 分）
+        var margin = DEADLINE - r.end;
+
+        outBox.textContent = "";
+        outBox.appendChild(card("全作業の完了", fmt(r.end), margin < 0 ? "var(--kb-danger)" : ""));
+        outBox.appendChild(card("始業（月 9:00）まで",
+          margin >= 0 ? Math.floor(margin / 60) + " 時間 " + (margin % 60) + " 分の余裕" : "▲ " + Math.floor(-margin / 60) + " 時間 " + (-margin % 60) + " 分 不足",
+          margin < 0 ? "var(--kb-danger)" : "var(--kb-ok)"));
+        outBox.appendChild(card("投入完了（PNR 候補）", fmt(pnrEnd)));
+        outBox.appendChild(card("切戻しの所要", Math.floor(rollback / 60) + " 時間 " + (rollback % 60) + " 分"));
+        outBox.appendChild(card("切戻し可能な最終時刻", fmt(lastRollback),
+          pnrEnd > lastRollback ? "var(--kb-danger)" : ""));
+
+        var cls = "", lines = [];
+        if (margin < 0) {
+          cls = "bad";
+          lines.push("🚨 月曜 9:00 の始業に間に合いません（" + Math.floor(-margin / 60) + " 時間 " + (-margin % 60) + " 分の不足）。");
+          lines.push("対策の候補：① 投入処理を高速化する（バルクロード・インデックス後付け）② 移行対象を絞る（過去 2 年 → 1 年。ただし業務判断）③ 切替開始を前倒しする（業務停止時間が延びるので、これも業務判断）④ 事前移行（過去分を先に投入し、当日は差分のみ）。");
+          lines.push("要員を増やしても短縮できるのは検証・疎通確認の工程だけです。抽出・変換・投入は機械の時間なので、人を増やしても変わりません。");
+        } else if (pnrEnd > lastRollback) {
+          cls = "warn";
+          lines.push("⚠ 間に合いますが、<b>切戻しの余地がありません</b>。データ投入の完了（" + fmt(pnrEnd) + "）が、切戻し可能な最終時刻（" + fmt(lastRollback) + "）を過ぎています。");
+          lines.push("つまり、投入後に重大な問題が見つかっても旧システムには戻せない状態で作業を進めることになります。切替開始を前倒しするか、移行量を減らして、切戻しの余地を確保してください。");
+        } else if (margin < 180) {
+          cls = "warn";
+          lines.push("⚠ 間に合いますが余裕が " + Math.floor(margin / 60) + " 時間しかありません。");
+          lines.push("移行当日は必ず想定外が起きます（変換エラー、環境の不調、判断待ち）。<b>リハーサルの実測値に対して最低 3 時間の予備を確保する</b>のが実務の目安です。");
+        } else {
+          lines.push("◯ 月曜 9:00 に十分間に合います（余裕 " + Math.floor(margin / 60) + " 時間）。切戻しの余地も確保できています。");
+          lines.push("切戻し判断点は「データ投入完了 ＝ " + fmt(pnrEnd) + "」に置き、<b>判断基準（何が起きたら戻すか）と判断者（発注者側の責任者）を事前に合意</b>してください。");
+        }
+        verdict.className = "mg-verdict" + (cls ? " " + cls : "");
+        verdict.textContent = "";
+        lines.forEach(function (t) {
+          var p = document.createElement("p");
+          var parts = t.split(/<b>|<\/b>/);
+          parts.forEach(function (seg, i) {
+            if (!seg) return;
+            if (i % 2 === 1) {
+              var b = document.createElement("strong");
+              b.textContent = seg;
+              p.appendChild(b);
+            } else {
+              p.appendChild(document.createTextNode(seg));
+            }
+          });
+          verdict.appendChild(p);
+        });
+      }
+
+      KB.bindRange(document.getElementById("ctl-vol"), document.getElementById("val-vol"),
+        function (v) { return v + " 万件"; }, function (v) { vol = v; render(); });
+      KB.bindRange(document.getElementById("ctl-mem"), document.getElementById("val-mem"),
+        function (v) { return v + " 名"; }, function (v) { mem = v; render(); });
+      KB.bindRange(document.getElementById("ctl-st"), document.getElementById("val-st"),
+        function (v) { return v < 24 ? "土 " + v + ":00" : "日 " + (v - 24) + ":00"; },
+        function (v) { st = v; render(); });
+
+      render();
+    });
+  </script>
+</body>
+</html>

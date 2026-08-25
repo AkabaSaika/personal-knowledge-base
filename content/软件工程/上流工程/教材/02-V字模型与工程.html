@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 V字模型与工程：要求・要件・仕様 的分界 · 知识库</title>
+  <meta name="kb:summary" content="从企画到運用保守的工程全景、V字模型左右两侧的对应关系，以及要望・要求・要件・仕様 四级词阶为什么在合同上完全不是一回事。">
+  <meta name="kb:tags" content="上流工程,V字模型,瀑布,工程,要件,仕样,要求定义,基本设计,敏捷,slgc,vzmx,yqyj">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：V字模型交互图 */
+    .vm-wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    .vm-fig { flex: 1 1 380px; min-width: 300px; }
+    .vm-panel {
+      flex: 1 1 280px; min-width: 260px;
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 12px 14px;
+    }
+    .vm-panel h4 { margin: 0 0 4px; font-size: 1rem; color: var(--kb-fg); }
+    .vm-panel .vm-alias { font-size: 0.78rem; color: var(--kb-fg-muted); margin: 0 0 10px; }
+    .vm-row { display: flex; gap: 10px; padding: 6px 0; font-size: 0.85rem; }
+    .vm-row + .vm-row { border-top: 1px solid var(--kb-border); }
+    .vm-key { flex: 0 0 5.6em; color: var(--kb-fg-muted); font-size: 0.8rem; }
+    .vm-val { flex: 1; }
+    .vm-node { cursor: pointer; }
+    .vm-node rect { fill: var(--kb-surface); stroke: var(--kb-border-strong); stroke-width: 1.2; }
+    .vm-node text { fill: var(--kb-fg); }
+    .vm-node:hover rect { stroke: var(--kb-accent); }
+    .vm-node.sel rect { fill: var(--kb-accent); stroke: var(--kb-accent); }
+    .vm-node.sel text { fill: #fff; }
+    .vm-node.pair rect { fill: var(--kb-ok-soft); stroke: var(--kb-ok); stroke-width: 1.8; }
+    .vm-node:focus { outline: none; }
+    .vm-node:focus rect { stroke: var(--kb-accent); stroke-width: 2.4; }
+    /* 词阶 */
+    .lv-hint { font-size: 0.8rem; color: var(--kb-fg-muted); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 2 章 · V字模型与工程：要求・要件・仕様 的分界</h1>
+        <p class="kb-lead">「それ、要件ですか？仕様ですか？」——这句话在日本的会议室里出现时，空气通常会凝固两秒。因为它问的不是词义，而是<strong>谁来付这笔钱</strong>。这一章先铺开从企画到運用保守的完整工程表，看清 V 字模型里「左边写的每一条，右边都有人拿着它来验」的对应关系，再把要望・要求・要件・仕様 这四个看似同义的词，拆成一道有法律后果的阶梯。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 按顺序说出从企画到運用保守的各工程、各自的成果物与主体；② 说明 V 字模型左右两侧的配对关系，以及它对「要件怎么写」的直接约束；③ 分清要望・要求・要件・仕様 四级词阶，并把同一件事写成四个层级；④ 解释「要件変更」与「仕様の詳細化」为什么在费用上完全不同；⑤ 说出日本SI现场ウォーターフォール与アジャイル的实际并存方式，以及本教材的内容在敏捷下哪些仍然有效。</p>
+        </div>
+
+        <h2>凝固两秒的会议室</h2>
+        <p>基本設計評審会上，経理部的高橋課長说：「この経費申請画面、金額を入れたら消費税が自動で出るようにしてほしいんですが」。</p>
+        <p>あおぞら的PM 停了两秒，问：「それは、要件定義書のどこかに書かれていましたか？」</p>
+        <p>如果写了——那是<strong>既定作业</strong>，不追加费用，只是把它在基本設計里具体化。如果没写——那是<strong>要件変更</strong>，要走変更管理，重新估工数、可能要签変更契約。</p>
+        <p>同一句话，两种命运。分界线不在于这个功能难不难，而在于<strong>它落在哪个工程的哪份文档里，有没有被签字</strong>。所以你必须先有一张工程地图。</p>
+
+        <h2>工程全景：从企画到運用保守</h2>
+        <p>日本SI现场的标准工程划分如下。注意「別名」这一栏——同一个工程在不同公司叫法不同，但指的是同一件事，看合同和设计书时要能立刻对上号。</p>
+
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工程</th><th>别名 / 略称</th><th>做什么</th><th>主要成果物</th><th>主体</th></tr></thead>
+            <tbody>
+              <tr><td><ruby>企画<rt>きかく</rt></ruby>・構想</td><td>システム化構想</td><td>从经营课题出发，决定要不要IT化、投多少钱</td><td>システム化構想書、投資対効果（ROI）試算</td><td>発注者</td></tr>
+              <tr><td><ruby>要求定義<rt>ようきゅうていぎ</rt></ruby></td><td>要求分析</td><td>把业务侧的「こうしたい」收集起来整理成要求一覧</td><td>要求一覧、システム化計画書、<ruby>RFP<rt>提案依頼書</rt></ruby></td><td>発注者（ベンダー支援）</td></tr>
+              <tr style="background:var(--kb-accent-soft)"><td><strong>要件定義</strong></td><td>—</td><td>把要求翻译成可实现・可验证的「要件」并达成合意</td><td><strong>要件定義書</strong>、業務フロー図、機能一覧、非機能要件定義書</td><td>共同（SEが執筆）</td></tr>
+              <tr style="background:var(--kb-accent-soft)"><td><strong>基本設計</strong></td><td><strong>外部設計</strong>・概要設計</td><td>决定「用户看得见的样子」与「系统间怎么连」</td><td>方式・画面・帳票・IF・バッチ・データ 各設計書</td><td>受注者</td></tr>
+              <tr><td><ruby>詳細設計<rt>しょうさいせっけい</rt></ruby></td><td><strong>内部設計</strong>・プログラム設計</td><td>决定程序内部结构：模块划分、处理逻辑、SQL</td><td>詳細設計書、モジュール仕様書</td><td>受注者</td></tr>
+              <tr><td><ruby>製造<rt>せいぞう</rt></ruby></td><td>実装・コーディング</td><td>写代码</td><td>ソースコード、単体テスト仕様書</td><td>受注者</td></tr>
+              <tr><td>単体テスト</td><td>UT（Unit Test）</td><td>以模块为单位验证</td><td>単体テスト仕様書・報告書</td><td>受注者</td></tr>
+              <tr><td>結合テスト</td><td>IT（Integration Test）<br>内部結合 / 外部結合</td><td>验证模块之间、系统之间的连携</td><td>結合テスト仕様書・報告書</td><td>受注者</td></tr>
+              <tr><td>総合テスト</td><td>ST・システムテスト</td><td>以系统整体验证，含性能等非机能</td><td>総合テスト仕様書・報告書、性能測定結果</td><td>受注者</td></tr>
+              <tr><td><ruby>受入テスト<rt>うけいれテスト</rt></ruby></td><td>UAT・検収</td><td>発注者亲自确认「业务能不能转起来」</td><td>受入テスト結果、<ruby>検収書<rt>けんしゅうしょ</rt></ruby></td><td><strong>発注者</strong></td></tr>
+              <tr><td>移行</td><td>本番移行・切替</td><td>把数据与业务搬到新系统上</td><td>移行計画書、移行手順書、リハーサル結果</td><td>共同</td></tr>
+              <tr><td>運用保守</td><td>—</td><td>日常运行、故障对应、改修</td><td>運用手順書、障害報告書</td><td>共同</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 最容易混淆的一组词</p>
+          <p><strong>基本設計＝外部設計</strong>，<strong>詳細設計＝内部設計</strong>。分界线是「<strong>ユーザーから見えるか</strong>」：画面上有哪些字段、按下按钮会发生什么、和会计系统交换什么文件——这些用户或对方系统看得见，属于基本設計；用哪个类、拆几个方法、SQL 怎么写——用户看不见，属于詳細設計。<br>本教材覆盖的是<strong>要件定義</strong>与<strong>基本設計</strong>这两格（表中蓝底部分）。</p>
+        </div>
+
+        <h2>V字模型：左边写的每一条，右边都有人来验</h2>
+        <p>把上面的工程折成一个 V 字，左边是「决定与设计」，右边是「验证」，底部是製造。<strong>V 字的价值不在于形状好看，而在于左右配对</strong>——每个设计工程，都有一个专门验证它的测试工程。</p>
+        <p>点一下图里的任意工程，右边会显示这一格的输入、输出、主体，以及它在 V 字另一侧的对手。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 可点击的 V 字模型：这一格在做什么，谁来验它</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：<strong>要件定義↔受入テスト、基本設計↔総合テスト、詳細設計↔結合テスト、製造↔単体テスト</strong> 四组配对。左侧文档是右侧测试的判定依据，所以<strong>无法被测试的要件不应该写进要件定義書</strong>。</p></noscript>
+            <div class="vm-wrap">
+              <div class="vm-fig">
+                <svg viewBox="0 0 400 340" width="100%" height="340" role="img" aria-label="V字模型图：左侧自上而下为要求定义、要件定义、基本设计、详细设计，底部为制造，右侧自下而上为单体测试、结合测试、综合测试、受入测试，左右同高的工程互为配对">
+                  <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12">
+                    <path d="M 88 44 L 200 268 L 312 44" stroke="var(--kb-border-strong)" stroke-width="1.4" fill="none" stroke-dasharray="3 4"/>
+                    <g stroke="var(--kb-ok)" stroke-width="1.1" stroke-dasharray="5 4" opacity="0.75">
+                      <path d="M 152 44 H 248"/>
+                      <path d="M 138 100 H 262"/>
+                      <path d="M 124 156 H 276"/>
+                      <path d="M 110 212 H 290"/>
+                    </g>
+
+                    <g class="vm-node" data-key="youkyu" tabindex="0" role="button" aria-label="要求定義">
+                      <rect x="14" y="26" width="124" height="36" rx="7"/>
+                      <text x="76" y="49" text-anchor="middle" font-weight="600">要求定義</text>
+                    </g>
+                    <g class="vm-node" data-key="youken" tabindex="0" role="button" aria-label="要件定義">
+                      <rect x="14" y="82" width="124" height="36" rx="7"/>
+                      <text x="76" y="105" text-anchor="middle" font-weight="600">要件定義</text>
+                    </g>
+                    <g class="vm-node" data-key="kihon" tabindex="0" role="button" aria-label="基本設計">
+                      <rect x="14" y="138" width="124" height="36" rx="7"/>
+                      <text x="76" y="161" text-anchor="middle" font-weight="600">基本設計</text>
+                    </g>
+                    <g class="vm-node" data-key="shosai" tabindex="0" role="button" aria-label="詳細設計">
+                      <rect x="14" y="194" width="124" height="36" rx="7"/>
+                      <text x="76" y="217" text-anchor="middle" font-weight="600">詳細設計</text>
+                    </g>
+                    <g class="vm-node" data-key="seizo" tabindex="0" role="button" aria-label="製造">
+                      <rect x="140" y="252" width="120" height="36" rx="7"/>
+                      <text x="200" y="275" text-anchor="middle" font-weight="600">製造</text>
+                    </g>
+                    <g class="vm-node" data-key="ut" tabindex="0" role="button" aria-label="単体テスト">
+                      <rect x="262" y="194" width="124" height="36" rx="7"/>
+                      <text x="324" y="217" text-anchor="middle" font-weight="600">単体テスト</text>
+                    </g>
+                    <g class="vm-node" data-key="it" tabindex="0" role="button" aria-label="結合テスト">
+                      <rect x="262" y="138" width="124" height="36" rx="7"/>
+                      <text x="324" y="161" text-anchor="middle" font-weight="600">結合テスト</text>
+                    </g>
+                    <g class="vm-node" data-key="st" tabindex="0" role="button" aria-label="総合テスト">
+                      <rect x="262" y="82" width="124" height="36" rx="7"/>
+                      <text x="324" y="105" text-anchor="middle" font-weight="600">総合テスト</text>
+                    </g>
+                    <g class="vm-node" data-key="uat" tabindex="0" role="button" aria-label="受入テスト">
+                      <rect x="262" y="26" width="124" height="36" rx="7"/>
+                      <text x="324" y="49" text-anchor="middle" font-weight="600">受入テスト</text>
+                    </g>
+
+                    <text x="200" y="316" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-faint)">緑の破線＝検証の対応関係</text>
+                  </g>
+                </svg>
+              </div>
+              <div class="vm-panel" id="vm-panel" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 V 字模型给上流工程的唯一戒律</p>
+          <p><strong>测试不了的要件，不要写进要件定義書。</strong><br>「使いやすい画面であること」在受入テスト时无法判定合格与否，写进去只会在半年后变成一场争吵。V 字告诉你：写下一条要件的瞬间，就要能回答「将来谁、拿什么、怎么判定它做到了」。这条戒律在第 6 章（検証可能性）会展开成一套可操作的改写方法。</p>
+        </div>
+
+        <h2>要望・要求・要件・仕様：一道有法律后果的阶梯</h2>
+        <p>这四个词在中文里都能译成「需求／规格」，但在日本的合同语境下是四个不同的层级。用本书的贯穿案例走一遍，一眼就清楚了：</p>
+
+        <figure>
+          <svg viewBox="0 0 700 300" width="700" height="300" role="img" aria-label="要望、要求、要件、仕样四级阶梯图，每一级配以经费精算系统的具体例句，越往上越具体、越可验证">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12">
+              <rect x="20" y="228" width="660" height="56" rx="8" fill="var(--kb-surface-alt)" stroke="var(--kb-border-strong)"/>
+              <text x="34" y="250" font-weight="700" fill="var(--kb-fg)">① 要望（ようぼう）</text>
+              <text x="200" y="250" fill="var(--kb-fg-muted)">主体も範囲もない、ただの願い</text>
+              <text x="34" y="271" fill="var(--kb-fg)">「月末の残業、なんとかしたいんですよね」</text>
+
+              <rect x="20" y="162" width="660" height="56" rx="8" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="34" y="184" font-weight="700" fill="var(--kb-fg)">② 要求（ようきゅう）</text>
+              <text x="200" y="184" fill="var(--kb-fg-muted)">発注者視点の目的。まだ「何を作るか」ではない</text>
+              <text x="34" y="205" fill="var(--kb-fg)">「経費精算をシステム化し、経理の転記作業をなくしたい」</text>
+
+              <rect x="20" y="96" width="660" height="56" rx="8" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+              <text x="34" y="118" font-weight="700" fill="var(--kb-fg)">③ 要件（ようけん）</text>
+              <text x="200" y="118" fill="var(--kb-fg-muted)">システムが満たすべき条件。検証可能・合意対象</text>
+              <text x="34" y="139" fill="var(--kb-fg)">「承認済みの経費申請から仕訳データを自動生成し、会計システムへ月次で連携すること」</text>
+
+              <rect x="20" y="30" width="660" height="56" rx="8" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="34" y="52" font-weight="700" fill="var(--kb-fg)">④ 仕様（しよう）</text>
+              <text x="200" y="52" fill="var(--kb-fg-muted)">要件を満たす具体的な実現方法</text>
+              <text x="34" y="73" fill="var(--kb-fg)">「KEIHI_YYYYMM.csv（Shift_JIS / CRLF）を毎月第一営業日 2:00 に FTP 連携。項目は…」</text>
+
+              <g stroke="var(--kb-accent)" stroke-width="2">
+                <path d="M 690 270 V 46"/>
+                <path d="M 690 46 l -5 8 h 10 z" fill="var(--kb-accent)" stroke="none"/>
+              </g>
+              <text x="694" y="160" font-size="11" fill="var(--kb-fg-muted)" transform="rotate(-90 694 160)" text-anchor="middle">具体的・検証可能に</text>
+            </g>
+          </svg>
+          <figcaption>同一件事的四个层级。<strong>要求＝なぜ（为什么要做）、要件＝なに（系统必须满足什么）、仕様＝どうやって（怎么实现）</strong>。要件定義的工作，就是把①②抬升到③；基本設計以降的工作，是把③落实成④。</figcaption>
+        </figure>
+
+        <p>为什么必须分清？因为<strong>「要件」是合同的对象，「仕様」不是</strong>：</p>
+        <ul>
+          <li><strong>要件定義書に書かれ、承認された内容</strong>＝受入テスト的判定依据，也是スコープ的边界。改动它＝<ruby>要件変更<rt>ようけんへんこう</rt></ruby>＝走変更管理、追加費用（第 8 章）。</li>
+          <li><strong>仕様</strong>是为了满足要件而由受注者决定的实现方式，写在基本設計書・詳細設計書里。在不改变要件的前提下调整仕様，通常不追加费用——因为「怎么实现」本来就是受注者的裁量范围。</li>
+        </ul>
+        <p>回到开头那句「消費税を自動計算してほしい」：如果要件定義書里有「経費申請時に消費税額を自動算出できること」，那它是<strong>既定要件</strong>，基本設計只是把它具体化成「税率マスタを持ち、費目ごとに税区分を保持する」这样的仕様；如果没有，它就是<strong>新しい要件</strong>——功能不大，但它会牵动税率的历史管理、既存数据的处理、会计连携的项目，绝不是「ついで」。</p>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「仕様です」是一句危险的话</p>
+          <p>现场经常听到用「仕様です」来挡住客户的抱怨。但要记住：<strong>「仕様」是你（受注者）自己决定的东西</strong>。用「これは仕様です」回应「使いにくい」，逻辑上等于说「我自己决定的，所以不改」——客户当然不服。<br>正确的回应方式是回到要件层：「要件定義書 第 5.3 節でご承認いただいた〜という要件に基づき、この仕様としています。変更をご希望であれば、影響を確認のうえ変更管理でご相談させてください。」<strong>拿出双方签字过的东西，而不是自己单方决定的东西。</strong></p>
+        </div>
+
+        <h2>上流成果物地图：这本书接下来要造的东西</h2>
+        <p>把要件定義与基本設計两个工程里要产出的东西铺开，就是本教材第 4 章以后的全部目录。这张地图值得贴在工位上。</p>
+
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工程</th><th>成果物</th><th>回答的问题</th><th>本书</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="6">要件定義</td><td>業務フロー図（As-Is / To-Be）</td><td>业务现在怎么转、将来怎么转</td><td>第 4 章</td></tr>
+              <tr><td>業務要件定義書</td><td>业务上必须成立的规则是什么</td><td>第 4 章</td></tr>
+              <tr><td>機能一覧・機能要件定義書</td><td>系统要提供哪些功能</td><td>第 5・6 章</td></tr>
+              <tr><td>非機能要件定義書</td><td>多快、多稳、多安全、怎么运维</td><td>第 7 章</td></tr>
+              <tr><td>スコープ定義・WBS・見積書</td><td>做到哪、多少钱、多久</td><td>第 8 章</td></tr>
+              <tr><td><strong>要件定義書</strong>（上記の統合）</td><td>以上全部，客户签字的那一本</td><td>第 9 章</td></tr>
+              <tr><td rowspan="6">基本設計</td><td>方式設計書・システム構成図</td><td>整体怎么搭、共通机制怎么定</td><td>第 10 章</td></tr>
+              <tr><td>画面設計書（一覧・遷移図・項目定義）</td><td>用户看到什么、能操作什么</td><td>第 11 章</td></tr>
+              <tr><td>データ設計書（ER図・テーブル定義・CRUD図）</td><td>数据怎么存、谁读谁写</td><td>第 12 章</td></tr>
+              <tr><td>IF設計書・バッチ設計書・帳票設計書</td><td>和别的系统怎么连、定时跑什么、打印什么</td><td>第 13 章</td></tr>
+              <tr><td>運用設計書・移行設計書</td><td>上线后怎么运维、旧数据怎么搬</td><td>第 14 章</td></tr>
+              <tr><td>メッセージ一覧・コード設計書</td><td>提示语和编码体系怎么统一</td><td>第 10・11 章</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>ウォーターフォール与アジャイル：日本现场的实际情况</h2>
+        <p>本教材以ウォーターフォール（V字模型）为主轴，这不是怀旧，而是因为<strong>受託開発（承包开发）与敏捷有结构性的摩擦</strong>：</p>
+        <ul>
+          <li>請負契約要求「完成」是可定义的，而敏捷的前提恰恰是「做的过程中会变」。两者天然打架。</li>
+          <li>発注者侧需要事前拿到总金额去走稟議（内部审批）。「やってみないと分かりません」在稟議书上过不了。</li>
+          <li>敏捷要求客户方投入 プロダクトオーナー 全程参与。但第 1 章说过——客户的情シス只有三个人。</li>
+        </ul>
+        <p>所以日本现场的实际形态多是<strong>混合</strong>：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>形态</th><th>做法</th><th>常见场景</th></tr></thead>
+            <tbody>
+              <tr><td>純ウォーターフォール</td><td>全工程按 V 字推进，各工程末尾评审・承认</td><td>基幹系（会計・生産管理）、公共系、金融系</td></tr>
+              <tr><td>ハイブリッド</td><td>要件定義・基本設計はWF、製造以降を反復（スプリント）で回す</td><td>Web系・社内系の中規模案件。<strong>本案例也属于这一类</strong></td></tr>
+              <tr><td>準委任アジャイル</td><td>全工程を準委任にし、スプリント単位で優先度を見直す</td><td>内製に近い体制、SaaS開発、DX案件</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>值得强调的是：<strong>本教材讲的内容，在敏捷下同样需要</strong>。业务流程要理解、非机能要定、数据模型要设计、和会计系统的连携格式要谈——这些工作不会因为换成 スプリント 就消失，只是被切碎、分散到各个迭代里去做。变的是<em>什么时候做、做多细</em>，不变的是<em>要做</em>。</p>
+
+        <h2>成果物样例</h2>
+        <p>本章对应的成果物是<strong>工程別成果物一覧</strong>——プロジェクト計画書里最重要的一张表。它定义了「本项目到底要交付哪些文档、谁审谁批」，是后续所有「这个要不要写」争议的裁决依据。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>工程別成果物一覧（プロジェクト計画書 第 6 章 抜粋）</span><span class="kb-doc-id">DOC-102 / v1.0</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>工程</th><th>成果物名</th><th>作成</th><th>レビュー</th><th>承認</th><th>提出時期</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="4">要件定義<br>（準委任）</td><td>業務フロー図（As-Is / To-Be）</td><td>受注者SE</td><td>経理部・情シス</td><td>情シス部長</td><td>2026/10/15</td></tr>
+                <tr><td>機能一覧</td><td>受注者SE</td><td>情シス</td><td>情シス部長</td><td>2026/10/31</td></tr>
+                <tr><td>非機能要件定義書</td><td>受注者SE</td><td>情シス</td><td>情シス部長</td><td>2026/11/15</td></tr>
+                <tr><td><strong>要件定義書</strong></td><td>受注者SE</td><td>情シス・経理部</td><td><strong>システムオーナー</strong></td><td>2026/11/30</td></tr>
+                <tr><td rowspan="4">基本設計<br>（請負）</td><td>方式設計書</td><td>受注者SE</td><td>受注者PM・情シス</td><td>情シス部長</td><td>2026/12/20</td></tr>
+                <tr><td>画面設計書・帳票設計書</td><td>受注者SE</td><td>経理部・情シス</td><td>情シス部長</td><td>2027/01/31</td></tr>
+                <tr><td>データ設計書（ER図・テーブル定義書）</td><td>受注者SE</td><td>受注者PM</td><td>情シス部長</td><td>2027/02/15</td></tr>
+                <tr><td>IF設計書・バッチ設計書</td><td>受注者SE</td><td>会計システム保守ベンダー同席</td><td>情シス部長</td><td>2027/02/28</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 本一覧に記載のない成果物は、本契約の範囲外とする。追加が必要となった場合は変更管理手続きによる。<br>※ レビュー指摘はレビュー記録票に記録し、対応完了をもって承認可能とする。</p>
+          </div>
+        </div>
+        <p class="lv-hint">注意最后那两行注记——「本一覧に記載のないものは範囲外」这一句，是把工程表变成防线的关键。第 8 章会讲这句话在预算上救过多少人。</p>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 「ボタンの色を青から緑に変えて」は要件変更か、仕様変更か</p>
+          <p><strong>判断步骤，而不是背答案：</strong><br>① <strong>查文档</strong>：颜色写在哪？如果只在基本設計書的画面レイアウト里（受注者决定的实现方式），那是<strong>仕様の変更</strong>。<br>② <strong>查承认状态</strong>：那份基本設計書已经被客户承认了吗？<br>③ <strong>算影响</strong>：如果只是一个按钮的样式常量，工数≈0，通常作为「軽微な修正」当场吸收；如果画面設計書已承認、且要改的是全系统所有按钮（涉及 42 个画面的截图全部重做），那即使是「仕様」，工数也不是零。<br><strong>结论</strong>：要件変更／仕様変更 决定的是「谁有权决定」，而<strong>是否收费由工数影响决定</strong>——两件事别混为一谈。现场的成熟做法是：仕様レベルの微修正は都度対応、ただし「軽微とみなす基準」（例：1 人日未満）をプロジェクト開始時に合意しておく。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 受入テストで「この帳票、部門別の小計がない」と言われた</p>
+          <p>要件定義書には「経費データを部門別に集計できること」と書かれている。基本設計の帳票設計書には小計行がない。誰の責任か？</p>
+          <p><strong>分析</strong>：要件には書かれている → V 字の左上（要件定義）で合意済み → 受入テストで「要件どおりでない」と指摘されるのは<strong>正当</strong>。責任は受注者側の<strong>設計漏れ</strong>にある可能性が高く、請負契約なら契約不適合責任の範囲＝自社負担で修正。<br>ただし本当に見るべきはその手前：<strong>なぜ基本設計のレビューで気づかれなかったのか</strong>。答えは「要件と設計書を突き合わせる仕組みがなかったから」。これを防ぐのが<ruby>トレーサビリティマトリクス<rt>要件追跡表</rt></ruby>（第 9 章）——要件ID ごとに「どの設計書のどこで実現し、どのテストで確認するか」を並べた表。この表があれば「要件 F-034 に対応する設計書が存在しない」がレビュー時点で機械的に見つかる。<br><strong>教訓</strong>：V字の左右対応は、図の上の話ではなく<strong>表の上で運用してはじめて効く</strong>。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 客が「アジャイルでやりたい」と言い出した（契約は一括請負）</p>
+          <p><strong>まず確認すべきは、客が「アジャイル」で何を期待しているか。</strong>多くの場合、本当の要望は次のどれかで、方法論そのものではない：(a) 早く動くものが見たい　(b) 途中で仕様を変えたい　(c) 全部決めきってから作るのが不安。<br><strong>(a) なら</strong>——ウォーターフォールのままでも、画面のプロトタイプやモックを基本設計フェーズで作れば応えられる（第 11 章）。契約に触らずに満たせる。<br><strong>(b) なら</strong>——契約形態の話になる。一括請負のままスコープを可変にはできない。準委任への変更、あるいは変更管理の枠（バッファ工数）をあらかじめ確保する形を提案する。<br><strong>(c) なら</strong>——多段階契約（第 1 章）の説明が効く。要件定義だけ先に切り出す。<br><strong>やってはいけないこと</strong>：契約は一括請負のまま「じゃあアジャイルっぽく柔軟にやりましょう」と曖昧に合意すること。スコープが無限に膨らみ、完成義務だけが残る——最悪の組み合わせになる。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>以下の作業は「基本設計（外部設計）」「詳細設計（内部設計）」のどちらか。① 経費申請画面の入力項目と桁数を決める　② 申請データを保存するクラスのメソッド分割を決める　③ 会計システムへ渡す CSV の項目順を決める　④ 一覧検索の SQL のインデックス設計を決める</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①基本設計　②詳細設計　③基本設計　④詳細設計</p>
+            <p><strong>解析</strong>：判定基準はただ一つ——<strong>「システムの外側（ユーザーまたは相手システム）から見えるか」</strong>。<br>①画面の項目と桁は利用者が直接目にする → 外部設計。②クラス構造は誰にも見えない → 内部設計。③CSV の項目順は<strong>相手システム（会計システム）から見える</strong>——ここが引っかけ。「外部＝人間のユーザー」ではなく「外部＝自分の担当範囲の外側」。相手システムとの取り決めは必ず基本設計。④インデックスは実装の最適化手段 → 内部設計。<br>ただし④には例外がある：性能要件（第 7 章）を満たすためにテーブル構成そのものを変える（非正規化する）ような判断は、データ設計として基本設計で扱う。「見えないが、後から変えると影響が大きすぎるもの」は基本設計に上げる——これが実務上の第二の判定軸。第 10 章で詳しく扱う。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>V 字模型で、次の各工程と対応するテスト工程を答えよ。① 要件定義　② 基本設計　③ 詳細設計　④ 製造。また、その対応関係から導かれる実務上の教訓を一つ書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①受入テスト（UAT）　②総合テスト（システムテスト）　③結合テスト　④単体テスト</p>
+            <p><strong>教訓の例</strong>：「テストで判定できない要件は書いてはいけない」／「各工程の成果物は、対応するテストの仕様書の材料になる」／「要件定義の段階で受入テストのシナリオを想像できていないなら、その要件はまだ書けていない」。</p>
+            <p><strong>解析</strong>：対応関係の本質は<strong>「誰の視点で書かれた文書か」＝「誰が検証するか」</strong>。要件定義書は発注者の業務視点で書かれる → 検証するのも発注者（受入テスト）。基本設計書はシステム全体の振る舞いを定義する → システム全体を通しで動かす総合テストが対応。詳細設計はモジュール間の呼び出しを決める → 結合テストが対応。<br>実務での応用：要件定義書を書きながら「この一文は、半年後に高橋課長がどう確認するだろう」と想像する癖をつけると、曖昧な要件が激減する。これを制度化したのが<strong>受入基準（受入テスト観点）を要件定義と同時に書く</strong>やり方で、第 9 章で扱う。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の文を、要望 → 要求 → 要件 → 仕様 の 4 段階に書き分けよ。素材：「出張が多い営業部から、経費の申請がスマホでできないと困る、という声が上がっている」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>解答例</strong>：</p>
+            <p><strong>① 要望</strong>：「外出先からでも経費申請できるようにしてほしい」（営業部の声そのまま）<br><strong>② 要求</strong>：「外勤者が帰社せずに経費申請できるようにし、申請の遅延と月末の集中を減らしたい」（発注者視点の目的が入った）<br><strong>③ 要件</strong>：「経費申請の入力・提出・申請状況の確認を、スマートフォンのブラウザ（iOS Safari / Android Chrome の最新 2 バージョン）から行えること。領収書の画像添付が行えること。」<br><strong>④ 仕様</strong>：「レスポンシブ Web で実現し、画面幅 768px 未満では 1 カラム表示に切り替える。画像添付は JPEG / PNG、1 ファイル 5MB 以内・1 申請あたり 10 件まで。撮影は端末のカメラ API を利用する。」</p>
+            <p><strong>解析</strong>：段階が上がるごとに増えるものに注目してほしい。<br>要望→要求では<strong>「なぜ」（目的）</strong>が入る。目的が入ると、後で「スマホ対応」以外の解決策（例：経理側の代理入力）とも比較できるようになる。<br>要求→要件では<strong>「対象・条件・判定基準」</strong>が入る。「スマホで」だけでは、対応OS・ブラウザ・機能範囲が決まらず、受入テストで揉める。<br>要件→仕様では<strong>「実現方法」</strong>が入る。ネイティブアプリでもレスポンシブWebでも要件は満たせる——どちらを選ぶかは受注者の裁量（＝仕様）であり、だからこそ要件に「ネイティブアプリで」と書いてはいけない。書いた瞬間、それは実現方法を縛る要件になり、コストが跳ね上がる。<br><strong>よくある失敗</strong>：客が仕様レベルで要望を出してくる（「ネイティブアプリにしてください」）。そのときは<strong>一段下げて聞き直す</strong>——「なぜネイティブが必要でしょうか？」。答えが「オフラインでも入力したい」なら、それが本当の要件。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>「基本設計」と同じ意味で使われる言葉を二つ、「詳細設計」と同じ意味で使われる言葉を二つ挙げよ。なぜ呼び名が複数あるのか、実務上どう対処すべきか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：基本設計＝<strong>外部設計</strong>／概要設計（英語では External Design、企業により Architecture Design）。詳細設計＝<strong>内部設計</strong>／プログラム設計（Internal Design、Detail Design）。</p>
+            <p><strong>解析</strong>：呼び名が割れる理由は、日本のSI工程区分に業界標準の強制力がなく、各社が独自の開発標準（社内の「システム開発標準」文書）を持っているため。共通フレーム（SLCP-JCF）という指針はあるが、現場の呼称までは統一されていない。<br><strong>実務上の対処</strong>：プロジェクト開始時に必ず<strong>工程定義と成果物一覧を文書で合意する</strong>（本章の成果物样例がまさにそれ）。「基本設計」という言葉が同じでも、A社では画面レイアウトまで、B社ではDB論理設計まで含む、ということが普通に起きる。<br>特に危険なのは<strong>見積のとき</strong>——「基本設計は 3 人月」と言われても、そこに何が含まれるか合意されていなければ、金額は無意味。だから見積書には必ず成果物一覧を添付する（第 8 章）。<br>もう一つの実践的コツ：客先の既存文書（他ベンダーが作った過去の設計書）を最初に見せてもらうこと。<strong>その会社にとっての「基本設計書」がどの粒度なのかは、過去の実物を見るのが一番速い。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>要件定義書に次の一文があった。これは要件として適切か。不適切なら理由を述べ、書き直せ。<br>「経費申請画面は、Vue.js を用いたモダンで直感的な UI とし、ユーザーがストレスなく操作できること。」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：不適切。三つの問題が混ざっている。</p>
+            <p><strong>問題① 仕様が要件に混入している</strong>：「Vue.js を用いた」は<em>実現方法</em>＝仕様。要件に書くと受注者の技術選択を縛り、しかも「なぜ Vue でなければならないか」を誰も説明できない状態になる。将来の保守要員が確保できないリスクも発注者が負うことになる。<br>——ただし例外がある。発注者側に「社内標準技術スタックが Vue で、保守は内製化したい」という<strong>制約</strong>が実在するなら、それは正当な要件になり得る。その場合は要件ではなく<strong>前提条件・制約条件</strong>の欄に、理由とともに書くのが正しい（第 8 章）。</p>
+            <p><strong>問題② 検証不可能な形容詞</strong>：「モダン」「直感的」「ストレスなく」——受入テストで合否を判定できない。V 字の戒律に反する。</p>
+            <p><strong>問題③ 一文に複数の要件が混在</strong>：技術指定・UI 品質・操作性が一文に詰まっており、片方だけ合意することができない。</p>
+            <p><strong>書き直し例</strong>：<br>［機能要件 F-012］「経費申請画面において、費目・金額・日付・支払先を入力し、申請を提出できること。」<br>［非機能要件 U-003］「経費申請 1 件の入力から提出完了までの操作を、初回利用者が操作マニュアルを参照せずに 5 分以内に完了できること（受入テストにて、経理部以外の社員 3 名で検証する）。」<br>［非機能要件 P-002］「各画面の応答時間は、通常時 3 秒以内であること。」<br>［制約条件］「フロントエンド技術は、発注者の社内標準に合わせ Vue.js 系とする（保守内製化のため）。」</p>
+            <p><strong>解析のポイント</strong>：「使いやすさ」を諦めて消すのではなく、<strong>測れる形に翻訳する</strong>のがコツ。上の U-003 のように「誰が・何を参照せず・何分で・誰が検証するか」まで書けば、主観的な品質も受入テストの対象にできる。この翻訳技術が第 6 章の中心テーマ。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>基本設計の途中で、要件定義書に書かれた「承認は 2 段階（課長→部長）」という要件について、経理部から「実は部署によっては 3 段階必要」と判明した。あなたは基本設計の画面設計を進めている最中である。どう動くか。V字模型の観点から、放置した場合に何が起きるかも述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>動き方</strong>：① 設計作業を止めずに、まず<strong>課題管理表に起票</strong>（第 3 章）。② 影響範囲を洗い出す——画面（承認画面・申請状況表示）、データ（承認履歴テーブルの構造）、権限設計、通知、帳票の承認欄、そして<strong>既に承認済みの要件定義書</strong>。③ PM に報告し、変更管理として発注者に提示（工数・日程・費用への影響つき）。④ 発注者の決定を待つ間、<strong>3 段階に拡張可能な設計にしておくか、2 段階固定で進めるか</strong>を、手戻りコストで判断する。⑤ 決定後、要件定義書の改訂（版数を上げて再承認）。</p>
+            <p><strong>放置した場合に起きること（V字の観点）</strong>：<br>要件定義書は<strong>受入テストの判定基準</strong>だった。要件定義書が「2 段階」のまま、設計と実装が「2 段階」で作られれば、受入テストは<strong>合格してしまう</strong>——書類上は。しかし本番稼働の直後、3 段階必要な部署が業務を回せず障害として噴出する。この時点での修正コストは、基本設計時点の 10 倍以上（テーブル構造とデータ移行にまで波及するため）。<br>逆に、要件定義書を直さずに設計だけ 3 段階にすると、こんどは<strong>要件と設計が乖離</strong>し、トレーサビリティが切れる。将来「なぜこの仕様なのか」を誰も説明できないシステムになる。</p>
+            <p><strong>この問題の核心</strong>：要件定義書は<strong>一度承認したら凍結される石版ではなく、版数管理される生き物</strong>だということ。変更してはいけないのではなく、<strong>手続きを踏まずに変更してはいけない</strong>。版を上げ、影響を示し、再承認をもらう——この手順を面倒がった瞬間に、V字の左右対応が壊れる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたが今関わっている（あるいは直近で関わった）システムについて、本章の「上流成果物地图」の表を作ってみよう。存在する成果物には ◯、存在しないものには ✕ を付け、✕ のものについて「無くて困ったことがあるか」を書き出すこと。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>観察の視点を示す。</p>
+            <p><strong>典型的なパターン①「✕ が非機能要件定義書と運用設計書に集中している」</strong>——これは日本のSI案件で最も多い欠落。困りごとは決まって稼働後に来る：「ログがどこにあるか誰も知らない」「バッチが落ちたとき誰に連絡すればいいか決まっていない」「性能が出ないが、そもそも何秒が目標だったのか合意がない」。第 7 章と第 14 章が対応する。</p>
+            <p><strong>典型的なパターン②「設計書はあるが、要件定義書がない／古い」</strong>——保守フェーズから参加した案件でよく見る。設計書は改修のたびに更新されるが、要件定義書は初回リリース時のまま。すると「なぜこの仕様なのか」が永久に失われる。対処は、改修のたびに<strong>設計書に「この変更の背景」を一行残す</strong>こと。要件定義書を遡って直すのは現実的でないが、意図を残すのはコストゼロに近い。</p>
+            <p><strong>典型的なパターン③「全部 ◯ だが、誰も読んでいない」</strong>——文書が形式的に揃っているだけで、実装とずれている状態。これは「無い」より危険なことがある（間違った文書を信じて設計する）。チェック方法：任意の画面を一つ選び、画面項目定義書と実際の画面を突き合わせてみる。3 箇所以上ずれていたら、その文書群は信頼できない。</p>
+            <p><strong>この演習の目的</strong>：本教材の第 4 章以降で作る成果物が、あなたの現場では「なぜ無いのか／なぜあるのか」を先に体感しておくこと。全部作るのが正義ではない——<strong>小規模案件では作らない判断も正しい</strong>。ただしそれは「意図的に作らない」であるべきで、「存在を知らなかったから作らなかった」であってはならない。この教材が埋めたいのは、その差である。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 工程は 企画→要求定義→<strong>要件定義</strong>→<strong>基本設計</strong>→詳細設計→製造→単体/結合/総合/受入テスト→移行→運用保守；<strong>基本設計＝外部設計、詳細設計＝内部設計</strong>，分界是「システムの外側から見えるか」——相手システムから見えるものも外部；② V 字模型的价值在左右配对：要件定義↔受入テスト、基本設計↔総合テスト、詳細設計↔結合テスト、製造↔単体テスト，由此得出唯一戒律——<strong>测试不了的要件不要写</strong>；③ 要望→要求→要件→仕様 是一道阶梯，<strong>要求＝なぜ、要件＝なに、仕様＝どうやって</strong>；要件是合同对象、是受入テストの判定基準，仕様是受注者的裁量；④ 「これは仕様です」挡不住抱怨——要拿双方签字过的<em>要件</em>说话；⑤ 要件定義書不是石版而是版数管理的生き物，可以改，但必须走手续；⑥ 敏捷与瀑布在日本现场并存，本教材的内容在敏捷下同样需要，变的只是切分方式。<br><strong>下一章预告</strong>：地图有了、词也分清了，接下来是最日本的一章——「定下来了」到底是怎么发生的。議事録为什么要在 48 小时内发出、QA表的列该怎么设计、以及那句万能的「一旦持ち帰ります」背后完整的作战流程。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./01-日本IT开发现场.html">← 第 1 章 日本IT开发现场：体制、契约与登场人物</a>
+          <a href="./03-上流的作法与合意形成.html">第 3 章 上流的作法：合意是怎么造出来的 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var panel = document.getElementById("vm-panel");
+      if (!panel) return;
+
+      var DATA = {
+        youkyu: {
+          name: "要求定義", alias: "要求分析 / 発注者主体",
+          goal: "業務側の「こうしたい」を集め、システム化の目的と優先度を整理する。",
+          input: "経営課題、現場の不満、システム化構想書",
+          output: "要求一覧、システム化計画書、RFP（提案依頼書）",
+          who: "発注者（ベンダーが支援することも多い）",
+          pair: null, pairName: "—（発注者の目的そのものは、稼働後の効果測定で評価される）",
+          book: "本教材では第 4・5 章の入口として扱う"
+        },
+        youken: {
+          name: "要件定義", alias: "本教材の第二部（第 4–9 章）",
+          goal: "要求を、実現可能で検証可能な「要件」に翻訳し、発注者と合意する。",
+          input: "要求一覧、現行業務の実態、現行システムの資料",
+          output: "要件定義書、業務フロー図、機能一覧、非機能要件定義書",
+          who: "共同作業。ただし文書を書くのは受注者SE",
+          pair: "uat", pairName: "受入テスト（UAT）",
+          book: "第 4 章〜第 9 章"
+        },
+        kihon: {
+          name: "基本設計", alias: "外部設計 / 概要設計",
+          goal: "ユーザーと相手システムから見える形を決める。「何がどう見え、どう繋がるか」。",
+          input: "承認済みの要件定義書",
+          output: "方式・画面・帳票・IF・バッチ・データ 各設計書、メッセージ一覧",
+          who: "受注者（発注者はレビューと承認）",
+          pair: "st", pairName: "総合テスト（システムテスト）",
+          book: "第 10 章〜第 14 章"
+        },
+        shosai: {
+          name: "詳細設計", alias: "内部設計 / プログラム設計",
+          goal: "プログラムの内部構造を決める。ユーザーには見えない領域。",
+          input: "基本設計書",
+          output: "詳細設計書、モジュール仕様書、SQL・処理フロー",
+          who: "受注者（協力会社が担当することも多い）",
+          pair: "it", pairName: "結合テスト（IT）",
+          book: "本教材の範囲外（第 14 章で引き継ぎ方のみ扱う）"
+        },
+        seizo: {
+          name: "製造", alias: "実装・コーディング",
+          goal: "詳細設計書に基づいてプログラムを作る。",
+          input: "詳細設計書",
+          output: "ソースコード、単体テスト仕様書",
+          who: "受注者・二次請け・オフショア",
+          pair: "ut", pairName: "単体テスト（UT）",
+          book: "本教材の範囲外"
+        },
+        ut: {
+          name: "単体テスト", alias: "UT（Unit Test）",
+          goal: "モジュール単位で、詳細設計どおりに動くかを確認する。",
+          input: "詳細設計書、ソースコード",
+          output: "単体テスト仕様書・報告書",
+          who: "受注者（製造担当者自身が行うことが多い）",
+          pair: "seizo", pairName: "製造",
+          book: "本教材の範囲外"
+        },
+        it: {
+          name: "結合テスト", alias: "IT / 内部結合・外部結合",
+          goal: "モジュール間、サブシステム間、他システム間の連携を確認する。",
+          input: "詳細設計書、基本設計のIF設計書",
+          output: "結合テスト仕様書・報告書",
+          who: "受注者",
+          pair: "shosai", pairName: "詳細設計",
+          book: "第 13 章のIF設計が、ここでの試験項目の材料になる"
+        },
+        st: {
+          name: "総合テスト", alias: "ST / システムテスト",
+          goal: "システム全体を業務シナリオで通し、非機能（性能・可用性）も含めて確認する。",
+          input: "基本設計書、非機能要件定義書",
+          output: "総合テスト仕様書・報告書、性能測定結果",
+          who: "受注者（発注者が立ち会うこともある）",
+          pair: "kihon", pairName: "基本設計",
+          book: "第 7 章の非機能要件が、ここで数値として検証される"
+        },
+        uat: {
+          name: "受入テスト", alias: "UAT / 検収",
+          goal: "発注者自身が、業務が回るかを確認する。合格をもって検収＝支払い。",
+          input: "要件定義書、業務フロー図（To-Be）",
+          output: "受入テスト結果、検収書",
+          who: "発注者（ユーザー部門が主役）",
+          pair: "youken", pairName: "要件定義",
+          book: "第 9 章で、要件定義と同時に受入観点を作る方法を扱う"
+        }
+      };
+
+      var nodes = Array.prototype.slice.call(document.querySelectorAll(".vm-node"));
+
+      function row(k, v) {
+        var r = document.createElement("div");
+        r.className = "vm-row";
+        var a = document.createElement("div");
+        a.className = "vm-key";
+        a.textContent = k;
+        var b = document.createElement("div");
+        b.className = "vm-val";
+        b.textContent = v;
+        r.appendChild(a); r.appendChild(b);
+        return r;
+      }
+
+      function select(key) {
+        var d = DATA[key];
+        nodes.forEach(function (n) {
+          var k = n.getAttribute("data-key");
+          n.classList.toggle("sel", k === key);
+          n.classList.toggle("pair", !!d.pair && k === d.pair);
+        });
+        panel.textContent = "";
+        var h = document.createElement("h4");
+        h.textContent = d.name;
+        var al = document.createElement("p");
+        al.className = "vm-alias";
+        al.textContent = d.alias;
+        panel.appendChild(h);
+        panel.appendChild(al);
+        panel.appendChild(row("目的", d.goal));
+        panel.appendChild(row("インプット", d.input));
+        panel.appendChild(row("成果物", d.output));
+        panel.appendChild(row("主体", d.who));
+        panel.appendChild(row("V字の相手", d.pairName));
+        panel.appendChild(row("本教材", d.book));
+      }
+
+      nodes.forEach(function (n) {
+        n.addEventListener("click", function () { select(n.getAttribute("data-key")); });
+        n.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            select(n.getAttribute("data-key"));
+          }
+        });
+      });
+
+      select("youken");
+    });
+  </script>
+</body>
+</html>

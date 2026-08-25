@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>08 范围、见积、日程与变更管理 · 知识库</title>
+  <meta name="kb:summary" content="スコープ定義的四要素、见积四法与精度、人月与要员计划、WBS与日程，以及用变更管理制度接住每天的「ついでにこれも」。">
+  <meta name="kb:tags" content="上流工程,要件定义,范围,见积,FP法,WBS,人月,变更管理,scope creep,slgc,fw,jj,bggl">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：スコープ変更シミュレータ */
+    .sc-items { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    .sc-item {
+      font: inherit; font-size: 0.8rem; padding: 6px 12px; cursor: pointer; text-align: left;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg); line-height: 1.4;
+    }
+    .sc-item:hover { border-color: var(--kb-accent); }
+    .sc-item[aria-pressed="true"] { background: var(--kb-accent-soft); border-color: var(--kb-accent); }
+    .sc-item b { display: block; font-size: 0.84rem; }
+    .sc-item span { color: var(--kb-fg-muted); font-size: 0.74rem; }
+    .sc-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .sc-card {
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 9px 11px;
+    }
+    .sc-card .sc-k { font-size: 0.73rem; color: var(--kb-fg-muted); display: block; margin-bottom: 2px; }
+    .sc-card .sc-v { font-size: 1.1rem; font-weight: 700; }
+    .sc-gauge { height: 14px; border-radius: 7px; background: var(--kb-surface-alt); overflow: hidden; display: flex; margin-bottom: 10px; }
+    .sc-gauge i { display: block; height: 100%; }
+    .sc-g-base { background: var(--kb-accent); }
+    .sc-g-buf { background: var(--kb-ok); }
+    .sc-g-over { background: var(--kb-danger); }
+    .sc-legend { font-size: 0.75rem; color: var(--kb-fg-muted); margin: -6px 0 10px; }
+    .sc-verdict {
+      border-left: 3px solid var(--kb-accent); background: var(--kb-accent-soft);
+      padding: 10px 13px; font-size: 0.87rem; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+    }
+    .sc-verdict.warn { border-left-color: var(--kb-warn); background: var(--kb-warn-soft); }
+    .sc-verdict.bad { border-left-color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .sc-verdict p { margin: 0 0 5px; }
+    .sc-verdict p:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 8 章 · 范围、见积、日程与变更管理</h1>
+        <p class="kb-lead">要件が出揃うと、必ずこう聞かれる——「で、いくらで、いつまでに？」。この章は<ruby>スコープ<rt>やること／やらないこと</rt></ruby>の線の引き方、見積の四つの方法とその精度、人月と要員計画の落とし穴、WBS とスケジュール、そして毎日降ってくる「ついでにこれも」を人間関係ではなく<strong>制度</strong>で受け止める変更管理の作り方を扱う。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 写出四要素齐全的スコープ定義（対象・対象外・前提条件・制約条件）；② 说明见积四法的适用时期与精度，并从機能一覧做出一份可解释的见积内訳；③ 说明人月的陷阱、バッファ的正确放法与要員山積み；④ 用成果物基准做出 WBS 并设定マイルストーン；⑤ 设计変更管理的流程与変更管理票，并事先约定「軽微な変更」的界线。</p>
+        </div>
+
+        <h2>「ちょっとだけ」が 40 回積み上がった</h2>
+        <p>基本設計中、経理部から週に 2〜3 件の要望が来る。どれも「ちょっとだけ」だった。「この項目も表示してほしい」「ボタンの位置を変えてほしい」「この一覧も CSV で落とせるように」。渡辺は関係を壊したくなくて、その場で「はい、対応します」と答え続けた。</p>
+        <p>3 か月後、基本設計は 6 週間遅れた。PM が原因を洗い出すと、<strong>40 件の「ちょっとだけ」の合計が 32 人日</strong>——当初見積の 27% にあたる。しかもそのうち一件も、変更管理票が起票されていない。追加請求できる根拠が、どこにも無かった。</p>
+        <p><strong>個々の判断は全部やさしくて、全部間違っていた。</strong>問題は「断らなかったこと」ではない——<strong>記録せずに受けたこと</strong>だ。記録さえあれば、20 件目の時点で「累計 15 人日です。このペースだと納期に影響します」と数字で相談できた。変更管理とは、断るための制度ではなく、<strong>受けたことを見えるようにする制度</strong>である。</p>
+
+        <h2>スコープ定義の四要素</h2>
+        <p>スコープは「やること」だけ書いても定義にならない。四つ揃って初めて線になる。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>要素</th><th>内容</th><th>書かないとどうなるか</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 対象範囲</strong></td><td>対象業務（業務ID）、対象機能（機能ID）、対象組織・拠点、対象データ</td><td>——</td></tr>
+              <tr><td><strong>② 対象外</strong></td><td>やらないことと、その代替手段（第 6 章）</td><td>「当然入っていますよね」と言われて争いになる</td></tr>
+              <tr><td><strong>③ 前提条件</strong></td><td><strong>発注者側にやってもらう前提</strong>。資料の提供、テスト要員の確保、他ベンダーとの調整、環境の準備</td><td>前提が崩れても、遅延の責任がベンダー側になる</td></tr>
+              <tr><td><strong>④ 制約条件</strong></td><td>技術・環境・法令・期間・予算の制約</td><td>後から「その技術は社内標準外です」と言われて作り直し</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 前提条件こそが最大の防御線</p>
+          <p>スコープ定義で最も軽視され、最も効くのが<strong>前提条件</strong>。プロジェクトが遅れる原因の相当部分は、ベンダー側ではなく<strong>発注者側の作業が止まること</strong>にある——資料が出てこない、レビューが返ってこない、他ベンダーとの調整が進まない、テスト要員が確保できない。</p>
+          <p>だから書く：<br>・「会計システムの連携仕様書は、2026 年 10 月末までに発注者より提供されるものとする。」<br>・「要件定義書のレビューは、提出後 5 営業日以内に回答されるものとする。」<br>・「受入テストは発注者にて実施し、期間中 2 名の要員を確保するものとする。」<br>・「本見積は、上記前提が満たされることを条件とする。前提に変更が生じた場合、工数・スケジュールを再検討する。」</p>
+          <p>これは客を責めるための条項ではない。<strong>「あなたにもやることがあります」を最初に共有しておく</strong>ためのもの——実際、発注者側は自分たちの作業量を把握していないことが多く、書いておくと体制を組んでもらえる。</p>
+        </div>
+
+        <h2>見積の四法</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>手法</th><th>やり方</th><th>使う時期</th><th>精度</th><th>弱点</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><ruby>類推見積<rt>るいすいみつもり</rt></ruby></td>
+                <td>似た過去案件の実績から「あれの 1.2 倍」と推定</td>
+                <td>企画・提案段階</td>
+                <td>±50% 程度</td>
+                <td>過去案件の実績データが無いと使えない。「似ている」の判断が属人的</td>
+              </tr>
+              <tr>
+                <td>係数見積<br>（パラメトリック）</td>
+                <td>画面数 × 単価、テーブル数 × 単価 などの係数で算出</td>
+                <td>要求定義〜要件定義初期</td>
+                <td>±30% 程度</td>
+                <td>画面の複雑さの差を吸収できない（一覧画面と複雑な入力画面が同じ単価になる）</td>
+              </tr>
+              <tr>
+                <td><strong>ボトムアップ見積</strong><br>（積み上げ）</td>
+                <td>機能一覧の 1 行ずつに工数を積む</td>
+                <td><strong>要件定義完了後</strong></td>
+                <td>±10〜20%</td>
+                <td>時間がかかる。機能一覧が確定していないと使えない。<strong>共通機能・テスト・管理工数を忘れがち</strong></td>
+              </tr>
+              <tr>
+                <td>FP法<br>（ファンクションポイント）</td>
+                <td>入力・出力・照会・ファイル・外部IF の数と複雑度から機能量を数値化し、生産性（FP/人月）で除す</td>
+                <td>要件定義完了後</td>
+                <td>±15% 程度</td>
+                <td>算定に習熟が必要。<strong>非機能要件を反映しにくい</strong>（同じ FP でも可用性要件で工数は倍違う）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 見積の精度は工程とともに上がる（不確実性のコーン）</p>
+          <p>提案時の見積が ±50% ブレるのは、担当者の能力不足ではなく<strong>構造的な必然</strong>。何を作るか決まっていない段階で正確な見積は原理的に不可能だからだ。だから第 1 章の<strong>多段階契約</strong>——要件定義（準委任）を終えてから、基本設計以降を見積り直す——が合理的な形になる。<br><strong>実務上の書き方</strong>：見積書に必ず<strong>「本見積の前提」と「精度」</strong>を書く。「本見積は要件定義書 v1.0（2026/11/30 承認）の機能一覧 87 機能に基づく。要件の追加・変更が生じた場合は再見積とする。」——この一文が、後の変更管理の起点になる。</p>
+        </div>
+
+        <h3>ボトムアップ見積で忘れられる三つの塊</h3>
+        <p>機能一覧に工数を積むと、必ず<strong>実際の 6〜7 割</strong>にしかならない。忘れられているのは：</p>
+        <ol>
+          <li><strong>共通・基盤の工数</strong>——認証、権限制御、ログ、エラー処理、画面テンプレート、開発環境の構築。第 5 章の Z- 系機能に相当する部分で、機能一覧の行数の割に工数が大きい。</li>
+          <li><strong>テストの工数</strong>——単体・結合・総合、そしてテストデータの作成。<strong>製造と同等かそれ以上</strong>かかることも珍しくない。特に第 7 章の性能テスト用に 10 万件のデータを作る作業は、見落とされやすいわりに数人日かかる。</li>
+          <li><strong>管理・調整の工数</strong>——会議、議事録、課題管理、レビュー、報告、そして客との調整。第 3 章で見たあの作法全部が工数。<strong>上流工程では管理工数がプロジェクト全体の 15〜20% を占める</strong>のが普通。</li>
+        </ol>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>基本設計以降 見積内訳（抜粋）</span><span class="kb-doc-id">DOC-208 / v1.0</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>区分</th><th>内容</th><th>数量</th><th>工数（人日）</th><th>備考</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="5">基本設計</td><td>方式設計</td><td>1 式</td><td>10</td><td>システム構成、共通方式、コード設計</td></tr>
+                <tr><td>画面設計</td><td>18 画面</td><td>27</td><td>単純 8 × 1.0、標準 7 × 2.0、複雑 3 × 2.5 人日</td></tr>
+                <tr><td>データ設計</td><td>24 テーブル</td><td>12</td><td>ER図、テーブル定義書、CRUD図</td></tr>
+                <tr><td>IF・バッチ・帳票設計</td><td>IF 3 / バッチ 5 / 帳票 2</td><td>16</td><td>会計連携の仕様調整を含む</td></tr>
+                <tr><td>運用・移行設計</td><td>1 式</td><td>8</td><td>—</td></tr>
+                <tr><td colspan="3"><strong>基本設計 小計</strong></td><td><strong>73</strong></td><td>—</td></tr>
+                <tr><td rowspan="2">レビュー・調整</td><td>レビュー会・指摘対応</td><td>—</td><td>11</td><td>設計工数の 15%</td></tr>
+                <tr><td>プロジェクト管理・報告</td><td>3 か月</td><td>12</td><td>PM 0.2 人月/月 × 3</td></tr>
+                <tr><td colspan="3"><strong>基本設計フェーズ 合計</strong></td><td><strong>96</strong></td><td>—</td></tr>
+                <tr><td>バッファ</td><td>想定外対応</td><td>—</td><td>14</td><td>合計の約 15%</td></tr>
+                <tr><td colspan="3"><strong>総計</strong></td><td><strong>110 人日</strong></td><td>3 名 × 約 3.5 か月</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">【本見積の前提】<br>・要件定義書 v1.0（2026/11/30 承認）の機能一覧 87 機能に基づく。要件の追加・変更が生じた場合は再見積とする。<br>・会計システムの連携仕様書が 2026/12/10 までに提供されること。<br>・設計書のレビュー回答が提出後 5 営業日以内に得られること。<br>・レビュー指摘への対応は 1 成果物あたり 2 回までを想定する。</p>
+          </div>
+        </div>
+
+        <h2>亲手加一加：スコープ変更シミュレータ</h2>
+        <p>下面是基本設計期间实际收到的追加要望。<strong>点开你觉得「这个应该答应」的项目</strong>，看总工数、费用、纳期怎么动。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 スコープ変更シミュレータ：「ちょっとだけ」を積んでみる</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：基本設計フェーズの計画は<strong>96 人日＋バッファ 14 人日、要員 3 名 × 45 営業日</strong>。追加要望はそれぞれ 2〜25 人日で、二つ三つ受けるだけでバッファを食い尽くす。バッファを使い切った状態は「まだ間に合っている」ではなく<strong>「以後の想定外に対応できない」</strong>状態であり、そこからの追加は必ず納期・費用・スコープのいずれかを削ることになる。</p></noscript>
+            <div class="sc-items" id="sc-items"></div>
+            <div class="sc-gauge" id="sc-gauge"></div>
+            <p class="sc-legend">青＝当初計画 96 人日／緑＝バッファ 14 人日／赤＝超過分（要員 3 名 × 45 営業日 ＝ 135 人日が上限）</p>
+            <div class="sc-out" id="sc-out"></div>
+            <div class="sc-verdict" id="sc-verdict"></div>
+          </div>
+        </div>
+
+        <h2>人月・バッファ・要員計画</h2>
+        <h3>人月の罠</h3>
+        <p>「120 人日だから、3 人でやれば 40 日、6 人なら 20 日」——これは成り立たない。理由は三つ：</p>
+        <ul>
+          <li><strong>分割できない作業がある。</strong>方式設計は 1 人で決めるほうが速い。10 人で議論すると合意に時間を食う。</li>
+          <li><strong>コミュニケーションコストが人数の二乗で増える。</strong>3 人なら 3 経路、6 人なら 15 経路。</li>
+          <li><strong>立ち上げコストがかかる。</strong>新規参加者は業務知識ゼロ。教える側の工数も減る（<em>The Mythical Man-Month</em> の有名な結論：<strong>遅れているプロジェクトへの人員追加は、さらに遅らせる</strong>）。</li>
+        </ul>
+        <p>だから納期が厳しいときの選択肢は、増員より先に<strong>①スコープを削る ②並行できる作業を洗い直す ③品質基準を（合意のうえで）調整する</strong>。増員は最後の手段で、しかも<strong>工程の早い段階でしか効かない</strong>。</p>
+
+        <h3>バッファの置き方</h3>
+        <p>バッファ（余裕工数）を各タスクに 20% ずつ隠すと、<strong>パーキンソンの法則</strong>——仕事は与えられた時間を全部使う——で必ず消費され、しかも余っても報告されない。<br>正しい置き方は<strong>プロジェクト全体で一箇所にまとめる</strong>：各タスクは実力値で見積り、全体の 10〜20% を<strong>プロジェクトバッファ</strong>として PM が管理する。<strong>「バッファを何%使ったか」がそのままプロジェクトの健康診断になる</strong>——工程の 3 割の時点でバッファを 8 割使っていたら、それは赤信号。</p>
+
+        <h3>要員山積み</h3>
+        <p>工数を月別・スキル別に並べたのが<ruby>要員山積み<rt>ようインやまづみ</rt></ruby>表。「合計 110 人日を 3 名で 3.5 か月」は<strong>平均の話</strong>であって、実際には設計初期は SE 2 名、後半のレビュー期は 4 名、というように波がある。<strong>山積み表を作らないと、必要な月に人が確保できない</strong>——特に協力会社の要員は 1〜2 か月前に手配が要る（第 1 章の商流）。</p>
+
+        <h2>WBS とスケジュール</h2>
+        <p><ruby>WBS<rt>Work Breakdown Structure</rt></ruby>は作業を階層分解した一覧。作り方の原則は二つ：</p>
+        <ul>
+          <li><strong>成果物ベースで分解する。</strong>「画面設計をする」ではなく「画面設計書（18 画面分）を作成する」。<strong>成果物で書くと完了判定ができる</strong>——「作業した」は測れないが「成果物が承認された」は測れる。</li>
+          <li><strong>8/80 ルール。</strong>最小単位のタスクは 8 時間（1 人日）以上、80 時間（10 人日）以下に収める。小さすぎると管理コストが上回り、大きすぎると進捗が「80% 完了」のまま何週間も動かなくなる。</li>
+        </ul>
+        <p>そして<strong>マイルストーン</strong>——「要件定義書 承認」「基本設計書 承認」「移行リハーサル完了」のような、<strong>誰が見ても達成/未達が判定できる点</strong>を置く。マイルストーンは進捗率と違って嘘がつけない。</p>
+
+        <h2>変更管理：制度で受け止める</h2>
+        <p>冒頭の 40 件の教訓は、<strong>変更を拒むのではなく、変更を可視化する</strong>こと。手順はこう：</p>
+        <ol>
+          <li><strong>受付</strong>——要望が来たら、その場で判断せず<ruby>変更管理票<rt>CR: Change Request</rt></ruby>を起票（第 3 章の「一旦持ち帰ります」）。</li>
+          <li><strong>影響評価</strong>——工数、日程、費用、他機能への波及、テストへの影響、リスク。<strong>ここを SE がやる</strong>。</li>
+          <li><strong>提示</strong>——PM から発注者へ、選択肢とともに提示（実施する／次期に回す／別の要望と入れ替える）。</li>
+          <li><strong>決定</strong>——発注者が決定。決定は議事録に残す。</li>
+          <li><strong>反映</strong>——要件定義書・設計書の版を上げ、WBS とスケジュールを更新。</li>
+        </ol>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 「軽微な変更」の基準を、最初に決めておく</p>
+          <p>すべての変更に CR を起票すると、事務手続きだけで日が暮れる。だから<strong>プロジェクト開始時に「軽微な変更」の基準を合意しておく</strong>。<br>例：「1 人日未満、かつ他機能・データ構造・IF に影響しない変更は、軽微な変更として都度対応する。ただし<strong>軽微な変更も一覧に記録し、週次で報告する</strong>。累計が 10 人日を超えた時点で、以降の扱いを協議する。」<br>——ポイントは<strong>「記録はする」</strong>。冒頭の事故は、軽微だから記録しなかったことで起きた。記録さえあれば、累計が見えた時点で相談できる。<strong>制度の目的は許可・不許可ではなく、可視化。</strong></p>
+        </div>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>変更管理票（記入例）</span><span class="kb-doc-id">CR-014 / 2027-01-20</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <tbody>
+                <tr><th>変更管理No</th><td>CR-014</td><th>起票日</th><td>2027/01/20</td></tr>
+                <tr><th>起票者</th><td>山田製作所 経理部 高橋課長</td><th>受付</th><td>あおぞら 伊藤（PM）</td></tr>
+                <tr><th>変更内容</th><td colspan="3">承認者が不在の場合に、あらかじめ指定した代理者が承認できる機能を追加したい。</td></tr>
+                <tr><th>背景・理由</th><td colspan="3">部門長の出張・休暇時に承認が滞留し、月末締めに間に合わないケースが月 2〜3 件発生する見込みのため。</td></tr>
+                <tr><th>影響範囲</th><td colspan="3">機能：F-020（承認待ち一覧）、F-071（承認ルート保守）に代理設定を追加／新規画面 1 本<br>データ：承認ルートテーブルに代理者・有効期間を追加、承認履歴に「代理」区分を追加<br>要件定義書：F-020-06 を追加、「対象外」記載を削除（v1.0 → v1.1）<br>テスト：結合テストケース 8 件追加</td></tr>
+                <tr><th>工数・費用</th><td colspan="3">12 人日（設計 4／製造 5／テスト 3）　費用 720,000 円（税別）</td></tr>
+                <tr><th>日程影響</th><td colspan="3">基本設計完了日を 2027/02/28 → 2027/03/07 に変更（7 営業日）。以降の工程は同日数後ろ倒し。</td></tr>
+                <tr><th>代替案</th><td colspan="3">A：本CRを実施（上記のとおり）<br>B：次期開発とし、当面は承認ルートマスタの一時変更で運用（経理担当の手作業・月 2〜3 回）<br>C：本CRを実施し、優先度 Could の F-060（部門別集計）を次期に回すことで日程影響を吸収</td></tr>
+                <tr><th>発注者判断</th><td colspan="3"><strong>C を採用</strong>（2027/01/27 定例会にて決定。決裁：情シス 鈴木部長）</td></tr>
+                <tr><th>反映状況</th><td colspan="3">要件定義書 v1.1 改訂済（2027/01/29）／WBS・スケジュール更新済／見積 変更契約締結済</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 代替案を必ず 2 案以上示すこと。「やるか、やらないか」の二択では、発注者は判断しづらい。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 客が「見積が高い」と言ってきた</p>
+          <p><strong>やってはいけない</strong>：理由を聞かずに値引きする。一度下げた金額は戻せないうえ、「言えば下がる」と学習される。そして削った工数は<strong>どこかで誰かが残業で埋める</strong>ことになる。</p>
+          <p><strong>まず分解して聞く</strong>：「予算の枠に対して高いのか、内容に対して高いと感じられるのか、どちらでしょうか」。<br><strong>予算枠の問題なら</strong>——スコープで調整する。優先度 Could の機能（F-060 部門別集計など）を次期に回す、対象拠点を絞る、非機能要件のレベルを下げる（第 7 章の可用性シミュレータがそのまま交渉材料になる）。<strong>「予算 X 円に収める組み合わせ」を 2〜3 案作って持っていく</strong>のが最も喜ばれる。<br><strong>内容に対して高いなら</strong>——見積の根拠を見せる。見積内訳（本章の成果物样例）があれば、「画面 18 本で 27 人日」「テストで 30 人日」と具体的に説明でき、どこが高いと感じられているかを特定できる。<strong>内訳の無い見積は交渉ができない</strong>——「一式 800 万円」では、下げるか下げないかの根競べになる。</p>
+          <p><strong>そして忘れてはいけないこと</strong>：値引きに応じるなら、必ず<strong>スコープか前提条件を同時に変える</strong>。「金額だけ下げてスコープはそのまま」は、赤字プロジェクトの始まり——そしてその赤字は、品質の低下という形で最終的に客にも返る。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 発注者側のレビューが返ってこず、2 週間止まっている</p>
+          <p><strong>これは前提条件の違反</strong>——スコープ定義に「レビュー回答は 5 営業日以内」と書いてあれば、堂々と提起できる。書いていなければ、事実上ベンダーの遅延として扱われる。</p>
+          <p><strong>動き方</strong>：<br>① <strong>すぐに課題管理表に起票</strong>（第 3 章）。「レビュー回答の遅延により設計作業が停止。1 日あたり X 人日の影響」と<strong>数字で書く</strong>。感情ではなく事実として記録する。<br>② <strong>止まっている間、できることを進める</strong>——他の設計書、テスト計画、環境構築。<strong>「待ちです」と言って何もしないのは最悪</strong>。あとで「あの 2 週間で何をしていたのか」と問われる。<br>③ <strong>定例会で正式に提起</strong>。PM から窓口へ、「現時点で 10 営業日の遅延。このままだと基本設計完了が X 日遅れます。レビュー体制についてご相談させてください」。<br>④ <strong>体制の提案までする</strong>——「全体レビューではなく、章ごとに分割してレビューしていただく」「経理部には業務ルールのみ確認いただき、非機能は情シスのみで」（第 3 章の観点指定）。<strong>相手を責めるのではなく、返しやすくする提案をする</strong>のが実務的。</p>
+          <p><strong>最も重要なこと</strong>：この状況を<strong>黙って耐えない</strong>。準委任なら善管注意義務違反、請負なら自社が納期責任を負ったまま時間だけが過ぎる。<strong>遅延の原因が発注者側にあるときこそ、記録が唯一の防御</strong>になる。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · スコープに入っているか判断がつかない要望が来た</p>
+          <p>「一覧画面に『部門』の列を追加してほしい」——これは既存機能の詳細化（スコープ内）か、機能追加（スコープ外）か。</p>
+          <p><strong>判断の手順</strong>：<br>① <strong>要件定義書を見る</strong>。F-011 の要件に「一覧に表示する項目」が明記されているか。明記されていて部門が含まれないなら、変更。明記されていない（＝基本設計で決める事項）なら、スコープ内の詳細化。<br>② <strong>影響を測る</strong>。単に既に取得しているデータを一列足すだけなら 0.5 人日。しかし部門は社員マスタ側にあり結合が必要で、しかも「申請時点の部門」を保持していない（＝データ構造の変更）なら 5 人日。<strong>同じ「列を一つ足す」でも桁が違う</strong>。<br>③ <strong>軽微基準に当てはめる</strong>。1 人日未満かつ他に影響しないなら軽微として都度対応＋記録。超えるなら CR。</p>
+          <p><strong>この例が示すこと</strong>：スコープの境界は<strong>要望の見た目ではなく、影響の実態で決まる</strong>。だから「これはスコープ内ですか」と聞かれても即答してはいけない——<strong>影響を測ってから答える</strong>。そして測る作業自体が 30 分〜数時間かかることもあり、それも工数（管理工数）である。<br>もう一つ。<strong>①で「要件定義書に書いていない」ケースが頻発するなら、それは要件の粒度が粗すぎた</strong>ということ（第 6 章）。表示項目レベルまで要件で決めておけば、この種の判断は発生しない。<strong>要件の書き方の丁寧さは、後工程の交渉コストとして返ってくる。</strong></p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>スコープ定義の四要素を挙げ、本案例（経費精算システム）でそれぞれ 2 例ずつ書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 対象範囲</strong>：業務一覧 B-010〜B-061 のうち「システム化 ◯」の業務／全社 320 名・4 拠点／過去 2 年分の確定済申請データ（参照用）。</p>
+            <p><strong>② 対象外</strong>：仮払金の精算（B-060。従来どおり Excel と紙で運用）／振込データ作成・給与連携（B-032。現行の給与システムで継続）／交通費の経路検索・運賃自動計算（申請者が手入力）／領収書の紙原本の保管（経理部で従来どおり）。</p>
+            <p><strong>③ 前提条件</strong>：会計システムの連携仕様書が 2026/12/10 までに提供される／設計書のレビュー回答が 5 営業日以内に得られる／受入テストは発注者が 2 名の要員を確保して実施する／SSO 認証基盤との接続に必要な情報・設定は発注者側で用意される。</p>
+            <p><strong>④ 制約条件</strong>：実行環境は発注者契約のクラウド（東京リージョン）／フロントエンド技術は発注者の社内標準に合わせる／稼働開始は 2027 年 10 月（期首）とする／経理関係データは法定保存年限 7 年を満たすこと。</p>
+            <p><strong>解析</strong>：③と④の区別が曖昧になりやすい。目安は<strong>「誰が守るものか」</strong>——前提条件は<strong>発注者が果たすべきこと</strong>（果たされないとベンダーが困る）、制約条件は<strong>ベンダーが従うべき枠</strong>（守らないと発注者が困る）。<br>もう一点。<strong>「稼働開始は期首」のような日程の制約は、実は最も強い制約</strong>。他は工数で調整できるが、期首は動かせない。だから制約条件に日程が入っている場合、スコープか品質のどちらかで調整するしかない——この構造を最初に共有しておくと、終盤の判断が速くなる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>見積四法のうち、次の場面ではどれを使うか。① 提案書に概算金額を載せる　② 要件定義完了後、基本設計以降の請負金額を出す　③ 変更管理で追加機能の工数を出す</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①類推見積（または係数見積）　②ボトムアップ見積（＋FP法で検算）　③ボトムアップ見積</p>
+            <p><strong>解析</strong>：<br>①の段階では機能一覧が無いので積み上げられない。過去の類似案件（「同規模の社内申請系システムで X 人月だった」）から出すしかない。<strong>このとき精度が ±50% であることを明記する</strong>のが誠実な出し方——「概算」と書くだけでなく、「要件定義完了後に再見積とする」まで書く。<br>②が本番。機能一覧の 87 機能に一つずつ工数を積み、共通・テスト・管理を足す。<strong>FP法を併用して検算する</strong>と、積み上げの漏れ（特に共通機能）が見つかることがある。二つの方法で大きく食い違ったら、どちらかが間違っている。<br>③は<strong>ボトムアップ以外にありえない</strong>。追加機能の影響範囲を特定して積む。ここで類推（「前も似た機能を 5 人日でやったから」）を使うと、既存設計への影響（本章の例題 3 のデータ構造変更）を見落として炎上する。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>ボトムアップ見積で忘れられがちな三つの塊を挙げ、それぞれ本案例で具体的に何が該当するか書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 共通・基盤の工数</strong>：SSO 認証連携（Z-010）、権限制御の共通処理（Z-011。<strong>画面ごとに実装するのではなく共通方式として作る＝第 10 章</strong>）、監査ログ（Z-012）、メール通知基盤（Z-020）、エラー画面・セッション管理（Z-030）、画面テンプレート、開発・テスト環境の構築。</p>
+            <p><strong>② テストの工数</strong>：単体・結合・総合テストの仕様書作成と実施、<strong>性能テスト用の 10 万件テストデータ作成</strong>（第 7 章 例題 2）、会計システムとの連携テスト（<strong>相手側の環境と日程を押さえる調整工数を含む</strong>）、受入テストの支援。</p>
+            <p><strong>③ 管理・調整の工数</strong>：定例会、議事録、課題管理表の運用、レビュー会の準備と指摘対応、進捗報告、そして<strong>会計システム保守ベンダーとの調整</strong>（第 1 章の商流上、他社との調整は想像以上に時間を食う）。</p>
+            <p><strong>実務的な目安</strong>：機能の積み上げが 100 だとすると、共通で +15〜25、テストで +60〜100、管理で +15〜20。<strong>つまり機能の積み上げだけでは全体の 4 割程度にしかならない</strong>。新人が出す見積が常に低いのはこれが理由で、能力ではなく<strong>見えていない範囲</strong>の問題。<br>対策としては、<strong>過去プロジェクトの実績比率を持っておく</strong>のが最強。「当社の過去 5 案件では、機能積み上げ：テスト：管理 ＝ 10：7：2 だった」という数字があれば、検算ができる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>「バッファを各タスクに 20% ずつ配る」やり方の問題点を説明し、正しい置き方を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>問題点</strong>：① <strong>パーキンソンの法則</strong>——与えられた時間は必ず使い切られる。5 日の作業に 6 日与えると 6 日かかる。② <strong>学生症候群</strong>——余裕があると着手が遅れ、結局ギリギリになる。③ <strong>余ってもプールされない</strong>——早く終わったタスクの余剰は報告されず消える（報告すると「見積が甘かった」と言われるため）。結果、<strong>遅れだけが累積し、進みは相殺されない</strong>。</p>
+            <p><strong>正しい置き方</strong>：各タスクは<strong>実力値（50% の確率で終わる程度）</strong>で見積り、プロジェクト全体の 10〜20% を<strong>プロジェクトバッファ</strong>として PM が一元管理する。個々のタスクが遅れたらバッファから引き出す。</p>
+            <p><strong>この方式の最大の利点は、可視化</strong>：「工程の 30% 時点でバッファを 20% 消費」なら健全、「30% 時点で 80% 消費」なら赤信号——<strong>バッファの消費率が進捗率を超えているかどうかが、早期警報になる</strong>。個々のタスクに隠れていると、この判断ができない。</p>
+            <p><strong>実務上の注意</strong>：客に見せる見積にバッファ行を明示するかどうかは判断が分かれる。明示すると「この 14 人日は要らないですよね」と削られるリスクがあり、隠すと透明性を欠く。<strong>実務的には「想定外対応」「リスク対応費」として明示し、その必要性を説明する</strong>ほうが結果的にうまくいくことが多い——削られたとしても、「バッファ無しで合意した」という記録が残るので、想定外が起きたときに変更管理へ持ち込みやすい。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>基本設計フェーズが 2 週間遅れている。PM から「人を 2 人増やすので取り戻せないか」と言われた。あなたはどう答えるか。増員が有効な条件・無効な条件を挙げて論じよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>まず確認すること</strong>：遅れの<strong>原因</strong>。原因によって増員の効果はまったく違う。<br>・<strong>作業量が想定より多かった</strong>（画面が 18 本ではなく 24 本だった）→ 増員が効く可能性がある。<br>・<strong>客のレビュー回答待ち</strong>→ <strong>増員はまったく効かない</strong>。人を増やしても待ち時間は減らない。<br>・<strong>要件が固まっておらず手戻りが発生している</strong>→ 増員は逆効果。決めるべき人が増えるだけで、合意はむしろ遅くなる。<br>・<strong>特定の一人（会計連携の担当）がボトルネック</strong>→ その領域の知識がある人でなければ増員の意味がない。</p>
+            <p><strong>増員が有効な条件</strong>：① 作業が分割可能（画面設計書を画面単位で分担できる）② 立ち上げコストを回収できるだけの残期間がある（<strong>残り 2 週間では回収できない</strong>——教育に 1 週間かかれば実働 1 週間）③ 教える側の工数を確保できる ④ 参加する人が業務知識または類似経験を持つ ⑤ 品質の統一手段がある（設計書のテンプレートとレビュー体制。<strong>これが無いと、増員した分だけバラバラな設計書が増える</strong>）。</p>
+            <p><strong>無効・逆効果の条件</strong>：① 残期間が短い ② 作業が本質的に分割できない（方式設計、コード体系の決定）③ 教える人がボトルネック本人 ④ 待ちが原因。</p>
+            <p><strong>実際の答え方の例</strong>：「遅れの内訳を確認したところ、7 営業日はレビュー回答待ち、3 営業日は会計連携の仕様調整です。増員で短縮できるのは画面設計の残り 4 本分（約 6 人日）のみで、立ち上げに 2〜3 人日を要するため、正味の効果は 3 人日程度と見込みます。<strong>それより効果が大きいのは、①レビューを章分割して並行で回していただく ②会計側との調整会議を今週中に設定する ③優先度 Could の F-060 を次期に回す</strong>の三つです。」<br>——<strong>増員を否定するのではなく、遅延を要因に分解して、それぞれに効く手を出す</strong>。これがボトルネックの分析であり、SE が PM に提供できる最も価値のある情報。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「軽微な変更」の基準を、あなたのプロジェクトのために定義せよ。基準に含めるべき要素と、運用上の注意点を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>基準に含めるべき要素</strong>：<br>① <strong>工数の閾値</strong>（例：1 人日未満）——ただし工数だけでは不十分。<br>② <strong>影響範囲の条件</strong>（他機能に影響しない／データ構造を変更しない／IF に影響しない／テストケースの追加が不要）——<strong>0.5 人日の作業でもテーブル定義が変われば軽微ではない</strong>。<br>③ <strong>累計の上限</strong>（例：累計 10 人日を超えたら以降の扱いを協議）——これが冒頭の 40 件を防ぐ仕掛け。<br>④ <strong>記録の義務</strong>（軽微であっても一覧に記録し週次で報告）。<br>⑤ <strong>判断者</strong>（軽微かどうかを誰が判断するか。SE の独断ではなく PL 以上、など）。<br>⑥ <strong>適用期限</strong>（設計完了後は軽微であっても CR とする、など。<strong>工程が進むほど変更コストは上がる</strong>ため）。</p>
+            <p><strong>定義の例</strong>：「次のすべてを満たす変更を軽微な変更とし、変更管理手続きを経ずに都度対応する。(a) 工数 1 人日未満 (b) 他機能・データ構造・外部IFに影響しない (c) 承認済み設計書の記載変更を伴わない。軽微な変更は変更一覧に記録し、週次定例で報告する。累計工数が 10 人日に達した時点で、以降の取扱いを協議する。基本設計完了後は、工数にかかわらず変更管理手続きの対象とする。」</p>
+            <p><strong>運用上の注意</strong>：<br>・<strong>基準は契約書か議事録で合意しておく</strong>。口頭の了解では、揉めたときに機能しない。<br>・<strong>SE が「これは軽微です」と自分で判断し続けると、必ず基準が緩む</strong>。人は目の前の相手に良く思われたいので、判断は甘くなる。だから⑤の判断者を自分以外にするのが効く。<br>・<strong>記録のフォーマットを軽くする</strong>。CR と同じ重さの記録を求めると誰も書かなくなる。日付・内容・工数・依頼者の 4 項目で十分。<br>・<strong>週次報告で「今週の軽微な変更 3 件、累計 4.5 人日」と読み上げる</strong>。読み上げると客側も自分たちの要望量を認識し、自然にブレーキがかかる。<strong>制度の効果の大半は、この可視化そのものから来る。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたが直近で関わったタスク（機能追加でも改修でもよい）について、事前の見積と実績を比較せよ。差分が出た原因を分類し、次回の見積に反映できる形の教訓を三つ書け。実績を記録していない場合は、記録していないこと自体の意味を考察すること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>差分の典型的な分類と、そこから引き出せる教訓の形を示す。</p>
+            <p><strong>分類① 作業範囲の見落とし</strong>——「テストデータの準備」「既存機能への影響確認」「ドキュメント更新」が見積に入っていなかった。<strong>教訓の形</strong>：チェックリスト化する。「見積時に必ず確認する項目：影響調査／テストデータ／既存テストの再実行／ドキュメント更新／レビュー対応」。<strong>個人の注意力ではなく、リストで防ぐ。</strong></p>
+            <p><strong>分類② 待ち時間</strong>——実作業は 3 日だが、確認待ち・レビュー待ち・環境待ちで 2 週間かかった。<strong>教訓の形</strong>：<strong>工数（人日）と期間（暦日）を分けて見積る</strong>。「3 人日／リードタイム 10 営業日」と書く。この二つを混同すると、スケジュールが必ず狂う。</p>
+            <p><strong>分類③ 想定の甘さ</strong>——「既存コードを流用できると思ったができなかった」。<strong>教訓の形</strong>：見積の前提を明記する。「既存の A 機能の処理を流用できる前提。流用不可の場合 +3 人日」。<strong>前提を書いておくと、外れたときに再見積の根拠になる</strong>（本章のスコープ定義の前提条件と同じ構造）。</p>
+            <p><strong>分類④ 割り込み</strong>——他案件の障害対応で 2 日取られた。<strong>教訓の形</strong>：稼働率を見込む。「1 人日＝実働 8 時間」ではなく「1 人月＝18 人日程度（会議・割り込み・その他を除く実働）」で計算する。<strong>多くの見積が外れる根本原因はここ</strong>——人は 1 日 8 時間その作業だけをしていない。</p>
+            <p><strong>実績を記録していない場合</strong>：それは<strong>見積の精度が構造的に上がらない状態</strong>を意味する。見積は才能ではなく、実績の蓄積から来る。記録が無ければ、10 年経っても最初の日と同じ精度で見積り続けることになる。<br>始め方は簡単：<strong>タスクごとに「見積／実績」の 2 列を持つだけ</strong>。第 1 章の TimeCamp のような工数記録の仕組みがあるなら、それを見積の振り返りに使う。1 年分溜まれば、あなたの見積は確実に変わる。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① スコープ定義は<strong>対象・対象外・前提条件・制約条件</strong>の四要素。中でも<strong>前提条件（発注者にやってもらうこと）が最大の防御線</strong>——遅延の相当部分は発注者側の停滞から来る；② 見積四法は 類推（±50%・提案時）／係数（±30%）／<strong>ボトムアップ</strong>（±10〜20%・要件定義後）／FP法。精度は工程とともにしか上がらないので<strong>多段階契約</strong>が合理的；③ ボトムアップで忘れる三つの塊は<strong>共通・基盤／テスト／管理・調整</strong>——機能の積み上げだけでは全体の 4 割程度にしかならない；④ 人月は分割できない・伝達コストは二乗・立ち上げコストがかかる。<strong>納期が厳しいときは増員より先にスコープ・並行化・品質基準</strong>；⑤ バッファは各タスクに配らず<strong>プロジェクト全体で一元管理</strong>し、消費率を早期警報に使う；⑥ WBS は<strong>成果物ベース＋8/80 ルール</strong>、マイルストーンは達成/未達が判定できる点に置く；⑦ 変更管理は断るための制度ではなく<strong>受けたことを見えるようにする制度</strong>。「軽微な変更」の基準（工数・影響範囲・<strong>累計上限</strong>・記録義務・判断者）を最初に合意し、<strong>軽微でも必ず記録して週次で読み上げる</strong>。<br><strong>下一章预告</strong>：材料は全部揃った。次章は要件定義の総仕上げ——要件定義書の標準目次、要求から要件・機能・テストまで一本に貫くトレーサビリティマトリクス、レビュー会の回し方、そしてサインオフ。この一冊に客が判子を押した瞬間、何が確定するのかを見る。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./07-非机能要件.html">← 第 7 章 非機能要件：IPA 非機能要求グレード</a>
+          <a href="./09-要件定义书与评审合意.html">第 9 章 要件定義書：目次、评审与合意 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var itemBox = document.getElementById("sc-items");
+      var gauge = document.getElementById("sc-gauge");
+      var out = document.getElementById("sc-out");
+      var verdict = document.getElementById("sc-verdict");
+      if (!itemBox) return;
+
+      var BASE = 96, BUFFER = 14, MEMBERS = 3, DAYS = 45, RATE = 60000;
+      var CAP = MEMBERS * DAYS; // 135 人日
+
+      var ITEMS = [
+        { n: "承認者不在時の代理承認", d: 12, s: "画面 +1 / DB 変更 / 権限" },
+        { n: "対象スマホブラウザの追加", d: 5, s: "テスト工数が主" },
+        { n: "部門別・費目別の集計画面", d: 8, s: "画面 +1 / 集計SQL" },
+        { n: "仮払金の精算（対象外だったもの）", d: 25, s: "業務追加 / DB 大幅変更" },
+        { n: "交通費の経路検索 API 連携", d: 18, s: "外部IF / 費用発生" },
+        { n: "承認ルートのマスタ保守画面", d: 10, s: "画面 +1 / マスタ設計" },
+        { n: "一覧からの一括承認", d: 6, s: "画面改修 / 排他制御" },
+        { n: "経費精算書のレイアウト微修正", d: 1, s: "帳票のみ・軽微" }
+      ];
+
+      var on = ITEMS.map(function () { return false; });
+
+      function card(k, v, color) {
+        var d = document.createElement("div");
+        d.className = "sc-card";
+        var kk = document.createElement("span");
+        kk.className = "sc-k";
+        kk.textContent = k;
+        var vv = document.createElement("span");
+        vv.className = "sc-v";
+        vv.textContent = v;
+        if (color) vv.style.color = color;
+        d.appendChild(kk); d.appendChild(vv);
+        return d;
+      }
+
+      function render() {
+        var add = 0;
+        ITEMS.forEach(function (it, i) { if (on[i]) add += it.d; });
+        var total = BASE + add;
+        var need = Math.ceil(total / MEMBERS);
+        var over = need - DAYS;
+        var money = add * RATE;
+
+        // ゲージ
+        gauge.textContent = "";
+        var scale = Math.max(CAP, total);
+        function seg(w, cls) {
+          if (w <= 0) return;
+          var i = document.createElement("i");
+          i.className = cls;
+          i.style.width = (w / scale * 100) + "%";
+          gauge.appendChild(i);
+        }
+        seg(BASE, "sc-g-base");
+        seg(Math.min(add, BUFFER), "sc-g-buf");
+        seg(Math.max(0, add - BUFFER), "sc-g-over");
+
+        out.textContent = "";
+        out.appendChild(card("追加工数", add + " 人日"));
+        out.appendChild(card("総工数", total + " 人日"));
+        out.appendChild(card("追加費用（@6 万円）", (money / 10000).toFixed(0) + " 万円"));
+        out.appendChild(card("必要営業日（3 名）", need + " 日",
+          over > 0 ? "var(--kb-danger)" : ""));
+        out.appendChild(card("納期に対して",
+          over > 0 ? "+" + over + " 日 超過" : (DAYS - need) + " 日 余裕",
+          over > 0 ? "var(--kb-danger)" : "var(--kb-ok)"));
+
+        var cls = "", lines = [];
+        if (add === 0) {
+          lines = ["当初計画どおり。バッファ 14 人日は「想定外のために取ってある」ものであって、「まだ使える枠」ではない点に注意。"];
+        } else if (add <= BUFFER) {
+          lines = ["◯ バッファ内で吸収可能。ただし、バッファを使い切ると以後の想定外（レビュー指摘の増加、会計連携の仕様変更など）に対応できなくなる。",
+                   "実務上は、バッファの半分（7 人日）を超えた時点で PM に共有し、以降の追加要望は変更管理へ回す運用に切り替えるのが安全。"];
+        } else if (over <= 0) {
+          cls = "warn";
+          lines = ["⚠ バッファを超過。まだ要員 3 名 × 45 営業日の枠には収まるが、余裕はゼロ。",
+                   "この時点で必ず変更管理票を起票し、追加費用と「バッファ消尽」の事実を発注者と共有すること。黙って吸収すると、次に何か起きたときに打つ手がなくなる。"];
+        } else if (over <= 15) {
+          cls = "warn";
+          lines = ["⚠ 納期を " + over + " 営業日 超過。三択で発注者に判断を仰ぐ場面。",
+                   "A：納期を " + over + " 営業日 延期する／B：優先度 Could の機能（部門別集計など）を次期に回して吸収する／C：追加要員（ただし残期間によっては逆効果——習題 8.5）。",
+                   "SE の仕事は、この三案を工数・費用・リスクつきで並べること。選ぶのは発注者。"];
+        } else {
+          cls = "bad";
+          lines = ["🚨 " + over + " 営業日の超過。これはもう「変更」ではなく、プロジェクトの再定義。",
+                   "契約金額・体制・スケジュールの全面的な見直しが必要で、変更契約の締結を伴う。ここまで積む前に、必ずどこかで一度立ち止まる仕組み（軽微変更の累計上限、バッファ消費率の監視）を入れておくこと。",
+                   "冒頭の 40 件の事故は、まさにこの状態に「気づかないまま」到達したケース。"];
+        }
+        verdict.className = "sc-verdict" + (cls ? " " + cls : "");
+        verdict.textContent = "";
+        lines.forEach(function (t) {
+          var p = document.createElement("p");
+          p.textContent = t;
+          verdict.appendChild(p);
+        });
+      }
+
+      ITEMS.forEach(function (it, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "sc-item";
+        b.setAttribute("aria-pressed", "false");
+        var nm = document.createElement("b");
+        nm.textContent = it.n;
+        var sub = document.createElement("span");
+        sub.textContent = "+" + it.d + " 人日　" + it.s;
+        b.appendChild(nm);
+        b.appendChild(sub);
+        b.addEventListener("click", function () {
+          on[i] = !on[i];
+          b.setAttribute("aria-pressed", String(on[i]));
+          render();
+        });
+        itemBox.appendChild(b);
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

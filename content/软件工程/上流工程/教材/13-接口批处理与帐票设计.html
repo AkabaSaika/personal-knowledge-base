@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>13 外部接口、批处理与帳票設計 · 知识库</title>
+  <meta name="kb:summary" content="与外部系统的边界设计：连携方式选择与电文布局、重复防止与顺序保证；批处理的一览与ジョブネット、异常时的リラン与时间窗；以及帐票设计。">
+  <meta name="kb:tags" content="上流工程,基本设计,接口设计,IF,批处理,ジョブネット,リラン,帐票设计,文件连携,slgc,jk,plcl">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：ジョブネット */
+    .jn-node { cursor: pointer; }
+    .jn-node rect { fill: var(--kb-surface); stroke: var(--kb-border-strong); stroke-width: 1.2; }
+    .jn-node text { fill: var(--kb-fg); }
+    .jn-node:hover rect { stroke: var(--kb-accent); }
+    .jn-node.sel rect { stroke: var(--kb-fg); stroke-width: 2.4; }
+    .jn-node.hit rect { fill: var(--kb-danger-soft); stroke: var(--kb-danger); stroke-width: 1.8; }
+    .jn-node.late rect { fill: var(--kb-warn-soft); stroke: var(--kb-warn); stroke-width: 1.6; }
+    .jn-node.stop rect { fill: var(--kb-danger); stroke: var(--kb-danger); }
+    .jn-node.stop text { fill: #fff; }
+    .jn-node:focus rect { stroke: var(--kb-accent); stroke-width: 2.4; }
+    .jn-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .jn-btn {
+      font: inherit; font-size: 0.82rem; padding: 5px 13px; cursor: pointer;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .jn-btn:hover { border-color: var(--kb-accent); }
+    .jn-btn[aria-pressed="true"] { background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600; }
+    .jn-hint { font-size: 0.78rem; color: var(--kb-fg-muted); }
+    .jn-panel {
+      margin-top: 12px; border-left: 3px solid var(--kb-ok); background: var(--kb-ok-soft);
+      padding: 10px 13px; font-size: 0.86rem; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+    }
+    .jn-panel.warn { border-left-color: var(--kb-warn); background: var(--kb-warn-soft); }
+    .jn-panel.bad { border-left-color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .jn-panel p { margin: 0 0 5px; }
+    .jn-panel p:last-child { margin-bottom: 0; }
+    .jn-panel .jn-k { color: var(--kb-fg-muted); font-size: 0.79rem; }
+    /* 固定長レイアウト表示 */
+    .fx { font-family: var(--kb-font-mono); font-size: 0.78rem; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 13 章 · 外部接口、批处理与帳票設計</h1>
+        <p class="kb-lead">システムの外側との境界。ここには<strong>自分の裁量が及ばない相手</strong>がいる——別のシステム、別のベンダー、別の時間割。この章は IF（外部インターフェース）設計、バッチ設計、帳票設計を扱う。三つに共通するのは、<strong>「正常に動くこと」より「落ちたときにどうするか」のほうが設計工数を食う</strong>という性質。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 选择连携方式并写出电文（ファイル／API）レイアウト定義；② 说明连携设计的四大论点——タイミング・リトライ・重複防止・順序保証；③ 画出ジョブネット并设计异常时的リラン・リカバリ；④ 用処理時間窓从业务倒推批处理的期限；⑤ 写出帳票設計書并处理再出力・改ページ・合計等定番论点。</p>
+        </div>
+
+        <h2>会計側の受入時間を知ったのは、結合テストの前日</h2>
+        <p>仕訳連携バッチは順調に開発が進んでいた。毎月第一営業日 2:00 に起動し、2:40 までに完了する設計（第 7 章 N-P03）。</p>
+        <p>結合テストの前日、会計システムの保守ベンダーから連絡が来た——<strong>「受入処理は 3:00 から 5:00 の間に走ります。それ以外の時間にファイルを置かれても取り込まれません。あと、ファイル名は KEIHI_YYYYMM.csv ではなく、当社の規約で SYS03_KEIHI_YYYYMMDD.dat です」。</strong></p>
+        <p>幸い時間帯は間に合った。しかしファイル名・拡張子・そして後から判明した<strong>固定長フォーマット</strong>（CSV だと思っていた）への対応で、2 週間の遅れが出た。</p>
+        <p><strong>IF設計の難しさは技術ではない。相手がいることだ。</strong>相手の都合は聞かないと分からず、聞くには相手の窓口を通す必要があり、その窓口は別の会社にあり、返事は 2 週間後に来る。だから第 8 章のスコープ定義で「会計システムの連携仕様書は 2026/12/10 までに提供されること」を<strong>前提条件</strong>に入れたのだった。</p>
+
+        <h2>IF（外部インターフェース）設計</h2>
+        <h3>IF一覧</h3>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>IF一覧</span><span class="kb-doc-id">DOC-306 / v0.5</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>IF-ID</th><th>相手システム</th><th>方向</th><th>方式</th><th>契機</th><th>頻度</th><th>件数</th><th>相手側改修</th></tr></thead>
+              <tbody>
+                <tr><td>IF-OUT-001</td><td>会計システム</td><td>送信</td><td>ファイル（固定長・FTPS）</td><td>月次バッチ</td><td>月 1 回</td><td>約 5,000 明細</td><td><strong>要（受入設定）</strong></td></tr>
+                <tr><td>IF-IN-001</td><td>人事システム</td><td>受信</td><td>ファイル（CSV・共有フォルダ）</td><td>日次バッチ</td><td>日 1 回</td><td>約 320 件</td><td>不要（既存出力を利用）</td></tr>
+                <tr><td>IF-IO-001</td><td>SSO 認証基盤</td><td>双方向</td><td>API（SAML）</td><td>ログイン時</td><td>随時</td><td>約 400 回/日</td><td>要（SP 登録）</td></tr>
+                <tr><td>IF-OUT-002</td><td>メール基盤</td><td>送信</td><td>API（SMTP）</td><td>イベント／バッチ</td><td>随時</td><td>約 200 通/日</td><td>不要</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 「相手側改修」欄が <strong>要</strong> のものは、<strong>相手ベンダーとの調整・費用負担・日程を、要件定義の段階で確認する必要がある</strong>（第 6 章のレビュー観点「実現可能性」）。<br>※ 各IFについて、<strong>テスト環境の有無と接続可能時期</strong>を別途確認すること。相手の検証環境が無い場合、本番でしかテストできないという事態になる。</p>
+          </div>
+        </div>
+
+        <h3>連携方式の選択</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方式</th><th>向く場面</th><th>注意点</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ファイル連携</strong><br>（FTPS／共有フォルダ／オブジェクトストレージ）</td><td>大量・定時・非同期。日本の基幹系で今も最も多い</td><td>置いただけでは相手が取ったか分からない。<strong>受領確認の仕組み</strong>（完了フラグファイル、受信結果ファイル）が要る</td></tr>
+              <tr><td>API（REST／SOAP）</td><td>即時性が必要、件数が少ない</td><td>相手が落ちていたらどうするか（リトライ・キュー）。認証方式・タイムアウト・スロットリング</td></tr>
+              <tr><td>DB 直接参照</td><td>—（推奨しない）</td><td>相手のテーブル変更で壊れる。相手の性能に影響する。<strong>疎結合の原則に反する</strong>ので、既存の慣習でどうしても必要な場合に限る</td></tr>
+              <tr><td>メッセージキュー</td><td>非同期・高信頼・順序保証が必要</td><td>基盤の導入・運用コスト。本案例の規模では過剰</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>連携設計の四大論点</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>論点</th><th>決めること</th><th>本案例</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>① タイミング</strong></td>
+                <td>いつ送るか／受けるか。相手の受入時間帯。締めとの関係</td>
+                <td>2:00 生成 → 2:40 完了 → 会計の受入は 3:00–5:00。<strong>この窓を外すと 1 か月遅れる</strong></td>
+              </tr>
+              <tr>
+                <td><strong>② リトライ</strong></td>
+                <td>失敗時に自動で再送するか、何回、何分間隔で。手動再送の手順</td>
+                <td>FTPS 送信は 5 分間隔で 3 回自動リトライ。それでも失敗なら異常終了し通知</td>
+              </tr>
+              <tr>
+                <td><strong>③ 重複防止（冪等性）</strong></td>
+                <td>同じデータが二度届いたらどうなるか。二重連携をどう防ぐか</td>
+                <td>連携済フラグ（status=60）で対象から除外。ファイル名に年月を含め、相手側でも重複チェック</td>
+              </tr>
+              <tr>
+                <td><strong>④ 順序保証</strong></td>
+                <td>複数ファイル・複数リクエストの処理順が保証されるか</td>
+                <td>月次 1 ファイルなので単純。<strong>日次連携（人事）は前日分が未処理のまま当日分が来ないよう、処理順を制御</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「送った」と「届いた」と「取り込まれた」は別のこと</p>
+          <p>ファイル連携で最も多い事故は、<strong>送信は成功したのに取り込まれていない</strong>状態。原因はファイル名の規約違反、文字コード、桁数オーバー、受入時間外、相手側の異常。<br>設計に必ず入れるべきもの：<br>① <strong>送信完了の記録</strong>——いつ、何件、どのファイルを送ったか。<br>② <strong>受領確認</strong>——相手からの結果ファイル、または相手システムでの取込件数の突合。<br>③ <strong>不一致時の運用</strong>——誰が気づき、誰に連絡し、どう再送するか（第 14 章の運用設計）。<br><strong>「送りっぱなし」の設計は、必ず月次決算の締めで問題になる。</strong></p>
+        </div>
+
+        <h3>ファイルレイアウト定義</h3>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>IF設計書　IF-OUT-001 会計システム 仕訳連携</span><span class="kb-doc-id">DOC-306 §2 / v0.5</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <tbody>
+                <tr><th>ファイル名</th><td colspan="3" class="fx">SYS03_KEIHI_YYYYMMDD.dat（YYYYMMDD＝送信日）</td></tr>
+                <tr><th>形式</th><td>固定長</td><th>文字コード</th><td>Shift_JIS</td></tr>
+                <tr><th>改行</th><td>CRLF</td><th>レコード長</th><td>200 バイト</td></tr>
+                <tr><th>転送</th><td colspan="3">FTPS（相手サーバ /in/keihi/）。転送後、同名の <span class="fx">.end</span> ファイルを置いて完了を通知する</td></tr>
+                <tr><th>受入時間帯</th><td colspan="3"><strong>3:00–5:00</strong>（この時間帯に存在するファイルのみ取り込まれる）</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead><tr><th>No</th><th>項目名</th><th>開始位置</th><th>長さ</th><th>属性</th><th>内容・編集</th></tr></thead>
+              <tbody>
+                <tr><td colspan="6" style="background:var(--kb-surface-alt)"><strong>ヘッダレコード（1 件）</strong></td></tr>
+                <tr><td>H1</td><td>レコード区分</td><td>1</td><td>1</td><td>X(1)</td><td class="fx">'H' 固定</td></tr>
+                <tr><td>H2</td><td>システム識別</td><td>2</td><td>5</td><td>X(5)</td><td class="fx">'SYS03' 固定</td></tr>
+                <tr><td>H3</td><td>作成日時</td><td>7</td><td>14</td><td>X(14)</td><td class="fx">YYYYMMDDHHMMSS</td></tr>
+                <tr><td>H4</td><td>対象年月</td><td>21</td><td>6</td><td>X(6)</td><td class="fx">YYYYMM</td></tr>
+                <tr><td colspan="6" style="background:var(--kb-surface-alt)"><strong>明細レコード（N 件）</strong></td></tr>
+                <tr><td>D1</td><td>レコード区分</td><td>1</td><td>1</td><td>X(1)</td><td class="fx">'D' 固定</td></tr>
+                <tr><td>D2</td><td>伝票番号</td><td>2</td><td>12</td><td>X(12)</td><td>申請番号（application_no）</td></tr>
+                <tr><td>D3</td><td>計上日</td><td>14</td><td>8</td><td>X(8)</td><td><span class="fx">YYYYMMDD</span>（経理確定日）</td></tr>
+                <tr><td>D4</td><td>借方勘定科目</td><td>22</td><td>4</td><td>X(4)</td><td>費目マスタの勘定科目コード</td></tr>
+                <tr><td>D5</td><td>部門コード</td><td>26</td><td>5</td><td>X(5)</td><td><strong>申請時所属部門</strong>（第 12 章 ★）</td></tr>
+                <tr><td>D6</td><td>金額</td><td>31</td><td>10</td><td>9(10)</td><td>右詰・前ゼロ埋め。円単位</td></tr>
+                <tr><td>D7</td><td>消費税額</td><td>41</td><td>10</td><td>9(10)</td><td>同上</td></tr>
+                <tr><td>D8</td><td>税区分</td><td>51</td><td>2</td><td>X(2)</td><td class="fx">'01'課税 '02'非課税</td></tr>
+                <tr><td>D9</td><td>摘要</td><td>53</td><td>60</td><td>X(60)</td><td>支払先＋目的。<strong>60 バイトで切り捨て</strong>（Shift_JIS で全角 30 文字）</td></tr>
+                <tr><td>D10</td><td>予備</td><td>113</td><td>88</td><td>X(88)</td><td>半角空白埋め</td></tr>
+                <tr><td colspan="6" style="background:var(--kb-surface-alt)"><strong>トレーラレコード（1 件）</strong></td></tr>
+                <tr><td>T1</td><td>レコード区分</td><td>1</td><td>1</td><td>X(1)</td><td class="fx">'T' 固定</td></tr>
+                <tr><td>T2</td><td>明細件数</td><td>2</td><td>8</td><td>9(8)</td><td>右詰・前ゼロ埋め</td></tr>
+                <tr><td>T3</td><td>金額合計</td><td>10</td><td>12</td><td>9(12)</td><td>同上</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">【設計上の注意】<br>・<strong>Shift_JIS に変換できない文字</strong>が摘要に含まれる場合、代替文字 '?' に置換せず<strong>該当申請を特定できるログを出力してエラーとする</strong>（方式設計 3.9・第 10 章 例題 2）。<br>・<strong>D9 摘要のバイト数切り捨て</strong>：全角文字の途中で切ると文字化けするため、文字単位で判定すること。<br>・トレーラの件数・金額合計は、相手側の突合に使われる。<strong>生成時に必ず検算する。</strong><br>・連携済の申請は status='60' に更新し、次回以降の対象から除外する（重複防止）。</p>
+          </div>
+        </div>
+
+        <h2>バッチ設計とジョブネット</h2>
+        <p>バッチ設計の中心は<strong>ジョブネット</strong>——ジョブ（処理の単位）の依存関係と実行順序を表した図。そして設計工数の大半を食うのは、<strong>正常系ではなく異常系</strong>である。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 ジョブネット波及シミュレータ：1 本が転ぶと何が起きるか</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：ジョブネットは<strong>依存関係の連鎖</strong>であり、1 本が遅延・異常終了すると後続が芋づる式に止まる。設計で決めておくべきは——<strong>①各ジョブの処理時間窓（何時までに終わらなければ業務影響が出るか）②異常時に後続を止めるか続行するか ③リランの単位（どこから流し直すか）④二重実行の防止 ⑤誰にどう通知するか</strong>。特に外部システムの受入時間帯（本案例では会計の 3:00–5:00）は動かせない制約であり、そこから逆算して各ジョブの期限が決まる。</p></noscript>
+            <div class="jn-bar">
+              <span class="jn-hint">図のジョブをクリック → 状態を選ぶ</span>
+              <button type="button" class="jn-btn" data-mode="ok" aria-pressed="true">正常</button>
+              <button type="button" class="jn-btn" data-mode="late" aria-pressed="false">30 分遅延</button>
+              <button type="button" class="jn-btn" data-mode="ng" aria-pressed="false">異常終了</button>
+            </div>
+            <div style="overflow-x:auto">
+              <svg viewBox="0 0 700 300" width="700" height="300" role="img" aria-label="月次批处理的作业网络图：社员主数据取込、前日数据抽出、仕訳数据生成、仕訳文件输出、会计系统传送、结果通知、精算书PDF生成的依赖关系">
+                <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11">
+                  <g class="jn-node" data-k="j5" tabindex="0" role="button" aria-label="社員マスタ取込">
+                    <rect x="14" y="30" width="130" height="46" rx="8"/>
+                    <text x="79" y="49" text-anchor="middle" font-weight="600">社員マスタ取込</text>
+                    <text x="79" y="65" text-anchor="middle" font-size="9.5">BT-D001 / 1:00 (10分)</text>
+                  </g>
+                  <g class="jn-node" data-k="j1" tabindex="0" role="button" aria-label="確定データ抽出">
+                    <rect x="180" y="30" width="130" height="46" rx="8"/>
+                    <text x="245" y="49" text-anchor="middle" font-weight="600">確定データ抽出</text>
+                    <text x="245" y="65" text-anchor="middle" font-size="9.5">BT-M001 / 2:00 (10分)</text>
+                  </g>
+                  <g class="jn-node" data-k="j2" tabindex="0" role="button" aria-label="仕訳データ生成">
+                    <rect x="346" y="30" width="130" height="46" rx="8"/>
+                    <text x="411" y="49" text-anchor="middle" font-weight="600">仕訳データ生成</text>
+                    <text x="411" y="65" text-anchor="middle" font-size="9.5">BT-M002 (20分)</text>
+                  </g>
+                  <g class="jn-node" data-k="j3" tabindex="0" role="button" aria-label="仕訳ファイル出力">
+                    <rect x="512" y="30" width="130" height="46" rx="8"/>
+                    <text x="577" y="49" text-anchor="middle" font-weight="600">仕訳ファイル出力</text>
+                    <text x="577" y="65" text-anchor="middle" font-size="9.5">BT-M003 (5分)</text>
+                  </g>
+                  <g class="jn-node" data-k="j4" tabindex="0" role="button" aria-label="会計システムへFTPS送信">
+                    <rect x="512" y="120" width="130" height="46" rx="8"/>
+                    <text x="577" y="139" text-anchor="middle" font-weight="600">会計へ FTPS 送信</text>
+                    <text x="577" y="155" text-anchor="middle" font-size="9.5">BT-M004 (5分)</text>
+                  </g>
+                  <g class="jn-node" data-k="j6" tabindex="0" role="button" aria-label="連携結果確認と通知">
+                    <rect x="512" y="210" width="130" height="46" rx="8"/>
+                    <text x="577" y="229" text-anchor="middle" font-weight="600">連携結果確認・通知</text>
+                    <text x="577" y="245" text-anchor="middle" font-size="9.5">BT-M005 (5分)</text>
+                  </g>
+                  <g class="jn-node" data-k="j7" tabindex="0" role="button" aria-label="精算書PDF一括生成">
+                    <rect x="346" y="180" width="130" height="46" rx="8"/>
+                    <text x="411" y="199" text-anchor="middle" font-weight="600">精算書PDF生成</text>
+                    <text x="411" y="215" text-anchor="middle" font-size="9.5">BT-M006 (30分)</text>
+                  </g>
+
+                  <g stroke="var(--kb-fg-muted)" stroke-width="1.4" fill="none">
+                    <path d="M 144 53 H 176"/><path d="M 180 53 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 310 53 H 342"/><path d="M 346 53 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 476 53 H 508"/><path d="M 512 53 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 577 76 V 116"/><path d="M 577 120 l -4 -8 h 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 577 166 V 206"/><path d="M 577 210 l -4 -8 h 8 z" fill="var(--kb-fg-muted)"/>
+                    <path d="M 411 76 V 176"/><path d="M 411 180 l -4 -8 h 8 z" fill="var(--kb-fg-muted)"/>
+                  </g>
+
+                  <rect x="14" y="120" width="452" height="42" rx="8" fill="var(--kb-warn-soft)" stroke="var(--kb-warn)" stroke-dasharray="4 3"/>
+                  <text x="28" y="138" fill="var(--kb-fg)" font-weight="600">会計システム 受入時間帯：3:00 – 5:00</text>
+                  <text x="28" y="154" fill="var(--kb-fg-muted)" font-size="10">この窓を外すと取り込まれない ＝ 月次決算が 1 か月遅れる</text>
+
+                  <rect x="14" y="210" width="452" height="42" rx="8" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-dasharray="4 3"/>
+                  <text x="28" y="228" fill="var(--kb-fg)" font-weight="600">業務開始：9:00</text>
+                  <text x="28" y="244" fill="var(--kb-fg-muted)" font-size="10">精算書 PDF は始業までに出来ていればよい（猶予が大きい）</text>
+                </g>
+              </svg>
+            </div>
+            <div class="jn-panel" id="jn-panel" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h3>異常時の設計：ここが工数の本体</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>論点</th><th>決めること</th></tr></thead>
+            <tbody>
+              <tr><td><strong>後続をどうするか</strong></td><td>異常時に後続ジョブを止めるか、スキップして続行するか。<strong>ジョブごとに決める</strong>（PDF 生成が落ちても連携は続けてよいが、逆は駄目）</td></tr>
+              <tr><td><strong>リランの単位</strong></td><td>どのジョブから流し直すか。<strong>途中から流せる設計になっているか</strong>——中間ファイルが残っているか、処理済が除外されるか</td></tr>
+              <tr><td><strong>中間コミット</strong></td><td>何件ごとにコミットするか（方式設計 3.7 では 1,000 件）。リラン時に処理済をどう除外するか</td></tr>
+              <tr><td><strong>二重実行の防止</strong></td><td>手動で二度流されたらどうなるか。<strong>実行中フラグ、または同一年月の処理済チェック</strong></td></tr>
+              <tr><td><strong>通知</strong></td><td>誰に、どの手段で、どんな情報を。<strong>「バッチが異常終了しました」だけでは動けない</strong>——ジョブ名・エラー内容・対処手順の参照先まで</td></tr>
+              <tr><td><strong>時間窓（リミット）</strong></td><td>何時までに終わらなければ業務影響が出るか。<strong>監視でこれを超えたら遅延として検知する</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>バッチ設計書　BT-M002 仕訳データ生成</span><span class="kb-doc-id">DOC-307 §3 / v0.4</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <tbody>
+                <tr><th>バッチID</th><td>BT-M002</td><th>バッチ名</th><td>仕訳データ生成</td></tr>
+                <tr><th>起動契機</th><td colspan="3">BT-M001 の正常終了（月次・第一営業日）</td></tr>
+                <tr><th>処理概要</th><td colspan="3">前月末までに経理確定（status='50'）された申請から、費目マスタの勘定科目・税区分を参照して仕訳明細を生成し、W_JOURNAL_WORK に格納する。</td></tr>
+                <tr><th>入力</th><td colspan="3">T_EXPENSE_APPLICATION（status='50' かつ confirmed_at &lt; 当月1日）、T_EXPENSE_DETAIL、M_EXPENSE_TYPE</td></tr>
+                <tr><th>出力</th><td colspan="3">W_JOURNAL_WORK（仕訳ワーク）／処理結果ログ</td></tr>
+                <tr><th>想定件数・時間</th><td colspan="3">申請 約 2,000 件・明細 約 5,000 件／20 分以内（非機能要件 N-P03）</td></tr>
+                <tr><th>コミット単位</th><td colspan="3">1,000 明細ごと（方式設計 3.7）</td></tr>
+                <tr><th>二重実行防止</th><td colspan="3">同一対象年月の W_JOURNAL_WORK が存在する場合はエラー終了（E9002）。<strong>強制再実行は起動パラメータ <span class="fx">--force</span> による</strong>（既存ワークを削除して再生成）</td></tr>
+                <tr><th>異常時</th><td colspan="3">後続（BT-M003）を<strong>停止</strong>する。処理途中のワークは削除せず残し、原因調査に用いる。リランは本ジョブから <span class="fx">--force</span> 付きで再実行する。</td></tr>
+                <tr><th>時間窓</th><td colspan="3"><strong>2:40 までに完了しないこと</strong>を遅延とみなし、運用担当へ通知する（会計受入 3:00 に間に合わせるため）</td></tr>
+                <tr><th>通知</th><td colspan="3">正常終了：通知なし（ログのみ）／異常終了・遅延：情シス担当へメール（バッチID・エラーコード・対処手順書の該当節を記載）</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 費目に対応する勘定科目が未設定の場合は、当該申請をスキップせず<strong>ジョブ全体をエラー終了</strong>させる。部分的に連携すると、会計側との突合が合わなくなるため。</p>
+          </div>
+        </div>
+
+        <h2>帳票設計</h2>
+        <p>帳票は画面と似ているが、<strong>紙という物理的制約</strong>と<strong>「後から出し直せるか」</strong>という論点が加わる。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>論点</th><th>決めること</th><th>本案例</th></tr></thead>
+            <tbody>
+              <tr><td>用紙・向き・余白</td><td>A4 縦／横、上下左右の余白、フォントサイズ</td><td>A4 縦、明朝 10pt</td></tr>
+              <tr><td>出力条件</td><td>誰が、どの状態のデータを、どこから出せるか</td><td>経理確定済の申請を、申請者本人と経理が出力可能</td></tr>
+              <tr><td><strong>改ページ</strong></td><td>何件で改ページするか、改ページ時にヘッダを再出力するか、明細が 1 行だけ次ページに残らないようにするか</td><td>明細 20 行で改ページ、各ページにヘッダと「N / M ページ」</td></tr>
+              <tr><td><strong>合計</strong></td><td>ページ小計・繰越・総合計をどう出すか</td><td>ページ小計と繰越を出し、最終ページに総合計</td></tr>
+              <tr><td><strong>再出力</strong></td><td>過去分を出し直せるか。出力済フラグ・出力日時を残すか。<strong>再出力であることを紙面に示すか</strong></td><td>再出力可。2 回目以降は「（再出力）」を表示</td></tr>
+              <tr><td>押印欄</td><td>承認欄の枠、電子承認済の場合の表示</td><td>電子承認のため押印欄は設けず、承認者名と承認日時を印字</td></tr>
+              <tr><td>0 件時</td><td>データが無いときに出力するか、エラーにするか</td><td>「該当データがありません」を印字した 1 枚を出力</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 帳票で最も揉めるのは「桁あふれ」</p>
+          <p>画面なら折り返せばよいが、<strong>紙は幅が決まっている</strong>。支払先 60 文字を印字する枠が 30 文字分しかなければ、切るか、縮小するか、折り返すかを決めなければならない。<br>そして<strong>この判断は業務判断</strong>——「株式会社◯◯◯商事 東京第二営業所」が「株式会社◯◯◯商事 東京第二営」と切れて出力されても構わないのか。<br>設計書には<strong>桁あふれ時の挙動を項目ごとに明記する</strong>：切り捨て／折り返し（何行まで）／縮小／「…」を付ける。書いていないと実装者が勝手に決め、経理から指摘が来る。<br>同じ論点は IF のファイルレイアウト（本章の D9 摘要 60 バイト）にもある——<strong>外に出す瞬間、必ず幅の制約にぶつかる。</strong></p>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 月次連携を、間違えて 2 回流してしまった</p>
+          <p>運用担当が手順を誤り、BT-M002〜M004 を 2 回実行。会計システムに同じ仕訳が二重に取り込まれた。</p>
+          <p><strong>設計で防ぐ三重の防御</strong>：<br>① <strong>自システムでの重複防止</strong>——連携済の申請は status='60' に更新し、次回対象から除外する。2 回目は対象 0 件になる。<br>② <strong>二重実行の検知</strong>——同一対象年月のワークが既に存在すればエラー終了（本章のバッチ設計書 E9002）。<strong>強制実行は明示的なパラメータを要求する</strong>——「うっかり」では通らないようにする。<br>③ <strong>相手側での重複チェック</strong>——ファイル名に年月を含め、相手が同一年月のファイルを二度取り込まないようにしてもらう。<strong>ただしこれは相手の実装なので、確認が必要</strong>（IF一覧の「相手側改修」欄）。</p>
+          <p><strong>それでも起きたときの復旧設計</strong>：<br>・自システムからは<strong>取り消せない</strong>——連携済のデータを「なかったこと」にはできない。<br>・会計側で<strong>逆仕訳</strong>を入れて相殺してもらう（方式設計に「連携後の取消は会計側の逆仕訳で対応し、本システムでは再連携しない」と書いた理由）。<br>・つまり<strong>「戻せない」ことを前提に、事前の防御を厚くする</strong>のが外部連携の設計原則。画面の操作ミスは取り消せるが、外に出したデータは取り消せない。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · バッチが 3:15 に異常終了。運用担当は何をすべきか</p>
+          <p>これは設計の問題である。<strong>「何をすべきか」が設計書に書かれていなければ、運用担当は何もできない。</strong></p>
+          <p><strong>設計書に書くべき対処手順</strong>（第 14 章の運用設計と接続する）：<br>① <strong>影響判定</strong>——どのジョブが落ちたか、後続は止まっているか、業務期限（会計受入 5:00）まであと何分か。<br>② <strong>切り分け</strong>——エラーコードから原因を特定する早見表（E9002＝二重実行、E9010＝勘定科目未設定、E9020＝FTPS 接続失敗…）。<br>③ <strong>対処</strong>——エラーコードごとの手順。「E9010：費目マスタの勘定科目を設定し、BT-M002 から <span class="fx">--force</span> 付きで再実行」。<br>④ <strong>期限内に復旧できない場合</strong>——<strong>ここが最も重要で、最も書かれていない</strong>。会計受入の 5:00 に間に合わないなら、翌日の受入枠を使えるのか、翌月に回すのか、手動で取り込んでもらうのか。<strong>これは業務判断なので、事前に経理部と合意しておく必要がある。</strong><br>⑤ <strong>エスカレーション</strong>——何分経ったら誰に連絡するか。</p>
+          <p><strong>設計時の問い</strong>：「このバッチが最悪のタイミングで落ちたとき、夜中の 3 時に叩き起こされた人は、何を見て、何をすればよいか」。<strong>この問いに答えられない設計書は、完成していない。</strong></p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 相手システムのテスト環境が無い</p>
+          <p>会計システムの保守ベンダーから「検証環境はありません。本番のみです」と言われた。連携テストがどうにもならない。</p>
+          <p><strong>取りうる手段</strong>：<br>① <strong>擬似受信側を自作する</strong>——相手のファイル仕様に従って、こちらでファイルを読み込み検証するツールを作る。<strong>形式の正しさは検証できるが、相手が本当に取り込めるかは分からない</strong>。<br>② <strong>相手の本番環境で、影響のない時間帯にテストする</strong>——テスト用の会社コードや、取込後に削除してもらう運用。<strong>相手の合意と立会いが必須</strong>で、日程調整に時間がかかる。<br>③ <strong>ファイルだけ渡して、相手に取り込んでもらう</strong>——本番稼働前に一度、実データに近いファイルを作って相手ベンダーに検証を依頼する。<strong>最も現実的</strong>だが、相手の工数が発生するので費用負担の話になる。<br>④ <strong>並行稼働期間を設ける</strong>——最初の 1 か月は従来の手入力も併用し、システムの出力と突合する（第 14 章の移行方式）。</p>
+          <p><strong>要件定義・スコープ定義に立ち返る</strong>：この状況は<strong>第 8 章の前提条件に書いておくべき事項</strong>だった——「会計システム側の検証環境が提供されること」「提供されない場合、相手ベンダーによる受入検証の工数・費用は発注者の負担とする」。<br><strong>相手システムがあるIFは、技術リスクではなく調整リスク</strong>。だから要件定義の早い段階で課題管理表に載せ、期限を切って追いかける（本案例の課題 No.015 がまさにそれ）。<strong>第 6 章のレビュー観点「④実現可能性」が最も見落とされる、と書いた理由がここにある。</strong></p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>連携設計の四大論点（タイミング・リトライ・重複防止・順序保証）について、人事システムからの社員マスタ日次取込（IF-IN-001）ではそれぞれ何を決めるべきか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① タイミング</strong>：人事側がいつファイルを置くか（例：毎日 0:30）。こちらがいつ取りに行くか（1:00）。<strong>ファイルが置かれていなかったらどうするか</strong>——待つ（何分？）／エラーにする／前日のマスタで続行する。人事側が休日は出力しない場合の扱いも決める。</p>
+            <p><strong>② リトライ</strong>：ファイルが無い場合に何分間隔で何回リトライするか。ネットワーク障害での取得失敗時の再試行。<strong>リトライしても取れない場合、後続（BT-M001）を止めるか続行するか</strong>——社員マスタが古くても仕訳生成はできるので、<strong>警告を出して続行</strong>が妥当（ただし新入社員の申請があるとエラーになる可能性を考慮）。</p>
+            <p><strong>③ 重複防止</strong>：同じファイルを二度取り込んだらどうなるか。全件洗い替え（DELETE→INSERT）なら冪等だが、差分更新なら重複が問題になる。<strong>取込済ファイルの記録</strong>（ファイル名＋日付）を持ち、同一ファイルの再取込を検知する。</p>
+            <p><strong>④ 順序保証</strong>：前日分が未処理のまま当日分が来る可能性。日付順に処理する制御が必要。<strong>特に「異動」は順序が意味を持つ</strong>——A→B→C と異動した人を、C→A の順で処理すると最終状態が間違う。</p>
+            <p><strong>追加の重要論点</strong>：<strong>削除の扱い</strong>。退職者が人事ファイルから消えたとき、こちらのマスタからも消すのか、無効化するのか。<strong>消すと過去の申請が参照できなくなる</strong>（第 12 章）。全件洗い替えは危険——正解は「ファイルに存在しない社員は無効フラグを立てる」。<strong>これは設計書に明記しないと、実装者は素直に DELETE する。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>ファイル連携で「送信は成功したが取り込まれていない」を検知するために、設計に何を入れるべきか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>入れるべき仕組み</strong>：<br>① <strong>送信側の記録</strong>——送信日時、ファイル名、明細件数、金額合計をログとテーブルに残す。<br>② <strong>完了通知ファイル</strong>（.end ファイル等）——相手が「ファイルが完全に置かれた」と判断できるようにする。転送途中のファイルを読まれる事故を防ぐ。<br>③ <strong>受領確認</strong>——相手からの結果ファイル（取込件数・エラー件数）を受け取り、こちらの送信件数と突合する専用ジョブ（BT-M005）。<br>④ <strong>突合不一致時の通知</strong>——件数や金額が合わなければ、運用担当へ通知する。<br>⑤ <strong>相手側で取り込めなかった場合の連絡経路</strong>——相手ベンダーから誰にどう連絡が来るか。<strong>これは技術ではなく運用の取り決め</strong>で、第 14 章の運用設計に書く。</p>
+            <p><strong>③が無い場合の現実</strong>：月次決算のとき経理が「経費の仕訳が入っていない」と気づく——<strong>つまり発覚が 1 週間後</strong>で、しかも気づくのが最も忙しい時期。<br><strong>設計の原則</strong>：外部連携は<strong>「送った」で終わらせず、「相手が受け取った」まで含めて設計する</strong>。相手が結果を返してくれない仕様なら、せめて<strong>件数を人が突合する運用手順</strong>を作る（自動化できなくても、決めておけば発覚が早まる）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>バッチの「異常時に後続を止めるか、続行するか」の判断基準を述べ、本章のジョブネットの各ジョブについて判断せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>判断基準</strong>：<strong>「後続の処理結果が、前のジョブの失敗によって誤ったものになるか」</strong>。なるなら停止、ならないなら続行。加えて「後続を止めることによる業務影響」も考慮する。</p>
+            <p><strong>各ジョブの判断</strong>：<br>・<strong>BT-D001（社員マスタ取込）が失敗</strong>→ <strong>警告して続行</strong>。マスタが 1 日古いだけで、仕訳生成は可能。ただし新入社員の申請がある場合はエラーになるため、通知は必須。<br>・<strong>BT-M001（確定データ抽出）が失敗</strong>→ <strong>停止</strong>。データが無ければ後続は無意味。<br>・<strong>BT-M002（仕訳生成）が失敗</strong>→ <strong>停止</strong>。不完全な仕訳を会計に送ると、突合が合わなくなり復旧が困難（例題 1）。<br>・<strong>BT-M003（ファイル出力）が失敗</strong>→ 停止。<br>・<strong>BT-M004（FTPS 送信）が失敗</strong>→ 停止（ただしリトライ後）。BT-M005 は送信結果を確認するジョブなので、送信が失敗しているなら実行する意味がない——<strong>ただし「失敗した」ことの通知は必要</strong>なので、通知部分だけは動かす設計もありうる。<br>・<strong>BT-M006（PDF 生成）が失敗</strong>→ <strong>他のジョブには影響しない</strong>。並列のブランチなので、連携側は続行してよい。業務影響も小さい（始業までに再実行すればよい）。</p>
+            <p><strong>設計上の要点</strong>：<strong>ジョブネットは一本の鎖ではなく、影響範囲の異なるブランチの集合</strong>。「全部止める」は安全だが、業務影響を不必要に広げる。<strong>ブランチごとに判断し、その判断理由を設計書に書く</strong>——理由が書かれていないと、後で誰かが「ここも止めるべきでは」と蒸し返す。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>帳票設計で「再出力」を許す場合に決めるべきことを 4 つ以上挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>決めるべきこと</strong>：<br>① <strong>誰が再出力できるか</strong>——申請者本人だけか、経理も可か、他人の分はどうか（権限マトリクスと整合させる）。<br>② <strong>いつまで出せるか</strong>——確定後何年分か。保存年限（7 年）と揃えるか。<strong>データがアーカイブされたら出せなくなる</strong>点も考慮。<br>③ <strong>出力履歴を残すか</strong>——いつ、誰が、何を出力したか。<strong>経費情報の閲覧記録は監査対象になりうる</strong>（第 12 章 習題 12.4 の②）。<br>④ <strong>紙面に「再出力」と示すか</strong>——示さないと、同じ帳票が複数存在したときにどれが正か分からない。日本の経理実務では「再発行」の表示を求められることが多い。<br>⑤ <strong>再出力時の内容</strong>——<strong>出力当時の内容か、現在の内容か</strong>。確定後にデータが修正されていた場合、どちらを出すか。<strong>これが最も重要な論点</strong>で、監査上は「当時の内容」が求められることがある（第 12 章の履歴管理につながる）。<br>⑥ <strong>連番・通し番号</strong>——帳票に発行番号を付けるか。付けるなら再出力時に新しい番号を採るか、同じ番号にするか。</p>
+            <p><strong>この演習の狙い</strong>：「再出力できるようにする」は一言だが、<strong>その裏に 6 つの判断が隠れている</strong>と気づくこと。そして⑤のように、<strong>データ設計（履歴を持つか）にまで遡る論点</strong>が含まれる——だから帳票設計を後回しにすると、データ設計の手戻りになる。基本設計の成果物が相互に依存している（第 10 章の依存図）とは、こういうこと。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>会計システムの受入時間帯が 3:00–5:00 である制約から逆算して、各バッチの時間窓（何時までに終わるべきか）を設計せよ。また、月末が土日・連休にかかる場合に何を考慮すべきか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>逆算</strong>：<br>・会計受入 3:00 開始 → <strong>BT-M004（FTPS 送信）は 2:55 までに完了</strong>したい（余裕 5 分）。<br>・BT-M004 は 5 分 → <strong>BT-M003 は 2:50 までに完了</strong>。<br>・BT-M003 は 5 分 → <strong>BT-M002 は 2:45 までに完了</strong>。<br>・BT-M002 は 20 分 → <strong>BT-M001 は 2:25 までに完了</strong>（開始 2:00・10 分なので余裕 15 分）。<br>・BT-D001（社員マスタ）は 1:00 開始・10 分 → BT-M001 の 2:00 開始まで 50 分の余裕。<br><strong>ただし受入終了の 5:00 が真の期限</strong>なので、リランの余地として「5:00 − 送信 5 分 − リラン所要 35 分 ＝ 4:20 までに障害対応を開始できれば間に合う」という<strong>復旧の期限</strong>も算出しておく。これが第 7 章の RTO（月末 2 時間以内）の根拠になる。</p>
+            <p><strong>設計書への書き方</strong>：各バッチに「時間窓（この時刻までに完了しなければ遅延として通知）」を明記し、<strong>監視でその時刻を超えたら自動通知</strong>する（第 14 章の運用設計）。「異常終了」だけを監視していると、<strong>「動いてはいるが終わらない」</strong>ケースを見逃す——これが実は最も多い障害パターン。</p>
+            <p><strong>月末が土日・連休にかかる場合</strong>：<br>① <strong>「第一営業日」の定義</strong>——営業日カレンダーが必要。会社の休日（年末年始、創立記念日）を保持するマスタを誰が保守するか。<br>② <strong>会計システム側も休みか</strong>——相手の受入処理が営業日のみ動くなら、こちらも合わせる必要がある。<strong>ここがズレると、ファイルを置いたのに誰も取り込まない。</strong><br>③ <strong>障害時の対応要員</strong>——連休中に落ちたら誰が対応するか（第 7 章 N-A03 の待機体制）。<br>④ <strong>締め日の前倒し</strong>——経理の締め作業自体が前倒しになる場合、確定データの抽出条件も変わる。<br>⑤ <strong>年末年始・年度末の特例</strong>——決算期は締めのルールが変わることがある。第 4 章の例外掘り出し問句「年度末や決算期は、何か変わりますか」がここで効いてくる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>仕訳連携ファイルの摘要欄（60 バイト）に、支払先（最大 60 文字）＋目的（最大 200 文字）を入れる設計になっている。この設計の問題を指摘し、解決案を複数挙げて比較せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>問題</strong>：<br>① <strong>圧倒的に入らない</strong>——支払先だけで全角 60 文字＝120 バイトあり、60 バイト枠には全角 30 文字しか入らない。目的はまったく入らない。<br>② <strong>切り捨ての基準が未定</strong>——支払先を優先するのか、目的を優先するのか、両方を切って結合するのか。<br>③ <strong>全角文字の途中で切ると文字化けする</strong>（Shift_JIS は 2 バイト文字）。バイト単位で切ってはいけない。<br>④ <strong>会計側で何が見えるか</strong>——摘要は仕訳の説明であり、経理が後で「これは何の費用か」を判断する材料。切れて意味が通じなければ、会計システム側で使えない。</p>
+            <p><strong>解決案の比較</strong>：<br><strong>A：支払先のみを入れ、全角 28 文字で切る（＋「…」）</strong>。利点：実装が単純。欠点：長い会社名が切れる。目的が伝わらない。<br><strong>B：目的を優先し、支払先は入れない</strong>。利点：費用の性質が伝わる。欠点：取引先が分からず、会計側の要件を満たさない可能性。<br><strong>C：支払先 30 バイト＋目的 30 バイトに分けて結合</strong>。利点：両方入る。欠点：どちらも中途半端に切れる。<br><strong>D：会計側に摘要欄の拡張を依頼する</strong>。利点：根本解決。欠点：<strong>相手システムの改修＝日程・費用・調整</strong>（IF一覧の「相手側改修」欄）。現実には難しいことが多い。<br><strong>E：申請番号を摘要に含め、詳細は本システムで参照してもらう</strong>。利点：60 バイトに確実に収まり、必要なら本システムで全情報を確認できる。欠点：会計側が本システムを見る運用が必要。</p>
+            <p><strong>推奨：E ＋ A の併用</strong>——「EX2026000011 髙田商事…」のように、申請番号（12 バイト）＋支払先の先頭（約 20 全角文字）。<strong>トレーサビリティが確保され、かつ人が見て概要が分かる。</strong></p>
+            <p><strong>この問題の本質</strong>：<strong>桁の制約は技術問題に見えて、業務判断を要求する</strong>。「何を捨てるか」は経理部にしか決められない。SE の仕事は、選択肢とそれぞれの帰結を示すこと——第 1 章から一貫している構造が、こんな細かい設計の場面にも現れる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたのシステムのバッチを一つ選び、① 時間窓（何時までに終わらなければ業務影響が出るか）② 異常終了時に後続を止めるか　③ リランの単位と手順　④ 二重実行の防止　⑤ 通知の宛先と内容——が設計書に書かれているかを点検せよ。書かれていないものについて、実際に障害が起きたときに何が起きるかを想像して書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>典型的な発見を挙げる。</p>
+            <p><strong>発見①「時間窓が定義されていない」</strong>——最も多い。異常終了は監視しているが、<strong>「終わらない」は検知していない</strong>。実際の障害では、無限ループやロック待ちで「動いているが終わらない」ケースが多く、朝になって初めて気づく。<strong>対策は簡単</strong>：想定所要時間の 2 倍を超えたら通知、という監視を入れるだけ。</p>
+            <p><strong>発見②「リラン手順が属人化している」</strong>——「あの人しか流し直せない」。手順書が無いか、あっても古い。<strong>年 1 回でも訓練する</strong>のが正しい姿だが、まずは手順を書き出すところから。</p>
+            <p><strong>発見③「途中から流せない」</strong>——設計時にリランを考慮していないため、最初から全部流し直すしかない。<strong>処理時間が長いバッチでは致命的</strong>——4 時間かかるバッチが 3 時間目で落ちたら、業務時間内に終わらない。<strong>中間コミットと処理済除外は、設計時に入れないと後から入れられない。</strong></p>
+            <p><strong>発見④「二重実行の防止が無い」</strong>——手動実行できるバッチほど危険。しかも二重実行の被害は、外部連携が絡むと復旧できない（例題 1）。</p>
+            <p><strong>発見⑤「通知先が個人のメールアドレス」</strong>——第 7 章 習題 7.7 でも出た論点。その人が異動・退職すると誰にも届かなくなる。<strong>グループアドレスにする</strong>だけで解決するのに、放置されていることが多い。</p>
+            <p><strong>発見⑥「通知の内容が『異常終了しました』だけ」</strong>——受け取った人は、どのバッチが、なぜ、どうすればよいか分からない。<strong>通知には最低限：バッチID・実行日時・エラーコード・エラーメッセージ・対処手順書の参照先</strong>を入れる。</p>
+            <p><strong>この演習の狙い</strong>：バッチ設計の品質は<strong>「正常に動くとき」ではなく「落ちた夜中の 3 時」に決まる</strong>と体感すること。そしてその品質は、ほとんどが<strong>設計書に一行書いてあるかどうか</strong>で決まっている。技術的に難しいことは何一つない——ただ、想像して、書くかどうか。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① IF設計の難しさは技術ではなく<strong>相手がいること</strong>——相手側改修の要否・テスト環境・受入時間帯・費用負担は<strong>要件定義の段階で課題化して追いかける</strong>；② 連携方式はファイル／API／DB直／MQ から選び、日本の基幹系では今もファイルが主流。<strong>「送った」「届いた」「取り込まれた」は別のこと</strong>——受領確認と突合を必ず設計に入れる；③ 連携設計の四大論点は<strong>タイミング・リトライ・重複防止（冪等性）・順序保証</strong>。外に出したデータは取り消せないので、<strong>事前の防御を厚くする</strong>；④ ファイルレイアウトでは文字コード・改行・桁・<strong>変換不可文字</strong>・全角の途中で切らないこと・トレーラの検算；⑤ バッチ設計の工数の本体は<strong>異常系</strong>——後続を止めるかはブランチごとに判断し、<strong>リランの単位・中間コミット・二重実行防止・通知・時間窓</strong>を書く；⑥ <strong>時間窓は外部の制約から逆算</strong>し、「異常終了」だけでなく<strong>「終わらない」も監視</strong>する；⑦ 帳票は改ページ・合計・再出力・<strong>桁あふれ</strong>——桁の制約は技術問題に見えて、何を捨てるかという業務判断。<br><strong>下一章预告</strong>：終章。作ったものをどうやって本番に載せ、どうやって動かし続けるのか——運用設計と移行設計、そして詳細設計への交棒。全書のまとめと、この先の学習路線も。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./12-数据设计.html">← 第 12 章 データ設計</a>
+          <a href="./14-运用移行设计与交棒.html">第 14 章 运用・移行設計与向詳細設計的交棒 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var panel = document.getElementById("jn-panel");
+      if (!panel) return;
+
+      var JOBS = {
+        j5: { name: "社員マスタ取込 (BT-D001)", start: 60, dur: 10, deps: [] },
+        j1: { name: "確定データ抽出 (BT-M001)", start: 120, dur: 10, deps: ["j5"] },
+        j2: { name: "仕訳データ生成 (BT-M002)", start: null, dur: 20, deps: ["j1"] },
+        j3: { name: "仕訳ファイル出力 (BT-M003)", start: null, dur: 5, deps: ["j2"] },
+        j4: { name: "会計へ FTPS 送信 (BT-M004)", start: null, dur: 5, deps: ["j3"] },
+        j6: { name: "連携結果確認・通知 (BT-M005)", start: null, dur: 5, deps: ["j4"] },
+        j7: { name: "精算書PDF生成 (BT-M006)", start: null, dur: 30, deps: ["j2"] }
+      };
+      var ORDER = ["j5", "j1", "j2", "j3", "j4", "j6", "j7"];
+      // 停止時に後続を止めるか（ブランチごとの設計判断）
+      var HALT = { j5: false, j1: true, j2: true, j3: true, j4: true, j6: false, j7: false };
+
+      var sel = "j2", mode = "ok";
+
+      function hhmm(m) {
+        var h = Math.floor(m / 60) % 24, mm = m % 60;
+        return ("0" + h).slice(-2) + ":" + ("0" + mm).slice(-2);
+      }
+
+      function simulate() {
+        var end = {}, startAt = {}, stopped = {}, delayed = {};
+        ORDER.forEach(function (k) {
+          var j = JOBS[k];
+          var depStop = j.deps.some(function (d) { return stopped[d] && HALT[d]; });
+          if (depStop) { stopped[k] = true; return; }
+          var s = j.start !== null ? j.start : 0;
+          j.deps.forEach(function (d) {
+            if (end[d] !== undefined) s = Math.max(s, end[d]);
+          });
+          if (j.start !== null) s = Math.max(s, j.start);
+          startAt[k] = s;
+          var dur = j.dur;
+          if (k === sel && mode === "late") { dur += 30; delayed[k] = true; }
+          if (k === sel && mode === "ng") { stopped[k] = true; end[k] = s + dur; return; }
+          end[k] = s + dur;
+          if (j.deps.some(function (d) { return delayed[d] || (startAt[d] !== undefined && end[d] > (JOBS[d].start !== null ? JOBS[d].start : 0) + JOBS[d].dur); })) {
+            delayed[k] = true;
+          }
+        });
+        return { end: end, startAt: startAt, stopped: stopped, delayed: delayed };
+      }
+
+      function render() {
+        var r = simulate();
+        Array.prototype.forEach.call(document.querySelectorAll(".jn-node"), function (n) {
+          var k = n.getAttribute("data-k");
+          n.classList.toggle("sel", k === sel);
+          n.classList.remove("hit", "late", "stop");
+          if (r.stopped[k]) n.classList.add(k === sel && mode === "ng" ? "stop" : "hit");
+          else if (r.delayed[k] || (k === sel && mode === "late")) n.classList.add("late");
+        });
+
+        var ACCT_OPEN = 180, ACCT_CLOSE = 300, BIZ = 540;
+        var sendDone = r.stopped["j4"] ? null : r.end["j4"];
+        var pdfDone = r.stopped["j7"] ? null : r.end["j7"];
+
+        panel.textContent = "";
+        function line(k, v, strong) {
+          var p = document.createElement("p");
+          if (k) {
+            var s = document.createElement("span");
+            s.className = "jn-k";
+            s.textContent = k + "：";
+            p.appendChild(s);
+          }
+          if (strong) {
+            var b = document.createElement("strong");
+            b.textContent = v;
+            p.appendChild(b);
+          } else {
+            p.appendChild(document.createTextNode(v));
+          }
+          panel.appendChild(p);
+        }
+
+        var cls = "", head;
+        if (mode === "ok") {
+          head = "◯ 全ジョブ正常。会計への送信は " + hhmm(sendDone) + " 完了（受入 3:00 開始に対し余裕あり）。";
+        } else {
+          var affected = ORDER.filter(function (k) { return k !== sel && (r.stopped[k] || r.delayed[k]); })
+                              .map(function (k) { return JOBS[k].name; });
+          if (mode === "ng") {
+            if (sendDone === null) {
+              cls = "bad";
+              head = "🚨 " + JOBS[sel].name + " が異常終了 → 会計への送信が実行されません。";
+            } else {
+              cls = "warn";
+              head = "⚠ " + JOBS[sel].name + " が異常終了。ただし連携ブランチには影響しません。";
+            }
+          } else {
+            if (sendDone !== null && sendDone > ACCT_CLOSE) {
+              cls = "bad";
+              head = "🚨 30 分の遅延により、送信完了が " + hhmm(sendDone) + " ＝ 受入締切 5:00 を超過します。";
+            } else if (sendDone !== null && sendDone > ACCT_OPEN + 60) {
+              cls = "warn";
+              head = "⚠ 30 分の遅延。送信完了は " + hhmm(sendDone) + "。受入時間帯には間に合いますが、余裕がありません。";
+            } else {
+              cls = "warn";
+              head = "⚠ 30 分の遅延。送信完了は " + hhmm(sendDone) + " で、受入時間帯には間に合います。";
+            }
+          }
+          line("", head, true);
+          line("波及するジョブ", affected.length ? affected.join("／") : "なし（並列ブランチのため他に影響しません）");
+          line("会計への送信", sendDone === null ? "実行されない（受入時間帯 3:00–5:00 を逃す）" : hhmm(sendDone) + " 完了");
+          line("精算書PDF", pdfDone === null ? "生成されない（始業 9:00 までに要リラン）" : hhmm(pdfDone) + " 完了");
+          if (mode === "ng") {
+            line("リラン範囲", HALT[sel]
+              ? JOBS[sel].name + " から後続すべて（--force 付きで再実行）"
+              : JOBS[sel].name + " のみ（後続は影響を受けない設計）");
+            line("対処の期限", sendDone === null
+              ? "受入締切 5:00 から逆算し、遅くとも 4:20 までに原因を特定して再実行を開始する必要があります（送信 5 分＋リラン所要 35 分）。"
+              : "始業 9:00 までに再実行すれば業務影響はありません。");
+          } else {
+            line("設計上の含意", "「異常終了」だけを監視していると、この『動いてはいるが終わらない』状態を見逃します。各ジョブに時間窓（この時刻を過ぎたら遅延通知）を設定してください。");
+          }
+          panel.className = "jn-panel" + (cls ? " " + cls : "");
+          return;
+        }
+        panel.className = "jn-panel";
+        line("", head, true);
+        line("精算書PDF", hhmm(pdfDone) + " 完了（始業 9:00 に対し余裕あり）");
+        line("使い方", "ジョブをクリックして選び、上のボタンで「30 分遅延」「異常終了」に切り替えると、波及範囲・リラン範囲・業務期限への影響が表示されます。");
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll(".jn-node"), function (n) {
+        var k = n.getAttribute("data-k");
+        n.addEventListener("click", function () { sel = k; render(); });
+        n.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); sel = k; render(); }
+        });
+      });
+      Array.prototype.forEach.call(document.querySelectorAll(".jn-btn"), function (b) {
+        b.addEventListener("click", function () {
+          mode = b.getAttribute("data-mode");
+          Array.prototype.forEach.call(document.querySelectorAll(".jn-btn"), function (o) {
+            o.setAttribute("aria-pressed", String(o === b));
+          });
+          render();
+        });
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

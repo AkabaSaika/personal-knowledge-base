@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 日本IT开发现场：体制、契约与登场人物 · 知识库</title>
+  <meta name="kb:summary" content="日本SI现场的结构：発注者与受注者双方的角色、元請け・多重下請け商流、請負与準委任的差别，以及契约形态如何改变SE每天的判断。">
+  <meta name="kb:tags" content="上流工程,要件定义,日本IT,SIer,契约,请负,准委任,多重下请,体制图,slgc,qy,zwr">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：判定器控件与结果面板 */
+    .qz-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .qz-label { font-size: 0.82rem; color: var(--kb-fg-muted); min-width: 5.2em; }
+    .qz-chip {
+      font: inherit; font-size: 0.84rem; padding: 5px 12px; cursor: pointer;
+      border-radius: 999px; border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .qz-chip:hover { border-color: var(--kb-accent); }
+    .qz-chip[aria-pressed="true"] {
+      background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600;
+    }
+    .qz-out {
+      margin-top: 14px; border-top: 1px dashed var(--kb-border-strong); padding-top: 12px;
+    }
+    .qz-row { display: flex; gap: 10px; padding: 6px 0; font-size: 0.88rem; align-items: baseline; }
+    .qz-row + .qz-row { border-top: 1px solid var(--kb-border); }
+    .qz-key { flex: 0 0 8.5em; color: var(--kb-fg-muted); font-size: 0.82rem; }
+    .qz-val { flex: 1; }
+    .qz-flag { font-weight: 700; }
+    .qz-ok { color: var(--kb-ok); }
+    .qz-bad { color: var(--kb-danger); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 1 章 · 日本IT开发现场：体制、契约与登场人物</h1>
+        <p class="kb-lead">在写下第一行要件之前，你得先知道自己站在一张什么样的牌桌上：会议室里坐着哪些人、他们各自向谁负责、钱从哪一层流到哪一层、以及你和客户之间那纸合同到底约定了「完成」还是「尽力」。这一章讲的不是技术，却决定了后面十三章里每一份文档为什么要那样写。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 画出一个典型日本SI项目的体制图，说出発注者侧与受注者侧各有哪些角色、谁说了算；② 解释多重下請け商流如何影响信息传递与责任边界；③ 分清 <ruby>請負<rt>うけおい</rt></ruby>契約 与 <ruby>準委任<rt>じゅんいにん</rt></ruby>契約 在「完成义务・指挥命令・成果物责任」上的差别；④ 说明为什么要件定義通常是準委任、基本設計以降通常是請負；⑤ 遇到「这活到底该谁干、能不能接」的争议时，从工程×契约的角度给出判断。</p>
+        </div>
+
+        <h2>一个 320 人公司的经费系统，为什么动用了四家公司</h2>
+        <p>山田製作所的情報システム部長给あおぞらシステムズ打了个电话：「経費精算、そろそろ何とかしたいんですよ」。</p>
+        <p>三个月后，第一次<ruby>要件定義<rt>ようけんていぎ</rt></ruby>会议在山田製作所的会议室召开。坐在桌边的有九个人：山田側四人（情報システム部長、情シス担当者、経理部長、経理担当）；あおぞら側五人——但其中两个人的名片上，印的是别的公司名字。而三个月后真正敲代码的，是又一家公司在大连的十人团队。</p>
+        <p>一个 320 人企业的经费报销系统，为什么要动用四家公司？这不是浪费，也不是特例——它是日本IT产业的<strong>默认结构</strong>。理解这个结构，你才能明白为什么日本现场把「議事録」看得比代码还重，为什么一句「持ち帰って確認します」是专业而不是推诿。</p>
+
+        <h2>登场人物：発注者侧与受注者侧</h2>
+        <p>日本SI项目的体制图，永远是左右两半：<ruby>発注者<rt>はっちゅうしゃ</rt></ruby>（客户）与<ruby>受注者<rt>じゅちゅうしゃ</rt></ruby>（供应商，现场常称ベンダー）。两半之间只有<strong>一条正式通道</strong>——这一点后面会反复用到。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 420" width="700" height="420" role="img" aria-label="典型日本SI项目体制图：左侧为发注者的经营层、情报系统部、用户部门，右侧为受注者的PM、PL、SE、PG与协力会社、离岸团队，双方通过情报系统部与PM之间的唯一正式窗口连接">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12.5">
+              <text x="150" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--kb-fg)">発注者（山田製作所）</text>
+              <text x="530" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--kb-fg)">受注者（あおぞらシステムズ）</text>
+
+              <rect x="30" y="36" width="240" height="358" rx="14" fill="var(--kb-accent)" opacity="0.07"/>
+              <rect x="410" y="36" width="240" height="358" rx="14" fill="#9466de" opacity="0.09"/>
+
+              <rect x="52" y="52" width="196" height="52" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="150" y="74" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">経営層 / システムオーナー</text>
+              <text x="150" y="92" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">予算を出す・やるかやらぬかを決める</text>
+
+              <rect x="52" y="176" width="196" height="60" rx="9" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+              <text x="150" y="199" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">情報システム部（情シス）</text>
+              <text x="150" y="217" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">3 名 / 窓口・予算・ベンダー管理</text>
+
+              <rect x="52" y="300" width="196" height="60" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="150" y="323" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">ユーザー部門</text>
+              <text x="150" y="341" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">経理部・各部門の申請者/承認者</text>
+
+              <path d="M 150 104 v 72" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+              <path d="M 150 236 v 64" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+
+              <rect x="432" y="52" width="196" height="52" rx="9" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+              <text x="530" y="74" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">PM（プロジェクトマネージャ）</text>
+              <text x="530" y="92" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">QCD 全体責任・契約の相手</text>
+
+              <rect x="432" y="132" width="196" height="52" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="530" y="154" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">PL / SE ← 本教材の主役</text>
+              <text x="530" y="172" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">要件定義・基本設計を書く人</text>
+
+              <rect x="432" y="212" width="196" height="48" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)" stroke-dasharray="4 3"/>
+              <text x="530" y="232" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">協力会社 / BP</text>
+              <text x="530" y="249" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">同じ島に座る、別会社の名刺</text>
+
+              <rect x="432" y="288" width="196" height="48" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="530" y="308" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">PG（製造・単体テスト）</text>
+              <text x="530" y="325" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">二次請け・三次請け</text>
+
+              <rect x="432" y="348" width="196" height="40" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)" stroke-dasharray="4 3"/>
+              <text x="530" y="373" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">オフショア（大連）＋ブリッジSE</text>
+
+              <path d="M 530 104 v 28" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+              <path d="M 530 184 v 28" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+              <path d="M 530 260 v 28" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+              <path d="M 530 336 v 12" stroke="var(--kb-fg-muted)" stroke-width="1.4"/>
+
+              <path d="M 248 200 H 432" stroke="#16a34a" stroke-width="2.6"/>
+              <text x="340" y="192" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">唯一の正式窓口</text>
+              <text x="340" y="220" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">決定はここを通ったものだけ</text>
+
+              <path d="M 248 330 C 320 330, 360 170, 432 158" stroke="var(--kb-danger)" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+              <text x="342" y="352" text-anchor="middle" font-size="11" fill="var(--kb-danger)">現場の直接依頼＝事故の元</text>
+            </g>
+          </svg>
+          <figcaption>典型的日本SI体制图。绿线是唯一被承认的正式通道；红虚线（ユーザー部門直接找SE说「ついでにこれも」）是所有スコープ事故的起点——第 3 章会讲怎么把它变回绿线。</figcaption>
+        </figure>
+
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>阵营</th><th>角色</th><th>他真正在意什么</th><th>你和他打交道时</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="4">発注者</td><td>経営層 / システムオーナー</td><td>投资回收、对董事会的交代</td><td>只在キックオフ和重大判断时出现；「目的」这一栏是写给他看的</td></tr>
+              <tr><td>ユーザー部門（業務部門）</td><td>自己每天的活变不变轻松</td><td>他们知道业务真相，但不知道系统能做什么；<strong>要件的原材料在这里</strong></td></tr>
+              <tr><td>情報システム部（情シス）</td><td>预算、上线后不出事、不被业务部门骂</td><td>正式窗口。人少事多，常常也不清楚业务细节，需要你替他组织会议</td></tr>
+              <tr><td>調達・購買部門</td><td>合同流程合规</td><td>只在契约签订、変更契約时出现</td></tr>
+              <tr><td rowspan="5">受注者</td><td>営業</td><td>受注金额与后续订单</td><td>他答应过什么，你要在キックオフ时确认清楚——常是スコープ争议的源头</td></tr>
+              <tr><td>PM</td><td>QCD（品質・コスト・納期）三者不崩</td><td>对外是契约相对人；一切対客户承诺经由他</td></tr>
+              <tr><td>PL / SE</td><td>要件与设计能不能落地</td><td><strong>本教材的主角</strong>——写文档、开会、被两边夹在中间的人</td></tr>
+              <tr><td>PG</td><td>能不能照着设计书写出来</td><td>你写的基本設計書，最终由他判定「够不够写代码」</td></tr>
+              <tr><td>ブリッジSE</td><td>把日语的设计书翻成能执行的指示</td><td>有オフショア时，设计书的「歧义容忍度」为零</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 日本SI最重要的结构性事实</p>
+          <p>発注者侧通常<strong>没有能写要件定義書的人</strong>。情シス 三个人光是处理 PC 故障、账号申请、许可证续费就满负荷了。于是「定义需求」这件本该由需求方做的事，实质上由<strong>ベンダー的SE 代劳</strong>，再请客户确认签字。<br>后面所有看起来繁琐的作法——議事録、確認依頼、QA表、サインオフ——都是这个结构的必然产物：<strong>因为需求是你替客户想出来的，所以你必须证明客户认可了它。</strong></p>
+        </div>
+
+        <h2>商流：多重下請け构造</h2>
+        <p>日本IT产业的另一个特征是<strong>层层转包</strong>。直接与客户签约的叫<ruby>元請け<rt>もとうけ</rt></ruby>（也叫プライム）；元請け把一部分工作转给<ruby>二次請け<rt>にじうけ</rt></ruby>，二次請け再转给三次請け——形成一座金字塔。</p>
+
+        <figure>
+          <svg viewBox="0 0 640 300" width="640" height="300" role="img" aria-label="多重下请金字塔：发注者付出的单价经过元请、二次请、三次请层层抽成，到最下层只剩约六成，同时需求信息也逐层衰减">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12.5">
+              <rect x="180" y="18" width="280" height="42" rx="8" fill="var(--kb-accent)" opacity="0.16"/>
+              <rect x="180" y="18" width="280" height="42" rx="8" fill="none" stroke="var(--kb-accent)"/>
+              <text x="320" y="45" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">発注者（山田製作所）</text>
+
+              <rect x="150" y="82" width="340" height="46" rx="8" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="320" y="103" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">元請け（一次請け）= あおぞらシステムズ</text>
+              <text x="320" y="120" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">全体責任・要件定義・基本設計・進捗管理</text>
+
+              <rect x="120" y="150" width="400" height="46" rx="8" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="320" y="171" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">二次請け（協力会社）</text>
+              <text x="320" y="188" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">詳細設計・製造・単体テストの一部</text>
+
+              <rect x="90" y="218" width="460" height="46" rx="8" fill="var(--kb-surface)" stroke="var(--kb-border-strong)" stroke-dasharray="4 3"/>
+              <text x="320" y="239" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">三次請け / オフショア</text>
+              <text x="320" y="256" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">製造中心・要件の背景は届かない</text>
+
+              <g stroke="var(--kb-fg-muted)" stroke-width="1.3">
+                <path d="M 320 60 v 22"/><path d="M 320 128 v 22"/><path d="M 320 196 v 22"/>
+              </g>
+
+              <text x="576" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">100%</text>
+              <text x="576" y="176" text-anchor="middle" font-size="12" font-weight="700" fill="var(--kb-warn)">〜75%</text>
+              <text x="576" y="244" text-anchor="middle" font-size="12" font-weight="700" fill="var(--kb-danger)">〜60%</text>
+              <text x="576" y="72" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">単価</text>
+
+              <text x="52" y="108" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">背景 100%</text>
+              <text x="52" y="176" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">背景 ↓</text>
+              <text x="52" y="244" text-anchor="middle" font-size="11" fill="var(--kb-fg-muted)">背景 ほぼ 0</text>
+              <text x="52" y="284" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-faint)">「なぜ」が消える</text>
+            </g>
+          </svg>
+          <figcaption>商流每下一层，单价被抽一次（中抜き），而「为什么要这样做」的背景信息也衰减一次。到了最下层，人只剩设计书可依——这正是基本設計書必须写清楚「意图」的现实理由。</figcaption>
+        </figure>
+
+        <p>对做上流的人来说，多重下請け带来三个具体后果：</p>
+        <ul>
+          <li><strong>信息的传话游戏</strong>：客户的一句话经过 3 层转述才到实现者手上。你写的設計書就是唯一没有失真的载体——所以它必须写得「不认识客户的人也能照着做」。</li>
+          <li><strong>责任边界模糊</strong>：出了 bug，是要件写得不清楚，还是設計書漏了，还是製造做错了？<strong>每一层的成果物就是每一层的免责证明。</strong>这不是甩锅文化，而是多方协作下不得不有的界桩。</li>
+          <li><strong>不能直接指挥</strong>：坐在你旁边的協力会社的人，法律上不是你的下属。你不能对他说「今日中にやって」，只能通过他所属公司的负责人。理由见下一节。</li>
+        </ul>
+
+        <h2>契约：請負与準委任到底差在哪</h2>
+        <p>日本IT合同基本只有两种：<strong>請負契約</strong>与<strong>準委任契約</strong>（还有一种<strong>派遣契約</strong>，但那是雇佣形态，不是承包形态）。两者的分水岭只有一句话——<strong>有没有「完成」的义务</strong>。</p>
+
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>观点</th><th>請負契約</th><th>準委任契約</th></tr></thead>
+            <tbody>
+              <tr><td>民法上的定位</td><td>第 632 条「仕事の完成」</td><td>第 656 条「事務の処理」</td></tr>
+              <tr><td>完成义务</td><td><strong>有</strong>。做不完＝违约</td><td><strong>无</strong>。负<ruby>善管注意義務<rt>ぜんかんちゅういぎむ</rt></ruby>（以专家应有的注意去做）</td></tr>
+              <tr><td>报酬的对价</td><td>成果物的完成</td><td>投入的工数・履行的业务</td></tr>
+              <tr><td>契約不適合責任<br>（旧称 瑕疵担保責任）</td><td><strong>有</strong>。交付后发现不符合约定，要负责修补</td><td>无（但故意・过失导致的损害仍需负责）</td></tr>
+              <tr><td>指挥命令权</td><td colspan="2" style="text-align:center"><strong>两者都一样：発注者不得直接指挥受注者的员工</strong>（违反则构成偽装請負）</td></tr>
+              <tr><td>适合的工程</td><td>仕様已固定之后：詳細設計・製造・単体テスト</td><td>仕様尚未固定：企画・要求定義・<strong>要件定義</strong>、運用保守</td></tr>
+              <tr><td>发生变更时</td><td>原则上要签変更契約（追加費用）</td><td>工数增加即费用增加，相对柔软</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>为什么要件定義是準委任</h3>
+        <p>因为<strong>「要件定義の完成」在开始时无法定义</strong>。要做多少张業務フロー図、要开几次ヒアリング、机能有 80 个还是 200 个——这些正是要件定義这项工作要<em>查出来</em>的答案。在还不知道答案时承诺「一定完成」，等于赌博。</p>
+        <p>反过来，基本設計以降之所以能用請負：要件定義書已经签字了，「要做什么」是确定的，剩下的是「做多少工时」的估算问题——这才谈得上承诺完成。</p>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 <ruby>多段階契約<rt>ただんかいけいやく</rt></ruby>：IPA 的推荐做法</p>
+          <p>IPA（情報処理推進機構）发布的《モデル取引・契約書》推荐<strong>按工程分段签约</strong>：要件定義（準委任）→ 基本設計以降（請負）。先做完要件定義，拿着确定的要件再谈后续的金额与工期。<br>与之相对的是<strong>一括請負</strong>——全工程一次性总价承包。它对客户很省心，对ベンダー是地狱：在要件还没定的时候把总额锁死，之后每一个「ついでにこれも」都只有两条路——自己吞下，或者撕破脸。日本大型系统开发的著名诉讼，大半根子在这里。</p>
+        </div>
+
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚨 <ruby>偽装請負<rt>ぎそううけおい</rt></ruby>：现场最容易踩的法律红线</p>
+          <p>合同写的是請負／準委任，实际却由発注者直接对受注者的员工下达指示、管理出勤、安排具体作业——这叫偽装請負，违反劳动者派遣法。<strong>「客先常駐で、客のPMから直接タスクを振られる」是最典型的灰色地带。</strong><br>防线只有一条：<strong>窓口一本化</strong>。客户的要求先到自社的PM／PL，再由自社向成员分配。这也正好是体制图里那条绿线存在的理由——它同时是法律防线和スコープ防线。</p>
+        </div>
+
+        <h2>亲手判一判：这活到底该谁负责</h2>
+        <p>下面的判定器把「工程 × 契约形态 × 你的立场」三者组合起来。先自己想一个答案，再切换看看——特别注意「請負」和「準委任」在同一个工程下，责任的落点差多少。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 この作業、誰の責任？判定器</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一个工程，<strong>準委任</strong>下受注者只负「以专家的注意去做」的义务、成果由双方共同承担；<strong>請負</strong>下受注者负「完成」义务并承担契約不適合責任。而无论哪种契约，<strong>発注者都不能直接指挥受注者的员工</strong>——那是偽装請負。</p></noscript>
+            <div class="qz-group">
+              <span class="qz-label">工程</span>
+              <button type="button" class="qz-chip" data-dim="phase" data-val="要件定義" aria-pressed="true">要件定義</button>
+              <button type="button" class="qz-chip" data-dim="phase" data-val="基本設計" aria-pressed="false">基本設計</button>
+              <button type="button" class="qz-chip" data-dim="phase" data-val="製造" aria-pressed="false">詳細設計・製造</button>
+              <button type="button" class="qz-chip" data-dim="phase" data-val="テスト" aria-pressed="false">結合テスト以降</button>
+            </div>
+            <div class="qz-group">
+              <span class="qz-label">契約形態</span>
+              <button type="button" class="qz-chip" data-dim="contract" data-val="準委任" aria-pressed="true">準委任</button>
+              <button type="button" class="qz-chip" data-dim="contract" data-val="請負" aria-pressed="false">請負</button>
+            </div>
+            <div class="qz-group">
+              <span class="qz-label">あなた</span>
+              <button type="button" class="qz-chip" data-dim="role" data-val="発注者" aria-pressed="false">発注者（情シス）</button>
+              <button type="button" class="qz-chip" data-dim="role" data-val="元請け" aria-pressed="true">元請けSE</button>
+              <button type="button" class="qz-chip" data-dim="role" data-val="二次請け" aria-pressed="false">二次請けSE</button>
+            </div>
+            <div class="qz-out" id="qz-out" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h2>商流与契约，怎么改变你每天的判断</h2>
+        <p>知道了以上这些，落到 SE 的日常上是四个非常具体的动作：</p>
+        <ol>
+          <li><strong>準委任的要件定義，「什么时候算做完」要自己划线。</strong>没有完成义务不等于可以无限期做下去——契约里会写作业期间与投入工数。所以要件定義的<ruby>完了判定基準<rt>かんりょうはんていきじゅん</rt></ruby>必须在开始时就和客户约定（第 9 章）。</li>
+          <li><strong>請負的基本設計，写多写少都是钱。</strong>写得不够，製造阶段的返工由你承担（契約不適合責任）；写得过细，工数超支也由你承担。第 10 章会给出「写到哪一层刚好」的判断线。</li>
+          <li><strong>身处二次請け时，主动去要「为什么」。</strong>背景信息在商流里会自然衰减。拿不到背景就照字面实现，是返工的头号原因。要不到就写进<ruby>前提条件<rt>ぜんていじょうけん</rt></ruby>（第 8 章）：「〜という前提で設計している」。</li>
+          <li><strong>客户现场直接被要求追加功能时，答案永远是「一旦持ち帰ります」。</strong>这不是推诿，是三件事的合规做法：避免偽装請負、走変更管理、保护自己的工数。第 3 章会给出完整话术。</li>
+        </ol>
+
+        <h2>成果物样例</h2>
+        <p>本章对应的成果物是<strong>体制図</strong>与<strong>契約体系表</strong>，通常收录在プロジェクト計画書与要件定義書的「実施体制」章节里。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>プロジェクト実施体制・契約体系（要件定義書 第 10 章 抜粋）</span><span class="kb-doc-id">DOC-101 / v1.0</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>区分</th><th>組織 / 会社</th><th>役割</th><th>氏名</th><th>役職</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="4">発注者</td><td>山田製作所 経営企画室</td><td>システムオーナー（最終決裁）</td><td>佐藤</td><td>執行役員</td></tr>
+                <tr><td>山田製作所 情報システム部</td><td>プロジェクト責任者・<strong>窓口</strong></td><td>鈴木</td><td>部長</td></tr>
+                <tr><td>山田製作所 情報システム部</td><td>実務担当</td><td>田中</td><td>主任</td></tr>
+                <tr><td>山田製作所 経理部</td><td>業務主管（業務要件の決定）</td><td>高橋</td><td>課長</td></tr>
+                <tr><td rowspan="3">受注者</td><td>あおぞらシステムズ</td><td>PM（QCD 責任・対外窓口）</td><td>伊藤</td><td>課長</td></tr>
+                <tr><td>あおぞらシステムズ</td><td>PL / SE（要件定義・基本設計）</td><td>渡辺</td><td>主任</td></tr>
+                <tr><td>みらいテック（協力会社）</td><td>SE（画面・帳票設計支援）</td><td>山本</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead><tr><th>工程</th><th>契約形態</th><th>期間</th><th>主な成果物</th></tr></thead>
+              <tbody>
+                <tr><td>要件定義</td><td>準委任</td><td>2026/09/01 – 2026/11/30</td><td>要件定義書、業務フロー図、機能一覧、非機能要件定義書</td></tr>
+                <tr><td>基本設計</td><td>請負</td><td>2026/12/01 – 2027/02/28</td><td>基本設計書（方式・画面・データ・IF・バッチ・帳票）</td></tr>
+                <tr><td>詳細設計〜総合テスト</td><td>請負（別途見積）</td><td>2027/03/01 – 2027/09/30</td><td>詳細設計書、プログラム、各テスト仕様書・報告書</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 発注者から受注者要員への直接の作業指示は行わない。すべての依頼・指示は 発注者窓口（鈴木部長）→ 受注者PM（伊藤課長）の経路で行う。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 「要件定義は準委任です」＝ 要件定義書は作らなくていい？</p>
+          <p><strong>答案：错。</strong>準委任没有的是「完成の義務」，不是「成果物」。<br>実際の契約書には「作業内容」として『業務フロー図の作成』『要件定義書の作成』が明記され、期間と投入工数も書かれる。差别在于：请负下「要件定義書が未完成＝債務不履行」，而準委任下「専門家として適切に作業した結果、想定より機能が多く期間内に書ききれなかった」时，双方要重新协商期间与工数——而不是单方违约。<br><strong>现场含义</strong>：準委任＝「进度晚了可以谈」，不是「可以不交东西」。反过来，你也有义务在发现做不完的<em>那一刻</em>就报告（善管注意義務），拖到最后一天才说，就是失职。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 客户的部长在走廊上说「ついでに承認者の代理機能も入れといて」</p>
+          <p><strong>正确动作三连：</strong><br>①<strong>当场不接</strong>：「ありがとうございます。一旦持ち帰って、PM と影響を確認のうえご回答します。」——不说 YES 也不说 NO。<br>②<strong>回去写下来</strong>：记入課題管理表，注明起票日・提出者・内容（第 3 章）。<br>③<strong>走正式路径</strong>：由自社PM向客户窗口（情シス）提出工数・日程・费用的影响，走変更管理（第 8 章）。<br><strong>为什么不能当场答应</strong>：三重风险叠加——(a) 越过正式窗口接受指示，有偽装請負嫌疑；(b) 「代理承認」牵动権限设计、画面、履歴表结构，绝不是「ついで」；(c) 口头承诺无法追溯，将来变成「言った言わない」。<br>注意：拒绝的不是<em>需求</em>，而是<em>路径</em>。需求本身完全可以是好需求。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 一括請負で受けた案件、要件定義で工数が当初見積の 2 倍に</p>
+          <p><strong>错在哪：</strong>错不在估算能力，而在<strong>契约结构</strong>。全工程一括請負意味着在「要做什么」还未知的时点锁死了总价与工期。之后每一次「実はこの業務もありまして」都只有三种结局：自己吞（赤字）、拒绝（关系破裂）、上法庭。<br><strong>正确做法</strong>：按 IPA モデル取引・契約書 分段签约——先只签要件定義（準委任），要件确定后再基于确定的機能一覧估算基本設計以降的金额与工期（第 8 章的見積四法）。<br><strong>已经签了怎么办</strong>：那就把<ruby>前提条件<rt>ぜんていじょうけん</rt></ruby>与<ruby>スコープ<rt>すこーぷ</rt></ruby>写到极致细——明确写出「やらないこと」，并在每次追加要求时立刻发出変更管理票。这是唯一的止血办法。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>下列工作，通常适合用請負契約还是準委任契約？①要件定義　②製造（コーディング）　③運用保守　④結合テスト</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①準委任　②請負　③準委任　④請負</p>
+            <p><strong>解析</strong>：判断的唯一标准是<strong>「开始时能不能定义『完成』」</strong>。①要件定義的产出量本身就是要查出来的答案，无法事先承诺完成 → 準委任。②要件与设计已确定，做多少工作量算得出来 → 請負。③运维是「持续提供服务」，没有终点，能承诺的只有响应时间等服务水准（SLA） → 準委任。④测试项目基于已确定的设计书导出，完成条件明确（全項目消化・不具合ゼロ） → 請負。<br>补充：現場でも「テストは準委任」の案件はある。バグ修正の工数が読めない場合など、実務上の判断で分かれることはある——契約は法律の型に業務を当てはめる作業であって、機械的に決まるわけではない。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>请说出以下三者的区别：ユーザー部門 / 情報システム部 / システムオーナー。在要件定義阶段，「業務のあるべき姿」应该主要问谁？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：システムオーナー＝出钱并对投资负责的人（経営層）；情報システム部＝公司内的IT担当，是项目窗口与预算管理者；ユーザー部門＝实际使用系统的业务部门。「業務のあるべき姿」要问<strong>ユーザー部門</strong>（本案例中的経理部与各部門の申請者/承認者）。</p>
+            <p><strong>解析</strong>：这是新人最常犯的错——把「窓口＝答案的持有者」。情シス是<em>正式通道</em>，但他们往往不了解経理部每月末具体在人肉核对什么。只跟情シス开会写出来的要件，几乎必然在受入テスト阶段被业务部门推翻。<br>正确做法：<strong>通道走情シス，内容问ユーザー部門</strong>——即「請情シス安排与経理部的ヒアリング」，而不是绕过情シス直接约経理部（那会破坏窗口一本化）。至于システムオーナー，你只需要从他那里拿到<strong>目的与判断基準</strong>：「为什么现在要做这个」——这一句将来是所有スコープ争议的裁决依据。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>「客先に常駐していて、客先のPMから毎朝直接タスクを指示されている」——契約形態が請負である場合、何が問題か。どう是正すべきか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<ruby>偽装請負<rt>ぎそううけおい</rt></ruby>に該当するおそれがある（労働者派遣法違反）。是正は「指揮命令系統を自社に戻す」こと。</p>
+            <p><strong>解析</strong>：請負・準委任では、<strong>受注者の要員に対する指揮命令は受注者自身が行う</strong>のが大原則。発注者が直接「今日はこれをやって」と指示すると、実態は労働者派遣なのに派遣契約を結んでいない状態＝偽装請負になる。<br>是正の具体策：① 発注者からの依頼はすべて受注者PM／PLを経由させる（窓口一本化）；② 作業指示はタスク単位ではなく<strong>成果物単位</strong>で受ける（「この設計書を今週末までに」であって「今日はこの作業を」ではない）；③ 勤怠管理・席の割当・作業手順の決定を発注者に握らせない。<br>実務的な注意：これは「客の言うことを聞くな」という話ではない。<strong>誰が指示を出すか</strong>という形式の問題であり、その形式こそが後の責任分界とスコープ管理を守る。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>你是二次請けのSE。渡ってきた基本設計書に「経費の締め日は月末とする」とだけ書かれている。実装は可能だが、気になることがある。何をすべきか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：そのまま実装せず、<strong>「なぜ月末なのか」「月末が土日祝の場合はどうなるのか」を元請け経由で確認する</strong>。回答が得られない場合は、自分の判断を<strong>前提条件として明記</strong>したうえで実装する。</p>
+            <p><strong>解析</strong>：商流を下るほど「なぜ」が消える（本章の図）。「月末」という一語には少なくとも三つの未定義がある——(a) 月末日が休日のときは前倒しか後ろ倒しか、(b) 締め時刻は何時か（23:59？ 17:00？）、(c) 締め後に提出された申請はどう扱うか（翌月扱い／エラー）。<br>これらは業務ルールであって技術判断ではない。勝手に決めると、受入テストで「経理の運用と違う」と言われて作り直しになる——しかも請負なら費用は自社持ち。<br><strong>実務のコツ</strong>：質問は「どうしますか？」ではなく<strong>「〜と理解していますが、相違ありませんか？」</strong>の形で出す。相手（多忙な元請け・その先の客）は、ゼロから考えるより Yes/No で答えるほうが圧倒的に速く返してくれる。この形式は第 3 章の QA表 で本格的に扱う。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>要件定義（準委任、3 か月）を開始して 1 か月半。ヒアリングを進めるうち、当初「経費精算のみ」と聞いていた対象業務に、<strong>出張申請と仮払金の精算</strong>が密接に絡んでいることが判明した。これらを含めると要件定義だけで想定の 1.5 倍の期間が必要になりそうだ。あなた（元請けSE）はどう動くか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案の骨子</strong>：① 判明した<strong>その時点で</strong>PMに報告する　② 事実・影響・選択肢を整理して客側に提示する　③ 客に「スコープを広げて期間延長」か「今回は対象外として次期対応」かを<strong>決めてもらう</strong>　④ 決定を議事録に残し、必要なら契約の変更手続きへ。</p>
+            <p><strong>解析</strong>：ここでの誤答パターンは三つある。<br>(1)<strong>黙って自分の残業で吸収する</strong>——最悪。準委任の善管注意義務には「問題を認識したら速やかに報告する」ことが含まれる。隠して後で破綻すると、期間延長の交渉余地すら失う。<br>(2)<strong>「スコープ外です」と切り捨てる</strong>——業務としては繋がっているので、切ると受入テストや稼働後に必ず問題化する。切るなら「切ったことによる影響（仮払金は当面Excel運用継続）」を明示して合意する必要がある。<br>(3)<strong>自分でスコープを決める</strong>——スコープを決めるのは金を出す側。あなたの仕事は<strong>判断材料を揃えて選ばせること</strong>。<br>提示すべき材料は：追加業務の内容と規模、期間・工数への影響（数字）、含めない場合の業務上のリスク、そして選択肢（A: 全部含める／B: 今回は経費精算のみ、仮払は次期／C: 仮払は現行運用のまま連携だけ考慮）。<br><strong>準委任だからこそ</strong>この相談が成立する点にも注目してほしい。一括請負だったら、この 1 か月半で判明した事実は「追加費用ゼロで飲むか、揉めるか」の二択になっていた。契約形態は、こういう場面で効いてくる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>本章の体制図で、ユーザー部門（経理部）から SE への直接依頼を「赤い破線＝事故の元」と書いた。しかし現実には、経理部と直接話さないと業務の実態は分からない。この矛盾をどう解くか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>「情報を取りにいく経路」と「決定を通す経路」を分けて考える</strong>。ヒアリングで経理部と直接話すのは必須。禁じられているのは、そこで出た要望を<strong>そのまま決定として取り込むこと</strong>。</p>
+            <p><strong>解析</strong>：正しい運用は次の形になる。<br>① 情シス（窓口）に依頼して、経理部へのヒアリングを<strong>正式に設定してもらう</strong>——窓口は「通さない」ものではなく「通す」もの。可能なら情シス担当者にも同席してもらう。<br>② ヒアリングの場で出た要望は、その場では「承りました、検討します」に留める。<br>③ 議事録にまとめ、<strong>情シス経由で正式に確認・承認をもらう</strong>（第 3 章の確認依頼）。<br>④ 部門間で要望が衝突した場合（経理部は厳格な入力チェックを求め、営業部門は簡単に出したい、など）、その調整は<strong>発注者側の仕事</strong>。あなたが裁定してはいけない。両論を整理して情シスに投げ、決めてもらう。<br>つまり窓口一本化とは「現場と話すな」ではなく、<strong>「決定は必ず一箇所を通す」</strong>という意味。この区別が付いていない SE は、「経理部と合意したのに、後から情シスに『そんな話は聞いていない』と言われる」という典型的な事故を起こす。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたの会社が受けている（あるいは過去に関わった）案件を一つ思い浮かべ、本章の体制図と契約体系表を実際に書き出してみよう。そのうえで次の三つに答えること：①「唯一の正式窓口」は誰か、実際に機能しているか　② 商流は何次まであるか、あなたは何次か　③ 各工程の契約形態は何か、それは工程の性質に合っているか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>この問題に唯一の正解はない。</strong>自己点検の観点を挙げる。</p>
+            <p><strong>①窓口について</strong>：「公式には情シス、実際は各部門から直接LINEやメールが飛んでくる」という状態なら、それは<strong>すでに事故が起きている</strong>状態。まずは飛んできた依頼を課題管理表に集約するところから始めるとよい（第 3 章）。窓口が機能していない案件は、ほぼ例外なく終盤でスコープが破綻する。</p>
+            <p><strong>②商流について</strong>：自分が二次以下にいるなら、「なぜ」の情報が構造的に届いていないはず。設計書を読んで<strong>「意図が書かれていない箇所」を数えてみる</strong>とよい。数が多いほど、その案件の返工リスクは高い。逆に自分が元請けなら、それは<strong>あなたが下流に書き残さなかった意図の数</strong>でもある。</p>
+            <p><strong>③契約形態について</strong>：よくある不整合は二つ。(a)<strong>要件定義が請負</strong>——営業が「要件定義もコミコミで」と受けてしまった案件。この場合、完了判定基準を契約書か議事録で早期に固めるのが唯一の防衛策。(b)<strong>製造まで含めた一括請負なのに要件が固まっていない</strong>——最も危険。前提条件と「やらないこと」を文書化し、変更管理を初日から回す。<br>この演習の目的は、日々「なんとなくおかしい」と感じている摩擦が、<strong>構造から必然的に生じている</strong>ことを見えるようにすること。構造が見えれば、個人の努力で耐えるべきものと、仕組みで直すべきものが区別できる。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 日本SI的体制永远是左右两半（発注者／受注者）＋一条唯一的正式窗口，绿线之外的一切「口头追加」都是事故的起点；② <strong>発注者侧通常没有能写要件的人</strong>，需求实质由ベンダーのSE代劳再请客户确认——这是議事録・QA表・サインオフ这一整套作法的根源；③ 多重下請け每下一层，单价被抽一次，「なぜ」也衰减一次，所以設計書必须写到「不认识客户的人也能照做」；④ 請負＝完成义务＋契約不適合責任，準委任＝善管注意義務、无完成义务；分水岭是「开始时能否定义『完成』」，所以要件定義多为準委任、基本設計以降为請負；⑤ 无论哪种契约，発注者都不能直接指挥受注者员工——窓口一本化既是法律防线也是スコープ防线。<br><strong>下一章预告</strong>：知道了牌桌上有谁，接下来看这场游戏的流程表。V字模型把开发切成十来个工程，每个工程的输入输出是什么、你现在站在哪一格、以及「要求」「要件」「仕様」这三个看起来差不多的词，为什么在合同和法庭上完全不是一回事。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./00-大纲与学习路线.html">← 大纲与学习路线</a>
+          <a href="./02-V字模型与工程.html">第 2 章 V字模型与工程：要求・要件・仕様 的分界 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var out = document.getElementById("qz-out");
+      if (!out) return;
+      var state = { phase: "要件定義", contract: "準委任", role: "元請け" };
+
+      var MAIN = {
+        "要件定義|準委任": {
+          lead: "本来あるべき組み合わせ。IPA モデル取引・契約書の推奨形。",
+          who: "発注者と受注者の共同作業。ただし文書化の手を動かすのは受注者SE。",
+          duty: "受注者は善管注意義務のみ。「要件定義書を必ず完成させる」義務は負わない。",
+          risk: "終わりが見えず期間が延びる。完了判定基準を最初に決めていないと永遠に終わらない。",
+          ok: true
+        },
+        "要件定義|請負": {
+          lead: "危険な組み合わせ。営業が「要件定義もコミコミで」と受けた案件で発生。",
+          who: "受注者が完成責任を負うが、内容を決めるのは発注者という捻れが生じる。",
+          duty: "受注者に完成義務。客が決めてくれないせいで終わらなくても、契約上は受注者の責任。",
+          risk: "客の意思決定待ちで遅延 → それでも違約になる。前提条件と完了判定基準の文書化が唯一の防衛。",
+          ok: false
+        },
+        "基本設計|準委任": {
+          lead: "あり得るが少数派。要件が固まりきらないまま設計に入る時に選ばれる。",
+          who: "受注者が主体。発注者は画面・帳票のレビューと承認を担う。",
+          duty: "完成義務なし。工数ベースの精算になる。",
+          risk: "「どこまで書けば設計完了か」が曖昧になりやすい。設計書一覧を先に合意しておくこと。",
+          ok: true
+        },
+        "基本設計|請負": {
+          lead: "標準的な組み合わせ。要件定義書の確定を前提に金額と工期を確定する。",
+          who: "受注者が主体で作成、発注者がレビュー・承認。",
+          duty: "受注者に完成義務＋契約不適合責任。設計漏れによる製造の手戻りは自社負担。",
+          risk: "確定した要件の外側の要望は、すべて変更管理へ。ここを緩めると赤字が確定する。",
+          ok: true
+        },
+        "製造|準委任": {
+          lead: "SES・準委任常駐でよく見る形。人月で人手を提供する契約。",
+          who: "受注者要員が作業するが、完成の約束はしていない。",
+          duty: "善管注意義務。「指定された作業を専門家として遂行する」ところまで。",
+          risk: "実態が「客の指示で日々作業」になりがちで、偽装請負に最も近い領域。指揮命令は必ず自社経由に。",
+          ok: true
+        },
+        "製造|請負": {
+          lead: "最も素直な組み合わせ。仕様が確定しているので完成を約束できる。",
+          who: "受注者が完全に主体。発注者は成果物の検収のみ。",
+          duty: "完成義務＋契約不適合責任。バグは受注者負担で修正。",
+          risk: "設計書の曖昧さが、そのまま自社の赤字になる。だから基本設計の品質が効いてくる。",
+          ok: true
+        },
+        "テスト|準委任": {
+          lead: "バグ修正の工数が読めない場合に選ばれることがある。",
+          who: "受注者がテストを実施、発注者は結果を確認。受入テストは発注者主体。",
+          duty: "善管注意義務。「テストを適切に実施する」まで。",
+          risk: "「品質が十分か」の判定基準が曖昧になる。合格基準（消化率・不具合密度）を先に合意すること。",
+          ok: true
+        },
+        "テスト|請負": {
+          lead: "標準的。テスト項目は設計書から導出されるので完成を定義できる。",
+          who: "結合・総合テストは受注者主体、受入テストは発注者主体（ここは契約の外に近い）。",
+          duty: "完成義務。全項目消化と合格基準の充足まで。",
+          risk: "受入テストで「要件と違う」と言われた時、根拠になるのは要件定義書だけ。第 9 章の伏線はここに落ちる。",
+          ok: true
+        }
+      };
+
+      var ADVICE = {
+        "発注者|要件定義": "あなたが決めないと誰も決められない。特に業務ルールと優先順位は、ベンダーに丸投げできない領域。",
+        "発注者|基本設計": "画面と帳票のレビューはあなたの最大の仕事。ここで承認したものが、そのまま出来上がってくる。",
+        "発注者|製造": "受注者要員へ直接指示しないこと。依頼は必ず受注者PM経由で。",
+        "発注者|テスト": "受入テストはベンダーに任せず自分でやる。要件定義書を片手に、業務が回るかを見る。",
+        "元請け|要件定義": "完了判定基準を初日に決め、決まったことを毎回議事録で確定させる。ここが緩いと全工程が緩む。",
+        "元請け|基本設計": "「どこまで書けば製造できるか」の線を意識する。書き足りない分は自社の赤字、書きすぎも自社の赤字。",
+        "元請け|製造": "下請けに「なぜ」を渡す責任があるのはあなた。設計書に意図を残すこと。",
+        "元請け|テスト": "不具合が要件起因か設計起因か製造起因かを切り分けられるのは、トレーサビリティがある案件だけ。",
+        "二次請け|要件定義": "背景情報が届いていない前提で動く。分からないことは「〜という理解でよいか」の形で元請けへ投げる。",
+        "二次請け|基本設計": "設計書の曖昧箇所は、実装前に必ず質問票へ。勝手に解釈した箇所は、ほぼ確実に手戻りになる。",
+        "二次請け|製造": "客先常駐でも、指示は自社の上長から受ける。これは自分を守るための線。",
+        "二次請け|テスト": "「仕様通りです」と言えるのは、仕様が文書で存在する場合だけ。口頭で決まった仕様は必ず文書化を依頼する。"
+      };
+
+      function row(key, val, cls) {
+        var r = document.createElement("div");
+        r.className = "qz-row";
+        var k = document.createElement("div");
+        k.className = "qz-key";
+        k.textContent = key;
+        var v = document.createElement("div");
+        v.className = "qz-val" + (cls ? " " + cls : "");
+        v.textContent = val;
+        r.appendChild(k);
+        r.appendChild(v);
+        return r;
+      }
+
+      function render() {
+        var m = MAIN[state.phase + "|" + state.contract];
+        var advice = ADVICE[state.role + "|" + state.phase];
+        out.textContent = "";
+        var head = document.createElement("p");
+        head.className = "qz-flag " + (m.ok ? "qz-ok" : "qz-bad");
+        head.style.margin = "0 0 8px";
+        head.textContent = (m.ok ? "◯ " : "⚠ ") + m.lead;
+        out.appendChild(head);
+        out.appendChild(row("主体は誰か", m.who));
+        out.appendChild(row("負う義務", m.duty));
+        out.appendChild(row("典型的な地雷", m.risk));
+        out.appendChild(row("あなたの一線", advice));
+        out.appendChild(row("指揮命令", "契約形態を問わず、発注者から受注者要員への直接指示は不可（偽装請負）。"));
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll(".qz-chip"), function (btn) {
+        btn.addEventListener("click", function () {
+          var dim = btn.getAttribute("data-dim");
+          state[dim] = btn.getAttribute("data-val");
+          Array.prototype.forEach.call(
+            document.querySelectorAll('.qz-chip[data-dim="' + dim + '"]'),
+            function (b) { b.setAttribute("aria-pressed", String(b === btn)); }
+          );
+          render();
+        });
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

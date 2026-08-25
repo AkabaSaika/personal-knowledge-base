@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>09 要件定義書：目次、评审与合意 · 知识库</title>
+  <meta name="kb:summary" content="要件定義書的标准目次、贯穿要求到测试的追溯矩阵、评审会的分割与观点设计、サインオフ与版数管理，以及完了判定基準与受入观点的埋种。">
+  <meta name="kb:tags" content="上流工程,要件定义书,目次,追溯性,矩阵,评审,签字,版数管理,受入测试,slgc,yjdys,zsx">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：セルフチェック */
+    .ck-group { margin-bottom: 12px; }
+    .ck-cat { font-size: 0.78rem; font-weight: 700; color: var(--kb-fg-muted); margin: 0 0 5px; }
+    .ck-item {
+      display: flex; align-items: flex-start; gap: 8px; padding: 4px 6px;
+      border-radius: 6px; cursor: pointer; font-size: 0.85rem; line-height: 1.5;
+    }
+    .ck-item:hover { background: var(--kb-surface-alt); }
+    .ck-item input { margin-top: 4px; flex: 0 0 auto; }
+    .ck-must {
+      display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: 1px;
+      background: var(--kb-danger-soft); color: var(--kb-danger); border: 1px solid var(--kb-danger);
+    }
+    .ck-bar { height: 12px; border-radius: 6px; background: var(--kb-surface-alt); overflow: hidden; margin: 10px 0 6px; }
+    .ck-bar i { display: block; height: 100%; background: var(--kb-accent); transition: width 0.2s; }
+    .ck-verdict {
+      border-left: 3px solid var(--kb-danger); background: var(--kb-danger-soft);
+      padding: 10px 13px; font-size: 0.87rem; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+    }
+    .ck-verdict.ok { border-left-color: var(--kb-ok); background: var(--kb-ok-soft); }
+    .ck-verdict.warn { border-left-color: var(--kb-warn); background: var(--kb-warn-soft); }
+    .ck-verdict p { margin: 0 0 5px; }
+    .ck-verdict p:last-child { margin-bottom: 0; }
+    .ck-verdict ul { margin: 4px 0 0; padding-left: 1.2em; font-size: 0.83rem; }
+    .ck-btns { display: flex; gap: 8px; margin-bottom: 10px; }
+    .ck-btn {
+      font: inherit; font-size: 0.8rem; padding: 4px 12px; cursor: pointer;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .ck-btn:hover { border-color: var(--kb-accent); }
+    /* トレーサビリティ表の強調 */
+    .tr-hi { background: var(--kb-accent-soft); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 9 章 · 要件定義書：目次、评审与合意</h1>
+        <p class="kb-lead">材料は全部揃った。この章は要件定義の総仕上げ——<strong>要件定義書</strong>という一冊にまとめ、レビューを通し、客に判子をもらうところまで。標準目次はどう構成されるのか、要求から受入テストまでを一本に貫く<ruby>トレーサビリティマトリクス<rt>要件追跡表</rt></ruby>とは何か、そして<ruby>サインオフ<rt>承認</rt></ruby>の瞬間に何が確定するのか。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出要件定義書の標準目次と各章の役割；② 作出トレーサビリティマトリクス，并用它做漏检出・影响分析・変更管理；③ 设计大规模レビュー的分割方式与观点分配；④ 说明サインオフ的合同意义与版数管理的做法；⑤ 定义要件定義の完了判定基準，并在要件と同时埋下受入テストの观点。</p>
+        </div>
+
+        <h2>判子を押した瞬間に、何が確定するのか</h2>
+        <p>要件定義書に承認印が押されると、三つのことが同時に起きる。</p>
+        <ul>
+          <li><strong>スコープが確定する。</strong>以降の追加・変更は変更管理（第 8 章）を通る。ここが曖昧なままだと、基本設計中ずっと要件の議論が続く。</li>
+          <li><strong>次工程の見積根拠が確定する。</strong>基本設計以降を請負で契約するなら、この一冊が金額の前提（第 1 章の多段階契約）。</li>
+          <li><strong>受入テストの判定基準が確定する。</strong>半年後、客が「これは違う」と言えるかどうかは、この一冊に書かれているかどうかで決まる（第 2 章の V 字）。</li>
+        </ul>
+        <p>逆に言えば、<strong>この三つが果たせない要件定義書は、承認されても意味がない</strong>。だから目次にも、レビューの回し方にも、全部理由がある。</p>
+
+        <h2>要件定義書の標準目次</h2>
+        <p>会社によって差はあるが、日本のSI現場で通用する構成はおおむね次のとおり。<strong>「この教材のどこでやったか」を併記した</strong>ので、第二部の総括として読んでほしい。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>内容</th><th>読者</th><th>本教材</th></tr></thead>
+            <tbody>
+              <tr><td>1. はじめに</td><td>本書の目的、位置づけ、対象読者、関連文書の一覧</td><td>全員</td><td>—</td></tr>
+              <tr><td>2. システム化の背景と目的</td><td>経営課題、現状の問題、システム化の目的と期待効果（数値）</td><td><strong>システムオーナー</strong></td><td>第 1・4 章</td></tr>
+              <tr><td>3. 対象業務</td><td>業務一覧、As-Is / To-Be 業務フロー、業務要件、業務ルール</td><td>ユーザー部門</td><td><strong>第 4 章</strong></td></tr>
+              <tr><td>4. 要求一覧</td><td>収集した要求、出典、優先度、対応する要件との対応</td><td>ユーザー部門・情シス</td><td>第 5 章</td></tr>
+              <tr><td>5. 機能要件</td><td>機能一覧、機能ごとの要件記述、権限マトリクス</td><td>情シス・ベンダー</td><td><strong>第 5・6 章</strong></td></tr>
+              <tr><td>6. 非機能要件</td><td>可用性・性能・運用保守・移行・セキュリティ・システム環境</td><td>情シス</td><td><strong>第 7 章</strong></td></tr>
+              <tr><td>7. システム構成（方針）</td><td>全体構成、他システムとの関連図、採用技術の方針</td><td>情シス</td><td>第 10 章で詳細化</td></tr>
+              <tr><td>8. 移行方針</td><td>移行対象データ、移行方式、並行稼働の要否</td><td>情シス・ユーザー部門</td><td>第 14 章で詳細化</td></tr>
+              <tr><td>9. 運用方針</td><td>運用時間、監視、バックアップ、問い合わせ体制</td><td>情シス</td><td>第 14 章で詳細化</td></tr>
+              <tr><td>10. 実施体制・スケジュール</td><td>体制図、役割分担、工程とマイルストーン</td><td>全員</td><td>第 1・8 章</td></tr>
+              <tr><td>11. スコープ・前提条件・制約条件</td><td>対象・対象外、前提、制約</td><td><strong>全員（最重要）</strong></td><td><strong>第 8 章</strong></td></tr>
+              <tr><td>12. 用語集</td><td>業務用語・システム用語の定義、使用しない同義語</td><td>全員</td><td>第 6 章</td></tr>
+              <tr><td>付録</td><td>機能一覧、権限マトリクス、業務フロー図、トレーサビリティマトリクス、課題管理表（残件）</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 「読者」の列が、この目次の設計思想</p>
+          <p>要件定義書は<strong>全員が全部読む文書ではない</strong>。システムオーナーは第 2 章と第 11 章だけ読む。経理部は第 3 章と第 5 章。情シスは全部だが重点は第 6・7・9 章。<br>だから<strong>章の順番は「読者ごとにまとまるように」並べる</strong>し、レビューも章ごとに読者を変えて回す（後述）。<br>そして最も重要なのは第 11 章（スコープ・前提・制約）——<strong>これだけは全員が必ず読む必要があり、かつ最も読まれない</strong>。だから要件定義書の説明会では、この章から先に説明するのが実務的なコツ。</p>
+        </div>
+
+        <h2>追溯矩阵：トレーサビリティマトリクス</h2>
+        <p><strong>要求 → 要件 → 機能 → 設計書 → テスト</strong> を一本の行で結んだ表。第 2 章の V 字模型を、図ではなく<strong>表として運用する</strong>ためのもの。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>トレーサビリティマトリクス（付録・抜粋）</span><span class="kb-doc-id">DOC-209 / v1.0</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>要求ID</th><th>要件ID</th><th>機能ID</th><th>基本設計書</th><th>結合テスト</th><th>受入テスト</th><th>状態</th></tr></thead>
+              <tbody>
+                <tr><td>R-002</td><td>F-010-02</td><td>F-010</td><td>画面設計書 SC-010 §4.2</td><td>IT-0112</td><td>UAT-014</td><td>—</td></tr>
+                <tr><td>R-002</td><td>F-010-03</td><td>F-010</td><td>画面設計書 SC-010 §4.3</td><td>IT-0113</td><td>UAT-015</td><td>—</td></tr>
+                <tr><td>R-003</td><td>F-022-01</td><td>F-022</td><td>画面設計書 SC-021 §3.1</td><td>IT-0140</td><td>UAT-021</td><td>—</td></tr>
+                <tr><td>R-003</td><td>F-023-01</td><td>F-023</td><td>データ設計書 §5（承認履歴）</td><td>IT-0141</td><td>UAT-022</td><td>—</td></tr>
+                <tr class="tr-hi"><td>R-005</td><td>F-015-02</td><td>F-015</td><td><strong>（該当なし）</strong></td><td>—</td><td>UAT-030</td><td><strong>⚠ 設計漏れ</strong></td></tr>
+                <tr><td>R-004</td><td>F-051-01</td><td>F-051</td><td>IF設計書 IF-001</td><td>IT-0210</td><td>UAT-040</td><td>—</td></tr>
+                <tr class="tr-hi"><td><strong>（該当なし）</strong></td><td>F-060-01</td><td>F-060</td><td>画面設計書 SC-060</td><td>IT-0150</td><td>—</td><td><strong>⚠ 要求に紐づかない</strong></td></tr>
+                <tr><td>—</td><td>N-P01</td><td>—</td><td>方式設計書 §7</td><td>—</td><td>ST-005（総合）</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 空欄・「該当なし」が出た行が、そのまま指摘事項になる。人間の注意力ではなく<strong>表の突き合わせ</strong>で漏れを見つけるのが目的。</p>
+          </div>
+        </div>
+
+        <p>この表が効く場面は四つ：</p>
+        <ol>
+          <li><strong>漏れの検出</strong>——上の表の黄色い 2 行。要件があるのに設計書が無い（設計漏れ）、機能があるのに要求に紐づかない（誰が何のために欲しかったのか不明）。第 2 章の例題 2 の帳票の小計事件は、この表があれば設計レビューで機械的に見つかった。</li>
+          <li><strong>影響分析</strong>——「R-003 を変更したい」と言われたとき、影響する要件・機能・設計書・テストが一目で出る。第 8 章の変更管理票の「影響範囲」欄は、この表から書く。</li>
+          <li><strong>受入テストの根拠</strong>——受入テストの各ケースが、どの要件を検証しているかが明示される。「なぜこのテストをするのか」に答えられる。</li>
+          <li><strong>稼働後の保守</strong>——「なぜこの仕様なのか」を要求まで遡れる。<strong>数年後、担当者が全員入れ替わったときに効く</strong>。</li>
+        </ol>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 完璧なマトリクスを作ろうとしない</p>
+          <p>トレーサビリティは理想を追うと膨大な保守コストになる。<strong>設計変更のたびに表を更新する運用が回らず、半年で実態と乖離した表が残る</strong>——これが最もよくある失敗。<br>現実的な落としどころ：<strong>①要求↔要件↔機能までは必ず維持する（要件定義書の中で完結する）②設計書・テストへの対応は、機能ID を設計書名とテストケースIDに埋め込むことで代替する</strong>（設計書名を「SC-010_経費申請登録」、テストケースIDを「IT-0112（F-010-02）」とする）。<br>これなら表を別に保守しなくても、grep で追跡できる。<strong>道具は運用が回る形にして初めて価値を持つ。</strong></p>
+        </div>
+
+        <h2>亲手查一遍：要件定義書セルフチェック</h2>
+        <p>下面 24 项是要件定義書提交评审前的自查表。<strong>赤色の「必須」項目は、一つでも欠けるとレビューに出す資格が無い</strong>。你现在手上的文档能过几项？</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 要件定義書セルフチェック：これ、レビューに出せますか</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：レビュー提出の必須条件は——<strong>①スコープの対象外が代替手段つきで明記　②全要件に主語がある　③全要件が検証可能（測定条件つきの数値を含む）　④非機能要件の六大項目が埋まっている　⑤権限マトリクスがある　⑥用語集がある　⑦未決事項が課題管理表で期限つきに管理されている　⑧完了判定基準が合意されている</strong>。これらが欠けたまま承認された要件定義書は、後工程で必ず破綻する。</p></noscript>
+            <div class="ck-btns">
+              <button type="button" class="ck-btn" id="ck-all">全部チェック</button>
+              <button type="button" class="ck-btn" id="ck-none">リセット</button>
+            </div>
+            <div id="ck-list"></div>
+            <div class="ck-bar"><i id="ck-bar-i" style="width:0%"></i></div>
+            <div class="ck-verdict" id="ck-verdict" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h2>大規模レビューの回し方</h2>
+        <p>要件定義書は 100 ページを超えることも珍しくない。第 3 章のレビュー会の作法を、この規模に適用するには工夫が要る。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工夫</th><th>やり方</th><th>理由</th></tr></thead>
+            <tbody>
+              <tr><td><strong>分割する</strong></td><td>第 3 章（業務）、第 5 章（機能）、第 6 章（非機能）を別々の回に分ける</td><td>100 ページを一度に見せると、誰も読んでこない</td></tr>
+              <tr><td><strong>読者を変える</strong></td><td>業務の回は経理部中心、非機能の回は情シス中心</td><td>関心のない章に付き合わされると、次から出席率が落ちる</td></tr>
+              <tr><td><strong>観点を指定する</strong></td><td>「例外業務が漏れていないか」「現行の運用と食い違わないか」</td><td>指定しないと誤字しか指摘されない（第 3 章）</td></tr>
+              <tr><td><strong>段階を分ける</strong></td><td>①ウォークスルー（説明会）→②各自レビュー→③指摘検討会</td><td>その場で読ませて意見を求めるのは無理。<strong>持ち帰り期間を必ず取る</strong></td></tr>
+              <tr><td><strong>差分を示す</strong></td><td>第 2 版以降は、前版からの変更箇所を明示</td><td>全部読み直させると、実際には誰も読まない</td></tr>
+              <tr><td><strong>実務担当者を呼ぶ</strong></td><td>課長だけでなく、日々作業している人を同席させる</td><td>実態を知っているのはその人。<strong>沈黙していたら指名で聞く</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>サインオフと版数管理</h2>
+        <p>承認は「読みました」ではなく「<strong>これで次工程に進んでよい</strong>」の意思表示。だから承認欄の近くに、その意味を明記する。</p>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>要件定義書 表紙・改訂履歴・承認欄</span><span class="kb-doc-id">DOC-200 / v1.1</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <tbody>
+                <tr><th>文書名</th><td colspan="3">経費精算システム再構築プロジェクト　要件定義書</td></tr>
+                <tr><th>文書番号</th><td>DOC-200</td><th>版数</th><td><strong>v1.1</strong></td></tr>
+                <tr><th>作成</th><td>あおぞらシステムズ 渡辺</td><th>作成日</th><td>2026/11/25</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead><tr><th>版数</th><th>日付</th><th>改訂内容</th><th>改訂者</th><th>承認者</th></tr></thead>
+              <tbody>
+                <tr><td>v0.1</td><td>2026/10/31</td><td>初版（社内レビュー用）</td><td>渡辺</td><td>—</td></tr>
+                <tr><td>v0.9</td><td>2026/11/18</td><td>レビュー指摘 42 件反映</td><td>渡辺</td><td>—</td></tr>
+                <tr><td>v1.0</td><td>2026/11/30</td><td>承認版</td><td>渡辺</td><td>佐藤（システムオーナー）</td></tr>
+                <tr><td><strong>v1.1</strong></td><td>2027/01/29</td><td><strong>CR-014 反映：F-020-06（代理承認）を追加、対象外記載を削除。F-060 を次期対応に変更。</strong></td><td>渡辺</td><td>鈴木（情シス部長）</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead><tr><th>承認</th><th>レビュー</th><th>レビュー</th><th>作成</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>山田製作所<br>執行役員 佐藤<br>（システムオーナー）</td>
+                  <td>山田製作所<br>情報システム部長 鈴木</td>
+                  <td>山田製作所<br>経理部長 高橋</td>
+                  <td>あおぞらシステムズ<br>渡辺</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">本書の内容にて基本設計工程を開始することを承認します。本書承認後の要件の追加・変更は、変更管理手続き（プロジェクト計画書 第 8 章）によるものとします。<br>※ 本書に記載のない事項は本プロジェクトの対象外とします。<br>※ 未決事項は課題管理表 No.021・022 に記載のとおりであり、2027/01/15 までに決定するものとします。</p>
+          </div>
+        </div>
+
+        <p><strong>版数管理の実務ルール</strong>：<br>・作成中は v0.x、承認されたら v1.0。以降は変更管理のたびに v1.1, v1.2…<br>・<strong>改訂内容には CR 番号を書く</strong>——なぜ変わったのかを追えるようにする。<br>・<strong>承認済みの版は絶対に上書きしない</strong>。v1.0 のファイルはそのまま残し、v1.1 を新規に作る。「どの版に対して承認したか」が特定できなくなるのが最悪の事態（第 3 章）。</p>
+
+        <h2>完了判定基準と、受入テストの種</h2>
+        <p>準委任契約の要件定義（第 1 章）には「完成」の定義が無い。だから<strong>プロジェクト開始時に完了判定基準を決めておく</strong>。決めていないと、終わらないか、中途半端なまま次に進むかのどちらかになる。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>判定基準の例</th><th>意味</th></tr></thead>
+            <tbody>
+              <tr><td>要件定義書がシステムオーナーの承認を得ていること</td><td>形式的な完了条件</td></tr>
+              <tr><td>機能一覧の全機能について、要件が記述されていること</td><td>網羅性（トレーサビリティで確認）</td></tr>
+              <tr><td>非機能要求グレードの重要項目が全て合意されていること</td><td>第 7 章の穴を塞ぐ</td></tr>
+              <tr><td><strong>課題管理表の重要度「高」が全てクローズ、または次工程での決定期限が合意されていること</strong></td><td>未決を持ち越す場合のルール。<strong>ゼロにするのは非現実的なので、期限つきで持ち越すことを許す</strong></td></tr>
+              <tr><td>基本設計以降の見積が提示され、合意されていること</td><td>多段階契約の接続条件</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 受入観点は、要件と同時に書く</p>
+          <p>成果物样例（第 6 章 DOC-206）の一番右の列を思い出してほしい——<strong>「受入観点」</strong>。要件を書いた瞬間に「これはどうやって確認されるか」を一緒に書いておくと、三つの効果がある。<br>① <strong>検証可能性のセルフチェックになる</strong>——受入観点が書けない要件は、書けていない要件（第 6 章）。<br>② <strong>受入テスト仕様書の下書きになる</strong>——半年後、客が受入テストを設計するときの材料がすでにある。発注者側にテスト設計のスキルが無いことは多く（第 1 章の情シス 3 名）、ここを支援できるベンダーは信頼される。<br>③ <strong>境界値が明確になる</strong>——「30,000 円以上は目的必須」なら、受入観点は「29,999 円で任意、30,000 円で必須」。境界を書くと、要件の曖昧さが最後に一度あぶり出される。</p>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 承認をもらう直前に、大きな未決事項が残っていることに気づいた</p>
+          <p>本案例の課題 No.013（部門ごとの承認段数）が、承認予定日の 1 週間前になっても決まっていない。部門長会議が延期されたためだ。</p>
+          <p><strong>選択肢は三つ</strong>：<br>A：<strong>決まるまで承認を待つ</strong>——最も安全だが、基本設計の着手が遅れ、全体スケジュールに影響する。<br>B：<strong>未決のまま承認し、期限を切って持ち越す</strong>——「承認段数は最大 3 段階まで対応可能な設計とし、具体的な部門別設定は 2027/01/15 までに決定する」と<strong>要件定義書に明記して</strong>承認をもらう。<br>C：<strong>暫定値で確定させる</strong>——「2 段階とする。変更が必要な場合は変更管理による」。</p>
+          <p><strong>実務ではBが最も多く、かつ多くの場合正しい</strong>。ポイントは<strong>「未決であることを文書に書く」</strong>こと。曖昧に承認をもらって後から揉めるのではなく、<strong>「ここは未決である」という事実自体を合意する</strong>。<br>ただしBを選ぶには条件がある：<strong>未決事項が設計の骨格に影響しないこと</strong>。承認段数なら「最大 3 段階まで対応する設計」にしておけば、具体的な設定値が後で決まっても手戻りは無い。逆に「そもそも承認が要るのか要らないのか」が未決なら、Bは成立しない——設計が始められない。<br><strong>判断軸</strong>：未決事項が<strong>「値」なのか「構造」なのか</strong>。値なら持ち越せる、構造なら持ち越せない。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · レビューで 80 件の指摘が出た</p>
+          <p><strong>まず、これは悪い知らせではない。</strong>指摘が 0 件のレビューのほうが危険——読まれていないか、観点が指定されていないかのどちらか。80 件出たなら、少なくとも読まれている。</p>
+          <p><strong>やるべきは分類</strong>：<br>・<strong>誤り（要修正）</strong>——事実と違う、矛盾している。無条件で直す。<br>・<strong>不足（要追記）</strong>——書かれていない。直すが、<strong>スコープ追加に該当しないか要注意</strong>（「この機能も要るよね」は指摘ではなく要望＝変更管理）。<br>・<strong>改善提案</strong>——直したほうがよいが必須ではない。対応するかを判断する。<br>・<strong>質問</strong>——回答すれば閉じる。文書の修正は不要なことも多い。<br>・<strong>指摘者の誤解</strong>——文書は正しいが読み取りにくい。<strong>「誤解されたのは文書の責任」</strong>と考えて、表現を直すのが望ましい。</p>
+          <p><strong>この分類が重要な理由</strong>：80 件を全部「直します」と受けると、工数が跳ね上がり、しかも「不足」に紛れたスコープ追加を無償で飲むことになる。<br><strong>各指摘に対応方針を書いて指摘者に返す</strong>のが正しい手順：「No.34：ご指摘の集計機能は要件定義の対象外としております（第 11 章）。ご要望として承り、変更管理でご相談させてください。」——<strong>「対応しない」も立派な対応方針</strong>で、それを明示して合意することがレビューの完了条件。<br>そして全件クローズをもって承認依頼を出す（第 3 章）。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 承認後に「やっぱりこれは違う」と言われた</p>
+          <p>基本設計中、経理部長から「要件定義書の第 5 章、これでは業務が回らない」と言われた。承認は 2 か月前に済んでいる。</p>
+          <p><strong>まず確認する</strong>：<br>① <strong>その人はレビューに参加していたか</strong>。参加していなかったなら、それはレビュー参加者の選定ミス（＝こちらにも責任がある）。参加していたなら、承認の重みを説明できる。<br>② <strong>本当に業務が回らないのか</strong>。回らないなら、たとえ契約上の立場が有利でも、そのまま作ってはいけない——<strong>動かないシステムを納品して喜ぶ人は誰もいない</strong>。<br>③ <strong>いつ気づいたか</strong>。設計書を見て初めて具体的にイメージできた、というのはよくあること（文字だけでは想像できない）。これは責めるべきことではなく、<strong>プロトタイプや画面モックを早期に見せる</strong>ことで構造的に減らせる問題（第 11 章）。</p>
+          <p><strong>取るべき態度</strong>：契約上の立場（承認済み＝変更管理の対象）を<strong>明確に示したうえで</strong>、業務上の解決策を一緒に考える。第 5 章 例題 2 と同じ——<strong>立場と助言を両方同時に出す</strong>。<br>「ご指摘の点は要件定義書 v1.0 でご承認いただいた範囲との差異にあたりますので、変更管理として影響を整理させてください。あわせて、現在の設計のままでは具体的にどの業務が回らないかを教えていただけますか。場合によっては、要件を変えずに設計の工夫で解決できるかもしれません。」</p>
+          <p><strong>そして次のプロジェクトへの教訓</strong>：文字だけの要件定義書に承認をもらうことのリスク。<strong>画面イメージ（ワイヤーフレーム）を要件定義の段階で 3〜5 本だけ作って見せる</strong>と、この種の事故は大幅に減る。工数は数人日、リターンは数十人日。<strong>要件定義に「見せる」要素を入れるのは、日本のSI現場でも近年広がっている実践。</strong></p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>要件定義書に承認印が押されることで確定する三つのことを挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：① スコープの確定（以降の変更は変更管理へ）② 次工程の見積根拠の確定（請負契約の前提）③ 受入テストの判定基準の確定。</p>
+            <p><strong>解析</strong>：この三つは、それぞれ第 8 章・第 1 章・第 2 章に対応している。要件定義書は単なる仕様書ではなく、<strong>契約・スケジュール・品質判定の三つを同時に支える文書</strong>だという理解が重要。<br>そしてこの理解があると、要件定義書に何を書くべきかが自然に決まる：スコープを確定するには「対象外」が要る、見積根拠にするには「機能一覧」が要る、受入判定にするには「検証可能な要件」が要る。<strong>目次のすべての項目に、この三つのどれかを支える役割がある。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>トレーサビリティマトリクスで、次の状態が見つかった。それぞれ何を意味し、どう対処すべきか。<br>① 要件IDに対応する設計書が空欄　② 機能IDに対応する要求IDが空欄　③ 要件IDに対応する受入テストIDが空欄</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 設計書が空欄</strong>＝<strong>設計漏れ</strong>。合意した要件が、どの設計書にも実現されていない。基本設計のレビューで必ず潰すべき最重要の指摘。放置すると、製造されず、受入テストで初めて発覚する（第 2 章 例題 2 の帳票小計事件）。<br>対処：該当する設計書に追記するか、設計書を新規作成する。工数影響があるなら PM へ報告。</p>
+            <p><strong>② 要求IDが空欄</strong>＝<strong>誰が何のために欲しかったのか不明な機能</strong>。三つの可能性がある：(a) 要求一覧への記載漏れ（出典を確認して追記）(b) ベンダー側が「必要だろう」と判断して足した機能（共通機能などは正当）(c) <strong>誰も必要としていない機能</strong>。<br>対処：(c) の場合、これは<strong>削れるスコープ</strong>。予算や納期が厳しいときの調整候補になる（第 8 章）。ただし勝手に削らず、必ず発注者に確認する。</p>
+            <p><strong>③ 受入テストIDが空欄</strong>＝二つの可能性。(a) 受入テスト設計の漏れ (b) <strong>そもそもその要件が検証不可能</strong>（第 6 章の検証可能性）。<br>対処：(b) なら要件の書き方に戻る。「使いやすいこと」のような要件はここで最後に発見される。<br>なお、非機能要件の一部（可用性など）は受入テストではなく総合テストや運用テストで確認するため、空欄でも正常なことがある——<strong>「どこで確認するか」の列を持っておく</strong>とより実用的。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>要件定義書の版数管理について、次の運用の問題点を指摘せよ。<br>「承認された要件定義書のファイルを直接編集し、変更履歴シートに追記している。ファイル名は常に『要件定義書.xlsx』。」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>問題点</strong>：<br>① <strong>承認時点の内容が復元できない</strong>——「v1.0 で承認した内容」が失われる。争いになったとき、承認されたのがどの内容だったかを証明できない。<br>② <strong>誰がどの版を見ているか分からない</strong>——ファイル名が同じなので、手元にダウンロードした人が古い内容を見続ける。<strong>「最新版を見ていなかった」による手戻りは非常に多い</strong>。<br>③ <strong>変更履歴シートの記載が正しいか検証できない</strong>——実際の変更と履歴の記載が食い違っていても気づけない。<br>④ <strong>同時編集による上書き事故</strong>のリスク。</p>
+            <p><strong>正しい運用</strong>：<br>・ファイル名に版数を含める：<code>DOC-200_要件定義書_v1.1.xlsx</code>。<br>・承認済みの版は<strong>読み取り専用にして別フォルダ（承認済み）へ移す</strong>。<br>・作業中は v1.2（draft）として別途管理し、承認されたら確定版へ。<br>・改訂履歴には<strong>変更理由（CR番号）</strong>を必ず書く。<br>・<strong>差分が分かるようにする</strong>——変更箇所に色を付けるか、変更箇所一覧を添付する（第 3 章の「差分を示す」）。</p>
+            <p><strong>補足</strong>：Git のようなバージョン管理システムが使える現場ならそれが最善だが、日本のSI現場では Excel と共有フォルダが依然として主流。<strong>ツールが古いこと自体は問題ではなく、上のルールを決めて守れば同じ目的は達成できる</strong>。重要なのは「承認された内容が不変に保存されていること」と「今どれが最新か誰でも分かること」の二点だけ。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>要件定義の完了判定基準を 5 つ挙げよ。特に「課題がゼロであること」を基準にすべきかどうかを論じよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>判定基準の例</strong>：① 要件定義書がシステムオーナーの承認を得ている　② 機能一覧の全機能に要件記述がある（トレーサビリティで確認）　③ 非機能要求グレードの重要項目が全て合意されている　④ 課題管理表の重要度「高」が全てクローズ、<strong>または次工程での決定期限が合意されている</strong>　⑤ 基本設計以降の見積が提示され合意されている。</p>
+            <p><strong>「課題ゼロ」を基準にすべきか</strong>：<strong>すべきでない。</strong>理由は三つ。<br>(a) <strong>現実的でない</strong>——上流工程では常に新しい課題が生まれ続ける。ゼロを求めると、要件定義が永遠に終わらない。<br>(b) <strong>ゼロを求めると、課題が起票されなくなる</strong>——これが最悪。「起票すると終われない」という力学が働き、担当者が課題を記録しなくなる。<strong>可視化のための道具が、隠蔽の動機になってしまう。</strong><br>(c) <strong>課題には持ち越せるものとそうでないものがある</strong>——例題 1 のとおり、「値」の未決は持ち越せるが「構造」の未決は持ち越せない。一律にゼロを求めるのは、この区別を無視している。</p>
+            <p><strong>正しい基準</strong>：<strong>「重要度『高』の課題が、クローズされているか、次工程での決定期限と決定者が合意されているか」</strong>。つまり<strong>「宙に浮いた課題がゼロ」</strong>であって「課題がゼロ」ではない。<br>これは第 3 章のペンディングの扱いと同じ思想——<strong>未決であることが記録され、期限と担当がついていれば、それは管理された状態</strong>。管理されていない未決だけが危険。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>100 ページの要件定義書のレビューを設計せよ。参加者は システムオーナー（執行役員）／情シス部長／情シス担当／経理部長／経理担当（実務）／営業部の代表者。会議の回数、各回の対象範囲・参加者・観点を具体的に設計し、そう分けた理由を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>設計例（全 4 回＋α）</strong></p>
+            <p><strong>第 0 回：ウォークスルー（全員・90 分）</strong>——全体構成と第 2 章（背景・目的）、第 11 章（スコープ・前提・制約）のみを説明。<strong>指摘は求めず、読み方を伝える</strong>のが目的。各人に「あなたに見ていただきたい章と観点」を配る。資料は 3 営業日前に配布。</p>
+            <p><strong>第 1 回：業務要件（経理部長・経理担当・営業部代表・情シス担当／90 分）</strong>——対象：第 3 章（業務一覧・業務フロー・業務ルール）、第 4 章（要求一覧）。観点：「現行の業務実態と合っているか」「例外業務が漏れていないか」「部門による違いはないか」。<strong>営業部代表を入れるのは、第 3 章の事故（承認段数の部門差）の再発防止</strong>。</p>
+            <p><strong>第 2 回：機能要件（情シス部長・情シス担当・経理担当／120 分）</strong>——対象：第 5 章（機能一覧・要件記述・権限マトリクス）。観点：「業務が回るか」「権限の範囲は妥当か」「表示項目・入力チェックに過不足はないか」。<strong>ここでワイヤーフレーム 3〜5 本を併せて見せる</strong>（例題 3 の教訓）。</p>
+            <p><strong>第 3 回：非機能・運用・移行（情シス部長・情シス担当／90 分）</strong>——対象：第 6〜9 章。観点：「運用体制で回せるか」「稼働率・復旧時間は業務影響と釣り合うか」「移行の作業量は現実的か」。<strong>経理部は呼ばない</strong>——関心が薄く、時間の無駄になり、次回以降の出席率が下がる。</p>
+            <p><strong>第 4 回：指摘検討会（情シス部長・情シス担当・ベンダー／60 分）</strong>——全指摘の対応方針を確認し、対応するもの／しないもの／変更管理に回すものを仕分けする（例題 2）。</p>
+            <p><strong>承認：システムオーナー向け説明（15〜30 分）</strong>——第 2 章（目的と効果）、第 11 章（スコープ）、第 10 章（体制・スケジュール）、そして費用。<strong>執行役員に 100 ページを読ませてはいけない</strong>。彼が判断するのは「この投資をするか」であって、入力チェックの詳細ではない。</p>
+            <p><strong>分け方の理由</strong>：① <strong>読者と関心で分ける</strong>（目次の「読者」列がそのまま設計図になる）② <strong>各回 90〜120 分に収める</strong>（それ以上は集中が持たない）③ <strong>実務担当者を必ず入れる</strong>（実態を知っているのはその人）④ <strong>役職者の時間は短く、決定に必要な範囲だけ</strong>。<br><strong>この設計自体が、第 1 章の体制図と第 3 章のレビュー作法の応用</strong>——誰が何に責任を持っているかが分かっていれば、レビュー設計は機械的に導ける。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>第 6 章の成果物样例（DOC-206）にある「受入観点」列を、次の要件について書け。<br>① F-022-01「承認者は、承認待ちの申請を差戻しできること。差戻し時は理由の入力を必須とすること。」<br>② N-A02「稼働率 99.5%（運用時間内。計画停止を除く）」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① F-022-01 の受入観点</strong>：<br>・承認待ちの申請に対し、差戻し操作ができる。<br>・理由を未入力のまま差戻し操作をした場合、エラーとなり差戻されない。<br>・理由を入力して差戻すと、申請の状態が「差戻し」となり、申請者の一覧に表示される。<br>・差戻された申請の詳細画面に、差戻し日時・差戻した人・理由が表示される。<br>・<strong>承認待ちでない申請（下書き・確定済など）には差戻し操作ができない。</strong><br>——最後の一つが重要。<strong>「できること」の裏側の「できないこと」も受入観点に入れる</strong>。正常系だけ確認して合格にすると、状態遷移の穴が残る。</p>
+            <p><strong>② N-A02 の受入観点</strong>：<strong>これは受入テストでは確認できない</strong>——稼働率は 1 年間運用して初めて測れる。<br>したがって書くべきは<strong>「どこで、何をもって確認するか」</strong>：<br>・総合テストにおいて、冗長構成の切替（フェイルオーバー）が設計どおり動作すること。<br>・障害検知から通知までの一連が動作すること（監視の疎通確認）。<br>・バックアップからのリストアが手順書どおりに完了し、所要時間が RTO 内であること。<br>・<strong>稼働後は月次で稼働率を測定し、運用報告書で報告すること</strong>（＝運用設計へ引き継ぐ／第 14 章）。</p>
+            <p><strong>この問題の教訓</strong>：非機能要件の多くは<strong>受入テストで検証できない</strong>。だから「検証方法」を要件と一緒に決めておく必要があり、その一部は<strong>稼働後の運用（測定と報告）</strong>になる。第 7 章 習題 7.7 の「測定していない要件は達成を誰も言えない」がここにつながる。<br>実務的には、非機能要件の表に<strong>「確認工程」列（総合テスト／運用テスト／稼働後の測定）</strong>を設けるとよい。これがあると、テスト計画を作るときに漏れない。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>第 4 章から第 9 章までで作ってきた成果物（業務一覧・業務フロー・要求一覧・機能一覧・権限マトリクス・機能要件・非機能要件・スコープ定義・見積・トレーサビリティ）を、あなたの実際のプロジェクトに当てはめて棚卸しせよ。「無い」ものについて、無いことで実際に起きている問題を書き、優先度をつけて 3 つだけ作るとしたらどれかを選び、理由を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>選び方の観点と、よくある判断を示す。</p>
+            <p><strong>観点① 「今、毎週困っていること」から選ぶ</strong>——理想の完備を目指すのではなく、痛みの大きいところから。毎週スコープで揉めているなら<strong>スコープ定義</strong>、毎回「誰がこれ見られるんだっけ」で止まるなら<strong>権限マトリクス</strong>。</p>
+            <p><strong>観点② 作成コストが低く効果が高いものから</strong>——この基準だと、多くの現場で上位に来るのは：<br>1. <strong>用語集</strong>（半日で作れて、以後のコミュニケーション事故が激減する）<br>2. <strong>権限マトリクス</strong>（1〜2 日で作れて、設計中の「この人は見られるのか」問答が消える）<br>3. <strong>業務フロー図（As-Is）</strong>（数日かかるが、これが無いと新規参加者の立ち上げに毎回 2 週間かかる）</p>
+            <p><strong>観点③ 「新しく作る」より「今あるものに列を足す」ほうが安い</strong>——機能一覧があるなら、そこに「関連業務ID」「要求ID」の列を足すだけで簡易トレーサビリティになる。ゼロから表を作るより現実的で、しかも運用が続く（本章の「完璧なマトリクスを作ろうとしない」）。</p>
+            <p><strong>よくある落とし穴</strong>：<strong>全部作ろうとして、全部中途半端に終わる</strong>。上流の成果物は「作ること」より「更新され続けること」に価値があり、更新されない文書は無いより有害（第 4 章 習題 4.7 のパターン③）。<strong>3 つに絞れという設問の意図はここにある。</strong></p>
+            <p><strong>第二部の総括として</strong>：第 4〜9 章で作ってきた成果物は、それぞれ独立した書類ではなく<strong>一本の鎖</strong>だった。業務一覧 → 業務フロー → 課題 → 要求一覧 → 機能一覧 → 要件記述 → 非機能 → スコープ・見積 → トレーサビリティ。前の成果物が次の成果物の材料になっており、<strong>どこかを飛ばすと、その先で必ず根拠のない判断が発生する</strong>。「性能要件の数値が決められない」の根っこが「業務の件数を数えていない」にあった（第 7 章）ように。<br>あなたの現場で「なんとなく決まらない」ことがあるなら、<strong>この鎖のどこが切れているかを探す</strong>——それがこの教材の第二部で身につけてほしい見方。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 承認印が確定させるのは<strong>スコープ・見積根拠・受入判定基準</strong>の三つ。この三つを果たせない要件定義書は、承認されても意味がない；② 標準目次は<strong>読者ごとにまとまるよう</strong>設計されている。最重要かつ最も読まれない第 11 章（スコープ・前提・制約）は、説明会で最初に説明する；③ トレーサビリティマトリクスは<strong>漏れ検出・影響分析・受入根拠・保守時の遡及</strong>の四用途。ただし<strong>完璧を目指さず</strong>、要求↔要件↔機能までを維持し、設計書・テストへはID埋め込みで代替する；④ 大規模レビューは<strong>分割・読者を変える・観点指定・段階を分ける・差分を示す・実務担当者を呼ぶ</strong>；⑤ サインオフは「読みました」ではなく「次工程に進んでよい」。<strong>承認済みの版は絶対に上書きしない</strong>；⑥ 完了判定基準に「課題ゼロ」を入れてはいけない——<strong>正しくは「宙に浮いた課題がゼロ」</strong>（期限と決定者がついていれば管理された状態）；⑦ <strong>受入観点は要件と同時に書く</strong>——検証可能性のセルフチェックになり、受入テスト仕様書の下書きになり、境界値をあぶり出す。<br><strong>下一章预告</strong>：ここまでが「何を作るか」。第三部は「どう見えるか・どう繋がるか」——基本設計に入る。まずは全体像と方式設計：外部設計と内部設計の境界はどこか、設計書は何種類あってどう依存し合うのか、そして全画面に影響する共通の決め事（認証・エラー・ログ・命名・コード体系）をなぜ最初に決めるのか。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./08-范围见积与变更管理.html">← 第 8 章 范围、见积、日程与变更管理</a>
+          <a href="./10-基本设计全景与方式设计.html">第 10 章 基本设计全景与方式設計 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var list = document.getElementById("ck-list");
+      var bar = document.getElementById("ck-bar-i");
+      var verdict = document.getElementById("ck-verdict");
+      if (!list) return;
+
+      var GROUPS = [
+        {
+          cat: "スコープ・前提（第 8 章）",
+          items: [
+            { t: "対象業務・対象機能が業務ID／機能IDで特定されている", must: false },
+            { t: "対象外の事項が、代替手段とともに明記されている", must: true },
+            { t: "前提条件（発注者側にお願いする作業とその期限）が書かれている", must: true },
+            { t: "制約条件（技術・環境・法令・期間・予算）が書かれている", must: false }
+          ]
+        },
+        {
+          cat: "業務（第 4 章）",
+          items: [
+            { t: "As-Is / To-Be の業務フロー図があり、差戻し・例外が描かれている", must: false },
+            { t: "業務一覧に件数と頻度（ピークの偏りを含む）が入っている", must: true },
+            { t: "課題が「現象・原因・影響」の三段式で書かれ、影響が数値化されている", must: false },
+            { t: "例外業務（不在時・締め後・退職者・特別な金額）が洗い出されている", must: false }
+          ]
+        },
+        {
+          cat: "機能（第 5・6 章）",
+          items: [
+            { t: "機能一覧に機能ID・区分（画面/帳票/バッチ/IF）・関連業務・優先度がある", must: false },
+            { t: "業務フローに現れない共通機能（認証・権限・ログ・通知・マスタ保守）が含まれている", must: true },
+            { t: "権限マトリクスがあり、機能権限とデータ範囲の両方が書かれている", must: true },
+            { t: "全ての要件に主語（誰が／システムが）が書かれている", must: true },
+            { t: "一文一要件になっており、「かつ」で複数要件が連結されていない", must: false },
+            { t: "曖昧語（適切に／必要に応じて／原則として／大量の）が残っていない", must: false }
+          ]
+        },
+        {
+          cat: "非機能（第 7 章）",
+          items: [
+            { t: "非機能要求グレードの六大項目それぞれに記載がある（該当なしも明記）", must: true },
+            { t: "稼働率が運用時間とセットで書かれている", must: false },
+            { t: "RTO と RPO が区別して書かれている", must: false },
+            { t: "性能要件に測定条件（データ量・同時利用者数・環境）とピーク時の値がある", must: true },
+            { t: "各非機能要件に、数値の根拠が書かれている", must: false }
+          ]
+        },
+        {
+          cat: "文書としての完成度（第 3・9 章）",
+          items: [
+            { t: "用語集があり、使用しない同義語も明記されている", must: true },
+            { t: "改訂履歴と承認欄があり、承認の意味が明記されている", must: false },
+            { t: "未決事項が課題管理表に起票され、決定者と期限が合意されている", must: true },
+            { t: "全ての要件に受入観点（どう確認するか）が書かれている", must: false },
+            { t: "要件定義の完了判定基準が、プロジェクト開始時に合意されている", must: true }
+          ]
+        }
+      ];
+
+      var flat = [];
+      GROUPS.forEach(function (g) { g.items.forEach(function (it) { flat.push(it); }); });
+      var state = flat.map(function () { return false; });
+
+      function render() {
+        var done = 0, missMust = [];
+        flat.forEach(function (it, i) {
+          if (state[i]) done++;
+          else if (it.must) missMust.push(it.t);
+        });
+        var pct = Math.round(done / flat.length * 100);
+        bar.style.width = pct + "%";
+
+        verdict.textContent = "";
+        var cls, head, body;
+        if (missMust.length > 0) {
+          cls = "";
+          head = "🚨 レビューに出すと死にます（" + done + "/" + flat.length + "　必須未達 " + missMust.length + " 項目）";
+          body = "以下は「必須」項目です。これらが欠けたまま承認された要件定義書は、後工程で必ず破綻します——スコープが確定せず、見積の根拠にならず、受入テストで判定できないからです。";
+        } else if (pct >= 90) {
+          cls = "ok";
+          head = "◯ レビューに出せます（" + done + "/" + flat.length + "）";
+          body = "必須項目は全て満たしています。残りの未チェック項目は、レビューで指摘される可能性がある点として認識しておけば十分です。指摘が出ること自体は健全——指摘ゼロのレビューのほうが危険（読まれていない証拠）。";
+        } else if (pct >= 70) {
+          cls = "warn";
+          head = "⚠ 出せますが、指摘は覚悟してください（" + done + "/" + flat.length + "）";
+          body = "必須項目は満たしていますが、抜けが目立ちます。レビューで指摘されて直すより、出す前に自分で直したほうが、工数も信頼も守れます。特に未チェックの項目が「機能」「非機能」に偏っている場合は要注意。";
+        } else {
+          cls = "warn";
+          head = "⚠ まだ早いです（" + done + "/" + flat.length + "）";
+          body = "必須項目は満たしているものの、全体として記載が不足しています。この状態でレビューに出すと指摘が 100 件を超え、対応工数でスケジュールが崩れます。";
+        }
+        verdict.className = "ck-verdict" + (cls ? " " + cls : "");
+        var p1 = document.createElement("p");
+        var b1 = document.createElement("strong");
+        b1.textContent = head;
+        p1.appendChild(b1);
+        var p2 = document.createElement("p");
+        p2.textContent = body;
+        verdict.appendChild(p1);
+        verdict.appendChild(p2);
+        if (missMust.length > 0) {
+          var ul = document.createElement("ul");
+          missMust.forEach(function (t) {
+            var li = document.createElement("li");
+            li.textContent = t;
+            ul.appendChild(li);
+          });
+          verdict.appendChild(ul);
+        }
+      }
+
+      var idx = 0;
+      GROUPS.forEach(function (g) {
+        var wrap = document.createElement("div");
+        wrap.className = "ck-group";
+        var cat = document.createElement("p");
+        cat.className = "ck-cat";
+        cat.textContent = g.cat;
+        wrap.appendChild(cat);
+        g.items.forEach(function (it) {
+          var my = idx++;
+          var lab = document.createElement("label");
+          lab.className = "ck-item";
+          var cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.addEventListener("change", function () { state[my] = cb.checked; render(); });
+          var sp = document.createElement("span");
+          sp.appendChild(document.createTextNode(it.t));
+          if (it.must) {
+            var m = document.createElement("span");
+            m.className = "ck-must";
+            m.textContent = "必須";
+            sp.appendChild(m);
+          }
+          lab.appendChild(cb);
+          lab.appendChild(sp);
+          wrap.appendChild(lab);
+          it._el = cb;
+        });
+        list.appendChild(wrap);
+      });
+
+      document.getElementById("ck-all").addEventListener("click", function () {
+        flat.forEach(function (it, i) { state[i] = true; it._el.checked = true; });
+        render();
+      });
+      document.getElementById("ck-none").addEventListener("click", function () {
+        flat.forEach(function (it, i) { state[i] = false; it._el.checked = false; });
+        render();
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

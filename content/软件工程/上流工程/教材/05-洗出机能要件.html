@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>05 洗出机能要件：从要求一覧到機能一覧 · 知识库</title>
+  <meta name="kb:summary" content="把要求翻译成机能：要求一覧的写法、画面・帳票・バッチ・IF 四分类堵漏法、機能ID体系与優先度、CRUD视角与権限矩阵，以及抜け漏れ检查表。">
+  <meta name="kb:tags" content="上流工程,要件定义,机能一览,机能ID,权限矩阵,CRUD,MECE,四分类,优先度,slgc,jnyl,qxjz">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：机能导出演示 */
+    .fd-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .fd-btn {
+      font: inherit; font-size: 0.84rem; padding: 6px 14px; cursor: pointer;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .fd-btn:hover { border-color: var(--kb-accent); }
+    .fd-btn.primary { background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600; }
+    .fd-btn:disabled { opacity: 0.45; cursor: default; }
+    .fd-btn:disabled:hover { border-color: var(--kb-border-strong); }
+    .fd-step {
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 12px 14px; margin-bottom: 12px;
+    }
+    .fd-no { font-size: 0.76rem; color: var(--kb-fg-muted); margin: 0 0 4px; }
+    .fd-flow { margin: 0 0 8px; font-weight: 700; }
+    .fd-ask { margin: 0; font-size: 0.86rem; color: var(--kb-fg-muted); }
+    .fd-list { margin: 0; padding-left: 1.1em; font-size: 0.87rem; }
+    .fd-list li { margin: 3px 0; }
+    .fd-kind {
+      display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 1px 7px;
+      border-radius: 999px; margin-right: 6px; vertical-align: 1px;
+      border: 1px solid var(--kb-border-strong); background: var(--kb-surface-alt); color: var(--kb-fg-muted);
+    }
+    .fd-k-screen { border-color: var(--kb-accent); color: var(--kb-accent); background: var(--kb-accent-soft); }
+    .fd-k-batch { border-color: var(--kb-warn); color: var(--kb-warn); background: var(--kb-warn-soft); }
+    .fd-k-if { border-color: var(--kb-ok); color: var(--kb-ok); background: var(--kb-ok-soft); }
+    .fd-k-report { border-color: var(--kb-danger); color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .fd-note { font-size: 0.82rem; color: var(--kb-fg-muted); margin: 8px 0 0; }
+    .fd-acc { font-size: 0.8rem; color: var(--kb-fg-muted); }
+    .fd-acc strong { color: var(--kb-fg); font-size: 1.05rem; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 5 章 · 洗出机能要件：从要求一覧到機能一覧</h1>
+        <p class="kb-lead">機能一覧是要件定義書的心脏——它决定了工数、决定了报价、也决定了半年后「这个功能做不做」的争论怎么收场。这一章讲怎么把第 4 章画出来的業務フロー榨成一份不漏的機能一覧：用<strong>画面・帳票・バッチ・IF 四分类</strong>堵漏、给机能编号、定优先级，并第一次画出<ruby>権限マトリクス<rt>権限矩阵</rt></ruby>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 写出带出典与優先度的要求一覧，并说明要求与要件的多对多关系；② 用画面・帳票・バッチ・IF 四分类，从業務フロー系统地导出机能；③ 设计機能ID体系并写出可用于见积的機能一覧；④ 用 CRUD 视角与権限マトリクス检出漏项；⑤ 用抜け漏れチェックリスト找出「業務フローに出てこないが必ず要る」的那两成机能。</p>
+        </div>
+
+        <h2>漏掉一行，半年后多花 300 万</h2>
+        <p>要件定義の機能一覧に「パスワード再発行」の行が無かった。誰も気づかなかった——業務フロー図に出てこないからだ。経理の業務を描いた図に、パスワードを忘れる話は出てこない。</p>
+        <p>稼働 2 週間前、運用テストで気づく。320 人が使うシステムに、パスワードを忘れた人の救済手段が無い。管理者がDBを直接触るわけにもいかない。<strong>結果：メール送信基盤の追加、トークン管理、有効期限、画面 3 本、テスト——追加 300 万円と 3 週間。</strong></p>
+        <p>機能一覧の漏れは、単に「あとで作ればいい」では済まない。<strong>それは見積の漏れであり、スケジュールの漏れであり、契約金額の漏れ</strong>だからだ（第 1 章の請負契約を思い出してほしい）。だからこの章のテーマは一つ——<strong>どうやったら漏れないか</strong>。</p>
+
+        <h2>要求一覧：先把「言われたこと」编号</h2>
+        <p>機能一覧の前に、<strong>要求一覧</strong>を作る。第 2 章の言葉でいえば「要求」の層、つまり<em>まだ機能になっていない、客の言い分そのもの</em>を並べた表。</p>
+        <p>なぜわざわざ一段挟むのか。理由は三つ：<strong>①「誰がいつ言ったか」を残すため</strong>（後で「そんなこと言っていない」を防ぐ）、<strong>②優先度を機能ではなく目的の単位で付けるため</strong>、<strong>③一つの要求から複数の機能が出ることを可視化するため</strong>。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>要求一覧（要件定義書 第 4 章 抜粋）</span><span class="kb-doc-id">DOC-203 / v1.1</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>要求ID</th><th>要求内容</th><th>出典</th><th>関連課題</th><th>優先度</th><th>対応する要件ID</th></tr></thead>
+              <tbody>
+                <tr><td>R-001</td><td>外出先・拠点からでも経費を申請できるようにしたい</td><td>営業部 / MTG-002</td><td>K-02</td><td><strong>Must</strong></td><td>F-010, F-011, N-U01</td></tr>
+                <tr><td>R-002</td><td>記入不備による差戻しを減らしたい</td><td>経理部 高橋課長 / MTG-004</td><td>K-01</td><td><strong>Must</strong></td><td>F-013, F-014</td></tr>
+                <tr><td>R-003</td><td>差戻しの理由と経緯を記録として残したい</td><td>経理部 / MTG-004</td><td>K-03</td><td><strong>Must</strong></td><td>F-022, F-023</td></tr>
+                <tr><td>R-004</td><td>会計システムへの手入力をなくしたい</td><td>情シス 鈴木部長 / MTG-001</td><td>K-05</td><td><strong>Must</strong></td><td>F-050, F-051</td></tr>
+                <tr><td>R-005</td><td>自分の申請が今どうなっているか、経理に聞かずに分かるようにしたい</td><td>営業部 / MTG-002</td><td>—</td><td>Should</td><td>F-015</td></tr>
+                <tr><td>R-006</td><td>費目や承認ルートを、経理部で変更できるようにしたい</td><td>経理部 / MTG-005</td><td>—</td><td>Should</td><td>F-070, F-071</td></tr>
+                <tr><td>R-007</td><td>部門別・費目別に経費を分析したい</td><td>経営企画室 / MTG-001</td><td>—</td><td>Could</td><td>F-060</td></tr>
+                <tr><td>R-008</td><td>仮払金の精算も同じ画面で行いたい</td><td>営業部 / MTG-006</td><td>—</td><td><strong>Won't（次期）</strong></td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 優先度は MoSCoW 法による。Must＝これが無ければ本プロジェクトの目的を達成できない／Should＝重要だが代替手段あり／Could＝あると良い／Won't＝今回は対象外（合意のうえで明記）。<br>※ 「Won't」の行を消さないこと。消すと「検討されていない」ことになり、後で再燃する。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 「出典」列が、あなたを守る</p>
+          <p>要求一覧の「出典」（誰が・どの会議で言ったか）は、三つの場面で効く。<br>① <strong>スコープ争議のとき</strong>——「R-008 は MTG-006 で次期対応と合意済みです」と即座に示せる。<br>② <strong>矛盾が出たとき</strong>——「経理部は厳しくと言い、営業部は緩くと言っている」が表の上で見える。人を突き合わせるべきタイミングが分かる（第 3 章 例題 3）。<br>③ <strong>仕様の理由を聞かれたとき</strong>——半年後に「なぜこの機能があるのか」と聞かれて、要求までさかのぼれる。これが第 9 章のトレーサビリティの出発点。</p>
+        </div>
+
+        <h2>四分类堵漏：画面・帳票・バッチ・IF</h2>
+        <p>機能の洗い出しで漏れる理由は単純で、<strong>人は目に見えるものしか思い出せない</strong>から。業務フローに描かれた「人の操作」＝画面は誰でも思いつくが、夜中に走るバッチや、他システムとのファイル交換は忘れられる。</p>
+        <p>だから機械的に四つの箱を用意して、業務フローを四回なぞる。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 250" width="700" height="250" role="img" aria-label="机能四分类图：画面、帐票、批处理、接口，四类各自的识别问句与例子">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11.5">
+              <rect x="16" y="20" width="320" height="100" rx="10" fill="var(--kb-accent)" opacity="0.08"/>
+              <rect x="16" y="20" width="320" height="100" rx="10" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+              <text x="32" y="44" font-size="14" font-weight="700" fill="var(--kb-fg)">画面</text>
+              <text x="32" y="66" fill="var(--kb-fg-muted)">見つけ方：業務フローで「人が操作する箱」</text>
+              <text x="32" y="86" fill="var(--kb-fg-muted)">申請・承認・検索・一覧・マスタ保守</text>
+              <text x="32" y="106" fill="var(--kb-fg-faint)" font-size="10.5">忘れやすい：一覧／検索／マスタ保守／権限管理</text>
+
+              <rect x="364" y="20" width="320" height="100" rx="10" fill="var(--kb-danger)" opacity="0.07"/>
+              <rect x="364" y="20" width="320" height="100" rx="10" fill="none" stroke="var(--kb-danger)" stroke-width="1.4"/>
+              <text x="380" y="44" font-size="14" font-weight="700" fill="var(--kb-fg)">帳票</text>
+              <text x="380" y="66" fill="var(--kb-fg-muted)">見つけ方：「紙で出す／PDFで渡す」もの</text>
+              <text x="380" y="86" fill="var(--kb-fg-muted)">精算書・一覧表・証憑・請求書</text>
+              <text x="380" y="106" fill="var(--kb-fg-faint)" font-size="10.5">忘れやすい：再出力／過去分の出力／印影・押印欄</text>
+
+              <rect x="16" y="132" width="320" height="100" rx="10" fill="var(--kb-warn)" opacity="0.09"/>
+              <rect x="16" y="132" width="320" height="100" rx="10" fill="none" stroke="var(--kb-warn)" stroke-width="1.4"/>
+              <text x="32" y="156" font-size="14" font-weight="700" fill="var(--kb-fg)">バッチ</text>
+              <text x="32" y="178" fill="var(--kb-fg-muted)">見つけ方：「定時に」「まとめて」「夜間に」</text>
+              <text x="32" y="198" fill="var(--kb-fg-muted)">締め処理・集計・通知メール・データ取込</text>
+              <text x="32" y="218" fill="var(--kb-fg-faint)" font-size="10.5">忘れやすい：リラン／エラー時通知／初期データ移行</text>
+
+              <rect x="364" y="132" width="320" height="100" rx="10" fill="var(--kb-ok)" opacity="0.09"/>
+              <rect x="364" y="132" width="320" height="100" rx="10" fill="none" stroke="var(--kb-ok)" stroke-width="1.4"/>
+              <text x="380" y="156" font-size="14" font-weight="700" fill="var(--kb-fg)">IF（外部インターフェース）</text>
+              <text x="380" y="178" fill="var(--kb-fg-muted)">見つけ方：「別のシステムと」やり取りするもの</text>
+              <text x="380" y="198" fill="var(--kb-fg-muted)">会計連携・人事マスタ取込・SSO 認証</text>
+              <text x="380" y="218" fill="var(--kb-fg-faint)" font-size="10.5">忘れやすい：相手側の改修要否／連携エラー時の運用</text>
+            </g>
+          </svg>
+          <figcaption>四分类是<strong>洗い出しの道具</strong>であって分類の目的ではない。同じ業務フローを「人が触る所は？」「紙が出る所は？」「まとめて処理する所は？」「外と繋がる所は？」と四回なぞる——それだけで漏れが激減する。</figcaption>
+        </figure>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 四分类でも取りこぼす二つの領域</p>
+          <p><strong>① マスタ管理</strong>：費目マスタ、承認ルート、部門マスタ、ユーザー。これらは業務フロー（日常業務）に出てこないが、無いとシステムが動かない。<strong>「このシステムが参照するマスタを全部挙げてください」</strong>という別の問いが必要。<br><strong>② 共通・基盤機能</strong>：ログイン／ログアウト、パスワード再発行、権限管理、監査ログ、エラー画面、メール通知基盤。冒頭の 300 万円はここ。<br>対策は本章末の<strong>抜け漏れチェックリスト</strong>——業務からではなく、<strong>システムの一般形から</strong>逆に問う。</p>
+        </div>
+
+        <h2>亲手导一遍：从業務フロー到機能一覧</h2>
+        <p>下面用第 4 章的 To-Be フロー，一步一步导出机能。<strong>每一步先自己想「这一步需要什么机能」，再点「答えを見る」</strong>。最后一步是本章的重点。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 業務フロー → 機能一覧 の導出演習</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：把 To-Be 業務フロー的每一步按「画面／帳票／バッチ／IF」四类展开，可以导出约 20 个机能；但<strong>ログイン・パスワード再発行・権限管理・監査ログ・エラー画面・マスタ保守</strong>这类机能<strong>不会出现在任何業務フロー里</strong>，必须靠独立的检查表才能捞出来——它们通常占机能总数的两成，占工数的更多。</p></noscript>
+            <div class="fd-bar">
+              <button type="button" class="fd-btn primary" id="fd-reveal">答えを見る</button>
+              <button type="button" class="fd-btn" id="fd-next">次のステップ →</button>
+              <button type="button" class="fd-btn" id="fd-reset">最初から</button>
+              <span class="fd-acc" id="fd-acc"></span>
+            </div>
+            <div class="fd-step" id="fd-step" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <h2>機能一覧与機能ID体系</h2>
+        <p>洗い出した機能に<strong>ID</strong>を振る。IDは単なる通し番号ではなく、<strong>後続工程すべての背骨</strong>になる——設計書名、テストケースID、課題の参照、変更管理の単位、すべてが機能IDで紐づく。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>設計方針</th><th>例</th><th>理由</th></tr></thead>
+            <tbody>
+              <tr><td>大分類を英字 1〜2 桁で表す</td><td>A＝申請、B＝承認、C＝経理、D＝バッチ、F＝IF、G＝帳票、H＝マスタ、Z＝共通</td><td>IDを見ただけで所属が分かる。ソートも自然に分類順になる</td></tr>
+              <tr><td>連番は 10 飛ばし</td><td>F-010, F-020, F-030</td><td><strong>後から間に挿入できる</strong>。連番だと追加機能に F-011 のような苦しいIDが必要になる</td></tr>
+              <tr><td>意味を持たせすぎない</td><td>× F-画面-申請-登録-001</td><td>長すぎるIDは書き間違いを生む。分類は列で持ち、IDは短く</td></tr>
+              <tr><td>一度振ったIDは再利用しない</td><td>削除した F-030 を別機能に使わない</td><td>過去の議事録・課題票が別物を指すようになる</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>機能一覧（要件定義書 第 5 章 抜粋）</span><span class="kb-doc-id">DOC-204 / v1.3</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>機能ID</th><th>大分類</th><th>機能名</th><th>概要</th><th>区分</th><th>関連業務</th><th>要求ID</th><th>優先度</th></tr></thead>
+              <tbody>
+                <tr><td>F-010</td><td>申請</td><td>経費申請登録</td><td>費目・金額・日付・支払先・目的を入力し、領収書画像を添付して申請を提出する</td><td>画面</td><td>B-010</td><td>R-001</td><td>Must</td></tr>
+                <tr><td>F-011</td><td>申請</td><td>申請一覧・下書き管理</td><td>自分の申請を一覧表示し、下書きの編集・削除、提出済の取下げを行う</td><td>画面</td><td>B-010</td><td>R-001</td><td>Must</td></tr>
+                <tr><td>F-012</td><td>申請</td><td>領収書画像アップロード</td><td>撮影またはファイル選択により領収書画像を添付する（1 申請 10 件・1 件 5MB まで）</td><td>画面</td><td>B-011</td><td>R-001</td><td>Must</td></tr>
+                <tr><td>F-013</td><td>申請</td><td>入力チェック</td><td>必須・桁・日付妥当性・費目と税区分の整合を検証しエラーを表示する</td><td>画面</td><td>B-010</td><td>R-002</td><td>Must</td></tr>
+                <tr><td>F-014</td><td>申請</td><td>重複申請チェック</td><td>同一日・同一金額・同一支払先の申請が既にある場合に警告を表示する</td><td>画面</td><td>B-010</td><td>R-002</td><td>Should</td></tr>
+                <tr><td>F-015</td><td>申請</td><td>申請状況照会</td><td>申請の現在の状態（承認待ち／差戻し／確定／支払済）と履歴を参照する</td><td>画面</td><td>B-040</td><td>R-005</td><td>Should</td></tr>
+                <tr><td>F-020</td><td>承認</td><td>承認待ち一覧</td><td>自分が承認すべき申請を一覧表示し、絞り込み・並べ替えを行う</td><td>画面</td><td>B-020</td><td>R-003</td><td>Must</td></tr>
+                <tr><td>F-021</td><td>承認</td><td>一括承認</td><td>一覧から複数件を選択してまとめて承認する</td><td>画面</td><td>B-020</td><td>R-003</td><td>Should</td></tr>
+                <tr><td>F-022</td><td>承認</td><td>差戻し</td><td>理由を必須入力のうえ申請者へ差戻す</td><td>画面</td><td>B-021</td><td>R-003</td><td>Must</td></tr>
+                <tr><td>F-023</td><td>承認</td><td>承認履歴の記録・参照</td><td>承認・差戻しの日時、実施者、理由を記録し参照可能とする</td><td>画面</td><td>B-020</td><td>R-003</td><td>Must</td></tr>
+                <tr><td>F-030</td><td>経理</td><td>経理チェック一覧・確定</td><td>承認済申請を一覧で確認し、経理確定を行う</td><td>画面</td><td>B-030</td><td>R-004</td><td>Must</td></tr>
+                <tr><td>F-050</td><td>バッチ</td><td>仕訳データ生成</td><td>確定済データから仕訳明細を生成する（月次・第一営業日 2:00）</td><td>バッチ</td><td>B-031</td><td>R-004</td><td>Must</td></tr>
+                <tr><td>F-051</td><td>IF</td><td>会計システム連携</td><td>仕訳ファイルを所定形式で出力し、会計システムへ連携する</td><td>IF</td><td>B-031</td><td>R-004</td><td>Must</td></tr>
+                <tr><td>F-052</td><td>IF</td><td>社員マスタ取込</td><td>人事システムから社員・部門・上長情報を日次で取り込む</td><td>IF</td><td>B-050</td><td>—</td><td>Must</td></tr>
+                <tr><td>F-060</td><td>照会</td><td>部門別・費目別集計</td><td>期間・部門・費目で集計し画面表示および CSV 出力する</td><td>画面</td><td>—</td><td>R-007</td><td>Could</td></tr>
+                <tr><td>F-070</td><td>マスタ</td><td>費目マスタ保守</td><td>費目・勘定科目・税区分の登録・変更・無効化を行う</td><td>画面</td><td>B-050</td><td>R-006</td><td>Should</td></tr>
+                <tr><td>F-090</td><td>帳票</td><td>経費精算書出力</td><td>確定済申請から経費精算書 PDF を出力する（過去分の再出力を含む）</td><td>帳票</td><td>B-030</td><td>—</td><td>Should</td></tr>
+                <tr><td>Z-010</td><td>共通</td><td>ログイン／ログアウト</td><td>SSO 認証基盤と連携して認証を行う</td><td>画面</td><td>—</td><td>—</td><td>Must</td></tr>
+                <tr><td>Z-011</td><td>共通</td><td>権限管理</td><td>ロールの割当と、画面・機能・データ範囲のアクセス制御を行う</td><td>画面</td><td>—</td><td>—</td><td>Must</td></tr>
+                <tr><td>Z-012</td><td>共通</td><td>監査ログ</td><td>ログイン、データ更新、権限変更の操作履歴を記録する</td><td>—</td><td>—</td><td>—</td><td>Must</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 本一覧は要件定義書の付属資料とし、機能の追加・削除は変更管理の対象とする。<br>※ 「関連業務」「要求ID」列により、業務一覧・要求一覧へ遡れる（トレーサビリティ／第 9 章）。</p>
+          </div>
+        </div>
+
+        <h2>CRUD 视角与権限マトリクス</h2>
+        <p>機能一覧ができたら、<strong>二つの直交する視点</strong>で穴を探す。一つ目が CRUD、二つ目が権限。</p>
+        <p><strong>CRUD 視点</strong>：主要なデータ（申請、費目マスタ、ユーザー）ごとに、Create／Read／Update／Delete が揃っているかを確認する。<br>例：「申請」は登録（F-010）・参照（F-011, F-015）・更新（下書き編集）はあるが、<strong>削除は？</strong>——提出後の取下げは誰がいつまでできるのか。確定後は？ 監査上、物理削除してよいのか（→ 論理削除、第 12 章）。この一問で必ず要件が一つ増える。</p>
+
+        <p><strong>権限マトリクス</strong>：ロール × 機能 の表を作る。<strong>これを要件定義でやらないと、基本設計で必ず破綻する</strong>——画面設計の途中で「この人にはこのボタンを見せるべきか？」が全画面で発生し、その都度客に確認する羽目になる。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>権限マトリクス（要件定義書 第 5 章 抜粋）</span><span class="kb-doc-id">DOC-205 / v0.9</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>機能</th><th>申請者<br>（全社員）</th><th>承認者<br>（部門長）</th><th>経理担当</th><th>システム<br>管理者</th></tr></thead>
+              <tbody>
+                <tr><td>F-010 経費申請登録</td><td>◯（自分のみ）</td><td>◯（自分のみ）</td><td>◯（自分のみ）</td><td>—</td></tr>
+                <tr><td>F-011 申請一覧</td><td>◯（自分のみ）</td><td>◯（自部門）</td><td>◯（全社）</td><td>◯（全社）</td></tr>
+                <tr><td>F-020 承認待ち一覧</td><td>—</td><td>◯（自部門）</td><td>—</td><td>—</td></tr>
+                <tr><td>F-022 差戻し</td><td>—</td><td>◯</td><td>◯</td><td>—</td></tr>
+                <tr><td>F-030 経理確定</td><td>—</td><td>—</td><td>◯</td><td>—</td></tr>
+                <tr><td>F-030 確定後の修正</td><td>—</td><td>—</td><td>◯（履歴必須）</td><td>—</td></tr>
+                <tr><td>F-060 部門別集計</td><td>—</td><td>◯（自部門）</td><td>◯（全社）</td><td>◯（全社）</td></tr>
+                <tr><td>F-070 費目マスタ保守</td><td>—</td><td>—</td><td>◯</td><td>◯</td></tr>
+                <tr><td>Z-011 権限管理</td><td>—</td><td>—</td><td>—</td><td>◯</td></tr>
+                <tr><td>Z-012 監査ログ参照</td><td>—</td><td>—</td><td>—</td><td>◯</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ ◯の括弧内は<strong>データ範囲</strong>（自分のみ／自部門／全社）。機能の可否とデータ範囲は別の軸であり、両方を書かないと設計できない。<br>※ 役員・出向者の扱いは課題 No.021 にて確認中。<br>※ 経理担当が自分の経費を申請した場合、自分で確定できてしまう点について、業務上の妥当性を要確認（課題 No.022）。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 権限マトリクスの二つの軸</p>
+          <p>「この機能を使えるか（機能権限）」と「どの範囲のデータを見られるか（データ権限）」は<strong>別の軸</strong>。この二つを混ぜると必ず設計で詰まる。<br>典型例：部門長は「申請一覧」を使えるが、見えるのは自部門だけ。経理は全社が見える。<strong>同じ画面・同じ機能でも、SQL の WHERE 句が変わる</strong>——これは第 12 章のデータ設計に直結する。<br>もう一つ、上の表の最後の注記に注目してほしい。<strong>「経理担当が自分の経費を自分で確定できる」</strong>——これは内部統制の観点で問題になり得る。権限マトリクスを書くと、こういう<strong>業務ルール上の矛盾が機械的に見つかる</strong>。これが表を書く本当の価値。</p>
+        </div>
+
+        <h2>抜け漏れチェックリスト</h2>
+        <p>最後に、<strong>業務からではなくシステムの一般形から</strong>問う。以下は経費精算に限らず使える汎用チェックリスト——業務フローには絶対に出てこないが、無いと動かないものたち。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>観点</th><th>問い</th><th>本案例で出た機能</th></tr></thead>
+            <tbody>
+              <tr><td>認証</td><td>ログイン・ログアウト・パスワード再発行・アカウントロックは？</td><td>Z-010（SSO 連携のため再発行は基盤側。<strong>これも確認して初めて分かる</strong>）</td></tr>
+              <tr><td>権限</td><td>ロールの登録・変更は誰がどこで行う？</td><td>Z-011</td></tr>
+              <tr><td>マスタ</td><td>このシステムが参照するマスタを全部挙げると？ その保守画面は？</td><td>F-070（費目）、F-071（承認ルート）、F-052（社員は人事から連携）</td></tr>
+              <tr><td>一覧・検索</td><td>登録した情報を後から探す手段は？ 検索条件は足りるか？</td><td>F-011, F-020, F-030 の検索条件</td></tr>
+              <tr><td>取消・訂正</td><td>間違えたときは誰がどう直す？ どこまで遡れる？</td><td>取下げ、確定後修正（履歴必須）</td></tr>
+              <tr><td>履歴・監査</td><td>「誰がいつ何を変えたか」を残す必要は？ 保存期間は？</td><td>F-023, Z-012</td></tr>
+              <tr><td>通知</td><td>誰かに知らせる必要のあるイベントは？（承認依頼・差戻し・締め間近）</td><td>Z-020 メール通知（<strong>演習では意図的に出していない。あなたは気づいたか</strong>）</td></tr>
+              <tr><td>帳票の再出力</td><td>過去分をもう一度出す必要は？ 出力済フラグは要る？</td><td>F-090 に「過去分の再出力を含む」と明記</td></tr>
+              <tr><td>初期データ</td><td>稼働時に投入するデータは？ 誰が作る？</td><td>移行計画へ（第 14 章）</td></tr>
+              <tr><td>エラー・異常</td><td>バッチが落ちたら？ 連携先が停止していたら？ 誰にどう通知する？</td><td>F-053 連携エラー通知・リラン（<strong>これも演習では未提示</strong>）</td></tr>
+              <tr><td>データ保持</td><td>いつまで保持する？ 削除・アーカイブは？</td><td>法定保存年限の確認（経理部・税務）→ 非機能要件（第 7 章）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 「一覧画面」は何本必要か</p>
+          <p>機能一覧に F-011（申請一覧）、F-020（承認待ち一覧）、F-030（経理チェック一覧）と、似た一覧が三つ並んだ。<strong>一本にまとめるべきか？</strong></p>
+          <p><strong>判断軸は「検索条件・表示項目・操作ボタンが同じか」</strong>。<br>申請者の一覧：自分の申請だけ、状態で絞る、操作は「編集・取下げ」。<br>承認者の一覧：自部門の承認待ちだけ、操作は「承認・差戻し」。<br>経理の一覧：全社の承認済だけ、操作は「確定・差戻し・CSV出力」。<br>→ <strong>三者は別画面にするのが正解</strong>。無理に一本化すると、権限による表示制御が画面内で複雑に分岐し、かえって作りにくく、テストケースも増える。</p>
+          <p><strong>ただし要件定義の段階では「画面を分けるか」は決めきらなくてよい</strong>——それは第 11 章（画面設計）の判断。要件定義で決めるべきは<strong>「誰が、どんな条件で、何を見て、何ができるか」</strong>まで。機能一覧では 3 行に分けておき、設計で統合する判断が出たらそのとき統合すればよい。<strong>粗く 1 行にしておくと見積が甘くなる</strong>ので、迷ったら分けて書く。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 客が「この機能は当然入っていますよね？」と言ってきた</p>
+          <p>基本設計に入ってから、経理部が「承認者が不在のときの代理承認、当然ありますよね」と発言。機能一覧には無い。</p>
+          <p><strong>まず確認する三点</strong>：① 要求一覧・議事録に記載があるか（第 3 章のペンディング欄に「代理承認」があった可能性）。② 業務一覧の「B-020 承認」の業務ルール欄に書かれていたか。③ 過去の会議で「次期対応」と合意していないか。</p>
+          <p><strong>記載があった場合</strong>——こちらの機能一覧への落とし込み漏れ。素直に認めて、影響（工数・日程）を示して対応を協議する。請負なら自社負担の可能性が高い。<strong>ここで争わないこと</strong>：記録が残っている以上、争っても勝てないし、信頼を失うだけ。</p>
+          <p><strong>記載が無かった場合</strong>——「当然」は要件ではない。ただし<strong>「言われていないから作らない」で押し切るのも下策</strong>。代理承認が無いと月末に承認が滞留し、システムの目的（K-04 の解決）が達成されない可能性がある。<br>正しい返し方：「機能一覧および要件定義書にはご承認いただいた範囲として含まれておりません。ただし運用上必要性が高いと認識しておりますので、<strong>変更管理として工数・日程影響をお出しします</strong>。あわせて、代理承認が無い場合の運用（承認者が事前に権限委譲する等）でも回るかをご確認いただけますでしょうか。」<br><strong>ポイント</strong>：契約上の立場（スコープ外）と、業務上の助言（無いと困りますよ）を<strong>両方同時に出す</strong>。片方だけだと、冷たいベンダーか、なんでも飲むベンダーのどちらかになる。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 優先度を全部「Must」と言われた</p>
+          <p>客に優先度を付けてもらうと、しばしば全部 Must になる。「どれも必要です」と。</p>
+          <p><strong>なぜそうなるか</strong>：優先度を下げることが「諦める」と受け取られるから。そして客の側にも部門間の力学がある（営業部の要望を Could にすると営業部長に怒られる）。</p>
+          <p><strong>効く三つの聞き方</strong>：<br>① <strong>順位を付けさせる</strong>——「優先度」ではなく「もし開発できるのが 10 個までだとしたら、どの 10 個ですか」。ランキングは Must/Should より答えやすい。<br>② <strong>リリース時期で切る</strong>——「初回リリースに必須のものと、稼働 3 か月後でも構わないものに分けていただけますか」。<strong>「捨てる」ではなく「後にする」なら合意しやすい</strong>。<br>③ <strong>目的に戻す</strong>——「今回の目的は月末の負荷削減と伺っています。R-007（部門別分析）はその目的に直接寄与しますか？」目的（第 2 章の要求層）を基準にすると、politics ではなく論理で話せる。</p>
+          <p><strong>それでも全部 Must なら</strong>：それは優先度の問題ではなく<strong>予算と工期の問題</strong>。第 8 章の見積を出して、「全部 Must なら、期間は 12 か月・費用は X 円になります。ご予算内に収めるにはどこかを次期にする必要があります」と、<strong>判断材料を出して決めてもらう</strong>——第 1 章から繰り返している構造がここでも出てくる。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の機能は 画面・帳票・バッチ・IF のどれに分類されるか。① 毎晩 1:00 に前日の申請件数を集計してメール送信　② 承認者へ承認依頼メールを即時送信　③ 経費精算書を PDF で出力　④ 人事システムから社員情報を日次で取り込む</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①バッチ　②画面（に付随する処理）または共通機能　③帳票　④IF（＋バッチ）</p>
+            <p><strong>解析</strong>：<br>①は「定時に・まとめて」なのでバッチ。<br>②が引っかけ。<strong>即時送信は画面操作の延長</strong>であって、バッチではない。ただし機能一覧では「Z-020 メール通知」として共通機能に括ることが多い（テンプレート管理、送信失敗時の扱いが共通のため）。<br>③は出力物なので帳票。ただし<strong>PDF出力のトリガーが画面ボタンなら画面機能でもある</strong>——分類は排他ではなく、洗い出しの道具にすぎない（本章の図の説明どおり）。<strong>迷ったら両方に書いて、後で統合する</strong>ほうが漏れない。<br>④は最も重要な例：<strong>IF であり、かつバッチでもある</strong>。「人事システムとの連携」という IF の観点で相手システムとの取り決め（ファイル形式・連携時刻・障害時の扱い）が必要で、同時に「日次で自動実行」というバッチの観点で実行契機・リラン・エラー通知が必要。<strong>片方の視点だけで洗い出すと、必ずどちらかが漏れる。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>機能IDを「連番（F-001, F-002, F-003…）」ではなく「10 飛ばし（F-010, F-020…）」にする理由を説明せよ。また、機能を削除した場合にそのIDを再利用してはいけない理由も述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>10 飛ばしの理由</strong>：要件定義から稼働までの間に機能は必ず追加される。連番だと「F-010 と F-011 の間に入る機能」に振るIDが無く、F-010-2 のような苦しい採番になるか、全体を振り直すことになる。<strong>振り直しは最悪</strong>——議事録・課題票・テストケース・見積書に散らばった旧IDが一斉に無効になる。</p>
+            <p><strong>再利用してはいけない理由</strong>：過去の文書（議事録、課題管理表、レビュー記録、見積の内訳）が旧F-030を参照しており、そこに別の機能を割り当てると、<strong>過去の記録が別のものを指すようになる</strong>。「F-030 は次期対応と合意」という議事録が、新しいF-030に対する合意として読まれてしまう。<br><strong>正しい扱い</strong>：削除した機能は<strong>行を消さず、状態を「削除（YYYY/MM/DD 変更管理 No.xx）」にして残す</strong>。要求一覧の Won't 行を消さないのと同じ思想——<strong>「検討した結果やらない」と「検討していない」は、記録上まったく別のもの</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>権限マトリクスにおける「機能権限」と「データ権限」の違いを説明し、本章の表から具体例を挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>機能権限</strong>＝その機能を使えるか（画面を開けるか、ボタンを押せるか）。<strong>データ権限</strong>＝使えるとして、どの範囲のデータを対象にできるか。</p>
+            <p><strong>具体例</strong>：F-011（申請一覧）は、申請者・承認者・経理担当のいずれも<strong>機能権限は ◯</strong>。しかしデータ権限は、申請者＝自分のみ、承認者＝自部門、経理＝全社と異なる。<strong>同じ画面を開いても、見えるものが違う。</strong></p>
+            <p><strong>なぜこの区別が重要か</strong>：設計・実装・テストのすべてに影響するから。<br>・設計：データ権限は SQL の WHERE 句、あるいは共通の絞り込み処理として方式設計（第 10 章）で決める必要がある。画面ごとに個別実装すると必ず漏れる。<br>・テスト：機能権限のテストは「開けるか／開けないか」の 2 値だが、データ権限のテストは「他部門のデータが<strong>見えないこと</strong>」を確認する必要がある。これは<strong>正常系のテストでは絶対に見つからない</strong>——意図的に他部門のデータを用意して、見えないことを確認する必要がある。<br>・セキュリティ：URLパラメータの改竄で他人のデータが見えてしまう事故（いわゆる水平権限昇格）は、データ権限をサーバ側で担保していない場合に起きる。第 7 章のセキュリティ要件、第 10 章の方式設計で扱う。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>本章の機能一覧には、演示や本文で「意図的に載せていない」と示唆された機能がいくつかある。抜け漏れチェックリストを使って 3 つ以上挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>解答例</strong>：<br>① <strong>Z-020 メール通知</strong>——承認依頼、差戻し、締め間近のリマインド。通知が無いと承認者が承認待ちに気づかず、月末の滞留が解決しない（＝K-04 の目的未達）。<br>② <strong>F-053 連携エラー通知・リラン</strong>——月次の仕訳連携が失敗したとき、誰がどう気づき、どう再実行するか。バッチは「正常に動くこと」より「落ちたときにどうするか」の要件のほうが工数を食う（第 13 章）。<br>③ <strong>F-071 承認ルート保守</strong>——本文の一部に登場するが、機能一覧の抜粋には無い。組織変更のたびにベンダーに依頼するのか、経理部が自分で直せるのかで、運用コストが大きく変わる。<br>④ <strong>データ保持・アーカイブ</strong>——法定保存年限（経理関係は 7 年）を満たすための保持と、性能維持のためのアーカイブ。<br>⑤ <strong>エラー画面・セッションタイムアウト時の挙動</strong>——「入力途中でタイムアウトして全部消える」は現場で最も嫌われる事象。<br>⑥ <strong>締め処理・締め後の追加（B-061）に対応する機能</strong>——業務一覧にはあるのに、機能一覧の抜粋には対応する行が無い。<strong>業務一覧と機能一覧を突き合わせると、この種の漏れが機械的に見つかる。</strong></p>
+            <p><strong>この演習の狙い</strong>：⑥の方法——<strong>業務一覧 × 機能一覧のクロスチェック</strong>——を体得すること。業務IDが機能一覧の「関連業務」列に一度も現れなければ、その業務は機能化されていない。<strong>表と表を突き合わせるだけで漏れが出る</strong>のが、IDを振っておくことの実利。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「申請」というデータについて CRUD 視点で機能の過不足を検証せよ。特に Delete について、業務・監査の観点から何を確認すべきか論じよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Create</strong>：F-010（申請登録）。加えて「下書き保存」も Create の一種——提出前の状態を保存できるか。長い入力の途中で離席する業務では必須。</p>
+            <p><strong>Read</strong>：F-011（一覧）、F-015（状況照会）、承認者・経理の各一覧。<strong>検索条件が足りるか</strong>が論点：期間、費目、金額範囲、状態、申請者、部門。経理が「先月の交通費だけ見たい」と言ったときに応えられるか。</p>
+            <p><strong>Update</strong>：下書きの編集、差戻し後の修正再申請、<strong>確定後の経理による修正</strong>。この三つは<strong>権限も履歴要件も異なる</strong>——特に確定後の修正は、会計連携済かどうかで扱いが変わる（連携後なら会計側の逆仕訳が必要）。</p>
+            <p><strong>Delete が最も論点が多い</strong>：<br>・<strong>誰が</strong>：申請者は自分の下書きを消せる。提出後は「取下げ」（＝Delete ではなく状態遷移）。確定後は経理も消せないのが普通。<br>・<strong>いつまで</strong>：承認前ならOK、承認後は不可、という線引きが要る。<br>・<strong>物理削除か論理削除か</strong>：<strong>経理データは物理削除してはいけない</strong>のが原則。監査対応（誰がいつ何を消したか）と、会計連携済データの整合性のため。よって「削除フラグ」＋「削除者・削除日時」の保持となる（第 12 章の共通項目）。<br>・<strong>添付ファイルは</strong>：申請を論理削除したとき、領収書画像は消すのか残すのか。ストレージ容量と監査要件のトレードオフ。<br>・<strong>法定保存年限</strong>：国税関係書類は原則 7 年（欠損金がある事業年度は 10 年）。<strong>これはシステム要件ではなく法令要件</strong>なので、経理部または顧問税理士に確認する必要がある。SEが勝手に決めてはいけない領域。</p>
+            <p><strong>この演習の本質</strong>：CRUD の C・R・U は業務フローから自然に出てくるが、<strong>D は必ず業務フローの外にある</strong>。そして D の要件は、たいてい<strong>法令・監査・内部統制</strong>という、業務担当者も即答できない領域につながる。だから早めに聞いて、課題管理表に載せて、期限を切って回答をもらう——第 3 章の作法がここで効く。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>要求 R-005「自分の申請が今どうなっているか、経理に聞かずに分かるようにしたい」を、機能に展開せよ。単に「申請状況照会画面」だけでは不十分である理由も述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>展開例</strong>：<br>① <strong>F-015 申請状況照会</strong>——状態（下書き／承認待ち／差戻し／承認済／経理確定／支払済）と、現在誰のところで止まっているかを表示。<br>② <strong>F-023 承認履歴の表示</strong>——いつ誰が承認したか、差戻しの理由は何か。「今どうなっているか」だけでなく「なぜそうなったか」が分からないと、結局経理に電話することになる。<br>③ <strong>Z-020 差戻し通知メール</strong>——差戻されたことに気づかなければ、照会画面があっても見に行かない。<strong>プッシュが無いとプルは機能しない。</strong><br>④ <strong>支払予定日の表示</strong>——「いつ振り込まれるか」が本当の関心事である可能性が高い。ただし振込は給与システム側（業務一覧 B-032 はスコープ外）なので、<strong>支払予定日をどこから取るかという IF の論点</strong>になる。<br>⑤ <strong>状態の定義そのもの</strong>——「支払済」をこのシステムがどうやって知るのか。給与システムから連携されないなら表示できない。</p>
+            <p><strong>「照会画面だけでは不十分」な理由</strong>：<br>要求 R-005 の真の目的は<strong>「経理への問い合わせを減らす」</strong>（業務一覧 B-040、月 80 件）。照会画面を作っただけでは問い合わせは減らない——(a) 差戻しに気づかない、(b) 理由が分からず結局聞く、(c) 一番知りたい「いつ振り込まれるか」が表示されない、のいずれかで電話がかかってくる。<br><strong>要求は「機能」ではなく「目的」であり、目的が達成されるまで機能を足す</strong>——これが第 2 章の要求と要件の関係の実践形。「言われたとおりの画面を作ったのに、問い合わせが減らない」は、要求を機能に直訳した典型的な失敗。</p>
+            <p><strong>実務的な確認方法</strong>：経理部に「今かかってくる問い合わせの内容を、1 週間分メモしていただけませんか」と依頼する。実データが取れれば、どの機能が本当に効くかが分かる。<strong>推測で機能を足すより、実態を測るほうが速い。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたが関わっているシステム（または習題 4.7 で描いた業務）について、機能一覧を作り、権限マトリクスを書け。そのうえで、本章の抜け漏れチェックリスト 11 項目を全部当てて、既存システムに「無い」ものを列挙せよ。無いことで実際に困っている事象があれば併記すること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>よく出る発見と、その意味を挙げる。</p>
+            <p><strong>発見①「マスタ保守画面が無く、依頼ベースで運用している」</strong>——最も多い。組織変更や費目追加のたびに情シスやベンダーに依頼し、DBを直接更新している。困りごとは「変更に 1 週間かかる」「更新ミスで事故が起きた」「誰がいつ変えたか分からない」。<strong>マスタ保守画面は「作らない」という判断が正当なこともある</strong>（年 1 回しか変わらないなら依頼運用で十分）が、頻度と事故コストを見て判断すべきもの。</p>
+            <p><strong>発見②「監査ログが無い、または取っているが誰も見られない」</strong>——ログはファイルに出ているがサーバに入らないと読めない、という状態。監査や事故調査のたびに情シスが手作業で抽出することになる。「取得している」と「使える」は別。</p>
+            <p><strong>発見③「エラー時の運用が決まっていない」</strong>——バッチが落ちたときの通知先が個人のメールアドレスで、その人が退職している、というのは実話としてよくある。<strong>これは機能の問題であると同時に運用設計の問題</strong>（第 14 章）。</p>
+            <p><strong>発見④「権限マトリクスを書いたら、実装と食い違った」</strong>——「本来は部門長は自部門だけのはずが、実は全社見えている」。これはセキュリティインシデント一歩手前。<strong>権限マトリクスを書くという行為自体が、既存システムの棚卸しになる。</strong></p>
+            <p><strong>この演習の狙い</strong>：機能一覧と権限マトリクスは<strong>新規開発のためだけの道具ではない</strong>ということ。既存システムに対して書くと、それは現状分析の道具になり、改修提案の根拠になり、引き継ぎ資料になる。<strong>「文書が無い既存システム」に対して最初にやるべきことは、この二つを書くこと</strong>——業務フロー（第 4 章）と合わせて三点セットが揃えば、そのシステムはもう「誰も分からないブラックボックス」ではなくなる。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 先做要求一覧（要求ID・<strong>出典</strong>・関連課題・優先度）再做機能一覧；「出典」列在スコープ争议・矛盾发现・追问理由三个场面救命；Won't 的行绝不删除；② 用<strong>画面・帳票・バッチ・IF 四分类</strong>把業務フロー纵向扫四遍——每类各有固定的识别问句与「忘れやすいもの」；③ 四分类之外还有两个盲区：<strong>マスタ管理</strong>与<strong>共通・基盤機能</strong>（登录、密码、权限、监査ログ、通知），它们不出现在任何業務フロー里，占机能总数约两成；④ 機能ID要分类前缀＋10 飛ばし连番，<strong>删除的ID绝不复用</strong>——过去的议事录会指向错误的东西；⑤ 两个正交视角查漏：<strong>CRUD</strong>（D 永远在業務フロー之外，且牵出法令・监査）与<strong>権限マトリクス</strong>（機能権限与<strong>データ権限</strong>是两个轴，后者决定 WHERE 句与安全测试）；⑥ 要求是目的不是机能——「照会画面を作ったのに問い合わせが減らない」是直译要求的典型失败。<br><strong>下一章预告</strong>：机能列出来了，但「使いやすいこと」「なるべく早く」这类句子还写在纸上。下一章正面对付暧昧——曖昧語辞典、一文一要件、検証可能性，把主观的品质翻译成能在受入テスト上判定的条文。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./04-读懂业务AsIs与ToBe.html">← 第 4 章 读懂业务：As-Is / To-Be 与業務フロー</a>
+          <a href="./06-要件的写法与品质.html">第 6 章 与暧昧作战：要件的写法与品质 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var stepBox = document.getElementById("fd-step");
+      var accBox = document.getElementById("fd-acc");
+      var btnReveal = document.getElementById("fd-reveal");
+      var btnNext = document.getElementById("fd-next");
+      var btnReset = document.getElementById("fd-reset");
+      if (!stepBox) return;
+
+      var K = { screen: "画面", batch: "バッチ", ifc: "IF", report: "帳票" };
+      var CLS = { screen: "fd-k-screen", batch: "fd-k-batch", ifc: "fd-k-if", report: "fd-k-report" };
+
+      var STEPS = [
+        {
+          flow: "① 申請者がスマホ／PC から経費を申請し、領収書を撮影して添付する",
+          ask: "この一歩に必要な機能は？（画面は 1 本で足りるか？ 添付は？ 費目はどこから来る？）",
+          fns: [
+            ["screen", "F-010 経費申請登録", "費目・金額・日付・支払先・目的の入力と提出"],
+            ["screen", "F-011 申請一覧・下書き管理", "書きかけの保存、提出済の取下げ"],
+            ["screen", "F-012 領収書画像アップロード", "撮影・ファイル選択、枚数とサイズの制限"]
+          ],
+          note: "「費目のプルダウンはどこから来るか」を考えると、費目マスタとその保守機能（F-070）が芋づる式に出てくる。"
+        },
+        {
+          flow: "② システムが入力内容を検証する",
+          ask: "チェックは何種類ある？ 「弾く」のと「警告して通す」のはどちらか？",
+          fns: [
+            ["screen", "F-013 入力チェック", "必須・桁・日付妥当性・費目と税区分の整合"],
+            ["screen", "F-014 重複申請チェック", "同一日・同一金額・同一支払先の警告表示"]
+          ],
+          note: "厳しすぎると現場が申請できない（第 3 章 例題 3）。「エラーで弾く」か「警告して通す」かは業務ルールとして決める必要があり、それ自体が要件になる。"
+        },
+        {
+          flow: "③ 上長が承認待ち一覧から承認、または理由を付けて差戻す",
+          ask: "一覧と詳細は別画面？ 月末に 50 件をどう捌く？ 差戻しの記録は？",
+          fns: [
+            ["screen", "F-020 承認待ち一覧", "自部門の承認待ちを絞り込み・並べ替え"],
+            ["screen", "F-021 一括承認", "複数選択してまとめて承認"],
+            ["screen", "F-022 差戻し", "理由の必須入力"],
+            ["screen", "F-023 承認履歴の記録・参照", "日時・実施者・理由を保持"]
+          ],
+          note: "「月末に 50 件まとめて」という第 4 章のヒアリング結果が、F-021（一括承認）という機能に直結している。業務の実態を知らないとこの機能は出てこない。"
+        },
+        {
+          flow: "④ 経理部が承認済の申請を確認し、経理確定を行う",
+          ask: "経理の一覧は承認者の一覧と同じでよい？ 確定後に間違いが見つかったら？",
+          fns: [
+            ["screen", "F-030 経理チェック一覧・確定", "全社の承認済を一覧確認し確定"],
+            ["screen", "F-031 確定後修正", "経理のみ可能、変更履歴を必須保持"]
+          ],
+          note: "検索条件・表示項目・操作ボタンが違うので、承認者の一覧とは別画面にするのが定石（例題 1）。"
+        },
+        {
+          flow: "⑤ 月次バッチが仕訳データを生成し、会計システムへ連携する",
+          ask: "バッチと IF は別の機能？ 失敗したらどうする？",
+          fns: [
+            ["batch", "F-050 仕訳データ生成", "確定済データから仕訳明細を生成（第一営業日 2:00）"],
+            ["ifc", "F-051 会計システム連携", "所定形式のファイルを出力し連携"],
+            ["batch", "F-052 連携エラー通知・リラン", "異常終了時の通知と再実行"]
+          ],
+          note: "バッチ機能は「正常に動くこと」より「落ちたときにどうするか」のほうが工数を食う。ここを要件で落とすと第 13 章で必ず詰まる。"
+        },
+        {
+          flow: "⑥ 申請者が自分の申請状況を照会する",
+          ask: "画面だけで十分か？ 経費精算書の紙は誰がいつ必要とする？",
+          fns: [
+            ["screen", "F-015 申請状況照会", "状態と履歴、現在の滞留先を表示"],
+            ["report", "F-090 経費精算書出力", "確定済申請から PDF 出力、過去分の再出力を含む"]
+          ],
+          note: "「照会画面を作れば問い合わせが減る」は誤り。差戻し通知（プッシュ）が無いと、そもそも見に来ない（習題 5.6）。"
+        },
+        {
+          flow: "⑦ 経理部が費目や承認ルートを保守する／人事システムから社員情報が届く",
+          ask: "このシステムが参照するマスタを全部挙げられるか？ それぞれ誰が保守する？",
+          fns: [
+            ["screen", "F-070 費目マスタ保守", "費目・勘定科目・税区分の登録／変更／無効化"],
+            ["screen", "F-071 承認ルート保守", "部門ごとの承認段数・承認者の設定"],
+            ["ifc", "F-053 社員マスタ取込", "人事システムから社員・部門・上長を日次連携"]
+          ],
+          note: "マスタは日常業務のフローに出てこない。「参照するマスタを全部挙げてください」という別の問いが必要になる。"
+        },
+        {
+          flow: "⑧ ……業務フローはここで終わり。しかし機能一覧はまだ終わらない",
+          ask: "業務フローに一度も登場しないが、無いとシステムが動かない機能は？",
+          fns: [
+            ["screen", "Z-010 ログイン／ログアウト", "SSO 認証基盤との連携"],
+            ["screen", "Z-011 権限管理", "ロール割当、機能権限とデータ権限の制御"],
+            ["screen", "Z-012 監査ログ", "ログイン・更新・権限変更の操作履歴"],
+            ["screen", "Z-020 メール通知", "承認依頼・差戻し・締め間近のリマインド"],
+            ["screen", "Z-030 エラー画面・セッションタイムアウト", "異常時の表示と入力内容の扱い"]
+          ],
+          note: "冒頭の 300 万円はここ。これらは業務フローからは絶対に出てこないので、システムの一般形から問う「抜け漏れチェックリスト」が必要になる。ここまでで機能は 20 本強——うち 5 本が業務フロー外である点に注目。"
+        }
+      ];
+
+      var idx = 0, revealed = false;
+      var found = 0;
+
+      function render() {
+        var s = STEPS[idx];
+        stepBox.textContent = "";
+
+        var no = document.createElement("p");
+        no.className = "fd-no";
+        no.textContent = "業務ステップ " + (idx + 1) + " / " + STEPS.length;
+        stepBox.appendChild(no);
+
+        var fl = document.createElement("p");
+        fl.className = "fd-flow";
+        fl.textContent = s.flow;
+        stepBox.appendChild(fl);
+
+        if (!revealed) {
+          var ask = document.createElement("p");
+          ask.className = "fd-ask";
+          ask.textContent = "🤔 " + s.ask;
+          stepBox.appendChild(ask);
+        } else {
+          var ul = document.createElement("ul");
+          ul.className = "fd-list";
+          s.fns.forEach(function (f) {
+            var li = document.createElement("li");
+            var badge = document.createElement("span");
+            badge.className = "fd-kind " + CLS[f[0]];
+            badge.textContent = K[f[0] === "ifc" ? "ifc" : f[0]];
+            li.appendChild(badge);
+            var b = document.createElement("strong");
+            b.textContent = f[1];
+            li.appendChild(b);
+            li.appendChild(document.createTextNode("　" + f[2]));
+            ul.appendChild(li);
+          });
+          stepBox.appendChild(ul);
+          var nt = document.createElement("p");
+          nt.className = "fd-note";
+          nt.textContent = "💡 " + s.note;
+          stepBox.appendChild(nt);
+        }
+
+        btnReveal.disabled = revealed;
+        btnNext.disabled = idx >= STEPS.length - 1;
+        accBox.textContent = "";
+        accBox.appendChild(document.createTextNode("導出済みの機能："));
+        var st = document.createElement("strong");
+        st.textContent = String(found);
+        accBox.appendChild(st);
+        accBox.appendChild(document.createTextNode(" 本"));
+      }
+
+      btnReveal.addEventListener("click", function () {
+        if (revealed) return;
+        revealed = true;
+        found += STEPS[idx].fns.length;
+        render();
+      });
+      btnNext.addEventListener("click", function () {
+        if (idx >= STEPS.length - 1) return;
+        if (!revealed) { found += STEPS[idx].fns.length; }
+        idx += 1;
+        revealed = false;
+        render();
+      });
+      btnReset.addEventListener("click", function () {
+        idx = 0; revealed = false; found = 0; render();
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

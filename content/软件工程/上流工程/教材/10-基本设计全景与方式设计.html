@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10 基本设计全景与方式設計 · 知识库</title>
+  <meta name="kb:summary" content="外部设计与内部设计的界线、设计书一览与依赖顺序，以及方式設計要定的共通事项：认证授权、错误、日志、排他、命名规约与代码体系。">
+  <meta name="kb:tags" content="上流工程,基本设计,外部设计,方式设计,共通方式,命名规约,代码设计,采番,排他控制,slgc,jbsj,fssj">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：分拣测验 */
+    .qs-q {
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 14px 16px; margin-bottom: 12px;
+    }
+    .qs-no { font-size: 0.75rem; color: var(--kb-fg-muted); margin: 0 0 5px; }
+    .qs-t { margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.6; }
+    .qs-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .qs-btn {
+      font: inherit; font-size: 0.86rem; padding: 7px 18px; cursor: pointer;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg); font-weight: 600;
+    }
+    .qs-btn:hover { border-color: var(--kb-accent); }
+    .qs-btn:disabled { opacity: 0.5; cursor: default; }
+    .qs-res {
+      border-left: 3px solid var(--kb-ok); background: var(--kb-ok-soft);
+      padding: 10px 13px; font-size: 0.87rem; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+      margin-bottom: 12px;
+    }
+    .qs-res.ng { border-left-color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .qs-res p { margin: 0 0 5px; }
+    .qs-res p:last-child { margin-bottom: 0; }
+    .qs-score { font-size: 0.82rem; color: var(--kb-fg-muted); }
+    .qs-score strong { color: var(--kb-fg); font-size: 1.05rem; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 10 章 · 基本设计全景与方式設計</h1>
+        <p class="kb-lead">第三部开始。要件が確定した今、問いは「何を作るか」から<strong>「どう見えるか・どう繋がるか」</strong>に変わる。この章はその全体像——外部設計と内部設計の境界はどこか、設計書は何種類あってどんな順に依存するのか、そして<strong>全画面・全機能に影響する共通の決め事</strong>（認証・エラー・ログ・排他・命名・コード体系）を、なぜ他のどの設計より先に決めなければならないのか。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用两条判定轴分清基本設計（外部設計）与詳細設計（内部設計）；② 说出基本設計の設計書一覧と作成順序、及其依赖关系；③ 说明方式設計要定的九类共通事项，并解释为什么它们必须先定；④ 设计命名規約与コード体系（採番・区分値）；⑤ 判断「どこまで書けば製造できるか」的界线。</p>
+        </div>
+
+        <h2>18 個の画面が、それぞれ権限判定を実装していた</h2>
+        <p>ある案件で、画面設計を 4 人の SE が分担した。全員が真面目に仕事をした。<strong>ただし、権限判定の方式が誰も決めていなかった。</strong></p>
+        <p>結果、A さんの画面は「ボタンを非表示」、B さんは「ボタンは出すが押すとエラー」、C さんは「画面自体を開かせない」、D さんは「一覧に他部門のデータも出すが、詳細を開こうとするとエラー」。<strong>D さんの方式は、一覧に他部門の経費が見えてしまうという事故そのものだった。</strong></p>
+        <p>統合テストで発覚し、18 画面すべての権限まわりを作り直した。工数 20 人日。<strong>方式設計で 2 時間かけて「権限判定は共通の仕組みでサーバ側に一元化する」と決めていれば、起きなかった。</strong></p>
+        <p>方式設計とは、<strong>「全部の設計書に共通して効く決め事」を先に潰しておく作業</strong>である。地味だが、基本設計で最も高い価値を生む工程。</p>
+
+        <h2>外部設計と内部設計の境界：二つの判定軸</h2>
+        <p>第 2 章では「システムの外側から見えるか」という軸を学んだ。実務ではもう一本、補助線が要る。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>判定軸</th><th>問い</th><th>これに該当するなら</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>軸 1：外から見えるか</strong></td>
+                <td>ユーザー、または相手システムから観測できるか？</td>
+                <td>基本設計（外部設計）</td>
+              </tr>
+              <tr>
+                <td><strong>軸 2：後から変えると影響が大きいか</strong></td>
+                <td>見えないが、後で変えると全機能・全データに波及するか？</td>
+                <td>基本設計に引き上げる</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>軸 2 に該当する典型が、<strong>方式設計の対象</strong>そのもの——権限判定の方式、エラー処理の方式、ログの方式、トランザクション境界、命名規約、コード体系。これらはユーザーには見えないが、<strong>詳細設計に降ろすと 4 人の SE が 4 通りに実装する</strong>。</p>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 迷ったときの三つ目の問い</p>
+          <p>「これは客に見せてレビューしてもらう必要があるか？」——YES なら基本設計。<br>画面の項目・帳票のレイアウト・会計システムに渡すファイルの項目は、客が見て「違う」と言えなければならない。逆にクラスの分割やインデックスの張り方を客に見せても、判断のしようがない。<br><strong>基本設計書＝発注者と合意する文書、詳細設計書＝製造者に指示する文書</strong>——この違いが、粒度と書き方の違いをすべて説明する。</p>
+        </div>
+
+        <h2>設計書一覧と依存関係</h2>
+        <p>基本設計の成果物は、独立した書類の束ではなく<strong>依存関係のあるネットワーク</strong>。作る順番を間違えると手戻りする。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 330" width="700" height="330" role="img" aria-label="基本设计成果物的依赖关系图：要件定义书为起点，方式设计与数据设计先行，画面、帐票、接口、批处理设计并行，最后是运用与移行设计">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11.5">
+              <rect x="250" y="12" width="200" height="40" rx="9" fill="var(--kb-ok-soft)" stroke="var(--kb-ok)" stroke-width="1.6"/>
+              <text x="350" y="37" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">要件定義書（承認済）</text>
+
+              <rect x="90" y="82" width="200" height="52" rx="9" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-width="1.8"/>
+              <text x="190" y="104" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">方式設計書</text>
+              <text x="190" y="122" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">構成・認証・エラー・ログ・命名・コード</text>
+
+              <rect x="410" y="82" width="200" height="52" rx="9" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-width="1.8"/>
+              <text x="510" y="104" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">データ設計書</text>
+              <text x="510" y="122" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">ER図・テーブル定義・CRUD図</text>
+
+              <rect x="20" y="168" width="150" height="46" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="95" y="188" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">画面設計書</text>
+              <text x="95" y="204" text-anchor="middle" font-size="10" fill="var(--kb-fg-muted)">一覧・遷移図・項目定義</text>
+
+              <rect x="184" y="168" width="150" height="46" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="259" y="188" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">帳票設計書</text>
+              <text x="259" y="204" text-anchor="middle" font-size="10" fill="var(--kb-fg-muted)">レイアウト・出力条件</text>
+
+              <rect x="348" y="168" width="150" height="46" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="423" y="188" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">IF設計書</text>
+              <text x="423" y="204" text-anchor="middle" font-size="10" fill="var(--kb-fg-muted)">連携方式・電文定義</text>
+
+              <rect x="512" y="168" width="150" height="46" rx="9" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+              <text x="587" y="188" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">バッチ設計書</text>
+              <text x="587" y="204" text-anchor="middle" font-size="10" fill="var(--kb-fg-muted)">一覧・ジョブネット</text>
+
+              <rect x="130" y="248" width="180" height="44" rx="9" fill="var(--kb-warn-soft)" stroke="var(--kb-warn)"/>
+              <text x="220" y="268" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">メッセージ一覧</text>
+              <text x="220" y="284" text-anchor="middle" font-size="10" fill="var(--kb-fg-muted)">全画面・全バッチ共通</text>
+
+              <rect x="380" y="248" width="180" height="44" rx="9" fill="var(--kb-warn-soft)" stroke="var(--kb-warn)"/>
+              <text x="470" y="268" text-anchor="middle" font-weight="600" fill="var(--kb-fg)">運用設計書・移行設計書</text>
+              <text x="470" y="284" text-anchor="middle" font-size="10" fill="var(--kb-fg-muted)">第 14 章</text>
+
+              <g stroke="var(--kb-fg-muted)" stroke-width="1.4" fill="none">
+                <path d="M 300 52 L 210 78"/><path d="M 210 78 l 2 -9 l -8 5 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 400 52 L 490 78"/><path d="M 490 78 l -2 -9 l 8 5 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 150 134 L 105 164"/><path d="M 105 164 l 2 -9 l -7 5 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 190 134 L 250 164"/><path d="M 250 164 l -3 -8 l 8 4 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 470 134 L 430 164"/><path d="M 430 164 l 2 -9 l -7 5 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 540 134 L 580 164"/><path d="M 580 164 l -3 -8 l 8 4 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 95 214 L 180 250"/><path d="M 180 250 l -3 -8 l 8 4 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 587 214 L 490 250"/><path d="M 490 250 l 3 -8 l -8 4 z" fill="var(--kb-fg-muted)"/>
+              </g>
+              <g stroke="var(--kb-accent)" stroke-width="1.2" stroke-dasharray="4 4" fill="none">
+                <path d="M 290 108 H 406"/>
+              </g>
+              <text x="348" y="103" text-anchor="middle" font-size="10" fill="var(--kb-accent)">相互に往復する</text>
+
+              <text x="20" y="318" font-size="10.5" fill="var(--kb-fg-faint)">※ 方式設計とデータ設計を先に固める。画面・帳票・IF・バッチは並行可能。メッセージ一覧は全設計書から参照される横断成果物。</text>
+            </g>
+          </svg>
+          <figcaption>基本設計の成果物依存図。<strong>方式設計とデータ設計が土台</strong>で、この二つは相互に往復しながら固まる（テーブル構成が方式に影響し、方式がテーブルに影響する）。画面・帳票・IF・バッチは並行できるが、<strong>土台が固まる前に走ると必ず手戻る</strong>。</figcaption>
+        </figure>
+
+        <h2>方式設計で決める九つのこと</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>項目</th><th>決めること</th><th>決めないとどうなるか</th></tr></thead>
+            <tbody>
+              <tr><td>① システム構成</td><td>本番・検証環境の構成、サーバ構成、ネットワーク、外部システムとの接続経路</td><td>調達が始められない。非機能要件（可用性）と整合しない</td></tr>
+              <tr><td>② アプリケーション方式</td><td>レイヤ構成、共通部品の範囲、画面遷移方式、セッション管理</td><td>SE ごとに構造がバラバラになり、保守で詰む</td></tr>
+              <tr><td>③ <strong>認証・認可方式</strong></td><td>認証の仕組み（SSO 連携）、機能権限とデータ権限を<strong>どこで担保するか</strong></td><td>冒頭の 20 人日。しかもデータ権限の漏れはセキュリティ事故</td></tr>
+              <tr><td>④ <strong>エラー・例外方式</strong></td><td>エラーの分類（入力エラー／業務エラー／システムエラー）、それぞれの表示方法、ロールバック方針、メッセージIDの体系</td><td>画面ごとにエラーの見え方が違う。異常時にデータが中途半端に残る</td></tr>
+              <tr><td>⑤ ログ方式</td><td>ログの種別（アプリ／アクセス／監査／エラー）、出力項目、保存期間、ローテーション、出力先</td><td>障害調査ができない。監査要件（第 7 章 N-S03）を満たせない</td></tr>
+              <tr><td>⑥ <strong>トランザクション・排他制御</strong></td><td>トランザクション境界、楽観ロック／悲観ロックの使い分け、競合時のユーザーへの見せ方</td><td>月末の同時アクセスでデータが壊れる／デッドロックで止まる</td></tr>
+              <tr><td>⑦ データの共通規則</td><td>文字コード、タイムゾーン、日付形式、金額の桁と小数、端数処理、全角半角の扱い</td><td>会計システムとの連携で文字化け。消費税の端数が 1 円ずれる</td></tr>
+              <tr><td>⑧ 命名規約</td><td>画面ID・テーブル名・カラム名・バッチID・メッセージIDの付け方</td><td>命名がバラバラで、検索も影響調査もできない</td></tr>
+              <tr><td>⑨ コード設計</td><td>採番方式（申請番号など）、区分値の管理方針</td><td>採番が重複する／区分値の追加のたびに改修が必要になる</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ ③認証・認可は「どこで担保するか」が全て</p>
+          <p>第 5 章で機能権限とデータ権限を分けた。方式設計で決めるのは<strong>その実現場所</strong>：<br>・<strong>画面で制御</strong>（ボタンを隠す）——利便性のためだけ。<strong>これだけでは守れない</strong>（URL 直叩き、API 直接呼び出しで突破される）。<br>・<strong>サーバの入口で制御</strong>（リクエストごとに権限チェック）——機能権限はここ。<br>・<strong>データ取得時に制御</strong>（SQL の WHERE 句に所属部門条件を自動付与）——データ権限はここ。<strong>各画面の SQL に手書きで条件を書かせると、必ずどこかで書き忘れる。</strong><br>方式設計に書くべき一文：「データ権限は共通のデータアクセス層で一元的に付与し、個々の機能では実装しない。」——この一文が、18 画面の事故を防ぐ。</p>
+        </div>
+
+        <h2>亲手判一判：これは基本設計？詳細設計？</h2>
+        <p>下面 16 道题。<strong>先自己判断，再看理由</strong>——重要的不是答对，而是理解「为什么这条线画在这里」。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 「基本設計？詳細設計？」分拣测验</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：判定は二軸——<strong>①ユーザーまたは相手システムから見えるか（見えれば基本設計）②見えなくても、後から変えると全体に波及するか（波及するなら基本設計に引き上げる）</strong>。第二軸に該当するのが方式設計の対象（権限方式・エラー方式・ログ方式・排他制御・命名規約・コード体系）で、これらを詳細設計に降ろすと、担当者ごとにバラバラな実装になる。</p></noscript>
+            <div class="qs-q" id="qs-q"></div>
+            <div class="qs-btns">
+              <button type="button" class="qs-btn" id="qs-a">基本設計（外部設計）</button>
+              <button type="button" class="qs-btn" id="qs-b">詳細設計（内部設計）</button>
+              <button type="button" class="qs-btn" id="qs-next">次の問題 →</button>
+            </div>
+            <div class="qs-res" id="qs-res" style="display:none"></div>
+            <p class="qs-score" id="qs-score"></p>
+          </div>
+        </div>
+
+        <h2>命名規約とコード設計</h2>
+        <h3>命名規約</h3>
+        <p>命名は「好み」ではなく<strong>検索可能性と影響調査のためのインフラ</strong>。決めるのは形式であって、美しさではない。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>対象</th><th>規約</th><th>例</th></tr></thead>
+            <tbody>
+              <tr><td>画面ID</td><td>SC + 機能分類 2 桁 + 連番 2 桁</td><td>SC-A010（申請系）、SC-B020（承認系）</td></tr>
+              <tr><td>テーブル名</td><td>区分接頭辞 + 業務名（英大文字・スネーク）</td><td>T_EXPENSE_APPLICATION（トランザクション）、M_EXPENSE_TYPE（マスタ）、W_BATCH_LOG（ワーク）</td></tr>
+              <tr><td>カラム名</td><td>英単語のスネークケース。<strong>略語は用語集で定義したものだけ</strong></td><td>application_no、expense_type_cd、created_at</td></tr>
+              <tr><td>バッチID</td><td>BT + 実行契機 1 桁 + 連番 3 桁</td><td>BT-M001（月次）、BT-D001（日次）</td></tr>
+              <tr><td>メッセージID</td><td>種別 1 桁 + 連番 4 桁</td><td>E0012（エラー）、W0003（警告）、I0001（情報）</td></tr>
+              <tr><td>IF ID</td><td>IF + 方向 + 連番</td><td>IF-OUT-001（会計へ）、IF-IN-001（人事から）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>命名規約の本当の価値</strong>：3 年後、「承認履歴に関わるものを全部出して」と言われたときに、grep 一発で設計書・ソース・テーブル・テストケースが揃うこと。<strong>機能ID（第 5 章）を設計書名とテストIDに埋め込むという第 9 章の話と、完全に同じ思想。</strong></p>
+
+        <h3>コード設計：採番と区分値</h3>
+        <p><strong>採番</strong>（申請番号などの一意な番号）で決めること：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>論点</th><th>選択肢</th><th>判断</th></tr></thead>
+            <tbody>
+              <tr><td>意味を持たせるか</td><td>連番のみ / 年月＋連番 / 部門コード＋年月＋連番</td><td>意味を持たせると人間に分かりやすいが、<strong>組織変更で破綻する</strong>。部門コードを埋め込むのは避けるのが無難</td></tr>
+              <tr><td>採番の単位</td><td>全体通し / 年度ごとリセット / 月ごとリセット</td><td>リセットする場合、桁あふれと重複の考慮が必要。<strong>年度をまたぐデータの並べ替えに注意</strong></td></tr>
+              <tr><td>採番の方式</td><td>DBのシーケンス / 採番テーブル / UUID</td><td>同時実行での重複が最大のリスク。<strong>「最大値+1」は絶対にやらない</strong>（同時実行で必ず重複する）</td></tr>
+              <tr><td>桁数</td><td>—</td><td>5 年後の件数（第 7 章 N-E01：10 万件）から決める。<strong>桁あふれは後から直せない</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>区分値</strong>（申請状態、費目区分など）で決めること——これは<strong>マスタにするか、コード定義書で固定するか</strong>の判断が本質：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>コード定義書で固定</th><th>マスタテーブルで管理</th></tr></thead>
+            <tbody>
+              <tr><td>向くもの</td><td>申請状態（下書き／承認待ち／差戻し／確定）——<strong>増えるとロジックの変更が伴う</strong>もの</td><td>費目、部門——<strong>運用中に増減する</strong>もの</td></tr>
+              <tr><td>追加のコスト</td><td>プログラム改修が必要</td><td>画面から追加できる</td></tr>
+              <tr><td>落とし穴</td><td>「あとで区分を増やしたい」と言われて改修になる</td><td><strong>マスタにしたのにロジックが値をハードコードしている</strong>——最悪の組み合わせ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>判定の問い</strong>：「その値が増えたとき、プログラムの動きも変わるか？」——変わるなら定義書で固定（増やすには改修が必要だと最初から合意する）、変わらないならマスタ。<strong>申請状態をマスタ化して「自由に増やせます」と言ってはいけない</strong>——状態が増えれば遷移ルールも画面も変わるからだ。</p>
+
+        <h2>「どこまで書けば製造できるか」</h2>
+        <p>基本設計書の粒度の判断基準は一つ：<strong>「この設計書だけを渡された、業務を知らない実装者が、迷わず作れるか」</strong>。第 1 章の商流を思い出してほしい——実際に作るのは二次請けやオフショアで、彼らは客に会ったことがない。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>基本設計に書く</th><th>詳細設計に降ろす</th></tr></thead>
+            <tbody>
+              <tr><td>画面</td><td>項目名・型・桁・必須・初期値・入力チェック・ボタン押下時の振る舞い</td><td>画面クラスの構成、イベントハンドラの分割</td></tr>
+              <tr><td>データ</td><td>テーブル定義、PK/FK、主要なインデックス、CRUD図</td><td>SQL の書き方、実行計画のチューニング</td></tr>
+              <tr><td>バッチ</td><td>処理概要、入出力、実行契機、異常時の扱い、ジョブネット</td><td>内部の処理フロー、コミット単位、メモリ上の処理方式</td></tr>
+              <tr><td>業務ロジック</td><td><strong>計算式・判定条件・端数処理</strong>（＝業務ルール由来のもの）</td><td>実装アルゴリズム</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>特に最後の行が重要。<strong>「消費税は税込金額 ÷ 1.1 の小数点以下切捨て」は基本設計に書く</strong>——これは実装方法ではなく<strong>業務ルール</strong>であり、間違えると金額がずれる。実装者に判断させてはいけない。</p>
+
+        <h2>成果物样例</h2>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>方式設計書（共通方式・抜粋）</span><span class="kb-doc-id">DOC-301 / v0.8</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>No</th><th>項目</th><th>方式</th><th>備考</th></tr></thead>
+              <tbody>
+                <tr><td>3.1</td><td>認証</td><td>全社 SSO 認証基盤に委譲。本システムはパスワードを保持しない。セッションタイムアウトは 30 分（無操作時）。</td><td>N-S01</td></tr>
+                <tr><td>3.2</td><td>機能権限</td><td>リクエスト受付時に共通フィルタでロールと機能IDの対応を検証する。画面側のボタン制御は<strong>利便性のためであり、権限の担保としない</strong>。</td><td>N-S02</td></tr>
+                <tr><td>3.3</td><td>データ権限</td><td>共通データアクセス層で、ログインユーザーのロールに応じた絞り込み条件（自分のみ／自部門／全社）を自動付与する。<strong>個々の機能で絞り込み条件を実装しない。</strong></td><td>N-S02<br>権限マトリクス DOC-205</td></tr>
+                <tr><td>3.4</td><td>エラー分類</td><td>①入力エラー（画面上部にメッセージ、該当項目を強調、入力値は保持）②業務エラー（同左、処理はロールバック）③システムエラー（専用画面へ遷移、エラーIDを表示、詳細はログのみ）</td><td>メッセージ一覧 DOC-305</td></tr>
+                <tr><td>3.5</td><td>メッセージ</td><td>全メッセージはメッセージ一覧で一元管理し、メッセージIDで参照する。画面・バッチ内に文言を直接記述しない。</td><td>—</td></tr>
+                <tr><td>3.6</td><td>ログ</td><td>アプリログ（INFO 以上・90 日保持）／アクセスログ（1 年）／<strong>監査ログ（7 年・別テーブル）</strong>／エラーログ（1 年）。日次ローテーション。</td><td>N-S03</td></tr>
+                <tr><td>3.7</td><td>トランザクション</td><td>1 画面操作＝1 トランザクション。バッチは 1,000 件ごとに中間コミットし、リラン時は処理済を除外する。</td><td>—</td></tr>
+                <tr><td>3.8</td><td>排他制御</td><td><strong>楽観ロック</strong>（更新日時による）。競合時は「他の利用者により更新されています。再読込してください」を表示し、更新は行わない。</td><td>月末の同時承認を想定</td></tr>
+                <tr><td>3.9</td><td>文字コード</td><td>システム内は UTF-8。<strong>会計システム連携ファイルのみ Shift_JIS（CRLF）</strong>。変換不可文字は連携前にエラーとし、対象申請を特定できるログを出力する。</td><td>IF-OUT-001</td></tr>
+                <tr><td>3.10</td><td>日時・金額</td><td>日時は JST 固定、DB は timestamp 型で保持。金額は整数（円）。消費税は税込額 ÷ (1+税率) の<strong>小数点以下切捨て</strong>（課題 No.012 の回答による）。</td><td>B-010-03</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 本方式は全設計書に優先する。個別の設計書で本方式と異なる方式を採る場合は、理由を明記のうえ本書に追記すること。<br>※ 3.3（データ権限）は結合テストにおいて、他部門データが取得できないことを確認する試験項目を必ず設けること。</p>
+            <table>
+              <thead><tr><th>コード体系</th><th>方式</th></tr></thead>
+              <tbody>
+                <tr><td>申請番号</td><td>「EX」＋年度 4 桁＋連番 6 桁（例：EX2026000001）。年度ごとにリセット。採番はDBシーケンスによる。5 年後想定 10 万件に対し 6 桁で充足。</td></tr>
+                <tr><td>申請状態</td><td><strong>コード定義書で固定</strong>（10:下書き／20:承認待ち／30:差戻し／40:承認済／50:経理確定／60:連携済／90:取消）。状態の追加はプログラム改修を伴う。</td></tr>
+                <tr><td>費目</td><td><strong>マスタテーブルで管理</strong>（M_EXPENSE_TYPE）。経理部が画面から追加・無効化できる。プログラム内で費目コードをハードコードしない。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 楽観ロックと悲観ロック、どちらを選ぶか</p>
+          <p><strong>悲観ロック</strong>＝開いた瞬間にロックし、他人が触れないようにする。<strong>楽観ロック</strong>＝更新時に「読み込んだ後で誰かが変えていないか」を確認し、変わっていたらエラーにする。</p>
+          <p><strong>本案例で楽観ロックを選んだ理由</strong>：<br>① Web アプリでは<strong>「開いたまま帰宅する」利用者がいる</strong>。悲観ロックだと、その申請が翌朝まで誰も触れなくなる。ロックの自動解除を作ることもできるが、それ自体が複雑な仕組みになる。<br>② 同じ申請を二人が同時に更新する頻度が低い（申請者本人と、承認者・経理が同時に触るケースは稀）。<br>③ 実装がシンプル（更新日時カラムの比較だけ）。</p>
+          <p><strong>悲観ロックが向く場面</strong>：在庫の引き当て、座席予約、採番——<strong>「競合が頻繁に起き、かつ後から『他の人が取りました』と言われては困る」</strong>業務。経費精算でも、月末の一括承認処理で複数の経理担当が同じ範囲を触るなら、そこだけ悲観的な制御を検討する。</p>
+          <p><strong>方式設計で書くべきこと</strong>：技術の選択だけでなく、<strong>競合したときにユーザーに何が見えるか</strong>。「他の利用者により更新されています。再読込してください」——この文言がメッセージ一覧に載り、画面設計に反映され、テストケースになる。<strong>排他制御は内部の話に見えて、ユーザーから見える振る舞いを持つ</strong>——だから基本設計の対象。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 文字コードで会計連携が止まった</p>
+          <p>連携テストで、一部の申請が会計システムに取り込めなかった。原因は支払先名に含まれる<strong>「髙」（はしごだか）</strong>——Shift_JIS に存在しない文字だった。</p>
+          <p><strong>なぜ起きるか</strong>：本システムは UTF-8、会計システムは Shift_JIS。UTF-8 では表現できる文字が、Shift_JIS に変換できない。日本語の環境では「髙」「𠮷」「﨑」などの<strong>異体字</strong>と、絵文字、そして中国語簡体字が典型例。利用者は自分の名字を正しく入力しただけで、悪意はない。</p>
+          <p><strong>方式設計で決めておくべきだったこと</strong>（成果物样例 3.9）：<br>① <strong>変換不可文字が現れたときの扱い</strong>——(a) 入力時点で弾く (b) 連携時にエラーにして人が対応 (c) 代替文字（「高」）に自動変換する。<br>② <strong>どれを選ぶかは業務判断</strong>——経理として「髙橋」が「高橋」になってよいのか。会計システム側の表示がどうなるか。<br>③ <strong>エラーにする場合、どの申請が原因かを特定できるログを出す</strong>。「変換エラー」だけでは 1,600 件から探せない。</p>
+          <p><strong>より根本的な教訓</strong>：<strong>相手システムの文字コード・桁数・使用可能文字は、IF設計（第 13 章）の最重要確認事項</strong>。そして「使用可能文字」は仕様書に書かれていないことが多く、<strong>実際にテストデータを流してみないと分からない</strong>。だから連携テストは早めに一度やる——第 8 章の前提条件に「会計システムの連携仕様書の提供」を入れたのはこのため。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 「区分値はマスタにして、自由に増やせるようにしてください」と言われた</p>
+          <p>客の要望は「費目を自分たちで追加したい」だった。それは正当な要望（要求 R-006）。しかし話が進むうちに「ついでに申請状態も自由に追加できるように」となった。</p>
+          <p><strong>説明すべきこと</strong>：「費目は<strong>データの分類</strong>なので、増えても処理の流れは変わりません。マスタで管理し、画面から追加できるようにします。<br>一方、申請状態は<strong>処理の流れそのもの</strong>です。たとえば『部長確認待ち』という状態を増やすと、誰がその状態の申請を見られるのか、次にどの状態へ進むのか、その画面はどうなるのか——これらは全部プログラムで決まっています。<strong>マスタに行を足しても、その状態には誰も遷移できません。</strong>」</p>
+          <p><strong>最も危険なのは中途半端な実装</strong>：状態をマスタ化して「増やせます」と言いながら、プログラム内では <code>if (status == 40)</code> のようにハードコードしている状態。<strong>増やせる見た目だけがあって、増やすと壊れる</strong>——これは客を裏切る設計であり、保守担当者を地獄に落とす設計でもある。</p>
+          <p><strong>方式設計に書くべき一文</strong>：「区分値のうち、業務処理の分岐に用いるものはコード定義書で固定し、マスタ化しない。マスタ化する区分値については、プログラム内でコード値をハードコードしない。」——<strong>この二つはセットで書く。</strong>片方だけだと必ず中途半端になる。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>基本設計と詳細設計を分ける二つの判定軸を挙げ、「ログの出力項目と保存期間」がどちらに該当するか、理由とともに答えよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>二つの軸</strong>：① ユーザーまたは相手システムから見えるか　② 見えなくても、後から変えると全体に波及するか。</p>
+            <p><strong>ログの出力項目と保存期間</strong>＝<strong>基本設計</strong>（軸 2 に該当）。</p>
+            <p><strong>理由</strong>：ログはユーザーには見えない（軸 1 では詳細設計に見える）。しかし——<br>・出力項目を機能ごとにバラバラに決めると、障害調査のときに<strong>ある機能ではユーザーIDが記録され、別の機能では記録されていない</strong>という状態になり、追跡できない。<br>・保存期間は<strong>非機能要件（監査証跡 7 年）に直結する</strong>。第 7 章の N-S03 を満たすかどうかが、ここで決まる。<br>・後から「全機能のログにリクエストIDを足す」となると、全機能の改修になる。</p>
+            <p><strong>補足</strong>：ただし<strong>「どのタイミングでログを出すか」の細部は詳細設計</strong>。方式設計で決めるのは「種別・共通の出力項目・保存期間・出力先・ローテーション」であって、「この処理のこの行でログを出す」ではない。<strong>方式設計は枠を決め、詳細設計はその枠の中を埋める</strong>——この関係が分かると、粒度の判断が安定する。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>基本設計の成果物のうち、最初に着手すべきものを二つ挙げ、その理由を述べよ。また、画面設計を先に始めた場合に何が起きるか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>最初に着手すべき</strong>：<strong>方式設計書</strong>と<strong>データ設計書</strong>。</p>
+            <p><strong>理由</strong>：この二つは他の全設計書から参照される土台だから。方式設計は「全画面共通のエラー表示・権限制御・メッセージ体系」を決め、データ設計は「画面に何のデータが表示できるか」を決める。<strong>この二つが決まらないと、他の設計書は仮定の上に書かれることになる。</strong></p>
+            <p><strong>画面設計を先に始めた場合に起きること</strong>：<br>① <strong>データ設計と食い違う</strong>——画面に「申請時の所属部門」を表示する設計にしたが、テーブルに部門を保持していなかった（社員マスタを見に行くと、異動後は現在の部門が出てしまう）。画面かテーブルのどちらかを直すことになる。<br>② <strong>エラー表示がバラバラになる</strong>——冒頭の 18 画面の事故と同じ構造。<br>③ <strong>項目の桁数が決まらない</strong>——「支払先」は何文字まで入るのか。テーブル定義が無いと決められず、「とりあえず 100 文字」で書いてしまう。</p>
+            <p><strong>ただし現実には並行して進む</strong>：方式設計とデータ設計が完全に固まるのを待つと日程が持たない。実務的な進め方は、<strong>①方式設計とデータ設計の「骨格」を 1〜2 週間で固める ②画面設計を始める ③画面設計から出た要求（この項目が必要）をデータ設計にフィードバックする</strong>——本章の依存図で方式設計とデータ設計の間に「相互に往復する」と書いたのは、この実態を指している。<strong>大事なのは、骨格が固まる前に大量の画面設計を並行で走らせないこと。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>申請番号の採番方式として「部門コード 3 桁＋年月 6 桁＋連番 4 桁」が提案された。問題点を指摘せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>問題点</strong>：<br>① <strong>組織変更で破綻する</strong>——部門コードが番号に埋め込まれていると、部門の統廃合・改称のたびに過去データの整合性が問われる。「この番号の部門はもう存在しない」という状態が発生する。<br>② <strong>申請者の異動</strong>——申請後に異動したら、番号の部門と実際の所属が食い違う。「申請時点の部門」を意味すると定義すればよいが、そのルールを知らない人が誤解する。<br>③ <strong>連番のリセット単位が曖昧</strong>——部門ごと・月ごとの連番なら、4 桁で足りるか（月 1,600 件の全社でも部門別なら足りる）。しかし<strong>「部門をまたいで通し」なのか「部門ごと」なのかが仕様として不明確</strong>。<br>④ <strong>番号から情報が読み取れてしまう</strong>——連番なので「その部門が月に何件申請したか」が番号から分かる。機密性の問題になることがある。</p>
+            <p><strong>推奨案</strong>：「EX＋年度 4 桁＋連番 6 桁」のように、<strong>意味を最小限にする</strong>。部門は番号ではなくデータ項目として保持し、検索条件で使う。</p>
+            <p><strong>一般化した教訓</strong>：<strong>コードに意味を埋め込むと、意味が変わったときに破綻する</strong>。人間が読んで分かるのは利点だが、その利点は「検索して部門で絞り込める」ことでも代替できる。<strong>例外は、業務上その形式が既に定着している場合</strong>（伝票番号の体系が社内で決まっている等）——その場合は現行に合わせるほうが正しい。技術的な正しさより、業務との整合が優先することもある。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の区分値は「コード定義書で固定」「マスタテーブルで管理」のどちらが適切か。理由も述べよ。<br>① 申請状態　② 費目　③ 部門　④ 権限ロール（申請者／承認者／経理担当／システム管理者）</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 申請状態＝コード定義書で固定</strong>。状態が増えれば遷移ルール・画面・権限が変わるため、プログラム改修が不可避。「自由に増やせる」と言ってはいけない。</p>
+            <p><strong>② 費目＝マスタ</strong>。増えても処理の流れは変わらない（勘定科目と税区分を持つだけ）。経理部が運用で追加したい（要求 R-006）。</p>
+            <p><strong>③ 部門＝マスタ</strong>。ただし本案例では<strong>人事システムから連携される（F-052）</strong>ので、本システムでは保守しない。<strong>「マスタだが自システムでは更新しない」という第三の類型</strong>があることに注意——この場合、連携が止まったときの扱い（新入社員が申請できない）を決める必要がある。</p>
+            <p><strong>④ 権限ロール＝コード定義書で固定</strong>（が原則）。ロールが増えると、権限マトリクスの列が増え、各機能でその新ロールが何をできるかを決める必要がある。<strong>これはプログラムと設計の変更を伴う</strong>。<br>ただし例外：ロールと権限の組み合わせを完全にデータ駆動にする設計（ロールマスタ＋権限マスタ）もあり得る。その場合は「ロールを増やせる」が成立するが、<strong>設計・実装・テストのコストが数倍になる</strong>。本案例のように 4 ロール固定で足りるなら、固定にするのが妥当。<strong>「将来増えるかもしれない」で汎用化するのは、多くの場合オーバーエンジニアリング</strong>——増えたときに改修するコストと、最初から汎用化するコストを比べて判断する。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>方式設計書に「データ権限は共通のデータアクセス層で一元的に付与する」と書いた。この方式を採る場合、①設計上どんな仕組みが必要か　②この方式でも漏れる可能性のあるケース　③テストでどう確認するか——を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 必要な仕組み</strong>：<br>・ログインユーザーのロールと所属部門を、リクエスト全体で参照できる形で保持する（コンテキスト）。<br>・データアクセス時に、対象テーブルとロールに応じた絞り込み条件を自動的に付与する層。<br>・<strong>「絞り込み対象のテーブル」の定義</strong>——申請テーブルは絞るが、費目マスタは絞らない。この対応表が必要。<br>・<strong>絞り込みを意図的に外すケースの扱い</strong>——バッチ処理（全社データを処理する）や、経理の全社参照。「システム実行」という特別なコンテキストを設けるのが一般的。</p>
+            <p><strong>② それでも漏れるケース</strong>：<br>・<strong>共通層を通らないデータアクセス</strong>——性能改善のために直接 SQL を書いた箇所、レポート機能、CSV 出力。<strong>「例外的に直接書いた場所」が事故の温床</strong>。<br>・<strong>結合したテーブル経由の漏洩</strong>——申請テーブルは絞ったが、結合した添付ファイルテーブルは絞っていない。あるいは、集計結果から個別データが推測できる。<br>・<strong>ID を直接指定する参照</strong>——一覧は絞られているが、詳細画面が申請IDだけで取得しており、他人のIDを指定すると見えてしまう（<strong>最も多い実際の事故</strong>）。<br>・<strong>ファイルのURL</strong>——領収書画像が推測可能なURLで、アクセス制御なしに配信されている。</p>
+            <p><strong>③ テストでの確認</strong>：<br>・<strong>正常系では絶対に見つからない</strong>ことを理解する。自分のデータを見るテストは全部通る。<br>・<strong>「見えないこと」を確認する試験項目を明示的に作る</strong>：他部門のユーザーでログインし、(a) 一覧に出ないこと (b) <strong>他部門の申請IDを直接指定しても取得できないこと</strong> (c) CSV出力に含まれないこと (d) 添付ファイルのURLを直接叩いても取得できないこと。<br>・<strong>テストデータに「他部門のデータ」を必ず用意する</strong>——自部門のデータしかないテスト環境では、この試験ができない。<br>・成果物样例の注記に「結合テストにおいて、他部門データが取得できないことを確認する試験項目を必ず設けること」と書いたのは、これを設計段階で予約しておくため。</p>
+            <p><strong>この問題の核心</strong>：<strong>セキュリティは「実装したこと」ではなく「実装されていない箇所が無いこと」で決まる</strong>。だから個別実装ではなく共通化するのだし、共通化したうえで「例外的に共通層を通らない箇所」を設計書上で管理する必要がある。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>基本設計書を二次請け・オフショアに渡して製造する前提で、「この設計書は製造できるか」を検査するチェックリストを 8 項目以上作れ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>チェックリスト例</strong>：<br>① <strong>業務用語がすべて用語集で定義されているか</strong>——「精算」「立替」「仮払」の違いを、業務を知らない人が判断できるか。<br>② <strong>計算式が明記されているか</strong>——消費税、端数処理、集計の条件。「適切に計算する」は製造できない。<br>③ <strong>すべての入力項目に型・桁・必須・初期値・チェック内容があるか</strong>。<br>④ <strong>エラー時の振る舞いが書かれているか</strong>——どのメッセージを出し、どこに遷移し、入力値をどう扱うか。<br>⑤ <strong>正常系以外の分岐が網羅されているか</strong>——データが 0 件のとき、権限がないとき、他人が同時更新したとき、外部システムが応答しないとき。<br>⑥ <strong>状態遷移が定義されているか</strong>——どの状態からどの状態へ、誰の操作で遷移するか。遷移できない組み合わせも明記されているか。<br>⑦ <strong>他の設計書への参照が正確か</strong>——「メッセージ一覧参照」の参照先が実在し、該当IDが存在するか。<br>⑧ <strong>図と表と本文が矛盾していないか</strong>——画面遷移図には無い遷移が本文に書かれている、という矛盾は頻出。<br>⑨ <strong>「なぜそうなのか」の意図が一行あるか</strong>——第 1 章の商流のとおり、背景は下流に届かない。「※月末の一括承認を想定しているため」の一行が、実装者の判断を助ける。<br>⑩ <strong>日本語が曖昧でないか</strong>——第 6 章の曖昧語辞典を、設計書にも当てる。翻訳・非母語話者が読む前提なら特に。</p>
+            <p><strong>最も効く検査方法</strong>：<strong>設計者以外の人に、設計書だけを見て疑問点を出してもらう</strong>。設計者は自分の頭の中の情報で行間を埋めてしまうので、自分では検査できない。<br>実務的には、<strong>製造を担当する会社のリーダーに設計レビューへ参加してもらう</strong>のが最善（第 1 章の体制図で協力会社を早期に巻き込む理由の一つ）。彼らの「これ、どう作るんですか」という質問が、そのまま設計の穴を指している。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたのシステムについて、本章の「方式設計で決める九つのこと」がどこに書かれているかを探せ。書かれていないものについて、実際にはどうなっているか（暗黙のルールがあるのか、バラバラなのか）を調べ、その結果何が起きているかを書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>典型的な発見を挙げる。</p>
+            <p><strong>発見①「方式設計書が存在しない。ただし暗黙のルールはある」</strong>——最も多い。古参のメンバーの頭の中にあり、新規参加者はコードを読んで真似る。問題は<strong>(a) 新規参加者の立ち上げに時間がかかる (b) 真似る対象を間違えると別の方式が混入する (c) その人が抜けるとルールが失われる</strong>こと。<br>対処は簡単で、<strong>既存コードから逆に方式設計書を起こす</strong>。半日〜数日で書ける。これは「新しいルールを作る」のではなく「現にあるルールを書き取る」作業なので、合意も要らず、反対もされない。</p>
+            <p><strong>発見②「エラー処理が機能ごとに違う」</strong>——ある画面はエラーで前画面に戻り、ある画面はその場でメッセージ、ある画面は例外画面。ユーザーからは「操作感が統一されていない」と言われるが、原因は方式の不在。</p>
+            <p><strong>発見③「ログの出力項目がバラバラで、障害調査に時間がかかる」</strong>——ある機能はユーザーIDを出すが別の機能は出さない。リクエストを横断的に追跡するIDが無い。<strong>調査時間の長さは、そのままRTO（第 7 章）に効く</strong>。</p>
+            <p><strong>発見④「排他制御が実装されていない」</strong>——同時更新すると後勝ちで上書きされ、しかも誰も気づかない。「たまにデータがおかしい」という報告の正体がこれであることは非常に多い。</p>
+            <p><strong>発見⑤「命名規約が無く、テーブル名の付け方が世代ごとに違う」</strong>——2015 年に作られたテーブルと 2022 年のテーブルで規則が違う。影響調査で漏れる。</p>
+            <p><strong>この演習の狙い</strong>：方式設計は<strong>新規開発でしか作れないものではない</strong>ということ。既存システムに対して書けば、それは現状の可視化であり、新規参加者の教科書になり、次の改修の判断基準になる。<strong>「うちには設計書が無い」と嘆く代わりに、九項目だけ書き出す</strong>——それが最も費用対効果の高い一歩になることが多い。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 外部設計と内部設計の境界は二軸——<strong>①外から見えるか ②見えなくても後から変えると全体に波及するか</strong>。第二軸に該当するのが方式設計の対象；補助の問いは「客に見せてレビューしてもらう必要があるか」；② 設計書は依存ネットワーク。<strong>方式設計とデータ設計が土台</strong>で相互に往復し、画面・帳票・IF・バッチは並行可能——ただし骨格が固まる前に大量に走らせない；③ 方式設計で決める九つ：構成／アプリ方式／<strong>認証・認可</strong>／<strong>エラー・例外</strong>／ログ／<strong>トランザクション・排他</strong>／データ共通規則／命名規約／コード設計；④ 権限は<strong>「どこで担保するか」が全て</strong>——画面制御は利便性、担保はサーバ側と共通データアクセス層；⑤ 命名規約の価値は<strong>3 年後に grep 一発で追える</strong>こと；⑥ 区分値は「その値が増えたとき<strong>プログラムの動きも変わるか</strong>」でマスタ化を判断。<strong>マスタ化したならハードコードしない</strong>——この二つはセットで書く；⑦ 粒度の基準は「<strong>業務を知らない実装者が、この設計書だけで迷わず作れるか</strong>」。計算式・端数処理は業務ルールなので必ず基本設計に書く。<br><strong>下一章预告</strong>：土台ができた。次章は客が最も強い関心を持ち、最も指摘が飛んでくる成果物——画面設計。画面一覧・遷移図・レイアウト・そして<strong>項目定義書</strong>という、基本設計で最も分厚くなる一枚を書く。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./09-要件定义书与评审合意.html">← 第 9 章 要件定義書：目次、评审与合意</a>
+          <a href="./11-画面设计.html">第 11 章 画面設計 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var qBox = document.getElementById("qs-q");
+      var resBox = document.getElementById("qs-res");
+      var scoreBox = document.getElementById("qs-score");
+      var btnA = document.getElementById("qs-a");
+      var btnB = document.getElementById("qs-b");
+      var btnNext = document.getElementById("qs-next");
+      if (!qBox) return;
+
+      var Q = [
+        { t: "経費申請画面の入力項目と、それぞれの桁数・必須有無", a: "k", w: "利用者が直接目にし、業務に直結する。客がレビューして「この項目が足りない」と言える必要がある。" },
+        { t: "申請データを保存するクラスの分割とメソッド構成", a: "s", w: "誰からも見えず、後から変えても影響は当該機能内に閉じる。実装者の裁量。" },
+        { t: "会計システムへ渡す CSV の項目順と文字コード", a: "k", w: "相手システムから見える。「外部＝人間のユーザー」ではなく「自分の担当範囲の外側」。相手ベンダーとの合意事項でもある。" },
+        { t: "一覧検索を高速化するためのインデックスの張り方", a: "s", w: "実装の最適化手段。ただし性能要件を満たすためにテーブル構成そのものを変える（非正規化）なら、それはデータ設計＝基本設計。" },
+        { t: "権限チェックをどの層で行うか（画面／サーバ入口／データアクセス層）", a: "k", w: "軸 2。見えないが、決めないと担当者ごとに実装が分かれ、セキュリティ事故になる。方式設計の中心項目。" },
+        { t: "エラーメッセージの文言そのもの", a: "k", w: "利用者が読む。メッセージ一覧として基本設計で作り、客の承認を得る。実装者に文言を考えさせてはいけない。" },
+        { t: "画面の HTML 要素の class 名の付け方", a: "s", w: "利用者にも相手システムにも見えず、変更の影響も局所的。ただしチーム内の統一ルールは必要（コーディング規約）。" },
+        { t: "消費税の端数処理を切捨てにするか四捨五入にするか", a: "k", w: "これは実装方法ではなく業務ルール。金額が変わるので、客に確認して基本設計に明記する。実装者に判断させてはいけない。" },
+        { t: "同時更新が起きたときに「他の利用者により更新されています」と表示すること", a: "k", w: "排他制御は内部の話に見えるが、競合時の振る舞いは利用者から見える。方式として全画面で統一する必要もある。" },
+        { t: "楽観ロックの実現に updated_at 列を使うか version 列を使うか", a: "s", w: "方式（楽観ロックを採ること）は基本設計だが、その実現手段は詳細設計。ただしテーブル定義に列が増えるので、データ設計とは連動する。" },
+        { t: "月次バッチの実行契機（毎月第一営業日 2:00）と、異常終了時の再実行の可否", a: "k", w: "運用に直結し、会計システム側の受入時間帯とも関係する。相手との調整事項なので基本設計。" },
+        { t: "バッチ内部で 1,000 件ごとに中間コミットする、という処理方式", a: "k", w: "軸 2。リラン時の挙動（処理済をどう除外するか）に直結し、全バッチで統一が必要。方式設計に書く。" },
+        { t: "テーブル名を T_ で始める、マスタは M_ で始める、という命名規約", a: "k", w: "軸 2。後から変えると全テーブル・全ソース・全設計書に波及する。方式設計の対象。" },
+        { t: "申請番号の採番を DB シーケンスで行うか採番テーブルで行うか", a: "k", w: "採番の重複は業務事故になり、後から方式を変えると既存データの移行が必要。コード設計として基本設計で決める。" },
+        { t: "領収書画像を保存するディレクトリ構成", a: "s", w: "内部の実装。ただし「推測可能な URL で直接アクセスできないこと」はセキュリティ方式＝基本設計。" },
+        { t: "画面遷移図（どの画面からどの画面へ遷移できるか）", a: "k", w: "利用者の操作の流れそのもの。客がレビューして「この画面から戻れないと困る」と言える必要がある。" }
+      ];
+
+      var i = 0, score = 0, answered = false;
+
+      function render() {
+        qBox.textContent = "";
+        var no = document.createElement("p");
+        no.className = "qs-no";
+        no.textContent = "第 " + (i + 1) + " 問 / " + Q.length;
+        var t = document.createElement("p");
+        t.className = "qs-t";
+        t.textContent = Q[i].t;
+        qBox.appendChild(no);
+        qBox.appendChild(t);
+        resBox.style.display = "none";
+        btnA.disabled = false;
+        btnB.disabled = false;
+        btnNext.disabled = true;
+        answered = false;
+        updateScore();
+      }
+
+      function updateScore() {
+        scoreBox.textContent = "";
+        scoreBox.appendChild(document.createTextNode("正解 "));
+        var st = document.createElement("strong");
+        st.textContent = score + " / " + (answered ? i + 1 : i);
+        scoreBox.appendChild(st);
+        if (i === Q.length - 1 && answered) {
+          scoreBox.appendChild(document.createTextNode("　— 全問終了。判定の軸が身についていれば、初見の項目でも判断できます。"));
+        }
+      }
+
+      function answer(pick) {
+        if (answered) return;
+        answered = true;
+        var ok = (pick === Q[i].a);
+        if (ok) score++;
+        btnA.disabled = true;
+        btnB.disabled = true;
+        btnNext.disabled = (i >= Q.length - 1);
+        resBox.style.display = "";
+        resBox.className = "qs-res" + (ok ? "" : " ng");
+        resBox.textContent = "";
+        var p1 = document.createElement("p");
+        var b = document.createElement("strong");
+        b.textContent = (ok ? "◯ 正解：" : "✗ 不正解：正解は ") + (Q[i].a === "k" ? "基本設計（外部設計）" : "詳細設計（内部設計）");
+        p1.appendChild(b);
+        var p2 = document.createElement("p");
+        p2.textContent = Q[i].w;
+        resBox.appendChild(p1);
+        resBox.appendChild(p2);
+        updateScore();
+      }
+
+      btnA.addEventListener("click", function () { answer("k"); });
+      btnB.addEventListener("click", function () { answer("s"); });
+      btnNext.addEventListener("click", function () {
+        if (i < Q.length - 1) { i++; render(); }
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

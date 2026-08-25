@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>00 大纲与学习路线 · 知识库</title>
+  <meta name="kb:summary" content="日本IT企业上流工程教材总纲：围绕「経費精算システム再構築」贯穿案例的三篇十四章学习路线，涵盖要件定义与基本设计的全部成果物、每章结构与习题规范。">
+  <meta name="kb:tags" content="上流工程,要件定义,基本设计,日本IT,SIer,教材,大纲,学习路线,slgc,yjdy,jbsj">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：章节状态徽章 */
+    .toc-status {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 1px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .toc-todo {
+      color: var(--kb-fg-muted);
+      background: var(--kb-surface-alt);
+      border: 1px solid var(--kb-border);
+    }
+    .toc-done {
+      color: var(--kb-ok);
+      background: var(--kb-ok-soft);
+      border: 1px solid var(--kb-ok);
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>上流工程教材：大纲与学习路线</h1>
+        <p class="kb-lead">这是一套写给<strong>在日本IT企业工作的工程师</strong>的上流工程实战教材。整本书只回答一个问题：<strong>从客户的一句「経費精算をなんとかしたい」，到程序员可以照着开工的設計書，中间到底要做什么、写什么、跟谁把什么定下来？</strong>三篇十四章依次覆盖现场规则、<ruby>要件定義<rt>ようけんていぎ</rt></ruby>（需求定义）与<ruby>基本設計<rt>きほんせっけい</rt></ruby>（概要设计）。全书贯穿同一个虚构项目，每章都产出这个项目的一份真实成果物样例——读完等于看过、并亲手推演过一整套设计书。</p>
+
+        <h2>教材定位与用法</h2>
+        <ul>
+          <li><strong>适合谁</strong>：会写代码、但没系统做过上流的开发者；被推去参加ヒアリング却不知道该问什么的人；想看懂日本SI现场那一整套 Excel 設計書是怎么长出来的人。不需要任何管理经验。</li>
+          <li><strong>语言约定</strong>：正文用中文讲原理，<strong>术语一律以日语原文为准</strong>——首次出现标注读法与中文对应（如 <ruby>非機能要件<rt>ひきのうようけん</rt></ruby>／非功能性需求），之后只用日语原文。<strong>成果物样例、会议用语、邮件措辞全部保留日语原文</strong>，因为那才是你在现场要交出去的东西。</li>
+          <li><strong>怎么用</strong>：每章约 40–60 分钟读完正文。习题分「基础 / 进阶 / 挑战」三档，全部附可折叠的完整解析，先做再看。挑战题多为「把本章成果物套到你自己项目上」的开放题。</li>
+          <li><strong>范围取舍</strong>：本教材止步于<strong>基本設計完成、交棒给詳細設計</strong>。詳細設計、製造、各阶段测试、项目管理（PMBOK 体系）不设专章，只在第 2 章讲工程全景、第 14 章讲交棒时点到。方法论以<strong>ウォーターフォール／V字モデル</strong>为主轴（日本SI现场的实际主流），アジャイル的对照放在第 2 章末。</li>
+          <li><strong>立场声明</strong>：书里的做法是日本SI现场的<strong>通行做法</strong>，不是唯一正确的做法。哪些是「行业惯性」、哪些是「真有道理」，每章都会明说，方便你到了自己公司再做取舍。</li>
+        </ul>
+
+        <h2>贯穿全书的案例项目</h2>
+        <p>为了让十四章的成果物能互相咬合，全书只用一个虚构项目。它被刻意设计成「五脏俱全的最小系统」——<strong>画面、帳票、バッチ、外部インターフェース、権限、データ移行、月末性能峰值</strong>一样不缺，但小到可以在一本教材里讲完。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>プロジェクト概要書（抜粋）</span><span class="kb-doc-id">DOC-000 / 全書共通</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <tbody>
+                <tr><th>プロジェクト名</th><td>経費精算システム再構築プロジェクト</td></tr>
+                <tr><th>発注者</th><td>山田製作所株式会社（中堅製造業・社員 320 名・拠点 4 か所／情報システム部 3 名）</td></tr>
+                <tr><th>受注者</th><td>あおぞらシステムズ株式会社（一次請け）<br>要件定義：準委任契約／基本設計以降：請負契約</td></tr>
+                <tr><th>現状（As-Is）</th><td>紙の経費精算書に手書き → 上長の押印回覧 → 経理部が会計システムへ手入力。月末は経理 2 名が連日残業、差戻しは電話と口頭。</td></tr>
+                <tr><th>目的</th><td>① 申請・承認の電子化による処理時間短縮　② 会計システムへの仕訳自動連携による転記ミス撲滅　③ 経費の可視化（部門別・費目別）</td></tr>
+                <tr><th>周辺システム</th><td>会計システム（仕訳ファイル連携・月次）／人事システム（社員マスタ連携・日次）／全社 SSO 認証基盤</td></tr>
+                <tr><th>利用者</th><td>申請者（全社員 320 名）／承認者（部門長 18 名）／経理担当（4 名）／システム管理者（2 名）</td></tr>
+                <tr><th>想定規模</th><td>申請 約 1,600 件／月（月末 3 営業日に約 6 割が集中）</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 本教材のために作成した架空のプロジェクトです。実在の企業・システムとは関係ありません。</p>
+          </div>
+        </div>
+
+        <h2>学习路线图</h2>
+        <figure>
+          <svg viewBox="0 0 680 200" width="680" height="200" role="img" aria-label="三篇学习路线：现场地图篇、要件定义篇、基本设计篇依次递进">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="8" y="38" width="196" height="126" rx="14" fill="var(--kb-accent)" opacity="0.12"/>
+              <rect x="8" y="38" width="196" height="126" rx="14" fill="none" stroke="var(--kb-accent)" stroke-width="1.5"/>
+              <text x="106" y="70" text-anchor="middle" font-size="15.5" font-weight="700" fill="var(--kb-fg)">第一部分 · 现场地图</text>
+              <text x="106" y="94" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 1–3 章</text>
+              <text x="106" y="116" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">体制与契约 · V字模型</text>
+              <text x="106" y="138" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">合意形成的作法</text>
+
+              <path d="M 210 101 h 30" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 240 101 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="248" y="38" width="196" height="126" rx="14" fill="#16a34a" opacity="0.10"/>
+              <rect x="248" y="38" width="196" height="126" rx="14" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="346" y="70" text-anchor="middle" font-size="15.5" font-weight="700" fill="var(--kb-fg)">第二部分 · 要件定義</text>
+              <text x="346" y="94" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 4–9 章</text>
+              <text x="346" y="116" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">业务 · 机能 · 非机能</text>
+              <text x="346" y="138" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">范围见积 · 评审合意</text>
+
+              <path d="M 450 101 h 30" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 480 101 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="488" y="38" width="184" height="126" rx="14" fill="#9466de" opacity="0.12"/>
+              <rect x="488" y="38" width="184" height="126" rx="14" fill="none" stroke="#9466de" stroke-width="1.5"/>
+              <text x="580" y="70" text-anchor="middle" font-size="15.5" font-weight="700" fill="var(--kb-fg)">第三部分 · 基本設計</text>
+              <text x="580" y="94" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 10–14 章</text>
+              <text x="580" y="116" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">画面 · 数据 · 接口批处理</text>
+              <text x="580" y="138" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">运用移行 · 交棒</text>
+
+              <text x="106" y="184" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">看懂这场游戏的规则</text>
+              <text x="346" y="184" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">把「想要」变成可签字的「要件」</text>
+              <text x="580" y="184" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">把「要件」变成可开工的「設計書」</text>
+            </g>
+          </svg>
+          <figcaption>三篇依次递进：先看懂现场规则，再学会把模糊的「想要」固化成能签字的要件，最后把要件翻译成程序员照着就能写的设计书。第一篇是后两篇的公共语言，不建议跳过。</figcaption>
+        </figure>
+
+        <h2>第一部分 · 现场地图（第 1–3 章）</h2>
+        <p>还没开始写任何文档之前，先要知道：这场游戏里都有谁、钱怎么流、责任在哪条线上切开、以及「定下来了」在日本现场到底意味着什么。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>01</td><td><a href="./01-日本IT开发现场.html">日本IT开发现场：体制、契约与登场人物</a></td>
+                <td>SIer 与ユーザー企業；元請け・多重下請け的商流；発注者侧的ユーザー部門与情報システム部門；PM/PL/SE/PG/ブリッジSE 的分工；請負 vs 準委任（成果物责任与契約不適合責任）；多段階契約与 IPA 模型合同；商流如何影响你的设计判断</td>
+                <td>交互：「この作業、誰の責任？」判定器——选工程×契约形态×立场，显示责任范围与典型纠纷</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>02</td><td><a href="./02-V字模型与工程.html">V字模型与工程：要求・要件・仕様 的分界</a></td>
+                <td>工程全景（企画→要求定義→要件定義→基本設計→詳細設計→製造→単体/結合/総合/受入テスト→移行→運用保守）；V 字左右的对应关系；要望→要求→要件→仕様 的词阶；上流成果物地图；与アジャイル的并存现状</td>
+                <td>交互：可点击的 V 字模型图——点任一工程显示输入/输出成果物、担当、工数占比与对应测试</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>03</td><td><a href="./03-上流的作法与合意形成.html">上流的作法：合意是怎么造出来的</a></td>
+                <td>ヒアリング→議事録→確認依頼→QA表→課題管理表→レビュー会→承認 的闭环；議事録的格式与「決定事項/宿題事項/ペンディング」三分法；QA表与課題管理表的列设计；「言った言わない」防卫与エビデンス文化；報連相的实际用法</td>
+                <td>交互：議事録道場——同一场会议的差版与好版并排，点击高亮十余处差异及其后果</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第二部分 · 要件定義（第 4–9 章）</h2>
+        <p>把「なんとかしたい」变成一份客户愿意签字、程序员将来能验收的<ruby>要件定義書<rt>ようけんていぎしょ</rt></ruby>。这一篇的每一章，都是要件定義書目次里的一个大章节。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>04</td><td><a href="./04-读懂业务AsIs与ToBe.html">读懂业务：As-Is / To-Be 与業務フロー</a></td>
+                <td>業務調査三手段（現行資料・ヒアリング・現地観察）；業務一覧与スイムレーン業務フロー図的记号与画法；As-Is → 課題 → To-Be 的推导链；「現行踏襲」的陷阱；例外・イレギュラー業務才是真正的雷区</td>
+                <td>交互：業務フロー 的 As-Is / To-Be 切换图，课题针脚可点开看「谁痛、痛在哪、怎么解」</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>05</td><td><a href="./05-洗出机能要件.html">洗出机能要件：从要求一覧到機能一覧</a></td>
+                <td>要求一覧→要件化的转换；機能階層与機能ID 体系；用<strong>画面・帳票・バッチ・IF 四分类</strong>堵漏；ユースケース与 CRUD 两种视角；権限・ロール矩阵；MECE 与抜け漏れチェックリスト</td>
+                <td>交互：从業務フロー的每一步逐步导出機能一覧的分步演示（先猜后揭）</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>06</td><td><a href="./06-要件的写法与品质.html">与暧昧作战：要件的写法与品质</a></td>
+                <td>「なるべく早く」「使いやすく」如何变成可验证条文；曖昧語辞典；一文一要件、主语必写、「〜できること」体、避免二重否定；要件粒度与トレーサビリティID；レビュー観点五则（完全性/一貫性/検証可能性/実現可能性/優先度）</td>
+                <td>交互：曖昧要件リライト道場——点击高亮劣质条文里的问题词，展开改写范例与判定理由</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>07</td><td><a href="./07-非机能要件.html">非机能要件：IPA 非機能要求グレード</a></td>
+                <td>六大项（可用性・性能拡張性・運用保守性・移行性・セキュリティ・システム環境）；グレード表与レベル値、モデルシステム的用法；性能目标值怎么定；稼働率与年间停机时间的换算、RTO/RPO；不定非机能会在哪个阶段爆炸</td>
+                <td>交互：可用性/性能滑块——实时显示年间允许停机、所需构成（単一/冗長/DR）与成本运维负担</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>08</td><td><a href="./08-范围见积与变更管理.html">范围、见积、日程与变更管理</a></td>
+                <td>スコープ定義（やること／やらないこと 明写）与前提・制約；見積四法（類推・係数・ボトムアップ・FP法）；人月、バッファ与要員山積み；WBS 与マスタスケジュール；変更管理(CR) 流程与スコープクリープ的防线</td>
+                <td>交互：スコープ変更シミュレータ——往篮子里加需求，工数・納期・体制・コスト实时联动</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>09</td><td><a href="./09-要件定义书与评审合意.html">要件定義書：目次、评审与合意</a></td>
+                <td>标准目次逐节讲解；トレーサビリティマトリクス（要求→要件→機能→テスト）；レビュー会的开法与指摘記録；承認・サインオフ的意义；要件定義完了判定基準；此刻就埋下受入テスト的种子</td>
+                <td>交互：要件定義書セルフチェック——勾选检查表，判定「能不能出评审」并指出缺口</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第三部分 · 基本設計（第 10–14 章）</h2>
+        <p>把已经签字的要件，翻译成「用户看得见的样子」和「系统之间怎么连」。这一篇的五章，正好对应基本設計阶段要交付的五类設計書。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>10</td><td><a href="./10-基本设计全景与方式设计.html">基本设计全景与方式設計</a></td>
+                <td>外部設計 vs 内部設計 的界线；設計書一覧与彼此的依赖关系；方式設計：システム構成図、アプリ方式（レイヤ・共通機能）、認証認可、エラー・例外方式、ログ方式、文字コード・タイムゾーン；命名規約与コード設計（採番・区分値）</td>
+                <td>交互：「基本設計？詳細設計？」分拣测验——三十个设计项目即时判定与理由</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>11</td><td><a href="./11-画面设计.html">画面設計</a></td>
+                <td>画面一覧与画面ID 体系；画面遷移図；画面レイアウト；<strong>画面項目定義書</strong>（項目名/型/桁/必須/初期値/編集可否/入力チェック）；イベント定義与メッセージ一覧；一覧・検索・登録・更新・削除 的定番模式；排他制御的可见行为；権限による表示制御</td>
+                <td>交互：点画面遷移図联动显示该画面的ワイヤ与項目定義書，并可实测输入チェック行为</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>12</td><td><a href="./12-数据设计.html">データ設計</a></td>
+                <td>概念→論理→物理 三层；エンティティ抽出与 ER図（IE記法）、カーディナリティ；正規化 1NF–3NF 与现场的非正規化判断；テーブル定義書；コード設計与区分値；共通項目与論理削除；<strong>CRUD図</strong> 查漏；マスタ／トランザクション与履歴管理</td>
+                <td>交互：正規化ステップ演示——非正规表逐步变形到 3NF，每步标出消除的异常</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>13</td><td><a href="./13-接口批处理与帐票设计.html">外部接口、批处理与帳票設計</a></td>
+                <td>IF一覧与连携方式（ファイル／API／DB直／MQ）；電文・レイアウト定義、文字コード・改行・固定長；连携タイミング与リトライ・重複防止・順序保証；バッチ一覧与ジョブネット、起動契機、異常時のリラン・リカバリ、処理時間窓；帳票一覧・レイアウト・出力条件</td>
+                <td>交互：ジョブネット図——让某个 job 延迟或异常，可视化波及范围与リラン范围</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>14</td><td><a href="./14-运用移行设计与交棒.html">运用・移行設計，与向詳細設計的交棒</a></td>
+                <td>運用設計：運用フロー、監視項目、ジョブ監視、障害対応フローと連絡体制、バックアップ・リストア、権限運用、問い合わせ対応；移行設計：移行方式、データ移行（現新マッピング・クレンジング・リハーサル・切戻し）、業務移行与研修；設計レビューと「写到什么程度才能开工」；全书总结与后续学习路径</td>
+                <td>交互：移行リハーサル时间轴——调切替窗口与数据量，判断能否赶上周一早上，及切戻し判断点</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>附录</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>篇</th><th>标题</th><th>内容</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>15</td><td><a href="./15-附录日中术语对照表.html">附录 · 日中IT术语对照表</a></td>
+                <td>上流工程日・中・英三语术语对照（按工程分组，含读法与一句话释义）；会议与邮件常用表达（「認識合わせ」「持ち帰り」「一旦」「エビデンス」…）；成果物名一覧速查表</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>每章的固定结构</h2>
+        <ol>
+          <li><strong>学习目标</strong>：3–5 条「学完你能……」。</li>
+          <li><strong>直觉引入</strong>：从贯穿案例的一个真实场景或一场事故切入，回答「为什么这一步不能省」。</li>
+          <li><strong>正文</strong>：现象与失败案例在前、术语在后——概念 → 图示 / 交互演示 → 做法与判断标准，重要结论用提示框标出。</li>
+          <li><strong>成果物样例</strong>：本章对应的日语原文設計書片段（本教材独有的一节），照着就能改成自己项目的版本。</li>
+          <li><strong>例题</strong>：2–3 道现场情景题，带完整分析过程，示范「遇到这种客户该怎么接话、怎么落到文档上」。</li>
+          <li><strong>习题</strong>：基础 3–4 题、进阶 2–3 题、挑战 1–2 题，全部附可折叠详解。</li>
+          <li><strong>要点回顾</strong>：kb-tip 提示框收束全章，并预告下一章。</li>
+        </ol>
+
+        <h2>习题设计与样例</h2>
+        <p>习题分三档：<span class="kb-exercise-badge">基础</span> 直接套用本章的模板或检查表；<span class="kb-exercise-badge kb-adv">进阶</span> 需要把两个以上概念连起来判断；<span class="kb-exercise-badge kb-hard">挑战</span> 引向真实工作——多为「把本章成果物套到你自己手上的项目」的开放题，解析给出评判维度而非唯一答案。呈现形式如下（可展开试试）：</p>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 样例习题 <span class="kb-exercise-badge">基础</span></p>
+          <p>客户在ヒアリング上说：「検索はサクサク動いてほしいですね」。把它原样写进要件定義書会出什么问题？请改写成一条可以验收的要件。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案示例</strong>：「経費申請一覧の検索において、対象データ 10 万件・同時アクセス 30 ユーザーの条件下で、検索結果の初期表示が 3 秒以内に完了すること。」</p>
+            <p><strong>解析</strong>：原句的问题不在于「客户说得随便」，而在于<strong>它无法被验证</strong>——「サクサク」既不能测量，也无法在受入テスト里判定合格与否，于是必然在测试阶段变成「これでは遅い」「いや要件通りです」的对峙。改写要补三样东西：<strong>①对象（哪个画面的哪个操作）②条件（数据量・并发数・网络环境）③数值与判定基準</strong>。注意 3 秒这个数字不能你自己拍——它是拿着<ruby>非機能要求グレード<rt>ひきのうようきゅうグレード</rt></ruby>的性能项，和客户当场确认下来的。这一整套流程是第 6 章（曖昧要件的改写）与第 7 章（非机能要件）的主题。</p>
+          </details>
+        </section>
+
+        <h2>编写约定（供后续章节遵守）</h2>
+        <ul>
+          <li>文件名与页面标题都用 <code>NN 章名</code> 编号（如 <code>01 日本IT开发现场：体制、契约与登场人物</code>），保证导航树按学习顺序排列。</li>
+          <li>章节文件放本目录（<code>content/软件工程/上流工程/教材/</code>），每章一个 HTML 文件；示意图全部内联 SVG（颜色用 CSS 变量适配深浅色），交互演示脚本内联在各章页尾，不建 <code>_media/</code>。</li>
+          <li>術語第一次出现时给出日语原文＋读法＋中文对应，之后统一用日语原文；成果物样例一律用日语原文书写，包在 <code>.kb-doc</code> 里并标注文档编号。</li>
+          <li>成果物样例全部取自「経費精算システム再構築プロジェクト」，跨章节必须保持一致——第 5 章定的機能ID，第 11 章画面設計要接得上；第 12 章的テーブル名，第 13 章的連携ファイル要用同一套。</li>
+          <li>小节标题（h2/h3）以中文汉字为主，避免整段假名——锚点 slug 会剥掉假名，纯假名标题会退化成无意义 id。正文与表格内不受此限。</li>
+          <li>每写完一章：把本页对应行的状态改为 <span class="toc-status toc-done">已上线</span> 并加上链接，章末「下一章」指向后继章节，最后重跑索引。</li>
+        </ul>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📌 当前进度</p>
+          <p>🎉 全书三篇十四章＋附录已全部上线！从<a href="./01-日本IT开发现场.html">第 1 章</a>开始顺序学习，或按需跳读任意章节。终章附有全书总结与后续学习路径；<a href="./15-附录日中术语对照表.html">附录的日中IT术语对照表</a>支持即时筛选，可当辞典用。</p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+</body>
+</html>

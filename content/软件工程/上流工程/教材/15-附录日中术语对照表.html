@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>15 附录 · 日中IT术语对照表 · 知识库</title>
+  <meta name="kb:summary" content="日本IT上流工程的日中英术语对照表：按工程分组，含读法与一句话释义；附会议与邮件常用表达、成果物名速查，支持即时筛选。">
+  <meta name="kb:tags" content="上流工程,术语对照,日中,词汇,日语,IT术语,附录,速查,slgc,syb,zhcz">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：术语筛选 */
+    .gl-filter {
+      position: sticky; top: calc(var(--kb-header-h) + 8px); z-index: 5;
+      background: var(--kb-bg); padding: 8px 0 10px; margin-bottom: 4px;
+    }
+    .gl-filter input {
+      font: inherit; font-size: 0.9rem; width: 100%; padding: 8px 12px;
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .gl-filter input:focus { outline: none; border-color: var(--kb-accent); }
+    .gl-count { font-size: 0.78rem; color: var(--kb-fg-muted); margin: 6px 0 0; }
+    .gl-tbl table { font-size: 0.85rem; }
+    .gl-tbl td:first-child { white-space: nowrap; font-weight: 600; }
+    .gl-yomi { display: block; font-size: 0.72rem; color: var(--kb-fg-muted); font-weight: 400; }
+    .gl-en { font-size: 0.78rem; color: var(--kb-fg-muted); }
+    .gl-hide { display: none; }
+    .gl-empty { color: var(--kb-fg-muted); font-size: 0.86rem; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>附录 · 日中IT术语对照表</h1>
+        <p class="kb-lead">本教材出现过的日本IT现场术语，按工程分组整理成辞典。<strong>日语原文＋读法＋中文对应＋一句话释义</strong>，加上会议与邮件的定型表达、成果物名速查。用输入框可以即时筛选——中文、日文、假名、英文、拼音（如 <code>yjdy</code>）都能命中。</p>
+
+        <div class="gl-filter">
+          <input type="search" id="gl-q" placeholder="🔍 筛选术语（中文 / 日语 / 假名 / 英文，例：要件 / ようけん / 需求 / batch）" aria-label="筛选术语">
+          <p class="gl-count" id="gl-count"></p>
+        </div>
+
+        <h2>一、工程・体制・契約</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>日语</th><th>中文</th><th>一句话释义</th></tr></thead>
+            <tbody>
+              <tr><td>上流工程<span class="gl-yomi">じょうりゅうこうてい</span></td><td>上游工程</td><td>要件定義と基本設計を指す。本教材の範囲。<span class="gl-en">upstream process</span></td></tr>
+              <tr><td>下流工程<span class="gl-yomi">かりゅうこうてい</span></td><td>下游工程</td><td>詳細設計・製造・テスト以降。</td></tr>
+              <tr><td>要求定義<span class="gl-yomi">ようきゅうていぎ</span></td><td>需求收集／要求定义</td><td>業務側の「こうしたい」を集めて整理する工程。発注者主体。</td></tr>
+              <tr><td>要件定義<span class="gl-yomi">ようけんていぎ</span></td><td>需求定义</td><td>要求を実現可能・検証可能な「要件」に翻訳し合意する工程。<span class="gl-en">requirements definition</span></td></tr>
+              <tr><td>基本設計<span class="gl-yomi">きほんせっけい</span></td><td>概要设计</td><td>＝外部設計。ユーザーと相手システムから見える形を決める。</td></tr>
+              <tr><td>外部設計<span class="gl-yomi">がいぶせっけい</span></td><td>外部设计</td><td>基本設計の別名。<span class="gl-en">external design</span></td></tr>
+              <tr><td>詳細設計<span class="gl-yomi">しょうさいせっけい</span></td><td>详细设计</td><td>＝内部設計。プログラムの内部構造を決める。</td></tr>
+              <tr><td>内部設計<span class="gl-yomi">ないぶせっけい</span></td><td>内部设计</td><td>詳細設計の別名。<span class="gl-en">internal design</span></td></tr>
+              <tr><td>製造<span class="gl-yomi">せいぞう</span></td><td>编码／实现</td><td>コーディング工程。「実装」とも。</td></tr>
+              <tr><td>単体テスト<span class="gl-yomi">たんたいテスト</span></td><td>单元测试</td><td>UT。モジュール単位の検証。<span class="gl-en">unit test</span></td></tr>
+              <tr><td>結合テスト<span class="gl-yomi">けつごうテスト</span></td><td>集成测试</td><td>IT。モジュール間・システム間の連携を検証。<span class="gl-en">integration test</span></td></tr>
+              <tr><td>総合テスト<span class="gl-yomi">そうごうテスト</span></td><td>系统测试</td><td>ST。システム全体を非機能含めて検証。<span class="gl-en">system test</span></td></tr>
+              <tr><td>受入テスト<span class="gl-yomi">うけいれテスト</span></td><td>验收测试</td><td>UAT。発注者自身が業務が回るかを確認する。<span class="gl-en">user acceptance test</span></td></tr>
+              <tr><td>検収<span class="gl-yomi">けんしゅう</span></td><td>验收</td><td>成果物を受け取り、対価を支払う根拠となる行為。</td></tr>
+              <tr><td>発注者<span class="gl-yomi">はっちゅうしゃ</span></td><td>甲方／客户</td><td>システムを発注する側。ユーザー企業。</td></tr>
+              <tr><td>受注者<span class="gl-yomi">じゅちゅうしゃ</span></td><td>乙方／供应商</td><td>開発を請け負う側。現場では「ベンダー」。</td></tr>
+              <tr><td>情報システム部<span class="gl-yomi">じょうほうシステムぶ</span></td><td>信息系统部／IT部</td><td>略称「情シス」。発注者側の窓口であり予算管理者。</td></tr>
+              <tr><td>ユーザー部門<span class="gl-yomi">ユーザーぶもん</span></td><td>业务部门</td><td>実際にシステムを使う部門。要件の原材料はここにある。</td></tr>
+              <tr><td>システムオーナー</td><td>系统所有者</td><td>投資判断をする経営層。目的と判断基準の出どころ。</td></tr>
+              <tr><td>元請け<span class="gl-yomi">もとうけ</span></td><td>总承包／一级承包</td><td>客と直接契約する会社。プライムとも。</td></tr>
+              <tr><td>二次請け<span class="gl-yomi">にじうけ</span></td><td>二级分包</td><td>元請けから業務を受ける会社。以下三次請け…。</td></tr>
+              <tr><td>協力会社<span class="gl-yomi">きょうりょくがいしゃ</span></td><td>合作公司</td><td>BP（ビジネスパートナー）。同じ現場に常駐する別会社の要員。</td></tr>
+              <tr><td>請負契約<span class="gl-yomi">うけおいけいやく</span></td><td>承揽合同</td><td>仕事の完成を約束する契約。契約不適合責任を負う。</td></tr>
+              <tr><td>準委任契約<span class="gl-yomi">じゅんいにんけいやく</span></td><td>委托合同</td><td>完成義務は無く、善管注意義務を負う。要件定義で使われる。</td></tr>
+              <tr><td>善管注意義務<span class="gl-yomi">ぜんかんちゅういぎむ</span></td><td>善良管理人注意义务</td><td>専門家として通常期待される注意をもって業務を行う義務。</td></tr>
+              <tr><td>契約不適合責任<span class="gl-yomi">けいやくふてきごうせきにん</span></td><td>契约不符责任</td><td>旧「瑕疵担保責任」。成果物が契約内容に適合しない場合の責任。</td></tr>
+              <tr><td>多段階契約<span class="gl-yomi">ただんかいけいやく</span></td><td>分阶段签约</td><td>工程ごとに契約を結び直す方式。IPA が推奨。</td></tr>
+              <tr><td>偽装請負<span class="gl-yomi">ぎそううけおい</span></td><td>假外包（实为派遣）</td><td>請負契約なのに発注者が直接指揮命令する状態。法令違反。</td></tr>
+              <tr><td>常駐<span class="gl-yomi">じょうちゅう</span></td><td>驻场</td><td>客先のオフィスで作業すること。「客先常駐」。</td></tr>
+              <tr><td>ブリッジSE</td><td>桥梁SE</td><td>日本側とオフショア側をつなぐ役割。設計書の解釈と翻訳を担う。</td></tr>
+              <tr><td>オフショア</td><td>离岸开发</td><td>海外拠点での開発。中国・ベトナム・インドなど。</td></tr>
+              <tr><td>V字モデル<span class="gl-yomi">ブイじモデル</span></td><td>V模型</td><td>設計工程と対応するテスト工程を左右に配置した開発モデル。</td></tr>
+              <tr><td>ウォーターフォール</td><td>瀑布模型</td><td>工程を順に進める開発方式。日本のSI現場の主流。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>二、要件定義</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>日语</th><th>中文</th><th>一句话释义</th></tr></thead>
+            <tbody>
+              <tr><td>要望<span class="gl-yomi">ようぼう</span></td><td>愿望／期望</td><td>主体も範囲もない、ただの願い。「なんとかしたい」。</td></tr>
+              <tr><td>要求<span class="gl-yomi">ようきゅう</span></td><td>要求／需求（目的层）</td><td>発注者視点の目的。「なぜ」を含む。</td></tr>
+              <tr><td>要件<span class="gl-yomi">ようけん</span></td><td>需求（条件层）</td><td>システムが満たすべき条件。検証可能で、合意の対象。</td></tr>
+              <tr><td>仕様<span class="gl-yomi">しよう</span></td><td>规格／实现方式</td><td>要件を満たす具体的な実現方法。受注者の裁量。</td></tr>
+              <tr><td>業務フロー図<span class="gl-yomi">ぎょうむフローず</span></td><td>业务流程图</td><td>誰が何をどの順にやるかを図示したもの。スイムレーン形式が主流。</td></tr>
+              <tr><td>スイムレーン</td><td>泳道</td><td>役割ごとに横の帯を分けた図の形式。</td></tr>
+              <tr><td>As-Is / To-Be</td><td>现状／目标</td><td>現行業務と、あるべき業務。間に「課題」を挟んで推導する。</td></tr>
+              <tr><td>現行踏襲<span class="gl-yomi">げんこうとうしゅう</span></td><td>沿用现状</td><td>「今までどおり」。範囲が定義されないまま使われる危険な言葉。</td></tr>
+              <tr><td>機能要件<span class="gl-yomi">きのうようけん</span></td><td>功能性需求</td><td>システムが何をするか。<span class="gl-en">functional requirements</span></td></tr>
+              <tr><td>非機能要件<span class="gl-yomi">ひきのうようけん</span></td><td>非功能性需求</td><td>どれだけ速く・落ちず・安全に・運用しやすいか。</td></tr>
+              <tr><td>機能一覧<span class="gl-yomi">きのういちらん</span></td><td>功能清单</td><td>全機能をIDつきで並べた表。見積と設計の単位になる。</td></tr>
+              <tr><td>権限マトリクス<span class="gl-yomi">けんげんマトリクス</span></td><td>权限矩阵</td><td>ロール×機能の可否表。機能権限とデータ範囲の二軸で書く。</td></tr>
+              <tr><td>スコープ</td><td>范围</td><td>やること／やらないこと。前提条件・制約条件とセットで定義する。</td></tr>
+              <tr><td>前提条件<span class="gl-yomi">ぜんていじょうけん</span></td><td>前提条件</td><td>発注者側にやってもらう前提。崩れると工数・日程に影響する。</td></tr>
+              <tr><td>制約条件<span class="gl-yomi">せいやくじょうけん</span></td><td>约束条件</td><td>技術・環境・法令・期間・予算の枠。</td></tr>
+              <tr><td>トレーサビリティ</td><td>可追溯性</td><td>要求→要件→機能→設計→テストの対応が追える状態。</td></tr>
+              <tr><td>用語集<span class="gl-yomi">ようごしゅう</span></td><td>术语表</td><td>業務用語の定義。「使用しない同義語」まで書くのがコツ。</td></tr>
+              <tr><td>MoSCoW</td><td>MoSCoW 优先级</td><td>Must / Should / Could / Won't の四段階で優先度を付ける手法。</td></tr>
+              <tr><td>見積<span class="gl-yomi">みつもり</span></td><td>估算／报价</td><td>工数と金額の算定。類推・係数・ボトムアップ・FP法。</td></tr>
+              <tr><td>人月<span class="gl-yomi">にんげつ</span></td><td>人月</td><td>1 人が 1 か月働く工数。実務では 1 人月＝18〜20 人日で計算する。</td></tr>
+              <tr><td>要員山積み<span class="gl-yomi">よういんやまづみ</span></td><td>人力堆叠表</td><td>工数を月別・スキル別に並べた要員計画。</td></tr>
+              <tr><td>WBS</td><td>工作分解结构</td><td>作業を成果物ベースで階層分解した一覧。8/80 ルール。</td></tr>
+              <tr><td>マイルストーン</td><td>里程碑</td><td>達成・未達が明確に判定できる節目。</td></tr>
+              <tr><td>変更管理<span class="gl-yomi">へんこうかんり</span></td><td>变更管理</td><td>要件・スコープの変更を記録し、影響を評価して合意する仕組み。</td></tr>
+              <tr><td>スコープクリープ</td><td>范围蔓延</td><td>小さな追加が積み重なってスコープが膨らむ現象。</td></tr>
+              <tr><td>サインオフ</td><td>签字确认</td><td>成果物の承認。「これで次工程に進んでよい」の意思表示。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>三、非機能要件</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>日语</th><th>中文</th><th>一句话释义</th></tr></thead>
+            <tbody>
+              <tr><td>非機能要求グレード<span class="gl-yomi">ひきのうようきゅうグレード</span></td><td>非功能需求分级</td><td>IPA が公開する非機能要件の項目・指標・レベルの体系。</td></tr>
+              <tr><td>可用性<span class="gl-yomi">かようせい</span></td><td>可用性</td><td>止まらずに使える度合い。稼働率・RTO・RPO で表す。</td></tr>
+              <tr><td>稼働率<span class="gl-yomi">かどうりつ</span></td><td>可用率</td><td>運用時間のうち利用可能だった割合。必ず運用時間とセットで書く。</td></tr>
+              <tr><td>運用時間<span class="gl-yomi">うんようじかん</span></td><td>运行时段</td><td>システムを利用可能とする時間帯。稼働率の分母になる。</td></tr>
+              <tr><td>RTO</td><td>目标恢复时间</td><td>障害発生から復旧完了までの目標時間。人と体制のコストが効く。</td></tr>
+              <tr><td>RPO</td><td>目标恢复点</td><td>どの時点のデータまで戻すか＝許容するデータ損失。インフラのコストが効く。</td></tr>
+              <tr><td>冗長化<span class="gl-yomi">じょうちょうか</span></td><td>冗余化</td><td>機器を二重化して単一障害点をなくすこと。</td></tr>
+              <tr><td>フェイルオーバー</td><td>故障转移</td><td>障害時に待機系へ自動的に切り替わること。</td></tr>
+              <tr><td>レスポンスタイム</td><td>响应时间</td><td>操作から応答までの時間。測定条件（件数・同時利用者・環境）が必須。</td></tr>
+              <tr><td>スループット</td><td>吞吐量</td><td>単位時間あたりの処理量。</td></tr>
+              <tr><td>ピーク</td><td>峰值</td><td>最も負荷が高くなる時期・時間帯。性能要件はピークで書く。</td></tr>
+              <tr><td>拡張性<span class="gl-yomi">かくちょうせい</span></td><td>扩展性</td><td>将来のデータ量・利用者増に耐える度合い。</td></tr>
+              <tr><td>移行性<span class="gl-yomi">いこうせい</span></td><td>迁移性</td><td>現行から新システムへ移す際の要件。</td></tr>
+              <tr><td>運用・保守性<span class="gl-yomi">うんよう・ほしゅせい</span></td><td>运维性</td><td>監視・バックアップ・保守体制に関する要件。</td></tr>
+              <tr><td>監査ログ<span class="gl-yomi">かんさログ</span></td><td>审计日志</td><td>誰がいつ何をしたかの記録。保存年限が法令で決まることがある。</td></tr>
+              <tr><td>脆弱性診断<span class="gl-yomi">ぜいじゃくせいしんだん</span></td><td>漏洞扫描／安全评估</td><td>稼働前のセキュリティ検査。実施者・範囲・費用負担を要件で決める。</td></tr>
+              <tr><td>SLA</td><td>服务水平协议</td><td>提供するサービス水準の約束。保守契約に書かれる。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>四、基本設計（画面・データ・IF・バッチ・帳票）</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>日语</th><th>中文</th><th>一句话释义</th></tr></thead>
+            <tbody>
+              <tr><td>方式設計<span class="gl-yomi">ほうしきせっけい</span></td><td>方案设计／架构方式设计</td><td>全設計書に共通して効く決め事（認証・エラー・ログ・命名・コード）。</td></tr>
+              <tr><td>システム構成図<span class="gl-yomi">システムこうせいず</span></td><td>系统架构图</td><td>サーバ・ネットワーク・外部接続を示した図。</td></tr>
+              <tr><td>画面一覧<span class="gl-yomi">がめんいちらん</span></td><td>画面清单</td><td>全画面をIDつきで並べた表。見積の単位でもある。</td></tr>
+              <tr><td>画面遷移図<span class="gl-yomi">がめんせんいず</span></td><td>画面跳转图</td><td>画面間の遷移と条件を示した図。戻る経路とエラー時も描く。</td></tr>
+              <tr><td>画面項目定義書<span class="gl-yomi">がめんこうもくていぎしょ</span></td><td>画面项目定义书</td><td>各項目の型・桁・必須・初期値・編集可否・入力チェック。</td></tr>
+              <tr><td>ワイヤーフレーム</td><td>线框图</td><td>画面のレイアウト案。触った感じを伝えるにはモックが要る。</td></tr>
+              <tr><td>イベント定義<span class="gl-yomi">イベントていぎ</span></td><td>事件定义</td><td>ボタン押下時などに何が起きるかの定義。</td></tr>
+              <tr><td>メッセージ一覧<span class="gl-yomi">メッセージいちらん</span></td><td>消息一览</td><td>全メッセージをIDと文言で一元管理する表。</td></tr>
+              <tr><td>入力チェック<span class="gl-yomi">にゅうりょくチェック</span></td><td>输入校验</td><td>必須・型・桁・範囲・項目間の整合の検証。</td></tr>
+              <tr><td>排他制御<span class="gl-yomi">はいたせいぎょ</span></td><td>并发控制／互斥控制</td><td>同時更新の競合を防ぐ仕組み。楽観／悲観ロック。</td></tr>
+              <tr><td>楽観ロック<span class="gl-yomi">らっかんロック</span></td><td>乐观锁</td><td>更新時に「他人が変えていないか」を確認する方式。</td></tr>
+              <tr><td>悲観ロック<span class="gl-yomi">ひかんロック</span></td><td>悲观锁</td><td>読み込み時点でロックし、他人が触れないようにする方式。</td></tr>
+              <tr><td>ER図<span class="gl-yomi">イーアールず</span></td><td>ER图／实体关系图</td><td>エンティティと関係を示した図。IE記法（鳥の足）が主流。</td></tr>
+              <tr><td>正規化<span class="gl-yomi">せいきか</span></td><td>规范化</td><td>「一つの事実を一箇所にだけ書く」ための手順。1NF〜3NF。</td></tr>
+              <tr><td>テーブル定義書<span class="gl-yomi">テーブルていぎしょ</span></td><td>表定义书</td><td>物理名・論理名・型・桁・PK・FK・インデックス。</td></tr>
+              <tr><td>マスタ</td><td>主数据</td><td>業務の前提となる変化の少ないデータ。削除ではなく無効化。</td></tr>
+              <tr><td>トランザクション（データ）</td><td>业务数据／流水数据</td><td>業務の発生を記録する増え続けるデータ。発生時点の値を保持する。</td></tr>
+              <tr><td>論理削除<span class="gl-yomi">ろんりさくじょ</span></td><td>逻辑删除</td><td>削除フラグで消えたことにする方式。監査対応のため。</td></tr>
+              <tr><td>CRUD図<span class="gl-yomi">クラッドず</span></td><td>CRUD矩阵</td><td>機能×テーブルの操作表。空白が設計漏れを示す。</td></tr>
+              <tr><td>採番<span class="gl-yomi">さいばん</span></td><td>编号生成</td><td>申請番号などの一意な番号を払い出すこと。</td></tr>
+              <tr><td>区分値<span class="gl-yomi">くぶんち</span></td><td>分类值／代码值</td><td>状態や種別を表すコード。マスタ化するか定義書で固定するかを判断する。</td></tr>
+              <tr><td>コード設計<span class="gl-yomi">コードせっけい</span></td><td>编码体系设计</td><td>採番規則と区分値の管理方針を決めること。</td></tr>
+              <tr><td>インターフェース（IF）</td><td>接口</td><td>他システムとのデータのやり取り。方式・電文・タイミングを決める。</td></tr>
+              <tr><td>電文<span class="gl-yomi">でんぶん</span></td><td>报文</td><td>やり取りするデータの単位。レイアウト定義が必要。</td></tr>
+              <tr><td>固定長<span class="gl-yomi">こていちょう</span></td><td>定长格式</td><td>各項目のバイト数を固定したファイル形式。日本の基幹系で今も多い。</td></tr>
+              <tr><td>冪等性<span class="gl-yomi">べきとうせい</span></td><td>幂等性</td><td>同じ処理を何度実行しても結果が変わらない性質。重複防止の鍵。</td></tr>
+              <tr><td>バッチ</td><td>批处理</td><td>まとめて・定時に実行する処理。異常時の設計が工数の本体。</td></tr>
+              <tr><td>ジョブネット</td><td>作业流／作业网络</td><td>ジョブの依存関係と実行順序を表した図。</td></tr>
+              <tr><td>リラン</td><td>重跑／重新执行</td><td>異常終了したバッチを流し直すこと。どこから流せるかを設計する。</td></tr>
+              <tr><td>リカバリ</td><td>恢复处理</td><td>異常時にデータを正常な状態へ戻す処理。</td></tr>
+              <tr><td>中間コミット<span class="gl-yomi">ちゅうかんコミット</span></td><td>中间提交</td><td>大量処理を一定件数ごとにコミットすること。</td></tr>
+              <tr><td>処理時間窓<span class="gl-yomi">しょりじかんまど</span></td><td>处理时间窗</td><td>この時刻までに終わらなければ業務影響が出る、という期限。</td></tr>
+              <tr><td>帳票<span class="gl-yomi">ちょうひょう</span></td><td>报表／单据</td><td>印刷またはPDFで出力する書類。改ページ・合計・再出力を設計する。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>五、運用・移行・テスト</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>日语</th><th>中文</th><th>一句话释义</th></tr></thead>
+            <tbody>
+              <tr><td>運用設計<span class="gl-yomi">うんようせっけい</span></td><td>运维设计</td><td>稼働後に誰が何をするかの設計。監視・バックアップ・障害対応・問い合わせ。</td></tr>
+              <tr><td>移行<span class="gl-yomi">いこう</span></td><td>迁移／切换</td><td>データと業務を新システムへ移すこと。</td></tr>
+              <tr><td>切替<span class="gl-yomi">きりかえ</span></td><td>切换</td><td>旧システムから新システムへ実際に移す作業。</td></tr>
+              <tr><td>並行稼働<span class="gl-yomi">へいこうかどう</span></td><td>并行运行</td><td>新旧両方を一定期間動かして結果を突合する移行方式。</td></tr>
+              <tr><td>切戻し<span class="gl-yomi">きりもどし</span></td><td>回滚／回退</td><td>移行に失敗した際に旧システムへ戻すこと。判断点を事前に決める。</td></tr>
+              <tr><td>リハーサル</td><td>演练</td><td>本番と同じ手順・データ量で移行を通しで試すこと。最低 2 回。</td></tr>
+              <tr><td>現新マッピング<span class="gl-yomi">げんしんマッピング</span></td><td>新旧字段映射</td><td>旧システムの項目と新テーブルの列の対応表。</td></tr>
+              <tr><td>クレンジング</td><td>数据清洗</td><td>不正・欠損・重複データの整理。移行で最も工数を食う。</td></tr>
+              <tr><td>疎通確認<span class="gl-yomi">そつうかくにん</span></td><td>连通性确认</td><td>実際に繋いで通信・連携ができるかの確認。</td></tr>
+              <tr><td>本番<span class="gl-yomi">ほんばん</span></td><td>生产环境</td><td>実業務で使う環境。「本番環境」「本番機」。</td></tr>
+              <tr><td>検証環境<span class="gl-yomi">けんしょうかんきょう</span></td><td>验证环境</td><td>テスト用の環境。ステージングとも。</td></tr>
+              <tr><td>障害<span class="gl-yomi">しょうがい</span></td><td>故障</td><td>システムが正常に動作しない状態。「障害対応」「障害報告書」。</td></tr>
+              <tr><td>一次受付<span class="gl-yomi">いちじうけつけ</span></td><td>一线受理</td><td>問い合わせ・障害の最初の受付窓口。</td></tr>
+              <tr><td>エスカレーション</td><td>升级上报</td><td>自分で解決できない事象を上位・専門部隊へ引き上げること。</td></tr>
+              <tr><td>棚卸し<span class="gl-yomi">たなおろし</span></td><td>盘点</td><td>権限・資産などを定期的に洗い出して確認すること。</td></tr>
+              <tr><td>不具合<span class="gl-yomi">ふぐあい</span></td><td>缺陷／bug</td><td>テストで見つかった不正な動作。「バグ」より広く使われる。</td></tr>
+              <tr><td>手戻り<span class="gl-yomi">てもどり</span></td><td>返工</td><td>前工程に戻ってやり直すこと。上流の品質が低いと増える。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>六、会議・文書・進行</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>日语</th><th>中文</th><th>一句话释义</th></tr></thead>
+            <tbody>
+              <tr><td>ヒアリング</td><td>访谈／需求调研</td><td>相手から話を聞いて情報を集めること。<span class="gl-en">interview</span></td></tr>
+              <tr><td>議事録<span class="gl-yomi">ぎじろく</span></td><td>会议纪要</td><td>決定事項・宿題事項・ペンディングを記録した文書。48 時間以内に発信。</td></tr>
+              <tr><td>決定事項<span class="gl-yomi">けっていじこう</span></td><td>决议事项</td><td>もう変えない、変えるなら変更管理が必要な事項。</td></tr>
+              <tr><td>宿題事項<span class="gl-yomi">しゅくだいじこう</span></td><td>待办事项</td><td>やることは決まっているが未完了の事項。担当と期限が必須。</td></tr>
+              <tr><td>ペンディング</td><td>暂缓／未定</td><td>やるかどうかも決まっていない事項。書かないと存在ごと消える。</td></tr>
+              <tr><td>課題管理表<span class="gl-yomi">かだいかんりひょう</span></td><td>问题跟踪表</td><td>解決が必要な事項を、担当・期限・状態つきで管理する表。</td></tr>
+              <tr><td>QA表<span class="gl-yomi">キューエーひょう</span></td><td>问答表／质询表</td><td>質問と回答を記録する表。「質問票」とも。</td></tr>
+              <tr><td>確認依頼<span class="gl-yomi">かくにんいらい</span></td><td>确认请求</td><td>期限を切って内容の確認を求めること。</td></tr>
+              <tr><td>みなし確認<span class="gl-yomi">みなしかくにん</span></td><td>视为确认</td><td>期限までに指摘がなければ合意とみなす、という取り決め。</td></tr>
+              <tr><td>レビュー</td><td>评审</td><td>成果物を他者が確認して指摘すること。観点の指定が成否を分ける。</td></tr>
+              <tr><td>指摘<span class="gl-yomi">してき</span></td><td>意见／问题点</td><td>レビューで挙がった問題点。記録票で管理する。</td></tr>
+              <tr><td>承認<span class="gl-yomi">しょうにん</span></td><td>批准／审批</td><td>「これで次工程に進んでよい」という意思表示。</td></tr>
+              <tr><td>稟議<span class="gl-yomi">りんぎ</span></td><td>内部审批（回签）</td><td>関係者に順次回して承認を得る日本企業の意思決定手続き。</td></tr>
+              <tr><td>報連相<span class="gl-yomi">ほうれんそう</span></td><td>报联商</td><td>報告・連絡・相談。悪い情報ほど早く生のまま上げるのが原則。</td></tr>
+              <tr><td>キックオフ</td><td>启动会</td><td>プロジェクト開始時の顔合わせと方針共有の会議。</td></tr>
+              <tr><td>定例<span class="gl-yomi">ていれい</span></td><td>例会</td><td>定期的に開く会議。「定例会」「週次定例」。</td></tr>
+              <tr><td>版数管理<span class="gl-yomi">はんすうかんり</span></td><td>版本管理</td><td>文書の版を管理すること。承認済みの版は上書きしない。</td></tr>
+              <tr><td>改訂履歴<span class="gl-yomi">かいていりれき</span></td><td>修订履历</td><td>版数・日付・改訂内容・改訂者・承認者の記録。</td></tr>
+              <tr><td>エビデンス</td><td>证据／凭据</td><td>後から確認できる記録。画面写真・ログ・メールなど。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>七、会話・メールの定型表現</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>表現</th><th>使う場面</th><th>それが実際にやっていること</th></tr></thead>
+            <tbody>
+              <tr><td>一旦持ち帰ります<span class="gl-yomi">いったんもちかえります</span></td><td>その場で判断できない依頼を受けたとき</td><td>需求は拒否せず、<strong>その場での即答だけを拒否する</strong>。偽装請負とスコープ事故の両方を防ぐ。</td></tr>
+              <tr><td>認識合わせをさせてください<span class="gl-yomi">にんしきあわせ</span></td><td>理解が合っているか確かめたいとき</td><td>自分の理解を先に開示し、<strong>誤解を今この場で露出させる</strong>。</td></tr>
+              <tr><td>〜という理解でよろしいでしょうか</td><td>質問するとき</td><td>相手は Yes/No で答えられる。<strong>回答率と精度が上がる最強の型</strong>。</td></tr>
+              <tr><td>念のため確認させてください<span class="gl-yomi">ねんのため</span></td><td>疑わしいが証拠がないとき</td><td>攻撃性を下げつつ、確認だけは確実に取る。</td></tr>
+              <tr><td>ご認識のとおりです</td><td>相手の理解が正しいとき</td><td>「はい」より丁寧で、確認の記録としても機能する。</td></tr>
+              <tr><td>差し支えなければ</td><td>お願いをするとき</td><td>断る余地を残しつつ依頼する。</td></tr>
+              <tr><td>お手数ですが</td><td>相手に作業をお願いするとき</td><td>依頼の定型。メールでほぼ必ず使う。</td></tr>
+              <tr><td>取り急ぎご報告まで</td><td>速報を送るとき</td><td>詳細は後で送る前提の第一報。障害対応で重要。</td></tr>
+              <tr><td>ご報告があります</td><td>悪い知らせを伝えるとき</td><td>事実 → 原因 → 対応案の順で。<strong>案のない報告は報告ではない</strong>。</td></tr>
+              <tr><td>影響範囲を確認のうえ回答します<span class="gl-yomi">えいきょうはんい</span></td><td>変更依頼を受けたとき</td><td>「できません」ではなく「即答しません」。変更管理への入口。</td></tr>
+              <tr><td>変更管理としてご相談させてください</td><td>スコープ外の要望が来たとき</td><td>人間関係の対立を、制度上の手続きに変換する。</td></tr>
+              <tr><td>スコープとしては〜までと認識しております</td><td>範囲を確認したいとき</td><td>断定せず、しかし範囲を明示する。</td></tr>
+              <tr><td>別途お見積りとなります</td><td>追加費用が発生するとき</td><td>「有料です」を角を立てずに伝える定型。</td></tr>
+              <tr><td>現時点では未定です</td><td>まだ決まっていないとき</td><td>曖昧に答えるより明確。<strong>いつ決まるかとセットで言う</strong>と信頼される。</td></tr>
+              <tr><td>恐れ入りますが</td><td>指摘・催促をするとき</td><td>クッション言葉。催促メールの冒頭に。</td></tr>
+              <tr><td>ご確認のほどよろしくお願いいたします</td><td>メールの結び</td><td>確認依頼の定型。期限を添えるとさらに効く。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>八、成果物名 速查</h2>
+        <div class="kb-table-wrap gl-tbl">
+          <table>
+            <thead><tr><th>成果物名</th><th>中文</th><th>工程 / 本教材</th></tr></thead>
+            <tbody>
+              <tr><td>プロジェクト計画書</td><td>项目计划书</td><td>企画〜要件定義 / 第 1・2・8 章</td></tr>
+              <tr><td>体制図・契約体系表</td><td>组织架构图・合同体系表</td><td>要件定義 / 第 1 章</td></tr>
+              <tr><td>業務一覧</td><td>业务清单</td><td>要件定義 / 第 4 章</td></tr>
+              <tr><td>業務フロー図（As-Is / To-Be）</td><td>业务流程图</td><td>要件定義 / 第 4 章</td></tr>
+              <tr><td>課題一覧</td><td>问题清单</td><td>要件定義 / 第 4 章</td></tr>
+              <tr><td>要求一覧</td><td>需求收集清单</td><td>要件定義 / 第 5 章</td></tr>
+              <tr><td>機能一覧</td><td>功能清单</td><td>要件定義 / 第 5 章</td></tr>
+              <tr><td>権限マトリクス</td><td>权限矩阵</td><td>要件定義 / 第 5 章</td></tr>
+              <tr><td>機能要件定義書</td><td>功能需求定义书</td><td>要件定義 / 第 6 章</td></tr>
+              <tr><td>非機能要件定義書</td><td>非功能需求定义书</td><td>要件定義 / 第 7 章</td></tr>
+              <tr><td>スコープ定義書・見積書</td><td>范围定义书・估算书</td><td>要件定義 / 第 8 章</td></tr>
+              <tr><td>変更管理票（CR）</td><td>变更申请单</td><td>全工程 / 第 8 章</td></tr>
+              <tr><td><strong>要件定義書</strong></td><td><strong>需求定义书</strong></td><td>要件定義 / 第 9 章</td></tr>
+              <tr><td>トレーサビリティマトリクス</td><td>需求追溯矩阵</td><td>要件定義〜テスト / 第 9 章</td></tr>
+              <tr><td>方式設計書</td><td>方案设计书</td><td>基本設計 / 第 10 章</td></tr>
+              <tr><td>画面一覧・画面遷移図</td><td>画面清单・跳转图</td><td>基本設計 / 第 11 章</td></tr>
+              <tr><td>画面項目定義書・イベント定義</td><td>画面项目定义书・事件定义</td><td>基本設計 / 第 11 章</td></tr>
+              <tr><td>メッセージ一覧</td><td>消息一览</td><td>基本設計 / 第 11 章</td></tr>
+              <tr><td>ER図・テーブル定義書・CRUD図</td><td>ER图・表定义书・CRUD矩阵</td><td>基本設計 / 第 12 章</td></tr>
+              <tr><td>IF一覧・IF設計書</td><td>接口清单・接口设计书</td><td>基本設計 / 第 13 章</td></tr>
+              <tr><td>バッチ一覧・バッチ設計書・ジョブネット</td><td>批处理清单・设计书・作业流</td><td>基本設計 / 第 13 章</td></tr>
+              <tr><td>帳票一覧・帳票設計書</td><td>报表清单・报表设计书</td><td>基本設計 / 第 13 章</td></tr>
+              <tr><td>運用設計書</td><td>运维设计书</td><td>基本設計 / 第 14 章</td></tr>
+              <tr><td>移行計画書・移行手順書</td><td>迁移计划书・迁移手册</td><td>基本設計〜移行 / 第 14 章</td></tr>
+              <tr><td>議事録・レビュー記録票</td><td>会议纪要・评审记录表</td><td>全工程 / 第 3 章</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 术语的用法建议</p>
+          <p>① <strong>会議では日本語の原語で言う。</strong>「需求定义」と言っても通じない。「要件定義」と言う。<strong>この対照表は理解のためのもので、現場での発話は原語で行う</strong>のが前提。<br>② <strong>用語が揺れたら用語集を作る。</strong>「承認者」「上長」「部門長」が混在したら、プロジェクトの用語集で一つに決め、<strong>使わない語も明記する</strong>（第 6 章 例題 3）。<br>③ <strong>略称は最初に一度だけ展開する。</strong>「結合テスト（IT）」と書いてから、以降は IT。ただし <em>IT</em> は Information Technology とも読めるので、文脈が曖昧なら「結合テスト」と書き切る。<br>④ <strong>会社によって工程名は違う。</strong>「基本設計」の範囲は A 社と B 社で異なる。<strong>プロジェクト開始時に工程定義と成果物一覧を文書で合意する</strong>のが唯一の解決策（第 2 章 習題 2.4）。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./14-运用移行设计与交棒.html">← 第 14 章 运用・移行設計与向詳細設計的交棒</a>
+          <a href="./00-大纲与学习路线.html">大纲与学习路线 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var q = document.getElementById("gl-q");
+      var countBox = document.getElementById("gl-count");
+      if (!q) return;
+
+      var rows = [];
+      Array.prototype.forEach.call(document.querySelectorAll(".gl-tbl tbody tr"), function (tr) {
+        rows.push({ el: tr, text: (tr.textContent || "").toLowerCase() });
+      });
+      var sections = [];
+      Array.prototype.forEach.call(document.querySelectorAll(".gl-tbl"), function (w) {
+        var h = w.previousElementSibling;
+        sections.push({ wrap: w, head: (h && h.tagName === "H2") ? h : null });
+      });
+
+      function apply() {
+        var v = (q.value || "").trim().toLowerCase();
+        var hit = 0;
+        rows.forEach(function (r) {
+          var ok = !v || r.text.indexOf(v) >= 0;
+          r.el.classList.toggle("gl-hide", !ok);
+          if (ok) hit++;
+        });
+        sections.forEach(function (s) {
+          var any = Array.prototype.some.call(s.wrap.querySelectorAll("tbody tr"), function (tr) {
+            return !tr.classList.contains("gl-hide");
+          });
+          s.wrap.classList.toggle("gl-hide", !any);
+          if (s.head) s.head.classList.toggle("gl-hide", !any);
+        });
+        countBox.textContent = v
+          ? (hit > 0 ? "命中 " + hit + " 条（共 " + rows.length + " 条）" : "没有匹配的术语。试试日语原文或中文，例如「要件」「批处理」")
+          : "共 " + rows.length + " 条术语。输入关键词即时筛选。";
+      }
+
+      q.addEventListener("input", apply);
+      apply();
+    });
+  </script>
+</body>
+</html>

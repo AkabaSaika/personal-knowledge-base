@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12 データ設計 · 知识库</title>
+  <meta name="kb:summary" content="从概念到物理的数据设计：实体抽取与ER图、1NF到3NF的正规化与现场的非正规化判断、表定义书、共通项目与履历管理，以及用CRUD图机械地查漏。">
+  <meta name="kb:tags" content="上流工程,基本设计,数据设计,ER图,正规化,表定义书,CRUD图,论理删除,履历管理,slgc,sjsj,ertu">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：正規化ステップ */
+    .nf-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .nf-btn {
+      font: inherit; font-size: 0.82rem; padding: 5px 14px; cursor: pointer;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .nf-btn:hover { border-color: var(--kb-accent); }
+    .nf-btn[aria-pressed="true"] { background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600; }
+    .nf-stage { overflow-x: auto; }
+    .nf-tbl { margin: 0 0 14px; }
+    .nf-name { font-size: 0.82rem; font-weight: 700; margin: 0 0 4px; color: var(--kb-fg); }
+    .nf-tbl table { font-size: 0.76rem; border-collapse: collapse; margin: 0; }
+    .nf-tbl th, .nf-tbl td { border: 1px solid var(--kb-border); padding: 3px 7px; white-space: nowrap; }
+    .nf-tbl th { background: var(--kb-surface-alt); }
+    .nf-tbl .pk { background: var(--kb-accent-soft); font-weight: 700; }
+    .nf-tbl .bad { background: var(--kb-danger-soft); }
+    .nf-tbl .fixed { background: var(--kb-ok-soft); }
+    .nf-expl {
+      border-left: 3px solid var(--kb-accent); background: var(--kb-accent-soft);
+      padding: 10px 13px; font-size: 0.86rem; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+      margin-bottom: 12px;
+    }
+    .nf-expl p { margin: 0 0 5px; }
+    .nf-expl p:last-child { margin-bottom: 0; }
+    .nf-legend { font-size: 0.75rem; color: var(--kb-fg-muted); margin: 0 0 10px; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 12 章 · データ設計</h1>
+        <p class="kb-lead">画面に映るデータは、どこに、どんな形で置かれているのか。データ設計は基本設計の中で<strong>最も後から変えにくい</strong>成果物——画面は作り直せるが、テーブル構成の変更は既存データの移行を伴う。この章は 概念→論理→物理 の三層、ER図と正規化、テーブル定義書、履歴の持ち方、そして<strong>CRUD図で漏れを機械的に見つける</strong>方法を扱う。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 从業務フローと画面から实体を抽出し、マスタ／トランザクション／ワークに分类；② 画出带 カーディナリティ 的 ER図 并解消多对多；③ 逐步做 1NF→3NF 的正規化，并说明现场何时该非正規化；④ 写出可实现的テーブル定義書（含共通項目・論理削除）；⑤ 选择合适的履歴管理方式；⑥ 用 CRUD図 查出机能与数据的漏项。</p>
+        </div>
+
+        <h2>「申請時の部門」を保持していなかった</h2>
+        <p>稼働から半年、4 月の組織改編で営業二部が営業一部に統合された。翌週、経理部から連絡が来る——<strong>「去年 10 月の経費を部門別に集計したら、営業二部の実績がゼロになっているんですが」。</strong></p>
+        <p>原因は単純だった。申請テーブルに部門を持たず、<strong>社員マスタの現在の所属を結合して表示していた</strong>。社員が異動すれば、過去の申請の部門表示まで変わる。</p>
+        <p>直すには、申請テーブルに「申請時点の部門コード」列を追加し、既存 3 万件について当時の所属を推定して埋める必要がある——<strong>だが異動履歴が残っていなければ、正確には復元できない</strong>。</p>
+        <p>これがデータ設計の怖さ。<strong>画面の作り直しは工数だが、データ設計の誤りは「失われた情報」になる</strong>。だから設計時に必ず問う：<strong>「この値は、そのとき何だったかを後から知る必要があるか？」</strong></p>
+
+        <h2>概念 → 論理 → 物理</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>層</th><th>作るもの</th><th>関心事</th><th>工程</th></tr></thead>
+            <tbody>
+              <tr><td><strong>概念データモデル</strong></td><td>主要なエンティティとその関係。属性は主要なもののみ</td><td>「業務にどんな『もの』が登場し、どう関係するか」</td><td>要件定義〜基本設計初期</td></tr>
+              <tr><td><strong>論理データモデル</strong></td><td>ER図（全属性・キー・カーディナリティ）、正規化済み</td><td>「データの構造として正しいか」——DBMS には依存しない</td><td><strong>基本設計</strong></td></tr>
+              <tr><td>物理データモデル</td><td>テーブル定義書（型・桁・インデックス・制約）</td><td>「この DBMS でどう実装するか」——性能も考慮</td><td>基本設計〜詳細設計</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>基本設計の成果物は<strong>論理モデル＋物理モデルの主要部分</strong>。インデックスの細かいチューニングは詳細設計に降ろせるが、<strong>テーブルの構成・キー・主要な列は基本設計で確定させる</strong>——第 10 章の「軸 2：後から変えると影響が大きい」の代表例だから。</p>
+
+        <h2>エンティティの抽出と分類</h2>
+        <p>実体は<strong>業務フロー（第 4 章）と画面（第 11 章）から</strong>拾う。コツは「業務で名詞になっているもの」を全部並べ、そこから重複と属性を除くこと。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>分類</th><th>性質</th><th>本案例</th><th>設計上の扱い</th></tr></thead>
+            <tbody>
+              <tr><td><strong>マスタ</strong>（M_）</td><td>業務の前提となる、変化の少ないデータ</td><td>社員、部門、費目、承認ルート</td><td>有効期間・無効フラグを持つことが多い。<strong>削除ではなく無効化</strong></td></tr>
+              <tr><td><strong>トランザクション</strong>（T_）</td><td>業務の発生を記録する、増え続けるデータ</td><td>申請、申請明細、承認履歴、添付ファイル</td><td>発生時点の値を保持する。<strong>マスタの現在値に依存させない</strong>（冒頭の事故）</td></tr>
+              <tr><td>ワーク（W_）</td><td>処理の途中で使う一時的なデータ</td><td>連携ファイル出力の中間データ、バッチのログ</td><td>保持期間を決める。<strong>消す仕組みを作らないと肥大化する</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 トランザクションが「そのときの値」を持つべき三つの場面</p>
+          <p><strong>① 参照先が変わりうる</strong>——所属部門、上長、単価。異動・改定があると過去が変わる（冒頭の事故）。<br><strong>② 金額に関わる</strong>——費目名は変わってもよいが、<strong>勘定科目コードと税率は申請時点の値を保持</strong>する。会計との整合が崩れるため。<br><strong>③ 監査で「当時どうだったか」を問われる</strong>——承認者は誰だったか、承認ルートはどうだったか。<br>逆に、保持しなくてよいのは<strong>表示のためだけに使う名称</strong>（費目名は M_ から引けばよい）。<strong>ただしコードは保持する</strong>——費目が無効化されても、過去の申請は表示できなければならない。</p>
+        </div>
+
+        <h2>ER図</h2>
+        <p>日本の現場でよく使われるのは<strong>IE 記法</strong>（鳥の足＝クロウズフット）。関係の「多重度」を線の端の形で表す。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 380" width="700" height="380" role="img" aria-label="经费精算系统的ER图：社员、部门、费目为主数据，申请、申请明细、承认履历、附件为交易数据，以鸟足记法表示一对多关系">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11">
+              <g>
+                <rect x="14" y="20" width="150" height="70" rx="8" fill="var(--kb-surface)" stroke="var(--kb-ok)" stroke-width="1.6"/>
+                <rect x="14" y="20" width="150" height="22" rx="8" fill="var(--kb-ok-soft)"/>
+                <text x="89" y="35" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">M_DEPARTMENT</text>
+                <text x="24" y="58" fill="var(--kb-fg)">🔑 department_cd</text>
+                <text x="24" y="74" fill="var(--kb-fg-muted)">department_name</text>
+              </g>
+              <g>
+                <rect x="14" y="130" width="150" height="86" rx="8" fill="var(--kb-surface)" stroke="var(--kb-ok)" stroke-width="1.6"/>
+                <rect x="14" y="130" width="150" height="22" rx="8" fill="var(--kb-ok-soft)"/>
+                <text x="89" y="145" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">M_EMPLOYEE</text>
+                <text x="24" y="168" fill="var(--kb-fg)">🔑 employee_cd</text>
+                <text x="24" y="184" fill="var(--kb-fg-muted)">employee_name</text>
+                <text x="24" y="200" fill="var(--kb-fg-muted)">department_cd (FK)</text>
+              </g>
+              <g>
+                <rect x="14" y="256" width="150" height="86" rx="8" fill="var(--kb-surface)" stroke="var(--kb-ok)" stroke-width="1.6"/>
+                <rect x="14" y="256" width="150" height="22" rx="8" fill="var(--kb-ok-soft)"/>
+                <text x="89" y="271" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">M_EXPENSE_TYPE</text>
+                <text x="24" y="294" fill="var(--kb-fg)">🔑 expense_type_cd</text>
+                <text x="24" y="310" fill="var(--kb-fg-muted)">expense_type_name</text>
+                <text x="24" y="326" fill="var(--kb-fg-muted)">account_cd / tax_type</text>
+              </g>
+
+              <g>
+                <rect x="256" y="94" width="176" height="120" rx="8" fill="var(--kb-surface)" stroke="var(--kb-accent)" stroke-width="1.8"/>
+                <rect x="256" y="94" width="176" height="22" rx="8" fill="var(--kb-accent-soft)"/>
+                <text x="344" y="109" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">T_EXPENSE_APPLICATION</text>
+                <text x="266" y="132" fill="var(--kb-fg)">🔑 application_no</text>
+                <text x="266" y="148" fill="var(--kb-fg-muted)">applicant_cd (FK)</text>
+                <text x="266" y="164" fill="var(--kb-danger)">applied_department_cd ★</text>
+                <text x="266" y="180" fill="var(--kb-fg-muted)">status / applied_at</text>
+                <text x="266" y="196" fill="var(--kb-fg-muted)">total_amount</text>
+              </g>
+              <g>
+                <rect x="512" y="20" width="174" height="104" rx="8" fill="var(--kb-surface)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+                <rect x="512" y="20" width="174" height="22" rx="8" fill="var(--kb-accent-soft)"/>
+                <text x="599" y="35" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">T_EXPENSE_DETAIL</text>
+                <text x="522" y="58" fill="var(--kb-fg)">🔑 application_no (FK)</text>
+                <text x="522" y="74" fill="var(--kb-fg)">🔑 detail_no</text>
+                <text x="522" y="90" fill="var(--kb-fg-muted)">expense_type_cd (FK)</text>
+                <text x="522" y="106" fill="var(--kb-danger)">tax_rate ★ / amount</text>
+              </g>
+              <g>
+                <rect x="512" y="144" width="174" height="86" rx="8" fill="var(--kb-surface)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+                <rect x="512" y="144" width="174" height="22" rx="8" fill="var(--kb-accent-soft)"/>
+                <text x="599" y="159" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">T_APPROVAL_HISTORY</text>
+                <text x="522" y="182" fill="var(--kb-fg)">🔑 history_id</text>
+                <text x="522" y="198" fill="var(--kb-fg-muted)">application_no (FK)</text>
+                <text x="522" y="214" fill="var(--kb-fg-muted)">approver_cd / action / reason</text>
+              </g>
+              <g>
+                <rect x="512" y="250" width="174" height="86" rx="8" fill="var(--kb-surface)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+                <rect x="512" y="250" width="174" height="22" rx="8" fill="var(--kb-accent-soft)"/>
+                <text x="599" y="265" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">T_ATTACHMENT</text>
+                <text x="522" y="288" fill="var(--kb-fg)">🔑 attachment_id</text>
+                <text x="522" y="304" fill="var(--kb-fg-muted)">application_no (FK)</text>
+                <text x="522" y="320" fill="var(--kb-fg-muted)">file_path / file_size</text>
+              </g>
+
+              <g stroke="var(--kb-fg-muted)" stroke-width="1.3" fill="none">
+                <path d="M 89 90 V 130"/>
+                <path d="M 82 122 l 7 8 l 7 -8"/>
+                <path d="M 164 173 H 210 V 140 H 252"/>
+                <path d="M 244 132 l 8 8 l -8 8"/>
+                <path d="M 164 299 H 200 V 92 H 508"/>
+                <path d="M 500 84 l 8 8 l -8 8"/>
+                <path d="M 432 130 H 470 V 74 H 508"/>
+                <path d="M 500 66 l 8 8 l -8 8"/>
+                <path d="M 432 154 H 470 V 186 H 508"/>
+                <path d="M 500 178 l 8 8 l -8 8"/>
+                <path d="M 432 190 H 456 V 292 H 508"/>
+                <path d="M 500 284 l 8 8 l -8 8"/>
+              </g>
+              <text x="196" y="120" font-size="10" fill="var(--kb-fg-muted)">1 : N</text>
+              <text x="474" y="66" font-size="10" fill="var(--kb-fg-muted)">1 : N</text>
+              <text x="474" y="178" font-size="10" fill="var(--kb-fg-muted)">1 : N</text>
+              <text x="462" y="284" font-size="10" fill="var(--kb-fg-muted)">1 : N</text>
+
+              <text x="14" y="366" font-size="10" fill="var(--kb-fg-faint)">★＝申請時点の値を保持する列（マスタの現在値に依存させない）／緑枠＝マスタ、青枠＝トランザクション／鳥の足＝多側</text>
+            </g>
+          </svg>
+          <figcaption>本案例の ER図（主要部分）。<strong>★の二列が冒頭の事故への対策</strong>——申請時点の部門コードと、申請時点の税率を、トランザクション側に持つ。<strong>1 対多の「多」側に鳥の足</strong>を描くのが IE 記法。</figcaption>
+        </figure>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 多対多は必ず解消する</p>
+          <p>「申請」と「費目」は一見 多対多（1 申請に複数費目、1 費目は複数申請に登場）に見える。これをそのまま実装することはできないので、<strong>間に「連関エンティティ」を置いて 1 対多 × 2 に分解する</strong>——それが T_EXPENSE_DETAIL（申請明細）。<br><strong>連関エンティティは、たいてい業務上の意味を持つ</strong>：「申請明細」は単なる中間表ではなく、「1 件の経費」という業務の実体。多対多を見つけたら「これは業務上なんと呼ばれているか」を考えると、正しい名前と必要な属性（金額、税率、備考）が見えてくる。</p>
+        </div>
+
+        <h2>亲手正规化一遍</h2>
+        <p>下面从一张「什么都塞进去」的表出发，逐步做到第三正規形。<strong>每一步都在消除一种具体的异常</strong>——注意每步「消除了什么问题」，那才是正规化的意义。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 正規化ステップ：非正規 → 1NF → 2NF → 3NF</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：<strong>非正規形</strong>＝繰り返し項目（明細1・明細2…）があり、明細が 3 件を超えると入らない。<strong>1NF</strong>＝繰り返しを行に展開（主キーは 申請番号＋明細番号）。<strong>2NF</strong>＝主キーの一部にしか依存しない列（申請者名・部門など）を別表へ＝更新異常の解消。<strong>3NF</strong>＝キー以外の列に依存する列（部門名は部門コードに、費目名は費目コードに依存）をマスタへ＝一箇所を直せば全体が直る状態。</p></noscript>
+            <div class="nf-bar" id="nf-bar"></div>
+            <div class="nf-expl" id="nf-expl"></div>
+            <p class="nf-legend">🔑 青＝主キー／赤＝この段階で問題になっている列／緑＝この段階で解消された列</p>
+            <div class="nf-stage" id="nf-stage"></div>
+          </div>
+        </div>
+
+        <h2>現場での非正規化判断</h2>
+        <p>3NF が「正しい」形だが、<strong>現場では意図的に崩すことがある</strong>。崩してよい条件と、崩してはいけない場合を区別する。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>ケース</th><th>判断</th><th>理由</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>申請時点の部門コードを申請テーブルに持つ</strong></td>
+                <td><strong>◯ 非正規化ではない</strong></td>
+                <td>「申請時点の部門」は社員の現在の所属とは<strong>別の事実</strong>。冗長ではなく、独立した意味を持つ列</td>
+              </tr>
+              <tr>
+                <td>申請テーブルに合計金額（total_amount）を持つ</td>
+                <td>◯ 条件付きで可</td>
+                <td>明細の SUM で求まるが、一覧表示のたびに集計すると性能要件（第 7 章 N-P01）を満たせない。<strong>ただし明細更新時に必ず再計算する責務を設計書に明記する</strong></td>
+              </tr>
+              <tr>
+                <td>申請テーブルに申請者名を持つ</td>
+                <td>△ ケースによる</td>
+                <td>「申請時点の氏名」に意味があるなら持つ（改姓がある）。単に結合を避けたいだけなら持たない——<strong>更新漏れのリスクのほうが大きい</strong></td>
+              </tr>
+              <tr>
+                <td>申請明細に費目名を持つ</td>
+                <td>✗ 持たない</td>
+                <td>費目名の変更が過去データに反映されなくなる。<strong>コード（expense_type_cd）だけ持ち、名称はマスタから引く</strong>のが正解</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>判断の問い</strong>：「その値は<strong>そのとき何だったかに意味がある</strong>のか、それとも<strong>単に速く読みたいだけ</strong>なのか」。前者なら持つべき列（非正規化ではない）、後者なら性能要件と更新漏れリスクを天秤にかける。</p>
+
+        <h2>テーブル定義書</h2>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>テーブル定義書　T_EXPENSE_APPLICATION（経費申請）</span><span class="kb-doc-id">DOC-304 / v0.6</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>No</th><th>物理名</th><th>論理名</th><th>型・桁</th><th>NULL</th><th>PK</th><th>FK</th><th>既定値</th><th>備考</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>application_no</td><td>申請番号</td><td>CHAR(12)</td><td>NO</td><td>◯</td><td>—</td><td>—</td><td>EX＋年度4＋連番6（方式設計）</td></tr>
+                <tr><td>2</td><td>applicant_cd</td><td>申請者コード</td><td>CHAR(7)</td><td>NO</td><td>—</td><td>M_EMPLOYEE</td><td>—</td><td>—</td></tr>
+                <tr><td>3</td><td>applied_department_cd</td><td>申請時所属部門コード</td><td>CHAR(5)</td><td>NO</td><td>—</td><td>M_DEPARTMENT</td><td>—</td><td><strong>申請時点の値を保持（異動後も変更しない）</strong></td></tr>
+                <tr><td>4</td><td>status</td><td>状態</td><td>CHAR(2)</td><td>NO</td><td>—</td><td>—</td><td>'10'</td><td>10:下書 20:承認待 30:差戻 40:承認済 50:経理確定 60:連携済 90:取消（コード定義書）</td></tr>
+                <tr><td>5</td><td>total_amount</td><td>合計金額</td><td>DECIMAL(10,0)</td><td>NO</td><td>—</td><td>—</td><td>0</td><td>明細の合計。<strong>明細の登録・更新・削除時に再計算する</strong></td></tr>
+                <tr><td>6</td><td>applied_at</td><td>申請日時</td><td>TIMESTAMP</td><td>YES</td><td>—</td><td>—</td><td>NULL</td><td>提出時に設定。下書き中は NULL</td></tr>
+                <tr><td>7</td><td>confirmed_at</td><td>経理確定日時</td><td>TIMESTAMP</td><td>YES</td><td>—</td><td>—</td><td>NULL</td><td>—</td></tr>
+                <tr><td>8</td><td>delete_flg</td><td>削除フラグ</td><td>CHAR(1)</td><td>NO</td><td>—</td><td>—</td><td>'0'</td><td>0:有効 1:削除（<strong>物理削除しない</strong>）</td></tr>
+                <tr><td>9</td><td>created_by</td><td>登録者</td><td>CHAR(7)</td><td>NO</td><td>—</td><td>—</td><td>—</td><td rowspan="4"><strong>共通項目</strong>（全テーブル共通・方式設計）</td></tr>
+                <tr><td>10</td><td>created_at</td><td>登録日時</td><td>TIMESTAMP</td><td>NO</td><td>—</td><td>—</td><td>CURRENT_TIMESTAMP</td></tr>
+                <tr><td>11</td><td>updated_by</td><td>更新者</td><td>CHAR(7)</td><td>NO</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>12</td><td>updated_at</td><td>更新日時</td><td>TIMESTAMP</td><td>NO</td><td>—</td><td>—</td><td>CURRENT_TIMESTAMP</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead><tr><th>インデックス</th><th>対象列</th><th>用途</th></tr></thead>
+              <tbody>
+                <tr><td>PK_EXPENSE_APPLICATION</td><td>application_no</td><td>主キー</td></tr>
+                <tr><td>IX_APP_01</td><td>applicant_cd, status, applied_at</td><td>申請一覧（SC-A010）の既定検索</td></tr>
+                <tr><td>IX_APP_02</td><td>applied_department_cd, status</td><td>承認待ち一覧（SC-B010）の自部門絞り込み</td></tr>
+                <tr><td>IX_APP_03</td><td>status, confirmed_at</td><td>月次仕訳連携バッチの抽出</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ updated_at は<strong>楽観ロックの判定にも用いる</strong>（方式設計 3.8）。<br>※ 想定件数：19,200 件/年 × 5 年 ＝ 約 10 万件（非機能要件 N-E01）。<br>※ 論理削除のため、全ての参照系 SQL は delete_flg = '0' を条件に含めること。<strong>共通データアクセス層で自動付与する</strong>（方式設計 3.3 と同じ思想）。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 インデックスは「画面と紐づけて」書く</p>
+          <p>テーブル定義書のインデックス欄に「用途」列を設けると、三つの効果がある。<br>① <strong>根拠が残る</strong>——「なぜこのインデックスがあるのか」が分かり、不要になったときに消せる。<br>② <strong>設計漏れが見つかる</strong>——画面一覧の各検索条件に対応するインデックスがあるかを突き合わせられる（第 9 章のトレーサビリティと同じ手法）。<br>③ <strong>性能要件との接続</strong>——第 7 章 N-P01（10 万件で 3 秒）を満たす根拠がここにある。<br>逆に「とりあえず全部の列にインデックス」は誤り——<strong>更新性能が落ち、月末の一括承認が遅くなる</strong>。</p>
+        </div>
+
+        <h2>履歴管理の三方式</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方式</th><th>持ち方</th><th>向く用途</th><th>欠点</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>① イベント履歴</strong></td>
+                <td>操作を 1 行ずつ記録（T_APPROVAL_HISTORY）</td>
+                <td>「誰がいつ何をしたか」。承認履歴、状態遷移</td>
+                <td>「ある時点の全体像」を復元するには全件を追う必要がある</td>
+              </tr>
+              <tr>
+                <td><strong>② 世代管理</strong></td>
+                <td>更新のたびに旧レコードを履歴テーブルへ退避、または版数列を持つ</td>
+                <td>「あの時点の内容を丸ごと見たい」。マスタの改定履歴、契約内容</td>
+                <td>テーブルが 2 倍になる。参照系の SQL が複雑になる</td>
+              </tr>
+              <tr>
+                <td><strong>③ 有効期間</strong></td>
+                <td>開始日・終了日を持ち、時点で絞り込む</td>
+                <td>税率、単価、組織——<strong>「いつからいつまでこの値」</strong>が業務上の意味を持つもの</td>
+                <td>期間の重なり・隙間を防ぐ制御が必要。SQL が複雑</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>選び方</strong>：「何を後から知りたいか」で決まる。<strong>本案例では ①（承認履歴）＋ トランザクション側に申請時点の値を保持</strong>という組み合わせを採った。②の世代管理まではやらない——申請内容の変更履歴を丸ごと復元する要件が無いため。<strong>要件が無いのに履歴を全部持つのは、コストだけが増える設計</strong>。第 7 章の N-S03（監査証跡 7 年）が要求しているのは「操作の記録」であって「全データの全世代」ではない。</p>
+
+        <h2>CRUD図で漏れを見つける</h2>
+        <p><strong>機能 × テーブル</strong>の表を作り、各セルに C/R/U/D を書く。第 9 章のトレーサビリティと同じ思想——<strong>人間の注意力ではなく、表の空白で漏れを見つける</strong>。</p>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>CRUD図（抜粋）</span><span class="kb-doc-id">DOC-304 §8</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>機能</th><th>T_EXPENSE<br>_APPLICATION</th><th>T_EXPENSE<br>_DETAIL</th><th>T_APPROVAL<br>_HISTORY</th><th>T_ATTACH<br>MENT</th><th>M_EXPENSE<br>_TYPE</th><th>M_EMPLOYEE</th></tr></thead>
+              <tbody>
+                <tr><td>F-010 経費申請登録</td><td>C U</td><td>C U D</td><td>C</td><td>C D</td><td>R</td><td>R</td></tr>
+                <tr><td>F-011 申請一覧</td><td>R D</td><td>R</td><td>—</td><td>—</td><td>R</td><td>R</td></tr>
+                <tr><td>F-020 承認</td><td>U</td><td>R</td><td>C</td><td>R</td><td>R</td><td>R</td></tr>
+                <tr><td>F-030 経理確定</td><td>U</td><td>R U</td><td>C</td><td>R</td><td>R</td><td>R</td></tr>
+                <tr><td>F-050 仕訳データ生成</td><td>R U</td><td>R</td><td>—</td><td>—</td><td>R</td><td>R</td></tr>
+                <tr><td>F-052 社員マスタ取込</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>C U</strong></td></tr>
+                <tr><td>F-070 費目マスタ保守</td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>C U</strong></td><td>—</td></tr>
+                <tr style="background:var(--kb-danger-soft)"><td colspan="7"><strong>⚠ 検出された問題</strong>　① T_APPROVAL_HISTORY に U・D が一つも無い＝正しい（履歴は追記のみ）。② <strong>M_EMPLOYEE に D が無い</strong>——退職者はどう扱うか（無効フラグ？ 削除？）が未設計。③ <strong>T_ATTACHMENT の D が F-010 にしか無い</strong>——申請が論理削除されたとき、添付ファイルの実体は残るのか消すのか未設計。</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 縦に見て「C が無いテーブル」＝どこからも作られない（不要か、設計漏れ）。「R しか無いテーブル」＝マスタとして妥当か確認。「D が無い」＝削除の要件が未検討。<br>※ 横に見て「R だけの機能」＝参照系として妥当か。更新系のはずなのに R だけなら設計漏れ。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 論理削除にするか、物理削除にするか</p>
+          <p><strong>論理削除（delete_flg）の利点</strong>：監査対応（誰がいつ何を消したか）、誤削除からの復旧、関連データの整合性維持（削除された申請を参照する承認履歴が孤児にならない）。</p>
+          <p><strong>論理削除の代償</strong>——これが軽視されがち：<br>① <strong>全ての参照 SQL に条件が必要</strong>。1 箇所でも書き忘れると、削除済データが画面に出る。<br>② <strong>一意制約が効かなくなる</strong>——「同じコードのマスタは 1 件まで」という制約が、削除済レコードのせいで機能しない。削除して同じコードで作り直せない。<br>③ <strong>データが増え続ける</strong>——性能とストレージに効いてくる。<br>④ <strong>結合が複雑になる</strong>——結合先も削除済かどうかの判定が要る。</p>
+          <p><strong>実務的な判断</strong>：<br>・<strong>トランザクション（申請・承認履歴）は論理削除</strong>——監査要件があり、件数も予測可能。<br>・<strong>マスタは論理削除ではなく「無効フラグ」または「有効期間」</strong>——意味が違う。「削除された費目」ではなく「今は使えない費目」。過去データからは参照され続ける。<br>・<strong>ワークテーブルは物理削除</strong>——残す意味がない。<br>・そして<strong>①への対策は方式設計</strong>——共通データアクセス層で delete_flg 条件を自動付与する（第 10 章 3.3 と同じ構造）。個々の SQL に書かせない。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 消費税率の変更にどう備えるか</p>
+          <p>2026 年時点で税率 10%。将来変わる可能性がある。どう設計するか。</p>
+          <p><strong>案 A：プログラムに定数として持つ</strong>——税率変更時に改修が必要。しかも<strong>過去データの再計算が起きてはいけない</strong>ので、「日付で分岐する」ロジックが埋め込まれ、年々複雑になる。</p>
+          <p><strong>案 B：税率マスタを有効期間で持つ</strong>——M_TAX_RATE（税区分、税率、適用開始日、適用終了日）。申請時に発生日から適用税率を引く。<strong>税率変更は マスタへの 1 行追加で済む</strong>。</p>
+          <p><strong>案 C：B に加えて、申請明細に適用税率を保持する</strong>（ER図の ★ tax_rate）。</p>
+          <p><strong>推奨は C</strong>。理由：<br>・B だけだと、過去の申請を表示するたびにマスタから引き直すことになり、<strong>マスタの設定を後から誤って変更すると過去の金額が変わる</strong>。<br>・C なら、申請時に確定した税率が明細に焼き付いているので、後から何が起きても過去は変わらない。<br>・会計システムへ連携済のデータと、システム上の金額が食い違わない——<strong>これは会計監査で最も重要な性質</strong>。</p>
+          <p><strong>一般化</strong>：<strong>「マスタから引く」設計は、マスタが変わると過去が変わる</strong>。金額・税率・単価・承認ルートのように<strong>「その時点の適用値」に意味があるものは、トランザクション側に焼き付ける</strong>。これが冒頭の事故（部門）と同じ構造であり、データ設計で最も繰り返し問うべき論点。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 添付ファイルをどこに置くか</p>
+          <p>領収書画像は 5 年で約 30 万件・600GB（第 7 章 N-E01）。選択肢は三つ。</p>
+          <p><strong>案 A：DB の BLOB 列に格納</strong>——利点：トランザクション整合性が保たれる（申請と画像が同時にコミット／ロールバックされる）、バックアップが一元化。欠点：<strong>DB が肥大化し、バックアップ・リストア時間が RTO を超える</strong>（第 7 章）。600GB の DB のリストアに何時間かかるか。</p>
+          <p><strong>案 B：ファイルシステム／オブジェクトストレージに格納し、DB にはパスを持つ</strong>（本案例の設計）——利点：DB が軽い、ストレージが安い、配信が速い。欠点：<strong>整合性を自前で担保する必要がある</strong>——DB のコミットに失敗したがファイルは書き込まれた、という孤児ファイルが発生しうる。</p>
+          <p><strong>案 C：外部のファイル管理サービスに委譲</strong>——本案例では対象外。</p>
+          <p><strong>B を選ぶ場合に設計書へ書くべきこと</strong>：<br>① <strong>ファイルパスの規則</strong>——推測可能な URL にしない（第 10 章のセキュリティ）。UUID など。<br>② <strong>孤児ファイルの扱い</strong>——定期的に「DB に存在しないファイル」を検出して削除するバッチ（第 13 章）。<br>③ <strong>申請が論理削除されたときの実体ファイル</strong>——CRUD図で検出された未設計項目。監査要件（7 年）を考えると、<strong>論理削除中は残し、保存年限経過後にまとめて削除する</strong>のが妥当。<br>④ <strong>バックアップの対象と方式</strong>——DB とファイルの<strong>時点の整合</strong>をどう取るか。別々にバックアップすると、リストア時にズレる。</p>
+          <p><strong>この例が示すこと</strong>：データ設計は「テーブルを設計する」だけではない。<strong>データの物理的な居場所、量、バックアップ、削除まで含めて設計する</strong>——そしてそれらは全部、第 7 章の非機能要件と第 14 章の運用設計に繋がっている。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>概念・論理・物理の三つのデータモデルの違いを説明し、基本設計で確定させるべきものはどこまでかを述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>概念</strong>：業務に登場する主要な「もの」とその関係。属性は主要なものだけ。DBMS も正規化も意識しない。<strong>論理</strong>：全属性・キー・カーディナリティを持つ ER図。正規化済み。DBMS に依存しない。<strong>物理</strong>：実際の DBMS 向けのテーブル定義（型・桁・インデックス・制約・パーティション）。</p>
+            <p><strong>基本設計で確定させるべきもの</strong>：<strong>論理モデル全体と、物理モデルの主要部分</strong>——テーブル構成、主キー・外部キー、列とその型・桁、主要なインデックス。</p>
+            <p><strong>詳細設計に降ろせるもの</strong>：インデックスの細かな追加・調整、実行計画のチューニング、パーティション設計の詳細。</p>
+            <p><strong>なぜこの線か</strong>：第 10 章の「軸 2：後から変えると影響が大きいか」。<strong>テーブル構成の変更は既存データの移行を伴う</strong>ので、後から変えるコストが桁違いに高い。一方、インデックスの追加は稼働後でもできる。<br>実務的な注意：<strong>列の桁数も基本設計で決める</strong>。「支払先 60 文字」を後から 100 文字に広げるのは可能だが、画面・帳票・連携ファイル・相手システムまで波及する（第 13 章）。<strong>桁数は「単なる実装詳細」ではなく、外部との約束事。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>正規化の各段階（1NF・2NF・3NF）で何が解消されるかを、演示の例に即して説明せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>1NF（第一正規形）</strong>：<strong>繰り返し項目の排除</strong>。「明細1費目・明細2費目・明細3費目」という横並びを、行に展開する。解消される問題：明細が 4 件になったら入らない／「費目が交通費の明細を全部出す」という検索ができない／空の列が大量に発生する。</p>
+            <p><strong>2NF（第二正規形）</strong>：<strong>部分関数従属の排除</strong>。複合主キー（申請番号＋明細番号）のうち、<strong>申請番号だけで決まる列</strong>（申請者名・部門・申請日）を別テーブルへ。解消される問題：<strong>更新異常</strong>——申請者の部門を直すのに、その申請の明細行を全部更新しなければならず、1 行でも漏れると矛盾する。</p>
+            <p><strong>3NF（第三正規形）</strong>：<strong>推移関数従属の排除</strong>。キー以外の列に依存する列（部門コード → 部門名、費目コード → 費目名）をマスタへ。解消される問題：部門名を改称するとき、全申請を更新する必要がある／まだ使われていない費目を登録できない（<strong>挿入異常</strong>）／最後の申請を削除すると費目の情報も消える（<strong>削除異常</strong>）。</p>
+            <p><strong>覚え方</strong>：<strong>1NF＝「繰り返しを消す」、2NF＝「キーの一部にしか依存しない列を出す」、3NF＝「キー以外に依存する列を出す」</strong>。実務では 3NF まで行けば十分で、BCNF 以上を意識する場面は稀。<br><strong>より実践的な理解</strong>：正規化は理論のためではなく、<strong>「一つの事実を一箇所にだけ書く」ための手順</strong>。同じ事実が二箇所にあると、必ずいつか食い違う。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>マスタ・トランザクション・ワークの三分類について、それぞれの性質と設計上の扱いの違いを述べよ。本案例のテーブルを分類せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>マスタ（M_）</strong>：業務の前提となる、変化の少ないデータ。<strong>削除ではなく無効化</strong>（過去のトランザクションから参照され続けるため）。有効期間や無効フラグを持つ。件数は少なく、更新頻度も低いが、<strong>全機能から参照される</strong>のでキャッシュの検討対象。<br>本案例：M_EMPLOYEE、M_DEPARTMENT、M_EXPENSE_TYPE、M_APPROVAL_ROUTE、M_TAX_RATE。</p>
+            <p><strong>トランザクション（T_）</strong>：業務の発生を記録する、増え続けるデータ。<strong>発生時点の値を保持</strong>し、マスタの現在値に依存させない。件数が多いので、インデックス設計と保存年限・アーカイブの検討が必須。<br>本案例：T_EXPENSE_APPLICATION、T_EXPENSE_DETAIL、T_APPROVAL_HISTORY、T_ATTACHMENT。</p>
+            <p><strong>ワーク（W_）</strong>：処理途中の一時データ。<strong>保持期間を決め、消す仕組みを作る</strong>。作らないと必ず肥大化し、数年後に「このテーブル消していいのか誰も分からない」状態になる。<br>本案例：W_JOURNAL_WORK（仕訳連携の中間データ）、W_BATCH_LOG（バッチ実行ログ）。</p>
+            <p><strong>実務上の意義</strong>：この分類は命名規約（第 10 章）だけの話ではなく、<strong>バックアップ方針・保存年限・アーカイブ・移行対象（第 14 章）の判断単位</strong>になる。「移行対象はマスタ全件とトランザクション 2 年分、ワークは対象外」という判断が、この分類があるだけで一言で書ける。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>CRUD図で次のパターンが見つかったとき、それぞれ何を疑うべきか。<br>① あるテーブルに C（作成）がない　② ある機能が全テーブルに対して R しかない　③ あるテーブルに D（削除）がない</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① C がない</strong>：そのテーブルにデータが入る経路が無い。疑うべきは——(a) <strong>初期データとして移行で投入する</strong>（正当。ただし移行設計に書かれているか確認）(b) <strong>外部システムから連携される</strong>（正当。IF設計にあるか）(c) <strong>単純な設計漏れ</strong>——マスタ保守機能を作り忘れている。<br>本案例で言えば、M_APPROVAL_ROUTE に C が無ければ、承認ルートを誰も登録できない＝システムが動かない。</p>
+            <p><strong>② R しかない機能</strong>：参照専用機能（一覧・照会・帳票出力）なら正当。<strong>ただし更新系のはずの機能が R だけなら設計漏れ</strong>。<br>見落としやすいのは<strong>「参照したこと自体を記録する必要がある機能」</strong>——個人情報や経費情報の閲覧ログ。監査要件によっては、参照機能でも監査ログテーブルへの C が必要になる（第 7 章 N-S03）。<strong>CRUD図に監査ログテーブルの列を作ると、この漏れが見つかる。</strong></p>
+            <p><strong>③ D がない</strong>：三つの可能性——(a) <strong>論理削除にしている</strong>（この場合 D ではなく U として現れる。CRUD図の凡例に「論理削除は U と表記」と書いておくべき）(b) <strong>削除の要件が未検討</strong>（第 5 章 習題 5.5 の論点。法定保存年限・監査との関係を確認する）(c) <strong>本当に削除しない設計</strong>（履歴テーブルは追記のみが正しい）。<br>本章の CRUD図で検出された「M_EMPLOYEE に D が無い」は (b)——退職者の扱いが未設計。マスタなので削除ではなく無効化が正解だが、<strong>その判断を明示的に設計書に書く必要がある</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>承認ルート（部門ごとの承認段数と承認者）をどうデータとして持つか設計せよ。組織変更・人事異動・過去データの参照という三つの観点から論じること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>基本構造</strong>：<br>M_APPROVAL_ROUTE（部門コード、承認順序、承認者コード、有効開始日、有効終了日）——部門ごとに複数行を持ち、承認順序で段数を表現する。</p>
+            <p><strong>① 組織変更への対応</strong>：部門が統合されたら、旧部門の行の有効終了日を設定し、新部門の行を追加する。<strong>物理削除しない</strong>——過去の申請がどのルートで承認されたかを説明できなくなるため。</p>
+            <p><strong>② 人事異動への対応</strong>：承認者を<strong>個人（employee_cd）で持つか、役職で持つか</strong>という論点がある。<br>・個人で持つ：異動のたびにマスタ更新が必要だが、明確。<br>・役職で持つ（「営業一部の部長」）：異動しても自動的に追随するが、<strong>役職者が空席の期間</strong>や兼任の扱いが難しい。<br>実務的には<strong>個人で持ち、人事システムからの連携（F-052）で自動更新するか、経理部が画面（F-071）で保守する</strong>のが現実的。</p>
+            <p><strong>③ 過去データの参照——ここが最重要</strong>：<strong>申請時点のルートを、トランザクション側に焼き付ける</strong>。具体的には T_APPROVAL_HISTORY に「承認順序」と「そのとき承認者として設定されていた人」を記録する。<br>理由：マスタだけに持つと、承認ルートを変更した瞬間に<strong>「過去の申請が、誰の承認を経たか」が説明できなくなる</strong>。監査で「この申請は正しい承認ルートを通ったか」を問われたときに答えられない。<br>これは例題 2（税率）と冒頭の事故（部門）と<strong>まったく同じ構造</strong>——本章で三度目の登場になる。</p>
+            <p><strong>設計上の追加論点</strong>：<br>・<strong>承認途中にルートが変更されたら</strong>どうするか。申請時に確定させる（＝申請時にルートを T_ 側にコピーする）のが安全。<br>・<strong>承認者が申請者本人になってしまう場合</strong>（部長自身の経費）。自己承認を許すのか、上位者へエスカレーションするのか——<strong>業務ルールとして確認が必要</strong>（第 5 章の権限マトリクスの注記と同じ論点）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>申請一覧（SC-A010）の検索が、10 万件のデータで 3 秒以内（N-P01）に応答するために、データ設計で考慮すべき点を挙げよ。テーブル定義書のどの部分に現れるかも示すこと。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① インデックス</strong>：既定の検索条件（申請者＋状態＋期間）に対応する複合インデックス（IX_APP_01）。<strong>列の順序が重要</strong>——等価条件（applicant_cd, status）を先に、範囲条件（applied_at）を後に置く。<br>テーブル定義書：インデックス欄。</p>
+            <p><strong>② 結合の数</strong>：一覧に費目名・申請者名・部門名を表示するために 3 テーブルを結合すると、件数が多いときに効いてくる。対策は (a) マスタが小さいならアプリ側でキャッシュして結合しない (b) 合計金額のように<strong>集計結果を持つ</strong>（本章の非正規化判断）。<br>テーブル定義書：total_amount 列とその備考。</p>
+            <p><strong>③ ページング方式</strong>：全件取得して先頭 50 件を表示するのではなく、<strong>DB 側で 50 件だけ取得する</strong>。ただし「全何件中」の表示のために件数取得が別途必要で、これも重い。<strong>「約 N 件」表示や、件数を出さない設計も選択肢</strong>——これは画面設計（第 11 章）との協議事項。</p>
+            <p><strong>④ 添付ファイルの扱い</strong>：一覧にサムネイルを出すと 50 件分の画像取得が発生する（第 11 章 習題 11.5）。<strong>DB の BLOB に入れていたら致命的</strong>——例題 3 で案 B を選んだ理由の一つ。</p>
+            <p><strong>⑤ データ量の増加への備え</strong>：5 年で 10 万件なら通常は問題ないが、<strong>10 年後は？ 添付ファイルは 60 万件</strong>。アーカイブ方針（何年経過したデータを別テーブル／別ストレージへ移すか）を検討する。<br>テーブル定義書：想定件数の注記と、保存年限の記載。</p>
+            <p><strong>⑥ 論理削除の影響</strong>：delete_flg = '0' の条件が全 SQL に付く。<strong>インデックスに delete_flg を含めるかどうか</strong>が判断点——削除データが少なければ不要、多ければ含める。</p>
+            <p><strong>この問題の要点</strong>：性能は「後でチューニングすればよい」と思われがちだが、<strong>テーブル構成・データの持ち方・ファイルの置き場所は後から変えられない</strong>。第 7 章の性能要件が、第 12 章のテーブル定義書の具体的な行に落ちる——<strong>非機能要件は、こうやって設計書に到達する。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたが関わるシステムのテーブルを 5 つ選び、① マスタ／トランザクション／ワークに分類　② 共通項目（登録者・登録日時・更新者・更新日時・削除フラグ）が揃っているか　③「そのとき何だったか」を保持すべきなのに保持していない列が無いか——を点検せよ。見つかった問題について、実際に困った事象があれば併記すること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>典型的な発見を挙げる。</p>
+            <p><strong>発見①「更新者・更新日時が無いテーブルがある」</strong>——障害調査で「このデータ、誰がいつ変えたの？」に答えられない。特に<strong>マスタに無い</strong>ことが多く、「気づいたら設定が変わっていた」という事故の調査ができない。<strong>共通項目は全テーブルに機械的に付ける</strong>のが正解で、「要らないと思ったから付けなかった」判断はほぼ確実に後悔する（コストは 4 列分だけ）。</p>
+            <p><strong>発見②「マスタから引いているせいで過去が変わる」</strong>——本章で三度出た構造。単価・税率・担当者・組織。「去年の集計を今出すと、去年出した数字と違う」という事象が起きているなら、ほぼこれが原因。<strong>そして多くの場合、既に手遅れ</strong>——過去の値は復元できない。だから設計時に問うしかない。</p>
+            <p><strong>発見③「ワークテーブルが消されていない」</strong>——数年分のバッチ中間データが残っており、DB 容量の大半を占めている。しかも<strong>消してよいか誰も判断できない</strong>（設計書に保持期間が書かれていない）。</p>
+            <p><strong>発見④「論理削除と物理削除が混在している」</strong>——テーブルによって方針が違い、しかもその理由が誰も分からない。結合したときに、片方は削除済を除外し片方は除外しない、という不整合が起きる。</p>
+            <p><strong>発見⑤「使われていない列がある」</strong>——過去の要件の名残。消せないまま残り、新規参加者が「これは何？」と毎回聞く。<strong>テーブル定義書の備考に「2023 年の要件変更により未使用」と書くだけで、以後の質問がゼロになる。</strong></p>
+            <p><strong>この演習の狙い</strong>：データ設計の良し悪しは、<strong>稼働直後ではなく数年後に効いてくる</strong>と体感すること。画面の使いにくさは初日に分かるが、「そのときの値を保持していない」問題は最初の組織改編まで表面化しない。<br>だから設計時に、<strong>「このシステムが 5 年動いたとき、何が起きているか」</strong>を想像する——組織は変わり、税率は変わり、担当者は入れ替わり、データは 5 倍になる。その未来に耐えるかどうかを、テーブル定義書の一行ずつに問う。それがデータ設計という仕事。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① データ設計は<strong>最も後から変えにくい</strong>——画面の誤りは工数だが、データ設計の誤りは<strong>失われた情報</strong>になる；② 概念→論理→物理。基本設計で確定させるのは<strong>論理モデル全体＋テーブル構成・キー・列・型桁・主要インデックス</strong>；③ 実体は マスタ／トランザクション／ワーク に分類し、<strong>トランザクションは「そのときの値」を保持</strong>——参照先が変わりうる・金額に関わる・監査で問われる、の三条件；④ 正規化は理論のためではなく<strong>「一つの事実を一箇所にだけ書く」ための手順</strong>。1NF＝繰り返しを消す、2NF＝キーの一部にしか依存しない列を出す、3NF＝キー以外に依存する列を出す；⑤ 非正規化の判断は「<strong>そのとき何だったかに意味があるのか、単に速く読みたいだけか</strong>」；⑥ テーブル定義書のインデックスには<strong>「用途（どの画面のどの検索）」列</strong>を持たせ、性能要件と繋ぐ；⑦ 履歴は イベント履歴／世代管理／有効期間 の三方式から<strong>「何を後から知りたいか」</strong>で選ぶ；⑧ <strong>CRUD図の空白が設計漏れ</strong>——C が無い／D が無い／R しかない、をそれぞれ疑う。<br><strong>下一章预告</strong>：システムの外側との境界へ。次章は外部インターフェース・バッチ・帳票——ファイル連携の文字コードと桁、ジョブネットと異常時のリラン、そして「相手システムがある」ことの難しさ。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./11-画面设计.html">← 第 11 章 画面設計</a>
+          <a href="./13-接口批处理与帐票设计.html">第 13 章 外部接口、批处理与帳票設計 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var bar = document.getElementById("nf-bar");
+      var stage = document.getElementById("nf-stage");
+      var expl = document.getElementById("nf-expl");
+      if (!bar) return;
+
+      // cell: [text, cls]   cls: "" | "pk" | "bad" | "fixed"
+      var STEPS = [
+        {
+          tab: "非正規形",
+          title: "非正規形：一つの行に何もかも詰め込む",
+          lines: [
+            "Excel の申請書をそのままテーブルにすると、こうなる。明細が横に並んでいる（繰り返し項目）。",
+            "問題：① 明細が 4 件以上ある申請を登録できない　② 「会議費の明細を全部出す」という検索ができない　③ ほとんどの行で明細2・明細3が空になり、容量も無駄になる。"
+          ],
+          tables: [{
+            name: "申請（非正規形）",
+            head: [["申請番号", "pk"], ["申請者ID", ""], ["申請者名", ""], ["部門CD", ""], ["部門名", ""], ["明細1費目CD", "bad"], ["明細1費目名", "bad"], ["明細1金額", "bad"], ["明細2費目CD", "bad"], ["明細2費目名", "bad"], ["明細2金額", "bad"]],
+            rows: [
+              [["EX2026000011", "pk"], ["E0042", ""], ["佐藤 花子", ""], ["D020", ""], ["営業二部", ""], ["1020", "bad"], ["会議費", "bad"], ["8400", "bad"], ["1010", "bad"], ["旅費交通費", "bad"], ["1320", "bad"]],
+              [["EX2026000012", "pk"], ["E0117", ""], ["田中 太郎", ""], ["D030", ""], ["製造部", ""], ["1010", "bad"], ["旅費交通費", "bad"], ["3200", "bad"], ["", "bad"], ["", "bad"], ["", "bad"]]
+            ]
+          }]
+        },
+        {
+          tab: "第 1 正規形",
+          title: "1NF：繰り返しを行に展開する",
+          lines: [
+            "明細を縦に展開し、主キーを「申請番号＋明細番号」の複合キーにした。これで明細は何件でも持てる。",
+            "解消：明細数の制限、明細を条件にした検索、空列の無駄。",
+            "残る問題：申請者名・部門・申請日が<strong>明細の数だけ重複</strong>している。佐藤さんが異動したら、この申請の 2 行を両方直す必要があり、片方だけ直すと矛盾する（更新異常）。"
+          ],
+          tables: [{
+            name: "申請明細（1NF）",
+            head: [["申請番号", "pk"], ["明細番号", "pk"], ["申請者ID", "bad"], ["申請者名", "bad"], ["部門CD", "bad"], ["部門名", "bad"], ["費目CD", ""], ["費目名", ""], ["金額", ""]],
+            rows: [
+              [["EX2026000011", "pk"], ["1", "pk"], ["E0042", "bad"], ["佐藤 花子", "bad"], ["D020", "bad"], ["営業二部", "bad"], ["1020", ""], ["会議費", ""], ["8400", ""]],
+              [["EX2026000011", "pk"], ["2", "pk"], ["E0042", "bad"], ["佐藤 花子", "bad"], ["D020", "bad"], ["営業二部", "bad"], ["1010", ""], ["旅費交通費", ""], ["1320", ""]],
+              [["EX2026000012", "pk"], ["1", "pk"], ["E0117", "bad"], ["田中 太郎", "bad"], ["D030", "bad"], ["製造部", "bad"], ["1010", ""], ["旅費交通費", ""], ["3200", ""]]
+            ]
+          }]
+        },
+        {
+          tab: "第 2 正規形",
+          title: "2NF：主キーの一部にしか依存しない列を出す",
+          lines: [
+            "申請者・部門・申請日は<strong>申請番号だけ</strong>で決まり、明細番号には依存しない（部分関数従属）。これを「申請」テーブルへ分離した。",
+            "解消：更新異常。申請者の情報は 1 行にしか無いので、直す場所は 1 箇所だけ。",
+            "残る問題：部門名は部門CDで決まり、費目名は費目CDで決まる。<strong>キーではない列に依存している列</strong>が残っている（推移関数従属）。営業二部が改称されたら、その部門の全申請を更新することになる。"
+          ],
+          tables: [
+            {
+              name: "申請（2NF）",
+              head: [["申請番号", "pk"], ["申請者ID", "fixed"], ["申請者名", "fixed"], ["部門CD", ""], ["部門名", "bad"], ["申請日", "fixed"]],
+              rows: [
+                [["EX2026000011", "pk"], ["E0042", "fixed"], ["佐藤 花子", "fixed"], ["D020", ""], ["営業二部", "bad"], ["2026-10-03", "fixed"]],
+                [["EX2026000012", "pk"], ["E0117", "fixed"], ["田中 太郎", "fixed"], ["D030", ""], ["製造部", "bad"], ["2026-10-05", "fixed"]]
+              ]
+            },
+            {
+              name: "申請明細（2NF）",
+              head: [["申請番号", "pk"], ["明細番号", "pk"], ["費目CD", ""], ["費目名", "bad"], ["金額", ""]],
+              rows: [
+                [["EX2026000011", "pk"], ["1", "pk"], ["1020", ""], ["会議費", "bad"], ["8400", ""]],
+                [["EX2026000011", "pk"], ["2", "pk"], ["1010", ""], ["旅費交通費", "bad"], ["1320", ""]],
+                [["EX2026000012", "pk"], ["1", "pk"], ["1010", ""], ["旅費交通費", "bad"], ["3200", ""]]
+              ]
+            }
+          ]
+        },
+        {
+          tab: "第 3 正規形",
+          title: "3NF：キー以外に依存する列をマスタへ出す",
+          lines: [
+            "部門名を部門マスタへ、費目名を費目マスタへ分離した。これで<strong>一つの事実が一箇所にだけ</strong>ある状態になる。",
+            "解消：① 部門名の改称は M_DEPARTMENT の 1 行を直すだけ　② まだ申請が 1 件も無い費目を登録できる（挿入異常の解消）　③ 最後の申請を削除しても費目の情報は消えない（削除異常の解消）。",
+            "そして最後の仕上げ：<strong>申請テーブルの部門CDは「申請時点の部門」として保持する</strong>（★）。社員マスタから現在の所属を引くのではなく、申請時に確定した値を焼き付ける——これが冒頭の事故への対策であり、正規化の理論とは別の、業務上の判断。"
+          ],
+          tables: [
+            {
+              name: "T_EXPENSE_APPLICATION（3NF）",
+              head: [["申請番号", "pk"], ["申請者CD", ""], ["申請時部門CD ★", "fixed"], ["申請日時", ""], ["状態", ""]],
+              rows: [
+                [["EX2026000011", "pk"], ["E0042", ""], ["D020", "fixed"], ["2026-10-03", ""], ["40", ""]],
+                [["EX2026000012", "pk"], ["E0117", ""], ["D030", "fixed"], ["2026-10-05", ""], ["20", ""]]
+              ]
+            },
+            {
+              name: "T_EXPENSE_DETAIL（3NF）",
+              head: [["申請番号", "pk"], ["明細番号", "pk"], ["費目CD", ""], ["適用税率 ★", "fixed"], ["金額", ""]],
+              rows: [
+                [["EX2026000011", "pk"], ["1", "pk"], ["1020", ""], ["0.10", "fixed"], ["8400", ""]],
+                [["EX2026000011", "pk"], ["2", "pk"], ["1010", ""], ["0.10", "fixed"], ["1320", ""]],
+                [["EX2026000012", "pk"], ["1", "pk"], ["1010", ""], ["0.10", "fixed"], ["3200", ""]]
+              ]
+            },
+            {
+              name: "M_DEPARTMENT",
+              head: [["部門CD", "pk"], ["部門名", "fixed"]],
+              rows: [[["D020", "pk"], ["営業二部", "fixed"]], [["D030", "pk"], ["製造部", "fixed"]]]
+            },
+            {
+              name: "M_EXPENSE_TYPE",
+              head: [["費目CD", "pk"], ["費目名", "fixed"], ["勘定科目CD", ""], ["税区分", ""]],
+              rows: [[["1010", "pk"], ["旅費交通費", "fixed"], ["5210", ""], ["課税", ""]], [["1020", "pk"], ["会議費", "fixed"], ["5230", ""], ["課税", ""]]]
+            }
+          ]
+        }
+      ];
+
+      var cur = 0;
+
+      function renderTabs() {
+        bar.textContent = "";
+        STEPS.forEach(function (s, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "nf-btn";
+          b.setAttribute("aria-pressed", String(i === cur));
+          b.textContent = s.tab;
+          b.addEventListener("click", function () { cur = i; render(); });
+          bar.appendChild(b);
+        });
+      }
+
+      function renderExpl() {
+        var s = STEPS[cur];
+        expl.textContent = "";
+        var h = document.createElement("p");
+        var st = document.createElement("strong");
+        st.textContent = s.title;
+        h.appendChild(st);
+        expl.appendChild(h);
+        s.lines.forEach(function (t) {
+          var p = document.createElement("p");
+          // 简单处理内联 <strong>
+          var parts = t.split(/<strong>|<\/strong>/);
+          parts.forEach(function (seg, i) {
+            if (!seg) return;
+            if (i % 2 === 1) {
+              var b = document.createElement("strong");
+              b.textContent = seg;
+              p.appendChild(b);
+            } else {
+              p.appendChild(document.createTextNode(seg));
+            }
+          });
+          expl.appendChild(p);
+        });
+      }
+
+      function renderTables() {
+        var s = STEPS[cur];
+        stage.textContent = "";
+        s.tables.forEach(function (t) {
+          var wrap = document.createElement("div");
+          wrap.className = "nf-tbl";
+          var nm = document.createElement("p");
+          nm.className = "nf-name";
+          nm.textContent = t.name;
+          wrap.appendChild(nm);
+          var tbl = document.createElement("table");
+          var thead = document.createElement("thead");
+          var tr = document.createElement("tr");
+          t.head.forEach(function (h) {
+            var th = document.createElement("th");
+            if (h[1]) th.className = h[1];
+            th.textContent = h[0];
+            tr.appendChild(th);
+          });
+          thead.appendChild(tr);
+          tbl.appendChild(thead);
+          var tb = document.createElement("tbody");
+          t.rows.forEach(function (r) {
+            var trr = document.createElement("tr");
+            r.forEach(function (c) {
+              var td = document.createElement("td");
+              if (c[1]) td.className = c[1];
+              td.textContent = c[0];
+              trr.appendChild(td);
+            });
+            tb.appendChild(trr);
+          });
+          tbl.appendChild(tb);
+          wrap.appendChild(tbl);
+          stage.appendChild(wrap);
+        });
+      }
+
+      function render() { renderTabs(); renderExpl(); renderTables(); }
+      render();
+    });
+  </script>
+</body>
+</html>

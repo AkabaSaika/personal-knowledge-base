@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>07 非機能要件：IPA 非機能要求グレード · 知识库</title>
+  <meta name="kb:summary" content="非机能要件的六大项与分级方法：稼働率与年间停机时间的换算、RTO/RPO、性能目标值的三种根据、以及不定非机能会在哪个工程爆炸。">
+  <meta name="kb:tags" content="上流工程,非机能要件,IPA,非機能要求グレード,可用性,性能,稼働率,RTO,RPO,安全,运维,slgc,fjn,ky">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：可用性シミュレータ */
+    .av-out {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px; margin-top: 14px;
+    }
+    .av-card {
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 10px 12px;
+    }
+    .av-card .av-k { font-size: 0.74rem; color: var(--kb-fg-muted); display: block; margin-bottom: 3px; }
+    .av-card .av-v { font-size: 1.15rem; font-weight: 700; color: var(--kb-fg); }
+    .av-card .av-s { font-size: 0.78rem; color: var(--kb-fg-muted); display: block; margin-top: 3px; }
+    .av-verdict {
+      margin-top: 12px; border-left: 3px solid var(--kb-accent);
+      background: var(--kb-accent-soft); padding: 10px 13px; font-size: 0.87rem;
+      border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+    }
+    .av-verdict.warn { border-left-color: var(--kb-warn); background: var(--kb-warn-soft); }
+    .av-verdict.bad { border-left-color: var(--kb-danger); background: var(--kb-danger-soft); }
+    .av-verdict p { margin: 0; }
+    .av-bar { height: 10px; border-radius: 5px; background: var(--kb-surface-alt); overflow: hidden; margin-top: 6px; }
+    .av-bar i { display: block; height: 100%; background: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 7 章 · 非機能要件：IPA 非機能要求グレード</h1>
+        <p class="kb-lead">「速く・落ちず・安全に・運用しやすく」——誰も反対しないが、誰も数値で語らない領域。<ruby>非機能要件<rt>ひきのうようけん</rt></ruby>は要件定義で最も後回しにされ、最も高くつく。この章では IPA の<strong>非機能要求グレード</strong>という共通言語を使って、客と数値で合意する方法を学ぶ。稼働率 99.9% が年に何時間の停止を許すのか、その一行がなぜ何百万円を動かすのか。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出非機能要求グレードの六大项与分级结构，并用モデルシステム作为出发点；② 把稼働率换算成年间停机时间，并说明 RTO / RPO 的含义与它们对构成・费用的影响；③ 用三种根据（业务必要・现行实绩・成本平衡）定出性能目标值，并写出带测定条件的性能要件；④ 说明非機能を決めないと哪个工程会爆炸、代价有多大；⑤ 写出一份可评审的非機能要件定義書（グレード表形式）。</p>
+        </div>
+
+        <h2>月末の夜に落ちて、朝まで誰も知らなかった</h2>
+        <p>ある社内システムが稼働して 2 か月目、月末の締め日の夜 22 時にサーバが停止した。復旧したのは翌朝 10 時——<strong>誰も止まったことに気づかなかったから</strong>。</p>
+        <p>要件定義書には、こう書かれていた：<strong>「システムは安定して稼働すること。」</strong></p>
+        <p>この一文には、決まっていないことが少なくとも六つある。①どれくらい止まってよいのか　②止まったことを誰がどうやって知るのか　③誰が復旧するのか　④何時間以内に復旧すべきか　⑤止まっている間、業務はどう回すのか　⑥データが壊れていたらどこまで戻せるのか。</p>
+        <p><strong>これらは全部、非機能要件である。</strong>そして全部、要件定義で決めておかなければ、決める機会は二度と来ない——製造も、テストも、「安定して稼働すること」を根拠には何もできないからだ。</p>
+
+        <h2>非機能要件が後回しにされる三つの理由</h2>
+        <ul>
+          <li><strong>客が語れない。</strong>「どれくらい止まってよいですか」と聞かれても、業務担当者は考えたことがない。「止まったら困ります」としか言えない。</li>
+          <li><strong>ベンダーも聞きにくい。</strong>数値を上げれば構成が重くなり、金額が上がる。「盛っている」と思われたくない心理が働く。</li>
+          <li><strong>機能要件のほうが目に見えて楽しい。</strong>画面の話は盛り上がるが、バックアップの話は盛り上がらない。会議の時間配分が自然に偏る。</li>
+        </ul>
+        <p>だから<strong>「グレード表」という道具で機械的に潰す</strong>。感覚で議論せず、項目を一つずつ潰していく——これが IPA 非機能要求グレードの発想。</p>
+
+        <h2>非機能要求グレードの構造</h2>
+        <p>IPA（情報処理推進機構）が公開している<ruby>非機能要求グレード<rt>ひきのうようきゅうグレード</rt></ruby>は、非機能要件を<strong>六大項目</strong>に分け、それぞれを中項目・小項目（メトリクス）に落とし、<strong>レベル 0〜5</strong> で段階を定義したもの。日本のSI現場では事実上の共通言語になっている。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 260" width="700" height="260" role="img" aria-label="非机能要求Grade的六大项目与分级结构：可用性、性能扩展性、运用保守性、移行性、安全性、系统环境，各项由中项目与指标构成并按等级0到5分级">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11.5">
+              <g>
+                <rect x="14" y="16" width="216" height="66" rx="10" fill="var(--kb-accent)" opacity="0.1"/>
+                <rect x="14" y="16" width="216" height="66" rx="10" fill="none" stroke="var(--kb-accent)" stroke-width="1.4"/>
+                <text x="30" y="40" font-size="13.5" font-weight="700" fill="var(--kb-fg)">① 可用性</text>
+                <text x="30" y="58" fill="var(--kb-fg-muted)">継続性・耐障害性・災害対策</text>
+                <text x="30" y="74" fill="var(--kb-fg-faint)">稼働率、RTO、RPO、冗長化</text>
+              </g>
+              <g>
+                <rect x="242" y="16" width="216" height="66" rx="10" fill="#16a34a" opacity="0.1"/>
+                <rect x="242" y="16" width="216" height="66" rx="10" fill="none" stroke="#16a34a" stroke-width="1.4"/>
+                <text x="258" y="40" font-size="13.5" font-weight="700" fill="var(--kb-fg)">② 性能・拡張性</text>
+                <text x="258" y="58" fill="var(--kb-fg-muted)">応答時間・処理量・将来の伸び</text>
+                <text x="258" y="74" fill="var(--kb-fg-faint)">レスポンス、スループット、データ量</text>
+              </g>
+              <g>
+                <rect x="470" y="16" width="216" height="66" rx="10" fill="#9466de" opacity="0.12"/>
+                <rect x="470" y="16" width="216" height="66" rx="10" fill="none" stroke="#9466de" stroke-width="1.4"/>
+                <text x="486" y="40" font-size="13.5" font-weight="700" fill="var(--kb-fg)">③ 運用・保守性</text>
+                <text x="486" y="58" fill="var(--kb-fg-muted)">監視・バックアップ・保守体制</text>
+                <text x="486" y="74" fill="var(--kb-fg-faint)">運用時間、監視方式、ログ、窓口</text>
+              </g>
+              <g>
+                <rect x="14" y="94" width="216" height="66" rx="10" fill="var(--kb-warn)" opacity="0.12"/>
+                <rect x="14" y="94" width="216" height="66" rx="10" fill="none" stroke="var(--kb-warn)" stroke-width="1.4"/>
+                <text x="30" y="118" font-size="13.5" font-weight="700" fill="var(--kb-fg)">④ 移行性</text>
+                <text x="30" y="136" fill="var(--kb-fg-muted)">移行方式・移行データ・移行期間</text>
+                <text x="30" y="152" fill="var(--kb-fg-faint)">並行稼働、切戻し、リハーサル</text>
+              </g>
+              <g>
+                <rect x="242" y="94" width="216" height="66" rx="10" fill="var(--kb-danger)" opacity="0.1"/>
+                <rect x="242" y="94" width="216" height="66" rx="10" fill="none" stroke="var(--kb-danger)" stroke-width="1.4"/>
+                <text x="258" y="118" font-size="13.5" font-weight="700" fill="var(--kb-fg)">⑤ セキュリティ</text>
+                <text x="258" y="136" fill="var(--kb-fg-muted)">認証・認可・監査・データ保護</text>
+                <text x="258" y="152" fill="var(--kb-fg-faint)">アクセス制御、暗号化、証跡、診断</text>
+              </g>
+              <g>
+                <rect x="470" y="94" width="216" height="66" rx="10" fill="var(--kb-fg-muted)" opacity="0.12"/>
+                <rect x="470" y="94" width="216" height="66" rx="10" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.4"/>
+                <text x="486" y="118" font-size="13.5" font-weight="700" fill="var(--kb-fg)">⑥ システム環境</text>
+                <text x="486" y="136" fill="var(--kb-fg-muted)">設置環境・制約・エコロジー</text>
+                <text x="486" y="152" fill="var(--kb-fg-faint)">クラウド/オンプレ、法令、電力</text>
+              </g>
+
+              <rect x="14" y="180" width="672" height="62" rx="10" fill="var(--kb-surface-alt)" stroke="var(--kb-border)"/>
+              <text x="30" y="202" font-weight="700" fill="var(--kb-fg)">各項目は「中項目 → メトリクス（指標）→ レベル 0〜5」に分解される</text>
+              <text x="30" y="222" fill="var(--kb-fg-muted)">例）可用性 → 継続性 → 稼働率 → Lv.1: 95% ／ Lv.3: 99.9% ／ Lv.5: 99.999%</text>
+              <text x="30" y="238" fill="var(--kb-fg-faint)" font-size="10.5">レベルが 1 段上がるだけで、構成・運用体制・費用が跳ね上がる項目がある——それを可視化するのがグレード表の役割</text>
+            </g>
+          </svg>
+          <figcaption>非機能要求グレードの六大項目。<strong>全項目を埋めるのが目的ではない</strong>——重要項目（IPA が「特に合意すべき」と定めた項目）から潰し、残りはモデルシステムの既定値を採用する、という使い方が現実的。</figcaption>
+        </figure>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 モデルシステムから始める</p>
+          <p>ゼロから全項目を議論すると日が暮れる。IPA は出発点として三つの<strong>モデルシステム</strong>を用意している：<br>①<strong>社会的影響が限定的</strong>なシステム（社内の情報系など）②<strong>社会的影響が限定的だが大きい</strong>システム（企業の基幹系）③<strong>社会的影響が極めて大きい</strong>システム（金融・公共インフラ）。<br>使い方：「本システムはモデル①をベースとし、以下の項目のみ変更する」と宣言してから、変更する項目だけを議論する。<strong>議論の対象が 3〜4 項目に絞れれば、会議 1 回で決まる。</strong><br>本教材の経費精算システムは①（社内システム、止まっても社外への影響なし、ただし月末は業務が止まる）が出発点になる。</p>
+        </div>
+
+        <h2>稼働率という一行が動かす金額</h2>
+        <p>非機能要件の中で最も分かりやすく、最も金額に効くのが<strong>可用性</strong>。下のスライダーで、稼働率と復旧目標時間を動かしてみてほしい。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 可用性シミュレータ：その一行は年に何時間の停止を許すか</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：稼働率 99%＝年 87.6 時間、99.9%＝年 8.8 時間、99.99%＝年 53 分。一段上がるごとに許容停止時間は 1/10 になり、必要な構成は<strong>単一構成 → 冗長化 → HA＋DR</strong>と重くなる。同時に、復旧目標時間（RTO）を短くするには<strong>24 時間監視と待機要員</strong>が必要になり、運用費が跳ね上がる。<strong>可用性の議論は「何%にするか」ではなく「止まったときに業務をどう回すか」から始めるべき</strong>——代替運用があるなら、高い稼働率は要らない。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">目標稼働率 <span class="kb-control-value" id="val-av"></span>
+                <input type="range" id="ctl-av" min="0" max="4" step="1" value="2"></label>
+              <label class="kb-control">復旧目標時間 RTO <span class="kb-control-value" id="val-rto"></span>
+                <input type="range" id="ctl-rto" min="0" max="4" step="1" value="1"></label>
+            </div>
+            <div class="av-out" id="av-out"></div>
+            <div class="av-verdict" id="av-verdict"></div>
+          </div>
+        </div>
+
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>稼働率</th><th>年間停止許容</th><th>月間停止許容</th><th>典型的な構成</th><th>よくある適用先</th></tr></thead>
+            <tbody>
+              <tr><td>99%</td><td>約 87.6 時間（3.7 日）</td><td>約 7.3 時間</td><td>単一構成・日次バックアップ</td><td>社内の情報系、検証環境</td></tr>
+              <tr><td>99.5%</td><td>約 43.8 時間</td><td>約 3.6 時間</td><td>単一構成＋迅速な復旧手順</td><td>小規模な社内業務システム</td></tr>
+              <tr><td><strong>99.9%</strong></td><td><strong>約 8.8 時間</strong></td><td>約 43 分</td><td>サーバ冗長化・自動フェイルオーバー</td><td>企業の基幹系（本案例の候補）</td></tr>
+              <tr><td>99.95%</td><td>約 4.4 時間</td><td>約 22 分</td><td>冗長化＋24 時間監視</td><td>ECサイト、受発注システム</td></tr>
+              <tr><td>99.99%</td><td>約 53 分</td><td>約 4.4 分</td><td>HA 構成＋DR サイト＋有人監視</td><td>金融、公共インフラ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ RTO と RPO を混同しない</p>
+          <p><strong>RTO（Recovery Time Objective / 目標復旧時間）</strong>＝障害発生から復旧までの目標時間。「何時間で戻すか」。<br><strong>RPO（Recovery Point Objective / 目標復旧時点）</strong>＝どの時点のデータまで戻すか。「どこまでのデータ損失を許すか」。<br>例：日次バックアップのみなら RPO は最大 24 時間——<strong>障害直前 23 時間分の申請データが消える</strong>ことを意味する。月末に起きたらどうなるか、を客と一緒に想像すること。<br>RPO を短くする（＝データを失わない）には、トランザクションログのバックアップやレプリケーションが必要で、これは RTO とは別のコストがかかる。<strong>二つを一緒くたに「バックアップは毎日取ります」で済ませると、事故のときに「1 日分消えるとは聞いていない」になる。</strong></p>
+        </div>
+
+        <h2>数値の決め方：三つの根拠</h2>
+        <p>「3 秒」「99.9%」という数字は、どこから持ってくるのか。根拠は三つあり、<strong>要件定義書には根拠も一緒に書く</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>根拠</th><th>問い方</th><th>本案例での例</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>① 業務上の必要</strong></td>
+                <td>「業務が止まって本当に困るのは、何時間からですか」「その間、代替手段はありますか」</td>
+                <td>月末 3 営業日以外なら半日止まっても業務は回る。月末は 2 時間止まると締めに影響する</td>
+              </tr>
+              <tr>
+                <td><strong>② 現行の実績</strong></td>
+                <td>「今のやり方だと何分かかっていますか」「今のシステムは年に何回止まっていますか」</td>
+                <td>現行は紙なので「システムが止まる」概念自体が無い。ただし現行の検索は Excel で 10 秒程度</td>
+              </tr>
+              <tr>
+                <td><strong>③ コストとのバランス</strong></td>
+                <td>「Lv.3 なら +200 万円、Lv.4 なら +800 万円です。業務影響と比べていかがですか」</td>
+                <td>冗長化 +200 万円に対し、業務停止の損失は月末 1 回で残業 20 時間程度 → 冗長化までは妥当、DR は過剰</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>③の出し方が SE の腕の見せどころ</strong>。「99.9% にしますか？」と聞いても客は答えられないが、<strong>「Lv.3 なら +200 万、Lv.4 なら +800 万。御社の場合、止まって困るのは月末だけなので Lv.3 で十分と考えますが、いかがでしょうか」</strong>なら判断できる。第 1 章から繰り返している構造——<strong>裁定するのではなく、選択肢とコストを並べて選ばせる</strong>。</p>
+
+        <h2>性能要件の書き方</h2>
+        <p>性能要件で必ず書くべき四点セット：<strong>①対象（どの操作か）②条件（データ量・同時利用者数・環境）③指標（応答時間 / スループット）④判定基準（何秒以内、何件/時間）</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>種別</th><th>指標</th><th>書き方の例</th></tr></thead>
+            <tbody>
+              <tr><td>オンライン応答</td><td>レスポンスタイム</td><td>「一覧検索は、データ 10 万件・同時 30 ユーザーの条件で、3 秒以内に初期表示が完了すること」</td></tr>
+              <tr><td>オンライン処理量</td><td>同時接続数・スループット</td><td>「ピーク時（月末 3 営業日の 9:00–11:00）において、同時 50 ユーザーの操作を上記応答時間で処理できること」</td></tr>
+              <tr><td>バッチ</td><td>処理時間・処理件数</td><td>「月次仕訳連携バッチは、申請 2,000 件・明細 5,000 件を 30 分以内に処理すること」</td></tr>
+              <tr><td>バッチ時間窓</td><td>実行可能時間帯</td><td>「月次バッチは、会計システムの受入時間（3:00–5:00）に間に合うよう、2:00 に開始し 2:40 までに完了すること」</td></tr>
+              <tr><td>拡張性</td><td>将来のデータ量</td><td>「稼働 5 年後（申請データ約 10 万件）においても、上記の性能要件を満たすこと」</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚨 「ピーク」を書かない性能要件は無意味</p>
+          <p>本案例の実態は<strong>月 1,600 件のうち約 6 割が月末 3 営業日に集中</strong>（第 4 章の業務一覧）。平均で設計すると、月末に確実に破綻する。<br>平均：1,600 件 ÷ 20 営業日 ＝ 80 件/日<br>ピーク：960 件 ÷ 3 営業日 ＝ 320 件/日（<strong>平均の 4 倍</strong>）。さらに時間帯も朝と夕方に偏るので、瞬間ピークはもっと高い。<br><strong>性能要件は必ずピーク時の数字で書く。</strong>そしてピークの数字は、第 4 章の業務一覧（件数と頻度）が唯一の根拠になる——<strong>業務調査を手抜きすると、性能要件が書けない</strong>という形で跳ね返ってくる。</p>
+        </div>
+
+        <h2>非機能を決めないと、どこで爆発するか</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>決めなかった項目</th><th>爆発する工程</th><th>そのときの手戻り</th></tr></thead>
+            <tbody>
+              <tr><td>性能（応答時間・データ量）</td><td>総合テスト</td><td>DB設計・インデックス・画面方式の見直し。<strong>基本設計まで戻る</strong>。冒頭の 3 か月はこれ</td></tr>
+              <tr><td>可用性（冗長構成）</td><td>基本設計〜調達</td><td>サーバ台数・ライセンス数が変わり、<strong>見積が根本から変わる</strong>。契約金額の再交渉</td></tr>
+              <tr><td>セキュリティ（認証・暗号化・証跡）</td><td>総合テスト〜稼働直前</td><td>脆弱性診断で指摘 → 設計変更。稼働延期になりやすい</td></tr>
+              <tr><td>運用（監視・バックアップ・窓口）</td><td><strong>稼働後</strong></td><td>止まっても誰も気づかない、復旧手順が無い、問い合わせ先が無い。冒頭の事故</td></tr>
+              <tr><td>移行（データ移行の範囲・期間）</td><td>移行リハーサル</td><td>移行に想定の 3 倍かかることが判明し、切替の週末に収まらない（第 14 章）</td></tr>
+              <tr><td>保存年限・アーカイブ</td><td>稼働 2〜3 年後</td><td>データが増えて性能劣化。削除してよいか誰も判断できない</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>共通しているのは<strong>「発覚が遅く、戻る距離が長い」</strong>こと。機能要件の漏れは製造で気づけば数日で直るが、非機能の漏れは<strong>アーキテクチャに触る</strong>ので、基本設計まで戻る。これが「非機能は要件定義で決めきる」と言われる理由。</p>
+
+        <h2>成果物样例</h2>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>非機能要件定義書（グレード表形式・抜粋）</span><span class="kb-doc-id">DOC-207 / v1.0</span></p>
+          <div class="kb-doc-body">
+            <p class="kb-doc-note" style="margin-bottom:10px">前提：IPA 非機能要求グレード「社会的影響が限定的なシステム」をベースとし、下表の項目について個別に合意する。記載のない項目はモデルシステムの既定値に従う。</p>
+            <table>
+              <thead><tr><th>大項目</th><th>要件ID</th><th>メトリクス</th><th>レベル / 値</th><th>根拠</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="4">可用性</td><td>N-A01</td><td>運用時間</td><td>平日 7:00–22:00（土日祝も同時間帯で利用可）</td><td>月末が休日にあたる場合の申請を許容するため</td></tr>
+                <tr><td>N-A02</td><td>稼働率</td><td>99.5%（運用時間内。計画停止を除く）</td><td>月末 3 営業日以外は半日停止しても代替運用（翌日提出）が可能なため</td></tr>
+                <tr><td>N-A03</td><td>RTO（目標復旧時間）</td><td>通常 8 時間以内／<strong>月末 3 営業日は 2 時間以内</strong></td><td>締め処理への影響を回避するため</td></tr>
+                <tr><td>N-A04</td><td>RPO（目標復旧時点）</td><td>24 時間（日次バックアップ）。ただし申請データは 1 時間（ログバックアップ）</td><td>再入力の負担が申請者 320 名に及ぶため、申請データのみ短縮</td></tr>
+                <tr><td rowspan="4">性能・拡張性</td><td>N-P01</td><td>オンライン応答時間</td><td>申請一覧検索：3 秒以内（データ 10 万件・同時 30 ユーザー・社内 LAN）</td><td>現行の Excel 検索（約 10 秒）を下回ること</td></tr>
+                <tr><td>N-P02</td><td>ピーク時処理量</td><td>月末 3 営業日 9:00–11:00 に同時 50 ユーザー</td><td>業務一覧より、月間 1,600 件の 6 割が月末 3 日に集中</td></tr>
+                <tr><td>N-P03</td><td>バッチ処理時間</td><td>月次仕訳連携：2:00 開始、2:40 までに完了</td><td>会計システムの受入時間帯 3:00–5:00 に間に合わせるため</td></tr>
+                <tr><td>N-E01</td><td>データ量（5 年後）</td><td>申請 10 万件、添付ファイル 30 万件・約 600GB</td><td>年 19,200 件 × 5 年、添付は 1 申請平均 3 件・平均 2MB</td></tr>
+                <tr><td rowspan="3">運用・保守性</td><td>N-O01</td><td>監視</td><td>サーバ死活・バッチ異常終了を自動検知し、情シス担当へメール通知</td><td>無人時間帯の停止に気づく手段を確保するため</td></tr>
+                <tr><td>N-O02</td><td>バックアップ</td><td>日次フルバックアップ（保持 14 世代）＋トランザクションログ 1 時間毎</td><td>N-A04 の RPO を満たすため</td></tr>
+                <tr><td>N-O03</td><td>保守窓口</td><td>平日 9:00–18:00、一次受付は情シス、二次はベンダー保守窓口</td><td>—</td></tr>
+                <tr><td rowspan="3">セキュリティ</td><td>N-S01</td><td>認証</td><td>全社 SSO 認証基盤と連携。システム独自のパスワードは保持しない</td><td>既存の全社方針に従う</td></tr>
+                <tr><td>N-S02</td><td>アクセス制御</td><td>権限マトリクス（DOC-205）に定めるロールとデータ範囲をサーバ側で制御すること</td><td>他部門の経費情報の閲覧を防ぐため</td></tr>
+                <tr><td>N-S03</td><td>証跡・保存年限</td><td>ログイン、データ更新、権限変更の操作履歴を 7 年保持</td><td>国税関係書類の保存年限に合わせる（経理部確認済）</td></tr>
+                <tr><td>移行性</td><td>N-M01</td><td>移行データ</td><td>過去 2 年分の確定済申請（約 38,000 件）を参照専用で移行。添付画像は移行対象外</td><td>紙原本が保管されているため、画像の移行は不要と判断</td></tr>
+                <tr><td>システム環境</td><td>N-V01</td><td>実行環境</td><td>発注者契約のクラウド環境（東京リージョン）。DR サイトは設けない</td><td>N-A02 の稼働率であれば単一リージョンで充足</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 各要件は総合テストにて測定・確認する。測定方法は総合テスト計画書に定める。<br>※ N-A03（月末 2 時間以内の復旧）については、月末 3 営業日のベンダー待機体制を別途保守契約で定める。</p>
+          </div>
+        </div>
+        <p>注意三件事：<strong>①全部の項目に「根拠」がある</strong>——数字の出どころが書かれていないと、後で変更を求められたときに議論できない。<strong>②「月末だけ RTO 2 時間」のように、業務のリズムに合わせて要件を変えている</strong>——一律に高くするとコストが跳ね上がる。<strong>③N-V01 のように「やらないこと」（DR サイトを設けない）も明記</strong>（第 6 章の対象外の書き方）。</p>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 客に「稼働率は何%にしますか」と聞いたら「100%で」と言われた</p>
+          <p><strong>やってはいけない</strong>：「100% は技術的に不可能です」と正論で返す。間違ってはいないが、客が本当に言いたいのは「止まってほしくない」という当たり前のことで、技術論で返すと会話が終わる。</p>
+          <p><strong>質問を変える</strong>：「承知しました。ではその前提で、<strong>万が一止まった場合の業務への影響</strong>を確認させてください。たとえば平日の昼間に 2 時間止まったら、業務はどうなりますか？」<br>——ほぼ確実に「まあ、2 時間なら翌日でもいいですね」「ただ月末だけは困ります」という答えが返ってくる。<strong>これが要件</strong>。可用性の議論は「何%にするか」からではなく、<strong>「止まったときに業務をどう回すか」から始める</strong>。</p>
+          <p><strong>そのうえでコストを見せる</strong>：「99.5% であれば単一構成で、追加費用はありません。99.9% にはサーバの冗長化が必要で、初期 +200 万円・年間保守 +30 万円かかります。月末だけ復旧を早くする体制を取るという方法もあり、こちらは年間 +50 万円程度です。」<br>——三つの選択肢を金額つきで並べれば、客は選べる。<strong>「100%で」は要求（第 2 章）であって要件ではない</strong>——目的（止まって困る事態を避けたい）に翻訳してから、実現手段の選択肢を出す。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 性能要件の測定条件を「本番同等環境で」と書いたら、テスト時に環境が無かった</p>
+          <p><strong>よくある事故</strong>：総合テスト環境が本番より小さい（CPU 半分、データ 1 万件しかない）ため、性能要件を測定できない。「本番で測ります」となり、稼働後に問題が発覚する。</p>
+          <p><strong>要件定義の時点で決めておくべきこと</strong>：① <strong>測定環境</strong>（本番同等か、縮小環境＋換算か）② <strong>測定用データ</strong>（10 万件のテストデータを誰がいつ作るのか——<strong>これは意外と大仕事で、工数として見積に入れる必要がある</strong>）③ <strong>測定方法</strong>（負荷ツールを使うのか、手動で何人が同時に操作するのか）④ <strong>合否判定</strong>（平均値か、最大値か、95 パーセンタイルか）。</p>
+          <p><strong>④が特に重要</strong>：「3 秒以内」が平均なのか最悪値なのかで、難易度がまったく違う。10 回中 9 回が 1 秒、1 回が 20 秒なら、平均は 2.9 秒で合格だが、利用者の体感は最悪。<strong>実務的には「95% のリクエストが 3 秒以内、最大でも 10 秒以内」のように二段で書く</strong>のが妥当。<br>そして測定条件は、要件定義書に書くだけでなく<strong>総合テスト計画書に引き継がれる</strong>——V字の右側との対応（第 2 章）がここでも効く。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 「バックアップは毎日取ります」で合意したつもりだった</p>
+          <p>稼働 8 か月後、月末の 21 時にデータベースが破損。前日 2:00 のバックアップから復旧した結果、<strong>その日 1 日分（月末で最も多い 300 件）の申請が消えた</strong>。申請者 300 人に再入力を依頼することになり、大問題に。</p>
+          <p><strong>何が抜けていたか</strong>：RPO（目標復旧時点）の合意。「毎日バックアップ」＝「最大 24 時間分のデータを失う」という意味だが、客はそう理解していなかった。<strong>技術者にとっての当たり前が、客にとっては初耳</strong>という典型例。</p>
+          <p><strong>どう書くべきだったか</strong>：本章の成果物样例 N-A04 のように、<strong>「日次バックアップ（RPO 24 時間）。ただし申請データはトランザクションログを 1 時間毎に取得し RPO 1 時間とする」</strong>と書く。そして重要なのは、<strong>その意味を客の言葉で説明して合意すること</strong>——「障害の起きたタイミングによっては、最大 1 時間分の申請が失われ、その分は再入力をお願いすることになります。月末であれば最大で約 40 件です。これで問題ないでしょうか」。</p>
+          <p><strong>教訓</strong>：非機能要件の合意は、<strong>数値を書くこと</strong>と<strong>その数値が業務上どういう事態を意味するかを説明すること</strong>の二段階。前者だけでは、稼働後に「そんなつもりではなかった」が必ず起きる。<strong>要件定義書に数値を書き、議事録に「その意味」を書く</strong>——これが第 3 章の作法と本章がつながる場所。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>稼働率 99.9%（24 時間 365 日運用の場合）の年間停止許容時間を計算せよ。また、運用時間が「平日 7:00–22:00」の場合はどう変わるか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>24 時間 365 日の場合</strong>：365 × 24 × (1 − 0.999) ＝ 8,760 × 0.001 ＝ <strong>約 8.76 時間/年</strong>（月あたり約 43 分）。</p>
+            <p><strong>平日 7:00–22:00 の場合</strong>：運用時間は 15 時間 × 約 250 営業日 ＝ 3,750 時間/年。3,750 × 0.001 ＝ <strong>約 3.75 時間/年</strong>。</p>
+            <p><strong>解析</strong>：ここが実務上の重要ポイント——<strong>同じ「99.9%」でも、分母（運用時間）が違えば許容停止時間はまったく違う</strong>。しかも意味が逆転することに注意：運用時間が短いほうが、許容される停止時間は短くなる（＝厳しい要件になる）。<br>したがって稼働率の要件は<strong>必ず運用時間とセットで書く</strong>。「稼働率 99.5%（運用時間内。計画停止を除く）」——この括弧が無いと、夜間のバッチ実行中の停止や、計画的なメンテナンス停止まで稼働率の計算に含まれてしまい、事実上達成不可能な要件になる。<br><strong>もう一つの実務知</strong>：「計画停止を除く」の定義も決めておく。何日前に通知すれば計画停止と認められるのか（通常は 1〜2 週間前の事前合意）。これを決めておかないと、パッチ適用のたびに揉める。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>RTO と RPO の違いを説明し、それぞれを短くするために必要な対策を挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>RTO</strong>＝障害発生から復旧完了までの目標<strong>時間</strong>。「どれだけ早く戻すか」。<br><strong>RPO</strong>＝復旧できるデータの目標<strong>時点</strong>。「どこまでのデータ損失を許すか」。</p>
+            <p><strong>RTO を短くする対策</strong>：① 冗長構成＋自動フェイルオーバー（人が介在しない）② 24 時間監視（気づくまでの時間を短縮——<strong>これを忘れると、復旧作業が速くても意味がない</strong>）③ 復旧手順書の整備と定期的な訓練 ④ 待機要員の確保（＝人件費）⑤ 予備機の常備。</p>
+            <p><strong>RPO を短くする対策</strong>：① バックアップ間隔の短縮 ② トランザクションログのバックアップ ③ DB のレプリケーション（同期／非同期）④ 遠隔地へのリアルタイム複製。</p>
+            <p><strong>コスト構造の違いに注目</strong>：RTO の短縮は<strong>運用（人と体制）のコスト</strong>が大きく、RPO の短縮は<strong>インフラ（ストレージと帯域）のコスト</strong>が大きい。だから「どちらを優先するか」は業務次第——<strong>データが消えると再入力が大変な業務（本案例）は RPO を、止まると即座に売上が消える業務（EC）は RTO を優先する</strong>。<br>そして両方を高くすると費用は掛け算で増える。<strong>要件定義では「どちらがより痛いか」を客に選ばせる</strong>のが実務的な進め方。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の性能要件の不足を指摘し、書き直せ。<br>「経費申請の一覧画面は 3 秒以内に表示されること。」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>不足している要素</strong>：① データ量（何件のときか）② 同時利用者数 ③ ネットワーク環境（社内 LAN か、VPN か、スマホの回線か）④ 測定の基準（平均か、最大か、パーセンタイルか）⑤ 「表示される」の定義（初期表示完了か、全画像の読み込み完了か）。</p>
+            <p><strong>書き直し例</strong>：<br>N-P01「経費申請一覧の検索は、申請データ 10 万件を保持した状態で、同時 30 ユーザーがアクセスする条件において、社内 LAN 環境から実行した場合、<strong>95% のリクエストで 3 秒以内</strong>、かつ<strong>最大でも 10 秒以内</strong>に一覧の初期表示が完了すること。」<br>N-P02「スマートフォンから 4G 回線で接続した場合、上記条件において 5 秒以内に初期表示が完了すること。」</p>
+            <p><strong>解析</strong>：⑤が地味に重要。「表示される」の定義が曖昧だと、テストのときに「一覧の文字は 2 秒で出たが、領収書のサムネイル画像が全部出るまで 8 秒かかった。これは合格か？」で揉める。<strong>利用者が業務を続けられる状態になるまで</strong>を基準にするのが妥当で、それを「初期表示完了」「操作可能になるまで」といった言葉で定義しておく。<br>また②のスマホ回線を分けて書いた点にも注目。<strong>要件 R-001（外出先からの申請）を満たすなら、社内 LAN だけの性能要件では不十分</strong>——機能要件と非機能要件は独立していない。機能一覧を一行ずつ見て「この機能はどんな環境で使われるか」を確認すると、こうした抜けが見つかる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>非機能要求グレードの六大項目を挙げ、本案例（経費精算システム）で特に重要になる項目を三つ選び、理由を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>六大項目</strong>：可用性／性能・拡張性／運用・保守性／移行性／セキュリティ／システム環境・エコロジー</p>
+            <p><strong>本案例で特に重要な三つ（解答例）</strong>：<br><strong>① 性能・拡張性</strong>——月末 3 営業日に業務の 6 割が集中する。ピーク時に耐えられないと、システム化の目的（月末負荷の削減）そのものが達成されない。しかも添付画像により 5 年でデータが 600GB に達する見込みで、拡張性の検討が必須。<br><strong>② セキュリティ</strong>——経費情報は個人の行動履歴（いつどこで誰と会食したか）を含み、他部門・他人に見えてはいけない。権限マトリクスのデータ範囲制御（第 5 章）をサーバ側で担保する必要がある。加えて国税関係書類として 7 年の証跡保持が求められる。<br><strong>③ 運用・保守性</strong>——情シスが 3 名しかいない（第 1 章）。監視・バックアップ・問い合わせ対応が属人的だと回らない。自動監視とアラート通知が無いと、冒頭の事故が起きる。</p>
+            <p><strong>逆に、相対的に優先度が低いもの</strong>：可用性（半日止まっても月末以外なら業務は回る）、システム環境（社内システムでエコロジー要件は薄い）。<strong>ただし「優先度が低い＝決めなくてよい」ではない</strong>——低いなら低いなりの数値を明記して合意する。空欄が最も危険。</p>
+            <p><strong>この演習の狙い</strong>：非機能要件は<strong>システムの性質によって重点が変わる</strong>と理解すること。EC サイトなら可用性が最優先、研究用の分析システムなら性能、公共システムならセキュリティと移行性。<strong>六大項目を均等に議論するのではなく、そのシステムの急所を見極めて時間を配分する</strong>のが上流の判断。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>本案例で「月末 3 営業日のみ RTO 2 時間、それ以外は 8 時間」という要件を立てた。この要件を満たすために、設計・運用の両面で何が必要になるか。また、この「時期によって要件を変える」書き方の利点と注意点を述べよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>設計面で必要なこと</strong>：① 障害検知の自動化（気づくまでの時間を最小化。8 時間なら翌朝でも間に合うが、2 時間なら即時通知が必須）② 復旧手順の自動化・簡素化（手順書が 30 ステップあると 2 時間では終わらない）③ バックアップからの復旧時間の実測（<strong>600GB のリストアに何時間かかるか、実際に測っておく必要がある</strong>——これは移行リハーサルと同じく、机上の計算では分からない）。</p>
+            <p><strong>運用面で必要なこと</strong>：① 月末 3 営業日のベンダー待機体制（夜間・休日を含むなら、それは保守契約の追加条項＝追加費用）② 連絡体制（誰が誰に何分以内に連絡するか）③ 情シス側の判断者の確保（復旧作業の実施可否を誰が判断するか）④ <strong>月末が土日祝にかかる場合の扱い</strong>（本案例は運用時間に土日祝を含めているので、待機も必要になる）。</p>
+            <p><strong>利点</strong>：一律に厳しい要件（常時 RTO 2 時間）にするより<strong>大幅に安い</strong>。年間の待機コストが 12 か月 × 3 日と、365 日では桁が違う。そして業務実態に合っている——第 4 章の業務調査で得た「月末集中」という事実が、ここで直接コスト削減に効いている。</p>
+            <p><strong>注意点</strong>：<br>① <strong>「月末 3 営業日」の定義を明記する</strong>——月末最終営業日から遡って 3 営業日か、暦月の最終 3 日か。年末年始はどうか。曖昧だと当日に揉める。<br>② <strong>切り替えの手間</strong>——体制が二段階あると、運用手順も二種類になる。「今日は待機日か」を誰がどう判断するのかを決める必要がある（カレンダーの整備）。<br>③ <strong>「それ以外は 8 時間」を軽視しない</strong>——月末以外でも、締め直前や決算期には重要度が上がる。年に数回の例外（年度末など）を別途定義するか検討する。<br>④ <strong>SLA 違反時の扱い</strong>——2 時間を超えたときにどうなるのか（ペナルティがあるのか、努力目標なのか）を保守契約で明確にする。<strong>要件定義書の非機能要件と、保守契約の SLA は別の文書であり、両者が食い違うと稼働後に必ず問題になる。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>客から「セキュリティはしっかりお願いします」と言われた。これを合意可能な非機能要件に展開せよ。最低 5 項目挙げること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>展開例</strong>：<br><strong>① 認証</strong>「全社 SSO 認証基盤と連携し、システム独自のパスワードは保持しないこと。」——認証方式、多要素認証の要否、セッションタイムアウト時間（例：30 分）。<br><strong>② 認可（アクセス制御）</strong>「権限マトリクス（DOC-205）に定めるロールおよびデータ範囲による制御を、<strong>サーバ側で</strong>行うこと。」——画面上でボタンを隠すだけでは不十分、という点を明記するのが肝（第 5 章の水平権限昇格）。<br><strong>③ 通信・保存時の保護</strong>「通信は TLS 1.2 以上で暗号化すること。領収書画像はアクセス制御された領域に保存し、URL の直接指定では取得できないこと。」<br><strong>④ 監査証跡</strong>「ログイン、データの登録・更新・削除、権限変更の操作について、日時・実施者・対象・操作内容を記録し、7 年間保持すること。」<br><strong>⑤ 脆弱性対策</strong>「稼働前に脆弱性診断を実施し、重大な指摘事項を解消すること。診断の実施者・範囲・費用負担を別途定める。」——<strong>誰が金を出すかを書かないと後で揉める</strong>。<br><strong>⑥ 個人情報・機微情報の扱い</strong>「経費データに含まれる個人情報の取扱いは、発注者の個人情報保護方針に従うこと。テスト環境では本番データを使用せず、マスキングしたデータを使用すること。」</p>
+            <p><strong>解析</strong>：「しっかり」を展開するときの切り口は<strong>「誰が入れるか（認証）／入った人が何をできるか（認可）／通信と保存の守り（暗号化）／何が起きたか分かるか（証跡）／穴が無いか確かめるか（診断）／データそのものの扱い（個人情報）」</strong>の六つ。この順序で問えば、たいていのシステムで抜けが出ない。</p>
+            <p><strong>実務上の落とし穴</strong>：⑤の脆弱性診断は<strong>要件定義で決めておかないと、稼働直前に「診断してから稼働」と言われて日程が崩壊する</strong>典型項目。診断で指摘が出れば修正が必要で、修正には設計変更が伴うこともある。<strong>「いつ・誰が・どの範囲を診断し、指摘への対応をどこまで誰の費用で行うか」を要件定義の時点で合意する</strong>——これは技術要件ではなく、実質的にはスケジュールと契約の話（第 8 章）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたが関わっているシステムについて、本章の六大項目それぞれについて「現在どうなっているか」を書き出せ。数値で答えられない項目があれば、それが何を意味するかを考察すること。特に「稼働率の実績」「バックアップからの復旧を実際に試したことがあるか」の二点は必ず確認すること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>この演習で高確率で判明することを挙げる。</p>
+            <p><strong>① 稼働率の実績を誰も知らない</strong>——監視はしているがレポート化されていない、あるいは監視自体が無い。「たぶん止まってません」は実績ではない。<strong>稼働率を要件にしているのに実績を測っていない</strong>のは、要件が形骸化している状態。測定していない要件は、達成しているかどうかを誰も言えない。</p>
+            <p><strong>② バックアップからの復旧を試したことがない</strong>——これが最も多い。バックアップは毎日取っているが、そこから戻せるかを検証したことがない。<strong>復旧できないバックアップは、存在しないバックアップと同じ</strong>。しかも実際に試すと、想定の 3 倍時間がかかることが判明したり、そもそも手順書が古くて使えなかったりする。<strong>年 1 回のリストア訓練を運用設計に入れる</strong>のが正しい姿（第 14 章）。</p>
+            <p><strong>③ 「性能が遅い」と言われているが、目標値が無い</strong>——遅いかどうかを判定する基準が無いので、改善したかどうかも分からない。この状態でのチューニングは、終わりの見えない作業になる。まず目標値を決めるところから始める必要がある。</p>
+            <p><strong>④ 権限の実態が設計と違う</strong>——第 5 章の習題でも出た論点。運用の中で「一時的に」付与された権限が残っていることが多い。<strong>権限の棚卸しを定期的に行う運用</strong>が非機能要件（運用・保守性）に入るべき項目。</p>
+            <p><strong>⑤ 保存年限が決まっていない／守られていない</strong>——データは増え続け、性能は落ち続け、しかし誰も消す判断ができない。これは技術問題ではなく<strong>業務上の意思決定の不在</strong>。</p>
+            <p><strong>この演習の狙い</strong>：非機能要件は<strong>「決めること」より「決めたことを測り続けること」のほうが難しい</strong>と体感すること。要件定義で数値を決めても、稼働後に測定されなければ意味がない。だから非機能要件を書くときは、<strong>同時に「どうやって測るか」「誰が定期的に確認するか」まで設計する</strong>——それが運用設計（第 14 章）につながっていく。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 非機能要件が後回しになるのは<strong>客が語れず・ベンダーも聞きにくく・機能の話のほうが楽しい</strong>から。だから感覚ではなく<strong>グレード表で機械的に潰す</strong>；② IPA 非機能要求グレードは六大項目（可用性／性能・拡張性／運用・保守性／移行性／セキュリティ／システム環境）＋レベル 0〜5。<strong>モデルシステムを出発点にして、変更する項目だけ議論する</strong>のが現実的；③ 稼働率は<strong>運用時間とセット</strong>でしか意味を持たない。99.9%＝年 8.8 時間（24H365D の場合）。<strong>RTO（どれだけ早く戻すか＝人と体制のコスト）と RPO（どこまでのデータ損失を許すか＝インフラのコスト）を混同しない</strong>；④ 数値の根拠は「業務上の必要・現行の実績・コストとのバランス」の三つ。<strong>選択肢を金額つきで並べて選ばせる</strong>；⑤ 性能要件は<strong>対象・条件・指標・判定基準</strong>の四点セット、しかも<strong>平均ではなくピークで</strong>書く——ピークの根拠は第 4 章の業務一覧；⑥ 非機能の漏れはアーキテクチャに触るため、発覚が遅く戻る距離が長い。運用の漏れに至っては<strong>稼働後にしか発覚しない</strong>；⑦ 合意は二段階——数値を書き、<strong>その数値が業務上どういう事態を意味するかを客の言葉で説明する</strong>。<br><strong>下一章预告</strong>：要件が出揃ってきた。次は「で、いくらで、いつまでに？」——スコープの線引き、見積の四つの方法、WBSとスケジュール、そして日々降ってくる「ついでにこれも」を制度で受け止める変更管理の作り方。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./06-要件的写法与品质.html">← 第 6 章 与暧昧作战：要件的写法与品质</a>
+          <a href="./08-范围见积与变更管理.html">第 8 章 范围、见积、日程与变更管理 →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var out = document.getElementById("av-out");
+      var verdict = document.getElementById("av-verdict");
+      var ctlAv = document.getElementById("ctl-av");
+      var ctlRto = document.getElementById("ctl-rto");
+      if (!out || !ctlAv || !ctlRto || !window.KB) return;
+
+      var AV = [
+        { label: "99%", rate: 0.99, arch: "単一構成", cost: 1.0 },
+        { label: "99.5%", rate: 0.995, arch: "単一構成＋復旧手順整備", cost: 1.1 },
+        { label: "99.9%", rate: 0.999, arch: "サーバ冗長化・自動フェイルオーバー", cost: 1.6 },
+        { label: "99.95%", rate: 0.9995, arch: "冗長化＋24 時間監視", cost: 2.1 },
+        { label: "99.99%", rate: 0.9999, arch: "HA 構成＋DR サイト", cost: 3.4 }
+      ];
+      var RTO = [
+        { label: "24 時間", h: 24, ops: "平日日中の対応で足りる", cost: 1.0 },
+        { label: "8 時間", h: 8, ops: "平日日中＋手順書整備", cost: 1.15 },
+        { label: "4 時間", h: 4, ops: "夜間の一次対応窓口が必要", cost: 1.5 },
+        { label: "1 時間", h: 1, ops: "24 時間監視＋待機要員", cost: 2.3 },
+        { label: "即時（自動）", h: 0.1, ops: "自動フェイルオーバー必須＋常時有人監視", cost: 3.2 }
+      ];
+
+      var ai = 2, ri = 1;
+
+      function card(k, v, s, ratio) {
+        var d = document.createElement("div");
+        d.className = "av-card";
+        var kk = document.createElement("span");
+        kk.className = "av-k";
+        kk.textContent = k;
+        var vv = document.createElement("span");
+        vv.className = "av-v";
+        vv.textContent = v;
+        d.appendChild(kk); d.appendChild(vv);
+        if (s) {
+          var ss = document.createElement("span");
+          ss.className = "av-s";
+          ss.textContent = s;
+          d.appendChild(ss);
+        }
+        if (typeof ratio === "number") {
+          var bar = document.createElement("div");
+          bar.className = "av-bar";
+          var i = document.createElement("i");
+          i.style.width = Math.max(4, Math.min(100, ratio * 100)) + "%";
+          bar.appendChild(i);
+          d.appendChild(bar);
+        }
+        return d;
+      }
+
+      function render() {
+        var a = AV[ai], r = RTO[ri];
+        // 運用時間は本案例の N-A01（平日+土日祝 7:00-22:00 = 15h × 365 日）で計算
+        var opHours = 15 * 365;
+        var downH = opHours * (1 - a.rate);
+        var totalCost = a.cost * r.cost;
+
+        out.textContent = "";
+        out.appendChild(card("年間の停止許容（運用 15h×365 日）",
+          downH >= 1 ? downH.toFixed(1) + " 時間" : Math.round(downH * 60) + " 分", "計画停止を除く"));
+        out.appendChild(card("月あたりに直すと",
+          downH / 12 >= 1 ? (downH / 12).toFixed(1) + " 時間" : Math.round(downH * 5) + " 分", "この時間を超えると SLA 違反"));
+        out.appendChild(card("必要な構成", a.arch, "可用性レベル " + a.label));
+        out.appendChild(card("必要な運用体制", r.ops, "RTO " + r.label));
+        out.appendChild(card("費用の目安（相対）", "×" + totalCost.toFixed(2), "最小構成を 1.00 としたとき", totalCost / 4));
+
+        var cls = "", msg = "";
+        if (ai <= 1 && ri <= 1) {
+          cls = "";
+          msg = "◯ 本案例（社内の経費精算・月末以外は代替運用が可能）には妥当な水準。追加のインフラ投資はほぼ不要で、復旧手順書の整備と障害の自動検知だけは必ず入れること——止まったことに誰も気づかない、が最悪の事態。";
+        } else if (ai === 2 && ri <= 2) {
+          cls = "";
+          msg = "◯ 基幹系寄りの水準。冗長化に初期 +200 万円程度。本案例では「月末 3 営業日だけこの水準、それ以外は緩める」という時期別の要件にすると、費用対効果が最も高くなる（成果物样例 N-A03）。";
+        } else if (ai >= 3 || ri >= 3) {
+          cls = "warn";
+          msg = "⚠ 金融・EC・公共インフラ相当の水準。24 時間の有人体制や DR サイトが必要になり、初期・運用とも費用が跳ね上がる。本案例（半日止まっても翌日提出で回る業務）には過剰。この水準を要求されたら、まず「止まったときに業務が本当に止まるのか、代替手段はないのか」を確認すること。";
+        }
+        if (ai >= 4 && ri >= 4) {
+          cls = "bad";
+          msg = "🚨 最高水準。ここまで来ると、システムの費用より「その体制を維持する人件費」が支配的になる。経費精算システムにこの要件が付いているなら、要件の出どころ（誰が何を恐れているのか）を確認したほうがよい——たいていは過去の別システムの事故の記憶が、根拠なく持ち込まれている。";
+        }
+        verdict.className = "av-verdict" + (cls ? " " + cls : "");
+        verdict.textContent = "";
+        var p = document.createElement("p");
+        p.textContent = msg;
+        verdict.appendChild(p);
+      }
+
+      KB.bindRange(ctlAv, document.getElementById("val-av"),
+        function (v) { return AV[v].label; },
+        function (v) { ai = v; render(); });
+      KB.bindRange(ctlRto, document.getElementById("val-rto"),
+        function (v) { return RTO[v].label; },
+        function (v) { ri = v; render(); });
+
+      render();
+    });
+  </script>
+</body>
+</html>

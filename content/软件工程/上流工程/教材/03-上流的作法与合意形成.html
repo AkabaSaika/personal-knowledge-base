@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>03 上流的作法：合意是怎么造出来的 · 知识库</title>
+  <meta name="kb:summary" content="日本上流工程的合意形成闭环：議事録的写法与48小时规则、確認依頼、QA表与課題管理表的列设计、レビュー会与サインオフ，以及现场话术。">
+  <meta name="kb:tags" content="上流工程,议事录,合意形成,QA表,课题管理,评审,签字,报联相,日本IT,slgc,jsl,hy">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：議事録道場 */
+    .mm-wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    .mm-doc {
+      flex: 1 1 340px; min-width: 280px;
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 12px 14px;
+      font-size: 0.84rem; line-height: 1.75;
+    }
+    .mm-line { padding: 2px 6px; margin: 0 -6px; border-radius: 4px; cursor: pointer; }
+    .mm-line:hover { background: var(--kb-surface-alt); }
+    .mm-line.hit { background: var(--kb-mark-bg); color: var(--kb-mark-fg); font-weight: 600; }
+    .mm-line.head { font-weight: 700; cursor: default; }
+    .mm-line.head:hover { background: transparent; }
+    .mm-side { flex: 1 1 280px; min-width: 260px; }
+    .mm-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .mm-chip {
+      font: inherit; font-size: 0.78rem; padding: 4px 10px; cursor: pointer;
+      border-radius: 999px; border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .mm-chip:hover { border-color: var(--kb-accent); }
+    .mm-chip[aria-pressed="true"] { background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600; }
+    .mm-expl {
+      border: 1px solid var(--kb-border); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface-alt); padding: 10px 12px; font-size: 0.85rem;
+    }
+    .mm-expl p { margin: 0 0 6px; }
+    .mm-expl p:last-child { margin-bottom: 0; }
+    .mm-expl .mm-bad { color: var(--kb-danger); font-weight: 700; }
+    .mm-expl .mm-good { color: var(--kb-ok); font-weight: 700; }
+    .mm-toggle { margin-bottom: 10px; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 3 章 · 上流的作法：合意是怎么造出来的</h1>
+        <p class="kb-lead">在日本做上流，写文档的时间远少于「让文档被认可」的时间。这一章讲的是那套看起来繁琐、实则是整个行业生存基础的作法：<ruby>議事録<rt>ぎじろく</rt></ruby>为什么必须在 48 小时内发出、<ruby>確認依頼<rt>かくにんいらい</rt></ruby>的措辞如何决定沉默是否等于同意、QA 表与課題管理表的列该怎么设计，以及那句万能的「一旦持ち帰ります」背后完整的作战流程。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 画出上流工程的合意形成闭环，说出每一环节的作用；② 写出一份能当作证据用的議事録，区分決定事項・宿題事項・ペンディング；③ 设计 QA 表与課題管理表的列，并用「〜という理解でよいか」的提问格式提高回复率；④ 主持一次レビュー会并把指摘落到記録票上；⑤ 说明サインオフ（承認）在合同上的意义与版数管理的做法；⑥ 在被现场直接追加需求时，用正确话术把它导回正式流程。</p>
+        </div>
+
+        <h2>一句「大丈夫です」引发的三个月返工</h2>
+        <p>要件定義の第 4 回ヒアリング。SE の渡辺が経理部の高橋課長に聞いた：「承認は課長→部長の 2 段階でよろしいですか？」高橋課長は答えた：「はい、大丈夫です」。</p>
+        <p>渡辺は手帳にメモした。議事録には「承認フローは 2 段階で合意」と一行書いた。誰も読み返さなかった。</p>
+        <p>八个月后的受入テスト。営業本部から声が上がる：「うちは金額 10 万円以上だと本部長承認も要るんですが」。</p>
+        <p>高橋課長に確認すると、こう言われる——「あれは<strong>経理部としては</strong> 2 段階で問題ないという意味でした。営業部の運用までは分かりません」。</p>
+        <p>谁都没有说谎。问题出在三个地方：<strong>①问了一个没有主语的问题</strong>（「承認は」——谁的承認？全社共通？）；<strong>②把「大丈夫です」记成了「合意」</strong>（回答的人有权代表全公司吗？）；<strong>③议事录发出去后没有人确认</strong>（没人有机会指出「それは経理部だけの話です」）。</p>
+        <p>日本现场那套繁琐作法，每一条都是为了堵住这三个洞中的一个。</p>
+
+        <h2>合意形成的闭环</h2>
+        <p>上流工程的日常，本质上是同一个循环转很多圈。任何一环缺失，「決まった」就会变成后来的「聞いていない」。</p>
+
+        <figure>
+          <svg viewBox="0 0 700 300" width="700" height="300" role="img" aria-label="合意形成闭环图：听取需求、议事录、确认依赖、QA表与课题管理表、评审会、承认签字，六个环节首尾相连，未解决的问题回流到课题管理表">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12">
+              <g>
+                <rect x="24" y="40" width="130" height="54" rx="10" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+                <text x="89" y="63" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">① ヒアリング</text>
+                <text x="89" y="81" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">聞く・その場で決めない</text>
+              </g>
+              <g>
+                <rect x="196" y="40" width="130" height="54" rx="10" fill="var(--kb-accent-soft)" stroke="var(--kb-accent)" stroke-width="1.6"/>
+                <text x="261" y="63" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">② 議事録</text>
+                <text x="261" y="81" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">48 時間以内に発信</text>
+              </g>
+              <g>
+                <rect x="368" y="40" width="130" height="54" rx="10" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+                <text x="433" y="63" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">③ 確認依頼</text>
+                <text x="433" y="81" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">期限を切る</text>
+              </g>
+              <g>
+                <rect x="540" y="40" width="136" height="54" rx="10" fill="var(--kb-surface)" stroke="var(--kb-border-strong)"/>
+                <text x="608" y="63" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">④ 確定</text>
+                <text x="608" y="81" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">決定事項として蓄積</text>
+              </g>
+
+              <g stroke="var(--kb-fg-muted)" stroke-width="1.6" fill="none">
+                <path d="M 154 67 h 34"/><path d="M 188 67 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 326 67 h 34"/><path d="M 360 67 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+                <path d="M 498 67 h 34"/><path d="M 532 67 l -8 -4 v 8 z" fill="var(--kb-fg-muted)"/>
+              </g>
+
+              <g>
+                <rect x="196" y="160" width="302" height="56" rx="10" fill="var(--kb-warn-soft)" stroke="var(--kb-warn)" stroke-width="1.6"/>
+                <text x="347" y="184" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">⑤ QA表 / 課題管理表</text>
+                <text x="347" y="202" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">その場で決まらなかったもの・確認待ちのものは全部ここ</text>
+              </g>
+              <g>
+                <rect x="196" y="240" width="302" height="46" rx="10" fill="var(--kb-ok-soft)" stroke="var(--kb-ok)" stroke-width="1.6"/>
+                <text x="347" y="269" text-anchor="middle" font-weight="700" fill="var(--kb-fg)">⑥ レビュー会 → 承認（サインオフ）</text>
+              </g>
+
+              <g stroke="var(--kb-warn)" stroke-width="1.6" fill="none" stroke-dasharray="5 4">
+                <path d="M 261 94 v 66"/><path d="M 261 160 l -4 -8 h 8 z" fill="var(--kb-warn)" stroke="none"/>
+                <path d="M 433 160 v -66"/><path d="M 433 94 l -4 8 h 8 z" fill="var(--kb-warn)" stroke="none"/>
+              </g>
+              <text x="150" y="130" font-size="10.5" fill="var(--kb-warn)">未決は落とさず回す</text>
+              <text x="452" y="130" font-size="10.5" fill="var(--kb-warn)">回答が来たら議事録へ</text>
+
+              <path d="M 347 216 v 24" stroke="var(--kb-fg-muted)" stroke-width="1.6"/>
+              <path d="M 347 240 l -4 -8 h 8 z" fill="var(--kb-fg-muted)"/>
+              <path d="M 608 94 C 608 200, 560 263, 502 263" stroke="var(--kb-fg-muted)" stroke-width="1.4" fill="none" stroke-dasharray="4 4"/>
+            </g>
+          </svg>
+          <figcaption>合意形成的闭环。<strong>关键在两条黄线</strong>：会上没定下来的，绝不能就地消失，必须落到課題管理表里；回答来了，也绝不能只留在邮件里，必须回到議事録变成決定事項。</figcaption>
+        </figure>
+
+        <h2>議事録：现场最强的武器</h2>
+        <p>在日本SI现场，<strong>議事録不是会议记录，而是「事实的确定书」</strong>。它的读者不是参会的人，而是三个月后争论「当时到底怎么说的」的人。</p>
+
+        <h3>必须有的八个要素</h3>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>要素</th><th>为什么不能省</th></tr></thead>
+            <tbody>
+              <tr><td>件名・日時・場所</td><td>同一主题会开十几次，没有编号与日期就无法引用</td></tr>
+              <tr><td>出席者（会社・部署・氏名）</td><td><strong>「誰が発言したか」＝「その発言に権限があったか」</strong>。开头那个事故就是缺了这一栏</td></tr>
+              <tr><td>配布資料</td><td>「あの資料の第 3 版に基づく議論」——版本不明会导致重复讨论</td></tr>
+              <tr><td><strong>決定事項</strong></td><td>已经定死的东西。改它需要変更管理</td></tr>
+              <tr><td><strong>宿題事項</strong>（TODO）</td><td>谁、在什么期限之前、做什么。<strong>三者缺一就不算宿題</strong></td></tr>
+              <tr><td><strong>ペンディング</strong>（保留）</td><td>今天没能决定的事。写下来才有下次；不写就永远消失</td></tr>
+              <tr><td>次回予定</td><td>下次会议的日期与议题</td></tr>
+              <tr><td>確認依頼文と期限</td><td>让「沉默」具有法律意义的那一句（见下）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 48 时间规则与那句关键的确认文</p>
+          <p><strong>议事录要在会议结束后 48 小时内发出</strong>——理由很实际：记忆的保鲜期就这么长，超过两天，双方对细节的记忆开始分叉，指出错误的成本变高，人就懒得指出了。</p>
+          <p>邮件正文的定型句：<br><code>本日はお時間をいただきありがとうございました。議事録を送付いたします。<br>ご確認のうえ、<strong>10 月 10 日（金）17 時まで</strong>にご指摘をお願いいたします。<br>期限までにご連絡がない場合は、本内容にてご認識合わせが完了したものとして進めさせていただきます。</code></p>
+          <p>最后一句叫<ruby>みなし確認<rt>みなしかくにん</rt></ruby>。它把「沉默」从「未回复」变成「同意」——这是SE手上最重要的一件工具。客户很忙、经常不回邮件；没有这句话，你的所有议事录都停留在「送っただけ」的状态，将来不构成任何证据。</p>
+        </div>
+
+        <h3>亲手改一份議事録</h3>
+        <p>下面是开头那场事故里，渡辺实际写的那份「メモ」。点左边的任意一行，或点右上角的问题标签，看看它错在哪、正确版本长什么样。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 議事録道場：这份记录为什么救不了你</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一份能当证据用的議事録，必须具备<strong>出席者（谁有权说话）、決定事項与宿題事項的分离、每条宿題的「担当・期限」、数值与条件的明确化、以及带期限的確認依頼文</strong>。缺任何一项，三个月后它都无法用来说明「当时是这么定的」。</p></noscript>
+            <div class="mm-toggle">
+              <button type="button" class="mm-chip" id="mm-switch" aria-pressed="false">切换到「良い議事録」</button>
+            </div>
+            <div class="mm-wrap">
+              <div class="mm-doc" id="mm-doc"></div>
+              <div class="mm-side">
+                <div class="mm-chips" id="mm-chips"></div>
+                <div class="mm-expl" id="mm-expl" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2>QA表と課題管理表：把「未決」变成可追踪的东西</h2>
+        <p>上流工程里，一次会议能当场定下来的事情不到三成。剩下的七成——「持ち帰って確認します」「経理部に聞いてみます」「システム部門と調整します」——如果只存在于记忆和邮件里，就等于不存在。</p>
+        <p>所以要有两张表。它们经常被合成一张，但角色不同：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th><ruby>QA表<rt>質問票</rt></ruby></th><th><ruby>課題管理表<rt>かだいかんりひょう</rt></ruby></th></tr></thead>
+            <tbody>
+              <tr><td>内容</td><td>「教えてほしいこと」——回答をもらえば閉じる</td><td>「解決しないと先に進めないこと」——判断・調整・作業が必要</td></tr>
+              <tr><td>例</td><td>「消費税の端数処理は切捨てでよいか」</td><td>「営業部と経理部で承認段数の認識が異なる。調整が必要」</td></tr>
+              <tr><td>閉じ方</td><td>回答が来たら Close、内容は議事録か設計書へ反映</td><td>対応方針の決定＋実施完了で Close</td></tr>
+              <tr><td>放置すると</td><td>設計が進まない</td><td><strong>プロジェクトが止まる／後で炎上する</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>列的设计有定式。少一列就会漏，多一列就没人填——下面这套是现场用得最久的最小集合：</p>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>課題管理表（サンプル）</span><span class="kb-doc-id">DOC-103 / 毎週更新</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>No</th><th>起票日</th><th>起票者</th><th>区分</th><th>内容</th><th>重要度</th><th>対応者</th><th>期限</th><th>状態</th><th>回答・対応結果</th><th>完了日</th></tr></thead>
+              <tbody>
+                <tr><td>012</td><td>10/08</td><td>あおぞら 渡辺</td><td>QA</td><td>消費税の端数処理は切捨て・四捨五入のいずれか</td><td>中</td><td>山田 高橋</td><td>10/15</td><td>完了</td><td>切捨て。既存の会計運用に合わせる（10/12 回答）</td><td>10/12</td></tr>
+                <tr><td>013</td><td>10/08</td><td>あおぞら 渡辺</td><td>課題</td><td>承認段数について、経理部は 2 段階、営業部は 3 段階の運用。全社ルールの確認・統一が必要</td><td><strong>高</strong></td><td>山田 鈴木</td><td>10/22</td><td>対応中</td><td>10/18 部門長会議で審議予定</td><td>—</td></tr>
+                <tr><td>014</td><td>10/09</td><td>山田 田中</td><td>QA</td><td>スマホ対応の対象ブラウザ範囲を提示してほしい</td><td>中</td><td>あおぞら 渡辺</td><td>10/16</td><td>完了</td><td>iOS Safari / Android Chrome 最新 2 バージョンを提案、10/15 合意</td><td>10/15</td></tr>
+                <tr><td>015</td><td>10/10</td><td>あおぞら 伊藤</td><td>課題</td><td>会計システム側の連携仕様書が未入手。保守ベンダーへの依頼ルート要確認</td><td><strong>高</strong></td><td>山田 鈴木</td><td>10/20</td><td>未着手</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 状態：未着手／対応中／完了／取下げ。　※ 重要度「高」は週次会議で必ず読み上げる。　※ 期限超過は赤字表示とし、翌週の会議冒頭で理由を報告する。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 提问的格式，决定回复的速度</p>
+          <p>同一个问题，两种问法的回复率差好几倍：</p>
+          <p>❌「消費税の端数処理はどうしますか？」——收件人要从零开始想，容易被搁置。<br>✅「<strong>消費税の端数処理は切捨てと理解していますが、相違ありませんか？</strong>（現行の会計システムが切捨てのため）」——只需要回 Yes/No，附带了你的判断依据。</p>
+          <p>这个格式在日语里叫「<ruby>認識合わせ<rt>にんしきあわせ</rt></ruby>」。它有三个附加好处：① 对方回复成本低；② 即使对方不回，你的理解已经白纸黑字留下了（结合みなし確認）；③ 万一你的理解是错的，对方看到错误的具体结论会比看到抽象问题更容易被激发出反应——<strong>人对「纠正错误」的反应比对「回答问题」快得多。</strong></p>
+        </div>
+
+        <h2>レビュー会：让文档被真正读过</h2>
+        <p>成果物写完不等于完成，要经过<ruby>レビュー<rt>review</rt></ruby>与<ruby>承認<rt>しょうにん</rt></ruby>。日本现场的レビュー会有一套流程，目的是防止「看都没看就盖章」和「盖了章又反悔」这两种事。</p>
+        <ol>
+          <li><strong>事前配布</strong>：会议前 3 个工作日发出资料。当场才发的评审会不叫评审会，叫朗读会。</li>
+          <li><strong>観点の提示</strong>：明确告诉评审者「请从哪个角度看」。对経理部说「請看業務フローと業務ルールが実態と合っているか」，对情シス说「請看非機能と運用」。不指定视角，就只会收到错别字的指摘。</li>
+          <li><strong>指摘の記録</strong>：所有指摘当场记入<ruby>レビュー記録票<rt>指摘一覧</rt></ruby>——No／指摘内容／指摘者／区分（誤り・改善提案・質問）／対応方針／対応者／期限／状態。</li>
+          <li><strong>対応と再確認</strong>：全部指摘对应完毕后，把対応結果回送给指摘者确认。</li>
+          <li><strong>承認</strong>：全指摘 Close 后，由承認者签字（押印或电子承认）。<strong>这一刻，文档的这一版就成为合同意义上的基准。</strong></li>
+        </ol>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「レビューしたのに後から言われる」を防ぐ二つの仕掛け</p>
+          <p><strong>① 版数管理を徹底する</strong>：文档必须有版本号与改訂履歴（版数／日付／改訂内容／改訂者／承認者）。「どの版に対して承認したのか」が特定できなければ、承認は無意味になる。<br><strong>② 承認の意味を明示する</strong>：承認欄の近くに一文添える——「本書の内容にて基本設計を進めることを承認します。以降の変更は変更管理手続きによるものとします。」承認が「読みました」ではなく「これで進めてよい」であることを、書面上はっきりさせる。</p>
+        </div>
+
+        <h2>现场话术：把口头追加导回正式流程</h2>
+        <p>第 1 章的例题 2 出现过「一旦持ち帰ります」。这里给出完整的话术库——这些不是客套，每一句都有明确的功能。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>场面</th><th>说法</th><th>它在做什么</th></tr></thead>
+            <tbody>
+              <tr><td>被现场直接要求追加功能</td><td>「ありがとうございます。<strong>一旦持ち帰って</strong>、影響を確認のうえご回答します。」</td><td>不拒绝需求、只拒绝路径。避免当场承诺与偽装請負</td></tr>
+              <tr><td>确认自己的理解</td><td>「<strong>認識合わせ</strong>させてください。〜という理解でよろしいでしょうか。」</td><td>把理解摊开，让错误在此刻暴露而不是半年后</td></tr>
+              <tr><td>发现可能有问题但没有证据</td><td>「<strong>念のため</strong>確認させていただきたいのですが、〜」</td><td>降低质疑的攻击性，保住关系的同时问出关键信息</td></tr>
+              <tr><td>需要对方给出书面依据</td><td>「<strong>エビデンス</strong>として、現行の帳票サンプルをいただけますか。」</td><td>把口头信息转成可追溯的材料</td></tr>
+              <tr><td>无法当场判断影响</td><td>「影響範囲を整理して、<strong>明日中に</strong>ご回答します。」</td><td>不说「できません」，而是给出期限——拒绝的是即答，不是需求</td></tr>
+              <tr><td>要件が膨らんできた</td><td>「今回のスコープとしては〜まで、と認識しております。<strong>変更管理として</strong>ご相談させてください。」</td><td>把スコープ争议导入既定流程，而不是人际冲突</td></tr>
+              <tr><td>坏消息要报告</td><td>「<strong>ご報告があります。</strong>現時点で〜という状況で、原因は〜、対応案は A / B の 2 案です。」</td><td>報連相の型：事実→原因→対応案。带方案的坏消息才叫报告</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>关于<ruby>報連相<rt>ほうれんそう</rt></ruby>（報告・連絡・相談），只需记一条实务准则：<strong>悪い情報ほど早く、生のまま上げる</strong>。日本现场对「遅い報告」的容忍度远低于对「問題そのもの」的容忍度——因为问题早说还有对策，晚说就只剩后果。而且在準委任契約下，及时报告本身就是<ruby>善管注意義務<rt>ぜんかんちゅういぎむ</rt></ruby>的一部分（第 1 章）。</p>
+
+        <h2>成果物样例</h2>
+        <p>本章的成果物是<strong>議事録</strong>本身。下面是把开头那场事故的会议，按本章规则重写后的样子。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>要件定義 第 4 回 打合せ 議事録</span><span class="kb-doc-id">MTG-004 / 2026-10-08</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <tbody>
+                <tr><th>件名</th><td>経費精算システム再構築プロジェクト 要件定義 第 4 回打合せ（承認フロー・領収書取扱い）</td></tr>
+                <tr><th>日時・場所</th><td>2026/10/08（水）14:00–15:30　山田製作所 本社 第 2 会議室</td></tr>
+                <tr><th>出席者</th><td>山田製作所：情報システム部 鈴木部長、田中主任／経理部 高橋課長<br>あおぞらシステムズ：伊藤（PM）、渡辺（SE・記録）</td></tr>
+                <tr><th>配布資料</th><td>①業務フロー図（As-Is）v0.3　②承認フロー案 v0.1</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead><tr><th>No</th><th>区分</th><th>内容</th><th>担当</th><th>期限</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td><strong>決定</strong></td><td><strong>経理部における</strong>経費精算の承認は、課長承認 → 部長承認の 2 段階とする。（経理部 高橋課長）</td><td>—</td><td>—</td></tr>
+                <tr><td>2</td><td><strong>決定</strong></td><td>領収書は電子データ（画像）の添付を必須とする。紙原本の保管は現行どおり経理部で行い、本システムの対象外とする。</td><td>—</td><td>—</td></tr>
+                <tr><td>3</td><td><strong>宿題</strong></td><td>経理部以外（営業部・製造部・管理部）の承認段数について、各部門の運用実態を確認する。<br>※ 部門により 3 段階の運用がある可能性が本日判明したため。</td><td>山田 鈴木部長</td><td>10/22</td></tr>
+                <tr><td>4</td><td><strong>宿題</strong></td><td>領収書画像の 1 申請あたり上限枚数・1 ファイルサイズ上限の案を提示する。</td><td>あおぞら 渡辺</td><td>10/15</td></tr>
+                <tr><td>5</td><td>ペンディング</td><td>スマートフォンからの申請可否。営業部からの要望として挙がっているが、対象範囲・優先度は未確定。第 6 回打合せで再度審議する。</td><td>—</td><td>—</td></tr>
+                <tr><td>6</td><td>ペンディング</td><td>金額による承認ルートの分岐（10 万円以上は本部長承認など）の要否。No.3 の確認結果を待って判断する。</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">次回：2026/10/15（水）14:00–　議題：領収書取扱い詳細、機能一覧（第 1 版）の説明<br>※ 本議事録の内容につきまして、<strong>2026/10/10（金）17:00 まで</strong>にご指摘をお願いいたします。期限までにご連絡がない場合、本内容にて認識合わせが完了したものとして進めさせていただきます。</p>
+          </div>
+        </div>
+        <p>注意 No.1 里那五个字——<strong>「経理部における」</strong>。它就是本章开头那三个月返工的解药：一个主语，值三个月。</p>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 議事録を送ったが、2 週間返事がない</p>
+          <p><strong>やってはいけない</strong>：「返事がない＝合意」と勝手に判断して黙って進める。みなし確認の一文を入れていた場合でも、<strong>期限を過ぎた時点で一度リマインドする</strong>のが実務の作法。理由は法的なものではなく実際的なもの——本当に見ていないことが多く、後で「見ていなかった」と言われたときに、リマインドの記録があるかどうかで話がまったく変わる。</p>
+          <p><strong>正しい動き</strong>：① 期限翌営業日にリマインドメール（「先般お送りした議事録につきまして、ご指摘がないようでしたら本内容で確定とさせていただきます。念のためご確認をお願いいたします。」）② それでも反応がなければ、<strong>次の会議の冒頭で口頭で読み上げて確認する</strong>——これが最も確実。③ 反応がない状態が続くようなら、それ自体を課題管理表に「発注者の確認が滞留しており、要件確定が遅延するリスクあり」として起票し、PM から正式に提起する。<br><strong>ポイント</strong>：みなし確認は「相手を黙らせるための罠」ではなく「合意を前に進めるための仕組み」。罠として使うと、いざ揉めたときに信頼を失って結局こちらが損をする。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · レビュー会で「なんとなく使いにくそう」という指摘が出た</p>
+          <p><strong>この指摘をどう扱うか。</strong>そのまま記録票に「使いにくそう」と書いても、対応のしようがない。かといって「具体的にお願いします」と突き返すと、相手は口を閉じる——そして本番で同じことを言う。</p>
+          <p><strong>その場でやること</strong>：具体化の質問を三つの方向から投げる。「<strong>どの操作</strong>のときにそう感じられましたか？」「<strong>今の業務</strong>だと、そこはどうされていますか？」「<strong>誰が</strong>一番困りそうですか？」——多くの場合、この三問で「月末に 50 件まとめて承認するとき、1 件ずつ開くのが辛い」といった具体的な業務課題が出てくる。ここまで来ればそれは<strong>一括承認機能という要件の話</strong>であり、記録票に書ける形になる。</p>
+          <p><strong>記録票への書き方</strong>：指摘内容「月末の一括承認時、1 件ずつ画面を開く操作が負担（経理部 高橋課長）」／区分「改善提案」／対応方針「一覧画面からの複数選択・一括承認機能の要否を検討。要件追加となるため変更管理で審議」。<br><strong>教訓</strong>：曖昧な指摘は<strong>質の低い指摘ではなく、まだ翻訳されていない指摘</strong>。翻訳するのはSEの仕事。第 6 章の曖昧語との戦いは、文章だけでなく会話にも適用される。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · 会議で客同士が揉め始めた（経理部と営業部で意見が割れた）</p>
+          <p>経理部「入力チェックは厳しくして、不備のある申請は受け付けないでほしい」／営業部「そんなに厳しくされたら現場が申請できない」。あなたは司会をしている。</p>
+          <p><strong>やってはいけない</strong>：どちらかの肩を持つ、その場で折衷案を決める、黙って時間切れを待つ。<strong>部門間の業務ルールの調整は発注者側の意思決定事項</strong>であり、ベンダーが裁定する筋合いのものではない（第 1 章 習題 1.6）。</p>
+          <p><strong>正しい動き</strong>：① <strong>論点を整理して見せる</strong>——「整理させてください。厳格化すると差戻しが減り経理の作業は減る一方、申請者の入力負荷が上がる、というトレードオフですね」。② <strong>選択肢を技術的に提示する</strong>——「システムとしては A: 必須チェックで弾く／B: 警告を出すが提出は可能／C: 費目により使い分ける、が可能です。それぞれ実装コストは大きく変わりません」。③ <strong>決定を発注者に返す</strong>——「どの方針とするか、社内でご決定いただけますでしょうか」。④ 課題管理表に「重要度：高、対応者：鈴木部長、期限：〜」で起票。</p>
+          <p><strong>この動きの価値</strong>：SEが提供すべきは<strong>裁定ではなく、判断材料と選択肢</strong>。技術的な可否とコスト感を並べて見せられるのはあなただけであり、それこそが会議におけるSEの存在価値になる。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>議事録の「決定事項」「宿題事項」「ペンディング」の違いを説明し、次の各項目をいずれかに分類せよ。① 承認は 2 段階とする　② 領収書の上限枚数を来週までに提案する（あおぞら渡辺）　③ スマホ対応をやるかどうかは今後検討</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①決定事項　②宿題事項　③ペンディング</p>
+            <p><strong>解析</strong>：三者の違いは<strong>「今、何が確定しているか」</strong>で切り分ける。<br><strong>決定事項</strong>＝もう変えない（変えるなら変更管理が必要）。<br><strong>宿題事項</strong>＝<strong>やることは決まっている</strong>が、まだ終わっていない。だから「担当」と「期限」が必須。この二つが書かれていない宿題は、宿題ではなく願望。<br><strong>ペンディング</strong>＝<strong>やるかどうかすら決まっていない</strong>。担当も期限も付けられない。しかし記録することには決定的な意味がある——書かなければ「その論点が存在したこと」自体が消え、半年後に「そんな話は出ていない」になる。<br><strong>実務での注意</strong>：ペンディングを溜めたまま工程を進めるとリスクが積み上がる。要件定義の完了判定（第 9 章）では、「ペンディングがゼロであること」または「残ペンディングが全て次工程で判断可能と合意されていること」を条件に入れるのが定石。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の質問を、回答率が上がる「認識合わせ」形式に書き直せ。<br>①「エラーメッセージはどうしますか？」　②「バッチの実行時間は何時がいいですか？」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>解答例</strong>：<br>①「エラーメッセージは画面上部に赤字で表示し、該当の入力欄も赤枠で強調する方式を想定しています（現行の社内システムに合わせています）。この方針で問題ないでしょうか。」<br>②「月次の仕訳連携バッチは、<strong>毎月第一営業日の 2:00 に実行</strong>することを想定しています。前月末までの承認済みデータを対象とします。会計システム側の受入時間帯と競合しないか、ご確認いただけますでしょうか。」</p>
+            <p><strong>解析</strong>：書き直しに必ず入れるべき三点——<strong>①こちらの案（たたき台）②その根拠 ③Yes/No で答えられる形</strong>。<br>特に②の根拠が効く。「現行に合わせています」「会計側の締めが 3:00 のためです」と書いてあると、相手は<em>あなたの前提が正しいか</em>だけを検証すればよくなり、思考コストが激減する。<br>②の解答例には、もう一つ実務的な工夫が入っている——<strong>質問の相手が答えられる範囲に絞っている</strong>点。「何時がいいですか」は情シスには答えられない（会計システム側の都合を知らないかもしれない）。「会計システム側と競合しないか確認してほしい」なら、誰に聞けばいいかが明確になる。<strong>質問は「答えられる人が、答えられる形で」投げる</strong>——これがQA表の回答率を決める。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>課題管理表に最低限必要な列を 6 つ以上挙げ、それぞれが無いと何が起きるか説明せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案例（本文の表より）</strong>：No／起票日／起票者／内容／対応者／期限／状態／対応結果／完了日</p>
+            <p><strong>各列が無いと起きること</strong>：<br><strong>No</strong>が無い → 会議で「あの件」としか呼べず、議事録から参照できない。<br><strong>起票日</strong>が無い → 滞留期間が分からない。「3 か月放置されている課題」が可視化されない。<br><strong>起票者</strong>が無い → 回答が出たとき誰に返せばいいか分からない。背景を聞ける相手も分からない。<br><strong>対応者</strong>が無い → <strong>最も致命的</strong>。全員の課題は誰の課題でもない。しかも「会社名＋氏名」で書くこと（「山田製作所側」では動かない）。<br><strong>期限</strong>が無い → 永遠に「対応中」。期限のない課題は課題ではなく愚痴。<br><strong>状態</strong>が無い → 毎回全件を読み上げることになり、会議が課題管理表の朗読会になる。<br><strong>対応結果</strong>が無い → 閉じた課題の結論が残らず、半年後に同じ議論が再発する。<strong>この列は「決定事項の履歴」として機能する</strong>ので、意外に重要。</p>
+            <p><strong>プラスアルファの実務知</strong>：重要度（高中低）の列を足し、<strong>週次会議では「高」だけを読み上げる</strong>運用にすると、課題管理表が形骸化しにくい。全件レビューは月次で十分。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>客先の会議室で、経理部の担当者から「この画面、ついでに CSV でダウンロードできるようにしてもらえませんか？」と言われた。あなたが口にすべき言葉と、会議後にとるべき行動を書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>その場で言うこと</strong>：「ありがとうございます。CSV 出力ですね。<strong>一旦持ち帰って</strong>、影響範囲を確認のうえご回答いたします。差し支えなければ、どういった場面で使われるか教えていただけますか？」</p>
+            <p><strong>会議後の行動</strong>：① 議事録の<strong>ペンディング</strong>欄に記載（決定事項でも宿題でもない）。② 課題管理表に起票（起票者：経理部○○、内容、重要度）。③ 影響を確認——出力項目、権限（誰でも全社の経費を落とせては困る）、文字コード、個人情報の扱い、既存の帳票機能との重複。④ PM に報告し、スコープ内かスコープ外かを判断。⑤ スコープ外なら変更管理として、工数・費用・日程影響とともに正式に提示。</p>
+            <p><strong>解析のポイント二つ</strong>：<br>(1)「使われる場面を聞く」を必ずセットにすること。CSV が欲しい理由が「月次で部門別に集計したい」なら、<strong>本当の要件は集計機能</strong>かもしれない。CSV は手段であって目的ではない（第 2 章の「一段下げて聞き直す」）。<br>(2) その場で「できます」も「できません」も言わない。「できます」は勝手なスコープ拡大、「できません」は判断権の逸脱（決めるのはPMと発注者）。<strong>SEが即答してよいのは事実だけで、可否ではない。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>あなたは要件定義書のレビュー会を主催する。出席予定は、情シス部長・情シス担当・経理部課長・経理担当・自社PM。効果的なレビュー会にするために、開催前・開催中・開催後にそれぞれ何をすべきか、具体的に挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>開催前</strong>：① 資料を <strong>3 営業日前</strong>に配布。② <strong>参加者ごとにレビュー観点を指定</strong>——経理部には「業務フローと業務ルールが実態と合っているか、例外業務が漏れていないか」、情シスには「非機能要件・運用・既存システムとの整合」、自社PMには「スコープと工数の整合」。③ 所要時間と扱う範囲を明示（「今回は第 1〜5 章のみ。非機能は次回」）。<strong>全部を一度に見せると誰も読んでこない。</strong>④ 事前に指摘を受け付けるフォーム（メールでも可）を用意し、当日は議論が必要なものに集中する。</p>
+            <p><strong>開催中</strong>：① 冒頭で<strong>ゴールを宣言</strong>（「本日は第 1〜5 章について、指摘を出し切ることがゴールです。対応方針まで決める必要はありません」）。② 指摘は<strong>その場で記録票に書き、読み上げて確認</strong>する（記録漏れと解釈違いを同時に潰す）。③ 議論が発散したら「それは課題として起票し、別途調整させてください」で切る。④ <strong>沈黙している人に指名で聞く</strong>——特に実務担当者。部長の前で発言しにくいだけで、実態を一番知っているのはその人であることが多い。</p>
+            <p><strong>開催後</strong>：① 24〜48 時間以内に議事録＋レビュー記録票を配布。② 各指摘に対応方針・対応者・期限を付けて再配布。③ 対応完了後、<strong>指摘者本人に対応結果を確認してもらう</strong>（起票者クローズの原則）。④ 全件クローズをもって承認依頼を出す。</p>
+            <p><strong>この問題の核心</strong>：レビュー会の失敗は、ほぼ「準備不足」か「観点未指定」に起因する。<strong>「何でもいいので見てください」と言われた人間は、誤字しか指摘できない。</strong>逆に観点を絞れば、経理部からは実務に基づく鋭い指摘が出てくる——それこそが要件定義の品質を決める。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>本章冒頭の事故（「承認は 2 段階でよろしいですか」→「大丈夫です」）を、合意形成の閉環のどの環節がどう機能していれば防げたか、環節ごとに具体的に書け。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>①ヒアリングの環節</strong>：質問に<strong>主語と範囲</strong>が無かった。正しくは「<strong>経理部での</strong>承認は課長→部長の 2 段階、という理解でよろしいですか。<strong>他部門も同じ運用でしょうか</strong>」。さらに「例外はありますか（高額の場合など）」まで聞ければ完璧。<strong>例外を聞くのは第 4 章の中心テーマ。</strong></p>
+            <p><strong>②議事録の環節</strong>：「承認フローは 2 段階で合意」という記述に主語がない。正しくは「<strong>経理部における</strong>経費精算の承認は 2 段階とする（経理部 高橋課長）」——<strong>誰の発言かまで書く</strong>ことで、権限の範囲が自動的に記録される。加えて、他部門が未確認である事実を<strong>宿題事項</strong>として立てるべきだった。</p>
+            <p><strong>③確認依頼の環節</strong>：議事録が送付されただけで、期限付きの確認依頼がなかった。みなし確認の一文があれば、鈴木部長が読んだ時点で「営業部は違うのでは」と気づく可能性があった。<strong>読む理由を作るのが確認依頼の機能。</strong></p>
+            <p><strong>⑤課題管理表の環節</strong>：「他部門の運用は未確認」という状態が、どこにも記録されなかった。ここに起票されていれば、期限管理の対象になり、週次会議で必ず読み上げられ、8 か月間見過ごされることはあり得なかった。</p>
+            <p><strong>⑥レビュー・承認の環節</strong>：要件定義書のレビューに<strong>営業部が参加していなかった</strong>可能性が高い。承認者がシステムオーナー（全社を代表する立場）であれば形式上は全社合意だが、実務上は「実際に使う部門がレビューしたか」が品質を決める。レビュー参加者の選定は、<strong>組織図ではなく業務フローの登場人物から決める</strong>べき——これが第 4 章の業務フロー図がレビュー設計にも効く理由。</p>
+            <p><strong>まとめ</strong>：一つの事故に対して、閉環の各環節が独立した防波堤になっている。どれか一つでも機能していれば、8 か月ではなく数週間で発見できた。<strong>作法が冗長に見えるのは、冗長性こそが目的だから。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>直近であなたが参加した打合せを一つ選び、本章の 8 要素を満たす議事録として書き直してみよう。書けない項目（出席者の所属が分からない、決定事項と検討事項の区別がつかない等）が出たら、それは<strong>その打合せの構造的な欠陥</strong>である。何が欠けていたかを列挙せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>よく出てくる「書けない」と、その意味を挙げる。</p>
+            <p><strong>「決定事項が一つも書けない」</strong>——最も多いパターン。会議が情報共有だけで終わっており、何も前に進んでいない。対策：会議の最後 5 分を「決定事項の読み上げ」に固定する。読み上げてみて何も無ければ、その会議は不要だったか、議題設定が悪かったかのどちらか。</p>
+            <p><strong>「宿題の担当が『みんな』『各自』になる」</strong>——担当が個人名でない宿題は 100% 実行されない。対策：会議中に「これは○○さんにお願いしてよいですか」と<strong>その場で名指しして合意を取る</strong>。名指しが失礼だと感じるかもしれないが、期限までに誰も動かず全員が気まずくなるほうがはるかに失礼。</p>
+            <p><strong>「決定事項と検討中の区別がつかない」</strong>——議事録が「〜という話が出た」調で書かれている場合に起きる。対策：文末を強制的に統一する。決定は「〜とする」、宿題は「〜する（担当・期限）」、ペンディングは「〜は未定。次回審議」。<strong>文末の型を決めるだけで、書きながら分類を強制される。</strong></p>
+            <p><strong>「出席者の所属・役職が分からない」</strong>——特にオンライン会議で頻発（画面に表示名しか出ない）。将来「その発言に決定権があったか」を検証できない。対策：初回に体制図（第 1 章）を作り、以後はそれを参照する。</p>
+            <p><strong>この演習の狙い</strong>：議事録は会議の記録ではなく<strong>会議の品質を測る計測器</strong>である、と体感すること。良い会議は自然に良い議事録になり、書けない議事録は会議そのものに欠陥がある。そして議事録を書く側は、<strong>次の会議の進め方を変える力</strong>を持っている——アジェンダに「決定事項の確認」を入れる、冒頭で前回の宿題を読み上げる、といった小さな介入で、会議は目に見えて変わる。上流工程のSEにとって、これは文章力ではなく<strong>会議設計のスキル</strong>である。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 合意形成是一个闭环：ヒアリング → 議事録 → 確認依頼 → 確定，未决事项落入 QA表／課題管理表 再回流；任何一环缺失，「決まった」都会变成「聞いていない」；② 議事録的读者是三个月后争论的人，必须有出席者（谁有权说话）、決定／宿題／ペンディング 三分、宿題必带担当与期限、<strong>48 时间内发出并附带期限的みなし確認文</strong>；③ 提问用「〜という理解でよいか」的認識合わせ形式，附上你的案与根据，回复率与准确度都会翻倍；④ 課題管理表的核心列是 No／起票日／起票者／内容／<strong>対応者（个人名）</strong>／期限／状態／対応結果，重要度「高」每周读一次；⑤ レビュー会成败取决于事前配布与<strong>观点指定</strong>——不指定视角就只会收到错别字；承認要配版数管理与「以降の変更は変更管理による」的明示；⑥ 现场话术不是客套：「一旦持ち帰る」拒绝的是路径而非需求，「認識合わせ」让错误当场暴露，坏消息要带着原因和方案早报。<br><strong>下一章预告</strong>：现场规则学完了。从下一章开始真正动手——先去看懂业务。As-Is 業務フロー怎么画、「現行踏襲」为什么是最贵的四个字、以及为什么真正的雷永远埋在「例外的なケース」里。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./02-V字模型与工程.html">← 第 2 章 V字模型与工程：要求・要件・仕様 的分界</a>
+          <a href="./04-读懂业务AsIs与ToBe.html">第 4 章 读懂业务：As-Is / To-Be 与業務フロー →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var docBox = document.getElementById("mm-doc");
+      var chipBox = document.getElementById("mm-chips");
+      var explBox = document.getElementById("mm-expl");
+      var switchBtn = document.getElementById("mm-switch");
+      if (!docBox || !chipBox || !explBox || !switchBtn) return;
+
+      var ISSUES = [
+        {
+          tag: "① 出席者がない",
+          bad: "誰がその場にいて、誰が発言したのかが分からない。",
+          why: "「大丈夫です」と答えたのが経理部の課長なのか、全社を代表する部長なのかで、その発言の重みはまったく違う。出席者欄が無い議事録は、権限の記録が無い議事録であり、三か月後の「それは経理部だけの話です」に何も反論できない。",
+          good: "会社・部署・氏名を全員分書く。さらに決定事項には発言者を括弧書きで添える。"
+        },
+        {
+          tag: "② 決定か検討か不明",
+          bad: "「話が出た」「前向きに検討する」——確定しているのか、していないのか読み取れない。",
+          why: "読む側は自分に都合よく解釈する。ベンダーは「検討中」と読み、客は「やってくれる」と読む。半年後に必ず衝突する。",
+          good: "文末を型で統一する。決定は「〜とする」、宿題は「〜する（担当・期限）」、未定は「〜は未定。次回審議」。"
+        },
+        {
+          tag: "③ 決定と宿題が混在",
+          bad: "決定事項・宿題事項・ペンディングが一つの箇条書きに並んでいる。",
+          why: "分類されていないと、次回の会議で「前回の宿題」を読み上げることができない。宿題は追跡されなければ実行されない。",
+          good: "区分列を作って三分類する。ペンディングも必ず書き残す——書かなければ論点の存在ごと消える。"
+        },
+        {
+          tag: "④ 主語がない",
+          bad: "「承認は 2 段階でいくことになった」——誰の承認か、どの範囲の話かが書かれていない。",
+          why: "本章冒頭の事故そのもの。経理部の運用を全社の決定と誤読し、八か月後に営業部で破綻した。",
+          good: "「経理部における経費精算の承認は〜」と範囲を明示し、他部門が未確認である事実を宿題として立てる。"
+        },
+        {
+          tag: "⑤ 数値・条件がない",
+          bad: "「枚数は多めに」——多めとは 5 枚か 50 枚か。",
+          why: "設計できない。しかも受入テストで判定できない（第 2 章の V 字の戒律）。曖昧なまま進むと、実装後に「思っていたのと違う」となる。",
+          good: "その場で決まらないなら、決まらないこと自体を宿題にする。「上限枚数の案を提示する（渡辺・10/15）」。"
+        },
+        {
+          tag: "⑥ 確認依頼と期限がない",
+          bad: "送っただけ。読まれたかどうかも、内容に同意したかどうかも分からない。",
+          why: "確認依頼が無い議事録は、証拠にならない。「送りましたよね」に対して「読んでいません」で終わる。",
+          good: "期限を切ったみなし確認文を添える。「10/10（金）17:00 までにご指摘なき場合は本内容で確定とさせていただきます」。"
+        }
+      ];
+
+      var BAD = [
+        { t: "経費精算 打合せメモ", head: true },
+        { t: "10/8　参加：渡辺ほか", i: 0 },
+        { t: "・承認フローについて話し合った。2 段階でいくことになった。", i: 3 },
+        { t: "・スマホ対応の話が出た。前向きに検討する。", i: 1 },
+        { t: "・領収書の添付は必要とのこと。枚数は多めに。", i: 4 },
+        { t: "・仕訳連携のフォーマットは会計側に確認する。", i: 2 },
+        { t: "・次回は来月。", i: 5 }
+      ];
+
+      var GOOD = [
+        { t: "要件定義 第 4 回 打合せ 議事録（MTG-004）", head: true },
+        { t: "日時：2026/10/08（水）14:00–15:30　場所：本社 第 2 会議室", i: 0 },
+        { t: "出席：山田製作所 情シス 鈴木部長・田中主任／経理部 高橋課長", i: 0 },
+        { t: "　　　あおぞら 伊藤(PM)・渡辺(SE・記録)", i: 0 },
+        { t: "【決定】経理部における経費精算の承認は、課長→部長の 2 段階とする。（経理部 高橋課長）", i: 3 },
+        { t: "【決定】領収書は電子データの添付を必須とする。紙原本の保管は本システム対象外とする。", i: 1 },
+        { t: "【宿題】経理部以外の承認段数について各部門の運用実態を確認する。（山田 鈴木部長・10/22）", i: 2 },
+        { t: "【宿題】領収書画像の上限枚数・ファイルサイズ上限の案を提示する。（あおぞら 渡辺・10/15）", i: 4 },
+        { t: "【保留】スマートフォンからの申請可否。対象範囲・優先度とも未確定。第 6 回で再審議。", i: 1 },
+        { t: "次回：10/15（水）14:00　議題：領収書取扱い詳細、機能一覧 第 1 版", i: 5 },
+        { t: "※ 本議事録につき 10/10（金）17:00 までにご指摘をお願いします。ご連絡なき場合は本内容にて確定とさせていただきます。", i: 5 }
+      ];
+
+      var showGood = false;
+      var active = -1;
+
+      function renderDoc() {
+        var lines = showGood ? GOOD : BAD;
+        docBox.textContent = "";
+        lines.forEach(function (ln) {
+          var d = document.createElement("div");
+          d.className = "mm-line" + (ln.head ? " head" : "");
+          d.textContent = ln.t;
+          if (!ln.head) {
+            d.setAttribute("data-i", String(ln.i));
+            if (ln.i === active) d.classList.add("hit");
+            d.addEventListener("click", function () { select(ln.i); });
+          }
+          docBox.appendChild(d);
+        });
+      }
+
+      function renderExpl() {
+        explBox.textContent = "";
+        if (active < 0) {
+          var p0 = document.createElement("p");
+          p0.textContent = "左の議事録の行、または上のタグをクリックしてください。悪い議事録の 6 つの欠陥を、一つずつ解説します。";
+          explBox.appendChild(p0);
+          return;
+        }
+        var is = ISSUES[active];
+        var p1 = document.createElement("p");
+        var b1 = document.createElement("span");
+        b1.className = "mm-bad";
+        b1.textContent = "問題：";
+        p1.appendChild(b1);
+        p1.appendChild(document.createTextNode(is.bad));
+        var p2 = document.createElement("p");
+        p2.textContent = is.why;
+        var p3 = document.createElement("p");
+        var b3 = document.createElement("span");
+        b3.className = "mm-good";
+        b3.textContent = "直し方：";
+        p3.appendChild(b3);
+        p3.appendChild(document.createTextNode(is.good));
+        explBox.appendChild(p1);
+        explBox.appendChild(p2);
+        explBox.appendChild(p3);
+      }
+
+      function select(i) {
+        active = i;
+        Array.prototype.forEach.call(chipBox.children, function (c, idx) {
+          c.setAttribute("aria-pressed", String(idx === i));
+        });
+        renderDoc();
+        renderExpl();
+      }
+
+      ISSUES.forEach(function (is, idx) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "mm-chip";
+        b.setAttribute("aria-pressed", "false");
+        b.textContent = is.tag;
+        b.addEventListener("click", function () { select(idx); });
+        chipBox.appendChild(b);
+      });
+
+      switchBtn.addEventListener("click", function () {
+        showGood = !showGood;
+        switchBtn.setAttribute("aria-pressed", String(showGood));
+        switchBtn.textContent = showGood ? "切换回「悪い議事録」" : "切换到「良い議事録」";
+        renderDoc();
+      });
+
+      renderDoc();
+      renderExpl();
+    });
+  </script>
+</body>
+</html>

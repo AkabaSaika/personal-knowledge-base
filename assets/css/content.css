@@ -368,3 +368,87 @@ model-viewer {
   border-top: 1px solid var(--kb-border);
   font-size: 0.9rem;
 }
+
+/* ===== 設計書样例（模拟现场 Excel 成果物） ===== */
+.kb-doc {
+  margin: 28px 0;
+  border: 1px solid var(--kb-border-strong);
+  border-radius: var(--kb-radius-sm);
+  background: var(--kb-surface);
+  overflow: hidden;
+}
+
+.kb-doc-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--kb-surface-alt);
+  border-bottom: 1px solid var(--kb-border-strong);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--kb-fg);
+}
+
+.kb-doc-title .kb-doc-id {
+  font-family: var(--kb-font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--kb-fg-muted);
+}
+
+.kb-doc-body {
+  padding: 12px 14px 14px;
+  overflow-x: auto;
+}
+
+.kb-doc-body > :first-child {
+  margin-top: 0;
+}
+
+.kb-doc-body > :last-child {
+  margin-bottom: 0;
+}
+
+.kb-doc-body table {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  border: 1px solid var(--kb-border-strong);
+}
+
+.kb-doc-body th,
+.kb-doc-body td {
+  padding: 5px 9px;
+  border: 1px solid var(--kb-border);
+  vertical-align: top;
+}
+
+.kb-doc-body th {
+  background: var(--kb-surface-alt);
+  white-space: nowrap;
+}
+
+.kb-doc-body tbody tr:hover {
+  background: transparent;
+}
+
+.kb-doc-note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--kb-fg-muted);
+}
+
+/* 日语原文术语的行内标注 */
+.kb-jp {
+  font-style: normal;
+  color: var(--kb-fg-muted);
+  font-size: 0.92em;
+}
+
+.kb-content ruby rt {
+  font-size: 0.55em;
+  color: var(--kb-fg-muted);
+}

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>06 与暧昧作战：要件的写法与品质 · 知识库</title>
+  <meta name="kb:summary" content="曖昧語辞典与要件文的写法模板：一文一要件、主语必写、可验证化，附要件粒度与ID设计、评审五观点，以及「対象外とする」的写法。">
+  <meta name="kb:tags" content="上流工程,要件定义,暧昧,可验证性,要件写法,评审观点,追溯性,粒度,slgc,amdz,ywyj">
+  <meta name="kb:created" content="2026-08-25">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：リライト道場 */
+    .rw-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .rw-tab {
+      font: inherit; font-size: 0.8rem; padding: 4px 11px; cursor: pointer;
+      border-radius: 999px; border: 1px solid var(--kb-border-strong);
+      background: var(--kb-surface); color: var(--kb-fg);
+    }
+    .rw-tab:hover { border-color: var(--kb-accent); }
+    .rw-tab[aria-pressed="true"] { background: var(--kb-accent); border-color: var(--kb-accent); color: #fff; font-weight: 600; }
+    .rw-sentence {
+      border: 1px solid var(--kb-border-strong); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface); padding: 14px 16px; font-size: 1rem; line-height: 2;
+      margin-bottom: 10px;
+    }
+    .rw-mark {
+      background: var(--kb-mark-bg); color: var(--kb-mark-fg); font-weight: 700;
+      border-radius: 4px; padding: 1px 3px; cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .rw-mark:hover { border-bottom-color: var(--kb-danger); }
+    .rw-mark.sel { outline: 2px solid var(--kb-danger); outline-offset: 1px; }
+    .rw-count { font-size: 0.8rem; color: var(--kb-fg-muted); margin: 0 0 10px; }
+    .rw-panel {
+      border: 1px solid var(--kb-border); border-radius: var(--kb-radius-sm);
+      background: var(--kb-surface-alt); padding: 11px 13px; font-size: 0.86rem;
+      margin-bottom: 10px;
+    }
+    .rw-panel p { margin: 0 0 6px; }
+    .rw-panel p:last-child { margin-bottom: 0; }
+    .rw-panel .rw-q { color: var(--kb-accent); font-weight: 700; }
+    .rw-fix {
+      border-left: 3px solid var(--kb-ok); background: var(--kb-ok-soft);
+      padding: 10px 13px; border-radius: 0 var(--kb-radius-sm) var(--kb-radius-sm) 0;
+      font-size: 0.87rem;
+    }
+    .rw-fix p { margin: 0 0 6px; }
+    .rw-fix p:last-child { margin-bottom: 0; }
+    .rw-btn {
+      font: inherit; font-size: 0.82rem; padding: 5px 13px; cursor: pointer;
+      border-radius: var(--kb-radius-sm); border: 1px solid var(--kb-ok);
+      background: var(--kb-surface); color: var(--kb-ok); font-weight: 600;
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 6 章 · 与暧昧作战：要件的写法与品质</h1>
+        <p class="kb-lead">机能列出来了，但纸上还写着「使いやすいこと」「なるべく早く」「必要に応じて」。这些句子在会议室里人人点头，在受入テスト的现场谁也说不清合格与否。这一章把第 2 章那条戒律——<strong>测试不了的要件不要写</strong>——变成一套可操作的手艺：曖昧語辞典、一文一要件的写法模板、要件的粒度与ID，以及评审时该拿什么观点去看。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 认出日语要件文里最危险的十几个曖昧語，并知道针对每个该问什么；② 用固定模板写出「主语・条件・対象・判定基準」齐全的一文一要件；③ 判断要件的粒度是否合适，设计要件ID并与機能ID挂钩；④ 用五个评审观点系统地审一份要件定義書；⑤ 正确地写「〜は対象外とする」——否定的要件和肯定的一样重要。</p>
+        </div>
+
+        <h2>「サクサク」で 3 か月揉めた話</h2>
+        <p>要件定義書にこう書かれていた：<strong>「経費申請の一覧検索は、サクサク動作すること。」</strong>客の口から出た言葉をそのまま写したものだった。誰もレビューで指摘しなかった——なぜなら、読んだ全員が<em>自分の思う「サクサク」</em>を思い浮かべて納得したから。</p>
+        <p>総合テストで測ると、全社 10 万件の状態で一覧検索に 8 秒。経理部長「これはサクサクじゃないですよ」。ベンダー「要件に数値の定めはありません」。<strong>この対立は、どちらも正しい。</strong>そして正しい者同士の対立は、数値という第三者がいないかぎり終わらない。</p>
+        <p>結果、3 か月かけてインデックス設計とページング方式を作り直し、費用負担で揉め、関係が悪化した。<strong>要件定義の段階で「3 秒以内」と一行書いておけば、5 分で終わった話だった。</strong></p>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 曖昧な要件が通ってしまう理由</p>
+          <p>曖昧な文が危険なのは、<strong>読む人全員が納得してしまう</strong>から。「使いやすい画面」に反対する人はいない。だからレビューを通り、承認印まで押される。<strong>曖昧さは、合意の障害ではなく、偽の合意の製造装置なのだ。</strong><br>明確に書くと、逆に揉める——「3 秒？ 1 秒じゃないんですか」と。<strong>その揉め事こそが要件定義の仕事</strong>であって、それを先送りにした代償が、半年後の 3 か月である。</p>
+        </div>
+
+        <h2>曖昧語辞典</h2>
+        <p>日本語の要件文に出てくる曖昧語には型がある。見つけたら反射的に「何を聞くべきか」が出てくるようにしておく。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>曖昧語</th><th>何が決まっていないか</th><th>聞き出す問い</th></tr></thead>
+            <tbody>
+              <tr><td>なるべく早く／速やかに／サクサク</td><td>時間の基準値、測定条件</td><td>「何秒以内でしょうか。データ何件、同時利用何名のときの話ですか」</td></tr>
+              <tr><td>使いやすい／分かりやすい／直感的な</td><td>誰にとって、何を基準に</td><td>「誰が使いますか。マニュアルを見ずに何分で完了できれば合格でしょうか」</td></tr>
+              <tr><td>適切に／正しく／妥当な</td><td>判断基準そのもの</td><td>「何をもって適切と判断しますか。判断する人は誰ですか」</td></tr>
+              <tr><td>必要に応じて</td><td>条件（いつ発動するか）</td><td>「どんな条件のときに必要になりますか。具体例を 2 つください」</td></tr>
+              <tr><td>原則として／基本的に</td><td><strong>例外の中身</strong></td><td>「例外はどんなケースですか。年に何件くらいありますか」</td></tr>
+              <tr><td>柔軟に／臨機応変に</td><td>変えられる範囲と、変える人</td><td>「誰が、どの項目を、いつ変更できる必要がありますか」</td></tr>
+              <tr><td>リアルタイムに</td><td>許容される遅延</td><td>「何秒以内なら実用上問題ありませんか。1 分後では駄目ですか」</td></tr>
+              <tr><td>大量の／多数の</td><td>件数の上限</td><td>「現在は何件で、5 年後は何件を想定しますか」</td></tr>
+              <tr><td>可能な限り／できるだけ</td><td>要件なのか希望なのか</td><td>「これは必須要件でしょうか、実現できなくても受入可能でしょうか」</td></tr>
+              <tr><td>等／など</td><td>列挙されていない残り</td><td>「他に何が入りますか。全部挙げていただけますか」</td></tr>
+              <tr><td>問題なく／支障なく</td><td>問題の定義</td><td>「どうなったら『問題あり』と判断されますか」</td></tr>
+              <tr><td>従来どおり／現行踏襲</td><td>従来が何かという事実</td><td>「現行の仕様書はありますか。無ければ調査して文書化し、ご確認いただきます」（第 4 章）</td></tr>
+              <tr><td>将来的に／必要になったら</td><td>今回のスコープに入るか</td><td>「今回のスコープに含めますか。含めない場合、将来の拡張余地だけ設計上考慮する形でよいですか」</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>「原則として」は特に注意。</strong>この四文字は「例外がある」と宣言しているのに、例外の中身を書いていない——つまり<strong>存在が分かっている地雷を、埋めたまま次工程に渡している</strong>状態。第 4 章の例外掘り出しがここでも効く。</p>
+
+        <h2>要件文の型</h2>
+        <p>曖昧さを潰すには、書き方を型で縛るのが一番早い。日本のSI現場で通用する基本形はこれ：</p>
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>機能要件の記述テンプレート</span><span class="kb-doc-id">記述ルール</span></p>
+          <div class="kb-doc-body">
+            <p style="font-size:0.95rem;margin:0 0 10px"><strong>〈主語〉は、〈条件・対象〉について、〈何を〉〈どうできる／どうすること〉。</strong></p>
+            <table>
+              <thead><tr><th>要素</th><th>書き方</th><th>例</th></tr></thead>
+              <tbody>
+                <tr><td>主語</td><td>「システムは」または「〈ロール名〉は」。<strong>省略しない</strong></td><td>「申請者は」「経理担当は」「システムは」</td></tr>
+                <tr><td>条件・対象</td><td>いつ・どの範囲・どんな状態のときか</td><td>「承認前の自身の申請について」</td></tr>
+                <tr><td>何を</td><td>対象となるデータ・画面・処理</td><td>「申請内容および添付ファイルを」</td></tr>
+                <tr><td>述語</td><td>能力なら「〜できること」、義務なら「〜すること」</td><td>「編集できること」「エラーメッセージを表示すること」</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">※ 「〜できること」＝利用者に許される能力（権限の裏返し）。「〜すること」＝システムが必ず行う義務。この二つを混ぜない。</p>
+          </div>
+        </div>
+
+        <h3>五条书写规则</h3>
+        <ol>
+          <li><strong>一文一要件。</strong>「かつ」「および」で二つの要件をつなぐと、片方だけ合意・片方だけ未達という状態が扱えなくなる。分ける。</li>
+          <li><strong>主語を必ず書く。</strong>第 3 章の事故（「承認は 2 段階」）は主語の欠落そのもの。「誰が」が無い要件は、権限設計（第 5 章）にも落とせない。</li>
+          <li><strong>否定形・二重否定を避ける。</strong>「承認されていない場合を除き削除できない」——読解に 3 秒かかる文は、実装時に必ず誤読される。肯定形で「承認前の申請のみ削除できる」と書く。</li>
+          <li><strong>数値には必ず条件を添える。</strong>「3 秒以内」だけでは足りない。「データ 10 万件・同時 30 ユーザーの条件で 3 秒以内」。<strong>測定条件のない数値は、数値ではない。</strong></li>
+          <li><strong>「〜が望ましい」を書かない。</strong>要件定義書は希望を書く場所ではない。必須なら「〜すること」、必須でないなら優先度 Should/Could として明示するか、書かない。<strong>曖昧な強度は、曖昧な内容と同じくらい危険。</strong></li>
+        </ol>
+
+        <h2>亲手改一改：曖昧要件リライト道場</h2>
+        <p>下面四句都是从真实要件定義書里改编的。<strong>点句子里高亮的词</strong>，看它埋了什么雷、该问什么；然后点「書き換え例を見る」。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 曖昧要件リライト道場</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：曖昧語（なるべく早く／適切に／必要に応じて／原則として／大量の／問題なく）出现时，改写要补齐四样东西——<strong>主语、条件（数据量・并发・时机）、対象、可判定的基准値</strong>；并且把一句拆成多句（一文一要件）、把否定形改成肯定形。</p></noscript>
+            <div class="rw-tabs" id="rw-tabs"></div>
+            <p class="rw-count" id="rw-count"></p>
+            <div class="rw-sentence" id="rw-sentence"></div>
+            <div class="rw-panel" id="rw-panel" aria-live="polite"></div>
+            <button type="button" class="rw-btn" id="rw-show">書き換え例を見る</button>
+            <div class="rw-fix" id="rw-fix" style="display:none"></div>
+          </div>
+        </div>
+
+        <h2>要件的粒度与ID</h2>
+        <p>粒度が粗すぎる要件は設計できず、細かすぎる要件は仕様（第 2 章）に踏み込んでしまい、受注者の裁量を奪う。判断の目安：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>例</th><th>問題</th></tr></thead>
+            <tbody>
+              <tr><td>粗すぎ</td><td>「経費精算ができること」</td><td>これでは何も設計できず、見積もできない。機能一覧の 20 本が全部この一文に潰れている</td></tr>
+              <tr><td><strong>適切</strong></td><td>「申請者は、承認前の自身の申請について、申請内容および添付ファイルを編集できること」</td><td>—（設計に落とせて、テストできて、実現方法は縛っていない）</td></tr>
+              <tr><td>細かすぎ</td><td>「編集ボタンは画面右上に配置し、色は #2563eb とすること」</td><td>仕様の領域。要件で縛ると設計の自由度が消え、変更のたびに要件変更手続きが必要になる</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>目安</strong>：一つの要件が<strong>受入テストの 1〜3 ケースに対応する</strong>粒度。テストケースが 20 個必要なら粗すぎ、0 個なら要件ではない。</p>
+
+        <p><strong>ID の設計</strong>は第 5 章の機能IDと同じ思想。区分の接頭辞を付ける：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>接頭辞</th><th>区分</th><th>例</th></tr></thead>
+            <tbody>
+              <tr><td>F-</td><td>機能要件</td><td>F-010-01「申請者は、費目・金額・日付・支払先を入力し申請を提出できること」</td></tr>
+              <tr><td>N-</td><td>非機能要件（第 7 章）</td><td>N-P01「一覧検索は、データ 10 万件・同時 30 ユーザーの条件で 3 秒以内に応答すること」</td></tr>
+              <tr><td>B-</td><td>業務要件</td><td>B-010-01「経費の申請は、発生日から 60 日以内に行うこと」</td></tr>
+              <tr><td>C-</td><td>制約条件</td><td>C-001「フロントエンド技術は発注者の社内標準（Vue.js 系）に合わせること」</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>機能ID（F-010）の配下に要件ID（F-010-01, -02…）をぶら下げると、<strong>「機能一覧の 1 行＝要件の束」</strong>という構造になり、第 9 章のトレーサビリティマトリクスが自然に組める。</p>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 業務ルールは「業務要件」として別に立てる</p>
+          <p>「経費の申請は発生日から 60 日以内」——これはシステムの機能ではなく<strong>会社の業務ルール</strong>。機能要件に混ぜず、業務要件（B-）として立てるべき理由は二つ。<br>① <strong>ルールは変わる</strong>。60 日が 90 日に変わったとき、影響範囲を「このルールを参照している全機能」として追える。<br>② <strong>ルールの決定者が違う</strong>。機能は情シスと決められるが、業務ルールの変更は経理部・場合によっては経営判断が要る（第 1 章の体制図）。<br>実務では、業務ルールを一覧表にして要件定義書の付録に置き、各機能要件から参照する形が扱いやすい。</p>
+        </div>
+
+        <h2>レビュー観点五则</h2>
+        <p>書けたら、次は見る側の話。要件定義書のレビューで使う観点は、以下の五つを順に当てる。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>観点</th><th>問い</th><th>典型的な指摘</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>① 完全性</strong><br>（漏れていないか）</td>
+                <td>業務一覧・機能一覧の全項目に対応する要件があるか。例外・エラー時・権限が書かれているか</td>
+                <td>「B-061（締め後の追加処理）に対応する要件が存在しない」</td>
+              </tr>
+              <tr>
+                <td><strong>② 一貫性</strong><br>（矛盾していないか）</td>
+                <td>他の要件と矛盾しないか。用語が統一されているか</td>
+                <td>「F-022 は『差戻し理由は必須』、F-030 は『任意』と書かれている」<br>「『承認者』『上長』『上席』が混在している」</td>
+              </tr>
+              <tr>
+                <td><strong>③ 検証可能性</strong><br>（テストできるか）</td>
+                <td>受入テストで合否を判定できるか。数値に測定条件があるか</td>
+                <td>「『使いやすいこと』は判定できない」「『3 秒以内』の測定条件がない」</td>
+              </tr>
+              <tr>
+                <td><strong>④ 実現可能性</strong><br>（作れるか）</td>
+                <td>技術的・期間的・予算的に実現できるか。前提となる外部条件は満たせるか</td>
+                <td>「会計システム側の改修が前提だが、相手ベンダーの合意が未取得」</td>
+              </tr>
+              <tr>
+                <td><strong>⑤ 必要性・優先度</strong><br>（本当に要るか）</td>
+                <td>その要件は目的（要求）に紐づいているか。優先度は妥当か</td>
+                <td>「F-060 はどの要求IDにも紐づいていない。誰の何のための機能か」</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>五つのうち<strong>現場で最も見落とされるのは ④ 実現可能性</strong>。要件定義はしばしば「客の言うことを整理する作業」と誤解されるが、<strong>実現できない要件を合意してしまうのは、書かないのと同じかそれ以上に罪が重い</strong>。特に外部システムとの連携（第 13 章）は、相手側の都合で実現不能になることがあり、要件定義の段階で相手ベンダーに確認を取っておく必要がある。</p>
+
+        <h2>「対象外とする」の書き方</h2>
+        <p>要件定義書には、<strong>やることと同じくらい、やらないことを書く</strong>。ただし「書かない」ことと「対象外と書く」ことはまったく違う。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>状態</th><th>半年後に起きること</th></tr></thead>
+            <tbody>
+              <tr><td>書いていない</td><td>検討されたかどうかも不明</td><td>「当然入っていますよね」→ 争いになる（第 5 章 例題 2）</td></tr>
+              <tr><td>「対象外とする」と書いた</td><td>検討した結果、今回はやらないと合意</td><td>「合意済みです」で終わる。次期開発の候補として残る</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>書き方の型</strong>：「〈対象〉は本システムの対象外とし、〈代替手段〉により運用する。」——<strong>代替手段まで書く</strong>のが肝。「仮払金の精算は本システムの対象外とし、従来どおり Excel と紙による運用を継続する」。代替手段が書かれていないと、「対象外」が「業務が回らない」に直結してしまう。</p>
+
+        <h2>成果物样例</h2>
+        <p>機能一覧の 1 行（F-010）が、要件としてどこまで書かれるかの実物。</p>
+
+        <div class="kb-doc">
+          <p class="kb-doc-title"><span>機能要件定義書 F-010 経費申請登録（抜粋）</span><span class="kb-doc-id">DOC-206 / v1.2</span></p>
+          <div class="kb-doc-body">
+            <table>
+              <thead><tr><th>要件ID</th><th>要件内容</th><th>要求ID</th><th>優先度</th><th>受入観点</th></tr></thead>
+              <tbody>
+                <tr><td>F-010-01</td><td><strong>申請者は</strong>、経費申請について、費目・金額・発生日・支払先・目的を入力し、申請を提出できること。</td><td>R-001</td><td>Must</td><td>各項目を入力し提出できる。提出後、状態が「承認待ち」となる</td></tr>
+                <tr><td>F-010-02</td><td><strong>システムは</strong>、申請の提出時に、費目・金額・発生日・支払先が未入力の場合はエラーメッセージを表示し、提出を受け付けないこと。</td><td>R-002</td><td>Must</td><td>各項目を未入力で提出した際、当該項目名を含むエラーが表示され、提出されない</td></tr>
+                <tr><td>F-010-03</td><td><strong>システムは</strong>、1 件あたりの金額が 30,000 円以上の申請について、目的欄の入力を必須とすること。</td><td>R-002</td><td>Must</td><td>29,999 円では目的欄が任意、30,000 円では必須となる</td></tr>
+                <tr><td>F-010-04</td><td><strong>システムは</strong>、発生日から 61 日以上経過した経費の申請を受け付けず、その旨のメッセージを表示すること。<br>※ 業務要件 B-010-01 に基づく</td><td>R-002</td><td>Must</td><td>発生日が 61 日前の申請でエラー、60 日前では提出できる</td></tr>
+                <tr><td>F-010-05</td><td><strong>申請者は</strong>、提出前の申請を下書きとして保存し、後から編集して提出できること。</td><td>R-001</td><td>Should</td><td>下書き保存後、一覧から再開し提出できる</td></tr>
+                <tr><td>F-010-06</td><td><strong>システムは</strong>、同一の申請者・発生日・金額・支払先の申請が既に存在する場合、警告メッセージを表示すること。ただし、申請者の確認操作により提出は可能とすること。</td><td>R-002</td><td>Should</td><td>重複条件で警告が出る。確認操作後は提出できる</td></tr>
+              </tbody>
+            </table>
+            <p class="kb-doc-note">【対象外】<br>・交通費の経路検索・運賃自動計算は本システムの対象外とし、申請者が金額を手入力する運用とする。<br>・仮払金の精算は本システムの対象外とし、従来どおり Excel および紙による運用を継続する（次期開発の候補とする）。<br>【関連する業務ルール】B-010-01（申請期限 60 日）、B-010-02（1 件 30,000 円以上は目的の記載を要する）</p>
+          </div>
+        </div>
+        <p>注意六件事：<strong>①主語が全文にある ②「〜できること」と「〜すること」を使い分けている ③数値には境界が明記され、受入観点も境界値で書かれている ④業務ルールへの参照がある ⑤例外（F-010-06 の「ただし」）が一文に収まる範囲で書かれている ⑥対象外が代替手段つきで書かれている。</strong></p>
+
+        <h2>例题</h2>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 1 · 「ただし」は使ってよいのか</p>
+          <p>「一文一要件」の原則からすると、F-010-06 の「ただし、申請者の確認操作により提出は可能とすること」は違反に見える。</p>
+          <p><strong>結論：この使い方は可</strong>。基準は「<strong>その例外だけを単独で合意・テストできるか</strong>」。<br>F-010-06 の場合、警告表示と確認操作は<strong>一つの振る舞いの表と裏</strong>であり、分けて書くとかえって「警告は出るが提出できるのか？」が読み取れなくなる。受入テストも「警告が出る→確認して提出できる」という 1 シナリオで検証される。</p>
+          <p><strong>ダメな「ただし」の例</strong>：「経費申請は上長の承認を必要とすること。ただし、役員の申請については別途定める。」——「別途定める」が何も定めていない。これは例外を書いたのではなく、<strong>例外の存在だけを宣言して中身を先送りした状態</strong>で、「原則として」と同じ罪。<br>正しくは、その場で決めるか、決まらないなら課題管理表に起票して<strong>期限を切る</strong>（第 3 章）。要件定義書に「別途定める」「後述」「TBD」が残ったまま承認されると、その穴は必ず設計・製造まで持ち越され、最も高いタイミングで表面化する。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 2 · 客が「使いやすさも要件に入れてほしい」と言う</p>
+          <p><strong>やってはいけない</strong>：「測れないので書けません」と断る。客にとって使いやすさは本当に重要な関心事であり、それを門前払いすると「このベンダーは客の要望を聞かない」になる。</p>
+          <p><strong>翻訳の三手</strong>：<br>① <strong>操作時間で測る</strong>——「経費申請 1 件の入力から提出完了までを、初回利用者がマニュアルを参照せずに 5 分以内に完了できること（受入テストにて、経理部以外の社員 3 名で検証する）」。<br>② <strong>操作回数・画面遷移数で測る</strong>——「承認者は、承認待ち一覧から 3 クリック以内で承認を完了できること」。<br>③ <strong>具体的な機能に落とす</strong>——「使いやすい」の実体は、たいてい具体的な不満。掘ると「月末に 50 件を 1 件ずつ開くのが辛い」（＝一括承認、第 3 章 例題 2）、「入力途中でセッションが切れると全部消える」（＝下書き自動保存）といった<strong>機能要件</strong>が出てくる。</p>
+          <p><strong>実務的には③が最も価値が高い</strong>。①②は測れるが、測れることと使いやすいことは別物で、数値をクリアしても不満は残り得る。<strong>「使いやすさ」は要件の名前ではなく、まだ分解されていない要望の袋である</strong>——第 5 章の「要求は目的」と同じ構造。<br>そのうえで、①のような操作性の要件は<strong>非機能要件（第 7 章）</strong>として一本立てておくと、設計段階での判断基準として機能する。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📘 例 3 · レビューで「用語が揺れている」と指摘された</p>
+          <p>要件定義書の中で「承認者」「上長」「上席者」「部門長」が混在していた。実装上は同じものを指している。</p>
+          <p><strong>なぜ問題か</strong>：<br>① <strong>本当に同じかどうかが分からない</strong>——「上長」は直属の上司、「部門長」は部の長であって、組織によっては別人。読み手（特にオフショアや二次請け）は判断できず、勝手に解釈するか、質問して時間を使う。<br>② <strong>検索できない</strong>——「承認者に関する要件を全部出して」ができない。変更の影響範囲が追えない。<br>③ <strong>設計に落ちない</strong>——権限マトリクス（第 5 章）のロール名とも突き合わない。</p>
+          <p><strong>対処</strong>：<strong>用語集（用語定義表）を要件定義書の第 1 章か付録に置き、そこで定義した語だけを使う</strong>。用語集の列は「用語／定義／同義語（使わない語）／備考」。<br>例：「<strong>承認者</strong>／申請を承認する権限を持つ者。本システムでは承認ルートマスタで定義される。／同義語：上長、上席者、部門長（<strong>本書ではこれらを使用しない</strong>）」。<br><strong>「使わない語」を明記するのがコツ</strong>——書いてないと、次の版でまた混ざる。<br>そして用語集は<strong>要件定義の最初に作り始め、最後まで育てる</strong>もの。ヒアリングで新しい業務用語（「仮払」「精算」「立替」の違いなど）が出るたびに追加する。これは第 9 章の要件定義書の目次にも標準で入っている項目。</p>
+        </div>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の要件文の問題点を指摘し、書き直せ。<br>「承認画面では、必要に応じて申請の詳細を確認でき、適切に承認または差戻しができること。」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>問題点</strong>：① 主語がない（誰が？）② 「必要に応じて」——条件不明 ③ 「適切に」——判断基準不明 ④ 一文に「確認」「承認」「差戻し」の三要件が混在 ⑤ 差戻し時の理由入力の要否が不明。</p>
+            <p><strong>書き直し例</strong>：<br>F-020-01「<strong>承認者は</strong>、自部門の承認待ち申請について、申請内容および添付された領収書画像を参照できること。」<br>F-020-02「<strong>承認者は</strong>、承認待ちの申請を承認できること。承認後、当該申請の状態は『承認済』となること。」<br>F-020-03「<strong>承認者は</strong>、承認待ちの申請を差戻しできること。差戻し時は理由の入力を必須とすること。」<br>F-020-04「<strong>システムは</strong>、承認および差戻しの実施日時・実施者・差戻し理由を記録し、申請者および経理担当が参照できること。」</p>
+            <p><strong>解析</strong>：4 行に増えたことを「冗長」と感じるかもしれないが、増えたのではなく<strong>元の 1 行が 4 つの要件を隠していた</strong>。分けたことで得られるもの：(a) 受入テストのケースが自然に導かれる、(b) F-020-03 だけを「差戻し理由は任意にしたい」と変更するとき、影響範囲が 1 行で済む、(c) 見積の単位になる。<br>なお F-020-04 は元の文にまったく無かった要件。<strong>分解する過程で漏れが見つかる</strong>——これが一文一要件の副次的な効能。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>「原則として、経費の申請は本人が行うこと。」——この文が要件定義書にあったら、あなたは何を聞くか。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>聞くべきこと</strong>：「<strong>例外はどんなケースですか</strong>」「その例外は年に何件くらい発生しますか」「例外のとき、誰が代わりに申請しますか」「代理で申請した場合、承認や責任の所在はどうなりますか」</p>
+            <p><strong>想定される回答と、そこから生まれる要件</strong>：<br>・「工場勤務者は PC を持っていないので、事務職が代行入力している」→ <strong>代理申請機能</strong>（申請者と入力者が異なるデータ構造、第 12 章）。かなり大きな要件。<br>・「役員は秘書が入力している」→ 同上、加えて権限設計への影響。<br>・「退職者の分は経理が入力する」→ 第 4 章の B-062。<br>・「例外はありません」→ ならば「原則として」を削除して「経費の申請は本人が行うこととする」と書き切る。<strong>例外が無いなら「原則として」は不要</strong>であり、この四文字を消せること自体が確認の成果。</p>
+            <p><strong>この問題の要点</strong>：「原則として」は<strong>相手が例外の存在を知っている合図</strong>。無意識に書かれることも多いが、書いた人の頭の中には必ず何らかの「そうでない場合」がある。掘れば必ず何か出てくる——そしてそれは、たいてい実装コストの高い要件（代理申請、権限の特例、データ構造の変更）である。<strong>要件定義で見つければ設計に織り込めるが、製造で見つかると作り直しになる。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>次の二文はどちらが適切か。理由も述べよ。<br>A「経費申請は、承認されていない場合を除き、削除できないものとする。」<br>B「申請者は、承認前の自身の申請を削除できること。承認後の申請は、申請者・承認者ともに削除できないこと。」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：B が適切。</p>
+            <p><strong>A の問題</strong>：① <strong>二重の否定構造</strong>（「されていない場合を除き」＋「できない」）で、読解に時間がかかり誤読を招く。実際、A を読んで「承認済みなら削除できる」と誤読する人がいる。② <strong>主語がない</strong>——申請者が削除できるのか、経理も削除できるのか、管理者はどうかが不明。③ 「削除」が物理削除か論理削除かに触れていない（第 5 章 習題 5.5）。</p>
+            <p><strong>B が優れている点</strong>：肯定形で「できること」を書き、続けて「できないこと」を明示している。<strong>できないことも明示的に書く</strong>のがポイント——「承認後は削除できない」と書いていないと、実装者は「書いていないから、まあ削除できてもいいか」と判断しうる。</p>
+            <p><strong>さらに良くするなら</strong>：<br>「F-011-03 申請者は、承認前の自身の申請を削除できること。」<br>「F-011-04 システムは、承認後の申請について、申請者および承認者からの削除操作を受け付けないこと。」<br>「F-011-05 システムは、削除された申請を物理削除せず、削除者・削除日時とともに保持すること（監査対応のため）。」<br>3 行に分かれ、それぞれ独立してテストでき、最後の 1 行は<strong>データ設計（第 12 章の論理削除）への明示的な入力</strong>になる。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>レビュー観点の五つ（完全性・一貫性・検証可能性・実現可能性・必要性）のうち、次の指摘はどれに該当するか。<br>① 「F-060 の集計機能は、どの要求にも紐づいていない」<br>② 「『3 秒以内』とあるが、何件のデータでの話か書かれていない」<br>③ 「会計システム側のファイル取込仕様の変更が前提になっているが、先方の合意は取れているのか」<br>④ 「業務一覧の B-061 に対応する機能要件が見当たらない」</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：①必要性・優先度　②検証可能性　③実現可能性　④完全性</p>
+            <p><strong>解析と、それぞれの指摘の重み</strong>：<br>①は<strong>スコープを削れる可能性のある指摘</strong>。要求に紐づかない機能は、誰かが「あったらいいな」で足したもの。予算が厳しいときに真っ先に削る候補になる。ただし「紐づいていない＝不要」とは限らず、要求一覧への追記漏れのこともあるので、まず出典を確認する。<br>②は最も頻出。<strong>数値があると安心してしまう</strong>のが落とし穴で、条件のない数値はテストできない（第 7 章で詳説）。<br>③は<strong>最も危険な指摘</strong>。自社の努力で解決できないため、放置すると工程後半で詰む。相手ベンダーとの調整には時間がかかるので、要件定義の早い段階で着手し、課題管理表で期限管理する（本案例の課題 No.015 がまさにこれ）。<br>④は機能一覧・業務一覧とのクロスチェックで機械的に見つかる（第 5 章 習題 5.4）。<strong>人間の注意力ではなく表の突き合わせで見つける</strong>のが正しいやり方。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「システムは、大量のデータでも問題なく動作すること。」を、機能要件・非機能要件に適切に分解して書き直せ。分解にあたって客に確認すべきことも挙げよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>まず確認すべきこと</strong>：① 「大量」とは何件か（現在の件数、5 年後の想定件数）② どの操作についての話か（一覧検索？ 集計？ バッチ？）③ 「問題なく」とは何秒以内か、あるいは何が起きたら問題と判断するか ④ 同時に何人が使うときの話か ⑤ どの環境での測定か（社内 LAN／VPN 経由／スマホの回線）。</p>
+            <p><strong>書き直し例</strong>：<br>［非機能・性能］N-P01「経費申請一覧の検索は、申請データ 10 万件・添付ファイル 30 万件・同時アクセス 30 ユーザーの条件において、社内 LAN 環境で 3 秒以内に初期表示が完了すること。」<br>［非機能・性能］N-P02「月次仕訳連携バッチは、1 か月分の申請 2,000 件・明細 5,000 件を 30 分以内に処理完了すること。」<br>［非機能・拡張性］N-E01「申請データは 5 年分（約 10 万件）を保持した状態で、N-P01 の性能要件を満たすこと。」<br>［機能］F-011-06「申請一覧の検索結果は 1 ページあたり 50 件を上限として表示し、ページ送りにより全件を参照できること。」</p>
+            <p><strong>解析</strong>：元の一文が<strong>4 つの要件に分かれ、うち 3 つは非機能要件</strong>だったことに注目。「大量のデータでも問題なく」は典型的な非機能要件の未分解形。<br>最後の F-011-06（ページング）が機能要件である点も重要——<strong>性能要件を満たすための手段が、利用者から見える振る舞いになる場合、それは機能要件</strong>（第 2 章の外部設計の判定軸と同じ）。「全件を一画面に出す」か「50 件ずつページングする」かは、性能だけでなく業務のやり方にも影響するので、客と合意すべき事項になる。<br><strong>実務的な注意</strong>：件数を聞くと客は現在値しか答えないことが多い。「5 年後は？」と必ず聞く。データは減らないので、設計時点の件数で性能を作ると必ず後で破綻する（第 7 章の拡張性）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>要件定義書のレビューで、経理部長から「この要件、書いてある内容は正しいが、こんなに細かく書く必要があるのか」と言われた。どう答えるか。また、実際に「細かすぎる」要件とはどういうものか、本章の内容を踏まえて説明せよ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答え方</strong>：<br>「要件定義書は、<strong>受入テストの判定基準</strong>であると同時に、<strong>お客様と当社の合意の記録</strong>になります。たとえば『30,000 円以上は目的欄を必須』という一行が無いと、完成したシステムで目的欄が任意になっていても、当社としては要件どおりと主張でき、お客様は差し戻せません。細かく書くのは当社を守るためではなく、<strong>お客様が『これは違う』と言える根拠を残すため</strong>です。」<br>——<strong>細かさの受益者が客であることを説明する</strong>のが要点。ベンダーの自己防衛だと思われると、協力が得られない。</p>
+            <p><strong>それでも「読むのが大変」と言われたら</strong>：構造で解決する。① 機能一覧（1 行 1 機能）を「読む用のサマリ」として先頭に置く、② 詳細な要件表は付録に置く、③ レビューでは観点を絞る（第 3 章）——経理部長には業務ルールと例外だけを見てもらい、細かい入力チェックは経理担当者に見てもらう。<strong>全員が全部を読む必要はない。</strong></p>
+            <p><strong>本当に「細かすぎる」要件とは</strong>：本章の粒度の表のとおり、<strong>実現方法を縛るもの</strong>。「編集ボタンは画面右上、色は #2563eb」「一覧は 1 ページ 50 件（← これは業務に影響するので可）」「内部的にキャッシュを使用すること（← 完全に仕様の領域）」。<br>判定基準：<strong>その記述を変更したとき、利用者の業務が変わるか？</strong> 変わるなら要件、変わらないなら仕様。ボタンの色を変えても業務は変わらない → 仕様。1 ページ 50 件を 10 件にすると月末の承認作業が明らかに大変になる → 要件。<br><strong>細かさの問題ではなく、レイヤーの問題</strong>——これが第 2 章の要件と仕様の分界が実務で効いてくる場面。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.7 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>あなたの手元にある実際の仕様書・要件定義書・チケット（バグ票や機能追加依頼でもよい）を一つ選び、本章の曖昧語辞典を当てて曖昧語を数え、上位 3 つを書き直せ。書き直しに必要な情報が手元に無い場合、それは「誰に何を聞くべきか」として列挙すること。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>唯一の正解はない。</strong>この演習で高い確率で起きることを挙げる。</p>
+            <p><strong>① 曖昧語が想像より多い</strong>——A4 一枚に 10 個以上見つかるのが普通。特に「適切に」「必要に応じて」「等」は、書いている本人が無意識に使っている。日本語の丁寧な文章ほど曖昧語が増えるという性質もある（断定を避ける文化）。<strong>要件定義書は丁寧である必要はなく、正確である必要がある。</strong></p>
+            <p><strong>② 書き直そうとすると情報が足りない</strong>——これが最大の収穫。「3 秒以内」と書こうとして、そもそも現状が何秒かを誰も測っていないことに気づく。「10 万件」と書こうとして、現在の件数を誰も知らないことに気づく。<strong>曖昧語は、情報の欠落を隠す包帯として機能している</strong>——剥がすと傷が見える。</p>
+            <p><strong>③ 聞く相手が分からないものが出る</strong>——「法定保存年限は何年か」「この判断は誰が決める権限を持つか」。これは要件の問題ではなく<strong>体制の問題</strong>（第 1 章）。聞く相手が分からない要件は、決定者が決まっていない要件であり、放置すると最後まで決まらない。<strong>課題管理表に「決定者不明」として起票し、窓口に決定者の指名を依頼する</strong>のが正しい動き。</p>
+            <p><strong>④ 曖昧なままでよいものもある</strong>——すべてを数値化する必要はない。優先度 Could の機能や、将来の拡張余地について、要件定義の段階で精緻に定義するのはコストの無駄。<strong>重要なのは「曖昧であることを認識したうえで曖昧にしている」状態</strong>で、無自覚に曖昧なのとはまったく違う。前者は「この点は基本設計時に詳細化する」と書けるが、後者は書けない。</p>
+            <p><strong>この演習の狙い</strong>：曖昧語の検出は<strong>スキルではなく習慣</strong>だと知ること。一度リストを頭に入れると、以後は書きながら自分で気づけるようになる。そして他人のドキュメントをレビューするときの、最も再現性の高い指摘手段にもなる——「ここ、何秒ですか？」は誰にでも言えて、必ず価値がある指摘。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">✅ 本章要点</p>
+          <p>① 曖昧な要件が通ってしまうのは、<strong>読む人全員が自分の解釈で納得する</strong>から——曖昧さは合意の障害ではなく<strong>偽の合意の製造装置</strong>；② 曖昧語辞典を反射で引けるようにする。特に<strong>「原則として」は例外の存在を宣言しながら中身を書いていない</strong>状態で、掘ると必ず高コストな要件が出る；③ 要件文の型は<strong>「〈主語〉は、〈条件・対象〉について、〈何を〉〈どうできる／どうすること〉」</strong>。五条规则：一文一要件・主語必須・否定形回避・数値には測定条件・「望ましい」を書かない；④ 粒度の目安は<strong>受入テスト 1〜3 ケース分</strong>。実現方法まで書くと仕様に踏み込み、受注者の裁量を奪う；⑤ 要件IDは F-（機能）/ N-（非機能）/ B-（業務ルール）/ C-（制約）で区分し、機能IDの配下にぶら下げる；⑥ レビュー五観点は 完全性・一貫性・検証可能性・<strong>実現可能性</strong>・必要性——④が最も見落とされ、外部システム連携で詰む；⑦ <strong>「対象外とする」は代替手段まで書く</strong>。書いていない＝検討されていない、と読まれる。<br><strong>下一章预告</strong>：曖昧との戦いの本丸へ。「速く・落ちず・安全に」という誰も数値で語らない領域を、IPA 非機能要求グレードという共通言語で客と合意する方法——稼働率 99.9% が年に何時間止まってよいのか、その一行が何百万円を動かすのかを見る。</p>
+        </div>
+
+        <nav class="kb-page-nav">
+          <a href="./05-洗出机能要件.html">← 第 5 章 洗出机能要件：从要求一覧到機能一覧</a>
+          <a href="./07-非机能要件.html">第 7 章 非機能要件：IPA 非機能要求グレード →</a>
+        </nav>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var tabBox = document.getElementById("rw-tabs");
+      var sentBox = document.getElementById("rw-sentence");
+      var panel = document.getElementById("rw-panel");
+      var countBox = document.getElementById("rw-count");
+      var fixBox = document.getElementById("rw-fix");
+      var showBtn = document.getElementById("rw-show");
+      if (!tabBox || !sentBox) return;
+
+      var CASES = [
+        {
+          tab: "① 検索の速度",
+          seg: [
+            { t: "経費申請の一覧検索は、" },
+            { t: "サクサク", m: 0 },
+            { t: "動作すること。" }
+          ],
+          marks: [
+            { w: "サクサク", why: "時間の基準値も測定条件も無い。読む人それぞれが別の秒数を思い浮かべ、全員が納得してしまう。総合テストで初めて食い違いが露呈する。",
+              q: "何秒以内でしょうか。データ何件・同時利用何名・どの回線環境での話ですか。" }
+          ],
+          fix: ["［非機能・性能］N-P01「経費申請一覧の検索は、申請データ 10 万件・同時アクセス 30 ユーザーの条件において、社内 LAN 環境で 3 秒以内に初期表示が完了すること。」",
+                "［機能］F-011-06「申請一覧の検索結果は 1 ページあたり 50 件を上限として表示し、ページ送りにより全件を参照できること。」",
+                "ポイント：性能の数値だけでなく、それを実現するために利用者から見える振る舞い（ページング）が変わるなら、それは機能要件として別に合意する。"]
+        },
+        {
+          tab: "② エラー表示",
+          seg: [
+            { t: "システムは、" },
+            { t: "必要に応じて", m: 0 },
+            { t: "、" },
+            { t: "適切な", m: 1 },
+            { t: "エラーメッセージを表示し、ユーザーが" },
+            { t: "分かりやすいように配慮すること", m: 2 },
+            { t: "。" }
+          ],
+          marks: [
+            { w: "必要に応じて", why: "発動条件が不明。どんな入力のときにエラーを出すのかが決まっていないので、設計もテストもできない。",
+              q: "どんな条件のときにエラーを表示しますか。入力チェックの一覧をいただけますか。" },
+            { w: "適切な", why: "判断基準が無い。「適切」と誰が判断するのかも書かれていない。実装者が自分の判断で文言を決め、受入テストで「分かりにくい」と言われる典型パターン。",
+              q: "メッセージの文言は誰が決めますか。既存システムのメッセージ規約はありますか。" },
+            { w: "分かりやすいように配慮すること", why: "検証不可能。受入テストで合否を判定できない（第 2 章の V 字の戒律に違反）。しかも「配慮」は義務の強度も曖昧。",
+              q: "どうなっていれば分かりやすいと判断されますか。エラー箇所が特定できればよいですか。" }
+          ],
+          fix: ["F-013-01「システムは、必須項目が未入力の状態で提出操作が行われた場合、未入力の項目名を含むエラーメッセージを画面上部に表示し、提出を受け付けないこと。」",
+                "F-013-02「システムは、エラーが発生した入力項目を画面上で識別可能に表示すること。」",
+                "F-013-03「システムは、エラー発生時に利用者が入力した内容を保持し、再入力を不要とすること。」",
+                "N-U02「エラーメッセージは、メッセージ一覧（別紙）に定義された文言を使用すること。メッセージ一覧は基本設計にて作成し、発注者の承認を得ること。」",
+                "ポイント：文言そのものは要件定義では決めきれない。「基本設計でメッセージ一覧を作り承認をもらう」という手続きを要件にするのが実務的な解。"]
+        },
+        {
+          tab: "③ 承認ルール",
+          seg: [
+            { t: "" },
+            { t: "原則として", m: 0 },
+            { t: "承認は 2 段階とするが、" },
+            { t: "柔軟に", m: 1 },
+            { t: "運用できること。" }
+          ],
+          marks: [
+            { w: "原則として", why: "例外の存在を宣言しながら、中身を書いていない。書いた人の頭の中には必ず「そうでない場合」がある——そしてそれは代理承認・金額分岐・部門差といった、実装コストの高い要件であることが多い。",
+              q: "例外はどんなケースですか。年に何件くらい発生しますか。" },
+            { w: "柔軟に", why: "「変えられる」ことが要件なのか、「例外がある」ことが要件なのかが不明。前者ならマスタ保守機能が必要（数十万円規模）、後者なら条件分岐で済む。まったく別の設計になる。",
+              q: "誰が、どの項目を、いつ変更できる必要がありますか。運用開始後に変更が発生する頻度はどれくらいですか。" }
+          ],
+          fix: ["B-020-01「経費申請の承認段数は、部門ごとに設定できるものとし、1 段階から 3 段階までを許容する。」（業務ルール）",
+                "F-071-01「経理担当は、部門ごとの承認段数および承認者を、承認ルートマスタ保守画面から変更できること。」",
+                "F-020-05「システムは、申請者の所属部門に対応する承認ルートに従って、承認者を決定すること。」",
+                "【対象外】承認者不在時の代理承認機能は本システムの対象外とし、承認ルートマスタの一時変更により対応する運用とする（次期開発の候補とする）。",
+                "ポイント：「柔軟に」の正体がマスタ化だと分かった瞬間、要件は 3 本＋対象外 1 本に増える。この増分こそが、最初の一文に隠れていた工数。"]
+        },
+        {
+          tab: "④ 削除の可否",
+          seg: [
+            { t: "経費申請は、" },
+            { t: "承認されていない場合を除き", m: 0 },
+            { t: "、" },
+            { t: "削除できない", m: 1 },
+            { t: "ものとする。" }
+          ],
+          marks: [
+            { w: "承認されていない場合を除き", why: "二重の否定構造。読解に時間がかかり、実際に「承認済みなら削除できる」と誤読される。オフショアや二次請けに渡ると誤実装のリスクが高い。",
+              q: "（聞くのではなく書き換える）肯定形で「承認前の申請は削除できる」と書けば、誤読の余地が消える。" },
+            { w: "削除できない", why: "主語が無い（申請者？ 経理？ 管理者？）。また「削除」が物理削除か論理削除かに触れておらず、監査要件・法定保存年限との関係が不明。",
+              q: "経理担当や管理者も削除できませんか。削除したデータは監査のために残す必要がありますか。保存年限は何年ですか。" }
+          ],
+          fix: ["F-011-03「申請者は、承認前の自身の申請を削除できること。」",
+                "F-011-04「システムは、承認後の申請について、申請者および承認者からの削除操作を受け付けないこと。」",
+                "F-011-05「システムは、削除された申請を物理削除せず、削除者および削除日時とともに保持すること。」",
+                "N-S03「経理関係データは、法定保存年限（7 年）にわたり参照可能な状態で保持すること。」",
+                "ポイント：否定形を肯定形に開くと 1 行が 4 行になり、うち 1 行はデータ設計（論理削除）への、1 行は非機能要件への明示的な入力になる。"]
+        }
+      ];
+
+      var ci = 0, mi = -1;
+
+      function renderTabs() {
+        tabBox.textContent = "";
+        CASES.forEach(function (c, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "rw-tab";
+          b.setAttribute("aria-pressed", String(i === ci));
+          b.textContent = c.tab;
+          b.addEventListener("click", function () { ci = i; mi = -1; renderAll(); });
+          tabBox.appendChild(b);
+        });
+      }
+
+      function renderSentence() {
+        var c = CASES[ci];
+        sentBox.textContent = "";
+        c.seg.forEach(function (s) {
+          if (typeof s.m === "number") {
+            var sp = document.createElement("span");
+            sp.className = "rw-mark" + (s.m === mi ? " sel" : "");
+            sp.setAttribute("tabindex", "0");
+            sp.setAttribute("role", "button");
+            sp.textContent = s.t;
+            sp.addEventListener("click", function () { mi = s.m; renderSentence(); renderPanel(); });
+            sp.addEventListener("keydown", function (e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); mi = s.m; renderSentence(); renderPanel(); }
+            });
+            sentBox.appendChild(sp);
+          } else if (s.t) {
+            sentBox.appendChild(document.createTextNode(s.t));
+          }
+        });
+        countBox.textContent = "この一文に埋まっている地雷：" + c.marks.length + " 個（黄色の語をクリック）";
+      }
+
+      function renderPanel() {
+        var c = CASES[ci];
+        panel.textContent = "";
+        if (mi < 0) {
+          var p = document.createElement("p");
+          p.textContent = "黄色くマークされた語をクリックすると、その語が何を隠しているか、客に何を聞くべきかが表示されます。";
+          panel.appendChild(p);
+          return;
+        }
+        var m = c.marks[mi];
+        var p1 = document.createElement("p");
+        var st = document.createElement("strong");
+        st.textContent = "「" + m.w + "」";
+        p1.appendChild(st);
+        p1.appendChild(document.createTextNode("　" + m.why));
+        var p2 = document.createElement("p");
+        var q = document.createElement("span");
+        q.className = "rw-q";
+        q.textContent = "聞くべきこと：";
+        p2.appendChild(q);
+        p2.appendChild(document.createTextNode(m.q));
+        panel.appendChild(p1);
+        panel.appendChild(p2);
+      }
+
+      function renderFix(visible) {
+        var c = CASES[ci];
+        fixBox.textContent = "";
+        if (!visible) { fixBox.style.display = "none"; return; }
+        fixBox.style.display = "";
+        c.fix.forEach(function (line) {
+          var p = document.createElement("p");
+          p.textContent = line;
+          fixBox.appendChild(p);
+        });
+      }
+
+      function renderAll() {
+        renderTabs();
+        renderSentence();
+        renderPanel();
+        renderFix(false);
+      }
+
+      showBtn.addEventListener("click", function () {
+        renderFix(fixBox.style.display === "none");
+      });
+
+      renderAll();
+    });
+  </script>
+</body>
+</html>
