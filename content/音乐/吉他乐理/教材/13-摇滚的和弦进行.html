@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>13 摇滚的和弦进行 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 13 章：Ⅰ–Ⅳ–Ⅴ 与十二小节布鲁斯的结构、混合利底亚如何让属七可以久留、♭Ⅵ–♭Ⅶ–Ⅰ 的来历，以及借用和弦与常见摇滚骨架。配十二小节布鲁斯自动伴奏。">
+  <meta name="kb:tags" content="吉他,乐理,教材,和弦进行,十二小节布鲁斯,混合利底亚,借用和弦,turnaround,摇滚,145,ygjx,bls">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 10px 0; }
+    .bar {
+      padding: 10px 4px; text-align: center; border-radius: 8px; font-weight: 700;
+      border: 1px solid var(--kb-border); background: var(--kb-surface-alt); font-size: 0.95em;
+    }
+    .bar small { display: block; font-weight: 400; font-size: 0.76em; color: var(--kb-fg-muted); }
+    .bar.on { background: var(--kb-accent); color: #fff; border-color: var(--kb-accent); }
+    .bar.on small { color: #dbeafe; }
+    .prog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .prog-grid .kb-btn { width: 100%; justify-content: center; }
+    .prog-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 13 章 · 摇滚的和弦进行</h1>
+        <p class="kb-lead">第 7 章给了你和声功能这把尺子。这一章用它去量摇滚——你会发现摇滚<strong>一半遵守规则，一半明目张胆地违反</strong>，而违反的地方恰恰是它最有辨识度的地方。十二小节布鲁斯把所有和弦都变成属七，抹平了功能层级；<strong>♭Ⅵ–♭Ⅶ–Ⅰ</strong> 完全绕过导音，却比任何正格终止都更有力量。这一章把这些骨架逐个拆开，看清它们从哪来、为什么好用，以及什么时候该用哪一个。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说清 Ⅰ–Ⅳ–Ⅴ 为什么是最小完整的和声系统；② 默写十二小节布鲁斯并说出它的问—问—答结构与常见变体；③ 解释混合利底亚为什么让属七「可以久留」；④ 说出 ♭Ⅵ–♭Ⅶ–Ⅰ 借自哪里、为什么有力；⑤ 认出并使用四类借用和弦；⑥ 面对一段陌生的摇滚进行，能判断它借了什么、缺了什么。</p>
+        </div>
+
+        <h2>Ⅰ–Ⅳ–Ⅴ：最小的完整系统</h2>
+        <p>为什么偏偏是这三个和弦统治了整个流行音乐史？两条理由，都很硬：</p>
+        <p><strong>理由一：它们覆盖了音阶的全部七个音。</strong>C 大调里 C（C E G）+ F（F A C）+ G（G B D）＝ C D E F G A B —— <strong>一个不漏</strong>。任何旋律音都能在这三个和弦里找到归属，所以配任何调内旋律都不会出错。</p>
+        <p><strong>理由二：三个功能各占一个。</strong>Ⅰ 是主，Ⅳ 是下属，Ⅴ 是属（第 7 章）。<strong>这是能构成完整 T–S–D–T 循环的最少和弦数。</strong>再少一个，功能循环就断了。</p>
+        <p>顺带，它们的根音 F–C–G 在五度圈上是<strong>相邻的三个</strong>（第 4 章）——Ⅰ 的左右邻居。所以这三个和弦的关系是所有和弦组合里最紧密的。</p>
+
+        <h2>十二小节布鲁斯</h2>
+        <p>把 Ⅰ–Ⅳ–Ⅴ 按一个固定的时间框架排开，就得到了流行音乐史上最重要的一张表格：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>小节</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
+            <tbody>
+              <tr><td><strong>标准型</strong></td><td>Ⅰ7</td><td>Ⅰ7</td><td>Ⅰ7</td><td>Ⅰ7</td><td>Ⅳ7</td><td>Ⅳ7</td><td>Ⅰ7</td><td>Ⅰ7</td><td><strong>Ⅴ7</strong></td><td>Ⅳ7</td><td>Ⅰ7</td><td>Ⅴ7</td></tr>
+              <tr><td>快速变化型</td><td>Ⅰ7</td><td><strong>Ⅳ7</strong></td><td>Ⅰ7</td><td>Ⅰ7</td><td>Ⅳ7</td><td>Ⅳ7</td><td>Ⅰ7</td><td>Ⅰ7</td><td>Ⅴ7</td><td>Ⅳ7</td><td>Ⅰ7</td><td>Ⅴ7</td></tr>
+              <tr><td>结构</td><td colspan="4"><strong>问（4 小节）</strong></td><td colspan="4"><strong>再问（4 小节）</strong></td><td colspan="4"><strong>答（4 小节）</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>三个关键点：</p>
+        <ol>
+          <li><strong>它是问—问—答。</strong>第 11 章讲的问答结构在这里是三段式：前四小节抛出（歌词唱一句），中间四小节几乎重复（同一句再唱一遍），最后四小节回答（新歌词 + 和声运动最密集）。<strong>整个布鲁斯的歌词格式就是这个结构逼出来的。</strong></li>
+          <li><strong>第 12 小节的 Ⅴ7 叫「turnaround」</strong>（回转）——它不是结束，而是把你甩回第 1 小节。这就是为什么十二小节能无限循环。若真要结束，最后一小节改成 Ⅰ7。</li>
+          <li><strong>所有和弦都是属七。</strong>这是布鲁斯最反常规的一点，下一节专门讲。</li>
+        </ol>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：十二小节布鲁斯自动伴奏</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。十二小节布鲁斯的标准和弦安排：Ⅰ7 ×4 ｜ Ⅳ7 ×2、Ⅰ7 ×2 ｜ Ⅴ7、Ⅳ7、Ⅰ7、Ⅴ7。伴奏使用经典的 boogie 型双音（根音配 5 度 → 6 度 → ♭7 度 → 6 度），配合 shuffle 节奏（一拍分成三份、只弹第一和第三份）。</p></noscript>
+            <div id="bl-sound"></div>
+            <div class="bars" id="bl-bars"></div>
+            <div class="kb-readout">
+              <span>调 <b id="bl-key">A</b></span>
+              <span>当前小节 <b id="bl-cur">—</b></span>
+              <span>和弦 <b id="bl-chord">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">调<span class="kb-control-value" id="bl-kv"></span>
+                <input type="range" id="bl-root" min="0" max="11" step="1" value="9"></label>
+              <label class="kb-control">速度<span class="kb-control-value" id="bl-bv"></span>
+                <input type="range" id="bl-bpm" min="60" max="180" step="2" value="104"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="bl-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="bl-shuffle" type="button">🎺 Shuffle：开</button>
+              <button class="kb-btn" id="bl-quick" type="button">⚡ 快速变化：关</button>
+              <button class="kb-btn" id="bl-stop" type="button">■ 停止</button>
+            </div>
+            <p id="bl-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">伴奏用的是经典 boogie 双音型：根音配 <strong>5 → 6 → ♭7 → 6</strong> 度反复。关掉 shuffle 变成直拍，你会立刻听出这个音乐失去了什么——<strong>布鲁斯的一半住在那个三连音网格里</strong>（第 9 章）。</p>
+          </div>
+        </div>
+
+        <h2>混合利底亚：让属七可以久留</h2>
+        <p>布鲁斯有一个理论上的「问题」：<strong>主和弦是 Ⅰ7</strong>。可属七按定义是要解决的（第 8 章）——一个必须解决的和弦怎么能当主和弦？</p>
+        <p>答案是：<strong>在布鲁斯里，♭7 不是「需要解决的张力音」，而是音阶的固定成员。</strong>把大调的第七级降下来，得到：</p>
+        <pre><code>大调：        1  2  3  4  5  6  7
+混合利底亚：   1  2  3  4  5  6  ♭7      ← 只改第七级</code></pre>
+        <p><strong>混合利底亚</strong>（Mixolydian）是七个自然调式之一（第 14 章会系统讲）。它的性格很特别：<strong>三度是大的（明亮），七度是小的（没有导音）</strong>。于是它同时具备大调的开朗和「不催促回家」的松弛——这正是摇滚要的。</p>
+        <p>它带来两个直接后果：</p>
+        <ul>
+          <li><strong>Ⅰ7 可以长期停留。</strong>既然 ♭7 是音阶成员而不是外来张力，主和弦带着它就不再「欠解决」。你可以在 A7 上待四小节而毫无不适。</li>
+          <li><strong>Ⅶ 级变成了 ♭Ⅶ 大三和弦。</strong>C 混合利底亚里第七级是 B♭，它上面的顺阶和弦是 <strong>B♭ 大三和弦</strong>。这个和弦是摇滚的宠儿——下一节的主角。</li>
+        </ul>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 独奏时怎么用</p>
+          <p>在 Ⅰ7 上，<strong>混合利底亚（1 2 3 4 5 6 ♭7）</strong>与<strong>小调五声（1 ♭3 4 5 ♭7）</strong>都能用，而且常常来回切换（第 12 章的混用）。混合利底亚给出大三度（甜、贴合和弦），小调五声给出小三度（脏、有攻击性）。<strong>一个乐句里两者都出现，正是布鲁斯摇滚独奏的标准做法。</strong></p>
+        </div>
+
+        <h2>♭Ⅵ–♭Ⅶ–Ⅰ：一听就是摇滚</h2>
+        <p>这三个和弦连在一起，几乎是硬摇滚的听觉签名。以 A 大调为例就是 <strong>F – G – A</strong>。</p>
+        <p><strong>它们从哪来？</strong>从<strong>同主音小调</strong>（第 5 章）。A 自然小调的 ♭Ⅵ 和 ♭Ⅶ 正是 F 和 G，而主和弦却用 A <strong>大</strong>三和弦——这是典型的<strong>借用和弦</strong>：调是大调，色彩却从小调借。</p>
+        <p><strong>为什么它这么有力</strong>，三条：</p>
+        <ol>
+          <li><strong>根音是大二度上行。</strong>F→G→A 每步走两个半音，是<strong>平移</strong>而不是「引力坠落」。听起来像板块推进，厚重而不轻佻——与 Ⅴ→Ⅰ 那种「舞步式」的落地完全不同。</li>
+          <li><strong>三个都是大三和弦。</strong>没有小和弦的柔软，全是最实心的声音。</li>
+          <li><strong>完全没有导音。</strong>它绕过了整个属功能系统（第 7 章习题 7.9），因此不制造「该结束了」的压力，可以反复轰。</li>
+        </ol>
+        <p><strong>它的近亲</strong>：<code>♭Ⅶ–Ⅳ–Ⅰ</code>（同样借自小调，更松弛）、<code>Ⅰ–♭Ⅶ–Ⅳ</code>（混合利底亚 vamp，可无限循环）、以及小调版的 <code>ⅰ–♭Ⅶ–♭Ⅵ–♭Ⅶ</code>（第 5、7 章）。这四个进行构成了硬摇滚和声的绝大部分。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：摇滚进行库（一键对比八个骨架）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。八个骨架：Ⅰ–Ⅳ–Ⅴ（最古老）、Ⅰ–♭Ⅶ–Ⅳ（混合利底亚 vamp）、♭Ⅵ–♭Ⅶ–Ⅰ（硬摇滚签名）、Ⅰ–Ⅴ–ⅵ–Ⅳ（流行万金油）、ⅵ–Ⅳ–Ⅰ–Ⅴ（同一循环的暗版）、卡农进行、ⅰ–♭Ⅶ–♭Ⅵ–♭Ⅶ（小调 riff 型）、ⅱ–Ⅴ–Ⅰ（最顺的收尾）。核心区别在于用不用属功能、以及借不借小调的和弦。</p></noscript>
+            <div class="prog-grid" id="pg-list"></div>
+            <div class="kb-readout">
+              <span>进行 <b id="pg-name">—</b></span>
+              <span>和弦 <b id="pg-chords">—</b></span>
+              <span>特点 <b id="pg-note">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">调<span class="kb-control-value" id="pg-kv"></span>
+                <input type="range" id="pg-root" min="0" max="11" step="1" value="9"></label>
+              <label class="kb-control">速度<span class="kb-control-value" id="pg-bv"></span>
+                <input type="range" id="pg-bpm" min="50" max="160" step="2" value="92"></label>
+              <button class="kb-btn" id="pg-stop" type="button">■ 停止</button>
+            </div>
+            <p id="pg-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点任意一个循环播放。建议连着对比 <strong>Ⅰ–Ⅳ–Ⅴ</strong> 与 <strong>♭Ⅵ–♭Ⅶ–Ⅰ</strong>：前者是「出发—铺垫—回家」，后者是「推、推、到」。同样三个大三和弦，运动方式完全不同。</p>
+          </div>
+        </div>
+
+        <h2>借用和弦：从平行世界搬东西</h2>
+        <p>上面的 ♭Ⅵ、♭Ⅶ 是个例子。把这类做法一般化，就是<strong>借用和弦</strong>（borrowed chord / modal interchange）：<strong>在一个调里，使用同主音的另一个调式的和弦。</strong></p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>借什么</th><th>从哪借</th><th>C 大调里的例子</th><th>效果</th></tr></thead>
+            <tbody>
+              <tr><td><strong>♭Ⅶ</strong></td><td>同主音小调 / 混合利底亚</td><td>B♭</td><td>松弛、摇滚、没有导音压力</td></tr>
+              <tr><td><strong>♭Ⅵ</strong></td><td>同主音小调</td><td>A♭</td><td>厚重、悲壮，常与 ♭Ⅶ 连用</td></tr>
+              <tr><td><strong>ⅳ（小四级）</strong></td><td>同主音小调</td><td>Fm</td><td><strong>最催泪的一个</strong>：大调进行里突然转暗</td></tr>
+              <tr><td><strong>♭Ⅲ</strong></td><td>同主音小调</td><td>E♭</td><td>硬朗，常见于 riff 型进行</td></tr>
+              <tr><td>Ⅳ（大四级）</td><td>同主音<strong>大</strong>调（用在小调里）</td><td>小调里的 D 大三和弦</td><td>多利亚色彩，明亮的小调</td></tr>
+              <tr><td>Ⅰ（大主和弦）</td><td>用在小调结尾</td><td>Am 曲子结束在 A</td><td>「皮卡第三度」，突然的光</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>ⅳ 值得单独提一句。</strong><code>Ⅳ → ⅳ → Ⅰ</code>（C 调里 F → Fm → C）是流行与摇滚里最有效的煽情手段之一：Ⅳ 是明亮的下属，紧接着同一个根音上的小三和弦，三音从 A 降到 A♭——<strong>一个半音的下行，整个色彩从阳光转到阴天</strong>。它便宜、有效，而且几乎不会失败。</p>
+        <p>还有一类叫<strong>副属和弦</strong>（secondary dominant）：把某个非主和弦临时当成「主」，在它前面放一个属七。记作 <code>Ⅴ/Ⅴ</code>（读作「五级的五级」）。C 调里 <code>Ⅴ/Ⅴ ＝ D7</code>，它解决到 G。这是<strong>把属功能的推力借给任意和弦</strong>的通用手段，在乡村摇滚与老派摇滚里很常见。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：借用和弦（把一个和弦换掉，听色彩突变）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：借用和弦是在一个调里使用同主音另一调式的和弦。把 Ⅳ 换成 ⅳ（小四级）会让明亮的进行突然转暗；把 Ⅴ 换成 ♭Ⅶ 会抽掉导音、让进行变松弛；把 ⅵ 换成 ♭Ⅵ 会让色彩变厚重。每次只换一个和弦，差别就非常明显。</p></noscript>
+            <div class="kb-readout">
+              <span>基础进行 <b>Ⅰ – ⅵ – Ⅳ – Ⅴ</b></span>
+              <span>当前 <b id="bw-cur">Ⅰ – ⅵ – Ⅳ – Ⅴ（无借用）</b></span>
+              <span>和弦 <b id="bw-chords">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="bw-none" type="button">原版（无借用）</button>
+              <button class="kb-btn" id="bw-iv" type="button">Ⅳ → ⅳ（小四级）</button>
+              <button class="kb-btn" id="bw-v" type="button">Ⅴ → ♭Ⅶ</button>
+              <button class="kb-btn" id="bw-vi" type="button">ⅵ → ♭Ⅵ</button>
+              <button class="kb-btn" id="bw-all" type="button">全部借用（几乎变成小调）</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="bw-ab" type="button">🔀 原版 → 借用版 连着听</button>
+              <button class="kb-btn" id="bw-stop" type="button">■ 停止</button>
+            </div>
+            <p id="bw-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">「Ⅳ → ⅳ」是这里最值得反复听的一个：三音只降了半音，整段的天气就变了。这就是借用和弦的性价比——<strong>一个音的代价，一整段的色彩。</strong></p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 13.1</p>
+          <p>写出 A 调十二小节布鲁斯的全部和弦（标准型）。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先定三个和弦</strong>：Ⅰ7 ＝ <strong>A7</strong>；Ⅳ7 ＝ A 上方纯四度 ＝ <strong>D7</strong>；Ⅴ7 ＝ A 上方纯五度 ＝ <strong>E7</strong>。</p>
+            <pre><code>小节： 1    2    3    4  ｜ 5    6    7    8  ｜ 9    10   11   12
+和弦： A7   A7   A7   A7 ｜ D7   D7   A7   A7 ｜ E7   D7   A7   E7</code></pre>
+            <p><strong>验算</strong>：A7 ＝ A C♯ E G，D7 ＝ D F♯ A C，E7 ＝ E G♯ B D。注意 A7 里有 G（♭7）、D7 里有 C（♭7）——<strong>这些音都不在 A 大调里</strong>（A 大调有 G♯ 和 C♯）。这正是布鲁斯的特征：<strong>它不属于任何一个大调，而是属于混合利底亚 + 蓝调音的混合体系。</strong></p>
+            <p><strong>吉他实战</strong>：A7、D7、E7 全是开放和弦，A 调因此成为布鲁斯最常用的调之一（另一个是 E 调）。第 12 章的 A 小调五声盒子（5 品）正好覆盖这一整套——<strong>伴奏和独奏在同一个把位区，这就是为什么初学布鲁斯几乎都从 A 或 E 开始。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 13.2</p>
+          <p>十二小节布鲁斯的第 5 小节为什么换到 Ⅳ，而不是 Ⅴ 或别的和弦？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>三条理由叠加</strong>：</p>
+            <p><strong>① 结构上，第二个四小节是「再问」，需要变化但不能太远。</strong>如果第 5 小节就上 Ⅴ，张力过早拉满，最后四小节的「答」就无处可去了。Ⅳ 是<strong>离主和弦最近的邻居</strong>（五度圈上主和弦的另一侧，第 4 章），既有变化又不失控。</p>
+            <p><strong>② 功能上，它建立了 T → S 的第一步。</strong>整个十二小节的功能弧线是：前四小节 T（安顿）→ 5–6 小节 S（离家）→ 7–8 小节 T（回来）→ 9 小节 D（拉满）→ 10 小节 S（缓降）→ 11 小节 T（落地）→ 12 小节 D（甩回去）。<strong>Ⅳ 出现两次，分别承担「第一次离开」和「从高处滑回」两个不同的角色。</strong></p>
+            <p><strong>③ 歌词上，它给了第二句一个新的底色。</strong>布鲁斯的歌词格式是「一句唱两遍，再答一句」——第二遍歌词与第一遍相同，如果和声也完全相同，就真的只是重复了。换成 Ⅳ，同样的词有了不同的分量。</p>
+            <p><strong>「快速变化型」的意义</strong>：把第 2 小节也改成 Ⅳ7，等于在开头就<strong>预告</strong>了 Ⅳ 的存在，让第 5 小节的到来显得有准备。这是同一个结构的更精致版本。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 13.3</p>
+          <p>C 大调里 ♭Ⅵ–♭Ⅶ–Ⅰ 是哪三个和弦？它们各自借自哪里？为什么最后的 Ⅰ 是大三和弦？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>三个和弦</strong>：♭Ⅵ ＝ <strong>A♭</strong>，♭Ⅶ ＝ <strong>B♭</strong>，Ⅰ ＝ <strong>C</strong>。</p>
+            <p><strong>借自哪里</strong>：A♭ 与 B♭ 都来自 <strong>C 自然小调</strong>（C D E♭ F G <strong>A♭ B♭</strong>）——也就是同主音小调（第 5 章）。它们在 C 大调里都是调外和弦。</p>
+            <p><strong>为什么最后是大三和弦</strong>：因为整首歌的主和弦是 C 大三和弦——<strong>调是大调，只是借了小调的两个和弦来做前面的铺垫。</strong>如果最后落到 Cm，那就不是借用，而是真的转成了小调。</p>
+            <p><strong>这个「一半大一半小」正是它的魅力</strong>：前两个和弦的阴郁 + 最后落地的明亮，制造出一种<strong>「从黑暗中冲出来」</strong>的效果。这就是为什么无数硬摇滚的副歌与结尾都用它。</p>
+            <p><strong>顺带算一下低音</strong>：A♭ → B♭ → C，三步都是<strong>大二度上行</strong>。正文说过这是平移式的推进，与 Ⅴ→Ⅰ 的引力坠落完全不同。<strong>要「重」，用平移；要「解决」，用五度。</strong></p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 E 调十二小节布鲁斯的三个和弦，并说出它们在吉他上为什么方便。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Ⅰ7 ＝ E7，Ⅳ7 ＝ A7，Ⅴ7 ＝ B7。</strong></p>
+            <p><strong>为什么方便</strong>：</p>
+            <ul>
+              <li>E7（<code>020100</code>）和 A7（<code>x02020</code>）都是<strong>开放和弦</strong>，用到大量空弦，声音厚且好按。</li>
+              <li>主音 E 有<strong>两根空弦</strong>（6 弦与 1 弦），伴奏时低音随时可用（第 2 章习题 2.4）。</li>
+              <li>E 小调五声盒 1 就在 <strong>0–3 品</strong>（第 12 章），伴奏与独奏在同一区域。</li>
+            </ul>
+            <p><strong>唯一的麻烦是 B7</strong>——它没有全空弦的指法，常用 <code>x21202</code>。这也是为什么很多布鲁斯吉他手在 E 调时会把 Ⅴ 弹成简化的双音或强力和弦。<strong>调的选择永远是乐理与人体工程学的合谋。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>混合利底亚与大调差哪一个音？这一个音带来了什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>只差第七级</strong>：大调是 7（大七度），混合利底亚是 <strong>♭7</strong>（小七度）。</p>
+            <p><strong>带来了两件事</strong>：</p>
+            <ol>
+              <li><strong>没有导音了。</strong>第七级到主音变成全音而不是半音，「必须回家」的拉力消失（第 4、5 章）。于是音乐可以<strong>停在主和弦上不动</strong>，也可以无限循环而不腻。</li>
+              <li><strong>主和弦变成了 Ⅰ7。</strong>因为 ♭7 现在是音阶成员，主和弦上叠七音得到的就是属七结构。这解释了布鲁斯为什么能把属七当主和弦用。</li>
+            </ol>
+            <p><strong>但三度还是大的</strong>——这才是关键。混合利底亚不是小调：它保留了大调的明亮三度，只是拿掉了那根催促的绳子。<strong>「明亮但不着急」，这就是摇滚的默认心情。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是 turnaround？为什么十二小节布鲁斯的第 12 小节通常不是 Ⅰ？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>turnaround（回转）</strong>是段落最后一两小节的一个和声动作，作用是<strong>把音乐甩回开头</strong>而不是让它停下。</p>
+            <p><strong>第 12 小节用 Ⅴ7 的原因</strong>：Ⅴ7 是属功能，它<strong>指向 Ⅰ</strong>（第 7、8 章）。而下一个 Ⅰ 正好是第 1 小节。所以第 12 小节的 Ⅴ7 制造的期待，会在循环回到开头的瞬间被满足——<strong>循环的接缝因此完全听不出来。</strong></p>
+            <p><strong>如果用 Ⅰ 会怎样</strong>：第 11 小节已经是 Ⅰ 了，第 12 小节再来一个 Ⅰ，音乐就「坐下了」。听众会觉得结束了，再从头开始就显得突兀。<strong>所以真正要结束时，才把第 12 小节改成 Ⅰ7。</strong></p>
+            <p><strong>推广</strong>：turnaround 的思路适用于所有循环型音乐——<strong>循环的最后一个单位不应该是最稳定的那个</strong>。第 7 章说 Ⅰ–Ⅴ–ⅵ–Ⅳ 能无限循环，也是因为它结束在 Ⅳ（下属）而不是 Ⅰ。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>Ⅰ、Ⅳ、Ⅴ 三个和弦一共包含大调音阶的几个音？请以 G 大调为例列出。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>G 大调</strong> ＝ G A B C D E F♯。</p>
+            <ul>
+              <li><strong>Ⅰ ＝ G</strong>：G B D</li>
+              <li><strong>Ⅳ ＝ C</strong>：C E G</li>
+              <li><strong>Ⅴ ＝ D</strong>：D F♯ A</li>
+            </ul>
+            <p><strong>合起来</strong>：G B D C E A F♯ ＝ <strong>全部七个音，一个不漏，也没有重复覆盖不到的</strong>。</p>
+            <p><strong>意义</strong>：任何 G 大调的旋律音，都至少属于这三个和弦中的一个。所以用 Ⅰ–Ⅳ–Ⅴ 给任何调内旋律配和声，<strong>数学上保证有解</strong>。这就是这三个和弦能统治民歌、乡村、早期摇滚的根本原因——它是「最小的完整覆盖」。</p>
+            <p><strong>注意每个音的归属并不唯一</strong>：G 同时属于 Ⅰ 和 Ⅳ，D 同时属于 Ⅰ 和 Ⅴ。这些<strong>共同音</strong>正是和弦之间能平滑连接的原因（第 7 章习题 7.6）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么 <strong>Ⅰ–♭Ⅶ–Ⅳ</strong> 可以无限循环而不产生「该结束了」的压力？请对比 Ⅰ–Ⅳ–Ⅴ。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Ⅰ–♭Ⅶ–Ⅳ 里没有属功能。</strong>三个和弦分别是主、♭Ⅶ（混合利底亚的第七级，<strong>不含导音</strong>）、下属。整个循环里<strong>没有一个和弦包含调的导音</strong>，因此没有任何「必须解决」的张力被制造出来。</p>
+            <p><strong>对比 Ⅰ–Ⅳ–Ⅴ</strong>：Ⅴ 含导音，每一轮都在积累张力并要求回到 Ⅰ。这个要求被满足时很爽，但也意味着<strong>循环有明确的呼吸单位</strong>——它天然分段，不适合作为长时间不变的背景。</p>
+            <p><strong>另一个角度：根音的运动。</strong><br>
+            Ⅰ–♭Ⅶ–Ⅳ 的根音（以 A 调为例）是 A → G → D → A，是<strong>下行全音 + 下行纯四度 + 上行纯五度</strong>，绕了一圈平滑地回来，没有一处「坠落」。<br>
+            Ⅰ–Ⅳ–Ⅴ–Ⅰ 的根音 A → D → E → A，最后一步 E→A 是下行纯五度——<strong>最强的落地</strong>。</p>
+            <p><strong>结论</strong>：<strong>要「一段音乐」，用 Ⅰ–Ⅳ–Ⅴ；要「一片氛围」，用 Ⅰ–♭Ⅶ–Ⅳ。</strong>前者有起承转合，后者是可以铺满整个主歌的地毯。很多摇滚歌的做法是：主歌用后者铺陈，副歌切到前者获得推进——<strong>用有没有属功能来区分段落，比用音量和乐器数更根本。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>C 调里 <code>F → Fm → C</code> 为什么这么「催泪」？请把三个和弦的音写出来，找出那条关键的线。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个和弦</strong>：<br>
+            F ＝ F <strong>A</strong> C　　Fm ＝ F <strong>A♭</strong> C　　C ＝ C E <strong>G</strong></p>
+            <p><strong>关键的线</strong>：把三个和弦里变化的那个声部单独拎出来 —— <strong>A → A♭ → G</strong>。这是一条<strong>连续的半音下行</strong>，走了两步。</p>
+            <p><strong>为什么有效</strong>，三层：</p>
+            <ol>
+              <li><strong>半音下行本身就是「叹息」的音型。</strong>它在古典时期就被称作 <em>lamento</em>（哀叹），几百年来一直被用于表达失落。人对下行半音的情绪反应几乎是本能的。</li>
+              <li><strong>变化只发生在一个声部。</strong>F 和 Fm 共享 F 与 C 两个音，只有三音在动。<strong>其他一切不变，只有一个东西在坠落</strong>——这种「局部变化、整体不动」的写法，比整个和弦换掉更让人注意到那个变化。</li>
+              <li><strong>A♭ 是借来的（♭6）。</strong>它不属于 C 大调，属于 C 小调。这个「外来音」带来一瞬间的陌生感与阴影，紧接着解决到 G（属音，稳定），阴影散去。<strong>一暗一亮，全在两拍之内完成。</strong></li>
+            </ol>
+            <p><strong>用法提醒</strong>：这一招效果太好，也因此太容易用滥。一首歌里出现<strong>一次</strong>（通常在最后一段副歌前）最有力；反复使用会让人麻木。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>C 大调里的副属和弦 <code>Ⅴ/Ⅴ</code> 是什么和弦？它含哪个调外音？为什么它能加强 Ⅴ？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>推导</strong>：Ⅴ/Ⅴ 读作「Ⅴ 的 Ⅴ」，意思是「把 Ⅴ 临时当成主和弦，写它的属七」。C 调的 Ⅴ 是 G；G 的属七是 <strong>D7</strong>。</p>
+            <p><strong>D7 ＝ D F♯ A C</strong>。其中 <strong>F♯ 是调外音</strong>（C 大调里是 F）。</p>
+            <p><strong>为什么能加强 Ⅴ</strong>：F♯ 是 <strong>G 的导音</strong>——它离 G 只有半音，急着上行解决到 G。也就是说，D7 对 G 制造了和「G7 对 C」完全相同的推力（第 8 章）。<strong>你把属功能的机制临时借给了 G。</strong></p>
+            <p><strong>典型用法</strong>：<code>C – D7 – G – C</code>。这里 D7 让 G 的到来显得「非它不可」，然后 G 再解决到 C。整个进行有了两级推进，比 <code>C – F – G – C</code> 更有戏剧性。</p>
+            <p><strong>识别技巧</strong>：<strong>在一段和弦进行里看到一个「不该是大三和弦 / 属七」的级数（比如 ⅱ 变成了 Ⅱ7），八成就是副属和弦。</strong>C 调里出现 D7、A7、E7 这类和弦时，先问「它后面跟的是谁」——答案通常就是它临时服务的那个目标。</p>
+            <p><strong>在重型音乐里</strong>：副属和弦用得较少，因为它依赖属功能和三度（第 10 章）。但它的<strong>思路</strong>——用半音逼近强调下一个和弦——被保留了下来，只是换成了强力和弦的半音滑入（第 11 章例题 11.3）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>十二小节布鲁斯的前 8 小节只用了 2 个和弦，后 4 小节却用了 4 次和弦变化。为什么和声运动要这样分布？这个设计原则可以推广到别的地方吗？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>先看清事实</strong>：</p>
+            <ul>
+              <li>小节 1–8：<code>Ⅰ Ⅰ Ⅰ Ⅰ ｜ Ⅳ Ⅳ Ⅰ Ⅰ</code> —— 8 小节只变化了 2 次。</li>
+              <li>小节 9–12：<code>Ⅴ Ⅳ Ⅰ Ⅴ</code> —— 4 小节变化了 4 次，<strong>密度是前面的四倍</strong>。</li>
+            </ul>
+            <p><strong>为什么这样分布</strong>：</p>
+            <ol>
+              <li><strong>它对应问—问—答的语义。</strong>前两句是陈述（歌词在唱，和声要让路，保持简单），第三句是回应与总结（和声接管，推向高潮再收束）。<strong>和声密度是「谁在说话」的信号。</strong></li>
+              <li><strong>它制造了加速感。</strong>同样的时间长度里事件变多，主观上就是「变快了」——即使 BPM 一个字没变。这是最经济的推进手段。</li>
+              <li><strong>它给独奏留出了空间。</strong>前 8 小节和声几乎不动，独奏者可以自由发挥长句；后 4 小节和声密集，独奏必须跟着走。<strong>一张一弛，独奏才有形状。</strong></li>
+            </ol>
+            <p><strong>推广（这才是这道题的价值）</strong>：这条原则叫<strong>「和声节奏」（harmonic rhythm）</strong>——和弦变化的疏密本身就是一个表现参数，独立于旋律与节奏。通用规律是：</p>
+            <ul>
+              <li><strong>段落开始时疏，结束前密。</strong>密集的和声变化天然带有「要收了」的信号。</li>
+              <li><strong>要制造高潮，就加密；要制造铺垫，就变疏。</strong>比改音量、加乐器更根本。</li>
+              <li><strong>在重型音乐里同样成立</strong>：主歌 riff 可能整段钉在一个音上（和声节奏＝0），到了副歌前的过门突然每拍换一个强力和弦——<strong>这就是没有属功能的音乐制造推进的主要方式之一</strong>（第 7 章习题 7.9 的答案之一）。</li>
+            </ul>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>古典和声认为属七<strong>必须</strong>解决，而布鲁斯把属七当主和弦用了整整一百年。两种做法都成立。请把两个体系各自的<strong>底层假设</strong>写出来，说明它们在哪里分岔。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>古典共性写作</th><th>布鲁斯 / 摇滚</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>音乐的基本形状</strong></td><td>有起点与终点的<strong>叙事</strong></td><td>可无限延续的<strong>循环</strong></td></tr>
+                  <tr><td><strong>张力的作用</strong></td><td>制造 → 解决，推动叙事前进</td><td>作为<strong>持续的底色</strong>存在，不必解决</td></tr>
+                  <tr><td><strong>♭7 的身份</strong></td><td>调外的<strong>不稳定音</strong>，必须下行解决</td><td>音阶的<strong>固定成员</strong>（混合利底亚 / 蓝调音阶）</td></tr>
+                  <tr><td><strong>协和的判据</strong></td><td>相对<strong>调性引力系统</strong>是否稳定</td><td>相对<strong>本风格的听觉习惯</strong>是否自然</td></tr>
+                  <tr><td><strong>结构靠什么划分</strong></td><td>终止式（和声）</td><td>小节数、歌词句式、编配变化</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>分岔点在哪</strong>：在<strong>「音乐要不要走向一个终点」</strong>这个前提上。</p>
+            <p>古典共性写作的整套引力体系（导音、属功能、终止式）都是为<strong>叙事</strong>服务的：有开始、有发展、有结束。在这个前提下，一个持续不解决的属七确实是「悬着的」，因为叙事被卡住了。</p>
+            <p>布鲁斯的前提不同——它源自<strong>劳动歌与循环性的口传音乐</strong>，形状是「一遍又一遍」。在这个前提下，「解决」根本不是目标；一个和弦是否「欠着什么」这个问题本身就不成立。<strong>♭7 不是欠着的债，它就是这个音阶的第七级。</strong></p>
+            <p><strong>关键的方法论结论</strong>：<strong>乐理规则不是自然律，而是某个风格内部的一致性描述。</strong>「属七必须解决」不是错的，它只是<strong>有适用范围的</strong>——范围就是那个把音乐当叙事的体系。跨出范围去评判，就像用象棋规则批评围棋。</p>
+            <p><strong>对学习者的实际忠告</strong>：学规则时，一并记住<strong>它假设了什么</strong>。这样你既能在体系内正确使用它，也能在体系外知道它为什么失效——而不是在遇到「明明书上说不行但听起来很棒」的时候陷入困惑。第三篇几乎每一章都在做这件事。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>Ⅰ–Ⅳ–Ⅴ 是最小的完整系统</strong>：三个和弦覆盖音阶全部七个音，且三种功能各占一个。② <strong>十二小节布鲁斯</strong>是问—问—答的三段式；第 12 小节的 <strong>turnaround（Ⅴ7）</strong>让循环的接缝听不出来；全部用属七是它最反常规也最本质的特征。③ <strong>混合利底亚</strong>＝大调降七级，拿掉导音但保留大三度 →「明亮但不着急」，让 Ⅰ7 可以久留。④ <strong>♭Ⅵ–♭Ⅶ–Ⅰ</strong> 借自同主音小调，三个大三和弦、根音大二度上行、完全没有导音 → 平移式的重量感。⑤ <strong>借用和弦</strong>是从同主音的另一调式搬和弦，性价比最高的是 <strong>Ⅳ→ⅳ</strong>（一个半音换一整段色彩）；<strong>副属和弦</strong>则是把属功能临时借给任意和弦。⑥ <strong>和声节奏</strong>（和弦变化的疏密）本身就是表现手段：疏则铺垫，密则推进。⑦ 规则有适用范围——<strong>「属七必须解决」假设了音乐是叙事；循环性音乐不接受这个前提。</strong></p>
+          <p><strong>下一章预告</strong>：本章反复提到混合利底亚、弗里几亚这些名字。第 14 章《金属的调式色彩》会把七个自然调式一次讲全，用<strong>同根音对比</strong>排出从最亮到最暗的光谱，并回答那个终极问题——<strong>金属的「邪恶感」到底是哪个音带来的？</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./14-金属的调式色彩.html"><strong>下一章：第 14 章 · 金属的调式色彩</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+      function voiceOf(rootPc, key) {
+        var steps = T.CHORDS[key].steps, base = 48 + rootPc;
+        return [base - 12].concat(steps.map(function (s) { return base + s; }));
+      }
+
+      /* ---------- 演示 1：十二小节布鲁斯 ---------- */
+      KBG.soundToggle($("bl-sound"));
+      var BARS = [0, 0, 0, 0, 5, 5, 0, 0, 7, 5, 0, 7];   // 相对主音的半音数
+      var RN = ["Ⅰ7", "Ⅰ7", "Ⅰ7", "Ⅰ7", "Ⅳ7", "Ⅳ7", "Ⅰ7", "Ⅰ7", "Ⅴ7", "Ⅳ7", "Ⅰ7", "Ⅴ7"];
+      var blRoot = 9, blBpm = 104, blShuffle = true, blQuick = false, blH = null, blRaf = null;
+      function bars() {
+        var b = BARS.slice(), r = RN.slice();
+        if (blQuick) { b[1] = 5; r[1] = "Ⅳ7"; }
+        return { b: b, r: r };
+      }
+      function renderBars(cur) {
+        var host = $("bl-bars"); clear(host);
+        var d = bars();
+        d.b.forEach(function (off, i) {
+          var el = document.createElement("div");
+          el.className = "bar" + (i === cur ? " on" : "");
+          el.appendChild(document.createTextNode(T.name(T.mod12(blRoot + off)) + "7"));
+          var sm = document.createElement("small");
+          sm.textContent = (i + 1) + " · " + d.r[i];
+          el.appendChild(sm);
+          host.appendChild(el);
+        });
+        $("bl-key").textContent = T.name(blRoot);
+        if (cur != null && cur >= 0) {
+          $("bl-cur").textContent = "第 " + (cur + 1) + " 小节（" + d.r[cur] + "）";
+          $("bl-chord").textContent = T.name(T.mod12(blRoot + d.b[cur])) + "7";
+        }
+      }
+      function blEvents() {
+        var d = bars(), ev = [];
+        var base = 40 + T.mod12(blRoot - 4);        // 让主音落在低音弦区域
+        var PATTERN = [7, 7, 9, 9, 10, 10, 9, 9];   // boogie：5 → 6 → ♭7 → 6
+        d.b.forEach(function (off, bar) {
+          var R = base + off;
+          for (var k = 0; k < 8; k++) {
+            var beat = Math.floor(k / 2), second = (k % 2) === 1;
+            var t = bar * 4 + beat + (second ? (blShuffle ? 2 / 3 : 0.5) : 0);
+            var dur = second ? (blShuffle ? 1 / 3 : 0.5) : (blShuffle ? 2 / 3 : 0.5);
+            ev.push({
+              t: t, dur: dur, midis: [R, R + PATTERN[k]], spread: 0.008,
+              gain: second ? 0.55 : 0.78, mute: false
+            });
+          }
+        });
+        return ev;
+      }
+      function startBl() {
+        stopBl(); A.setDrive(0.28);
+        blH = A.sequence(blEvents(), { bpm: blBpm, loop: true, lengthBeats: 48 });
+        (function tick() {
+          if (!blH) return;
+          renderBars(Math.floor(blH.position() / 4) % 12);
+          blRaf = requestAnimationFrame(tick);
+        })();
+        $("bl-play").textContent = "⏸ 暂停";
+      }
+      function stopBl() {
+        if (blH) { blH.stop(); blH = null; }
+        if (blRaf) { cancelAnimationFrame(blRaf); blRaf = null; }
+        A.stopAll(); renderBars(-1); $("bl-play").textContent = "▶ 循环播放";
+      }
+      $("bl-play").addEventListener("click", function () { blH ? stopBl() : startBl(); });
+      $("bl-shuffle").addEventListener("click", function () {
+        blShuffle = !blShuffle;
+        $("bl-shuffle").textContent = blShuffle ? "🎺 Shuffle：开" : "🎺 Shuffle：关（直拍）";
+        $("bl-msg").textContent = blShuffle
+          ? "Shuffle：每拍分成三份、只弹第一和第三份（第 9 章）。这是布鲁斯的呼吸。"
+          : "直拍：一拍两等分。同样的音，一下子变得方正、失去摇摆——布鲁斯的一半就住在那个三连音网格里。";
+        if (blH) startBl();
+      });
+      $("bl-quick").addEventListener("click", function () {
+        blQuick = !blQuick;
+        $("bl-quick").textContent = blQuick ? "⚡ 快速变化：开" : "⚡ 快速变化：关";
+        renderBars(-1); if (blH) startBl();
+      });
+      $("bl-stop").addEventListener("click", stopBl);
+      KB.bindRange($("bl-root"), $("bl-kv"), function (v) { return T.name(v) + " 调"; },
+        function (v) { blRoot = v; renderBars(-1); if (blH) startBl(); });
+      KB.bindRange($("bl-bpm"), $("bl-bv"), function (v) { return v + " BPM"; },
+        function (v) { blBpm = v; if (blH) startBl(); });
+
+      /* ---------- 演示 2：进行库 ---------- */
+      var PROGS = [
+        { cn: "Ⅰ–Ⅳ–Ⅴ", ch: [[0, "maj"], [5, "maj"], [7, "maj"]], note: "最古老的骨架，T→S→D，覆盖全部七个音" },
+        { cn: "Ⅰ–♭Ⅶ–Ⅳ", ch: [[0, "maj"], [10, "maj"], [5, "maj"]], note: "混合利底亚 vamp：无导音，可无限循环" },
+        { cn: "♭Ⅵ–♭Ⅶ–Ⅰ", ch: [[8, "maj"], [10, "maj"], [0, "maj"]], note: "硬摇滚签名：根音大二度上行，平移式推进" },
+        { cn: "Ⅰ–Ⅴ–ⅵ–Ⅳ", ch: [[0, "maj"], [7, "maj"], [9, "min"], [5, "maj"]], note: "流行万金油：从不真正终止，所以能无限循环" },
+        { cn: "ⅵ–Ⅳ–Ⅰ–Ⅴ", ch: [[9, "min"], [5, "maj"], [0, "maj"], [7, "maj"]], note: "同一个循环的暗版，从小和弦起步" },
+        { cn: "卡农进行", ch: [[0, "maj"], [7, "maj"], [9, "min"], [4, "min"], [5, "maj"], [0, "maj"], [5, "maj"], [7, "maj"]], note: "八个和弦，低音级进下行，最「顺」的长循环" },
+        { cn: "ⅰ–♭Ⅶ–♭Ⅵ–♭Ⅶ", ch: [[0, "min"], [10, "maj"], [8, "maj"], [10, "maj"]], note: "小调 riff 型：全部来自自然小调，没有导音" },
+        { cn: "ⅱ–Ⅴ–Ⅰ", ch: [[2, "min"], [7, "maj"], [0, "maj"]], note: "根音连走两步五度圈，最顺的收尾" }
+      ];
+      var pgRoot = 9, pgBpm = 92, pgIdx = -1, pgH = null;
+      var pgBtns = [];
+      PROGS.forEach(function (p, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = p.cn;
+        b.addEventListener("click", function () { playProg(i); });
+        $("pg-list").appendChild(b); pgBtns.push(b);
+      });
+      function playProg(i) {
+        pgIdx = i;
+        pgBtns.forEach(function (b, j) { b.className = "kb-btn" + (j === i ? " on" : ""); });
+        if (pgH) { pgH.stop(); pgH = null; }
+        A.stopAll(); A.setDrive(0.22);
+        var p = PROGS[i];
+        var ev = p.ch.map(function (c, k) {
+          return { t: k * 2, midis: voiceOf(T.mod12(pgRoot + c[0]), c[1]), dur: 2, spread: 0.03, gain: 0.55 };
+        });
+        pgH = A.sequence(ev, { bpm: pgBpm, loop: true, lengthBeats: p.ch.length * 2 });
+        $("pg-name").textContent = p.cn;
+        $("pg-chords").textContent = p.ch.map(function (c) {
+          return T.chordName(T.mod12(pgRoot + c[0]), c[1]);
+        }).join(" – ");
+        $("pg-note").textContent = p.note;
+      }
+      $("pg-stop").addEventListener("click", function () {
+        if (pgH) { pgH.stop(); pgH = null; }
+        A.stopAll(); pgBtns.forEach(function (b) { b.className = "kb-btn"; });
+      });
+      KB.bindRange($("pg-root"), $("pg-kv"), function (v) { return T.name(v); },
+        function (v) { pgRoot = v; if (pgIdx >= 0) playProg(pgIdx); });
+      KB.bindRange($("pg-bpm"), $("pg-bv"), function (v) { return v + " BPM"; },
+        function (v) { pgBpm = v; if (pgIdx >= 0) playProg(pgIdx); });
+
+      /* ---------- 演示 3：借用和弦 ---------- */
+      var BASE_P = [[0, "maj"], [9, "min"], [5, "maj"], [7, "maj"]];   // Ⅰ ⅵ Ⅳ Ⅴ
+      var BW = {
+        none: { cn: "Ⅰ – ⅵ – Ⅳ – Ⅴ（无借用）", ch: BASE_P },
+        iv: { cn: "Ⅰ – ⅵ – ⅳ – Ⅴ（借小四级）", ch: [[0, "maj"], [9, "min"], [5, "min"], [7, "maj"]] },
+        v: { cn: "Ⅰ – ⅵ – Ⅳ – ♭Ⅶ（借降七级）", ch: [[0, "maj"], [9, "min"], [5, "maj"], [10, "maj"]] },
+        vi: { cn: "Ⅰ – ♭Ⅵ – Ⅳ – Ⅴ（借降六级）", ch: [[0, "maj"], [8, "maj"], [5, "maj"], [7, "maj"]] },
+        all: { cn: "Ⅰ – ♭Ⅵ – ⅳ – ♭Ⅶ（全部借用）", ch: [[0, "maj"], [8, "maj"], [5, "min"], [10, "maj"]] }
+      };
+      var BW_ROOT = 0, bwH = null, bwKey = "none";
+      function playBw(k, delay, loop) {
+        var p = BW[k];
+        var ev = p.ch.map(function (c, i) {
+          return { t: (delay || 0) + i * 2, midis: voiceOf(T.mod12(BW_ROOT + c[0]), c[1]), dur: 2, spread: 0.03, gain: 0.55 };
+        });
+        return ev;
+      }
+      function setBw(k) {
+        bwKey = k;
+        Object.keys(BW).forEach(function (j) {
+          $("bw-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        if (bwH) { bwH.stop(); bwH = null; }
+        A.stopAll(); A.setDrive(0.2);
+        bwH = A.sequence(playBw(k), { bpm: 88, loop: true, lengthBeats: BW[k].ch.length * 2 });
+        $("bw-cur").textContent = BW[k].cn;
+        $("bw-chords").textContent = BW[k].ch.map(function (c) {
+          return T.chordName(T.mod12(BW_ROOT + c[0]), c[1]);
+        }).join(" – ");
+      }
+      Object.keys(BW).forEach(function (k) {
+        $("bw-" + k).addEventListener("click", function () { setBw(k); });
+      });
+      $("bw-ab").addEventListener("click", function () {
+        if (bwH) { bwH.stop(); bwH = null; }
+        A.stopAll(); A.setDrive(0.2);
+        var target = bwKey === "none" ? "iv" : bwKey;
+        A.sequence(playBw("none").concat(playBw(target, 8)), { bpm: 88 });
+        $("bw-msg").textContent = "先原版、后借用版（" + BW[target].cn + "）。注意只有一个和弦不同，整段的天气却变了。";
+      });
+      $("bw-stop").addEventListener("click", function () {
+        if (bwH) { bwH.stop(); bwH = null; }
+        A.stopAll();
+      });
+
+      renderBars(-1); setBw("none"); A.stopAll();
+      if (bwH) { bwH.stop(); bwH = null; }
+    });
+  </script>
+</body>
+</html>

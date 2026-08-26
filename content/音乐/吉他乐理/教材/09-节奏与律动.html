@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>09 节奏与律动 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 9 章：拍号与强弱规律、音符时值与附点、切分、三连音与 shuffle、金属的 gallop 节奏、TAB 节奏记号，以及右手闷音与拨弦方向如何决定律动。">
+  <meta name="kb:tags" content="吉他,乐理,教材,节奏,拍号,时值,切分,三连音,shuffle,gallop,闷音,palm mute,律动,jz,ld">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .pat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .pat-grid .kb-btn { width: 100%; justify-content: center; }
+    .pat-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 9 章 · 节奏与律动</h1>
+        <p class="kb-lead">前八章都在讲「弹哪个音」。这一章讲「<strong>什么时候弹</strong>」——而对摇滚与金属来说，后者的重要性只高不低。把一段经典 Riff 的音高全部保留、节奏换掉，它立刻什么都不是；反过来，只留下节奏、把所有音都换成同一个空弦，你往往还能听出是哪首歌。<strong>重型音乐的辨识度，八成住在右手里。</strong>这一章补上时间这条轴：拍号、时值、切分、三连音，以及两个决定金属生死的技术——<strong>闷音</strong>与 <strong>gallop</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 读懂拍号，说出常见拍号的强弱规律；② 换算各种音符时值，包括附点与三连音；③ 解释切分为什么产生「推动感」；④ 分辨 shuffle 与直拍，并说出 gallop 是怎么构成的；⑤ 读懂 TAB 上的节奏信息；⑥ 说清右手闷音与拨弦方向如何塑造律动，以及为什么「完全对齐节拍器」反而不好听。</p>
+        </div>
+
+        <h2>拍号：分母是尺子，分子是数几下</h2>
+        <p>拍号写成两个数字上下叠放，比如 <strong>4/4</strong>。读法很直白：</p>
+        <ul>
+          <li><strong>分母</strong>：用什么音符当「一拍」。4 ＝ 四分音符，8 ＝ 八分音符。</li>
+          <li><strong>分子</strong>：每小节有几拍。</li>
+        </ul>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>拍号</th><th>读作</th><th>强弱规律</th><th>典型场景</th></tr></thead>
+            <tbody>
+              <tr><td><strong>4/4</strong></td><td>每小节四个四分音符</td><td><strong>强</strong> 弱 <strong>次强</strong> 弱</td><td>绝大多数摇滚、流行、金属</td></tr>
+              <tr><td>3/4</td><td>每小节三个四分音符</td><td><strong>强</strong> 弱 弱</td><td>华尔兹、抒情曲</td></tr>
+              <tr><td>6/8</td><td>每小节六个八分音符</td><td><strong>强</strong> 弱 弱 <strong>次强</strong> 弱 弱</td><td>摇滚慢板、金属的史诗段落</td></tr>
+              <tr><td>2/4</td><td>每小节两个四分音符</td><td><strong>强</strong> 弱</td><td>进行曲、朋克</td></tr>
+              <tr><td>7/8、5/4</td><td>不能被 2 或 3 整除</td><td>需要人为分组，如 7/8 ＝ 3+2+2</td><td>前卫金属、数学摇滚（第 15 章）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 6/8 不是「快一点的 3/4」</p>
+          <p>两者每小节都有六个八分音符，但<strong>分组方式不同</strong>：3/4 是「<strong>2</strong>+<strong>2</strong>+<strong>2</strong>」（三个大拍，每拍两分），6/8 是「<strong>3</strong>+<strong>3</strong>」（两个大拍，每拍三分）。所以 3/4 数「1-2-3」，6/8 数「1-2-3-2-2-3」。听感上 6/8 有一种摇晃的、三连音式的推进——这就是为什么很多摇滚慢板（以及《Nothing Else Matters》那一类的金属抒情曲）用 6/8 而不是 3/4。</p>
+        </div>
+
+        <h2>时值：一棵不断对半分的树</h2>
+        <p>音符时值是一套严格的二分体系：每往下一级，时长减半。</p>
+        <figure>
+          <svg viewBox="0 0 660 210" width="660" height="210" role="img" aria-label="音符时值树：全音符对半分成二分、四分、八分、十六分音符">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="11.5">
+              <text x="8" y="26" fill="var(--kb-fg-muted)">全音符 ＝ 4 拍</text>
+              <rect x="140" y="14" width="504" height="22" rx="4" fill="var(--kb-accent)" opacity="0.75"/>
+              <text x="8" y="62" fill="var(--kb-fg-muted)">二分音符 ＝ 2 拍</text>
+              <rect x="140" y="50" width="248" height="22" rx="4" fill="var(--kb-accent)" opacity="0.62"/>
+              <rect x="396" y="50" width="248" height="22" rx="4" fill="var(--kb-accent)" opacity="0.62"/>
+              <text x="8" y="98" fill="var(--kb-fg-muted)">四分音符 ＝ 1 拍</text>
+              <g fill="var(--kb-accent)" opacity="0.5">
+                <rect x="140" y="86" width="120" height="22" rx="4"/><rect x="268" y="86" width="120" height="22" rx="4"/>
+                <rect x="396" y="86" width="120" height="22" rx="4"/><rect x="524" y="86" width="120" height="22" rx="4"/>
+              </g>
+              <text x="8" y="134" fill="var(--kb-fg-muted)">八分音符 ＝ ½ 拍</text>
+              <g fill="var(--kb-accent)" opacity="0.38"><g id="e8"><rect x="140.0" y="122" width="56" height="22" rx="4"/><rect x="203.0" y="122" width="56" height="22" rx="4"/><rect x="266.0" y="122" width="56" height="22" rx="4"/><rect x="329.0" y="122" width="56" height="22" rx="4"/><rect x="392.0" y="122" width="56" height="22" rx="4"/><rect x="455.0" y="122" width="56" height="22" rx="4"/><rect x="518.0" y="122" width="56" height="22" rx="4"/><rect x="581.0" y="122" width="56" height="22" rx="4"/></g></g>
+              <text x="8" y="170" fill="var(--kb-fg-muted)">十六分音符 ＝ ¼ 拍</text>
+              <g fill="var(--kb-accent)" opacity="0.26"><g id="e16"><rect x="140.0" y="158" width="26" height="22" rx="3"/><rect x="171.5" y="158" width="26" height="22" rx="3"/><rect x="203.0" y="158" width="26" height="22" rx="3"/><rect x="234.5" y="158" width="26" height="22" rx="3"/><rect x="266.0" y="158" width="26" height="22" rx="3"/><rect x="297.5" y="158" width="26" height="22" rx="3"/><rect x="329.0" y="158" width="26" height="22" rx="3"/><rect x="360.5" y="158" width="26" height="22" rx="3"/><rect x="392.0" y="158" width="26" height="22" rx="3"/><rect x="423.5" y="158" width="26" height="22" rx="3"/><rect x="455.0" y="158" width="26" height="22" rx="3"/><rect x="486.5" y="158" width="26" height="22" rx="3"/><rect x="518.0" y="158" width="26" height="22" rx="3"/><rect x="549.5" y="158" width="26" height="22" rx="3"/><rect x="581.0" y="158" width="26" height="22" rx="3"/><rect x="612.5" y="158" width="26" height="22" rx="3"/></g></g>
+              <text x="8" y="200" fill="#d97706" font-weight="700">附点四分 ＝ 1.5 拍</text>
+              <rect x="140" y="188" width="184" height="16" rx="4" fill="#d97706" opacity="0.55"/>
+              <text x="336" y="200" fill="var(--kb-fg-muted)">附点 ＝ 在原时值上再加它的一半</text>
+            </g>
+          </svg>
+          <figcaption>时值体系是严格的二分树。<strong>附点</strong>打破这个规律：它把音符延长「自身的一半」，于是附点四分 ＝ 1.5 拍。附点是节奏产生「不整齐感」的最主要来源之一。</figcaption>
+        </figure>
+        <p>在吉他 TAB 上，时值通常由<strong>数字下方的符干与横梁</strong>表示：一条横梁＝八分音符，两条＝十六分音符，无符干的多为四分或更长。<strong>本教材的 TAB 采用更直接的做法——列的宽度与时值成正比</strong>，宽的音长、窄的音短，一眼就能看出节奏形状。</p>
+
+        <h2>切分：把重音挪到不该在的地方</h2>
+        <p>4/4 的默认强弱是「<strong>强</strong> 弱 <strong>次强</strong> 弱」。<strong>切分</strong>（syncopation）就是故意违背它——把重音放在弱拍上，或者让音符<strong>提前</strong>到前一拍的后半，跨过强拍。</p>
+        <p>效果是什么？<strong>推动感</strong>。当耳朵预期的强拍位置上没有音、而弱拍上却砸下来一个重音时，身体会本能地产生「被往前推」的感觉。这就是「律动」（groove）的核心机制：<strong>期待与实际之间的偏差</strong>。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 摇滚的切分和放克的切分不是一回事</p>
+          <p><strong>摇滚</strong>的切分通常是<strong>提前</strong>——把本该落在第 3 拍的和弦提前到第 2 拍后半（俗称「抢拍 / push」），制造迫不及待的冲劲。<strong>放克</strong>的切分是<strong>密集的十六分网格 + 大量休止</strong>，重音散布在各处，制造摇摆而非冲刺。<strong>金属</strong>则常用第三种：<strong>在密集的八 / 十六分闷音流里突然插入一个重音或一个休止</strong>——因为背景足够规整，任何一点偏移都会被放大成强烈的冲击。</p>
+        </div>
+
+        <h2>三连音、shuffle 与 gallop</h2>
+        <p>二分树覆盖不了「把一拍分成三份」，于是有了<strong>三连音</strong>：在一拍的时间里均匀塞进三个音。它是所有「摇摆感」的来源。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>节奏型</th><th>一拍里的分布</th><th>听感</th><th>典型用途</th></tr></thead>
+            <tbody>
+              <tr><td><strong>直八分</strong></td><td>1 – 1（两个等长）</td><td>方正、直接</td><td>朋克、Thrash、大多数摇滚</td></tr>
+              <tr><td><strong>三连音</strong></td><td>1 – 1 – 1（三个等长）</td><td>滚动、摇晃</td><td>布鲁斯、慢速金属、6/8 段落</td></tr>
+              <tr><td><strong>Shuffle / Swing</strong></td><td>2 – 1（三连音去掉中间那个）</td><td>「长–短」的跛行感</td><td>布鲁斯、摇滚乐、Boogie</td></tr>
+              <tr><td><strong>Gallop</strong></td><td><strong>2 – 1 – 1</strong>（八分 + 两个十六分）</td><td>马蹄声，向前冲</td><td><strong>重金属的招牌节奏</strong></td></tr>
+              <tr><td><strong>反向 Gallop</strong></td><td><strong>1 – 1 – 2</strong>（两个十六分 + 八分）</td><td>推着走，更凶</td><td>Thrash、Death</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Gallop</strong>（马蹄节奏）值得单独说，它几乎定义了 1980 年代以来的重金属。构成极简单：<strong>把一拍分成「一个八分 + 两个十六分」，然后用右手全下拨或下-下-上反复砸</strong>。之所以像马蹄，是因为「长-短-短」的模式正是马小跑时的蹄音节律。配上闷音，它能在不改变任何音高的情况下把一段静止的低音变成一列前进的火车。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：节奏机（切换节奏型，听同一个音的不同性格）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="r-canvas" height="150"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一个音高，只改变节奏就能得到完全不同的性格。四分＝稳重，八分＝行进，十六分＝紧张，gallop（八分＋两个十六分）＝马蹄式冲刺，shuffle（长-短）＝摇摆，切分＝推动。闷音（palm mute）把每个音的余韵掐断，使密集节奏保持清晰——这是重型音乐的基础技术。</p></noscript>
+            <div id="r-sound"></div>
+            <div class="pat-grid" id="r-pats"></div>
+            <div class="kb-readout">
+              <span>节奏型 <b id="r-name">八分音符</b></span>
+              <span>一小节音数 <b id="r-cnt">8</b></span>
+              <span>说明 <b id="r-desc">最基础的行进感</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="r-bpmv"></span>
+                <input type="range" id="r-bpm" min="50" max="220" step="2" value="120"></label>
+              <label class="kb-control">失真<span class="kb-control-value" id="r-drv"></span>
+                <input type="range" id="r-drive" min="0" max="1" step="0.05" value="0.7"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="r-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="r-mute" type="button">🤚 闷音：开</button>
+              <button class="kb-btn" id="r-metro" type="button">🥁 节拍器：关</button>
+              <button class="kb-btn" id="r-stop" type="button">■ 停止</button>
+            </div>
+            <p id="r-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">先在 120 BPM 把六种节奏型都听一遍，再关掉闷音听同样的十六分——你会立刻明白为什么金属离不开右手掌根。</p>
+          </div>
+        </div>
+
+        <h2>读懂 TAB 上的节奏</h2>
+        <p>下面是一段典型的 gallop riff，用本教材的 TAB 记法写出来。<strong>列越宽 ＝ 音越长</strong>，标注 <code>PM</code> 的是闷音：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：TAB 与播放同步（看着谱听）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。谱例（E 小调 gallop riff）：以 6 弦空弦 E 为持续低音，每拍弹「长-短-短」三个音，其中第 3、4 拍插入 3 品（G）与 5 品（A）作为色彩音。核心手法是右手闷音下拨，配合每拍固定的马蹄节奏型。</p></noscript>
+            <div id="t-tab"></div>
+            <div class="kb-readout">
+              <span>调 <b>E 小调</b></span>
+              <span>节奏 <b>Gallop（八分 + 两个十六分）</b></span>
+              <span>技术 <b>右手闷音下拨</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="t-bpmv"></span>
+                <input type="range" id="t-bpm" min="60" max="200" step="2" value="132"></label>
+              <button class="kb-btn kb-btn-primary" id="t-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="t-flat" type="button">🔀 换成直八分对比</button>
+              <button class="kb-btn" id="t-stop" type="button">■ 停止</button>
+            </div>
+            <p id="t-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">按「换成直八分对比」听听差别：<strong>音高一个没变，节奏一改，riff 的性格全变了。</strong>这就是本章开头那句话的意思。</p>
+          </div>
+        </div>
+
+        <h2>右手：闷音、拨弦方向与律动</h2>
+        <p>同样的音符时值，右手怎么处理，出来的东西天差地别。三件事最关键：</p>
+        <p><strong>① 掌根闷音（palm mute，简写 PM）。</strong>右手掌根轻压在琴桥附近的弦上，让音只响一小段就被掐断。它做的是<strong>缩短每个音的余韵</strong>——听起来更紧、更有颗粒感，也更像打击乐。为什么重型音乐离不开它？因为高增益失真会大幅延长余韵（第 10 章），不闷音的话密集节奏会糊成一片持续的轰鸣，节奏信息全部丢失。<strong>闷音不是效果，是让快速节奏得以存在的前提。</strong></p>
+        <p><strong>② 拨弦方向。</strong>「全下拨」（all downstrokes）每一下的力度与音色一致，声音方正、有攻击性，但速度上限低——这是 Thrash 金属的标志性右手，也是它最累人的地方。「交替拨弦」（alternate picking，下上下上）速度快得多，但上拨的音色天生略弱，会产生轻微的强弱交替——这个交替本身就成了律动的一部分。</p>
+        <p><strong>③ 微小的时值偏移。</strong>这是最容易被忽略、却最决定「好不好听」的一条。</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 完全对齐节拍器的演奏是僵硬的</p>
+          <p>人类演奏中，音符实际落点与网格总有 5–30 毫秒的偏差，而<strong>这些偏差是有系统性的</strong>：军鼓稍晚一点会「拖」出慵懒感，贝斯稍早一点会「推」出紧迫感。这就是所谓 <strong>groove</strong>（律动）——它不是节奏型，而是<strong>节奏型的执行方式</strong>。</p>
+          <p>所以练习时要用节拍器（建立稳定的内部时钟），但演奏时不要追求毫秒级对齐。<strong>「准」是地基，「不完全准」才是音乐。</strong>本页所有演示都是机器精确播放的——它们能教你节奏型，但教不了律动；律动只能靠听真人演奏和自己弹来获得。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：切分与重音（重音一挪，性格全变）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="s-canvas" height="130"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：4/4 的默认重音在第 1、3 拍；把重音移到第 2、4 拍（backbeat）就得到摇滚的基本律动；把音符提前到弱拍后半（抢拍）会产生向前推的紧迫感；在规整的密集节奏里插入休止，则制造强烈的冲击。</p></noscript>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="s-plain" type="button">① 正拍重音（1 3）</button>
+              <button class="kb-btn" id="s-back" type="button">② 后拍重音（2 4）</button>
+              <button class="kb-btn" id="s-push" type="button">③ 抢拍（提前半拍）</button>
+              <button class="kb-btn" id="s-rest" type="button">④ 密集流 + 突然休止</button>
+              <button class="kb-btn" id="s-stop" type="button">■ 停止</button>
+            </div>
+            <p id="s-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">② 是摇滚乐最基本的律动（backbeat），③ 是「推动感」的来源，④ 则是重型音乐制造冲击最省钱的手段——<strong>什么都不弹，也是一种弹法。</strong></p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 9.1</p>
+          <p>在 4/4 拍、120 BPM 下，一个十六分音符持续多少毫秒？一小节多久？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>一拍</strong>：120 BPM 意思是每分钟 120 拍 → 每拍 <em class="kb-math">60 ÷ 120 ＝ 0.5</em> 秒 ＝ <strong>500 ms</strong>。</p>
+            <p><strong>十六分音符</strong>：四分之一拍 → <em class="kb-math">500 ÷ 4 ＝ 125 ms</em>。</p>
+            <p><strong>一小节</strong>：4 拍 → <em class="kb-math">4 × 500 ＝ 2000 ms ＝ 2 秒</em>。</p>
+            <p><strong>为什么值得算这个</strong>：125 ms 是一个有实感的数字——人类能稳定控制的手部动作大约在这个量级附近，所以 120 BPM 的十六分音符（每秒 8 个音）对新手已经不轻松；Thrash 常见的 180–200 BPM 全下拨八分（每秒 6 个音，但每一下都是完整的下拨动作）之所以出名地累人，原因就在这里。<strong>算一次这个数，你就知道某段 riff 到底难在哪。</strong></p>
+            <p>顺带：延迟效果器上的「点音符」设置也用这个换算——120 BPM 的八分延迟就是 250 ms。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 9.2</p>
+          <p>把 gallop 节奏（八分 + 两个十六分）在一小节 4/4 里写全，用「拍.分数」标出每个音的起始位置。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>一拍内的分布</strong>：八分音符占前半拍（0 到 0.5），两个十六分各占 0.25 → 起点在 <strong>0、0.5、0.75</strong>。</p>
+            <p><strong>一小节（以拍为单位，从 0 计）</strong>：</p>
+            <pre><code>第 1 拍：0     0.5   0.75
+第 2 拍：1     1.5   1.75
+第 3 拍：2     2.5   2.75
+第 4 拍：3     3.5   3.75
+共 12 个音</code></pre>
+            <p><strong>用「1 e & a」口诀数</strong>（十六分音符的标准数法是「1 e &amp; a, 2 e &amp; a…」）：gallop 弹的是 <strong>「1 — &amp; a」</strong>，也就是<strong>跳过每拍的第二个十六分（e）</strong>。这是记住它最快的方式：<strong>四个十六分格子，不弹第二个。</strong></p>
+            <p><strong>反向 gallop</strong> 则是「1 e &amp; —」：弹前三个，跳过第四个，把长音放在后面。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 9.3</p>
+          <p>Shuffle 和三连音是什么关系？为什么说 shuffle 是「三连音去掉中间那个」？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>三连音</strong>：一拍分成三等份，起点在 0、⅓、⅔，三个音。</p>
+            <p><strong>Shuffle</strong>：只弹第 1 个和第 3 个 → 起点在 <strong>0 和 ⅔</strong>，时值分别是 <strong>⅔ 拍和 ⅓ 拍</strong>。也就是「长 – 短」。</p>
+            <p><strong>为什么这么理解最有用</strong>：因为它告诉你 shuffle 的<strong>底层网格是三分而不是二分</strong>。很多人把 shuffle 弹成「附点八分 + 十六分」（那是 3:1 的比例），实际上标准 shuffle 是 <strong>2:1</strong>。两者听起来差别明显：3:1 太生硬、有跛脚感，2:1 才是那种圆润的摇摆。</p>
+            <p><strong>实战提示</strong>：练 shuffle 时先把三连音数出声「哒-哒-哒」，然后<strong>只弹第一和第三个「哒」</strong>，中间那个在心里数但不弹。这比试图直接模仿「长短长短」准确得多。整个布鲁斯与早期摇滚都建立在这个网格上（第 13 章）。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>6/8 拍的一小节里有几个八分音符？强拍在第几个？它和 3/4 的区别是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：6 个八分音符；强拍在<strong>第 1 个和第 4 个</strong>（分组为 3+3）。</p>
+            <p><strong>与 3/4 的区别</strong>：3/4 也是六个八分音符，但分组是 <strong>2+2+2</strong>（三个大拍，每拍两分），强拍只在第 1 个。<br>
+            简单说：<strong>6/8 数「1-2-3, 2-2-3」（两大拍），3/4 数「1-&amp;, 2-&amp;, 3-&amp;」（三大拍）。</strong></p>
+            <p><strong>解析</strong>：分组不同导致重音位置不同，听感完全两回事。6/8 因为每个大拍内部是三分，天然带三连音式的摇晃——这就是它适合摇滚慢板和金属史诗段落的原因。<strong>判断一段音乐是 6/8 还是 3/4，听「一小节里有几个明显的落点」：两个是 6/8，三个是 3/4。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>附点八分音符等于多少拍？附点八分 + 十六分加起来是多少拍？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>附点八分</strong>：八分是 ½ 拍，附点加上自身的一半（¼ 拍）→ <strong>¾ 拍</strong>。</p>
+            <p><strong>附点八分 + 十六分</strong>：¾ + ¼ ＝ <strong>1 拍</strong>（正好一拍）。</p>
+            <p><strong>解析</strong>：这个「附点八分 + 十六分」的组合是 3:1 的长短比，在进行曲、朋克和某些金属 riff 里很常见，听起来<strong>比 shuffle 更硬、更有棱角</strong>（对比例题 9.3 的 2:1）。</p>
+            <p><strong>容易混的一点</strong>：附点作用于<strong>它前面的那个音符</strong>，而且加的是「那个音符的一半」，不是「下一级音符」。附点四分 ＝ 1 + ½ ＝ 1.5 拍；附点二分 ＝ 2 + 1 ＝ 3 拍。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是掌根闷音（palm mute）？为什么重型音乐几乎离不开它？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>定义</strong>：右手掌根轻压在琴桥附近的琴弦上，让弦振动被迅速衰减，音只响一小段就被掐断。记谱上写作 <code>PM</code>。</p>
+            <p><strong>为什么离不开它</strong>，三个层次：</p>
+            <ol>
+              <li><strong>保住节奏信息。</strong>高增益失真会大幅拉长余韵（第 10 章）。不闷音时，一串十六分音符的余韵互相叠加，两拍之后就糊成一团持续的轰鸣，节奏型完全消失。闷音把每个音切短，节奏才「看得见」。</li>
+              <li><strong>制造打击感。</strong>掐断余韵后，剩下的主要是起音的瞬态——听起来更接近打击乐，与鼓的配合更紧。这是重型音乐「重」的重要来源之一：重不是音量大，是<strong>攻击清晰</strong>。</li>
+              <li><strong>提供动态对比。</strong>一段闷音之后突然松开（let ring），音瞬间打开，能量释放感极强。<strong>闷与不闷的切换，本身就是一种编曲手段。</strong></li>
+            </ol>
+            <p><strong>技术要点</strong>：压的位置很关键——太靠近琴桥闷音太浅（几乎没效果），太往前则音高会被压偏、变成哑音。掌根应该<strong>刚好搭在琴桥的弦锚点前方几毫米</strong>，并且力度可以连续调节，这本身就是一个表现参数。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>在 4/4 里，什么叫 backbeat？为什么它是摇滚乐的基本律动？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>定义</strong>：把重音放在<strong>第 2 拍和第 4 拍</strong>（而不是自然强拍 1、3），通常由军鼓承担。这就是 backbeat（后拍重音）。</p>
+            <p><strong>为什么它是摇滚的基础</strong>：</p>
+            <ul>
+              <li><strong>它与身体动作对齐。</strong>1、3 拍是「落脚」，2、4 拍是「抬起」。把重音放在抬起的时刻，制造持续的向上牵引，人会不自觉地点头、摇摆——这是最直接的生理反应。</li>
+              <li><strong>它制造了固定的期待与偏差。</strong>低音与和弦落在 1、3，军鼓砸在 2、4，两条线交错咬合，产生比单一重音丰富得多的律动网格。</li>
+              <li><strong>它是历史继承。</strong>backbeat 来自福音与节奏布鲁斯，通过早期摇滚进入所有后续流派。今天几乎所有摇滚、流行、金属的鼓组都建立在它上面。</li>
+            </ul>
+            <p><strong>吉他手的相关性</strong>：知道 backbeat 在哪，你才知道扫弦或闷音的重音该配合谁。常见做法是<strong>吉他的重音与军鼓对齐</strong>（一起砸 2、4），或者<strong>刻意错开</strong>制造切分。两种都行，但必须是有意识的选择。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么 Thrash 金属坚持用「全下拨」而不用速度更快的交替拨弦？代价是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>为什么坚持</strong>：</p>
+            <ol>
+              <li><strong>音色一致。</strong>下拨与上拨的音色天生不同——下拨从粗弦向细弦扫过，起音更硬、低频更足；上拨方向相反，音色偏薄。全下拨保证<strong>每一个音的攻击完全相同</strong>，得到那种机关枪般整齐的音墙。交替拨弦则会产生强弱交替的「摇摆」，与 Thrash 追求的方正感相悖。</li>
+              <li><strong>与闷音配合更好。</strong>下拨时手掌的运动方向与闷音的压力方向一致，容易保持稳定的闷音深度；交替拨弦时掌根会随手腕轻微起伏，闷音深浅会波动。</li>
+              <li><strong>重量感。</strong>下拨可以调动更多的手臂重量，单音能量更大。</li>
+            </ol>
+            <p><strong>代价</strong>：</p>
+            <ul>
+              <li><strong>速度上限低。</strong>每次下拨后手必须<strong>空走回来</strong>，等于做了两倍的动作。物理上限大约在 200 BPM 的八分音符附近（每秒约 7 下），再快就极难维持。</li>
+              <li><strong>体力消耗巨大。</strong>这是 Thrash 现场演出最著名的难点——一首歌全下拨下来，右手前臂会明显发胀。许多乐队在录音时全下拨、现场则在最难的段落改用交替。</li>
+            </ul>
+            <p><strong>结论</strong>：这是一个<strong>用速度上限和体力换音色一致性</strong>的取舍。判断该用哪种，取决于这段音乐要的是「整齐的墙」还是「流动的线」——前者全下拨，后者交替。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一段 riff 每小节都在同一个音上弹十六分闷音，听起来单调。在<strong>不改变任何音高</strong>的前提下，给出四种让它变得有意思的办法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>加重音（accent）。</strong>在十六分流里每隔 3 个或 5 个音重砸一下。因为 3 和 5 都不整除 16，重音会在小节之间<strong>漂移</strong>，产生长达数小节的循环——这是最省力也最有效的一招。</li>
+              <li><strong>挖休止。</strong>拿掉其中几个音。休止在密集流里是最强的重音——什么都不弹的那一瞬间，听觉注意力反而最集中。金属里大量的「断奏 stab」就是这么来的。</li>
+              <li><strong>切换闷音深度。</strong>让掌根压力在几拍之间由深变浅再变深，音色从「哒哒哒」渐变到「嗡嗡嗡」。这是一条完全独立于音高与节奏的表现轴。</li>
+              <li><strong>改变分组（polymeter 的雏形）。</strong>把十六分按 3 个一组分（3+3+3+3+3+1），重音落点每小节都不同，制造「节奏与小节线错位」的效果。这正是第 15 章 djent 与前卫金属的核心手法。</li>
+            </ol>
+            <p><strong>额外一条</strong>：<strong>让别的乐器变。</strong>吉他保持不变、鼓改变过门与踩镲、贝斯加入切分——同样的吉他部分会因为背景变化而听起来不同。<strong>编曲是「关系」的艺术，不必所有变化都发生在同一件乐器上。</strong></p>
+            <p>这道题的真正意义：<strong>当和声被简化到极限（一个音）时，音乐的全部信息量都转移到了节奏与音色上。</strong>这正是重型音乐的常态，也是为什么第三篇要花那么多篇幅讲 riff 与右手。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么说「完全对齐节拍器的演奏是僵硬的」？既然如此，练习还要不要用节拍器？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>为什么僵硬</strong>：人类听觉对「完美规整」的反应是<strong>把它归类为机器</strong>，注意力随之下降。真实演奏中，音符落点相对网格有 5–30 ms 的系统性偏差，而这些偏差携带信息：<strong>稍晚（laid back）</strong>产生放松、慵懒；<strong>稍早（pushing）</strong>产生紧迫、兴奋。乐队成员之间偏差的相对关系，就是这支乐队的「感觉」。</p>
+            <p><strong>但节拍器绝对要用</strong>，因为两件事不能混为一谈：</p>
+            <ul>
+              <li><strong>稳定的内部时钟</strong>是能力，必须靠节拍器建立。没有它，你的「偏差」就不是表达，而是失误——两者的区别在于<strong>是否可控、是否一致</strong>。</li>
+              <li><strong>有表现力的偏移</strong>是选择，建立在稳定之上。一个能稳定弹在网格上的人，才谈得上「故意晚 15 毫秒」。</li>
+            </ul>
+            <p><strong>正确的练法</strong>：① 用节拍器练到能稳定对齐；② 试着<strong>故意</strong>把音弹得稍早或稍晚，体会两种感觉；③ 练习时把节拍器设成只响 2、4 拍（甚至只响每小节第一拍），逼自己承担更多的计时责任；④ 多跟着真人录音弹，模仿其中的时间感。</p>
+            <p><strong>给重型乐手的特别提醒</strong>：现代金属的制作大量使用节奏对齐（把演奏在软件里拉到网格上），所以你听到的很多参考录音<strong>本身就是机器化的</strong>。这是一种风格选择，不是唯一标准——听一听 1970–80 年代的现场录音，你会发现那种「不太齐但活着」的感觉是另一种完全成立的美学。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>在 4/4 的十六分网格上，把重音每隔 <strong>3 个</strong>十六分放一次。重音要经过几小节才会回到第 1 拍的正拍上？如果改成每隔 5 个呢？给出一般公式。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>建立模型</strong>：一小节 4/4 有 <strong>16 个</strong>十六分格。重音每隔 <em class="kb-math">k</em> 格出现一次，要回到「小节开头」这个位置，需要走过的格数是 <em class="kb-math">k</em> 与 16 的<strong>最小公倍数</strong>。</p>
+            <p><strong>每隔 3 格</strong>：<em class="kb-math">lcm(3, 16) ＝ 48</em> 格 ＝ <em class="kb-math">48 ÷ 16 ＝ <strong>3 小节</strong></em>。<br>
+            重音落点依次是第 0、3、6、9、12、15、18(＝下一小节第 2 格)… 三小节后重新对齐。</p>
+            <p><strong>每隔 5 格</strong>：<em class="kb-math">lcm(5, 16) ＝ 80</em> 格 ＝ <strong>5 小节</strong>。</p>
+            <p><strong>一般公式</strong>：周期（小节数）＝ <em class="kb-math">lcm(k, 16) ÷ 16 ＝ k ÷ gcd(k, 16)</em>。</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>每隔 k 格</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
+                <tbody>
+                  <tr><td>周期（小节）</td><td>1</td><td><strong>3</strong></td><td>1</td><td><strong>5</strong></td><td>3</td><td><strong>7</strong></td><td>1</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>读懂这张表</strong>：<em class="kb-math">k</em> 是 16 的因数时（2、4、8）周期为 1，重音每小节都在同一位置——规整但无趣。<em class="kb-math">k</em> 与 16 <strong>互质</strong>时（3、5、7）周期最长，等于 <em class="kb-math">k</em> 本身——这就是「奇数分组」听起来复杂的数学原因。</p>
+            <p><strong>音乐上的意义</strong>：这正是 <strong>polymeter</strong>（多节拍）的原理——两个不同长度的循环叠在一起，要过好几小节才重合。它让一段素材极少的音乐产生长时间的变化，是 djent 与前卫金属的核心手法。<strong>选 3 或 5 会得到 3 或 5 小节的大循环，选 4 或 8 则什么都不会发生。</strong>第 15 章会把它展开成完整的写作技术。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>一段 riff 写在 7/8 拍上。请给出三种不同的内部分组方式，说明各自的听感差异，并解释为什么「7/8 听起来别扭」其实是一种可以被利用的资源。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>7 个八分音符不能被 2 或 3 整除，必须人为分组。三种主要方式：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>分组</th><th>数法</th><th>听感</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>3+2+2</strong></td><td>1-2-3 · 1-2 · 1-2</td><td>开头有一个「长」的落点，之后加速——最常见，听起来像「起跳后小步跑」</td></tr>
+                  <tr><td><strong>2+2+3</strong></td><td>1-2 · 1-2 · 1-2-3</td><td>前面规整，结尾突然拖长一格——像每小节末尾被绊了一下，紧张感强</td></tr>
+                  <tr><td><strong>2+3+2</strong></td><td>1-2 · 1-2-3 · 1-2</td><td>不对称居中，最「摇晃」，也最难数</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>为什么「别扭」是资源</strong>：</p>
+            <ol>
+              <li><strong>它自动产生新鲜感。</strong>听众的身体默认按 4/4 预测，7/8 每小节都会让这个预测落空一次。持续的轻微落空 ＝ 持续的注意力。</li>
+              <li><strong>它免费提供了推进力。</strong>4/4 里要靠切分、重音才能制造的「被推着走」，在 7/8 里是结构自带的——每小节都比 4/4 少一个八分，音乐像被不断催促。</li>
+              <li><strong>它能与 4/4 对撞。</strong>让吉他弹 7/8、鼓保持 4/4，两条线要过 <em class="kb-math">lcm(7, 8) ＝ 56</em> 个八分（＝ 8 个 7/8 小节 ＝ 7 个 4/4 小节）才重合——一个漫长而华丽的大循环。这是习题 9.8 那个公式的直接应用。</li>
+            </ol>
+            <p><strong>写作建议</strong>：新手用 7/8 常见的失败是<strong>让它听起来像「4/4 少了一拍」</strong>——那样只会显得像失误。避免的方法是<strong>让重音明确地落在分组的开头</strong>（比如 3+2+2 就在第 1、4、6 个八分上砸），把不对称<strong>说清楚</strong>。听众能感觉到规律（哪怕数不清），就不会觉得是错的。<strong>奇数拍的关键不是「奇」，而是「有规律地奇」。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 拍号<strong>分母＝一拍是什么音符，分子＝一小节几拍</strong>；6/8 是 3+3 分组，不是「快的 3/4」。② 时值是<strong>二分树</strong>，附点＝加自身的一半。③ <strong>切分</strong>把重音移到弱拍或提前跨过强拍，产生推动感——律动的本质是<strong>期待与实际的偏差</strong>。④ 三连音是三分网格；<strong>shuffle ＝ 三连音去掉中间那个（2:1，不是 3:1）</strong>；<strong>gallop ＝ 每拍四个十六分格里不弹第二个</strong>，是重金属的招牌。⑤ <strong>掌根闷音不是效果，是让密集节奏在失真下得以存在的前提</strong>；全下拨用速度上限换音色一致性。⑥ 完全对齐节拍器是僵硬的，但<strong>稳定是地基、偏移是选择</strong>——两者都要。⑦ 重音每隔 <em class="kb-math">k</em> 个十六分出现一次，周期为 <em class="kb-math">k ÷ gcd(k,16)</em> 小节；<strong>k 与 16 互质时周期最长</strong>，这是 polymeter 的数学基础。</p>
+          <p><strong>下一章预告</strong>：第二篇到此结束——你已经掌握了完整的和声与节奏工具箱。第三篇要把它们接到<strong>失真</strong>上。第 10 章《失真的和声学》是全书的枢纽：它会用可切增益的演示告诉你，为什么金属不弹大三度、为什么强力和弦是被物理逼出来的、以及为什么「重」这件事从来不只是音量问题。<strong>前九章的所有内容，都会在那一章里被重新称量一遍。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./10-失真的和声学.html"><strong>下一章：第 10 章 · 失真的和声学：金属为什么不弹大三度</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+      function cssVar(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+      var redraws = [];
+
+      /* ---------- 演示 1：节奏机 ---------- */
+      KBG.soundToggle($("r-sound"));
+      function perBeat(offsets, durs) {          // 把「一拍内的模式」铺满 4 拍
+        var out = [];
+        for (var b = 0; b < 4; b++) {
+          offsets.forEach(function (o, i) {
+            out.push({ t: b + o, dur: durs[i], accent: o === 0 });
+          });
+        }
+        return out;
+      }
+      var PATS = [
+        { cn: "四分音符", desc: "最稳重，一拍一下", ev: perBeat([0], [1]) },
+        { cn: "八分音符", desc: "最基础的行进感", ev: perBeat([0, 0.5], [0.5, 0.5]) },
+        { cn: "十六分音符", desc: "紧张、密集，几乎必须闷音", ev: perBeat([0, 0.25, 0.5, 0.75], [0.25, 0.25, 0.25, 0.25]) },
+        { cn: "Gallop", desc: "八分 + 两个十六分：马蹄声，重金属招牌", ev: perBeat([0, 0.5, 0.75], [0.5, 0.25, 0.25]) },
+        { cn: "反向 Gallop", desc: "两个十六分 + 八分：推着走，更凶", ev: perBeat([0, 0.25, 0.5], [0.25, 0.25, 0.5]) },
+        { cn: "Shuffle", desc: "三连音去掉中间那个（2:1），摇摆", ev: perBeat([0, 2 / 3], [2 / 3, 1 / 3]) },
+        { cn: "三连音", desc: "一拍三等分，滚动感", ev: perBeat([0, 1 / 3, 2 / 3], [1 / 3, 1 / 3, 1 / 3]) },
+        {
+          cn: "切分", desc: "重音落在弱拍，产生推动感", ev: [
+            { t: 0, dur: 1, accent: true }, { t: 1.5, dur: 0.5, accent: true },
+            { t: 2, dur: 1, accent: false }, { t: 3.5, dur: 0.5, accent: true }
+          ]
+        }
+      ];
+      var rIdx = 1, rBpm = 120, rDrive = 0.7, rMute = true, rHandle = null, rRaf = null, rMetro = null;
+      var rBtns = [];
+      PATS.forEach(function (p, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = p.cn;
+        b.addEventListener("click", function () { rIdx = i; updateR(); if (rHandle) startR(); });
+        $("r-pats").appendChild(b); rBtns.push(b);
+      });
+      var c1 = $("r-canvas");
+      var ctx1 = KB.fitCanvas(c1, 150, function () { drawR(); });
+      function drawR(pos) {
+        var w = c1.clientWidth || 600, h = 150;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx1.clearRect(0, 0, w, h);
+        var x0 = 16, x1 = w - 16, span = x1 - x0;
+        if (span < 60) return;
+        ctx1.font = "11px -apple-system, PingFang SC, sans-serif";
+        /* 十六分网格 */
+        for (var i = 0; i <= 16; i++) {
+          var x = x0 + span * (i / 16);
+          var big = i % 4 === 0;
+          ctx1.strokeStyle = big ? muted : faint;
+          ctx1.globalAlpha = big ? 0.8 : 0.3;
+          ctx1.lineWidth = big ? 1.6 : 1;
+          ctx1.beginPath(); ctx1.moveTo(x, 28); ctx1.lineTo(x, 112); ctx1.stroke();
+          if (big && i < 16) {
+            ctx1.globalAlpha = 1; ctx1.fillStyle = muted; ctx1.textAlign = "left";
+            ctx1.fillText("第 " + (i / 4 + 1) + " 拍", x + 4, 22);
+          }
+        }
+        ctx1.globalAlpha = 1;
+        /* 音符块 */
+        PATS[rIdx].ev.forEach(function (e) {
+          var bx = x0 + span * (e.t / 4), bw = Math.max(6, span * (e.dur / 4) - 3);
+          var hgt = e.accent ? 62 : 44;
+          ctx1.fillStyle = e.accent ? "#dc2626" : accent;
+          ctx1.globalAlpha = e.accent ? 0.9 : 0.65;
+          ctx1.fillRect(bx, 106 - hgt, bw, hgt);
+        });
+        ctx1.globalAlpha = 1;
+        /* 播放头 */
+        if (pos != null) {
+          var px = x0 + span * (pos / 4);
+          ctx1.strokeStyle = "#16a34a"; ctx1.lineWidth = 2.5;
+          ctx1.beginPath(); ctx1.moveTo(px, 24); ctx1.lineTo(px, 116); ctx1.stroke();
+        }
+        ctx1.fillStyle = muted; ctx1.textAlign = "left";
+        ctx1.fillText("高块＝重音 · 块宽＝时值 · 竖线＝十六分格", x0, 138);
+      }
+      redraws.push(function () { drawR(); });
+      function updateR() {
+        rBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === rIdx ? " on" : ""); });
+        $("r-name").textContent = PATS[rIdx].cn;
+        $("r-cnt").textContent = PATS[rIdx].ev.length;
+        $("r-desc").textContent = PATS[rIdx].desc;
+        drawR();
+      }
+      function startR() {
+        stopR(true);
+        A.setDrive(rDrive);
+        var ev = PATS[rIdx].ev.map(function (e) {
+          return { t: e.t, midi: 40, dur: e.dur, mute: rMute, gain: e.accent ? 0.95 : 0.6 };
+        });
+        rHandle = A.sequence(ev, { bpm: rBpm, loop: true, lengthBeats: 4 });
+        if (rMetro !== null) rMetro = A.metronome(rBpm, { pattern: [1, 0, 0, 0] });
+        (function tick() {
+          if (!rHandle) return;
+          drawR(rHandle.position());
+          rRaf = requestAnimationFrame(tick);
+        })();
+        $("r-play").textContent = "⏸ 暂停";
+      }
+      function stopR(keepMetro) {
+        if (rHandle) { rHandle.stop(); rHandle = null; }
+        if (rRaf) { cancelAnimationFrame(rRaf); rRaf = null; }
+        if (!keepMetro && rMetro) { rMetro.stop(); rMetro = null; }
+        A.stopAll(); drawR(); $("r-play").textContent = "▶ 循环播放";
+      }
+      $("r-play").addEventListener("click", function () { rHandle ? stopR() : startR(); });
+      $("r-mute").addEventListener("click", function () {
+        rMute = !rMute;
+        $("r-mute").textContent = rMute ? "🤚 闷音：开" : "✋ 闷音：关";
+        $("r-msg").textContent = rMute
+          ? "闷音开：每个音被掐短，节奏型清晰可辨。"
+          : "闷音关：余韵互相叠加，密集节奏很快糊成一片——这就是重型音乐必须闷音的原因。";
+        if (rHandle) startR();
+      });
+      $("r-metro").addEventListener("click", function () {
+        if (rMetro) { rMetro.stop(); rMetro = null; $("r-metro").textContent = "🥁 节拍器：关"; }
+        else { rMetro = A.metronome(rBpm, { pattern: [1, 0, 0, 0] }); $("r-metro").textContent = "🥁 节拍器：开"; }
+      });
+      $("r-stop").addEventListener("click", function () { stopR(); });
+      KB.bindRange($("r-bpm"), $("r-bpmv"), function (v) { return v + " BPM"; },
+        function (v) { rBpm = v; if (rHandle) startR(); });
+      KB.bindRange($("r-drive"), $("r-drv"), function (v) { return Math.round(v * 100) + "%"; },
+        function (v) { rDrive = v; A.setDrive(v); });
+
+      /* ---------- 演示 2：TAB 与播放同步 ---------- */
+      function gallopCols() {
+        var cols = [], beats = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 3, 5]];
+        beats.forEach(function (b) {
+          cols.push({ notes: [{ string: 0, fret: b[0] }], dur: 0.5, mute: true });
+          cols.push({ notes: [{ string: 0, fret: b[1] }], dur: 0.25, mute: true });
+          cols.push({ notes: [{ string: 0, fret: b[2] }], dur: 0.25, mute: true });
+        });
+        return cols;
+      }
+      function flatCols() {
+        return [0, 0, 0, 0, 0, 0, 3, 5].map(function (f) {
+          return { notes: [{ string: 0, fret: f }], dur: 0.5, mute: true };
+        });
+      }
+      var tGallop = true, tBpm = 132, tHandle = null, tRaf = null, tab = null;
+      function buildTab() {
+        clear($("t-tab"));
+        tab = KBG.tab($("t-tab"), {
+          tuning: TUN, labelMode: "degree", root: 4,
+          title: tGallop ? "E 小调 gallop riff（8 + 16 + 16）" : "同样的音，直八分",
+          columns: tGallop ? gallopCols() : flatCols()
+        });
+      }
+      function startT() {
+        stopT();
+        A.setDrive(0.78);
+        var ev = tab.events().map(function (e) {
+          return { t: e.t, midi: e.midi, midis: e.midis, dur: e.dur, mute: e.mute, gain: e.t % 1 === 0 ? 0.9 : 0.62 };
+        });
+        var total = tab.beatsOf().length ? tab.beatsOf()[tab.beatsOf().length - 1] +
+          (tab.columns[tab.columns.length - 1].dur || 1) : 4;
+        tHandle = A.sequence(ev, { bpm: tBpm, loop: true, lengthBeats: total });
+        var starts = tab.beatsOf();
+        (function tick() {
+          if (!tHandle) return;
+          var p = tHandle.position(), idx = 0;
+          for (var i = 0; i < starts.length; i++) if (p >= starts[i]) idx = i;
+          tab.setCursor(idx);
+          tRaf = requestAnimationFrame(tick);
+        })();
+        $("t-play").textContent = "⏸ 暂停";
+      }
+      function stopT() {
+        if (tHandle) { tHandle.stop(); tHandle = null; }
+        if (tRaf) { cancelAnimationFrame(tRaf); tRaf = null; }
+        A.stopAll(); if (tab) tab.setCursor(null);
+        $("t-play").textContent = "▶ 循环播放";
+      }
+      $("t-play").addEventListener("click", function () { tHandle ? stopT() : startT(); });
+      $("t-flat").addEventListener("click", function () {
+        var was = !!tHandle; stopT();
+        tGallop = !tGallop; buildTab();
+        $("t-flat").textContent = tGallop ? "🔀 换成直八分对比" : "🔀 换回 gallop";
+        $("t-msg").textContent = tGallop
+          ? "Gallop：每拍「长-短-短」，向前冲。"
+          : "直八分：同样的音，方正、平稳，冲劲少了一大半。节奏才是这条 riff 的灵魂。";
+        if (was) startT();
+      });
+      $("t-stop").addEventListener("click", stopT);
+      KB.bindRange($("t-bpm"), $("t-bpmv"), function (v) { return v + " BPM"; },
+        function (v) { tBpm = v; if (tHandle) startT(); });
+
+      /* ---------- 演示 3：切分与重音 ---------- */
+      var SYN = {
+        plain: {
+          cn: "正拍重音（1 3）", ev: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5].map(function (t) {
+            return { t: t, dur: 0.5, accent: t === 0 || t === 2 };
+          })
+        },
+        back: {
+          cn: "后拍重音（2 4）", ev: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5].map(function (t) {
+            return { t: t, dur: 0.5, accent: t === 1 || t === 3 };
+          })
+        },
+        push: {
+          cn: "抢拍（提前半拍）", ev: [
+            { t: 0, dur: 1, accent: true }, { t: 1.5, dur: 0.5, accent: true },
+            { t: 2.5, dur: 0.5, accent: true }, { t: 3.5, dur: 0.5, accent: true }
+          ]
+        },
+        rest: {
+          cn: "密集流 + 突然休止", ev: (function () {
+            var out = [];
+            for (var i = 0; i < 16; i++) {
+              if (i === 6 || i === 7) continue;               // 挖掉两个十六分
+              out.push({ t: i * 0.25, dur: 0.25, accent: i % 4 === 0 });
+            }
+            return out;
+          })()
+        }
+      };
+      var sKey = "plain";
+      var c3 = $("s-canvas");
+      var ctx3 = KB.fitCanvas(c3, 130, function () { drawS(); });
+      function drawS(pos) {
+        var w = c3.clientWidth || 600, h = 130;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx3.clearRect(0, 0, w, h);
+        var x0 = 16, x1 = w - 16, span = x1 - x0;
+        if (span < 60) return;
+        ctx3.font = "11px -apple-system, PingFang SC, sans-serif";
+        for (var i = 0; i <= 16; i++) {
+          var x = x0 + span * (i / 16), big = i % 4 === 0;
+          ctx3.strokeStyle = big ? muted : faint;
+          ctx3.globalAlpha = big ? 0.75 : 0.25; ctx3.lineWidth = big ? 1.6 : 1;
+          ctx3.beginPath(); ctx3.moveTo(x, 24); ctx3.lineTo(x, 96); ctx3.stroke();
+        }
+        ctx3.globalAlpha = 1;
+        SYN[sKey].ev.forEach(function (e) {
+          var bx = x0 + span * (e.t / 4), bw = Math.max(6, span * (e.dur / 4) - 3);
+          var hgt = e.accent ? 56 : 32;
+          ctx3.fillStyle = e.accent ? "#dc2626" : accent;
+          ctx3.globalAlpha = e.accent ? 0.9 : 0.6;
+          ctx3.fillRect(bx, 92 - hgt, bw, hgt);
+        });
+        ctx3.globalAlpha = 1;
+        if (pos != null) {
+          var px = x0 + span * (pos / 4);
+          ctx3.strokeStyle = "#16a34a"; ctx3.lineWidth = 2.5;
+          ctx3.beginPath(); ctx3.moveTo(px, 20); ctx3.lineTo(px, 100); ctx3.stroke();
+        }
+        ctx3.fillStyle = muted; ctx3.textAlign = "left";
+        ctx3.fillText(SYN[sKey].cn, x0, 118);
+      }
+      redraws.push(function () { drawS(); });
+      var sHandle = null, sRaf = null;
+      function playS(k) {
+        sKey = k;
+        ["plain", "back", "push", "rest"].forEach(function (j) {
+          $("s-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        if (sHandle) { sHandle.stop(); sHandle = null; }
+        if (sRaf) { cancelAnimationFrame(sRaf); sRaf = null; }
+        A.stopAll(); A.setDrive(0.7);
+        sHandle = A.sequence(SYN[k].ev.map(function (e) {
+          return { t: e.t, midi: 40, dur: e.dur, mute: true, gain: e.accent ? 0.98 : 0.55 };
+        }), { bpm: 116, loop: true, lengthBeats: 4 });
+        (function tick() {
+          if (!sHandle) return;
+          drawS(sHandle.position());
+          sRaf = requestAnimationFrame(tick);
+        })();
+      }
+      ["plain", "back", "push", "rest"].forEach(function (k) {
+        $("s-" + k).addEventListener("click", function () { playS(k); });
+      });
+      $("s-stop").addEventListener("click", function () {
+        if (sHandle) { sHandle.stop(); sHandle = null; }
+        if (sRaf) { cancelAnimationFrame(sRaf); sRaf = null; }
+        A.stopAll(); drawS();
+      });
+
+      if (window.MutationObserver) {
+        new MutationObserver(function () { redraws.forEach(function (f) { f(); }); })
+          .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      }
+      updateR(); buildTab(); drawS();
+    });
+  </script>
+</body>
+</html>

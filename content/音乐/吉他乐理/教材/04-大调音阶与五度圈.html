@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>04 大调音阶、调号与五度圈 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 4 章：全全半全全全半的由来、七个音级各自的性格与倾向、调号为什么按五度递增、五度圈的构造与三种用法，以及大调音阶在指板上的形状。">
+  <meta name="kb:tags" content="吉他,乐理,教材,大调音阶,调号,五度圈,音级,导音,关系小调,ddyj,wdq">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .deg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .deg-grid .kb-btn { width: 100%; justify-content: center; }
+    .deg-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+    .cof-wrap { display: flex; justify-content: center; }
+    .cof-wrap svg { width: 100%; max-width: 420px; height: auto; }
+    .cof-key { cursor: pointer; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 4 章 · 大调音阶、调号与五度圈</h1>
+        <p class="kb-lead">十二个半音是原材料，但没有哪首歌用满十二个。绝大多数音乐是从十二个里<strong>挑七个</strong>组成一支队伍，然后只在这支队伍里活动——这支队伍就是<strong>音阶</strong>，而挑法决定了整首歌的性格。这一章讲最基础的那支队伍：大调音阶。它的间距模式看起来很随意（全全半全全全半），实际上是一个极其精巧的结构：它让七个字母各用一次、让每个音都有明确的职务、还让十二个调可以首尾相接排成一个圆。学完这一章，你会明白「调」到底是什么，也终于能回答第 1 章留下的那个悬案——<strong>是谁在给音分配职务</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用「全全半全全全半」推出任意大调的七个音；② 说出七个音级各自的名字与倾向，特别是导音为什么非上行不可；③ 解释调号为什么按五度递增、升号为什么按 F C G D A E B 的顺序出现；④ 画出五度圈并说出它的三种用法；⑤ 在指板上把大调音阶当作可平移的形状按出来；⑥ 由任意大调立刻说出它的关系小调。</p>
+        </div>
+
+        <h2>一支队伍：全全半全全全半</h2>
+        <p>大调音阶的配方只有一行：从主音出发，按 <strong>全 全 半 全 全 全 半</strong> 的间距走七步，回到主音。用半音数写就是 <strong>2 2 1 2 2 2 1</strong>（加起来正好 12，一个八度）。</p>
+        <p>从 C 出发试一遍：C →(2) D →(2) E →(1) <strong>F</strong> →(2) G →(2) A →(2) B →(1) <strong>C</strong>。得到 <strong>C D E F G A B</strong>——正好是七个白键，一个升降号都不需要。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 是钢琴迁就了音阶，不是音阶迁就了钢琴</p>
+          <p>很多人以为「C 大调没有升降号是因为钢琴白键正好是 C 大调」。因果关系是反的：<strong>先有这个七音模式（它源自泛音列与五度堆叠），后有键盘布局</strong>——白键被设计成刚好铺出这个模式，黑键才是后加的补丁。同理，第 1 章说的「E–F 与 B–C 天生只差半音」也不是巧合，那两个半音正是模式里第 3–4 级和第 7–8 级的那两处「半」。</p>
+        </div>
+        <p>把 C 换成任何一个音，模式照搬，就得到那个调的大调音阶。从 G 出发：G →(2) A →(2) B →(1) C →(2) D →(2) E →(2) <strong>F♯</strong> →(1) G。注意最后那一步——如果用 F 而不是 F♯，E 到 F 只有 1 个半音、F 到 G 有 2 个，模式就破了。<strong>F♯ 不是「加进来的装饰」，而是模式逼出来的必然结果。</strong>这就是调号的来源。</p>
+
+        <h2>七个音级：各有各的职务</h2>
+        <p>音阶不是七个平等的音，而是<strong>七个岗位</strong>。它们围绕第一级（主音）形成一套引力关系：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>级数</th><th>名称</th><th>与主音的音程</th><th>性格与倾向</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td>主音（Tonic）</td><td>纯一度</td><td>家。最稳定，一切运动的终点。</td></tr>
+              <tr><td>2</td><td>上主音</td><td>大二度</td><td>不稳定，通常向下靠回主音，或向上推向三音。</td></tr>
+              <tr><td><strong>3</strong></td><td>中音（Mediant）</td><td>大三度</td><td><strong>决定大小调色彩的那个音</strong>。稳定但柔软。</td></tr>
+              <tr><td>4</td><td>下属音</td><td>纯四度</td><td>离家的第一步，倾向解决到三音（差半音）。</td></tr>
+              <tr><td><strong>5</strong></td><td>属音（Dominant）</td><td>纯五度</td><td>第二稳定的音，主音最有力的支撑者与对手。</td></tr>
+              <tr><td>6</td><td>下中音</td><td>大六度</td><td>柔和，常用于抒情；也是关系小调的主音。</td></tr>
+              <tr><td><strong>7</strong></td><td><strong>导音</strong>（Leading tone）</td><td>大七度</td><td><strong>离主音只有半音，急切地想上行</strong>。整个调性体系的引擎。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>导音</strong>值得单独说。它离主音只差一个半音——第 3 章告诉我们，半音是最不协和、张力最大的音程。所以当你弹到第七级时，耳朵会强烈地期待下一个音是主音。<strong>这种「非解决不可」的期待，就是调性音乐的动力来源</strong>：作曲家不断制造它、又不断满足它，音乐才有推进感。</p>
+        <p>下面这个演示让你逐个感受七个音级的「引力」。每次它会弹「主音 → 该级 → 主音」，请注意<strong>中间那个音想不想回家、以及有多想</strong>：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：七个音级的性格（听引力，不是听音高）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：音阶七个音对主音有不同强度的「引力」。第 7 级（导音）离主音只有半音，回归倾向最强；第 5 级（属音）最稳定、是主音的对手；第 3 级决定大小调色彩；第 4 级倾向解决到第 3 级。这些倾向是和声进行的底层动力。</p></noscript>
+            <div id="dg-sound"></div>
+            <div class="deg-grid" id="dg-grid"></div>
+            <div class="kb-readout">
+              <span>音级 <b id="dg-name">—</b></span>
+              <span>音程 <b id="dg-iv">—</b></span>
+              <span>倾向 <b id="dg-tend">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="dg-up" type="button">▶ 上行音阶</button>
+              <button class="kb-btn" id="dg-down" type="button">▶ 下行音阶</button>
+              <button class="kb-btn" id="dg-cliff" type="button">🪂 停在导音上（别急着放）</button>
+              <button class="kb-btn" id="dg-stop" type="button">■ 停止</button>
+            </div>
+            <p id="dg-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">强烈建议先点「停在导音上」——它会弹到第 7 级就<strong>停住不动</strong>。那种「悬在半空、必须落地」的难受感，就是调性音乐全部张力的来源。</p>
+          </div>
+        </div>
+
+        <h2>调号：为什么是这个顺序</h2>
+        <p>刚才发现 G 大调需要一个 F♯。如果再从 G 往上一个纯五度到 D 呢？D E F♯ G A B C♯ —— 保留了 F♯，又多了一个 C♯。再往上到 A：A B C♯ D E F♯ G♯ —— 保留前两个，多了 G♯。</p>
+        <p>规律出来了：<strong>每往上走一个纯五度，就多一个升号，而且前面的升号全部保留。</strong>新增的那个升号永远是新调的<strong>第七级（导音）</strong>。升号出现的顺序因此固定为：</p>
+        <pre><code>升号顺序：F♯  C♯  G♯  D♯  A♯  E♯  B♯      （每个之间也是纯五度）
+降号顺序：B♭  E♭  A♭  D♭  G♭  C♭  F♭      （正好是升号顺序倒过来）</code></pre>
+        <p>降号是同一件事的镜像：每往<strong>下</strong>走一个纯五度（＝往上走一个纯四度），多一个降号，新增的降号永远是新调的<strong>第四级</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>调号</th><th>大调</th><th>关系小调</th><th>升 / 降的音</th></tr></thead>
+            <tbody>
+              <tr><td>—</td><td><strong>C</strong></td><td>Am</td><td>（无）</td></tr>
+              <tr><td>1♯</td><td>G</td><td>Em</td><td>F♯</td></tr>
+              <tr><td>2♯</td><td>D</td><td>Bm</td><td>F♯ C♯</td></tr>
+              <tr><td>3♯</td><td>A</td><td>F♯m</td><td>F♯ C♯ G♯</td></tr>
+              <tr><td>4♯</td><td><strong>E</strong></td><td>C♯m</td><td>F♯ C♯ G♯ D♯</td></tr>
+              <tr><td>5♯</td><td>B</td><td>G♯m</td><td>F♯ C♯ G♯ D♯ A♯</td></tr>
+              <tr><td>6♯ / 6♭</td><td>F♯ / G♭</td><td>D♯m / E♭m</td><td>同一个调，两种写法</td></tr>
+              <tr><td>5♭</td><td>D♭</td><td>B♭m</td><td>B♭ E♭ A♭ D♭ G♭</td></tr>
+              <tr><td>4♭</td><td>A♭</td><td>Fm</td><td>B♭ E♭ A♭ D♭</td></tr>
+              <tr><td>3♭</td><td>E♭</td><td>Cm</td><td>B♭ E♭ A♭</td></tr>
+              <tr><td>2♭</td><td>B♭</td><td>Gm</td><td>B♭ E♭</td></tr>
+              <tr><td>1♭</td><td>F</td><td>Dm</td><td>B♭</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 两条秒查规则</p>
+          <p><strong>看见升号</strong>：<strong>最后一个升号往上半音</strong>就是主音。例如 3 个升号，最后一个是 G♯，往上半音是 A → <strong>A 大调</strong>。（原理：新增的升号永远是导音，导音上方半音就是主音。）</p>
+          <p><strong>看见降号</strong>：<strong>倒数第二个降号</strong>就是主音。例如 4 个降号 B♭ E♭ A♭ D♭，倒数第二个是 A♭ → <strong>A♭ 大调</strong>。（只有 1 个降号的 F 大调要单独记。）</p>
+        </div>
+
+        <h2>五度圈：把十二个调排成一个圆</h2>
+        <p>既然每上一个五度就多一个升号，走十二次五度会发生什么？<em class="kb-math">7 × 12 = 84 = 12 × 7</em>——正好绕回原点。于是十二个调可以首尾相接排成一个圆，这就是<strong>五度圈</strong>（circle of fifths）。它是全书最值得贴在墙上的一张图。</p>
+        <p>它有三种用法，重要性递增：</p>
+        <ol>
+          <li><strong>查调号</strong>：从 C 顺时针数几步，就是几个升号；逆时针数几步，就是几个降号。</li>
+          <li><strong>找近关系调</strong>：圆上<strong>相邻</strong>的两个调只差一个音，因此转调最平滑。想临时借个和弦、或者把副歌升个调，第一选择永远是左右邻居（第 11 章）。</li>
+          <li><strong>看和弦的引力方向</strong>：<strong>和弦倾向于沿五度圈逆时针走一步</strong>——G 想去 C，C 想去 F。这就是 Ⅴ→Ⅰ（属到主）的本质，也是 ii–V–I、以及无数流行进行的骨架（第 7 章）。</li>
+        </ol>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：交互五度圈（点任意调，看它的全部家底）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：顺时针每走一步升高一个纯五度、多一个升号；逆时针每走一步多一个降号。相邻的调只差一个音，所以转调平滑；和弦的自然引力方向是逆时针（Ⅴ→Ⅰ）。外圈为大调，内圈为对应的关系小调。</p></noscript>
+            <div id="cof-sound"></div>
+            <div class="cof-wrap" id="cof-host"></div>
+            <div class="kb-readout">
+              <span>调 <b id="cof-key">C 大调</b></span>
+              <span>调号 <b id="cof-sig">无升降号</b></span>
+              <span>关系小调 <b id="cof-rel">A 小调</b></span>
+            </div>
+            <div class="kb-readout">
+              <span>音阶 <b id="cof-scale">—</b></span>
+            </div>
+            <div class="kb-readout">
+              <span>顺阶和弦 <b id="cof-chords">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="cof-play" type="button">▶ 弹这个调的音阶</button>
+              <button class="kb-btn" id="cof-cad" type="button">▶ 听 Ⅴ→Ⅰ（逆时针一步）</button>
+              <button class="kb-btn" id="cof-stop" type="button">■ 停止</button>
+            </div>
+            <p id="cof-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点圆上任意一个调。注意相邻两个调的音阶——它们<strong>只差一个音</strong>，这就是「近关系」的确切含义。</p>
+          </div>
+        </div>
+
+        <h2>大调音阶在指板上的形状</h2>
+        <p>和音程一样，音阶在吉他上也是<strong>可平移的形状</strong>。最实用的是「每弦三音」（three notes per string）排法，从 6 弦根音出发：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>弦</th><th>相对根音的品位</th><th>弹到的音级</th></tr></thead>
+            <tbody>
+              <tr><td>6（根音在此）</td><td>0 · +2 · +4</td><td>1 · 2 · 3</td></tr>
+              <tr><td>5</td><td>0 · +2 · +4</td><td>4 · 5 · 6</td></tr>
+              <tr><td>4</td><td>+1 · +2 · +4</td><td>7 · 1 · 2</td></tr>
+              <tr><td>3</td><td>+1 · +2 · +4</td><td>3 · 4 · 5</td></tr>
+              <tr><td>2</td><td><strong>+2</strong> · +4 · +5</td><td>6 · 7 · 1</td></tr>
+              <tr><td>1</td><td>+2 · +4 · +5</td><td>2 · 3 · 4</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>从 3 弦到 2 弦那一行整体多了一品——又是那个大三度例外，第三次出现了。除此之外，整个形状<strong>可以原样平移到任何调</strong>：想弹 A 大调就把根音放在 6 弦 5 品，想弹 C 大调就放 8 品，手型一个字都不用改。这是吉他相对钢琴最大的红利。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：大调音阶形状（换调只是平移）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：大调音阶在指板上是一个可整体平移的形状，换调不改变手型，只改变起始品位；跨越 3–2 弦时整体多一品。</p></noscript>
+            <div id="sc-board"></div>
+            <div class="kb-readout">
+              <span>调 <b id="sc-key">—</b></span>
+              <span>音阶 <b id="sc-notes">—</b></span>
+              <span>根音位置 <b id="sc-root">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">主音（6 弦第几品）<span class="kb-control-value" id="sc-val"></span>
+                <input type="range" id="sc-fret" min="1" max="10" step="1" value="5"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="sc-3nps" type="button">每弦三音形状</button>
+              <button class="kb-btn" id="sc-all" type="button">全指板（所有音阶音）</button>
+              <button class="kb-btn" id="sc-play" type="button">▶ 上下行</button>
+              <button class="kb-btn" id="sc-stop" type="button">■ 停止</button>
+            </div>
+            <p id="sc-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">拖动滑块换调——手型纹丝不动，只是整体挪了位置。这正是吉他手可以「不懂调号也能转调」的原因，也是很多人乐理停滞的原因：形状会按，却不知道按的是什么。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 4.1</p>
+          <p>推出 E 大调的七个音，并说出它有几个升号。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>按 2 2 1 2 2 2 1 走</strong>，起点 E：<br>
+            E →(2) F♯ →(2) G♯ →(1) A →(2) B →(2) C♯ →(2) D♯ →(1) E</p>
+            <p><strong>七个音</strong>：<strong>E F♯ G♯ A B C♯ D♯</strong>。</p>
+            <p><strong>升号</strong>：F♯、C♯、G♯、D♯ 共 <strong>4 个</strong>。</p>
+            <p><strong>两处验算</strong>：① 七个字母 E F G A B C D 各出现一次 ✓；② 升号顺序表是 F C G D A E B，取前 4 个正是 F C G D ✓ 与我们推出的完全一致。</p>
+            <p><strong>顺带一提</strong>：E 大调在吉他上格外好用——主音 E 有两根空弦，属音 B 有一根空弦，四个升号里没有一个落在需要别扭指法的位置上。这是摇滚偏爱 E 调的又一个原因。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 4.2</p>
+          <p>某首歌的调号是 3 个降号。这是什么大调？它的关系小调是什么？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>第一步：写出降号。</strong>按降号顺序 B E A D G C F 取前三个 → <strong>B♭ E♭ A♭</strong>。</p>
+            <p><strong>第二步：套规则。</strong>降号调的主音 ＝ <strong>倒数第二个降号</strong> → <strong>E♭ 大调</strong>。</p>
+            <p><strong>第三步：验算。</strong>E♭ 大调 ＝ E♭ F G A♭ B♭ C D，确实只用到 B♭、E♭、A♭ 三个降号 ✓。</p>
+            <p><strong>第四步：找关系小调。</strong>关系小调的主音 ＝ 大调的<strong>第六级</strong> ＝ C → <strong>C 小调</strong>。（也可以记成「往下小三度」：E♭ 往下 3 个半音 ＝ C。）</p>
+            <p>E♭ 与 Cm 用<strong>完全相同</strong>的七个音、完全相同的调号，区别只在于「谁是家」——第 5 章会讲清楚这件事。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 4.3</p>
+          <p>G 大调的第七级为什么必须写成 F♯，而不能写成 G♭？两者在指板上明明是同一个品位。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>音高上确实一样</strong>，但音阶有一条硬性规则：<strong>七个字母必须各用一次，不重不漏。</strong></p>
+            <p>G 大调是 G A B C D E ? G。已经用掉的字母是 G A B C D E，唯一没用的是 <strong>F</strong>，所以第七级的字母<strong>只能是 F</strong>，加个升号变成 F♯。</p>
+            <p><strong>如果写成 G♭ 会怎样</strong>：音阶变成 G A B C D E G♭ G —— 字母 G 出现了三次，F 一次没出现。这会带来实际麻烦：写在五线谱上，G♭ 和 G 会挤在同一条线上，读谱者根本分不清；写和弦时，「G♭ 到 G」看起来像同一个音在重复，实际上是导音解决到主音。</p>
+            <p><strong>一句话</strong>：音名不是音高的标签，而是<strong>它在音阶里占了第几个座位</strong>。第 1 章说「音名是职务名称」，这就是那句话的完整含义——<strong>座位表由调决定</strong>。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 D 大调的七个音，并说出它的调号。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：D E F♯ G A B C♯，调号是 <strong>2 个升号（F♯ C♯）</strong>。</p>
+            <p><strong>解析</strong>：从 D 按 2 2 1 2 2 2 1 走：D →(2) E →(2) F♯ →(1) G →(2) A →(2) B →(2) C♯ →(1) D。<br>
+            <strong>验算</strong>：升号顺序表前两个是 F、C ✓ 与推导一致。<br>
+            <strong>五度圈验算</strong>：D 在 C 顺时针第 2 格 → 2 个升号 ✓。三种方法互相印证，这正是学五度圈的价值。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>只给你「4 个升号」这一条信息，不许推音阶，直接说出是什么大调。写出你用的规则。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>E 大调</strong>。</p>
+            <p><strong>规则</strong>：升号按 F C G D A E B 顺序出现，4 个升号即 F♯ C♯ G♯ <strong>D♯</strong>；<strong>最后一个升号往上半音就是主音</strong> → D♯ + 1 个半音 ＝ E。</p>
+            <p><strong>为什么这条规则成立</strong>：因为每次新增的升号，永远是新调的<strong>第七级（导音）</strong>；而导音的定义就是「主音下方半音」。所以反过来，最后一个升号上方半音必然是主音。这不是记忆技巧，是定义的直接推论。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>C 大调的第五级和第七级各是什么音？它们分别倾向于走向哪里？为什么倾向的强度不同？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>第五级</strong>：<strong>G</strong>（属音）。倾向<strong>弱</strong>——它本身就很稳定，纯五度是完全协和音程。它更像主音的「对手」而不是「仆人」：一段音乐可以在 G 上停留很久而不觉得难受。</p>
+            <p><strong>第七级</strong>：<strong>B</strong>（导音）。倾向<strong>极强</strong>，急切地想上行半音到 C。</p>
+            <p><strong>强度差异的原因</strong>：距离。B 到 C 只有 <strong>1 个半音</strong>——第 3 章告诉我们小二度是张力最大的音程，两个音靠得越近，耳朵越迫切地想让它们「合并」。而 G 到 C 有 5 个半音，是个协和的纯四度，没有任何非走不可的理由。</p>
+            <p><strong>实战推论</strong>：想让一句旋律「悬着」，停在导音上；想让它落地，停在主音上；想让它「暂时休息但没结束」，停在属音上。这三种收束方式，第 7 章讲终止式时会正式命名。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>把大调音阶的根音放在 6 弦 3 品（G）。用「每弦三音」形状，第三级在 6 弦第几品？第五级在 5 弦第几品？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>第三级</strong>：形状表里 6 弦是「0 · +2 · +4」对应「1 · 2 · 3」，所以第三级在 <strong>3 + 4 ＝ 7 品</strong>。验算：6 弦 7 品 ＝ B，G 大调的第三级确实是 B ✓。</p>
+            <p><strong>第五级</strong>：5 弦是「0 · +2 · +4」对应「4 · 5 · 6」，第五级是这一行的第二个 → <strong>3 + 2 ＝ 5 品</strong>。验算：5 弦 5 品 ＝ D，G 大调第五级是 D ✓。</p>
+            <p><strong>解析</strong>：注意你<strong>全程没有推音阶</strong>——只查了形状表。这正是形状的价值：换成 A 大调（根音 5 品），第三级就是 6 弦 9 品、第五级是 5 弦 7 品，规则一个字不用改。但也请注意反面：如果你<strong>只</strong>会形状不知道音级，就没法在别人喊「上四级」时反应过来。形状和乐理要一起用。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>F♯ 大调和 G♭ 大调在钢琴上按的是同一组键，为什么要保留两个名字？各有几个升 / 降号？什么情况下该选哪一个？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>调号</strong>：F♯ 大调有 <strong>6 个升号</strong>（F♯ C♯ G♯ D♯ A♯ E♯）；G♭ 大调有 <strong>6 个降号</strong>（B♭ E♭ A♭ D♭ G♭ C♭）。数量一样，方向相反。</p>
+            <p><strong>为什么保留两个</strong>：因为五度圈是一个圆，顺时针走 6 步和逆时针走 6 步到达同一点。这个点<strong>既可以看作「升了六次」，也可以看作「降了六次」</strong>，两种记法都合法。注意两者都用到了「奇怪的」音名：F♯ 大调里有 E♯（就是 F），G♭ 大调里有 C♭（就是 B）——这正是走到圆的对面时必然付出的代价。</p>
+            <p><strong>怎么选</strong>：<br>
+            ① <strong>看来路</strong>：如果这段音乐是从 B 大调（5♯）转过来的，写 F♯ 更连贯；从 D♭（5♭）转过来则写 G♭。<br>
+            ② <strong>看乐器</strong>：弦乐与吉他偏好升号调（开放弦多在升号一侧），管乐（尤其降 B 调乐器）偏好降号调。<br>
+            ③ <strong>看后续</strong>：如果后面要转到 B 大调，用 F♯；要转到 C♭ / D♭ 一侧，用 G♭。</p>
+            <p><strong>吉他手的现实</strong>：这个调在吉他上不常见，真遇到时多数人会直接<strong>用变调夹或降调</strong>把它变成好按的形状——这不算作弊，但你至少要知道自己在做什么。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>在五度圈上从 C 顺时针走 3 步到 A。A 大调和 C 大调有几个音不同？再从 C 逆时针走 3 步到 E♭，又有几个音不同？你发现了什么规律？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>C 大调</strong>：C D E F G A B<br>
+            <strong>A 大调</strong>：A B C♯ D E F♯ G♯ → 不同的是 <strong>C♯、F♯、G♯</strong>，共 <strong>3 个</strong>。<br>
+            <strong>E♭ 大调</strong>：E♭ F G A♭ B♭ C D → 不同的是 <strong>E♭、A♭、B♭</strong>，共 <strong>3 个</strong>。</p>
+            <p><strong>规律</strong>：<strong>五度圈上相隔 n 步的两个调，正好有 n 个音不同。</strong>相邻（1 步）只差 1 个音，隔 2 步差 2 个……走到对面（6 步）差 6 个音——正好是七个音里的六个，只剩一个共同音。</p>
+            <p><strong>为什么</strong>：每走一步五度，恰好新增一个升号（或降号），也就是恰好替换掉一个音。所以「距离」和「差异」是同一件事的两种说法。</p>
+            <p><strong>这条规律的用处</strong>：它把「转调难易」量化了。转到相邻调（差 1 个音）几乎无缝，听众甚至察觉不到；转到隔 3 步的调需要铺垫；转到对面（差 6 个音）是强烈的戏剧性事件，必须刻意处理。第 11 章讲转调时会直接用这把尺子。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么和弦倾向于沿五度圈<strong>逆时针</strong>走（G→C 而不是 C→G）？请用第 1 章的泛音列和第 3 章的音程各给一个理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>理由一（泛音列）</strong>：C 的泛音列是 C、C、G、C、E、G……—— <strong>G 就藏在 C 的泛音里</strong>（第三泛音）。也就是说，当你弹 G 时，耳朵会隐约觉得它「属于某个 C」；G 走向 C，是回到它自己泛音的宿主，听感上是<strong>归位</strong>。反过来 C 走向 G，是从宿主跑到寄生位置，听感上是<strong>离开</strong>——两个方向都合法，但只有一个方向有「到家了」的感觉。</p>
+            <p><strong>理由二（音程 / 导音）</strong>：G 大三和弦包含 <strong>B</strong>，而 B 正是 C 大调的<strong>导音</strong>，离主音 C 只有半音。所以 G→C 的进行里，有一个声部在做最紧迫的半音上行解决。如果再把 G 变成 <strong>G7</strong>（加上 F），就同时有了 B→C（半音上行）和 F→E（半音下行）——第 3 章习题 3.7 算过，那正是三全音向内收缩的解决。<strong>两条半音线同时到位，这就是最强的归属感。</strong></p>
+            <p><strong>补充一条根音层面的理由</strong>：根音下行纯五度（G→C）在低音听起来「落下去、坐稳了」；根音上行纯五度（C→G）听起来「提上去、还没完」。这是低音区最基本的两种运动感，第 7 章的终止式全建立在它上面。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：<strong>大调音阶就是五度圈上连续七个音</strong>。并用这个结论重新解释「相邻调只差一个音」。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>验证（以 C 大调为例）</strong>：从 F 开始沿五度圈顺时针取七个音：<strong>F C G D A E B</strong>。把它们按音高排序：<strong>C D E F G A B</strong> —— 正是 C 大调音阶。∎</p>
+            <p><strong>为什么必然如此</strong>：五度圈顺时针一步 ＝ 升高 7 个半音，折回一个八度内 ＝ 升高 7 或降低 5。取连续七个五度，得到的音级集合是 {0, 7, 14, 21, 28, 35, 42} 对 12 取模 ＝ {0, 7, 2, 9, 4, 11, 6}，以 F（＝5）为起点平移后排序，间距正好是 2 2 1 2 2 2 1。任何「连续七个五度」的集合都等价于某个大调音阶，只是起点不同。</p>
+            <p><strong>重新解释「相邻调差一个音」</strong>：既然大调音阶 ＝ 五度圈上一个<strong>宽度为 7 的滑动窗口</strong>，那么把窗口沿圆<strong>滑动一格</strong>，就会<strong>丢掉一端的一个音、捡起另一端的一个音</strong>——恰好换掉一个音。这比逐个比对音阶要直观得多，也立刻推出习题 4.6 的一般结论：滑动 n 格就换掉 n 个音。</p>
+            <p><strong>更深一层</strong>：这个「连续五度窗口」的视角还解释了为什么大调音阶听起来「自洽」——窗口内任意两个音之间的关系都尽可能接近协和的五度网络。而当你把窗口开到 12（取满全部十二个音），所有调性差异消失，就得到了半音阶——一个没有主音、没有引力的集合。<strong>调性的本质，就是「只取一部分」这个选择本身。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>两首歌都只用 C D E F G A B 这七个音，一首听起来是 C 大调（明亮），另一首听起来是 A 小调（忧郁）。音的集合完全相同，差别到底在哪？请列出至少四种「让某个音成为主音」的手段。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>核心结论</strong>：<strong>调不是音的集合，而是引力的中心。</strong>同一组音，把引力中心放在 C 就是 C 大调，放在 A 就是 A 小调。集合相同，中心不同。</p>
+            <p><strong>确立主音的手段</strong>（按有效程度排序）：</p>
+            <ol>
+              <li><strong>低音与和弦。</strong>最强的一条。乐曲开头和结尾停在 Am 上、低音反复回到 A，听众就把 A 当家。反之停在 C 上就是 C 大调。<strong>吉他手请注意</strong>：这就是为什么同一套指法在不同伴奏下「味道」完全不同。</li>
+              <li><strong>终止式。</strong>用 E7→Am（属到主）收尾，A 的主音地位不容置疑；用 G7→C 收尾则是 C。第 7 章会专门讲。</li>
+              <li><strong>时值与重音。</strong>让某个音落在强拍、拖得更长、反复出现，它就更像家。旋律的第一个音和最后一个音尤其有分量。</li>
+              <li><strong>旋律轮廓。</strong>乐句反复「奔向」某个音并在那里休息，那个音就是主音。这就是所谓「解决感」。</li>
+            </ol>
+            <p><strong>一个反直觉的推论</strong>：<strong>调号本身并不能决定调。</strong>调号只告诉你「用哪七个音」，不告诉你「谁是家」——C 大调和 A 小调共用同一个空白调号。所以看到谱子上没有升降号时，你还需要看开头结尾的和弦才能判断是大调还是小调。</p>
+            <p><strong>为什么这一条对摇滚金属特别重要</strong>：重型音乐大量使用<strong>没有明确终止式</strong>的写法——Riff 循环、pedal tone、强力和弦（不含三度，因此不表明大小）。在这种语境下，主音几乎完全由<strong>最低、最常回归的那个音</strong>决定。这就是为什么金属 Riff 常常死死钉在一根空弦上：<strong>那根空弦就是调。</strong>第 11 章与第 14 章会把这条线索接下去。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 大调音阶 ＝ <strong>全全半全全全半</strong>（2 2 1 2 2 2 1），它保证七个字母各用一次。② 七个音级是<strong>七个岗位</strong>：主音是家，属音是对手，中音决定大小调色彩，<strong>导音离主音只有半音、非解决不可</strong>——这是调性音乐的引擎。③ 每上行一个纯五度多一个升号，新增的升号永远是<strong>新调的导音</strong>；升号顺序 F C G D A E B，降号顺序倒过来。<strong>秒查规则</strong>：最后一个升号上方半音 ＝ 主音；倒数第二个降号 ＝ 主音。④ <strong>五度圈</strong>三用：查调号、找近关系调、看和弦引力方向（逆时针 ＝ Ⅴ→Ⅰ）。相隔 n 步的两个调正好差 n 个音。⑤ 大调音阶 ＝ 五度圈上<strong>连续七个音</strong>的滑动窗口。⑥ 在指板上音阶是<strong>可平移的形状</strong>，换调不换手型；跨 3–2 弦照例多一品。</p>
+          <p><strong>下一章预告</strong>：本章末尾那道挑战题留了个钩子——同样七个音，为什么有的听起来忧郁？第 5 章《小调家族》会正面回答：自然小调是怎么来的、和声小调为什么要把第七级升上去、以及为什么<strong>摇滚与金属几乎住在小调里</strong>。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./05-小调家族.html"><strong>下一章：第 5 章 · 小调家族：自然、和声、旋律</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      var NS = "http://www.w3.org/2000/svg";
+      function $(id) { return document.getElementById(id); }
+      function el(tag, attrs, text) {
+        var n = document.createElementNS(NS, tag);
+        for (var k in attrs) if (attrs.hasOwnProperty(k) && attrs[k] != null) n.setAttribute(k, attrs[k]);
+        if (text != null) n.textContent = text;
+        return n;
+      }
+
+      /* ---------- 演示 1：七个音级的性格 ---------- */
+      KBG.soundToggle($("dg-sound"));
+      var ROOT = 48;                       // C3
+      var DEG = [
+        { n: "主音", s: 0, t: "家。一切运动的终点，最稳定。" },
+        { n: "上主音", s: 2, t: "不稳定，向下靠回主音、或向上推向三音。" },
+        { n: "中音", s: 4, t: "决定大小调色彩的那个音。稳定但柔软。" },
+        { n: "下属音", s: 5, t: "离家第一步。向下半音解决到三音的倾向明显。" },
+        { n: "属音", s: 7, t: "主音的对手。稳定，可长时间停留而不难受。" },
+        { n: "下中音", s: 9, t: "柔和抒情；它也是关系小调的主音。" },
+        { n: "导音", s: 11, t: "离主音只有半音，急切上行——调性音乐的引擎。" }
+      ];
+      var dgGrid = $("dg-grid"), dgBtns = [];
+      DEG.forEach(function (d, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = (i + 1) + " " + d.n;
+        b.addEventListener("click", function () {
+          dgBtns.forEach(function (x) { x.className = "kb-btn"; });
+          b.className = "kb-btn on";
+          A.stopAll(); A.setDrive(0.08);
+          A.sequence([
+            { t: 0, midi: ROOT, dur: 1 },
+            { t: 1, midi: ROOT + d.s, dur: 1.4 },
+            { t: 2.4, midi: ROOT, dur: 1.6 }
+          ], { bpm: 108 });
+          $("dg-name").textContent = (i + 1) + " 级 · " + d.n;
+          $("dg-iv").textContent = T.INTERVALS[d.s].cn + "（" + d.s + " 半音）";
+          $("dg-tend").textContent = d.t;
+        });
+        dgGrid.appendChild(b); dgBtns.push(b);
+      });
+      function scaleSeq(desc, stopAt) {
+        var st = T.SCALES.major.steps.concat([12]);
+        if (stopAt) st = st.slice(0, stopAt);
+        if (desc) st = st.slice().reverse();
+        return st.map(function (s, i) { return { t: i * 0.5, midi: ROOT + s, dur: 0.5 }; });
+      }
+      $("dg-up").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.08); A.sequence(scaleSeq(false), { bpm: 132 });
+        $("dg-msg").textContent = "上行八个音。最后一步（导音→主音）只有半音，那一下「到家」的感觉最明显。";
+      });
+      $("dg-down").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.08); A.sequence(scaleSeq(true), { bpm: 132 });
+        $("dg-msg").textContent = "下行时导音在开头，落地感前置；结尾是主音—上主音—主音，收得更柔。";
+      });
+      $("dg-cliff").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.08);
+        A.sequence(scaleSeq(false, 7), { bpm: 132 });
+        $("dg-msg").textContent = "弹到第 7 级就停了。感觉到那股「必须再走一步」的拉力了吗？——这就是导音。整个调性和声就是不断制造、又不断满足这股拉力。";
+      });
+      $("dg-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：交互五度圈 ---------- */
+      KBG.soundToggle($("cof-sound"));
+      var KEYS = ["C", "G", "D", "A", "E", "B", "F♯", "D♭", "A♭", "E♭", "B♭", "F"];
+      var cofData = T.circleOfFifths();
+      var cofSel = 0;
+      var CX = 190, CY = 190, RO = 150, RI = 104;
+      var cofSvg = el("svg", { viewBox: "0 0 380 380", role: "img", "aria-label": "交互五度圈：外圈大调，内圈关系小调" });
+      cofSvg.setAttribute("font-family", "-apple-system, PingFang SC, sans-serif");
+      cofSvg.appendChild(el("circle", { cx: CX, cy: CY, r: RO, fill: "none", stroke: "var(--kb-border)", "stroke-width": 1 }));
+      cofSvg.appendChild(el("circle", { cx: CX, cy: CY, r: RI, fill: "none", stroke: "var(--kb-border)", "stroke-width": 1 }));
+      var outerNodes = [];
+      for (var i = 0; i < 12; i++) {
+        (function (i) {
+          var th = (-90 + i * 30) * Math.PI / 180;
+          var ox = CX + RO * Math.cos(th), oy = CY + RO * Math.sin(th);
+          var ix = CX + RI * Math.cos(th), iy = CY + RI * Math.sin(th);
+          var g = el("g", { class: "cof-key", style: "cursor:pointer" });
+          var c = el("circle", { cx: ox, cy: oy, r: 25, fill: "var(--kb-surface-alt)", stroke: "var(--kb-border-strong)", "stroke-width": 1.5 });
+          var t1 = el("text", { x: ox, y: oy + 5, "text-anchor": "middle", "font-size": 15, "font-weight": 700, fill: "var(--kb-fg)" }, KEYS[i]);
+          var sig = i === 0 ? "" : (i <= 6 ? i + "♯" : (12 - i) + "♭");
+          var t2 = el("text", { x: ox, y: oy + 19, "text-anchor": "middle", "font-size": 9, fill: "var(--kb-fg-muted)" }, sig);
+          g.appendChild(c); g.appendChild(t1); g.appendChild(t2);
+          g.addEventListener("click", function () { selectKey(i); });
+          cofSvg.appendChild(g);
+          var ic = el("circle", { cx: ix, cy: iy, r: 19, fill: "none", stroke: "var(--kb-border)", "stroke-width": 1 });
+          var it = el("text", { x: ix, y: iy + 4, "text-anchor": "middle", "font-size": 11.5, fill: "var(--kb-fg-muted)" },
+            T.name(T.mod12(cofData[i].pc + 9)) + "m");
+          cofSvg.appendChild(ic); cofSvg.appendChild(it);
+          outerNodes.push({ circle: c, text: t1, sub: t2, inner: ic, innerText: it });
+        })(i);
+      }
+      cofSvg.appendChild(el("text", { x: CX, y: CY - 8, "text-anchor": "middle", "font-size": 11.5, fill: "var(--kb-fg-muted)" }, "顺时针 ＝ 升五度 ＝ 多一个升号"));
+      cofSvg.appendChild(el("text", { x: CX, y: CY + 10, "text-anchor": "middle", "font-size": 11.5, fill: "var(--kb-accent)" }, "逆时针 ＝ 和弦的引力方向"));
+      cofSvg.appendChild(el("text", { x: CX, y: CY + 30, "text-anchor": "middle", "font-size": 10.5, fill: "var(--kb-fg-faint)" }, "内圈：关系小调"));
+      $("cof-host").appendChild(cofSvg);
+
+      function selectKey(i) {
+        cofSel = i;
+        outerNodes.forEach(function (n, j) {
+          var on = (j === i);
+          n.circle.setAttribute("fill", on ? "#2563eb" : "var(--kb-surface-alt)");
+          n.circle.setAttribute("stroke", on ? "#2563eb" : "var(--kb-border-strong)");
+          n.text.setAttribute("fill", on ? "#fff" : "var(--kb-fg)");
+          n.sub.setAttribute("fill", on ? "#dbeafe" : "var(--kb-fg-muted)");
+        });
+        var pc = cofData[i].pc, flat = (i >= 7);
+        var pcs = T.scalePcs(pc, "major");
+        $("cof-key").textContent = KEYS[i] + " 大调";
+        $("cof-sig").textContent = i === 0 ? "无升降号" : (i <= 6 ? i + " 个升号" : (12 - i) + " 个降号");
+        $("cof-rel").textContent = T.name(T.mod12(pc + 9), { flat: flat }) + " 小调";
+        $("cof-scale").textContent = pcs.map(function (p) { return T.name(p, { flat: flat }); }).join("  ");
+        $("cof-chords").textContent = T.diatonic(pc, "major", 3).map(function (d) {
+          return d.roman + " " + T.name(d.rootPc, { flat: flat }) + d.sym;
+        }).join("   ");
+      }
+      $("cof-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.08);
+        var base = 48 + T.mod12(cofData[cofSel].pc);
+        var st = T.SCALES.major.steps.concat([12]);
+        A.sequence(st.map(function (s, k) { return { t: k * 0.45, midi: base + s, dur: 0.45 }; }), { bpm: 140 });
+      });
+      $("cof-cad").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.06);
+        var pc = cofData[cofSel].pc;
+        var I = 48 + T.mod12(pc), V = 48 + T.mod12(pc + 7);
+        A.strum([V, V + 4, V + 7, V + 10], { spread: 0.03, gain: 0.6 });
+        A.strum([I, I + 4, I + 7, I + 12], { delay: 1.5, spread: 0.03, gain: 0.6 });
+        $("cof-msg").textContent = "Ⅴ7 → Ⅰ：在五度圈上就是逆时针挪一格。这一步是全部调性音乐里出现次数最多的和弦运动。";
+      });
+      $("cof-stop").addEventListener("click", function () { A.stopAll(); });
+      selectKey(0);
+
+      /* ---------- 演示 3：大调音阶形状 ---------- */
+      var NPS = [[0, 2, 4], [0, 2, 4], [1, 2, 4], [1, 2, 4], [2, 4, 5], [2, 4, 5]];
+      var rootFret = 5, mode3 = true;
+      var fbS = KBG.fretboard($("sc-board"), {
+        tuning: TUN, fromFret: 1, toFret: 14, showOpen: false,
+        labels: "degree", root: 0, marks: [], title: "大调音阶形状"
+      });
+      function scMidis() {
+        var out = [];
+        for (var s = 0; s < 6; s++) NPS[s].forEach(function (o) { out.push(TUN[s] + rootFret + o); });
+        return out.sort(function (a, b) { return a - b; });
+      }
+      function updateSc() {
+        var rootPc = T.mod12(TUN[0] + rootFret);
+        var marks = [];
+        if (mode3) {
+          for (var s = 0; s < 6; s++) NPS[s].forEach(function (o) {
+            var f = rootFret + o;
+            marks.push({ string: s, fret: f, kind: T.mod12(TUN[s] + f) === rootPc ? "root" : "note" });
+          });
+        } else {
+          T.findOnBoard(TUN, T.scalePcs(rootPc, "major"), 14, 1).forEach(function (p) {
+            marks.push({ string: p.string, fret: p.fret, kind: p.pc === rootPc ? "root" : "note" });
+          });
+        }
+        fbS.setLabels("degree", rootPc);
+        fbS.setMarks(marks);
+        $("sc-key").textContent = T.name(rootPc) + " 大调";
+        $("sc-notes").textContent = T.scalePcs(rootPc, "major").map(function (p) { return T.name(p); }).join(" ");
+        $("sc-root").textContent = "6 弦 " + rootFret + " 品";
+      }
+      KB.bindRange($("sc-fret"), $("sc-val"), function (v) { return v + " 品（" + T.name(T.mod12(40 + v)) + "）"; },
+        function (v) { rootFret = v; if (typeof fbS !== "undefined") updateSc(); });
+      $("sc-3nps").addEventListener("click", function () {
+        mode3 = true; $("sc-3nps").className = "kb-btn kb-btn-primary"; $("sc-all").className = "kb-btn"; updateSc();
+      });
+      $("sc-all").addEventListener("click", function () {
+        mode3 = false; $("sc-all").className = "kb-btn kb-btn-primary"; $("sc-3nps").className = "kb-btn"; updateSc();
+      });
+      $("sc-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12);
+        var up = scMidis(), all = up.concat(up.slice(0, -1).reverse());
+        A.sequence(all.map(function (m, i) { return { t: i * 0.28, midi: m, dur: 0.28 }; }), { bpm: 150 });
+      });
+      $("sc-stop").addEventListener("click", function () { A.stopAll(); });
+      updateSc();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10 失真的和声学：金属为什么不弹大三度 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 10 章：削波如何产生谐波、两个音一起进入非线性时的互调失真、用差音算清「为什么三度会糊而五度不会」，以及强力和弦为何是被物理逼出来的选择。">
+  <meta name="kb:tags" content="吉他,乐理,教材,失真,削波,谐波,互调失真,差音,强力和弦,高增益,频谱,szhsx,hutiao">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .verdict { font-weight: 700; }
+    .verdict.good { color: #16a34a; }
+    .verdict.mid { color: #d97706; }
+    .verdict.bad { color: #dc2626; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 10 章 · 失真的和声学：金属为什么不弹大三度</h1>
+        <p class="kb-lead">前九章的乐理，是在<strong>线性</strong>世界里成立的：两个音一起响，你听到的就是这两个音。可一旦挂上高增益失真，这个前提就崩了——放大器开始<strong>凭空造出原本不存在的频率</strong>，而且造得越多，和弦越糊。这不是音箱不好，是物理。这一章要把这件事算清楚：为什么同样是两个音，纯五度进去出来更厚，大三度进去出来是一团泥？为什么强力和弦不是审美偏好，而是<strong>被非线性逼出来的唯一解</strong>？学完这一章，前九章所有的和声知识都要重新称一遍重量。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释削波如何把一个正弦波变成一串谐波；② 说清单音失真「变厚」与多音失真「变糊」为什么是两回事；③ 用<strong>差音</strong>算出任意音程在失真下的「干净程度」，并解释为什么五度干净、三度浑浊；④ 说明强力和弦为什么在高增益下反而听起来更大；⑤ 列出想在重型音色里保住三度的四种实际手段。</p>
+        </div>
+
+        <h2>失真是什么：把波形削平</h2>
+        <p>放大器的输出电压有上限。当输入信号太大，超出上限的部分就被<strong>削平</strong>（clipping）——原本圆润的正弦波顶部被压成了平台，波形越来越接近方波。</p>
+        <p>这个过程的关键在于它是<strong>非线性</strong>的：输出不再正比于输入。而傅里叶告诉我们，一个不再是纯正弦的周期波形，必然可以分解成<strong>基频 + 一系列谐波</strong>。<strong>削波没有改变音高，但凭空生成了 2f、3f、4f……</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：削波与谐波（拖动增益，看波形与频谱同时变化）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="d1-canvas" height="300"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：增益越大，波形顶部被削得越平、越接近方波；与此同时频谱里出现越来越多的谐波（2f、3f、4f……）。对称削波主要产生奇次谐波（3f、5f、7f），这正是失真吉他那种「方正、带刺」音色的来源。基频不变，所以音高不变——变的是音色。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">增益（drive）<span class="kb-control-value" id="d1-gv"></span>
+                <input type="range" id="d1-gain" min="0.2" max="40" step="0.2" value="0.2"></label>
+            </div>
+            <div class="kb-readout">
+              <span>基频 <b>200 Hz</b></span>
+              <span>可见谐波数 <b id="d1-nh">1</b></span>
+              <span>波形 <b id="d1-shape">纯正弦（未削波）</b></span>
+            </div>
+            <p id="d1-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">把增益从 1 拉到 40：波形从正弦变成方波，频谱从「一根」长成「一排」。<strong>注意所有新增的频率都是 200 Hz 的整数倍</strong>——这就是单音失真只会「变厚」不会「变脏」的原因。</p>
+          </div>
+        </div>
+
+        <h2>单音失真：变厚，不变脏</h2>
+        <p>上面的演示说明了一件重要的事：<strong>一个音单独进入失真，产生的全是它自己的谐波。</strong>而根据第 1 章，这些谐波（2f、3f、4f…）本来就存在于这个音的泛音列里——失真只是把它们放大了。</p>
+        <p>结果是<strong>音色变厚、变亮、延音变长</strong>，但和声上什么都没发生。这就是为什么<strong>单音独奏在多大的增益下都不会糊</strong>——第 12 章的五声音阶独奏、第 16 章的快速跑动，都建立在这个事实上。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么失真吉他延音更长</p>
+          <p>削波是一种极端的<strong>压缩</strong>：信号大的时候被削掉，信号小的时候原样放大。于是音头被压低、尾巴被抬高，包络被拉平——听感上就是「延音变长了」。这也解释了为什么高增益下必须闷音（第 9 章）：延音被拉长后，密集节奏的余韵会互相叠加成一片轰鸣。<strong>增益与闷音是一对必然同时出现的技术。</strong></p>
+        </div>
+
+        <h2>两个音一起进去：互调失真</h2>
+        <p>现在把两个音一起送进同一个非线性器件。麻烦来了。</p>
+        <p>非线性最简单的模型是平方项：输出里含有 <em class="kb-math">(A + B)²</em> 这样的成分。展开它——</p>
+        <pre><code>(sin 2πf₁t + sin 2πf₂t)²  展开后包含：
+    cos 2π(f₂ − f₁)t        ← 差频（difference tone）
+    cos 2π(f₂ + f₁)t        ← 和频
+    以及各自的 2f₁、2f₂</code></pre>
+        <p>也就是说，<strong>两个音一起进去，出来的不只是它们各自的谐波，还有它们的「和」与「差」</strong>。更高次的非线性还会产生 <em class="kb-math">2f₁ − f₂</em>、<em class="kb-math">2f₂ − f₁</em> 等一大堆组合频率。这种现象叫 <strong>互调失真</strong>（intermodulation distortion，IMD）。</p>
+        <p><strong>这才是问题的核心</strong>：谐波（<em class="kb-math">nf</em>）永远和原音属于同一个泛音列，听起来是「厚」；而互调产物 <em class="kb-math">f₂ ± f₁</em> <strong>不一定属于任何一个和弦音的泛音列</strong>——如果它落在一个和原音毫无关系的频率上，那就是纯粹的杂音，听起来就是「糊」。</p>
+
+        <h2>算一笔账：差音落在哪</h2>
+        <p>我们来做一个最小模型：<strong>两个纯正弦，只看最主要的那个互调产物——差音 <em class="kb-math">f₂ − f₁</em></strong>。判据很简单：</p>
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📐 判据</p>
+          <p>如果差音正好是根音的一个<strong>整数分之一</strong>（即 <em class="kb-math">f₁ / n</em>，<em class="kb-math">n</em> 为小整数），那么它就是这两个音<strong>共同的虚拟基频</strong>——它不但不脏，反而<strong>把整个和弦「坐实」</strong>，听起来更大更沉。<br>
+          反之，如果它落在两个整数之间，它就是一个与两个原音都无关的外来频率 → <strong>浑浊</strong>。</p>
+        </div>
+        <p>取根音 <em class="kb-math">f₁</em> ＝ 200 Hz，用十二平均律算出各音程的上方音，再算差音，看它离「根音的整数分之一」有多远：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>音程</th><th>上方音 f₂</th><th>差音 f₂−f₁</th><th>f₁ ÷ 差音</th><th>离最近的整数差多少</th><th>结论</th></tr></thead>
+            <tbody>
+              <tr><td><strong>纯八度</strong></td><td>400.00</td><td>200.00</td><td>1.000</td><td><strong>0 音分</strong></td><td class="verdict good">完美：差音＝根音本身</td></tr>
+              <tr><td><strong>纯五度</strong></td><td>299.66</td><td>99.66</td><td>2.007</td><td><strong>+6 音分</strong></td><td class="verdict good">极干净：差音＝低八度的根音</td></tr>
+              <tr><td>纯四度</td><td>266.97</td><td>66.97</td><td>2.987</td><td>−8 音分</td><td class="verdict good">干净</td></tr>
+              <tr><td>大二度</td><td>224.49</td><td>24.49</td><td>8.166</td><td>+36 音分</td><td class="verdict mid">开始浑浊</td></tr>
+              <tr><td><strong>大三度</strong></td><td>251.98</td><td>51.98</td><td>3.847</td><td><strong>−67 音分</strong></td><td class="verdict bad">浑浊：差音离第 4 分音差 2/3 个半音</td></tr>
+              <tr><td><strong>小三度</strong></td><td>237.84</td><td>37.84</td><td>5.285</td><td><strong>+96 音分</strong></td><td class="verdict bad">更浑浊：差不多整整一个半音</td></tr>
+              <tr><td><strong>三全音</strong></td><td>282.84</td><td>82.84</td><td>2.414</td><td><strong>+326 音分</strong></td><td class="verdict bad">最糟：正好卡在 2 与 3 中间</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>看最后两列。</strong>这张表把一件靠感觉说的事变成了数字：</p>
+        <ul>
+          <li><strong>八度、五度、四度</strong>的差音几乎精确落在根音的第 1、2、3 分音上（误差不到 8 音分，人耳基本听不出）。它们生成的不是杂音，而是一个<strong>低八度的虚拟根音</strong>——这就是为什么强力和弦在高增益下听起来比它实际弹的音还要低、还要大。<strong>失真在帮它变重。</strong></li>
+          <li><strong>大三度差 67 音分、小三度差 96 音分</strong>——这些差音落在根音泛音列的<strong>缝隙里</strong>，与真正的谐波相隔大半个到一个整半音，产生明显的拍频与浑浊。<strong>失真在帮它变脏。</strong></li>
+          <li><strong>三全音差 326 音分</strong>，几乎卡在两个分音的正中间，是最不「归位」的一个。第 3 章说它「无根」，这里给出了物理层面的同一个结论。</li>
+        </ul>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 这是一个简化模型，但排序是对的</p>
+          <p>真实情况比这复杂得多：① 实际失真会产生远不止一个差音（还有 <em class="kb-math">2f₁−f₂</em>、<em class="kb-math">f₁+f₂</em> 等一大批）；② 吉他的每个音本身就有十几个谐波，任意两个谐波之间都会互调，产物数量是<strong>组合爆炸</strong>的；③ 音箱与箱体的频响会大幅改变这些产物的可闻程度。</p>
+          <p>所以上面的表<strong>不能用来预测具体的音色</strong>。但它给出的<strong>排序</strong>——八度 &gt; 五度 &gt; 四度 &gt;&gt; 大二度 &gt; 大三度 &gt; 小三度 &gt; 三全音——与所有吉他手的实际经验完全一致。这就是一个好模型该做的事：<strong>用最少的假设解释最稳定的现象。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：差音计算器（选一个音程，看它在失真下会造出什么）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="d2-canvas" height="240"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：两个音进入非线性时会产生差音 f₂−f₁。当这个差音恰好等于根音的整数分之一（八度、五度、四度），它充当共同的虚拟基频，让和弦更厚实；当它落在整数之间（三度、三全音），它就是外来频率，造成浑浊。</p></noscript>
+            <div id="d2-sound"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">音程（半音）<span class="kb-control-value" id="d2-sv"></span>
+                <input type="range" id="d2-semi" min="1" max="12" step="1" value="7"></label>
+              <label class="kb-control">增益<span class="kb-control-value" id="d2-gv"></span>
+                <input type="range" id="d2-gain" min="1" max="40" step="0.5" value="20"></label>
+            </div>
+            <div class="kb-readout">
+              <span>音程 <b id="d2-name">纯五度</b></span>
+              <span>f₁ / f₂ <b id="d2-f">200 / 299.7 Hz</b></span>
+              <span>差音 <b id="d2-diff">99.7 Hz</b></span>
+              <span>f₁ ÷ 差音 <b id="d2-ratio">2.007</b></span>
+              <span>偏差 <b id="d2-off" class="verdict good">+6 音分</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d2-clean" type="button">▶ 清音听</button>
+              <button class="kb-btn" id="d2-dirty" type="button">▶ 高增益听</button>
+              <button class="kb-btn" id="d2-ab" type="button">🔀 清 → 脏 连着听</button>
+              <button class="kb-btn" id="d2-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d2-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">把滑块在 <strong>7（纯五度）</strong>和 <strong>4（大三度）</strong>之间来回切，同时点「高增益听」。频谱图里红色标出的就是差音——五度时它落在根音的整数分音上（图中虚线），三度时它明显偏离。</p>
+          </div>
+        </div>
+
+        <h2>强力和弦：被物理逼出来的解</h2>
+        <p>现在把强力和弦放进这个框架里看。E5 ＝ <strong>E – B – E</strong>，也就是根音、纯五度、纯八度。第 3 章习题 3.2 说过它内部「全是完全协和音程」，现在我们知道这句话在失真下的确切含义：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>音对</th><th>频率（以 E2 ≈ 82.4 Hz 为准）</th><th>差音</th><th>落在哪</th></tr></thead>
+            <tbody>
+              <tr><td>根 – 五</td><td>82.4 / 123.5</td><td>41.1 Hz</td><td>≈ 根音低八度（41.2 Hz）</td></tr>
+              <tr><td>五 – 八</td><td>123.5 / 164.8</td><td>41.3 Hz</td><td>≈ 同一个低八度根音</td></tr>
+              <tr><td>根 – 八</td><td>82.4 / 164.8</td><td>82.4 Hz</td><td>＝ 根音本身</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>三对音产生的差音全部落在同一个地方——根音或它的低八度。</strong>失真非但没有制造杂音，反而在低音区堆出了一个原本不存在的、比你弹的最低音还低八度的基频。这就是重型音色那种「地动山摇」的来源：<strong>你听到的低频有一部分并不在琴上，是放大器算出来的。</strong></p>
+        <p>所以「金属用强力和弦」这件事有两层原因，缺一不可：</p>
+        <ol>
+          <li><strong>和声上</strong>：它没有三度，因而没有大小之分，可以在任何调里平行移动（第 6、11 章）。</li>
+          <li><strong>物理上</strong>：它的所有内部音程在非线性下都<strong>自我强化</strong>而非互相污染。</li>
+        </ol>
+        <p><strong>换句话说，即使不考虑任何审美与风格，只要你把增益开到某个程度，能剩下的和弦形态就已经所剩无几了。</strong>强力和弦不是简化，是幸存者。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：A/B 试听（同一个根音，三种和弦，切增益）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：清音下三种和弦都清晰可辨；把增益拉到高位，强力和弦（根-五-八）依然干净甚至更厚，而大三和弦与大三度双音会明显变浑浊——因为后者产生的差音落在根音泛音列的缝隙里。</p></noscript>
+            <div class="kb-readout">
+              <span>当前 <b id="d3-cur">—</b></span>
+              <span>构成 <b id="d3-notes">—</b></span>
+              <span>预期 <b id="d3-pred">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">增益<span class="kb-control-value" id="d3-gv"></span>
+                <input type="range" id="d3-drive" min="0" max="1" step="0.05" value="0.85"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d3-p5" type="button">▶ E5 强力和弦（根-五-八）</button>
+              <button class="kb-btn" id="d3-maj" type="button">▶ E 大三和弦</button>
+              <button class="kb-btn" id="d3-m3" type="button">▶ 只弹大三度双音</button>
+              <button class="kb-btn" id="d3-tt" type="button">▶ 三全音双音</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="d3-sweep" type="button">🔁 当前和弦：清音 → 高增益</button>
+              <button class="kb-btn" id="d3-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d3-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">建议顺序：先把增益拖到 0，四个都听一遍（都很清楚）；再拖到 0.85，重听一遍。强力和弦几乎没变化，三度和三全音会明显发浑。</p>
+          </div>
+        </div>
+
+        <h2>那还想要三度怎么办</h2>
+        <p>三度是色彩的来源，全部放弃太可惜。实际制作里有四种成熟的对策：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>手段</th><th>做法</th><th>代价</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 降增益</strong></td><td>用中等 overdrive 而非高增益 distortion。经典硬摇滚的完整和弦几乎都在这个区间。</td><td>失去极端重量感</td></tr>
+              <tr><td><strong>② 挪到高音区</strong></td><td>把三度放在高把位。频率越高，差音也越高，落在人耳不敏感、且被箱体高频滚降削弱的区域。</td><td>失去低频冲击</td></tr>
+              <tr><td><strong>③ 双吉他分工</strong></td><td>一把只弹根 + 五（左声道），另一把弹三度或旋律（右声道）。<strong>两把琴各自过各自的失真</strong>，互调只发生在各自内部。</td><td>需要两把琴 / 两轨</td></tr>
+              <tr><td><strong>④ 交给别人</strong></td><td>三度由主唱、键盘或干净音色的第二吉他承担，失真吉他只管根与五。</td><td>编曲复杂度上升</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>③ 是现代金属制作的标准答案</strong>，而且它解释了一个常被误解的现象：为什么专辑里的吉他听起来「又厚又清晰」，自己一个人弹却总是糊？<strong>因为专辑里那是两把（甚至四把）分别录制、各自失真、再摆到不同声道的吉他</strong>——互调失真被隔离在每一轨内部，合起来听既有和声又不浑浊。<strong>这不是技术，是拓扑。</strong></p>
+        <p>还有一条常被忽略的：<strong>EQ 与音箱的作用</strong>。重型音色普遍<strong>切掉大量中频、并用高通滤掉 80 Hz 以下</strong>，前者削弱了三度互调产物最集中的区域，后者防止低频差音堆积成糊。所以「金属音色要挖中频」这条流传已久的经验，背后是有物理依据的——<strong>它挖掉的正是互调产物最吵的那一段。</strong></p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 10.1</p>
+          <p>根音 A2 ＝ 110 Hz，加上它的纯五度 E3。算出差音，并判断这个音程在失真下干不干净。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>算上方音</strong>：<em class="kb-math">110 × 2^(7/12) ＝ 110 × 1.49831 ≈ 164.81 Hz</em>（正是 E3，与第 1 章的调弦表一致 ✓）。</p>
+            <p><strong>算差音</strong>：<em class="kb-math">164.81 − 110 ＝ 54.81 Hz</em>。</p>
+            <p><strong>判断</strong>：<em class="kb-math">110 ÷ 54.81 ＝ 2.007</em> —— 最接近的整数是 <strong>2</strong>，偏差 <em class="kb-math">1200 × log₂(2.007/2) ≈ +6 音分</em>。</p>
+            <p><strong>结论</strong>：差音几乎精确落在<strong>比根音低一个八度</strong>的位置（A1 ≈ 55 Hz）。它不是杂音，而是给这两个音提供了一个共同的虚拟基频 → <strong>干净，而且会让和弦听起来更沉更大</strong>。</p>
+            <p>这就是 A5 强力和弦在高增益下的物理表现。顺带注意：54.81 Hz 已经接近 5 弦所能表达的最低区域以下——<strong>你听到的这个低频完全是失真造出来的，琴上并不存在。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 10.2</p>
+          <p>同样以 A2 ＝ 110 Hz 为根音，这次加大三度 C♯3。差音落在哪？与例题 10.1 比较。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>上方音</strong>：<em class="kb-math">110 × 2^(4/12) ＝ 110 × 1.25992 ≈ 138.59 Hz</em>。</p>
+            <p><strong>差音</strong>：<em class="kb-math">138.59 − 110 ＝ 28.59 Hz</em>。</p>
+            <p><strong>判断</strong>：<em class="kb-math">110 ÷ 28.59 ＝ 3.847</em>。最接近的整数是 <strong>4</strong>（即「根音低两个八度」），偏差 <em class="kb-math">1200 × log₂(3.847/4) ≈ −67 音分</em>。</p>
+            <p><strong>结论</strong>：差音落在第 4 分音<strong>下方三分之二个半音</strong>的位置——既不是根音的谐波，也不是任何和弦音，是一个纯粹的外来低频。它会与根音自身的低频成分产生拍频，听感就是<strong>浑浊、发闷、「糊」</strong>。</p>
+            <p><strong>两题对照</strong>：同一个根音、同样的增益，仅仅因为上方音差了 3 个半音，差音从「+6 音分的完美归位」变成「−67 音分的外来杂频」。<strong>这就是金属不弹大三度的全部理由，它是可以算出来的。</strong></p>
+            <p><strong>再深一层</strong>：67 音分这个数字，源头是第 1 章那张表里「平均律大三度比纯律高 13.7 音分」。13.7 音分的音程误差，经过「取差值」这一步被放大成了 67 音分——<strong>因为差音是两个大数相减得到的小数，相对误差被成倍放大。</strong>第 1 章埋的伏笔，在这里收网。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 10.3</p>
+          <p>为什么单音独奏在任何增益下都不会「糊」，而两个音就会？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>关键在于「新频率从哪来」。</strong></p>
+            <p><strong>单音</strong>：非线性只能产生这个音自身的整数倍谐波 <em class="kb-math">2f、3f、4f…</em>。而根据第 1 章，这些频率<strong>本来就在这个音的泛音列里</strong>——失真只是把它们放大。结果是音色变亮变厚、延音变长，<strong>和声内容没有增加一个字节</strong>。</p>
+            <p><strong>两个音</strong>：除了各自的谐波，还多出了 <em class="kb-math">f₂ − f₁</em>、<em class="kb-math">f₂ + f₁</em>、<em class="kb-math">2f₁ − f₂</em>…… 这些<strong>组合频率</strong>。它们是否协和，取决于 <em class="kb-math">f₁</em> 与 <em class="kb-math">f₂</em> 的比值有多简单——比值简单（八度、五度）则组合频率落回同一个泛音列，比值复杂（三度、三全音）则落在缝隙里。</p>
+            <p><strong>数量上的差异更惊人</strong>：两个音有 1 对组合，三个音有 3 对，四个音有 6 对——而每个音本身还有十几个谐波，谐波之间也会两两互调。<strong>音数每增加一个，杂频数量按平方增长。</strong>这就是为什么七和弦（4 个音）在高增益下基本不能用（第 8 章），而单音跑动可以快到任意速度都清晰。</p>
+            <p><strong>实战推论</strong>：这条规律直接决定了重型音乐的织体设计——<strong>和声要稀，旋律可以密</strong>。第 11 章的 riff 写作、第 16 章的独奏构建，都是这条约束下的产物。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>削波产生的新频率与原音是什么关系？为什么失真不改变音高？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>关系</strong>：新频率是原音基频的<strong>整数倍</strong>（2f、3f、4f……），即谐波。对称削波（上下削得一样多）主要产生<strong>奇次</strong>谐波（3f、5f、7f），这是电吉他失真那种方正带刺音色的来源。</p>
+            <p><strong>为什么音高不变</strong>：因为削波是一个<strong>逐周期重复</strong>的操作——输入周期是 <em class="kb-math">1/f</em>，输出也是 <em class="kb-math">1/f</em>。周期不变则基频不变，而音高由基频决定。变的只是这个周期内波形的<strong>形状</strong>，也就是音色。</p>
+            <p><strong>一个有用的推论</strong>：既然失真不改变音高，那么<strong>调音不准的地方，失真只会放大而不会掩盖</strong>。相反，因为增加了大量谐波，走音会变得更刺耳。「高增益能盖住手上的毛病」是彻头彻尾的误解——它盖住的只是力度不均，暴露的是音准和杂音。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么高增益下几乎必须使用掌根闷音？请从「削波是一种压缩」这个角度回答。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>削波把包络压平了。</strong>信号强的时候被削掉（增益等效降低），信号弱的时候被完整放大（增益等效不变）——这正是<strong>压缩器</strong>做的事。结果是音头被压低、尾音被抬高，<strong>延音大幅变长</strong>。</p>
+            <p><strong>后果</strong>：一串十六分音符，如果每个音的余韵都被拉长到一两秒，那么第 5 个音响起时前面 4 个还在响。这些互相重叠的音会<strong>两两互调</strong>（见例题 10.3），迅速堆成一片没有节奏轮廓的轰鸣。<strong>节奏信息就这样丢失了。</strong></p>
+            <p><strong>闷音的作用</strong>：把每个音的物理长度切到 100–200 ms，让它在下一个音到来之前就基本消失。这样既保住了节奏的颗粒感，也大幅减少了同时发声的音数，从而减少互调。</p>
+            <p><strong>结论</strong>：<strong>增益、延音、闷音三者是一个连锁</strong>——增益越大，延音越长，就越必须闷音。这解释了为什么重型音乐的右手技术如此发达，而清音风格（如爵士）几乎不需要掌根闷音。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>E5 强力和弦（E–B–E）里有三对音。它们各自产生的差音落在哪？这说明了什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>以 E2 ＝ 82.4 Hz 为准，B2 ＝ 123.5 Hz，E3 ＝ 164.8 Hz：</p>
+            <ul>
+              <li><strong>根 – 五</strong>：123.5 − 82.4 ＝ <strong>41.1 Hz</strong>（≈ E1，根音低八度）</li>
+              <li><strong>五 – 八</strong>：164.8 − 123.5 ＝ <strong>41.3 Hz</strong>（≈ 同一个 E1）</li>
+              <li><strong>根 – 八</strong>：164.8 − 82.4 ＝ <strong>82.4 Hz</strong>（＝ 根音本身）</li>
+            </ul>
+            <p><strong>说明</strong>：三个差音<strong>全部落在同一个泛音列上</strong>（E1 与 E2），彼此之间也互不冲突。失真非但没有添乱，还在低音区堆出了一个比琴上最低音还低八度的 <strong>E1</strong>。</p>
+            <p><strong>这解释了两件事</strong>：① 强力和弦在高增益下听起来<strong>比它实际弹的还要低、还要大</strong>；② 为什么它在低音弦上效果最好——那个虚拟基频落在 40 Hz 附近，正好是人耳感受为「体感冲击」而非「音高」的区域。<strong>「重」在物理上是可以定位的。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么「一把琴弹根 + 五、另一把弹三度，分别录音、分左右声道」能解决浑浊，而一把琴弹完整和弦不行？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为互调发生在非线性器件内部，而不是空气里。</strong></p>
+            <p><strong>一把琴弹完整和弦</strong>：根、三、五三个音<strong>同时进入同一个失真电路</strong>，三对音两两互调，产生的杂频与信号混在一起被一起放大——之后无论怎么 EQ 都分不开了。</p>
+            <p><strong>两把琴分开录</strong>：第一轨里只有根与五（内部互调干净，见习题 10.3），第二轨里只有三度相关的音（如果是单音则完全没有互调）。<strong>两轨各自失真完成后才相加</strong>——而相加是<strong>线性</strong>操作，不会产生任何新频率。</p>
+            <p><strong>关键词是「顺序」</strong>：<br>
+            <code>失真(A + B)</code> ≠ <code>失真(A) + 失真(B)</code><br>
+            左边有互调，右边没有。这就是非线性系统与线性系统的根本区别，也是整个现代金属制作流程的技术基础。</p>
+            <p><strong>推广</strong>：同样的道理解释了为什么<strong>贝斯与吉他要分轨</strong>（否则低频互调会毁掉两者）、为什么<strong>加倍录音（double tracking）</strong>能让吉他变厚却不变糊、以及为什么在一个音箱里同时接两把琴是个坏主意。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>习题 10.3 算出 E5 强力和弦的差音约 41 Hz。这个频率对应什么音？为什么它带来的是「重量感」而不是「一个更低的音」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>音名</strong>：41.2 Hz ＝ <strong>E1</strong>，比 6 弦空弦（E2，82.4 Hz）再低一个八度。这个音在标准调弦的六弦吉他上<strong>根本不存在</strong>——最低音就是 E2。</p>
+            <p><strong>为什么听成「重量」而非「音高」</strong>，三条：</p>
+            <ol>
+              <li><strong>人耳在低频的音高分辨能力很差。</strong>40 Hz 附近，听觉系统更多是通过<strong>周期性的冲击感</strong>而非明确的音高来感知。你「感觉到」它，但很难唱出它。</li>
+              <li><strong>它的能量主要通过身体而非耳朵传递。</strong>40 Hz 的波长约 8.5 米，在房间里几乎不产生方向感，而是让胸腔与地板一起振动。现场演出的「震」大部分来自这个区域。</li>
+              <li><strong>它是「虚拟基频」而不是独立的音。</strong>因为它恰好是上方两个音的公约数，听觉系统会把它与 E2、B2、E3 <strong>归并成同一个声源</strong>，感知为「这个声音很低沉」，而不是「多了一个音」。</li>
+            </ol>
+            <p><strong>制作上的含义</strong>：这个频率区域非常拥挤——底鼓、贝斯都在这里。所以重型混音的核心工作之一就是<strong>给吉他做高通</strong>（通常切在 80–100 Hz），把这个差音区域让给贝斯与鼓。<strong>吉他的「重」其实主要来自 100–250 Hz 的中低频，而不是这个 40 Hz。</strong>知道它存在，是为了知道该把它切掉。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>正文说「把三度挪到高把位能改善浑浊」。可音程比例是不变的，差音相对根音的偏差也应该一样。那到底改善了什么？请算一个例子。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>先确认「比例不变」这件事是对的</strong>：</p>
+            <ul>
+              <li><strong>低音区</strong>：E2 ＝ 82.4，G♯2 ＝ 103.8 → 差音 <strong>21.4 Hz</strong>；<em class="kb-math">82.4 ÷ 21.4 ＝ 3.85</em></li>
+              <li><strong>高音区</strong>：E4 ＝ 329.6，G♯4 ＝ 415.3 → 差音 <strong>85.7 Hz</strong>；<em class="kb-math">329.6 ÷ 85.7 ＝ 3.85</em></li>
+            </ul>
+            <p>比例完全相同（因为指板是等比的，第 1 章）——所以<strong>「音程有多不准」确实一点没变</strong>。改善的是另外三件事：</p>
+            <ol>
+              <li><strong>差音的绝对位置变了。</strong>21.4 Hz 深埋在底鼓与贝斯的能量区，且几乎无法用 EQ 单独处理（切它就会把底鼓一起切掉）；85.7 Hz 则可以用高通干净地滚降掉，或者干脆让它落在吉他本来就不该占据的频段。</li>
+              <li><strong>人耳的频率分辨率随频率提高。</strong>在 20 Hz 附近，人耳几乎分不清两个相近频率，只感受到一团「隆隆」；在 85 Hz 附近已经能分辨，杂频听起来是一个可识别的成分，而不是弥漫的泥。</li>
+              <li><strong>高把位的音本身低频能量少。</strong>弦越短、音越高，基频以下的能量越少，参与互调的低频成分也越少。</li>
+            </ol>
+            <p><strong>结论</strong>：挪到高把位<strong>没有让音程变准</strong>，而是<strong>把互调产物挪到了一个好处理的位置</strong>。这是工程上的典型思路——解决不了问题，就把问题搬到能解决的地方。这也是为什么金属的双吉他和声（harmony lead）几乎总在高把位，而低把位只留强力和弦。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「金属音色要挖中频」是流传最广的调音建议之一。请用本章的内容解释它为什么有效，并指出它的副作用。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>为什么有效</strong>，三条叠加：</p>
+            <ol>
+              <li><strong>互调产物最吵的区域正在中频。</strong>吉他的基频集中在 80–600 Hz，它们两两互调产生的和频与差频大量落在 <strong>300 Hz–1.5 kHz</strong>。切掉这一段，等于切掉杂频最密集的地方。</li>
+              <li><strong>它给人声与军鼓让路。</strong>人声的主要辨识信息在 1–4 kHz，军鼓的「啪」在 200 Hz 与 4 kHz。吉他挖中频后，整个混音的空间被腾出来。</li>
+              <li><strong>它制造「音墙」的心理印象。</strong>没有中频的两侧频段（低频的厚 + 高频的刺）会让人感觉声音「宽而空」，配合双吉他左右摆位，形成包围感。</li>
+            </ol>
+            <p><strong>副作用（而且很严重）</strong>：</p>
+            <ul>
+              <li><strong>单独听很好、放进乐队就消失。</strong>中频是<strong>穿透力</strong>所在。挖得太狠的音色在耳机里听着很爽，一旦和鼓、贝斯、人声放在一起就完全听不见了——这是业余录音最常见的失败。</li>
+              <li><strong>失去和弦辨识度。</strong>中频也承载着和弦色彩信息。挖掉之后，不同和弦听起来会趋同——这在只弹强力和弦时无所谓，一旦想用点色彩和弦就成了问题。</li>
+              <li><strong>失去动态表现。</strong>拨弦力度的变化主要体现在中频，挖掉后演奏细节被抹平。</li>
+            </ul>
+            <p><strong>成熟的做法</strong>：<strong>录音时不要挖，混音时才挖，而且只挖窄的一段。</strong>专业金属音色通常在 400–800 Hz 做一个不太深的窄带切（去掉「纸箱味」），而不是把整个中频铲平。<strong>「Scooped mids」是一种效果，不是一个默认值。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>假设有一把能精确按<strong>纯律</strong>发声的吉他（大三度严格 5:4）。大三度在高增益下会变干净吗？会带来什么新问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>会干净得多。</strong>算一遍：<em class="kb-math">f₁ ＝ 200</em>，纯律大三度 <em class="kb-math">f₂ ＝ 200 × 5/4 ＝ 250</em>，差音 ＝ <strong>50 Hz ＝ f₁ ÷ 4</strong> —— <strong>精确</strong>落在根音低两个八度处，偏差 0 音分。它会像五度一样充当虚拟基频，把和弦坐实而不是搅浑。</p>
+            <p>这也从反面印证了本章的核心论点：<strong>三度在失真下的浑浊，根源不在「三度这个音程」，而在「平均律的三度不准」。</strong></p>
+            <p><strong>新问题（而且是致命的）</strong>：</p>
+            <ol>
+              <li><strong>纯律只对一个调准。</strong>把品格按 C 大调的纯律排好，弹 C 和弦完美；换到 D 和弦，所有音程立刻偏掉，比平均律还糟。而吉他的<strong>品是横贯所有弦的金属条</strong>（第 1 章习题 1.9），不可能为每个调重排。</li>
+              <li><strong>同一个和弦在不同位置也不一致。</strong>纯律里 D 到 A 的五度和 C 到 G 的五度宽度不同，而指板上它们是同一个形状——形状可平移这个吉他最大的红利，会被纯律彻底摧毁（第 2、3 章）。</li>
+              <li><strong>其他音程仍然不干净。</strong>三全音的纯律比是 45:32，本身就是复杂比，差音依然落在缝隙里。也就是说，纯律救得了三度，救不了整个体系。</li>
+              <li><strong>无法与别的乐器合奏。</strong>键盘、贝斯、合成器全是平均律。</li>
+            </ol>
+            <p><strong>结论</strong>：这是一笔<strong>不划算的交易</strong>——用「所有调都能弹、形状可平移、能和别人合奏」换「一个调里的三度更干净」。现实中的解决方案不是改律制，而是本章正文那四条：降增益、挪高把位、双吉他分工、或者干脆不弹三度。<strong>第 1 章说十二平均律是「三件事的组合最优」，这道题就是那句话的代价清单。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>现代金属（djent 一类）大量使用「极低的根音 + 高把位的不谐和小音块」这种织体，而不是完整和弦。请用本章的物理解释这种写法为什么成立，并说明它在<strong>和声</strong>上得到了什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>物理上为什么成立</strong>：</p>
+            <ol>
+              <li><strong>频率间隔拉大 → 互调产物远离原音。</strong>低音在 40–80 Hz，音块在 400–900 Hz，两者相隔三到四个八度。差音落在几百赫兹，远高于低音区，不会与那个虚拟基频堆在一起；和频则落在很高的位置，被箱体高频滚降削掉。<strong>把两个成分在频率上拉开，等于把互调产物赶到无害区。</strong></li>
+              <li><strong>音块本身音数少（通常 2–3 个音）</strong>，内部互调对数少（见例题 10.3 的平方增长）。</li>
+              <li><strong>低音部分往往只有一个音</strong>（pedal tone），而单音失真不产生互调（例题 10.3）——所以整个织体里真正参与互调的只有音块内部那两三个音。</li>
+              <li><strong>低音大量使用闷音</strong>，缩短同时发声的时间窗口，进一步减少重叠。</li>
+            </ol>
+            <p><strong>和声上得到了什么</strong>：</p>
+            <ul>
+              <li><strong>不谐和音程终于可用了。</strong>在低把位不能碰的小二度、三全音、大七度，挪到高音区的小音块里就没问题——因为它们的互调产物已经被赶到了听不见的地方。这让重型音乐在保持重量的同时<strong>恢复了色彩自由度</strong>，这是它相对早期金属最大的和声进步。</li>
+              <li><strong>低音与和声解耦。</strong>低音只管节奏与调中心（往往就是一根空弦），上方音块只管色彩，两者可以<strong>各自独立变化</strong>。第 14 章的调式着色、第 15 章的 polymeter，都建立在这个解耦上。</li>
+              <li><strong>它复刻了管弦乐的配器原则。</strong>「低音稀疏、高音密集」本来就是配器学的基本规则（低频的谐波间隔窄，堆叠容易浑浊）。现代金属是从物理约束<strong>独立重新发现</strong>了这条规则——两条路径，同一个结论。</li>
+            </ul>
+            <p><strong>代价</strong>：这种织体高度依赖录音与混音（分轨、EQ、声像），<strong>一把琴现场弹很难还原</strong>。这也是为什么这类音乐的现场往往需要双吉他甚至预录轨。第 15 章会展开这套写作方法。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 失真＝<strong>削波</strong>，它把正弦削成方波，凭空生成谐波；基频不变，所以音高不变。② <strong>单音失真只产生自身谐波</strong>→ 变厚不变脏；<strong>多音失真产生互调</strong>（<em class="kb-math">f₂±f₁</em> 等）→ 可能变糊。音数每加一个，杂频按<strong>平方</strong>增长。③ 判据：<strong>差音是否落在根音的整数分之一上</strong>。八度 0 音分、五度 +6、四度 −8 → 干净且强化；大三度 −67、小三度 +96、三全音 +326 → 外来杂频。④ <strong>强力和弦的三对音差音全部落在根音或其低八度</strong>，失真反而在低音区堆出一个 E1 级别的虚拟基频——它不是简化，是<strong>幸存者</strong>。⑤ 想保住三度有四招：<strong>降增益、挪高把位、双吉他分轨、交给别的乐器</strong>；核心原理是 <code>失真(A+B) ≠ 失真(A)+失真(B)</code>。⑥ 「挖中频」有效是因为它切掉了互调最密集的频段，但挖过头会让吉他在乐队里消失。</p>
+          <p><strong>下一章预告</strong>：物理约束讲完了，接下来是在这个约束下<strong>怎么写</strong>。第 11 章《强力和弦与 Riff 语法》会把强力和弦的平行移动、持续低音、动机发展、以及「休止也是一种弹法」组装成一套可操作的写作方法——<strong>那是把前十章全部知识变成音乐的地方。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./11-强力和弦与Riff语法.html"><strong>下一章：第 11 章 · 强力和弦与 Riff 语法</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory;
+      function $(id) { return document.getElementById(id); }
+      function cssVar(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+      var redraws = [];
+      function clip(x, g) { return Math.tanh(g * x) / Math.tanh(g); }
+
+      /* ---------- 演示 1：削波与谐波 ---------- */
+      var g1 = 1;
+      var c1 = $("d1-canvas");
+      var ctx1 = KB.fitCanvas(c1, 300, function () { draw1(); });
+      function draw1() {
+        var w = c1.clientWidth || 600, h = 300;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx1.clearRect(0, 0, w, h);
+        var x0 = 40, x1 = w - 14, span = x1 - x0;
+        if (span < 80) return;
+        ctx1.font = "11px -apple-system, PingFang SC, sans-serif";
+
+        /* 上半：波形（两个周期） */
+        var yMid = 78, amp = 54;
+        ctx1.strokeStyle = faint; ctx1.globalAlpha = 0.5; ctx1.lineWidth = 1;
+        ctx1.beginPath(); ctx1.moveTo(x0, yMid); ctx1.lineTo(x1, yMid); ctx1.stroke();
+        ctx1.globalAlpha = 1;
+        [["input", faint, 1.4], ["output", accent, 2.2]].forEach(function (cfg) {
+          ctx1.strokeStyle = cfg[1]; ctx1.lineWidth = cfg[2];
+          ctx1.setLineDash(cfg[0] === "input" ? [4, 3] : []);
+          ctx1.beginPath();
+          for (var i = 0; i <= span; i++) {
+            var t = i / span, s = Math.sin(2 * Math.PI * 2 * t);
+            var v = cfg[0] === "input" ? s : clip(s, g1);
+            var px = x0 + i, py = yMid - v * amp;
+            if (i === 0) ctx1.moveTo(px, py); else ctx1.lineTo(px, py);
+          }
+          ctx1.stroke();
+        });
+        ctx1.setLineDash([]);
+        ctx1.fillStyle = muted; ctx1.textAlign = "left";
+        ctx1.fillText("波形（虚线＝输入正弦，实线＝削波后）", x0, 20);
+
+        /* 下半：谐波频谱（对一个周期做傅里叶分解） */
+        var N = 512, NH = 16, mags = [], maxm = 0;
+        for (var n = 1; n <= NH; n++) {
+          var re = 0, im = 0;
+          for (var k = 0; k < N; k++) {
+            var v2 = clip(Math.sin(2 * Math.PI * k / N), g1);
+            re += v2 * Math.cos(2 * Math.PI * n * k / N);
+            im -= v2 * Math.sin(2 * Math.PI * n * k / N);
+          }
+          var m = Math.sqrt(re * re + im * im) / N;
+          mags.push(m); if (m > maxm) maxm = m;
+        }
+        var by = 268, bh = 116;
+        ctx1.strokeStyle = faint; ctx1.globalAlpha = 0.6;
+        ctx1.beginPath(); ctx1.moveTo(x0, by); ctx1.lineTo(x1, by); ctx1.stroke();
+        ctx1.globalAlpha = 1;
+        var bw = span / NH;
+        var visible = 0;
+        mags.forEach(function (m, i) {
+          var hgt = maxm > 0 ? (m / maxm) * bh : 0;
+          if (m / maxm > 0.02) visible++;
+          ctx1.fillStyle = i === 0 ? "#dc2626" : accent;
+          ctx1.globalAlpha = i === 0 ? 0.9 : 0.7;
+          ctx1.fillRect(x0 + i * bw + 2, by - hgt, bw - 5, hgt);
+          if (i % 2 === 0) {
+            ctx1.globalAlpha = 1; ctx1.fillStyle = muted; ctx1.textAlign = "center";
+            ctx1.fillText((i + 1) + "f", x0 + i * bw + bw / 2, by + 14);
+          }
+        });
+        ctx1.globalAlpha = 1;
+        ctx1.fillStyle = muted; ctx1.textAlign = "left";
+        ctx1.fillText("频谱（红＝基频 200 Hz，蓝＝新生成的谐波）", x0, 162);
+        $("d1-nh").textContent = visible;
+        $("d1-shape").textContent = g1 < 0.6 ? "接近纯正弦（线性区）"
+          : (g1 < 3 ? "轻微软削波：已能看到第 3 谐波"
+            : (g1 < 10 ? "软削波：顶部明显变平" : (g1 < 25 ? "中度削波" : "接近方波（硬削波）")));
+      }
+      redraws.push(draw1);
+      KB.bindRange($("d1-gain"), $("d1-gv"), function (v) { return "×" + v.toFixed(1); },
+        function (v) { g1 = v; draw1(); });
+
+      /* ---------- 演示 2：差音计算器 ---------- */
+      KBG.soundToggle($("d2-sound"));
+      var F1 = 200, semi = 7, g2 = 20;
+      var c2 = $("d2-canvas");
+      var ctx2 = KB.fitCanvas(c2, 240, function () { draw2(); });
+      function stats() {
+        var f2 = F1 * Math.pow(2, semi / 12);
+        var d = f2 - F1;
+        var ratio = F1 / d;
+        var nearest = Math.max(1, Math.round(ratio));
+        var cents = 1200 * Math.log(ratio / nearest) / Math.LN2;
+        return { f2: f2, d: d, ratio: ratio, nearest: nearest, cents: cents };
+      }
+      function draw2() {
+        var w = c2.clientWidth || 600, h = 240;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx2.clearRect(0, 0, w, h);
+        var x0 = 34, x1 = w - 14, span = x1 - x0;
+        if (span < 80) return;
+        ctx2.font = "11px -apple-system, PingFang SC, sans-serif";
+        var st = stats();
+        var FMAX = 1000, SR = 8000, N = 1024;
+        /* 生成双音削波信号 */
+        var buf = new Float64Array(N);
+        for (var i = 0; i < N; i++) {
+          var t = i / SR;
+          var s = (Math.sin(2 * Math.PI * F1 * t) + Math.sin(2 * Math.PI * st.f2 * t)) / 2;
+          buf[i] = clip(s, g2) * (0.5 - 0.5 * Math.cos(2 * Math.PI * i / (N - 1)));
+        }
+        /* 细粒度 DFT */
+        var bins = [], maxm = 0, STEP = 5;
+        for (var f = 0; f <= FMAX; f += STEP) {
+          var re = 0, im = 0, k = 2 * Math.PI * f / SR;
+          for (var n = 0; n < N; n++) { re += buf[n] * Math.cos(k * n); im -= buf[n] * Math.sin(k * n); }
+          var m = Math.sqrt(re * re + im * im) / N;
+          bins.push({ f: f, m: m }); if (m > maxm) maxm = m;
+        }
+        var by = 196, bh = 150;
+        /* 根音的整数分音位置（虚线） */
+        ctx2.setLineDash([3, 3]); ctx2.lineWidth = 1;
+        for (var nn = 1; nn <= 8; nn++) {
+          var fx = F1 / nn;
+          if (fx > FMAX) continue;
+          var px = x0 + span * (fx / FMAX);
+          ctx2.strokeStyle = faint; ctx2.globalAlpha = 0.55;
+          ctx2.beginPath(); ctx2.moveTo(px, 40); ctx2.lineTo(px, by); ctx2.stroke();
+          ctx2.globalAlpha = 1; ctx2.fillStyle = faint; ctx2.textAlign = "center";
+          if (nn <= 5) ctx2.fillText("f₁/" + nn, px, 34);
+        }
+        ctx2.setLineDash([]);
+        /* 频谱 */
+        bins.forEach(function (b) {
+          var px = x0 + span * (b.f / FMAX);
+          var hgt = maxm > 0 ? (b.m / maxm) * bh : 0;
+          if (hgt < 0.6) return;
+          var isDiff = Math.abs(b.f - st.d) < STEP;
+          var isTone = Math.abs(b.f - F1) < STEP || Math.abs(b.f - st.f2) < STEP;
+          ctx2.strokeStyle = isDiff ? "#dc2626" : (isTone ? accent : muted);
+          ctx2.globalAlpha = isDiff ? 1 : (isTone ? 0.9 : 0.42);
+          ctx2.lineWidth = isDiff || isTone ? 3 : 1.6;
+          ctx2.beginPath(); ctx2.moveTo(px, by); ctx2.lineTo(px, by - hgt); ctx2.stroke();
+        });
+        ctx2.globalAlpha = 1;
+        ctx2.strokeStyle = faint; ctx2.lineWidth = 1;
+        ctx2.beginPath(); ctx2.moveTo(x0, by); ctx2.lineTo(x1, by); ctx2.stroke();
+        ctx2.fillStyle = muted; ctx2.textAlign = "left";
+        ctx2.fillText("削波后的频谱：蓝＝两个原音，红＝差音 f₂−f₁，灰＝其余谐波与互调产物", x0, 20);
+        [0, 250, 500, 750, 1000].forEach(function (f) {
+          var px = x0 + span * (f / FMAX);
+          ctx2.fillStyle = muted; ctx2.textAlign = "center";
+          ctx2.fillText(f + " Hz", px, by + 16);
+        });
+        ctx2.textAlign = "left";
+        ctx2.fillStyle = Math.abs(st.cents) < 15 ? "#16a34a" : (Math.abs(st.cents) < 50 ? "#d97706" : "#dc2626");
+        ctx2.fillText(Math.abs(st.cents) < 15
+          ? "红线几乎落在虚线上 → 差音是共同的虚拟基频 → 干净"
+          : "红线明显偏离虚线 → 差音是外来频率 → 浑浊", x0, by + 36);
+      }
+      redraws.push(draw2);
+      function update2() {
+        var st = stats();
+        $("d2-name").textContent = T.INTERVALS[semi].cn;
+        $("d2-f").textContent = F1 + " / " + st.f2.toFixed(1) + " Hz";
+        $("d2-diff").textContent = st.d.toFixed(1) + " Hz";
+        $("d2-ratio").textContent = st.ratio.toFixed(3) + "（最近整数 " + st.nearest + "）";
+        var e = $("d2-off");
+        e.textContent = (st.cents >= 0 ? "+" : "") + st.cents.toFixed(0) + " 音分";
+        e.className = "verdict " + (Math.abs(st.cents) < 15 ? "good" : (Math.abs(st.cents) < 50 ? "mid" : "bad"));
+        draw2();
+      }
+      KB.bindRange($("d2-semi"), $("d2-sv"), function (v) { return v + "（" + T.INTERVALS[v].cn + "）"; },
+        function (v) { semi = v; update2(); });
+      KB.bindRange($("d2-gain"), $("d2-gv"), function (v) { return "×" + v.toFixed(1); },
+        function (v) { g2 = v; draw2(); });
+      function playPair(drive, delay) {
+        A.setDrive(drive);
+        var m = 52;                     // E3 附近，听感清楚
+        A.pluck(m, { delay: delay, gain: 0.7 });
+        A.pluck(m + semi, { delay: delay, gain: 0.7 });
+      }
+      $("d2-clean").addEventListener("click", function () { A.stopAll(); playPair(0, 0); });
+      $("d2-dirty").addEventListener("click", function () { A.stopAll(); playPair(0.88, 0); });
+      $("d2-ab").addEventListener("click", function () {
+        A.stopAll(); playPair(0, 0);
+        setTimeout(function () { playPair(0.88, 0); }, 2000);
+        $("d2-msg").textContent = "先清音、后高增益。" +
+          (Math.abs(stats().cents) < 15
+            ? "这个音程的差音归位良好，加了增益只是变厚。"
+            : "这个音程的差音偏离谐波位置，加了增益后能听到明显的浑浊与拍频。");
+      });
+      $("d2-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 3：A/B 试听 ---------- */
+      var CH = {
+        p5: { cn: "E5 强力和弦", midis: [40, 47, 52], notes: "E–B–E（根 五 八）", pred: "干净：三对差音全落在 E1／E2 上" },
+        maj: { cn: "E 大三和弦", midis: [40, 44, 47], notes: "E–G♯–B（根 三 五）", pred: "浑浊：根–三的差音偏离 67 音分" },
+        m3: { cn: "大三度双音", midis: [40, 44], notes: "E–G♯", pred: "浑浊：只有这一对，问题更暴露" },
+        tt: { cn: "三全音双音", midis: [40, 46], notes: "E–B♭", pred: "最浑浊：差音偏离 326 音分" }
+      };
+      var curCh = "p5", drive3 = 0.85;
+      function setCh(k) {
+        curCh = k;
+        ["p5", "maj", "m3", "tt"].forEach(function (j) {
+          $("d3-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        $("d3-cur").textContent = CH[k].cn;
+        $("d3-notes").textContent = CH[k].notes;
+        $("d3-pred").textContent = CH[k].pred;
+        A.stopAll(); A.setDrive(drive3);
+        A.strum(CH[k].midis, { spread: 0.014, gain: 0.62 });
+      }
+      ["p5", "maj", "m3", "tt"].forEach(function (k) {
+        $("d3-" + k).addEventListener("click", function () { setCh(k); });
+      });
+      $("d3-sweep").addEventListener("click", function () {
+        A.stopAll();
+        A.setDrive(0);
+        A.strum(CH[curCh].midis, { spread: 0.014, gain: 0.62 });
+        setTimeout(function () {
+          A.setDrive(drive3);
+          A.strum(CH[curCh].midis, { spread: 0.014, gain: 0.62 });
+        }, 2200);
+        $("d3-msg").textContent = "先清音、后高增益，同一个和弦。" +
+          (curCh === "p5" ? "强力和弦几乎只是变厚了。" : "听那一下变浑——这就是差音在作祟。");
+      });
+      KB.bindRange($("d3-drive"), $("d3-gv"), function (v) { return Math.round(v * 100) + "%"; },
+        function (v) { drive3 = v; A.setDrive(v); });
+      $("d3-stop").addEventListener("click", function () { A.stopAll(); });
+
+      if (window.MutationObserver) {
+        new MutationObserver(function () { redraws.forEach(function (f) { f(); }); })
+          .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      }
+      draw1(); update2(); setCh("p5"); A.stopAll();
+    });
+  </script>
+</body>
+</html>

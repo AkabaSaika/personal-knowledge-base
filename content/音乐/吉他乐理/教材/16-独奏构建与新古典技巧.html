@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>16 独奏构建与新古典技巧 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 16 章（终章）：目标音与和弦音导向、乐句的呼吸与问答、模进、琶音与扫拨、和声小调的新古典语汇、速度与张力的分配，以及全书结语与后续路径。">
+  <meta name="kb:tags" content="吉他,乐理,教材,独奏,即兴,目标音,和弦音,模进,琶音,扫拨,新古典,和声小调,张力,dz,xgd">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 0.88em; color: var(--kb-fg-muted); }
+    .kb-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .chip {
+      padding: 7px 14px; border-radius: 999px; font-size: 0.94em; font-weight: 600;
+      background: var(--kb-surface-alt); border: 1px solid var(--kb-border);
+    }
+    .chip.on { background: var(--kb-accent); color: #fff; border-color: var(--kb-accent); }
+    .final { border-left: 4px solid var(--kb-accent); padding-left: 16px; margin: 22px 0; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 16 章 · 独奏构建与新古典技巧</h1>
+        <p class="kb-lead">前十五章给了你材料：音、距离、音阶、和弦、进行、节奏、失真的物理约束。这一章讲<strong>怎么把它们变成话</strong>。绝大多数吉他手卡在同一个地方——音阶练得很熟，一到独奏就变成「在盒子里上下跑」：没有句子、没有呼吸、没有目标，听起来像在做练习而不是在说什么。这一章的核心只有一句话：<strong>独奏不是「弹哪些音」，是「往哪走、在哪停、什么时候不弹」。</strong>最后我们会用新古典金属的语汇做一次总演练，然后为整本书收尾。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出每个和弦下哪些是「目标音」、并把它们放在正确的位置；② 用呼吸与问答把一串音组织成乐句；③ 用模进让一个动机走遍指板；④ 说清琶音与扫拨的用途、以及减七琶音为什么能到处平移；⑤ 写出带新古典色彩的乐句；⑥ 用密度与音区规划一段独奏的张力曲线。</p>
+        </div>
+
+        <h2>独奏不是跑音阶</h2>
+        <p>先把问题说清楚。新手和老手弹同一个五声盒子，差别在哪？</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>新手</th><th>老手</th></tr></thead>
+            <tbody>
+              <tr><td>音的选择</td><td>盒子里的任意音，先后顺序随机</td><td>同样的音，但<strong>落点</strong>经过挑选</td></tr>
+              <tr><td>时间</td><td>音符均匀铺满，很少停</td><td><strong>大量留白</strong>；句子有开始和结束</td></tr>
+              <tr><td>与和弦的关系</td><td>不知道现在是什么和弦</td><td>每换一个和弦，<strong>目标音就换一批</strong></td></tr>
+              <tr><td>力度与音色</td><td>一成不变</td><td>推弦、颤音、闷音、力度都在变</td></tr>
+              <tr><td>结构</td><td>一条长线，没有段落</td><td>问—答、由疏到密、有高点有落点</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>注意「音的选择」这一行</strong>：老手用的音和新手<strong>基本是同一批</strong>。差别不在音阶知识，在<strong>组织</strong>。这就是为什么很多人练了几年音阶却感觉没进步——<strong>他们一直在扩充材料，从没练过组织。</strong></p>
+
+        <h2>目标音：跟着和弦说话</h2>
+        <p>最有效的一条改进，就是<strong>把和弦音放在显眼的位置</strong>。</p>
+        <p>在任何一个和弦下，音阶里的音分成两类：</p>
+        <ul>
+          <li><strong>和弦音</strong>（chord tone）：属于当前和弦的音。听起来「对」、稳定、可以停留。</li>
+          <li><strong>其余音阶音</strong>：调内但不属于当前和弦。听起来「在路上」，适合经过，不适合久留。</li>
+        </ul>
+        <p><strong>操作规则极其简单</strong>：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三条落点规则</p>
+          <p>① <strong>句尾落在和弦音上</strong>（尤其是三音或根音）；<br>
+          ② <strong>强拍尽量是和弦音</strong>，弱拍随意；<br>
+          ③ <strong>和弦切换的那一瞬间，让旋律也跟着换</strong>——最好用最短的距离移到新和弦的某个和弦音（哪怕只动半音）。</p>
+          <p>只做到这三条，你的独奏就会立刻从「在音阶里游荡」变成「跟着和声说话」。<strong>这是投入产出比最高的一项改进，比多学三个音阶有用得多。</strong></p>
+        </div>
+        <p>特别值得关注的是<strong>三音</strong>：它决定和弦的大小（第 6 章），因此最能体现「你听见了和弦的变化」。在 Am → F 的切换里，如果你在切换瞬间从 C（Am 的三音）移到 A（F 的三音），听众会立刻感到「这个人在跟着和弦走」。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：目标音高亮（跟着和弦，可用音在变）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：在一段和弦进行上独奏时，音阶是不变的，但每个和弦下的「和弦音」（可以停留的目标音）不断变化。把句尾与强拍落在当前和弦的和弦音上（尤其是三音），独奏就会听起来跟着和声走，而不是在音阶里游荡。</p></noscript>
+            <div id="g-sound"></div>
+            <div class="chip-row" id="g-chips"></div>
+            <div id="g-board"></div>
+            <div class="kb-legend">
+              <span><i style="background:#dc2626"></i>当前和弦的根音</span>
+              <span><i style="background:#16a34a"></i>当前和弦的三音（最能说明和弦变了）</span>
+              <span><i style="background:#2563eb"></i>其他和弦音</span>
+              <span><i style="background:#8b5cf6"></i>其余音阶音（经过音）</span>
+            </div>
+            <div class="kb-readout">
+              <span>进行 <b>Am – F – G – Am（A 自然小调）</b></span>
+              <span>当前和弦 <b id="g-cur">—</b></span>
+              <span>目标音 <b id="g-tones">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="g-bv"></span>
+                <input type="range" id="g-bpm" min="50" max="140" step="2" value="76"></label>
+              <button class="kb-btn kb-btn-primary" id="g-play" type="button">▶ 循环伴奏</button>
+              <button class="kb-btn" id="g-good" type="button">▶ 示范：句尾落在和弦音上</button>
+              <button class="kb-btn" id="g-bad" type="button">▶ 反例：无目标地跑音阶</button>
+              <button class="kb-btn" id="g-stop" type="button">■ 停止</button>
+            </div>
+            <p id="g-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">两个示范用的<strong>音阶完全相同</strong>，音符数量也接近。差别只在落点与留白——请对比着听两遍。</p>
+          </div>
+        </div>
+
+        <h2>乐句：呼吸与问答</h2>
+        <p>一段独奏不是一条长线，而是<strong>若干句子</strong>。句子需要三样东西：</p>
+        <ol>
+          <li><strong>一个开始</strong>——通常从一个明确的音进入，可以是和弦音，也可以是一个推弦。</li>
+          <li><strong>一个方向</strong>——朝某个目标音走，中间可以绕。</li>
+          <li><strong>一个结束和一段空白</strong>——落在目标音上，然后<strong>停下来</strong>。</li>
+        </ol>
+        <p>第三条是新手最容易漏掉的。<strong>不留白的独奏，听众没有时间消化刚才那一句，也没有期待下一句</strong>。而留白还有一个实际好处：它给乐队其他成员空间，让整体听起来更有对话感。</p>
+        <p>组织多个句子最可靠的方式还是<strong>问答</strong>（第 11 章讲 riff 时用过的同一个工具）：</p>
+        <pre><code>句 1（问）：从低把位上行，停在 5 音上   ← 悬着
+句 2（答）：同样的形状，但落在主音上   ← 落地
+句 3（问的变体）：更高、更密
+句 4（最终答）：最高音 → 推弦 → 长音 + 颤音收尾</code></pre>
+        <p><strong>三个最常见的毛病</strong>，以及对应的药：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>毛病</th><th>症状</th><th>药</th></tr></thead>
+            <tbody>
+              <tr><td><strong>不换气</strong></td><td>从头弹到尾没有一处停顿</td><td>强制规定：每四小节必须有一整拍不弹</td></tr>
+              <tr><td><strong>没有目标</strong></td><td>不知道这一句要去哪，就一直跑</td><td>先<strong>决定落音</strong>，再想怎么走过去</td></tr>
+              <tr><td><strong>力度平</strong></td><td>每个音一样响、一样长</td><td>每句挑<strong>一个</strong>音重点处理（推弦、颤音、拖长）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>模进：让一个动机走遍指板</h2>
+        <p><strong>模进</strong>（sequence）是把同一个音型在不同音高上重复。它同时解决两个问题：<strong>提供辨识度</strong>（因为形状重复）与<strong>提供推进</strong>（因为音高在移动）。</p>
+        <p>最常用的三种：</p>
+        <ul>
+          <li><strong>级进模进</strong>：动机每次沿音阶挪一级。最平顺，也最容易听懂。</li>
+          <li><strong>三度模进</strong>：每次挪两级（一个三度）。速度更快，气势更强。</li>
+          <li><strong>四音组</strong>：把四个连续音阶音打包，每次挪一级——这是新古典金属跑动的标准零件。</li>
+        </ul>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 模进的两个陷阱</p>
+          <p><strong>① 别做太多次。</strong>三到四次就够了，再多听众就知道接下来会发生什么，紧张感立刻归零。<strong>典型的处理是「做三次，第四次打破」</strong>——用一个意外的音或节奏结束这条线。</p>
+          <p><strong>② 模进不是句子。</strong>它是句子内部的一个装置，本身没有落点。<strong>模进结束后必须有一个真正的目标音来收</strong>，否则整段听起来像练习曲。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：模进生成器</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：模进是把同一个音型在不同音高上重复。级进模进最平顺、三度模进更有气势、四音组是快速跑动的标准零件。做三到四次即可，之后必须用一个明确的目标音收尾，否则会听起来像练习曲。</p></noscript>
+            <div id="q-tab"></div>
+            <div class="kb-readout">
+              <span>动机 <b id="q-motif">—</b></span>
+              <span>模进方式 <b id="q-type">级进上行</b></span>
+              <span>音阶 <b id="q-scale">A 自然小调</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">动机长度<span class="kb-control-value" id="q-mv"></span>
+                <input type="range" id="q-mlen" min="2" max="4" step="1" value="3"></label>
+              <label class="kb-control">重复次数<span class="kb-control-value" id="q-rv"></span>
+                <input type="range" id="q-reps" min="2" max="6" step="1" value="4"></label>
+              <label class="kb-control">速度<span class="kb-control-value" id="q-bv"></span>
+                <input type="range" id="q-bpm" min="70" max="200" step="2" value="132"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="q-step" type="button">级进上行</button>
+              <button class="kb-btn" id="q-down" type="button">级进下行</button>
+              <button class="kb-btn" id="q-third" type="button">三度模进</button>
+              <button class="kb-btn" id="q-play" type="button">▶ 播放</button>
+              <button class="kb-btn" id="q-stop" type="button">■ 停止</button>
+            </div>
+            <p id="q-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">末尾自动加了一个长音作为落点。试着把「重复次数」拉到 6——你会听出<strong>第五次开始就腻了</strong>，这就是「做三四次」这条经验的来源。</p>
+          </div>
+        </div>
+
+        <h2>琶音与扫拨</h2>
+        <p><strong>琶音</strong>（arpeggio）就是<strong>只弹和弦音，一个一个弹</strong>。它是「目标音」思路的极端版本——既然和弦音最稳，那干脆全用和弦音。</p>
+        <p>琶音相对音阶跑动有两个优势：</p>
+        <ul>
+          <li><strong>它清楚地表明和弦。</strong>音阶跑动模糊，琶音则直接把和弦拆开摊给听众。和弦一换，琶音跟着换，效果非常明确。</li>
+          <li><strong>它有更大的音程跨度。</strong>音阶是级进（二度），琶音是三度跳进——听起来更开阔、更有气势，也更容易横跨音区。</li>
+        </ul>
+        <p><strong>扫拨</strong>（sweep picking）是弹琶音的一种技术：拨片朝一个方向连续「扫」过相邻的弦，每根弦一个音，左手依次抬落。它能达到极高的速度，但对左手的<strong>消音</strong>要求极苛刻——第 12 章说过，高增益下任何多余的响声都会被放大。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 减七琶音：可以到处平移的万能零件</p>
+          <p>第 8 章证明过：减七和弦把八度四等分，因此 <strong>Bdim7 ＝ Ddim7 ＝ Fdim7 ＝ A♭dim7</strong>，而且十二个调里只有 <strong>3 个</strong>不同的减七和弦。</p>
+          <p>对独奏的意义是：<strong>一个减七琶音的形状，可以每隔三品原样平移，一路扫到指板尽头，而始终是同一个和弦。</strong>这就是新古典金属里那些「一口气冲上去」的华丽乐句最常用的零件——它<strong>不可能按错</strong>，因为整块指板上每隔三品都是同一组音。</p>
+          <p>代价（同样来自第 8 章）：它<strong>没有根音、不能久留</strong>，只能作为经过与冲刺，最后必须落到一个明确的和弦音上。</p>
+        </div>
+
+        <h2>新古典语汇</h2>
+        <p>把前面的零件组装起来，就得到新古典金属的典型乐句。它的配方相当稳定：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>成分</th><th>来自哪一章</th><th>作用</th></tr></thead>
+            <tbody>
+              <tr><td><strong>和声小调 / 弗里几亚属</strong></td><td>第 5、14 章</td><td>提供导音的推力 + 增二度的异国色彩</td></tr>
+              <tr><td><strong>小三和弦与减七琶音</strong></td><td>第 6、8 章</td><td>大跨度、可平移的冲刺零件</td></tr>
+              <tr><td><strong>四音组模进</strong></td><td>本章</td><td>高速跑动的标准结构</td></tr>
+              <tr><td><strong>Ⅴ → ⅰ 的解决</strong></td><td>第 5、7 章</td><td>与古典和声相同的落地方式</td></tr>
+              <tr><td><strong>推弦与颤音收尾</strong></td><td>第 12 章</td><td>把机械的跑动重新变成人声</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>值得注意的是最后一项。</strong>新古典乐句最容易失败的地方，是变成一串没有表情的音符。<strong>老练的做法是：跑动越快、收尾越慢</strong>——用一个长音、一个推弦、一段颤音把速度「接住」。<strong>速度是手段，表情才是目的。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：新古典乐句（琶音 + 跑动 + 解决）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：典型的新古典乐句由三段组成——琶音上行冲刺（大跨度、建立气势）、音阶模进跑动（密度最高处）、以及落在和弦音上的长音收尾（配推弦与颤音）。使用和声小调可获得导音的推力与增二度的异国色彩；减七琶音因为对称，可以每隔三品原样平移。</p></noscript>
+            <div id="n-tab"></div>
+            <div class="kb-readout">
+              <span>调 <b>A 和声小调</b></span>
+              <span>当前段 <b id="n-part">—</b></span>
+              <span>说明 <b id="n-desc">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="n-bv"></span>
+                <input type="range" id="n-bpm" min="70" max="220" step="2" value="150"></label>
+              <label class="kb-control">失真<span class="kb-control-value" id="n-dv"></span>
+                <input type="range" id="n-drive" min="0" max="1" step="0.05" value="0.55"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="n-arp" type="button">① 琶音上行（Am 三和弦）</button>
+              <button class="kb-btn" id="n-dim" type="button">② 减七琶音（每隔三品平移）</button>
+              <button class="kb-btn" id="n-run" type="button">③ 和声小调四音组跑动</button>
+              <button class="kb-btn kb-btn-primary" id="n-full" type="button">▶ 完整乐句（三段连起来）</button>
+              <button class="kb-btn" id="n-stop" type="button">■ 停止</button>
+            </div>
+            <p id="n-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">听「完整乐句」时注意结构：<strong>先大跨度冲上去（琶音）→ 再高密度铺满（跑动）→ 最后一个长音落地（推弦 + 颤音）</strong>。这个「张—密—收」的三段式，几乎是所有好独奏的通用形状。</p>
+          </div>
+        </div>
+
+        <h2>速度与张力的分配</h2>
+        <p>最后一件事，也是最容易被忽略的：<strong>一段独奏需要一条曲线。</strong></p>
+        <p>可用的参数有四个，而且它们应该<strong>协同</strong>而不是各干各的：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>参数</th><th>低张力</th><th>高张力</th></tr></thead>
+            <tbody>
+              <tr><td><strong>音符密度</strong></td><td>疏，长音多，留白多</td><td>密，十六分跑动</td></tr>
+              <tr><td><strong>音区</strong></td><td>中低把位</td><td>高把位，最高音留到最后</td></tr>
+              <tr><td><strong>音程跨度</strong></td><td>级进为主</td><td>琶音、大跳</td></tr>
+              <tr><td><strong>技巧强度</strong></td><td>干净的单音</td><td>推弦、颤音、扫拨、点弦</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>标准形状</strong>：<strong>疏 → 渐密 → 最密（同时到达最高音）→ 一个长音落地。</strong>把最高音和最高密度<strong>放在同一个位置</strong>，那就是这段独奏的顶点；顶点应该在整段的三分之二到四分之三处，之后要留出时间收。</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 关于速度</p>
+          <p><strong>速度只是密度参数的一种，它不是水平的度量。</strong>一段从头快到尾的独奏没有曲线，因此没有高潮——<strong>因为高潮是相对的</strong>。同样地，如果整段都在最高把位，最高音就不再是「最高」。</p>
+          <p>这也解释了为什么很多技术极强的独奏听起来不感人，而一些只用五声音阶、每个音都拖得很长的独奏却让人记一辈子：<strong>后者规划了曲线，前者只展示了材料。</strong></p>
+        </div>
+
+        <div class="final">
+          <h2>全书结语</h2>
+          <p>十六章走到这里，我们从「一根弦是一把等分的尺子」出发，最后落回「一段独奏需要一条曲线」。回头看，这本教材其实只讲了三件事：</p>
+          <p><strong>第一，音乐是距离。</strong>音高是频率，音程是比例，音阶是间距模式，和弦是叠起来的音程，进行是功能之间的运动。每一层都建立在下一层的距离关系上——所以第 1 章那把「等分的尺子」，是后面十五章共同的地基。</p>
+          <p><strong>第二，吉他是一张形状可以平移的地图。</strong>因为指板是等比的，音程、音阶、和弦在吉他上都是<strong>可整体平移的固定手型</strong>。这是吉他相对键盘最大的红利，也是 CAGED、五声盒子、强力和弦、调式指法之所以成立的共同原因。唯一的例外只有一个——3 弦到 2 弦那个大三度，它在整本书里出现了不下十次。</p>
+          <p><strong>第三，规则有适用范围。</strong>这是第三篇真正想教的东西。「属七必须解决」假设了音乐是叙事；「三度让和弦有色彩」假设了增益不高；「和声进行要避免功能倒退」假设了古典共性写作的引力体系。<strong>当风格换了、音色换了、听觉习惯换了，规则就要重新称一遍重量。</strong>知道规则很重要，知道规则<strong>为什么</strong>成立更重要——因为只有后者能告诉你它什么时候不成立。</p>
+          <p>还有一条贯穿全书、但没有单独成章的线索：<strong>物理约束会塑造音乐。</strong>十二平均律的三度偏高 14 音分（第 1 章），在高增益下被放大成 67 音分的杂频（第 10 章），于是金属放弃了三度（第 11 章），于是和声色彩被迫转移到高音区的小音块（第 15 章），于是整个 djent 织体成型。<strong>这条链条从物理一路走到风格，中间没有一步是任意的。</strong></p>
+
+          <h3>接下来往哪走</h3>
+          <ul>
+            <li><strong>把书合上，去弹。</strong>最重要的一条。本书的每一个概念都应该在琴上验证一遍——尤其是那些你觉得「已经懂了」的。<strong>懂和会是两件事，而它们之间的距离通常比想象中大。</strong></li>
+            <li><strong>练耳。</strong>回到第 3 章的音程听辨小测，每天五分钟。所有乐理最终都要通过耳朵才有意义；能听出来的知识才是你的。</li>
+            <li><strong>扒谱。</strong>用第 7 章的罗马数字分析你喜欢的歌，用第 11 章的框架拆解你喜欢的 riff。<strong>分析别人的作品，是把知识变成直觉最快的路径。</strong></li>
+            <li><strong>如果想继续深入和声</strong>：下一站是爵士和声——延伸音的用法、和弦代换、调式和声、以及「和弦—音阶」思维。第 8 章的延伸音与第 13 章的三全音代换是它的入口。</li>
+            <li><strong>如果想继续深入重型</strong>：下一站是<strong>编曲与制作</strong>。第 10 章与第 15 章反复指向同一个结论——现代重型音乐的很大一部分「乐理」其实是<strong>录音与混音的拓扑</strong>。学会分轨思维，比再学三个调式有用。</li>
+            <li><strong>如果想写歌</strong>：从第 7 章的功能与第 13 章的骨架出发，先写一百个四小节的循环。<strong>数量会解决很多想不明白的问题。</strong></li>
+          </ul>
+          <p>最后一句。这本书从头到尾在做的事，是把「凭感觉」换成「知道为什么」。但请记住：<strong>乐理是用来解释音乐的，不是用来审批音乐的。</strong>当你的耳朵和书上的规则打架时——<strong>先相信耳朵，然后回来搞清楚规则为什么在这里失效。</strong>那一刻你学到的，会比顺利套用规则时多得多。</p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 16.1</p>
+          <p>在 Am 和弦下弹 A 自然小调，哪些音是「目标音」？哪些是经过音？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>A 自然小调</strong> ＝ A B C D E F G（七个音）。<br>
+            <strong>Am 和弦</strong> ＝ A C E（三个音）。</p>
+            <p><strong>目标音（和弦音）</strong>：<strong>A（根音）、C（三音）、E（五音）</strong> —— 可以停留、可以拖长、适合放在句尾与强拍。</p>
+            <p><strong>经过音</strong>：<strong>B、D、F、G</strong> —— 调内但不属于当前和弦，适合放在弱拍、快速经过，停在它们上面会有「话没说完」的感觉。</p>
+            <p><strong>其中最有分量的是 C</strong>——它是三音，决定了这个和弦是小和弦。把句子落在 C 上，听众会明确感到「这是 Am」。</p>
+            <p><strong>注意「适合停留」不等于「只能用和弦音」</strong>。经过音提供了全部的色彩与运动感，没有它们音乐会像一串琶音练习。规则说的是<strong>落点</strong>，不是<strong>禁令</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 16.2</p>
+          <p>进行是 <strong>Am → F</strong>。在切换的那一瞬间，旋律从哪个音移到哪个音，最能让听众感到「和弦变了」？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先找出两个和弦的关系</strong>：<br>
+            Am ＝ <strong>A C</strong> E　　F ＝ F <strong>A C</strong></p>
+            <p><strong>共同音</strong>：A 和 C。<strong>各自独有的音</strong>：Am 有 <strong>E</strong>，F 有 <strong>F</strong>。</p>
+            <p><strong>关键推论</strong>：如果旋律停在 A 或 C 上，<strong>和弦换了但旋律听起来没变</strong>——因为这两个音在新和弦里依然成立。想让听众听到变化，就必须动到那两个「独有的音」。</p>
+            <p><strong>最佳答案：从 E 移到 F</strong>。理由有三：</p>
+            <ol>
+              <li><strong>它是最小的移动</strong>——只走一个半音；</li>
+              <li><strong>它精确地标记了变化</strong>——E 是 Am 独有的，F 是 F 独有的，一步就从「只属于旧和弦」跨到「只属于新和弦」；</li>
+              <li><strong>半音上行有强烈的方向感</strong>（第 3 章）——听起来不是「跳到别处」，而是「被牵引过去」。</li>
+            </ol>
+            <p><strong>一般化的方法</strong>：换和弦时，找出<strong>旧和弦独有的音</strong>与<strong>新和弦独有的音</strong>，然后用最短的距离连接它们。<strong>这就是古典和声里「声部进行」的核心思想，在独奏上同样成立</strong>——第 8 章例题 8.1 里属七解决的那两条半音线，用的是完全相同的原理。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 16.3</p>
+          <p>为什么减七琶音可以每隔三品原样平移，一路扫到指板尽头？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>因为减七和弦把八度四等分</strong>（第 8 章）：它的结构是 0–3–6–9，每层都是<strong>小三度</strong>。</p>
+            <p><strong>数学上</strong>：设减七和弦的音级集合为 <em class="kb-math">S(r) ＝ { r, r+3, r+6, r+9 }</em>。把根音升高 3 个半音：<br>
+            <em class="kb-math">S(r+3) ＝ { r+3, r+6, r+9, r+12 } ＝ { r+3, r+6, r+9, r } ＝ S(r)</em>。<br>
+            <strong>集合完全不变</strong>——所以往上挪三品，弹的还是同一组音。∎</p>
+            <p><strong>在指板上的后果</strong>：同一个琶音形状，在 <em class="kb-math">n</em>、<em class="kb-math">n+3</em>、<em class="kb-math">n+6</em>、<em class="kb-math">n+9</em>、<em class="kb-math">n+12</em> 品位都成立。你可以像爬梯子一样一路扫上去，<strong>不可能按错</strong>，因为整块指板上每隔三品都是同一个和弦。</p>
+            <p><strong>为什么它在新古典金属里那么常见</strong>：它同时提供了三样东西——<strong>大跨度</strong>（三度跳进，气势足）、<strong>高速度</strong>（扫拨友好）、<strong>零风险</strong>（形状可任意平移）。而它自带的紧张感（内含两个三全音）正好符合这类音乐的情绪。</p>
+            <p><strong>但别忘了它的代价</strong>（第 8 章）：对称 ＝ 无根 ＝ 不能久留。<strong>减七琶音必须以一个明确的和弦音收尾</strong>，否则整段听起来是一场没有落点的炫技。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是目标音？复述三条落点规则，并说明为什么它们比「多学一个音阶」更有效。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>目标音</strong> ＝ 当前和弦的<strong>和弦音</strong>。它们听起来稳定、可以停留。</p>
+            <p><strong>三条规则</strong>：① 句尾落在和弦音上（尤其三音或根音）；② 强拍尽量是和弦音；③ 和弦切换时，旋律用最短距离移到新和弦的和弦音上。</p>
+            <p><strong>为什么更有效</strong>：因为绝大多数人的问题<strong>不是材料不够，而是组织不够</strong>。多学一个音阶，是往手里再塞一把工具；而落点规则改变的是<strong>怎么用手里已有的工具</strong>——它让同样的音立刻听起来「跟着和声在说话」。</p>
+            <p><strong>一个自检方法</strong>：录下自己的独奏，然后只听<strong>每个乐句的最后一个音</strong>。如果它们大多是和弦音，说明你在说话；如果基本是随机的，说明你在跑音阶。<strong>这个测试三分钟就能做完，比练一个月音阶更能说明问题。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>在 G 和弦下弹 G 大调音阶，哪三个音是目标音？如果和弦换成 Em，目标音怎么变？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>G 和弦下</strong>：G ＝ <strong>G、B、D</strong>。<br>
+            <strong>Em 和弦下</strong>：Em ＝ <strong>E、G、B</strong>。</p>
+            <p><strong>变化分析</strong>：共同音是 <strong>G 和 B</strong>；G 独有的是 <strong>D</strong>，Em 独有的是 <strong>E</strong>。</p>
+            <p>所以要体现 G → Em 的切换，最好的动作是 <strong>D → E</strong>（上行大二度）——从旧和弦独有的音走到新和弦独有的音（例题 16.2 的方法）。</p>
+            <p><strong>顺带注意</strong>：G 和 Em 是<strong>关系大小调</strong>的主和弦（第 5 章），共享两个音，所以这个切换本身就很「柔和」。如果你停在共同音 G 或 B 上，听众几乎察觉不到和弦变了——<strong>有时这正是你想要的（保持连贯），有时不是（想要变化被听到）。规则是工具，不是命令。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>模进一般做几次？为什么不能多做？做完之后必须接什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三到四次。</strong></p>
+            <p><strong>为什么不能多</strong>：模进的价值在于「重复形状 + 移动音高」制造的推进感。但重复到第四五次，听众已经完全预测到接下来会发生什么——<strong>可预测 ＝ 无张力</strong>。这时它就从「推进」变成了「填充」。</p>
+            <p><strong>常见的高明处理</strong>：<strong>做三次，第四次打破</strong>——在第四次的位置换一个音、改一下节奏，或者干脆停下。听众建立的预期被满足了三次，第四次的意外因此格外有效。</p>
+            <p><strong>做完之后必须接什么</strong>：<strong>一个明确的目标音（和弦音），最好配长时值。</strong>模进本身<strong>没有落点</strong>——它是句子内部的装置，不是句子。不给落点就直接进入下一段，整段会听起来像练习曲而不是乐句。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>琶音相对音阶跑动有哪两个优势？它的代价是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>优势一：它清楚地表明和弦。</strong>琶音全部由和弦音组成，等于把当前和弦拆开摊给听众。和弦一换、琶音跟着换，「跟着和声走」这件事变得毫不含糊。</p>
+            <p><strong>优势二：更大的音程跨度。</strong>音阶是级进（二度），琶音是三度跳进——听起来更开阔、更有气势，也更容易在短时间内跨越音区（用来「冲上去」特别有效）。</p>
+            <p><strong>代价</strong>：</p>
+            <ul>
+              <li><strong>缺少色彩。</strong>只用和弦音意味着放弃了经过音带来的张力与摩擦，全用琶音会显得干净但空洞。</li>
+              <li><strong>容易听起来像练习。</strong>琶音形状极其规整，连续使用会暴露出「机械感」。</li>
+              <li><strong>技术门槛高。</strong>跨弦跳进对消音要求苛刻，高增益下尤其如此。</li>
+            </ul>
+            <p><strong>成熟的用法是混合</strong>：用琶音<strong>建立骨架与冲刺</strong>，用音阶<strong>填充与连接</strong>，用推弦和长音<strong>收尾</strong>。三者各司其职，正是演示 3 那个「张—密—收」三段式的内部分工。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一段独奏的「顶点」应该放在整段的哪个位置？为什么不是最后一秒？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>大约在整段的三分之二到四分之三处。</strong></p>
+            <p><strong>为什么不放最后</strong>，三条理由：</p>
+            <ol>
+              <li><strong>需要时间落地。</strong>顶点之后要有一个「收」的过程——把张力释放掉、把听众带回地面。如果顶点就是结尾，音乐会显得<strong>被切断</strong>而不是<strong>结束</strong>。</li>
+              <li><strong>需要与后面的段落衔接。</strong>独奏之后通常还有副歌或结尾。如果独奏在最高点戛然而止，后面的段落会显得虚弱——<strong>你把能量全用光了，却没有交接。</strong></li>
+              <li><strong>顶点需要对比才存在。</strong>「最高」是相对的。顶点之后的回落，反过来确认了刚才那里确实是最高点。没有回落，听众感受到的只是「一直很高」。</li>
+            </ol>
+            <p><strong>标准形状</strong>：疏 → 渐密 → 顶点（最高音 + 最高密度 + 最强技巧，三者<strong>同时</strong>到达）→ 长音落地 + 颤音。</p>
+            <p><strong>一个实用检验</strong>：把独奏的音符密度画成一条曲线。如果它是一条平线，那这段独奏没有结构；如果它先升后降且峰值靠后，那就对了。<strong>这条曲线和第 13 章习题 13.8 的「和声节奏」是同一个思路——疏密本身就是表现手段。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么技术极强、从头快到尾的独奏常常「不感人」，而一些只用五声音阶、音符很少的独奏却让人记很久？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>核心原因：张力是相对的，没有对比就没有张力。</strong></p>
+            <p>一段从头快到尾的独奏，把「密度」这个参数<strong>钉死在最大值</strong>。于是：</p>
+            <ul>
+              <li><strong>没有顶点</strong>——因为处处都是顶点，就等于没有顶点；</li>
+              <li><strong>没有呼吸</strong>——听众没有时间消化，注意力会在十几秒后自动下降；</li>
+              <li><strong>信息过载</strong>——音符太多、太快，听觉来不及记住任何一个乐句，所以什么也留不下。</li>
+            </ul>
+            <p><strong>而少音符的独奏为什么容易记住</strong>：</p>
+            <ul>
+              <li>每个音都被<strong>听清楚了</strong>，而且有时间在记忆里留下痕迹；</li>
+              <li>留白让每一个音都变重要（第 11 章：空白是最强的重音）；</li>
+              <li>因为音少，作者被迫在<strong>每个音的处理</strong>上下功夫——推弦的到位程度、颤音的速度、音色的变化。<strong>这些「音之外的信息」正是感染力的来源。</strong></li>
+            </ul>
+            <p><strong>但这不是在说「快是错的」。</strong>速度是极其有效的张力工具——问题只出在<strong>把手段当成了目的</strong>。正确的用法是：<strong>把速度留给顶点。</strong>前面越疏，顶点的快才越有冲击力。<strong>技术不是用来展示的，是用来在需要的那一刻兑现的。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>在 <strong>Am – F – G – Am</strong>（每小节一个和弦，共 4 小节）上，设计一段四句的独奏骨架。只需写出<strong>每句的落音与密度</strong>，并说明理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>一个可行的设计（音区从中到高，密度先疏后密）：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>小节</th><th>和弦</th><th>密度</th><th>落音</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Am</td><td>很疏（3–4 个音 + 半小节留白）</td><td><strong>C</strong>（Am 三音）</td><td>开局要立住调性与和弦；三音最能说明「这是小和弦」；留白建立呼吸习惯</td></tr>
+                  <tr><td>2</td><td>F</td><td>稍密（6–8 个音）</td><td><strong>F</strong>（F 根音）</td><td>用 <code>E → F</code> 的半音上行进入（例题 16.2），标记和弦变化</td></tr>
+                  <tr><td>3</td><td>G</td><td>最密（十六分跑动或模进）</td><td><strong>B</strong>（G 三音，音区最高）</td><td><strong>顶点放在这里</strong>——第 3 小节是全段的四分之三处（习题 16.5）；G 是这个循环里张力最高的和弦</td></tr>
+                  <tr><td>4</td><td>Am</td><td>骤疏（1–2 个音 + 长音）</td><td><strong>A</strong>（主音）+ 推弦 / 颤音</td><td>回落与解决；用长音把速度「接住」，给下一段留出交接</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>四句构成问答</strong>：句 1 与句 2 是「问 + 展开」，句 3 是高潮，句 4 是「答」。整体密度曲线是<strong>疏 → 中 → 密 → 疏</strong>，音区曲线是<strong>中 → 中高 → 高 → 中</strong>，两条曲线在第 3 小节同时到达峰值。</p>
+            <p><strong>值得强调的是：这份骨架里一个具体的音都没写。</strong>落音与密度定下来之后，中间用哪些音其实自由度很大——<strong>先定结构，再填内容</strong>，这个顺序比反过来可靠得多。很多人独奏没有形状，正是因为他们从第一个音开始就在即兴，而从未规划过整体。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>「练了好几年音阶，独奏还是没进步。」请用本书学过的内容给出一份<strong>诊断清单</strong>与<strong>改进顺序</strong>。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>诊断清单</strong>（逐条自查，录音之后回听最准）：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>#</th><th>检查项</th><th>不合格的表现</th><th>对应章节</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>句尾落在哪</td><td>乐句最后一个音大多不是和弦音</td><td>本章</td></tr>
+                  <tr><td>2</td><td>有没有留白</td><td>整段几乎没有超过一拍的停顿</td><td>本章、第 11 章</td></tr>
+                  <tr><td>3</td><td>知不知道当前和弦</td><td>换和弦时旋律毫无反应</td><td>第 7 章、本章</td></tr>
+                  <tr><td>4</td><td>密度有没有曲线</td><td>从头到尾一样密</td><td>本章</td></tr>
+                  <tr><td>5</td><td>音区有没有移动</td><td>整段困在一个盒子里</td><td>第 12 章</td></tr>
+                  <tr><td>6</td><td>推弦准不准</td><td>全音推弦经常偏低</td><td>第 12 章</td></tr>
+                  <tr><td>7</td><td>有没有动机</td><td>没有任何形状被重复过</td><td>第 11 章、本章</td></tr>
+                  <tr><td>8</td><td>听不听得出音程</td><td>脑子里想的旋律弹不出来</td><td>第 3 章</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>改进顺序</strong>（按性价比排序，不要跳步）：</p>
+            <ol>
+              <li><strong>先修留白与落点（第 1、2 项）。</strong>成本最低、见效最快。规定自己每四小节必须有一整拍不弹、每句必须落在和弦音上。<strong>这一步通常能带来最明显的听感提升。</strong></li>
+              <li><strong>再修「跟着和弦走」（第 3 项）。</strong>用本章演示 1 的方法，在每个和弦下先只弹三个和弦音，熟练后再加经过音。</li>
+              <li><strong>然后修结构（第 4、7 项）。</strong>先写骨架（落音 + 密度，见习题 16.7），再填内容。练习「用一个动机做三次模进」。</li>
+              <li><strong>接着扩音区（第 5 项）。</strong>只需再学一两个五声盒子并练熟连接（第 12 章习题 12.5）。</li>
+              <li><strong>最后是技术细节（第 6 项）与练耳（第 8 项）。</strong>推弦音准用「同音位置对照法」；练耳每天五分钟，回到第 3 章的听辨小测。</li>
+            </ol>
+            <p><strong>核心诊断结论</strong>：<strong>「练音阶」练的是材料，而独奏的瓶颈几乎总在组织。</strong>材料是线性积累的（学一个是一个），组织是结构性的（学会一条规则，全部材料的价值都提升）。<strong>所以当你感觉停滞时，第一反应不应该是「再学一个音阶」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p><strong>全书综合题。</strong>约束条件：<strong>Drop C 调弦、高增益、E 弗里几亚、7/8 拍</strong>。设计一段 8 小节的音乐（riff 骨架 + 独奏骨架），并逐条说明每个决定引用了本书哪一章的哪条原则。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>第一步：先检查约束之间有没有冲突。</strong></p>
+            <p>Drop C 的空弦是 C G C F A D（第 15 章）。而我们要 <strong>E 弗里几亚</strong>——E 在 6 弦第 <strong>4</strong> 品（C2 ＝ 36，E2 ＝ 40）。<strong>这就丢掉了「主音是空弦」这个最大的便利</strong>（第 11、14 章）。</p>
+            <p><strong>两个选择</strong>：① 改用 <strong>C 弗里几亚</strong>（主音就是空弦，代价是放弃指定的调）；② 保留 E，接受主音在 4 品。<br>
+            <strong>这里选 ②，但做一个补偿</strong>：把 6 弦 4 品当作新的「持续低音」，并大量使用闷音——闷音下空弦与按弦的音色差别本来就小（第 9 章）。<strong>这是一个有意识的取舍，而不是忽略问题。</strong></p>
+
+            <p><strong>第二步：Riff 骨架（4 小节，7/8）</strong></p>
+            <pre><code>调弦 Drop C ｜ 主音 E ＝ 6 弦 4 品 ｜ 单指强力和弦（第 15 章）
+
+小节 1–2（分组 3+2+2，第 9 章习题 9.9）：
+   ×· ·   ｜ ×· ｜ ×·        全部闷音十六分，根音钉在 4 品（E5）
+小节 3：
+   ×· ·   ｜ ×· ｜ ♭Ⅱ ·       第 3 组换成 5 品（F5）＝ ♭Ⅱ（第 14 章特征音）
+小节 4：
+   ×· ·   ｜ ♭Ⅱ ｜ 休 休       末尾留休止（第 11 章：空白是最强的重音）</code></pre>
+            <p><strong>逐条依据</strong>：</p>
+            <ul>
+              <li><strong>只用强力和弦</strong> → 第 10 章：高增益下三度会糊，强力和弦的差音自我强化。</li>
+              <li><strong>全程闷音</strong> → 第 9、10 章：高增益延长延音，密集节奏必须靠闷音保住颗粒。</li>
+              <li><strong>用 ♭Ⅱ（F5）而不是别的音</strong> → 第 14 章：♭2 是弗里几亚的特征音，不强调它调式就不成立；且 <code>F5 → E5</code> 只差一品（第 11 章）。</li>
+              <li><strong>7/8 分成 3+2+2</strong> → 第 9 章：奇数拍必须明确分组，让不对称「有规律地奇」。</li>
+              <li><strong>末尾留休止</strong> → 第 11 章：休止是密集织体里最强的重音，且必须落在固定位置才被听成设计。</li>
+              <li><strong>7/8 与鼓的 4/4 叠加</strong>（可选）→ 第 15 章：<em class="kb-math">lcm(7, 8) ＝ 56</em>，7 小节一个大循环，用极少素材换长周期变化。</li>
+            </ul>
+
+            <p><strong>第三步：独奏骨架（4 小节）</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>小节</th><th>密度</th><th>落音</th><th>依据</th></tr></thead>
+                <tbody>
+                  <tr><td>5</td><td>疏，2–3 个音 + 长音</td><td><strong>E</strong>（主音）</td><td>先立调性（第 14 章）；开局留白（本章）</td></tr>
+                  <tr><td>6</td><td>中，加入 <strong>F（♭2）</strong> 推弦回 E</td><td><strong>E</strong></td><td>特征音必须在独奏里也出现（第 14 章）；推弦提供表情（第 12 章）</td></tr>
+                  <tr><td>7</td><td><strong>最密</strong>：Em 琶音上行 → 四音组跑动，冲到最高音</td><td><strong>B</strong>（五音，最高点）</td><td>顶点放在四分之三处（本章习题 16.5）；琶音负责冲刺（本章）</td></tr>
+                  <tr><td>8</td><td>骤疏：一个长音 + 颤音</td><td><strong>E</strong> + 颤音</td><td>回落与落地；用长音接住速度（本章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>额外的两条注意</strong>：</p>
+            <ul>
+              <li><strong>独奏要在高音区。</strong>第 10 章习题 10.6：低音区的互调产物落在最拥挤、最难分辨的频段；而且 riff 已经占满了低音，独奏必须换个楼层才听得见（第 15 章的分层思想）。</li>
+              <li><strong>独奏用的音阶必须和 riff 对齐。</strong>riff 用了 F（♭2），独奏就不能用 F♯——否则半音打架，高增益下必糊（第 14 章习题 14.9 第 4 条）。</li>
+            </ul>
+
+            <p><strong>这道题真正想让你看到的</strong>：一段八小节的重型音乐，背后是<strong>十几个互相牵制的决定</strong>，而每一个决定都能追溯到某条具体的原理——从十二平均律的三度误差（第 1 章）到互调失真（第 10 章）到调式特征音（第 14 章）到最小公倍数（第 15 章）。<strong>这就是「懂乐理」的实际含义：不是能背出定义，而是在做每一个选择时知道自己在权衡什么。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点 · 兼全书总结</p>
+          <p><strong>本章</strong>：① <strong>独奏不是跑音阶，是组织</strong>——老手和新手用的音基本相同，差别在落点、留白与结构。② <strong>目标音三规则</strong>：句尾落在和弦音、强拍尽量是和弦音、换和弦时用最短距离移到新和弦独有的音。③ <strong>乐句要有开始、方向、结束和空白</strong>；组织多句用问答。④ <strong>模进</strong>做三到四次，之后必须用一个目标音收。⑤ <strong>琶音</strong>表明和弦、提供大跨度；<strong>减七琶音</strong>因对称可每隔三品平移，但无根不能久留。⑥ <strong>张力靠密度、音区、跨度、技巧四条曲线协同</strong>，顶点放在三分之二到四分之三处；<strong>速度是留给顶点的手段，不是目的</strong>。</p>
+          <p><strong>全书三条主线</strong>：① <strong>音乐是距离</strong>——从频率比到音程到音阶到和弦到进行，每一层都建立在下一层的距离关系上。② <strong>吉他是一张可平移的地图</strong>——等比指板让所有形状都能整体移动，唯一的例外是 3–2 弦那个大三度。③ <strong>规则有适用范围</strong>——知道规则为什么成立，才知道它什么时候失效；而<strong>物理约束会一路塑造到风格</strong>（平均律的三度误差 → 互调失真 → 强力和弦 → 高音音块 → djent 织体）。</p>
+          <p><strong>最后一句</strong>：乐理是用来<strong>解释</strong>音乐的，不是用来<strong>审批</strong>音乐的。耳朵和规则打架时，先相信耳朵，再回来搞清楚规则为什么在这里失效。</p>
+        </div>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎸 读完了</p>
+          <p>十六章到此结束。回到<a href="./00-大纲与学习路线.html">大纲页</a>可以跳读任意章节；如果你是一路读下来的，那么现在最该做的事只有一件——<strong>把琴拿起来。</strong></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+      /* 把 MIDI 映射到一个适合旋律的指板位置（优先高音弦） */
+      function pos(midi) {
+        for (var s = 5; s >= 2; s--) {
+          var f = midi - TUN[s];
+          if (f >= 0 && f <= 15) return { string: s, fret: f };
+        }
+        return { string: 5, fret: Math.max(0, midi - TUN[5]) };
+      }
+
+      /* ---------- 演示 1：目标音高亮 ---------- */
+      KBG.soundToggle($("g-sound"));
+      var A_MIN = T.scalePcs(9, "naturalMinor");             // A B C D E F G
+      var PROG = [
+        { cn: "Am", root: 9, key: "min", bass: 45 },
+        { cn: "F", root: 5, key: "maj", bass: 41 },
+        { cn: "G", root: 7, key: "maj", bass: 43 },
+        { cn: "Am", root: 9, key: "min", bass: 45 }
+      ];
+      var gBpm = 76, gH = null, gRaf = null, gCur = -1;
+      var fbG = KBG.fretboard($("g-board"), {
+        tuning: TUN, fromFret: 1, toFret: 14, showOpen: false,
+        labels: "degree", root: 9, marks: [], title: "当前和弦的目标音"
+      });
+      function renderG(i) {
+        gCur = i;
+        var host = $("g-chips"); clear(host);
+        PROG.forEach(function (p, k) {
+          var c = document.createElement("span");
+          c.className = "chip" + (k === i ? " on" : "");
+          c.textContent = p.cn;
+          host.appendChild(c);
+        });
+        if (i < 0) { $("g-cur").textContent = "—"; $("g-tones").textContent = "—"; return; }
+        var p = PROG[i];
+        var tones = T.CHORDS[p.key].steps.map(function (s) { return T.mod12(p.root + s); });
+        $("g-cur").textContent = p.cn;
+        $("g-tones").textContent = tones.map(function (x) { return T.name(x); }).join(" ") +
+          "（三音 ＝ " + T.name(tones[1]) + "）";
+        var marks = [];
+        T.findOnBoard(TUN, A_MIN, 14, 1).forEach(function (q) {
+          var idx = tones.indexOf(q.pc);
+          marks.push({
+            string: q.string, fret: q.fret,
+            kind: idx === 0 ? "root" : (idx === 1 ? "third" : (idx === 2 ? "note" : "purple"))
+          });
+        });
+        fbG.setMarks(marks);
+      }
+      function startG() {
+        stopG(); A.setDrive(0.2);
+        var ev = [];
+        PROG.forEach(function (p, i) {
+          var st = T.CHORDS[p.key].steps;
+          ev.push({ t: i * 4, midis: [p.bass].concat(st.map(function (s) { return 57 + T.mod12(p.root + s - 9); })),
+            dur: 3.6, spread: 0.035, gain: 0.42 });
+        });
+        gH = A.sequence(ev, { bpm: gBpm, loop: true, lengthBeats: 16 });
+        (function tick() {
+          if (!gH) return;
+          renderG(Math.floor(gH.position() / 4) % 4);
+          gRaf = requestAnimationFrame(tick);
+        })();
+        $("g-play").textContent = "⏸ 暂停";
+      }
+      function stopG() {
+        if (gH) { gH.stop(); gH = null; }
+        if (gRaf) { cancelAnimationFrame(gRaf); gRaf = null; }
+        A.stopAll(); $("g-play").textContent = "▶ 循环伴奏";
+      }
+      $("g-play").addEventListener("click", function () { gH ? stopG() : startG(); });
+      /* 两段示范：音阶完全相同，只有落点与留白不同 */
+      var SOLO_GOOD = [
+        { t: 0, m: 57, d: 0.5 }, { t: 0.5, m: 59, d: 0.5 }, { t: 1, m: 60, d: 1.5 },
+        { t: 4, m: 64, d: 0.5 }, { t: 4.5, m: 65, d: 2 },
+        { t: 8, m: 67, d: 0.5 }, { t: 8.5, m: 65, d: 0.5 }, { t: 9, m: 64, d: 0.5 }, { t: 9.5, m: 62, d: 2 },
+        { t: 12, m: 60, d: 0.5 }, { t: 12.5, m: 59, d: 0.5 }, { t: 13, m: 57, d: 3 }
+      ];
+      var SOLO_BAD = (function () {
+        var seq = [57, 59, 60, 62, 64, 65, 67, 69, 67, 65, 64, 62, 60, 59, 57, 59,
+                   60, 62, 64, 65, 67, 69, 71, 69, 67, 65, 64, 62, 60, 59, 57, 59];
+        return seq.map(function (m, i) { return { t: i * 0.5, m: m, d: 0.5 }; });
+      })();
+      function playSolo(list, msg) {
+        stopG(); A.setDrive(0.2);
+        var ev = [];
+        PROG.forEach(function (p, i) {
+          var st = T.CHORDS[p.key].steps;
+          ev.push({ t: i * 4, midis: [p.bass].concat(st.map(function (s) { return 57 + T.mod12(p.root + s - 9); })),
+            dur: 3.6, spread: 0.035, gain: 0.32 });
+        });
+        list.forEach(function (n) { ev.push({ t: n.t, midi: n.m, dur: n.d, gain: 0.85 }); });
+        gH = A.sequence(ev, { bpm: gBpm, loop: true, lengthBeats: 16 });
+        (function tick() {
+          if (!gH) return;
+          renderG(Math.floor(gH.position() / 4) % 4);
+          gRaf = requestAnimationFrame(tick);
+        })();
+        $("g-play").textContent = "⏸ 暂停";
+        $("g-msg").textContent = msg;
+      }
+      $("g-good").addEventListener("click", function () {
+        playSolo(SOLO_GOOD, "句尾依次落在 C（Am 三音）→ F（F 根音）→ D（G 五音）→ A（主音，长音）。注意每句之间都有留白，而且 Am→F 的切换用了 E→F 的半音上行。");
+      });
+      $("g-bad").addEventListener("click", function () {
+        playSolo(SOLO_BAD, "同样的音阶、同样的伴奏，但音符均匀铺满、没有一处停顿、和弦换了旋律也没反应——这就是「在盒子里跑音阶」的听感。");
+      });
+      $("g-stop").addEventListener("click", stopG);
+      KB.bindRange($("g-bpm"), $("g-bv"), function (v) { return v + " BPM"; },
+        function (v) { gBpm = v; if (gH) startG(); });
+
+      /* ---------- 演示 2：模进生成器 ---------- */
+      var SCALE = T.SCALES.naturalMinor.steps;               // A 自然小调
+      var qBase = 57, qLen = 3, qReps = 4, qType = "step", qBpm = 132, qTab = null, qH = null;
+      function seqNotes() {
+        var out = [], stepBy = (qType === "third") ? 2 : 1;
+        for (var r = 0; r < qReps; r++) {
+          var start = (qType === "down") ? (qReps - 1 - r) * 1 : r * stepBy;
+          for (var k = 0; k < qLen; k++) {
+            var idx = start + k;
+            out.push(qBase + SCALE[idx % 7] + 12 * Math.floor(idx / 7));
+          }
+        }
+        out.push(qBase + 12);                                 // 收在主音上
+        return out;
+      }
+      function buildQ() {
+        var notes = seqNotes();
+        clear($("q-tab"));
+        qTab = KBG.tab($("q-tab"), {
+          tuning: TUN, labelMode: "none", title: "模进（末尾自动加一个落点长音）",
+          columns: notes.map(function (m, i) {
+            var p = pos(m);
+            return { notes: [{ string: p.string, fret: p.fret }], dur: i === notes.length - 1 ? 2 : 0.25 };
+          })
+        });
+        $("q-motif").textContent = "连续 " + qLen + " 个音阶音";
+        $("q-type").textContent = { step: "级进上行", down: "级进下行", third: "三度模进" }[qType];
+        ["step", "down", "third"].forEach(function (k) {
+          var id = { step: "q-step", down: "q-down", third: "q-third" }[k];
+          $(id).className = "kb-btn" + (k === qType ? " kb-btn-primary" : "");
+        });
+      }
+      $("q-play").addEventListener("click", function () {
+        if (qH) { qH.stop(); qH = null; }
+        A.stopAll(); A.setDrive(0.4);
+        var notes = seqNotes(), t = 0, ev = [];
+        notes.forEach(function (m, i) {
+          var d = (i === notes.length - 1) ? 2 : 0.25;
+          ev.push({ t: t, midi: m, dur: d, gain: (i % qLen === 0) ? 0.9 : 0.65 });
+          t += d;
+        });
+        qH = A.sequence(ev, { bpm: qBpm });
+        $("q-msg").textContent = "重复 " + qReps + " 次" +
+          (qReps >= 5 ? "——听出腻了吗？这就是「做三四次」这条经验的来源。" : "，末尾落在主音上。");
+      });
+      $("q-stop").addEventListener("click", function () {
+        if (qH) { qH.stop(); qH = null; } A.stopAll();
+      });
+      ["step", "down", "third"].forEach(function (k) {
+        $({ step: "q-step", down: "q-down", third: "q-third" }[k])
+          .addEventListener("click", function () { qType = k; buildQ(); });
+      });
+      KB.bindRange($("q-mlen"), $("q-mv"), function (v) { return v + " 个音"; },
+        function (v) { qLen = v; buildQ(); });
+      KB.bindRange($("q-reps"), $("q-rv"), function (v) { return v + " 次"; },
+        function (v) { qReps = v; buildQ(); });
+      KB.bindRange($("q-bpm"), $("q-bv"), function (v) { return v + " BPM"; },
+        function (v) { qBpm = v; });
+
+      /* ---------- 演示 3：新古典乐句 ---------- */
+      var HAR = T.SCALES.harmonicMinor.steps;                // A 和声小调
+      var nBpm = 150, nDrive = 0.55, nH = null, nTab = null;
+      var SEG = {
+        arp: {
+          cn: "① 琶音上行", desc: "Am 三和弦琶音，大跨度冲刺（本章：琶音提供气势）",
+          notes: [57, 60, 64, 69, 72, 76, 81]
+        },
+        dim: {
+          cn: "② 减七琶音", desc: "G♯dim7，每隔三品原样平移（第 8 章：对称结构）",
+          notes: [56, 59, 62, 65, 68, 71, 74, 77]
+        },
+        run: {
+          cn: "③ 四音组跑动", desc: "A 和声小调，注意 ♭6→♮7 的增二度（第 5、14 章）",
+          notes: (function () {
+            var out = [];
+            for (var r = 0; r < 4; r++) for (var k = 0; k < 4; k++) {
+              var idx = 7 - r - k;
+              out.push(69 + HAR[((idx % 7) + 7) % 7] + 12 * Math.floor(idx / 7));
+            }
+            return out;
+          })()
+        }
+      };
+      function buildN(key) {
+        var s = SEG[key];
+        clear($("n-tab"));
+        nTab = KBG.tab($("n-tab"), {
+          tuning: TUN, labelMode: "none", title: "A 和声小调 · " + s.cn,
+          columns: s.notes.map(function (m) {
+            var p = pos(m);
+            return { notes: [{ string: p.string, fret: p.fret }], dur: 0.25 };
+          }).concat([{ notes: [{ string: pos(69).string, fret: pos(69).fret }], dur: 2 }])
+        });
+        $("n-part").textContent = s.cn;
+        $("n-desc").textContent = s.desc;
+      }
+      function playSeg(key) {
+        if (nH) { nH.stop(); nH = null; }
+        A.stopAll(); A.setDrive(nDrive);
+        buildN(key);
+        var s = SEG[key], t = 0, ev = [];
+        s.notes.forEach(function (m, i) {
+          ev.push({ t: t, midi: m, dur: 0.25, gain: i % 4 === 0 ? 0.9 : 0.65 });
+          t += 0.25;
+        });
+        nH = A.sequence(ev, { bpm: nBpm });
+        A.pluck(69, { delay: t * 60 / nBpm + 0.05, dur: 2.4, gain: 0.9,
+          bend: { semitones: 0, time: 0.01 }, vibrato: { cents: 40, hz: 5.5, delay: 0.25 } });
+      }
+      ["arp", "dim", "run"].forEach(function (k) {
+        $("n-" + k).addEventListener("click", function () { playSeg(k); });
+      });
+      $("n-full").addEventListener("click", function () {
+        if (nH) { nH.stop(); nH = null; }
+        A.stopAll(); A.setDrive(nDrive);
+        var ev = [], t = 0;
+        ["arp", "dim", "run"].forEach(function (k) {
+          SEG[k].notes.forEach(function (m, i) {
+            ev.push({ t: t, midi: m, dur: 0.25, gain: i % 4 === 0 ? 0.92 : 0.62 });
+            t += 0.25;
+          });
+        });
+        nH = A.sequence(ev, { bpm: nBpm });
+        A.pluck(81, { delay: t * 60 / nBpm + 0.05, dur: 1.2, gain: 0.95 });
+        A.pluck(69, { delay: t * 60 / nBpm + 1.15, dur: 3, gain: 0.95,
+          vibrato: { cents: 45, hz: 5.5, delay: 0.3 } });
+        $("n-part").textContent = "完整乐句（① + ② + ③ + 收尾）";
+        $("n-desc").textContent = "张（琶音冲刺）→ 密（跑动铺满）→ 收（最高音后落回主音 + 颤音）";
+        $("n-msg").textContent = "注意结构而不是速度：先大跨度冲上去、再高密度铺满、最后一个长音落地。这个三段式是所有好独奏的通用形状。";
+      });
+      $("n-stop").addEventListener("click", function () {
+        if (nH) { nH.stop(); nH = null; } A.stopAll();
+      });
+      KB.bindRange($("n-bpm"), $("n-bv"), function (v) { return v + " BPM"; },
+        function (v) { nBpm = v; });
+      KB.bindRange($("n-drive"), $("n-dv"), function (v) { return Math.round(v * 100) + "%"; },
+        function (v) { nDrive = v; A.setDrive(v); });
+
+      renderG(0); buildQ(); buildN("arp");
+    });
+  </script>
+</body>
+</html>

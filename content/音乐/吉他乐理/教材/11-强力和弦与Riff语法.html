@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11 强力和弦与 Riff 语法 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 11 章：强力和弦的三种形状与平行移动、持续低音、Riff 的动机发展与问答结构、休止的力量，以及半音逼近等色彩手段。配可自己搭 Riff 的交互演示。">
+  <meta name="kb:tags" content="吉他,乐理,教材,强力和弦,riff,平行移动,持续低音,pedal tone,动机,休止,半音逼近,qlhx,riff">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .slot-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .slot {
+      width: 52px; height: 46px; border-radius: 8px; border: 1px solid var(--kb-border);
+      background: var(--kb-surface-alt); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; font-size: 0.9em; cursor: pointer;
+    }
+    .slot b { font-size: 1.1em; }
+    .slot small { color: var(--kb-fg-muted); font-size: 0.76em; }
+    .slot.cur { border-color: var(--kb-accent); border-width: 2px; }
+    .slot.play { background: var(--kb-accent); color: #fff; }
+    .slot.play small { color: #dbeafe; }
+    .slot.rest b { color: var(--kb-fg-faint); }
+    .cb-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 10px 0 4px; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 11 章 · 强力和弦与 Riff 语法</h1>
+        <p class="kb-lead">第 10 章证明了强力和弦是高增益下的幸存者。这一章讲怎么用它<strong>写东西</strong>。Riff 是重型音乐的基本单位——它不是旋律，不是和弦进行，而是一个<strong>短到能被记住、密到能被重复几十遍还不腻</strong>的音乐块。好 riff 的秘密从来不在音多，恰恰相反：<strong>它们通常只有三四个音、一个节奏型，然后靠重复、变形与留白撑起整整一分钟。</strong>这一章把这套语法拆开：平行移动、持续低音、动机发展、问答结构，以及最容易被低估的一件事——<strong>什么都不弹</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出强力和弦的三种形状与各自根音所在弦；② 解释「平行移动」为什么在别的和弦上不成立；③ 用持续低音写出一段能确立调中心的 riff；④ 用重复—变奏—发展三个层次组织一段 riff；⑤ 用休止与断奏制造冲击；⑥ 用半音逼近给 riff 上色，并知道那个色彩来自哪个调式。</p>
+        </div>
+
+        <h2>三个形状，一把钥匙</h2>
+        <p>强力和弦的构成是<strong>根音 + 纯五度</strong>（常再加一个八度）。第 3 章告诉我们纯五度在指板上是「跨一根弦、进两品」，八度是「跨两根弦、进两品」。把这两个形状叠起来，就得到三个可用的指法——区别只在根音落在哪根弦：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>形状</th><th>根音在</th><th>指法（根音在第 n 品）</th><th>典型用途</th></tr></thead>
+            <tbody>
+              <tr><td><strong>六弦根</strong></td><td>6 弦</td><td><code>n, n+2, n+2, ×, ×, ×</code></td><td>最低最重，riff 主力</td></tr>
+              <tr><td><strong>五弦根</strong></td><td>5 弦</td><td><code>×, n, n+2, n+2, ×, ×</code></td><td>中音区，与六弦根交替使用避免大跨度</td></tr>
+              <tr><td><strong>四弦根</strong></td><td>4 弦</td><td><code>×, ×, n, n+2, n+2, ×</code></td><td>高音区，用于亮色段落与桥段</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 唯一的例外还是那个大三度</p>
+          <p>三弦根的强力和弦要写成 <code>n, n+3</code>（跨过 3–2 弦要多一品，第 2、3 章那条规则）。正因为它「破形状」，实战中几乎没人用——<strong>宁可换把位，也不打破手型的一致性。</strong>这是一个很能说明问题的细节：吉他手的选择常常由<strong>手型是否一致</strong>决定，而不是由音高决定。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：强力和弦的三种形状与平行移动</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：强力和弦只有根音与五度（常加八度），没有三音，因此不分大小调，可以整体平移到任意品位而不需要调整任何手指。三种形状分别以 6、5、4 弦为根音弦，指法完全一致（n / n+2 / n+2）。</p></noscript>
+            <div id="p-sound"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">根音<span class="kb-control-value" id="p-rootv"></span>
+                <input type="range" id="p-root" min="0" max="11" step="1" value="4"></label>
+              <button class="kb-btn kb-btn-primary" id="p-6" type="button">六弦根</button>
+              <button class="kb-btn" id="p-5" type="button">五弦根</button>
+              <button class="kb-btn" id="p-4" type="button">四弦根</button>
+            </div>
+            <div class="cb-row" id="p-box"></div>
+            <div class="kb-readout">
+              <span>和弦 <b id="p-name">E5</b></span>
+              <span>构成音 <b id="p-notes">E B E</b></span>
+              <span>指法 <b id="p-frets">—</b></span>
+            </div>
+            <div id="p-board"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="p-play" type="button">▶ 弹一下</button>
+              <button class="kb-btn" id="p-slide" type="button">▶ 沿指板整体平移（听「同一个和弦的十二个调」）</button>
+              <button class="kb-btn" id="p-stop" type="button">■ 停止</button>
+            </div>
+            <p id="p-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点「整体平移」听十二个半音——<strong>手型一根手指都不用改</strong>。换成大三和弦试试这件事，你会立刻明白强力和弦的价值：它把「换和弦」变成了「挪把位」。</p>
+          </div>
+        </div>
+
+        <h2>为什么只有它能平行移动</h2>
+        <p>「把手型整体挪几品」这件事，任何和弦形状都能做——第 6 章的 CAGED 就是这么工作的。但强力和弦有一个别的和弦没有的性质：<strong>挪到哪里都不会出错。</strong></p>
+        <p>差别在于<strong>调内与调外</strong>。假设你在 A 小调里，想把 Am 和弦挪到第三级：如果整体平移三个半音，得到的是 <strong>Cm</strong>——可 A 小调的第三级是 <strong>C 大三和弦</strong>。手型平移给了你一个<strong>调外</strong>的和弦，听起来是错的。要弹对，你必须改指法（把小三度改成大三度）。</p>
+        <p>强力和弦没有这个问题，<strong>因为它根本不含三度</strong>（第 6 章）。A5 挪三个半音是 C5，而 C5 既不是大也不是小——它在 A 小调里、在 A 大调里、在 C 大调里都成立。<strong>没有三度，就没有可能出错的那个音。</strong></p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 这带来了一种全新的写作方式</p>
+          <p>传统和声写作是「选一个调 → 从七个顺阶和弦里挑」。强力和弦写作是「<strong>选一条根音线 → 沿着它平移手型</strong>」。后者不再受顺阶约束——你可以自由使用 ♭Ⅱ、♭Ⅴ、♭Ⅵ 这些调外的根音，因为强力和弦不会与调发生「大小」冲突。</p>
+          <p>代价是：<strong>调性变模糊了</strong>（第 5 章习题 5.9 那道题）。收益是：<strong>根音线本身成了作曲对象</strong>。整个重型音乐的和声语言，就是在这个交换里长出来的。</p>
+        </div>
+
+        <h2>Riff 由什么构成</h2>
+        <p>Riff ＝ <strong>一条短的根音线</strong> × <strong>一个节奏型</strong> × <strong>一套右手处理</strong>。三者缺一不可，而且分工明确：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>成分</th><th>负责什么</th><th>典型选择</th></tr></thead>
+            <tbody>
+              <tr><td><strong>根音线</strong></td><td>调中心与色彩</td><td>3–5 个音，常含一个调外的半音（见下文）</td></tr>
+              <tr><td><strong>节奏型</strong></td><td>性格与推进力</td><td>gallop、直八分、切分、十六分（第 9 章）</td></tr>
+              <tr><td><strong>右手处理</strong></td><td>质感与清晰度</td><td>闷音深浅、下拨 / 交替、重音位置、休止</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>新手最常见的失误是把全部注意力放在第一项</strong>——不停地找「更酷的音」，却用同一个平淡的节奏和一成不变的闷音。而实际上，<strong>一条只有两个音的根音线，配上好的节奏与右手，可以撑起整首歌</strong>；反过来，一条精心设计的旋律线配上平庸的节奏，什么都不是。</p>
+
+        <h2>持续低音：把一只脚钉在地上</h2>
+        <p><strong>持续低音</strong>（pedal tone）指的是<strong>一个音反复出现、其他音在它周围变化</strong>。在吉他上它几乎总是一根<strong>空弦</strong>——最常见的是 6 弦空弦 E。</p>
+        <p>它同时解决三个问题：</p>
+        <ol>
+          <li><strong>确立调中心。</strong>第 4 章习题 4.9 说过，在没有属功能的音乐里，主音由「最低、最常回归的那个音」决定。持续低音就是把这件事做到极致——不断回到同一个音，调中心不容置疑。</li>
+          <li><strong>提供连续性。</strong>上方音怎么跳都行，因为底下有一根线始终连着。这让 riff 可以使用大跨度、调外音而不散架。</li>
+          <li><strong>解放手指。</strong>空弦不占手指，左手可以专心处理上方的变化音。<strong>这是纯粹的物理红利，也是为什么 E 小调和 Drop D 调弦如此流行</strong>（第 15 章）。</li>
+        </ol>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：持续低音（同一根空弦，上方音在变）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：持续低音是反复出现的固定低音（通常是空弦），上方音在其周围变化。它确立调中心、提供连续性、并解放左手。上方音的选择决定 riff 的调式色彩：♭2（F）给出弗里几亚的阴冷，♮2（F♯）给出自然小调，♭5（B♭）给出三全音的不安。</p></noscript>
+            <div class="kb-readout">
+              <span>持续低音 <b>6 弦空弦 E</b></span>
+              <span>上方音 <b id="pd-note">—</b></span>
+              <span>调式色彩 <b id="pd-mode">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">上方音（离 E 几个半音）<span class="kb-control-value" id="pd-sv"></span>
+                <input type="range" id="pd-semi" min="1" max="12" step="1" value="3"></label>
+              <label class="kb-control">速度<span class="kb-control-value" id="pd-bv"></span>
+                <input type="range" id="pd-bpm" min="70" max="200" step="2" value="140"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="pd-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="pd-stop" type="button">■ 停止</button>
+            </div>
+            <p id="pd-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">节奏固定为「低音 低音 上方音 低音」。只拖动上方音的滑块——<strong>1（♭2）</strong> 阴冷得像弗里几亚，<strong>3（♭3）</strong> 是标准小调，<strong>6（♭5）</strong> 是三全音的不安，<strong>7（5）</strong> 最稳。同一段节奏，一个音决定全部情绪。</p>
+          </div>
+        </div>
+
+        <h2>三个层次：重复、变奏、发展</h2>
+        <p>一段 riff 反复十遍必然乏味，但每遍都换又会失去辨识度。成熟的写法是<strong>分层</strong>：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>层次</th><th>做法</th><th>作用</th><th>典型用量</th></tr></thead>
+            <tbody>
+              <tr><td><strong>重复</strong></td><td>原样再来一遍</td><td>建立记忆，让听众「学会」这段</td><td>第 1–2 遍</td></tr>
+              <tr><td><strong>变奏</strong></td><td>只改<strong>一个</strong>音或<strong>一个</strong>节奏细节，通常在句尾</td><td>保持新鲜又不失辨识度</td><td>第 2、4 遍的后半</td></tr>
+              <tr><td><strong>发展</strong></td><td>整体移位、扩展、截断，或换到另一根弦</td><td>推进段落，通往下一部分</td><td>段落末尾</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>最经典的组织方式是<strong>问答结构</strong>（call &amp; response）：把 riff 写成两个半句，<strong>前半句每次都一样（问），后半句每次不同（答）</strong>。听众靠前半句认出这是哪首歌，靠后半句保持注意力。这个结构来自布鲁斯，被摇滚全盘继承，至今仍是最可靠的 riff 骨架。</p>
+
+        <h2>休止：什么都不弹，也是一种弹法</h2>
+        <p>第 9 章习题 9.6 已经点到了，这里正式立为一条原则：<strong>在密集的织体里，空白是最强的重音。</strong></p>
+        <p>为什么？因为听觉是<strong>对比</strong>驱动的。当十六分闷音流持续了两小节，听觉已经把这个密度设为「背景」；此时突然的静默会造成强烈的注意力峰值——比再砸一个重音有效得多，而且不需要任何额外的音量。</p>
+        <p>两种常见用法：</p>
+        <ul>
+          <li><strong>断奏（stab）</strong>：全乐队一起砸一个短促的和弦，然后<strong>全部静音</strong>。用在段落交界处。</li>
+          <li><strong>riff 内部的洞</strong>：在 riff 的固定位置留一个十六分的空白，每次循环都在同一处「缺一口」。这个洞会成为 riff 辨识度的一部分。</li>
+        </ul>
+
+        <h2>半音逼近：给 riff 上色</h2>
+        <p>只用调内音的 riff 容易平淡。最省事的上色手段是<strong>半音逼近</strong>——在目标音的上方或下方半音处放一个音，然后滑向目标。</p>
+        <p>其中最有效的一个是 <strong>♭Ⅱ</strong>，也就是主音上方半音（E 小调里的 <strong>F</strong>）。<code>F5 → E5</code> 这一下半音下行落回主音，是重型音乐辨识度最高的手法之一。它的来源是<strong>弗里几亚调式</strong>，第 14 章会正式展开；这里你只需要知道两件事：</p>
+        <ul>
+          <li>它<strong>只需要一个音</strong>就能把一段中性的 riff 变得阴冷；</li>
+          <li>因为强力和弦不含三度，<strong>♭Ⅱ5 与主和弦不会产生大小冲突</strong>——这又是平行移动的红利。</li>
+        </ul>
+        <p>另一个常用的是<strong>三全音</strong>（E 小调里的 B♭）。它没有解决方向（第 3 章），所以用它的目的通常不是「推向某处」，而是<strong>制造一片无根的不安</strong>然后强行落回主音。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：Riff 搭建器（自己点一条根音线出来）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一条 riff ＝ 根音线 × 节奏型 × 右手处理。同一条根音线换一个节奏型，性格完全不同；同一个节奏型换一个色彩音（如加入 ♭2 或三全音），情绪立刻改变。留出休止往往比多加音更有效。</p></noscript>
+            <div id="rf-board"></div>
+            <div class="slot-row" id="rf-slots"></div>
+            <div id="rf-tab"></div>
+            <div class="kb-readout">
+              <span>根音线 <b id="rf-line">—</b></span>
+              <span>级数（相对 E）<b id="rf-deg">—</b></span>
+              <span>节奏 <b id="rf-rhy">Gallop</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="rf-bv"></span>
+                <input type="range" id="rf-bpm" min="70" max="200" step="2" value="140"></label>
+              <label class="kb-control">失真<span class="kb-control-value" id="rf-dv"></span>
+                <input type="range" id="rf-drive" min="0" max="1" step="0.05" value="0.8"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="rf-r0" type="button">四分</button>
+              <button class="kb-btn" id="rf-r1" type="button">八分</button>
+              <button class="kb-btn kb-btn-primary" id="rf-r2" type="button">Gallop</button>
+              <button class="kb-btn" id="rf-r3" type="button">反向 Gallop</button>
+              <button class="kb-btn" id="rf-r4" type="button">十六分</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="rf-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="rf-rest" type="button">留一个休止</button>
+              <button class="kb-btn" id="rf-undo" type="button">← 退一格</button>
+              <button class="kb-btn" id="rf-pow" type="button">🎸 强力和弦：开</button>
+              <button class="kb-btn" id="rf-stop" type="button">■ 停止</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="rf-ex1" type="button">范例：E 小调基本型</button>
+              <button class="kb-btn" id="rf-ex2" type="button">范例：加 ♭Ⅱ（弗里几亚色）</button>
+              <button class="kb-btn" id="rf-ex3" type="button">范例：三全音 + 休止</button>
+            </div>
+            <p id="rf-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点指板上 6 弦的任意品位，依次填入 4 个格子（每格 1 拍）。先载入一个范例看看，再改动其中<strong>一个</strong>音——体会「变奏」的威力。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 11.1</p>
+          <p>写出 G5 的三种指法，并说出各自根音在第几品。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先定位 G</strong>：6 弦 3 品、5 弦 10 品、4 弦 5 品（第 2 章的锚点与八度形状）。</p>
+            <ul>
+              <li><strong>六弦根</strong>：根音 6 弦 3 品 → <code>3, 5, 5, ×, ×, ×</code></li>
+              <li><strong>五弦根</strong>：根音 5 弦 10 品 → <code>×, 10, 12, 12, ×, ×</code></li>
+              <li><strong>四弦根</strong>：根音 4 弦 5 品 → <code>×, ×, 5, 7, 7, ×</code></li>
+            </ul>
+            <p><strong>三者的音完全相同</strong>（都是 G、D、G），只是八度不同：六弦根最低最重，四弦根最高最亮。</p>
+            <p><strong>什么时候用哪个</strong>：主要看<strong>前后和弦的距离</strong>。如果上一个和弦是 E5（6 弦 0 品），接六弦根的 G5（3 品）只需移三品；但如果上一个是 D5（5 弦 5 品），接五弦根的 G5（5 弦 10 品）比跳到 6 弦 3 品更省事。<strong>Riff 写作里，「手怎么走」经常和「音怎么走」同等重要。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 11.2</p>
+          <p>一段 riff 的根音线是 <strong>E5 – G5 – A5 – B5</strong>。写出级数，并说出它可能属于哪些调式。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>级数</strong>（以 E 为 1）：E ＝ <strong>1</strong>，G ＝ <strong>♭3</strong>，A ＝ <strong>4</strong>，B ＝ <strong>5</strong>。</p>
+            <p><strong>这四个音（1 ♭3 4 5）是 E 小调五声音阶的前四个</strong>（完整的是 1 ♭3 4 5 ♭7，第 12 章）。</p>
+            <p><strong>可能的调式</strong>：因为强力和弦不含三度，也因为这条线里没有第 2 级和第 6 级，它同时兼容——</p>
+            <ul>
+              <li>E 自然小调（爱奥利亚）：E F♯ G A B C D ✓</li>
+              <li>E 多利亚：E F♯ G A B C♯ D ✓</li>
+              <li>E 弗里几亚：E F G A B C D ✓</li>
+              <li>E 小调五声：E G A B D ✓</li>
+            </ul>
+            <p><strong>这正是第 5 章习题 5.9 的结论</strong>：这种模糊不是缺陷，而是重型音乐刻意保留的开放性——riff 先立骨架，主唱与主奏后上色。想钉死它，只要在旋律里加一个 <strong>C♯</strong>（→ 多利亚）、<strong>F</strong>（→ 弗里几亚）或 <strong>F♯ 与 C</strong>（→ 自然小调）就行。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 11.3</p>
+          <p>为什么 <code>F5 → E5</code>（半音下行落回主音）听起来那么「金属」？请给出三条理由。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>① 它是最短的解决。</strong>半音是最小的音程距离，也是张力最大的音程（第 3 章）。F 到 E 只走一步就落地，这个「一步到位」的落差极其干脆——比任何和声铺垫都直接。</p>
+            <p><strong>② 它借用了弗里几亚的色彩，而弗里几亚的 ♭2 是最阴冷的调式特征音。</strong>E 弗里几亚 ＝ E <strong>F</strong> G A B C D，第二级被压低到 F。一旦你在 E 上方半音处放一个强调音，耳朵立刻把整段听成弗里几亚（第 14 章会展开）。</p>
+            <p><strong>③ 它在物理上是安全的。</strong>两个都是强力和弦，各自内部差音干净（第 10 章）；而且它们是<strong>先后</strong>弹的，不同时发声，因此不产生跨和弦的互调。<strong>如果换成 F 大三和弦接 E 大三和弦，同样的半音关系在高增益下会浑浊得多。</strong></p>
+            <p><strong>额外一条</strong>：F5 与 E5 在吉他上只差一品，右手不用动、左手整体挪一格——<strong>物理上极其顺手</strong>。第 6 章说过 F 在开放和弦体系里是最难按的那个；到了强力和弦体系里，它反而成了最容易的邻居之一。<strong>换一套和弦语言，难易表就整个重排了。</strong></p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>强力和弦为什么写作 <code>A5</code> 而不是 <code>A</code> 或 <code>Am</code>？这个「5」指的是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>「5」指的是纯五度</strong>——这个和弦只有<strong>根音和五度</strong>（常再加一个八度），没有第三个音级。</p>
+            <p><strong>为什么不能写 A 或 Am</strong>：因为 <code>A</code> 表示大三和弦（含大三度 C♯），<code>Am</code> 表示小三和弦（含小三度 C）。而强力和弦<strong>两个都不是</strong>——它把三度整个省略了，因此既不明也不暗。用 <code>A</code> 或 <code>Am</code> 记录它，会给出错误的信息。</p>
+            <p><strong>这个记号的实际价值</strong>：它明确告诉演奏者「<strong>这里不要加三度</strong>」。在乐谱里看到 <code>E5 – G5 – A5</code>，你知道这是一条可以直接平移手型的根音线；如果写成 <code>Em – G – Am</code>，你就得逐个判断大小、逐个换指法，而且高增益下会糊。<strong>记号的差别反映的是两种完全不同的写作思路。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出六弦根 A5 与五弦根 D5 的指法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>六弦根 A5</strong>：A 在 6 弦 5 品 → <code>5, 7, 7, ×, ×, ×</code>。</p>
+            <p><strong>五弦根 D5</strong>：D 在 5 弦 5 品 → <code>×, 5, 7, 7, ×, ×</code>。</p>
+            <p><strong>解析</strong>：注意两者的<strong>数字完全一样</strong>（5-7-7），只是整体挪到了相邻的弦组。这是标准调弦「相邻弦多为纯四度」带来的红利（第 2 章）：<strong>把强力和弦手型往细弦方向平移一根弦，得到的是上方纯四度的和弦。</strong></p>
+            <p><strong>实战用法</strong>：这条性质让 <code>A5 → D5</code>（Ⅰ→Ⅳ）变成一个纯粹的「往下挪一根弦」的动作，右手位置几乎不变。摇滚里 Ⅰ–Ⅳ 用得那么多，这也是原因之一。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是持续低音（pedal tone）？它同时解决了哪三个问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>定义</strong>：一个音反复出现、保持不变，其他声部在它周围变化。吉他上通常是一根<strong>空弦</strong>（最常见 6 弦空弦 E）。</p>
+            <p><strong>三个问题</strong>：</p>
+            <ol>
+              <li><strong>调中心</strong>：在没有属功能的重型音乐里，主音由「最低、最常回归的音」决定；持续低音把这件事做到极致，调中心毫无疑义。</li>
+              <li><strong>连续性</strong>：上方音可以大跨度、可以用调外音，因为底下始终有一根线连着，不会散架。</li>
+              <li><strong>解放左手</strong>：空弦不占手指，左手可以专心处理上方的变化音，同时也让快速切换成为可能。</li>
+            </ol>
+            <p><strong>吉他上的典型例子</strong>：6 弦空弦 E 反复闷音，中间穿插 5 弦或 4 弦上的变化音；或者把 6 弦空弦当低音，上方在 3–4 弦弹强力和弦。<strong>Drop D 调弦（第 15 章）本质上就是「把持续低音搬到 D 上」的工程改造。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么在密集的十六分闷音流里，一个休止能产生比重音更强的冲击？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为听觉是对比驱动的。</strong>当一个密度持续足够久，听觉系统会把它设为「背景」并降低关注度；此时最能重新抓住注意力的，是<strong>与背景差异最大的事件</strong>。</p>
+            <p><strong>在密集流的背景下</strong>：再砸一个重音，只是「更响的同类事件」，差异是量的；而突然的静默是「完全不同类的事件」，差异是质的。所以后者的冲击更强。</p>
+            <p><strong>三个附带好处</strong>：</p>
+            <ul>
+              <li><strong>不消耗音量预算。</strong>音乐已经很响时，加重音的空间有限；休止不需要任何余量。</li>
+              <li><strong>让下一个音变重。</strong>静默之后的第一个音，主观响度会明显提高（听觉的适应与恢复）。</li>
+              <li><strong>给别的乐器让位。</strong>吉他的休止常常正是鼓过门或人声呼吸的位置。</li>
+            </ul>
+            <p><strong>使用注意</strong>：休止必须<strong>落在固定的位置</strong>并被重复，才会被听成「设计」而不是「失误」。随机的空白只会让人觉得没弹稳。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>把开放 Am 的手型整体平移三品会得到什么和弦？在 A 小调里能直接这么用吗？为什么强力和弦就可以？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>平移结果</strong>：Am 手型（<code>x02210</code>，A 型小三和弦）整体上移三品，得到 <strong>Cm</strong>（<code>x35543</code>）。</p>
+            <p><strong>在 A 小调里不能直接用</strong>：A 自然小调的第三级顺阶和弦是 <strong>C 大三和弦</strong>（C–E–G），不是 Cm（C–E♭–G）。E♭ 根本不在 A 小调里。所以这个平移给出的是一个<strong>调外和弦</strong>，直接用会听起来是错的。要弹对，必须<strong>改指法</strong>——把小三度改成大三度，换成 A 型大三和弦 <code>x35553</code>。</p>
+            <p><strong>强力和弦为什么可以</strong>：A5 平移三品得到 C5 ＝ C + G。<strong>这两个音都在 A 小调里</strong>（C 是 ♭3，G 是 ♭7）。而且因为不含三度，它<strong>没有可能出错的那个音</strong>——大调需要 C 大三和弦、小调需要 C 大三和弦，两者都要 E；而 C5 里根本没有第三个音级，所以两边都不冲突。</p>
+            <p><strong>一般结论</strong>：<strong>平移一个含三度的手型，会把「和弦性质」也一起平移，而调内各级的性质本来就不同（大小小大大小减，第 7 章），所以必然出错。</strong>强力和弦没有性质，所以平移永远安全。这一条就是重型音乐能用「根音线思维」代替「顺阶思维」的全部技术基础。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用级数设计一段四小节的「问答」结构 riff，并解释它为什么比「同一段重复四遍」更耐听。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>一个可行的设计</strong>（E 小调，每小节 4 拍，「｜」分隔前后半句）：</p>
+            <pre><code>第 1 小节：  1  1  ♭3  4 ｜ 1  1  ♭3  5       ← 问 A ／ 答 a
+第 2 小节：  1  1  ♭3  4 ｜ 1  1  ♭3  1       ← 问 A ／ 答 b（落回主音）
+第 3 小节：  1  1  ♭3  4 ｜ 1  1  ♭2  1       ← 问 A ／ 答 c（换成 ♭2，上色）
+第 4 小节：  1  1  ♭3  4 ｜ ♭6 ♭6  5  —      ← 问 A ／ 答 d（发展 + 休止收尾）</code></pre>
+            <p><strong>结构说明</strong>：前半句<strong>四次完全相同</strong>（这是「问」），后半句<strong>每次不同</strong>（这是「答」）。第 4 小节的答句做了两件事：整体移到 ♭6，并在末尾留一个休止——既是变奏也是通往下一段的信号。</p>
+            <p><strong>为什么比重复四遍耐听</strong>，三条：</p>
+            <ol>
+              <li><strong>重复建立记忆，变化维持注意。</strong>四次相同的前半句让听众牢牢记住这段 riff；四次不同的后半句让每一遍都有新信息。<strong>两件事同时达成，而不必二选一。</strong></li>
+              <li><strong>它有内在的方向。</strong>四个答句可以排成递进（越来越远、越来越暗、最后收束），整个四小节因此有起点和终点，而不是原地打转。</li>
+              <li><strong>它给听众一个可预测的框架。</strong>听第二遍时人已经知道「前半会重复」，于是注意力自动集中到后半——<strong>作曲者因此可以精确控制听众在哪一拍上关注什么。</strong></li>
+            </ol>
+            <p><strong>这个结构来自布鲁斯</strong>（十二小节里的问—问—答，第 13 章），被摇滚全盘继承。它之所以经久不衰，是因为它同时满足了记忆与新鲜这两个互相矛盾的需求。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一段 riff 反复交替 <code>E5</code> 与 <code>F5</code>（相差半音）。第 3 章说小二度是最不协和的音程，第 10 章说三全音在失真下最糟。那为什么这段 riff 在高增益下听起来完全没问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>关键在于「同时」二字。</strong>互调失真只发生在<strong>同时进入非线性器件</strong>的频率之间（第 10 章）。E5 与 F5 是<strong>先后</strong>弹的——第一个和弦已经衰减（尤其在闷音下几乎立刻消失），第二个才响起。<strong>两者从不同时存在，因此不产生任何跨和弦的互调。</strong></p>
+            <p><strong>而每个和弦内部都是干净的</strong>：E5 ＝ E–B–E，F5 ＝ F–C–F，各自内部只有纯五度与纯八度，差音全部落在自己的根音上（第 10 章习题 10.3）。</p>
+            <p><strong>所以真正的规则应该是</strong>：<strong>「同时响的音要协和，先后响的音可以任意不协和」。</strong>第 3 章的协和度表描述的是<strong>纵向</strong>（同时）关系，第 10 章的差音表也是纵向的；而 riff 是<strong>横向</strong>（先后）的——横向上，不协和恰恰是色彩与推动力的来源。</p>
+            <p><strong>这条区分极其重要，因为它给了重型写作一条明确的自由</strong>：<strong>纵向必须稀（强力和弦），横向可以任意浓（半音、三全音、调外音随便用）。</strong>整个第三篇的写作技术，几乎都建立在这条不对称上。</p>
+            <p><strong>唯一的注意事项</strong>：如果放开闷音让和弦延音（let ring），前一个和弦的余韵会与后一个重叠，此时半音关系就真的会打架了。<strong>所以半音 riff 几乎总是配合闷音出现——这不是巧合。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>许多最著名的 riff 只有三四个音。为什么如此少的素材反而更容易成为经典？请从记忆、重复与信息三个角度分析，并说出这种写法的失败模式。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 记忆角度。</strong>人的短时记忆容量有限。一段三四个音、一个节奏型的 riff 可以在<strong>第一次听完就被完整记住</strong>——而「能被哼出来」几乎是流行度的必要条件。音一多，听众记住的就只是「大概的感觉」，传播力骤降。</p>
+            <p><strong>② 重复角度。</strong>Riff 的使命是被重复几十遍。素材越少，<strong>每一遍的信息负担越轻</strong>，听众越不容易疲劳；同时也留出了大量空间给别的东西——鼓的过门、贝斯的走动、人声的旋律。<strong>Riff 少占地方，整首歌才有地方可用。</strong></p>
+            <p><strong>③ 信息角度。</strong>这是最反直觉的一条：<strong>素材少，反而让每一次微小的变化都变成大事件。</strong>如果 riff 有十二个音，改动其中一个几乎没人察觉；如果只有三个音，改动一个就是三分之一的内容变了，听众一定会注意到。<strong>少素材是在为「变奏」积攒杠杆。</strong>第 9 章习题 9.6 说的四种「不改音高也能变有趣」的手法，全都依赖这个杠杆。</p>
+            <p><strong>失败模式</strong>（同样重要）：</p>
+            <ul>
+              <li><strong>素材少但不重复变形</strong>——那就真的只是单调。少素材要求作者更努力地设计变奏与编排，而不是更省事。</li>
+              <li><strong>节奏也一起简化。</strong>音少的 riff 必须靠节奏与右手撑起辨识度；如果音少、节奏也平，就什么都不剩了。</li>
+              <li><strong>缺少一个「钩子」。</strong>三四个音里通常需要有<strong>一个</strong>意外的音（调外的半音、一个大跳、一个三全音），它是这段 riff 区别于其他一千段 riff 的记号。全是调内平稳音级的三音 riff 会消失在人海里。</li>
+            </ul>
+            <p><strong>一句话</strong>：<strong>少不是目的，「少而不腻」才是</strong>——而这要求作者把省下来的注意力全部投到节奏、变奏与编排上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>给定根音线 <strong>E – G – A – B♭ – B</strong>。写出每个音的级数，指出它属于什么音阶，并设计一种编排，让那个 B♭ 听起来「必要」而不是「弹错了」。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>级数</strong>：E ＝ <strong>1</strong>，G ＝ <strong>♭3</strong>，A ＝ <strong>4</strong>，B♭ ＝ <strong>♭5</strong>，B ＝ <strong>5</strong>。</p>
+            <p><strong>音阶归属</strong>：1 ♭3 4 ♭5 5 ♭7 正是<strong>蓝调音阶</strong>（第 12 章）——小调五声音阶（1 ♭3 4 5 ♭7）中间插入一个 <strong>♭5</strong>，这个音就叫<strong>蓝调音</strong>（blue note）。所以 B♭ 不是外来户，它是这个音阶的正式成员。</p>
+            <p><strong>但「属于音阶」不等于「听起来对」</strong>——♭5 是三全音，最不稳定（第 3 章），处理不当确实像弹错。三条编排原则：</p>
+            <ol>
+              <li><strong>放在经过位置，不要放在落脚点。</strong>让它夹在 A 与 B 之间，形成 <strong>4 → ♭5 → 5</strong> 的半音上行。这样它的身份是「路过」，耳朵会自动把它听成连接而非目标。反之，若把 B♭ 放在小节强拍并延长，它就会暴露成一个刺耳的错音。</li>
+              <li><strong>给它最短的时值。</strong>典型做法是让 A 和 B 各占一个八分，而 B♭ 只占一个十六分——快到耳朵来不及追究它的身份。</li>
+              <li><strong>不要落在强拍上。</strong>把它安排在弱位（比如每拍的第二个十六分），重音留给 A 或 B。</li>
+            </ol>
+            <p><strong>一个可用的写法</strong>（每格一个十六分，<code>·</code> 为闷音低音 E）：</p>
+            <pre><code>拍 1：  1  ·  ·  ·        拍 2：  ♭3 ·  ·  ·
+拍 3：  4  ♭5 5  ·        拍 4：  1  ·  ·  ·
+                 ↑ 只占一个十六分，夹在 4 与 5 之间，落在弱位</code></pre>
+            <p><strong>更进一步</strong>：如果你<strong>确实</strong>想让 B♭ 成为落脚点（有些金属 riff 就是要那股不安），那就必须<strong>反复强调它</strong>——同一位置连用三四遍，让听众把它接受为这段音乐的一部分。<strong>一次出现是错音，反复出现是风格。</strong>第 14 章讲金属调式色彩时，这条原则会反复出现。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 强力和弦有<strong>三种形状</strong>（六 / 五 / 四弦根），指法一致（<code>n, n+2, n+2</code>）；三弦根要多一品，所以几乎没人用。② 它能<strong>安全平行移动</strong>，是因为不含三度，没有可能出错的那个音——这让写作从「顺阶思维」转向「<strong>根音线思维</strong>」，代价是调性变模糊。③ Riff ＝ <strong>根音线 × 节奏型 × 右手处理</strong>，新手常常只经营第一项。④ <strong>持续低音</strong>一次解决三件事：确立调中心、提供连续性、解放左手。⑤ 组织方式是<strong>重复 → 变奏 → 发展</strong>，最可靠的骨架是<strong>问答结构</strong>（前半句固定，后半句每次不同）。⑥ <strong>休止是密集织体里最强的重音</strong>，但必须落在固定位置才会被听成设计。⑦ 关键的不对称：<strong>纵向（同时响）必须稀，横向（先后响）可以任意浓</strong>——这就是半音 riff 在高增益下依然干净的原因，也是它几乎总配合闷音的原因。</p>
+          <p><strong>下一章预告</strong>：Riff 管左手的低音区，独奏管高音区。第 12 章《五声与蓝调》会讲那把所有摇滚吉他手都在用的梳子——五声音阶从哪来、五个盒子怎么连起来、蓝调音为什么好听，以及推弦与颤音这两件<strong>把音高变成连续量</strong>的武器。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./12-五声与蓝调.html"><strong>下一章：第 12 章 · 五声与蓝调</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+      /* ---------- 演示 1：强力和弦三形状 ---------- */
+      KBG.soundToggle($("p-sound"));
+      var pRoot = 4, pShape = "P6";
+      var fbP = KBG.fretboard($("p-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "degree", root: 4, marks: [], title: "强力和弦在指板上"
+      });
+      function pMidis() {
+        var v = T.barre(pShape, pRoot, TUN);
+        return T.voicingMidis(v.frets, TUN);
+      }
+      function updateP() {
+        var v = T.barre(pShape, pRoot, TUN);
+        clear($("p-box"));
+        var cell = document.createElement("div");
+        $("p-box").appendChild(cell);
+        KBG.chordbox(cell, {
+          title: T.name(pRoot) + "5 · " + v.cn, frets: v.frets, fingers: v.fingers,
+          baseFret: v.baseFret, rootString: v.rootString, rows: 5
+        });
+        ["P6", "P5", "P4"].forEach(function (k, i) {
+          $("p-" + [6, 5, 4][i]).className = "kb-btn" + (k === pShape ? " kb-btn-primary" : "");
+        });
+        var m = pMidis();
+        $("p-name").textContent = T.name(pRoot) + "5";
+        $("p-notes").textContent = m.map(function (x) { return T.name(x); }).join(" ");
+        $("p-frets").textContent = v.frets.map(function (f) { return f < 0 ? "×" : f; }).join(" ");
+        fbP.setLabels("degree", pRoot);
+        fbP.setMarks(T.findOnBoard(TUN, [pRoot, T.mod12(pRoot + 7)], 12).map(function (p) {
+          return { string: p.string, fret: p.fret, kind: p.pc === pRoot ? "root" : "note" };
+        }));
+      }
+      KB.bindRange($("p-root"), $("p-rootv"), function (v) { return T.name(v); },
+        function (v) { pRoot = v; if (typeof fbP !== "undefined") updateP(); });
+      [6, 5, 4].forEach(function (n, i) {
+        $("p-" + n).addEventListener("click", function () { pShape = ["P6", "P5", "P4"][i]; updateP(); });
+      });
+      $("p-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.8); A.strum(pMidis(), { spread: 0.012, gain: 0.7 });
+      });
+      $("p-slide").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.8);
+        var v0 = T.barre(pShape, 0, TUN);
+        var base = v0.frets.filter(function (f) { return f >= 0; });
+        for (var k = 0; k < 12; k++) {
+          (function (k) {
+            var v = T.barre(pShape, T.mod12(pRoot + k), TUN);
+            var mm = T.voicingMidis(v.frets, TUN).map(function (x) { return x; });
+            var lift = (T.mod12(pRoot + k) < pRoot) ? 12 : 0;   // 保证是往上平移而不是折回
+            A.strum(mm.map(function (x) { return x + lift; }), { delay: k * 0.62, spread: 0.012, gain: 0.6 });
+          })(k);
+        }
+        $("p-msg").textContent = "十二个半音，十二个和弦，手型一根手指都没动过。这就是「平行移动」。";
+      });
+      $("p-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：持续低音 ---------- */
+      var pdSemi = 3, pdBpm = 140, pdH = null;
+      var MODE_HINT = {
+        1: "♭2 —— 弗里几亚：最阴冷的金属色彩（第 14 章）",
+        2: "2 —— 自然小调 / 多利亚都可能，中性",
+        3: "♭3 —— 标准小调三度，最常用",
+        4: "3 —— 大调三度，riff 立刻变明亮（少见但有力）",
+        5: "4 —— 稳定的下属色彩",
+        6: "♭5 —— 三全音：无根的不安（第 14 章）",
+        7: "5 —— 最稳，几乎不带色彩",
+        8: "♭6 —— 爱奥利亚的忧郁",
+        9: "6 —— 多利亚的明亮小调",
+        10: "♭7 —— 摇滚最爱，拒绝解决",
+        11: "7 —— 导音，急着回主音（和声小调）",
+        12: "8 —— 八度，纯粹的力量"
+      };
+      function updatePd() {
+        var m = 40 + pdSemi;
+        $("pd-note").textContent = T.name(m, { octave: 1 }) + "（" + T.DEGREES[T.mod12(pdSemi)] + "）";
+        $("pd-mode").textContent = MODE_HINT[pdSemi] || "";
+      }
+      function startPd() {
+        stopPd(); A.setDrive(0.78);
+        var E = 40, up = 40 + pdSemi;
+        var seq = [E, E, up, E, E, E, up, E];
+        pdH = A.sequence(seq.map(function (m, i) {
+          return { t: i * 0.5, midi: m, dur: 0.5, mute: true, gain: i % 2 === 0 ? 0.85 : 0.6 };
+        }), { bpm: pdBpm, loop: true, lengthBeats: 4 });
+        $("pd-play").textContent = "⏸ 暂停";
+      }
+      function stopPd() {
+        if (pdH) { pdH.stop(); pdH = null; }
+        A.stopAll(); $("pd-play").textContent = "▶ 循环播放";
+      }
+      KB.bindRange($("pd-semi"), $("pd-sv"), function (v) { return v + " 半音"; },
+        function (v) { pdSemi = v; updatePd(); if (pdH) startPd(); });
+      KB.bindRange($("pd-bpm"), $("pd-bv"), function (v) { return v + " BPM"; },
+        function (v) { pdBpm = v; if (pdH) startPd(); });
+      $("pd-play").addEventListener("click", function () { pdH ? stopPd() : startPd(); });
+      $("pd-stop").addEventListener("click", stopPd);
+
+      /* ---------- 演示 3：Riff 搭建器 ---------- */
+      var RHY = [
+        { cn: "四分", subs: [[0, 1]] },
+        { cn: "八分", subs: [[0, 0.5], [0.5, 0.5]] },
+        { cn: "Gallop", subs: [[0, 0.5], [0.5, 0.25], [0.75, 0.25]] },
+        { cn: "反向 Gallop", subs: [[0, 0.25], [0.25, 0.25], [0.5, 0.5]] },
+        { cn: "十六分", subs: [[0, 0.25], [0.25, 0.25], [0.5, 0.25], [0.75, 0.25]] }
+      ];
+      var slots = [{ fret: 0 }, { fret: 0 }, { fret: 3 }, { fret: 5 }];
+      var cur = 0, rhy = 2, usePow = true, rfBpm = 140, rfDrive = 0.8, rfH = null, rfRaf = null, rfTab = null;
+
+      var fbR = KBG.fretboard($("rf-board"), {
+        tuning: [40], fromFret: 1, toFret: 12, showOpen: true, clickable: true,
+        labels: "degree", root: 4, title: "6 弦：点一个品位填进当前格",
+        marks: [],
+        onClick: function (info) {
+          slots[cur] = { fret: info.fret };
+          cur = (cur + 1) % slots.length;
+          renderRf(); if (rfH) startRf();
+        }
+      });
+      function rfMarks() {
+        var out = [];
+        for (var f = 0; f <= 12; f++) {
+          var used = slots.some(function (s) { return s && s.fret === f; });
+          out.push({ string: 0, fret: f, kind: f === 0 ? "root" : (used ? "third" : "ghost") });
+        }
+        return out;
+      }
+      function slotMidis(s) {
+        if (!s) return [];
+        return usePow ? [40 + s.fret, 47 + s.fret, 52 + s.fret] : [40 + s.fret];
+      }
+      function rfCols() {
+        var cols = [];
+        slots.forEach(function (s) {
+          RHY[rhy].subs.forEach(function (sub) {
+            if (!s) { cols.push({ notes: [], dur: sub[1], label: "休" }); return; }
+            var notes = usePow
+              ? [{ string: 0, fret: s.fret }, { string: 1, fret: s.fret + 2 }, { string: 2, fret: s.fret + 2 }]
+              : [{ string: 0, fret: s.fret }];
+            cols.push({ notes: notes, dur: sub[1], mute: true });
+          });
+        });
+        return cols;
+      }
+      function renderRf() {
+        var host = $("rf-slots"); clear(host);
+        slots.forEach(function (s, i) {
+          var d = document.createElement("div");
+          d.className = "slot" + (i === cur ? " cur" : "") + (s ? "" : " rest");
+          var b = document.createElement("b");
+          b.textContent = s ? s.fret : "休";
+          var sm = document.createElement("small");
+          sm.textContent = s ? T.DEGREES[T.mod12(s.fret)] : "止";
+          d.appendChild(b); d.appendChild(sm);
+          d.addEventListener("click", function () { cur = i; renderRf(); });
+          host.appendChild(d);
+        });
+        clear($("rf-tab"));
+        rfTab = KBG.tab($("rf-tab"), {
+          tuning: TUN, labelMode: "none",
+          title: "生成的 TAB（" + RHY[rhy].cn + (usePow ? " · 强力和弦" : " · 单音") + "）",
+          columns: rfCols()
+        });
+        $("rf-line").textContent = slots.map(function (s) {
+          return s ? T.name(T.mod12(40 + s.fret)) : "休";
+        }).join(" – ");
+        $("rf-deg").textContent = slots.map(function (s) {
+          return s ? T.DEGREES[T.mod12(s.fret)] : "—";
+        }).join(" – ");
+        $("rf-rhy").textContent = RHY[rhy].cn;
+        fbR.setMarks(rfMarks());
+      }
+      function startRf() {
+        stopRf(); A.setDrive(rfDrive);
+        var ev = [];
+        slots.forEach(function (s, i) {
+          if (!s) return;
+          RHY[rhy].subs.forEach(function (sub) {
+            ev.push({
+              t: i + sub[0], dur: sub[1], mute: true,
+              gain: sub[0] === 0 ? 0.9 : 0.6,
+              midis: usePow ? slotMidis(s) : undefined,
+              midi: usePow ? undefined : slotMidis(s)[0],
+              spread: 0.01
+            });
+          });
+        });
+        if (!ev.length) { $("rf-msg").textContent = "全是休止，没东西可放。"; return; }
+        rfH = A.sequence(ev, { bpm: rfBpm, loop: true, lengthBeats: slots.length });
+        var starts = rfTab.beatsOf();
+        (function tick() {
+          if (!rfH) return;
+          var p = rfH.position(), idx = 0;
+          for (var i = 0; i < starts.length; i++) if (p >= starts[i]) idx = i;
+          rfTab.setCursor(idx);
+          var host = $("rf-slots");
+          for (var j = 0; j < host.children.length; j++) {
+            host.children[j].classList.toggle("play", j === Math.floor(p) % slots.length);
+          }
+          rfRaf = requestAnimationFrame(tick);
+        })();
+        $("rf-play").textContent = "⏸ 暂停";
+      }
+      function stopRf() {
+        if (rfH) { rfH.stop(); rfH = null; }
+        if (rfRaf) { cancelAnimationFrame(rfRaf); rfRaf = null; }
+        A.stopAll();
+        if (rfTab) rfTab.setCursor(null);
+        var host = $("rf-slots");
+        for (var j = 0; j < host.children.length; j++) host.children[j].classList.remove("play");
+        $("rf-play").textContent = "▶ 循环播放";
+      }
+      [0, 1, 2, 3, 4].forEach(function (i) {
+        $("rf-r" + i).addEventListener("click", function () {
+          rhy = i;
+          [0, 1, 2, 3, 4].forEach(function (j) {
+            $("rf-r" + j).className = "kb-btn" + (j === i ? " kb-btn-primary" : "");
+          });
+          renderRf(); if (rfH) startRf();
+        });
+      });
+      $("rf-play").addEventListener("click", function () { rfH ? stopRf() : startRf(); });
+      $("rf-rest").addEventListener("click", function () {
+        slots[cur] = null; cur = (cur + 1) % slots.length; renderRf(); if (rfH) startRf();
+      });
+      $("rf-undo").addEventListener("click", function () {
+        cur = (cur - 1 + slots.length) % slots.length; renderRf();
+      });
+      $("rf-pow").addEventListener("click", function () {
+        usePow = !usePow;
+        $("rf-pow").textContent = usePow ? "🎸 强力和弦：开" : "🎸 强力和弦：关（单音）";
+        renderRf(); if (rfH) startRf();
+      });
+      $("rf-stop").addEventListener("click", stopRf);
+      function loadEx(list, rhyIdx, msg) {
+        return function () {
+          stopRf();
+          slots = list.map(function (f) { return f === null ? null : { fret: f }; });
+          rhy = rhyIdx; cur = 0;
+          [0, 1, 2, 3, 4].forEach(function (j) {
+            $("rf-r" + j).className = "kb-btn" + (j === rhyIdx ? " kb-btn-primary" : "");
+          });
+          renderRf();
+          $("rf-msg").textContent = msg;
+        };
+      }
+      $("rf-ex1").addEventListener("click",
+        loadEx([0, 0, 3, 5], 2, "E – E – G – A ＝ 1 ♭3 4，E 小调五声的前四个音，最标准的骨架。"));
+      $("rf-ex2").addEventListener("click",
+        loadEx([0, 0, 1, 0], 2, "把第三格换成 1 品（F ＝ ♭2）——一个音就把整段染成弗里几亚。这就是「变奏」的杠杆。"));
+      $("rf-ex3").addEventListener("click",
+        loadEx([0, 6, null, 0], 3, "第二格是 6 品（B♭ ＝ ♭5 三全音），第三格留空。不安 + 空白，两种张力叠加。"));
+      KB.bindRange($("rf-bpm"), $("rf-bv"), function (v) { return v + " BPM"; },
+        function (v) { rfBpm = v; if (rfH) startRf(); });
+      KB.bindRange($("rf-drive"), $("rf-dv"), function (v) { return Math.round(v * 100) + "%"; },
+        function (v) { rfDrive = v; A.setDrive(v); });
+
+      updateP(); updatePd(); renderRf();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>07 顺阶和弦与和声功能 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 7 章：一个调只有七个和弦、罗马数字级数思维、主—下属—属三种和声功能、四种终止式，以及常见和弦进行的解剖。配可自由排列的进行播放器。">
+  <meta name="kb:tags" content="吉他,乐理,教材,顺阶和弦,罗马数字,和声功能,终止式,和弦进行,属和弦,sjhx,hsgn">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .dia-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 12px 0 4px; }
+    .dia-card {
+      min-width: 92px; text-align: center; padding: 8px 6px; border-radius: 10px;
+      border: 1px solid var(--kb-border); background: var(--kb-surface-alt); cursor: pointer;
+    }
+    .dia-card:hover { border-color: var(--kb-accent); }
+    .dia-card .rn { font-size: 1.16em; font-weight: 700; }
+    .dia-card .nm { font-size: 1.02em; color: var(--kb-fg); }
+    .dia-card .fn { font-size: 0.78em; margin-top: 3px; }
+    .fn-T { color: #16a34a; } .fn-S { color: #d97706; } .fn-D { color: #dc2626; }
+    .dia-card.T { border-left: 4px solid #16a34a; }
+    .dia-card.S { border-left: 4px solid #d97706; }
+    .dia-card.D { border-left: 4px solid #dc2626; }
+    .prog-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; min-height: 40px;
+      padding: 8px; border: 1px dashed var(--kb-border-strong); border-radius: 8px; }
+    .prog-chip { padding: 5px 12px; border-radius: 999px; font-size: 0.92em; font-weight: 600;
+      background: var(--kb-surface-alt); border: 1px solid var(--kb-border); }
+    .prog-chip.T { border-color: #16a34a; color: #16a34a; }
+    .prog-chip.S { border-color: #d97706; color: #d97706; }
+    .prog-chip.D { border-color: #dc2626; color: #dc2626; }
+    .prog-chip.cur { background: var(--kb-accent); color: #fff; border-color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 7 章 · 顺阶和弦与和声功能</h1>
+        <p class="kb-lead">上一章你学会了造和弦。可一首歌不是一个和弦，是<strong>一串</strong>。为什么 C–G–Am–F 听起来天经地义，而 C–F♯–B♭–Em 像是随机砸出来的？为什么有些进行让人觉得「转完一圈回家了」，有些却像话说到一半？这一章给出答案：一个调里<strong>只有七个和弦</strong>，它们分成<strong>三种功能</strong>，而和声进行本质上就是这三种功能之间的运动。学完这一章，你会开始用<strong>罗马数字</strong>而不是和弦名思考——这是业余和专业之间最明显的一道分水岭。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 推出任意大调 / 小调的七个顺阶和弦，并说出「大小小大大小减」这个口诀为什么成立；② 用罗马数字记录和分析进行，并把同一个进行瞬间移到任何调；③ 说出主、下属、属三种功能各包含哪些和弦、各自的作用；④ 分辨四种终止式并知道各用在什么地方；⑤ 解剖流行与摇滚里最常见的几个进行，说清它们为什么好用。</p>
+        </div>
+
+        <h2>一个调只有七个和弦</h2>
+        <p>规则还是第 6 章那一条：<strong>从音阶里隔一个取一个</strong>。区别在于这次<strong>从每一级都做一遍</strong>。以 C 大调为例：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>级</th><th>Ⅰ</th><th>ⅱ</th><th>ⅲ</th><th>Ⅳ</th><th>Ⅴ</th><th>ⅵ</th><th>ⅶ°</th></tr></thead>
+            <tbody>
+              <tr><td>和弦</td><td><strong>C</strong></td><td>Dm</td><td>Em</td><td><strong>F</strong></td><td><strong>G</strong></td><td>Am</td><td>Bdim</td></tr>
+              <tr><td>构成音</td><td>C E G</td><td>D F A</td><td>E G B</td><td>F A C</td><td>G B D</td><td>A C E</td><td>B D F</td></tr>
+              <tr><td>性质</td><td>大</td><td>小</td><td>小</td><td>大</td><td>大</td><td>小</td><td>减</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>请注意：<strong>这七个和弦一个升降号都没用</strong>——它们全部由 C 大调的七个音组成，所以叫<strong>顺阶和弦</strong>（diatonic chords，「顺着音阶来的」）。一首标准的 C 大调歌曲，和弦库就是这七个，多一个都没有。</p>
+        <p>更重要的是，这个「大小小大大小减」的顺序<strong>对任何大调都成立</strong>：</p>
+        <pre><code>大调：  Ⅰ    ⅱ    ⅲ    Ⅳ    Ⅴ    ⅵ    ⅶ°
+        大   小   小   大   大   小   减
+
+自然小调：ⅰ   ⅱ°   ♭Ⅲ   ⅳ    ⅴ   ♭Ⅵ   ♭Ⅶ
+        小   减   大   小   小   大   大</code></pre>
+        <p>为什么固定？因为<strong>音阶的间距是固定的</strong>（全全半全全全半），而和弦性质完全由间距决定。第 1 级上方三度跨了两个全音（大三度），第 2 级上方三度跨了「全 + 半」（小三度）……每一级摊到什么就是什么，没有选择余地。<strong>一个调的和弦库，在你定下主音的那一刻就已经全部确定了。</strong></p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 小调顺阶其实不用另外背</p>
+          <p>自然小调的七个和弦，和它的关系大调<strong>是同一批和弦</strong>，只是编号起点不同。A 小调的 ⅰ ⅱ° ♭Ⅲ ⅳ ⅴ ♭Ⅵ ♭Ⅶ ＝ Am Bdim C Dm Em F G ——正是 C 大调那七个从第六个开始重排。<strong>记住大调一套就够了。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：顺阶和弦浏览器（换调只是整体平移）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：大调顺阶和弦的性质顺序恒为「大小小大大小减」，小调恒为「小减大小小大大」，与调无关。因此一个调的和弦库在主音确定时就已完全确定。</p></noscript>
+            <div id="d1-sound"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">主音<span class="kb-control-value" id="d1-rootv"></span>
+                <input type="range" id="d1-root" min="0" max="11" step="1" value="0"></label>
+              <button class="kb-btn kb-btn-primary" id="d1-maj" type="button">大调</button>
+              <button class="kb-btn" id="d1-min" type="button">自然小调</button>
+            </div>
+            <div class="dia-row" id="d1-cards"></div>
+            <div class="kb-readout">
+              <span>音阶 <b id="d1-scale">—</b></span>
+              <span>性质顺序 <b id="d1-order">大 小 小 大 大 小 减</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d1-all" type="button">▶ 七个和弦依次听</button>
+              <button class="kb-btn" id="d1-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d1-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点任意一张卡片试听。左侧色条是它的<strong>功能</strong>：绿＝主（家），橙＝下属（离家），红＝属（张力）。下一节解释。</p>
+          </div>
+        </div>
+
+        <h2>罗马数字：用功能思考</h2>
+        <p>为什么专业乐手写 <strong>Ⅰ–Ⅴ–ⅵ–Ⅳ</strong> 而不写 <strong>C–G–Am–F</strong>？三个理由：</p>
+        <ol>
+          <li><strong>可移调。</strong>Ⅰ–Ⅴ–ⅵ–Ⅳ 在 C 调是 C–G–Am–F，在 G 调是 G–D–Em–C，在 E 调是 E–B–C♯m–A。<strong>写成级数，一句话覆盖十二个调</strong>；写成和弦名，换个调就得重写。乐队排练时说「主歌是 1–5–6–4」比报四个和弦名有效得多。</li>
+          <li><strong>能看出结构。</strong>「C–G–Am–F」是四个名字；「Ⅰ–Ⅴ–ⅵ–Ⅳ」是一条<strong>路线</strong>：从家出发 → 制造张力 → 假装回家却拐弯 → 铺垫 → 再来一轮。名字看不出这些，级数一眼就看出来了。</li>
+          <li><strong>能识别「同一首歌」。</strong>大量流行歌用的是同一套级数，只是调不同。用级数思考，你会发现自己「早就会」很多歌。</li>
+        </ol>
+        <p><strong>写法约定</strong>：大写罗马数字 ＝ 大三和弦（Ⅰ Ⅳ Ⅴ），小写 ＝ 小三和弦（ⅱ ⅲ ⅵ），加 <code>°</code> ＝ 减三和弦（ⅶ°），加 <code>+</code> ＝ 增三和弦。级数前的 <code>♭</code> 表示这一级比大调的对应级低半音（如小调里的 <code>♭Ⅶ</code>）。</p>
+
+        <h2>三种功能：主、下属、属</h2>
+        <p>七个和弦不是七种平等的选择，而是<strong>三种角色</strong>。判断依据很简单：<strong>看它和主和弦共享几个音、以及它含不含导音</strong>。</p>
+        <figure>
+          <svg viewBox="0 0 660 230" width="660" height="230" role="img" aria-label="和声功能流向图：主功能到下属功能到属功能再回到主功能">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="20" y="40" width="170" height="106" rx="14" fill="#16a34a" opacity="0.12"/>
+              <rect x="20" y="40" width="170" height="106" rx="14" fill="none" stroke="#16a34a" stroke-width="1.8"/>
+              <text x="105" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-fg)">主功能 T</text>
+              <text x="105" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">Ⅰ · ⅵ · ⅲ</text>
+              <text x="105" y="112" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">家。稳定，可久留</text>
+              <text x="105" y="132" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">含主音，不含导音</text>
+
+              <rect x="245" y="40" width="170" height="106" rx="14" fill="#d97706" opacity="0.12"/>
+              <rect x="245" y="40" width="170" height="106" rx="14" fill="none" stroke="#d97706" stroke-width="1.8"/>
+              <text x="330" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-fg)">下属功能 S</text>
+              <text x="330" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">Ⅳ · ⅱ</text>
+              <text x="330" y="112" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">离家。铺垫，中途站</text>
+              <text x="330" y="132" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">含第四级，不含导音</text>
+
+              <rect x="470" y="40" width="170" height="106" rx="14" fill="#dc2626" opacity="0.12"/>
+              <rect x="470" y="40" width="170" height="106" rx="14" fill="none" stroke="#dc2626" stroke-width="1.8"/>
+              <text x="555" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-fg)">属功能 D</text>
+              <text x="555" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">Ⅴ · ⅶ°</text>
+              <text x="555" y="112" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">张力。必须解决</text>
+              <text x="555" y="132" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)"><tspan font-weight="700">含导音</tspan>，急着回家</text>
+
+              <path d="M 196 93 h 40" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 236 93 l -9 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+              <path d="M 421 93 h 40" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 461 93 l -9 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+              <path d="M 555 152 C 555 190 105 190 105 152" fill="none" stroke="#dc2626" stroke-width="2.2"/>
+              <path d="M 105 152 l -5 10 h 10 z" fill="#dc2626"/>
+              <text x="330" y="200" text-anchor="middle" font-size="12.5" fill="#dc2626" font-weight="700">解决：属 → 主，整个调性体系最强的一步</text>
+              <path d="M 105 40 C 105 12 330 12 330 40" fill="none" stroke="var(--kb-fg-faint)" stroke-width="1.6" stroke-dasharray="4 3"/>
+              <path d="M 330 40 l -5 -10 h 10 z" fill="var(--kb-fg-faint)"/>
+              <text x="218" y="24" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-faint)">也可以直接 T → D，或 T 内部互换</text>
+            </g>
+          </svg>
+          <figcaption>标准的和声流向是 <strong>T → S → D → T</strong>：从家出发、走远、制造张力、回家。可以跳过 S 直接 T→D，也可以在同一功能内部换和弦（如 Ⅰ→ⅵ）而不改变「还在家」的感觉。<strong>唯一强烈避免的是 D→S 的倒退</strong>——张力已经拉满却往回退，听感上会「泄气」。</figcaption>
+        </figure>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>功能</th><th>大调和弦</th><th>与主和弦共享的音</th><th>含导音吗</th><th>作用</th></tr></thead>
+            <tbody>
+              <tr><td><strong>主 T</strong></td><td>Ⅰ、ⅵ、ⅲ</td><td>2 个（ⅵ 与 ⅲ 各与 Ⅰ 共享两音）</td><td>否</td><td>稳定，段落的起点与终点</td></tr>
+              <tr><td><strong>下属 S</strong></td><td>Ⅳ、ⅱ</td><td>1 个</td><td>否</td><td>离开主和弦，为属功能铺路</td></tr>
+              <tr><td><strong>属 D</strong></td><td>Ⅴ、ⅶ°</td><td>1 个 / 0 个</td><td><strong>是</strong></td><td>制造张力，指向主和弦</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>关键的判据是<strong>导音</strong>。C 大调里导音是 B，含 B 的顺阶和弦有 G（G B D）、Em（E G B）、Bdim（B D F）。其中 <strong>G 和 Bdim 同时含有第四级 F 或强烈指向主音</strong>，属于属功能；Em 虽然含 B，但它同时含 E 和 G（主和弦的两个音），所以听起来仍像「在家」，归为主功能。<strong>ⅲ 级是三种功能里最暧昧的一个</strong>，很多分析把它单列，实战中把它当成「弱化的主功能」即可。</p>
+
+        <h2>终止式：句子怎么收尾</h2>
+        <p>和声进行像说话，需要标点。<strong>终止式</strong>（cadence）就是乐句的标点符号，共四种：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>名称</th><th>走法</th><th>相当于</th><th>用在哪</th></tr></thead>
+            <tbody>
+              <tr><td><strong>正格终止</strong></td><td><strong>Ⅴ → Ⅰ</strong></td><td>句号。最强的结束</td><td>段落与全曲收尾</td></tr>
+              <tr><td><strong>变格终止</strong></td><td><strong>Ⅳ → Ⅰ</strong></td><td>柔和的句号（「阿门终止」）</td><td>圣诗、抒情尾奏、福音摇滚</td></tr>
+              <tr><td><strong>半终止</strong></td><td><strong>停在 Ⅴ</strong></td><td>逗号。话没说完</td><td>主歌结尾、进副歌之前</td></tr>
+              <tr><td><strong>阻碍终止</strong></td><td><strong>Ⅴ → ⅵ</strong></td><td>破折号。以为要结束却拐弯</td><td>延长段落、制造意外</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>阻碍终止</strong>值得多说一句。Ⅴ 已经把张力拉满，听众的耳朵百分之百在等 Ⅰ；这时你给它 ⅵ——一个和 Ⅰ 共享两个音、却是小和弦的替身。既满足了「有个东西接住了」，又制造了「不是它！」的意外，还顺便把段落延长了一轮。<strong>这是流行歌里最好用的一招「假结束」。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：四种终止式（听标点符号）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：Ⅴ→Ⅰ 是最强的结束（正格终止）；Ⅳ→Ⅰ 柔和（变格终止）；停在 Ⅴ 表示未完（半终止）；Ⅴ→ⅵ 制造意外并延长段落（阻碍终止）。四者的差别不在音好不好听，而在「结束感」的强弱。</p></noscript>
+            <div class="kb-readout">
+              <span>当前 <b id="d2-cur">—</b></span>
+              <span>走法 <b id="d2-path">—</b></span>
+              <span>结束感 <b id="d2-feel">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d2-auth" type="button">▶ 正格 Ⅴ→Ⅰ</button>
+              <button class="kb-btn" id="d2-plag" type="button">▶ 变格 Ⅳ→Ⅰ</button>
+              <button class="kb-btn" id="d2-half" type="button">▶ 半终止（停在 Ⅴ）</button>
+              <button class="kb-btn" id="d2-dec" type="button">▶ 阻碍 Ⅴ→ⅵ</button>
+              <button class="kb-btn" id="d2-cmp" type="button">🔀 正格 vs 阻碍 对比</button>
+              <button class="kb-btn" id="d2-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d2-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">每个终止式前面都加了同样的 Ⅰ–Ⅳ 作为铺垫，这样你听到的差别纯粹来自最后两个和弦。</p>
+          </div>
+        </div>
+
+        <h2>常见进行的解剖</h2>
+        <p>用功能视角重看几个你天天弹的进行，它们会立刻变得透明：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>进行</th><th>功能路线</th><th>为什么好用</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Ⅰ–Ⅴ–ⅵ–Ⅳ</strong></td><td>T → D → T → S</td><td>四个和弦全是「大大小大」的强和弦，Ⅴ→ⅵ 是阻碍终止（不结束），Ⅳ 又把你送回 Ⅰ——<strong>天生适合无限循环</strong>。流行歌用得最滥的进行。</td></tr>
+              <tr><td><strong>ⅵ–Ⅳ–Ⅰ–Ⅴ</strong></td><td>T → S → T → D</td><td>同样四个和弦，只是从 ⅵ 起步 → 开头是小和弦，情绪更暗。<strong>与上一行是同一个循环的不同切入点。</strong></td></tr>
+              <tr><td><strong>Ⅰ–Ⅳ–Ⅴ</strong></td><td>T → S → D</td><td>最古老的骨架。布鲁斯与早期摇滚的全部（第 13 章）。</td></tr>
+              <tr><td><strong>ⅱ–Ⅴ–Ⅰ</strong></td><td>S → D → T</td><td>根音沿五度圈连走两步（第 4 章）。爵士的基本句式，也是流行歌里最「顺」的收尾。</td></tr>
+              <tr><td><strong>ⅰ–♭Ⅶ–♭Ⅵ–♭Ⅶ</strong></td><td>（小调，无属功能）</td><td><strong>摇滚金属的主力。</strong>没有导音、没有 Ⅴ，因此<strong>不产生「该结束了」的压力</strong>，可以扛住一整段 riff（第 5 章、第 13 章）。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>下面这个演示让你自己排进行、循环播放，并实时看到功能着色。<strong>强烈建议亲手试一个「错误」的进行</strong>（比如 Ⅴ→Ⅳ→Ⅰ，属退回下属），听听那种泄气感——理解规则最快的方式是听一遍打破规则的后果。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：进行播放器（自己排，循环听）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：和声进行是三种功能（主 T、下属 S、属 D）之间的运动；典型流向为 T→S→D→T，而 D→S 的倒退会产生「泄气」的听感。同一串罗马数字可以移到任何调。</p></noscript>
+            <div class="dia-row" id="d3-pad"></div>
+            <div class="prog-chips" id="d3-chips"></div>
+            <div class="kb-readout">
+              <span>调 <b id="d3-key">C 大调</b></span>
+              <span>和弦 <b id="d3-names">—</b></span>
+              <span>功能路线 <b id="d3-fn">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="d3-bpmv"></span>
+                <input type="range" id="d3-bpm" min="50" max="150" step="2" value="88"></label>
+              <label class="kb-control">调<span class="kb-control-value" id="d3-keyv"></span>
+                <input type="range" id="d3-root" min="0" max="11" step="1" value="0"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="d3-loop" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="d3-stop" type="button">■ 停止</button>
+              <button class="kb-btn" id="d3-undo" type="button">← 删一个</button>
+              <button class="kb-btn" id="d3-clear" type="button">清空</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="p-1546" type="button">Ⅰ–Ⅴ–ⅵ–Ⅳ</button>
+              <button class="kb-btn" id="p-6415" type="button">ⅵ–Ⅳ–Ⅰ–Ⅴ</button>
+              <button class="kb-btn" id="p-145" type="button">Ⅰ–Ⅳ–Ⅴ</button>
+              <button class="kb-btn" id="p-251" type="button">ⅱ–Ⅴ–Ⅰ</button>
+              <button class="kb-btn" id="p-rock" type="button">ⅰ–♭Ⅶ–♭Ⅵ–♭Ⅶ（小调）</button>
+              <button class="kb-btn" id="p-bad" type="button">Ⅴ–Ⅳ–Ⅰ（故意倒退）</button>
+            </div>
+            <p id="d3-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点上面七张卡把和弦加进序列。拖动「调」滑块——<strong>罗马数字一个不变，和弦名全变了</strong>，这就是级数思维的全部意义。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 7.1</p>
+          <p>写出 G 大调的七个顺阶和弦，并标注每个的功能。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>G 大调</strong> ＝ G A B C D E F♯。套「大小小大大小减」：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>级</th><th>Ⅰ</th><th>ⅱ</th><th>ⅲ</th><th>Ⅳ</th><th>Ⅴ</th><th>ⅵ</th><th>ⅶ°</th></tr></thead>
+                <tbody>
+                  <tr><td>和弦</td><td>G</td><td>Am</td><td>Bm</td><td>C</td><td>D</td><td>Em</td><td>F♯dim</td></tr>
+                  <tr><td>功能</td><td>T</td><td>S</td><td>T</td><td>S</td><td><strong>D</strong></td><td>T</td><td><strong>D</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>验算</strong>：只有 ⅶ° 用到了 F♯，其余六个都不带升降号——符合「顺阶和弦全部来自本调音阶」。</p>
+            <p><strong>吉他视角</strong>：G、Am、Bm、C、D、Em 六个里，只有 Bm 需要横按。这就是 G 调在吉他弹唱里泛滥的原因——<strong>七个和弦有六个是开放和弦</strong>。顺带记住：G 调常用的「G–D–Em–C」正是 Ⅰ–Ⅴ–ⅵ–Ⅳ。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 7.2</p>
+          <p>一首歌的和弦是 <strong>D – A – Bm – G</strong>，循环。它是什么调？用罗马数字写出来，并说出功能路线。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>第一步：猜主音。</strong>循环的第一个和弦通常（不总是）是主和弦，先假设是 <strong>D 大调</strong>。</p>
+            <p><strong>第二步：验算。</strong>D 大调 ＝ D E F♯ G A B C♯，顺阶和弦是 D、Em、F♯m、G、A、Bm、C♯dim。<br>
+            题目里的四个和弦 D、A、Bm、G <strong>全部在列</strong> ✓ 假设成立。</p>
+            <p><strong>第三步：编号。</strong>D ＝ Ⅰ，A ＝ Ⅴ，Bm ＝ ⅵ，G ＝ Ⅳ → <strong>Ⅰ–Ⅴ–ⅵ–Ⅳ</strong>。</p>
+            <p><strong>功能路线</strong>：T → D → T → S，然后循环回 T。</p>
+            <p><strong>为什么它能无限循环</strong>：Ⅴ→ⅵ 是阻碍终止（本该结束却拐弯），紧接着的 Ⅳ 又是下属功能，自然把你推回 Ⅰ。<strong>整个循环里没有一次真正的正格终止</strong>，所以永远不会给人「结束了」的感觉——这正是流行歌需要的性质。</p>
+            <p><strong>如果第一个和弦不是主和弦怎么办</strong>：把四个和弦轮流当主音试一遍，看哪一种假设下四个和弦全部落在顺阶里。若有多种可能（比如这四个和弦在 Bm 调下也全部成立），就看<strong>低音停在哪、旋律落在哪</strong>——回到第 4 章习题 4.9 的判据。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 7.3</p>
+          <p>正文说 Ⅴ→Ⅳ 是「泄气」的倒退。可布鲁斯里 Ⅴ→Ⅳ 到处都是。矛盾吗？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>不矛盾，因为布鲁斯把功能层级压平了。</strong>两条原因：</p>
+            <p><strong>① 布鲁斯的三个和弦全是属七。</strong>标准十二小节布鲁斯用的是 Ⅰ7、Ⅳ7、Ⅴ7 —— <strong>连主和弦都是属七</strong>。而属七本该是「必须解决」的张力和弦。当所有和弦都带着同样的张力，功能的高低差就被抹平了：没有哪个和弦特别稳、也没有哪个特别急，于是「倒退」无从谈起。</p>
+            <p><strong>② 那里的 Ⅳ 不是「下属」，而是下行路线的一站。</strong>十二小节布鲁斯第 9–11 小节是 Ⅴ7 → Ⅳ7 → Ⅰ7，根音走 G → F → C。这是一条<strong>向下的回家路</strong>，Ⅳ 在这里的角色是「从 Ⅴ 滑回 Ⅰ 的中途踏板」，而不是「重新出发去铺垫」。听感上是<strong>缓降</strong>，不是倒退。</p>
+            <p><strong>一般化的教训</strong>：功能理论描述的是<strong>古典共性写作</strong>的引力规律，它在流行、爵士、摇滚里依然大体有效，但<strong>不是物理定律</strong>。当一个流派系统性地改变了和弦的构成（布鲁斯全用属七）或者放弃了导音（摇滚用自然小调），功能规则就要相应打折。<strong>规则要知道，也要知道它在哪儿失效——后者才是第三篇的主题。</strong></p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 A 大调的七个顺阶和弦。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>A 大调</strong> ＝ A B C♯ D E F♯ G♯。</p>
+            <p><strong>Ⅰ</strong> A、<strong>ⅱ</strong> Bm、<strong>ⅲ</strong> C♯m、<strong>Ⅳ</strong> D、<strong>Ⅴ</strong> E、<strong>ⅵ</strong> F♯m、<strong>ⅶ°</strong> G♯dim。</p>
+            <p><strong>解析</strong>：不必逐个叠三度，直接套「大小小大大小减」把七个音级填进去即可——这就是口诀的价值。<br>
+            <strong>验算</strong>：Ⅰ、Ⅳ、Ⅴ 是 A、D、E（例题 6.1 已算过 ✓）；ⅵ 是 F♯m，而 F♯ 小调正是 A 大调的关系小调（第 5 章）✓ 两处独立验算都对上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>把 <strong>C – Am – F – G</strong> 写成罗马数字，标出功能路线，并把它移到 E 调。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>罗马数字</strong>：<strong>Ⅰ – ⅵ – Ⅳ – Ⅴ</strong>。</p>
+            <p><strong>功能路线</strong>：T → T → S → D。注意开头两个都是主功能——Ⅰ 换到 ⅵ 只是「在家里换了个房间」，情绪转暗但没有离开。真正的运动从 Ⅳ 才开始。</p>
+            <p><strong>移到 E 调</strong>：E 大调 ＝ E F♯ G♯ A B C♯ D♯ → Ⅰ ＝ <strong>E</strong>，ⅵ ＝ <strong>C♯m</strong>，Ⅳ ＝ <strong>A</strong>，Ⅴ ＝ <strong>B</strong>。即 <strong>E – C♯m – A – B</strong>。</p>
+            <p><strong>解析</strong>：这个进行（俗称「50 年代进行」，因为它统治了 1950 年代的流行乐）之所以经久不衰，是因为它把 T–S–D–T 的完整循环压缩进四个和弦，且每一步都在功能上「前进」，没有任何倒退。<strong>它是最「规矩」的进行</strong>——也正因为太规矩，现代作品用它时往往会改动其中一个和弦来避免陈词滥调。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>在任何大调里，哪几级是大三和弦？哪几级是小三和弦？唯一的减三和弦在第几级？为什么它很少被单独使用？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>大三和弦</strong>：Ⅰ、Ⅳ、Ⅴ。<strong>小三和弦</strong>：ⅱ、ⅲ、ⅵ。<strong>减三和弦</strong>：ⅶ°（第七级）。</p>
+            <p><strong>为什么 ⅶ° 很少单独用</strong>，三条原因：</p>
+            <ol>
+              <li><strong>它不稳定。</strong>内部含三全音（第 6 章例题 6.2），无法作为落脚点。</li>
+              <li><strong>它有更好的替身。</strong>Bdim ＝ B D F，而 G7 ＝ G B D F —— <strong>ⅶ° 就是 Ⅴ7 去掉根音</strong>。既然 Ⅴ7 功能相同且低音更有力，实践中几乎总是用 Ⅴ7。</li>
+              <li><strong>吉他上不好按。</strong>减三和弦没有顺手的开放指法，而它带来的收益（属功能）用一个 G7 就能拿到。</li>
+            </ol>
+            <p><strong>它什么时候有用</strong>：当你想要属功能<strong>但不想要低音跳到 Ⅴ</strong> 时。比如 <code>C – Bdim – Am</code>，低音走 C→B→A 级进（第 6 章习题 6.7 的下行低音线）——这时 ⅶ° 就比 Ⅴ 好用。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是半终止？为什么它特别适合放在主歌结尾、副歌之前？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>定义</strong>：乐句<strong>停在 Ⅴ 上</strong>（而不是走到 Ⅰ），叫半终止。它相当于句子里的逗号。</p>
+            <p><strong>为什么适合放在副歌之前</strong>：Ⅴ 含导音，张力拉满却<strong>故意不解决</strong>。听众的耳朵被吊在半空，本能地等待下一句——这时副歌一进来，那个积累的期待瞬间兑现，冲击力被放大。</p>
+            <p><strong>换句话说</strong>：半终止不是「没写完」，而是<strong>把结束感当成资源存起来，留给下一段花</strong>。这是编曲里最经济的张力管理手段：不需要加乐器、不需要加音量，只需要在正确的位置<strong>不解决</strong>。</p>
+            <p><strong>重型音乐里的等价物</strong>：金属很少用规规矩矩的 Ⅴ，但用同样的逻辑——副歌前一小节常常是<strong>一段停顿、一个持续的低音、或者一个不解决的强力和弦</strong>，作用完全一样。第 11 章讲 Riff 结构时会看到，<strong>「休止」是重型音乐版本的半终止。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>摇滚里极常见的 <strong>Em – C – G – D</strong>：写出它在 E 小调里的罗马数字。然后换一个角度——它在 G 大调里又是什么？这个「双重身份」说明了什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>在 E 小调里</strong>：E 自然小调 ＝ E F♯ G A B C D，顺阶和弦 Em、F♯dim、G、Am、Bm、C、D。<br>
+            → <strong>ⅰ – ♭Ⅵ – ♭Ⅲ – ♭Ⅶ</strong>。</p>
+            <p><strong>在 G 大调里</strong>：Em ＝ ⅵ，C ＝ Ⅳ，G ＝ Ⅰ，D ＝ Ⅴ。<br>
+            → <strong>ⅵ – Ⅳ – Ⅰ – Ⅴ</strong>。</p>
+            <p><strong>说明了什么</strong>：这两个分析<strong>都对</strong>，因为 E 小调和 G 大调是关系大小调，共用同一批和弦（第 5 章）。到底算哪个，取决于<strong>耳朵把谁当家</strong>——如果旋律和低音反复回到 E，就是小调；反复回到 G，就是大调。</p>
+            <p><strong>这个模糊性恰恰是它好用的原因。</strong>Em–C–G–D 同时具备「小调的暗」和「大调的开阔」，情绪上左右逢源：主歌唱得低沉时它听起来是 Em 调，副歌一上高音落在 G 上它立刻变得明亮，<strong>而和弦一个都没换</strong>。无数摇滚歌就靠这一招在一个循环里完成情绪转换。</p>
+            <p><strong>吉他上的加成</strong>：Em、C、G、D 全是开放和弦，且 E 小调的主音有两根空弦。乐理上的双重身份 + 物理上的顺手，共同造就了这个进行的统治地位。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么 <strong>ⅱ–Ⅴ–Ⅰ</strong> 听起来比 <strong>Ⅳ–Ⅴ–Ⅰ</strong> 更「顺」？请从根音运动和共同音两个角度分析。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>角度一：根音运动。</strong><br>
+            ⅱ–Ⅴ–Ⅰ 在 C 调是 D → G → C：<strong>连续两次下行纯五度</strong>，也就是在五度圈上连走两格（第 4 章）。每一步都是最强的根音运动，方向一致，像滚下楼梯一样自然。<br>
+            Ⅳ–Ⅴ–Ⅰ 是 F → G → C：先<strong>上行大二度</strong>，再下行纯五度。方向变了一次，多了一个「拐点」。</p>
+            <p><strong>角度二：共同音与声部进行。</strong><br>
+            Dm（D F A）与 G（G B D）共享 <strong>D</strong>；若用七和弦，Dm7（D F A C）与 G7（G B D F）共享 <strong>D 和 F</strong> 两个音——换和弦时有两个声部原地不动，其余小步移动，极其平滑。<br>
+            F（F A C）与 G（G B D）<strong>一个共同音都没有</strong>，三个声部必须同时移动，听起来更「硬」。</p>
+            <p><strong>结论</strong>：ⅱ–Ⅴ–Ⅰ 在两个维度上都更连贯，所以成了爵士的基本句式，也大量出现在流行歌的收尾。</p>
+            <p><strong>但「更顺」不等于「更好」</strong>：Ⅳ–Ⅴ–Ⅰ 那个「硬」正是摇滚要的——三个声部一起动，和弦切换有<strong>撞击感</strong>。所以 Ⅰ–Ⅳ–Ⅴ 是摇滚骨架而 ⅱ–Ⅴ–Ⅰ 是爵士骨架，这不是水平高低，是审美取向的差异。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用了阻碍终止 Ⅴ→ⅵ 之后，作曲家通常怎么接下去？为什么不能直接从 ⅵ 结束全曲？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>典型接法</strong>：<code>… Ⅴ → ⅵ → Ⅳ（或 ⅱ）→ Ⅴ → Ⅰ</code>。也就是<strong>退回下属功能，重新走一遍 S–D–T</strong>，第二次才真正落地。</p>
+            <p><strong>为什么不能停在 ⅵ</strong>：因为 ⅵ 是<strong>主功能的替身，不是主功能本身</strong>。它和 Ⅰ 共享两个音，所以能「接住」Ⅴ 的张力；但它的根音不是主音，而且它是小和弦——听觉上会觉得「落到了一个地方，但不是家」。用它结束全曲会留下明显的悬念感（有些作品故意如此，效果是「未完的怅然」）。</p>
+            <p><strong>阻碍终止的真正用途</strong>：<strong>买时间。</strong>当你已经写到该结束的位置、但还想再唱一段，阻碍终止让你在不破坏结构的前提下把段落延长一轮。听众得到了「有东西接住了」的满足，同时又保留了「还没完」的期待。</p>
+            <p><strong>用滥的风险</strong>：连续两次阻碍终止听众就腻了，因为「意外」重复两次就成了套路。经典用法是<strong>整首歌只用一次</strong>，放在最后一段副歌之前。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明「大调顺阶三和弦的性质顺序恒为 大-小-小-大-大-小-减」，与调无关。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>设定</strong>：大调音阶相对主音的半音数是固定序列<br>
+            <em class="kb-math">s</em> ＝ [0, 2, 4, 5, 7, 9, 11]，向上延展为 [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17]。<br>
+            第 <em class="kb-math">i</em> 级三和弦由 <em class="kb-math">s[i]</em>、<em class="kb-math">s[i+2]</em>、<em class="kb-math">s[i+4]</em> 组成。只需算出<strong>三音</strong> <em class="kb-math">s[i+2] − s[i]</em> 与<strong>五音</strong> <em class="kb-math">s[i+4] − s[i]</em>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>级 <em class="kb-math">i</em></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
+                <tbody>
+                  <tr><td>三音间距</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>3</td><td>3</td></tr>
+                  <tr><td>五音间距</td><td>7</td><td>7</td><td>7</td><td>7</td><td>7</td><td>7</td><td><strong>6</strong></td></tr>
+                  <tr><td>性质</td><td>大</td><td>小</td><td>小</td><td>大</td><td>大</td><td>小</td><td><strong>减</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>（逐项验算，例如 <em class="kb-math">i</em> = 6：<em class="kb-math">s[8] − s[6]</em> ＝ 14 − 11 ＝ 3，<em class="kb-math">s[10] − s[6]</em> ＝ 17 − 11 ＝ 6 → 小三度 + 减五度 ＝ 减三和弦 ✓）</p>
+            <p><strong>结论</strong>：这张表<strong>只依赖于 <em class="kb-math">s</em> 这个固定序列，不含主音信息</strong>。换调等于把所有音整体加上同一个常数，差值不变，因此性质序列不变。∎</p>
+            <p><strong>顺带一个漂亮的观察</strong>：五音间距全是 7（纯五度），<strong>只有第七级是 6（三全音）</strong>。整个大调体系里的不稳定感，全部来自这唯一一处塌陷——而它恰好落在导音上。<strong>调性音乐的引擎与它唯一的缺陷，是同一个东西。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>大量摇滚与金属作品<strong>完全不使用属功能</strong>（没有 Ⅴ，没有导音）。这样做失去了什么？得到了什么？请从「张力从哪来」的角度回答。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>失去的</strong>：</p>
+            <ol>
+              <li><strong>明确的结束感。</strong>没有 Ⅴ→Ⅰ，就没有那种「一锤定音」的落地。段落的开始与结束需要靠别的手段划分。</li>
+              <li><strong>长线的方向感。</strong>古典和声能用属功能规划几十小节的张力弧线；放弃它之后，和声本身不再提供长期方向。</li>
+              <li><strong>转调的便利。</strong>属七和弦是最常用的转调工具（第 11 章），没有它，转调要另想办法。</li>
+            </ol>
+            <p><strong>得到的</strong>：</p>
+            <ol>
+              <li><strong>可无限循环。</strong>这是最大的收益。ⅰ–♭Ⅶ–♭Ⅵ 之类的进行没有「该结束了」的压力，因此可以承载一整段 riff 而不显得拖沓。<strong>重型音乐的段落结构靠重复建立，而重复要求和声不催促。</strong></li>
+              <li><strong>重量感。</strong>♭Ⅶ 与 ♭Ⅵ 都是大三和弦，且根音在主音下方全音、小三度处——低音的运动是<strong>平移</strong>而非<strong>引力坠落</strong>，听起来更像板块移动而不是舞步。</li>
+              <li><strong>与强力和弦兼容。</strong>属功能依赖导音，而导音是三音；强力和弦没有三音（第 6 章）。<strong>既然重型音色逼你放弃三度（第 10 章），属功能本来也就用不上了。</strong></li>
+            </ol>
+            <p><strong>那张力从哪来</strong>——这才是问题的核心。答案是：<strong>张力从和声转移到了别处。</strong></p>
+            <ul>
+              <li><strong>节奏</strong>：切分、休止、变拍、加速（第 9、15 章）；</li>
+              <li><strong>音色与音量</strong>：干净 → 失真、闷音 → 放开、单吉他 → 双吉他叠加；</li>
+              <li><strong>音区</strong>：低音区堆积 → 高音区爆发；</li>
+              <li><strong>音阶色彩</strong>：用 ♭2（弗里几亚）或三全音制造局部紧张，但<strong>不解决</strong>（第 14 章）。</li>
+            </ul>
+            <p><strong>结论</strong>：不用属功能不是「不懂和声」，而是<strong>把张力的责任交给了别的参数</strong>。判断一段重型音乐写得好不好，要看它在放弃了和声引力之后，有没有用节奏、音色、音区把结构撑起来。<strong>这正是第三篇要教的东西。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 一个调<strong>只有七个顺阶和弦</strong>，性质顺序恒为大调「<strong>大小小大大小减</strong>」、自然小调「小减大小小大大」——由音阶间距唯一决定。② <strong>罗马数字</strong>让你可移调、看结构、认出「同一首歌」；大写＝大，小写＝小，<code>°</code>＝减。③ 三种功能：<strong>主 T（Ⅰ ⅵ ⅲ）＝ 家、下属 S（Ⅳ ⅱ）＝ 离家、属 D（Ⅴ ⅶ°）＝ 张力</strong>；判据是<strong>含不含导音</strong>。标准流向 T→S→D→T，忌 D→S 倒退。④ 四种终止式：正格 Ⅴ→Ⅰ（句号）、变格 Ⅳ→Ⅰ（柔和句号）、半终止停在 Ⅴ（逗号）、阻碍 Ⅴ→ⅵ（破折号，用来延长段落）。⑤ 常见进行本质都是功能路线：Ⅰ–Ⅴ–ⅵ–Ⅳ 之所以能无限循环，是因为它<strong>从不真正终止</strong>。⑥ 摇滚金属常<strong>整体放弃属功能</strong>，换来可循环与重量感，代价是必须用节奏、音色、音区来承担张力。</p>
+          <p><strong>下一章预告</strong>：三个音还不够。第 8 章《七和弦与延伸音》会给和弦再加一层——属七为什么是整个调性体系里张力最大的和弦？maj7 的「悬浮感」从哪来？以及那些看起来吓人的符号（<code>m7♭5</code>、<code>add9</code>、<code>13</code>）到底怎么读。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./08-七和弦与延伸音.html"><strong>下一章：第 8 章 · 七和弦与延伸音</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+      var ROMAN_MAJ = ["Ⅰ", "ⅱ", "ⅲ", "Ⅳ", "Ⅴ", "ⅵ", "ⅶ°"];
+      var ROMAN_MIN = ["ⅰ", "ⅱ°", "♭Ⅲ", "ⅳ", "ⅴ", "♭Ⅵ", "♭Ⅶ"];
+      var FN_MAJ = ["T", "S", "T", "S", "D", "T", "D"];
+      var FN_MIN = ["T", "S", "T", "S", "D", "S", "D"];
+      var FN_CN = { T: "主 · 家", S: "下属 · 离家", D: "属 · 张力" };
+
+      /* 把和弦排成「低音 + 三音块」，保证任何性质都能正确发声 */
+      function voiceOf(rootPc, key) {
+        var steps = T.CHORDS[key].steps, base = 48 + rootPc;
+        return [base - 12].concat(steps.map(function (s) { return base + s; }));
+      }
+
+      /* ---------- 演示 1：顺阶和弦浏览器 ---------- */
+      KBG.soundToggle($("d1-sound"));
+      var d1Root = 0, d1Major = true;
+      function d1Data() {
+        return T.diatonic(d1Root, d1Major ? "major" : "naturalMinor", 3);
+      }
+      function update1() {
+        var list = d1Data(), host = $("d1-cards");
+        clear(host);
+        var fns = d1Major ? FN_MAJ : FN_MIN;
+        var rns = d1Major ? ROMAN_MAJ : ROMAN_MIN;
+        list.forEach(function (d, i) {
+          var card = document.createElement("div");
+          card.className = "dia-card " + fns[i];
+          var rn = document.createElement("div");
+          rn.className = "rn"; rn.textContent = rns[i];
+          var nm = document.createElement("div");
+          nm.className = "nm"; nm.textContent = T.name(d.rootPc) + d.sym;
+          var fn = document.createElement("div");
+          fn.className = "fn fn-" + fns[i]; fn.textContent = FN_CN[fns[i]];
+          card.appendChild(rn); card.appendChild(nm); card.appendChild(fn);
+          card.addEventListener("click", function () {
+            A.stopAll(); A.setDrive(0.12);
+            A.strum(voiceOf(d.rootPc, d.key), { spread: 0.03, gain: 0.6 });
+            $("d1-msg").textContent = rns[i] + " ＝ " + T.name(d.rootPc) + d.sym + "（" + d.cn +
+              "），功能：" + FN_CN[fns[i]] + "。构成音 " +
+              d.notes.map(function (p) { return T.name(p); }).join(" ");
+          });
+          host.appendChild(card);
+        });
+        $("d1-scale").textContent = T.scalePcs(d1Root, d1Major ? "major" : "naturalMinor")
+          .map(function (p) { return T.name(p); }).join(" ");
+        $("d1-order").textContent = d1Major ? "大 小 小 大 大 小 减" : "小 减 大 小 小 大 大";
+        $("d1-maj").className = "kb-btn" + (d1Major ? " kb-btn-primary" : "");
+        $("d1-min").className = "kb-btn" + (d1Major ? "" : " kb-btn-primary");
+      }
+      KB.bindRange($("d1-root"), $("d1-rootv"), function (v) { return T.name(v); },
+        function (v) { d1Root = v; update1(); });
+      $("d1-maj").addEventListener("click", function () { d1Major = true; update1(); });
+      $("d1-min").addEventListener("click", function () {
+        d1Major = false; update1();
+        $("d1-msg").textContent = "注意自然小调的 ⅴ 是小三和弦、♭Ⅶ 是大三和弦——两者都不含导音，" +
+          "所以小调的「属功能」推力很弱。这正是第 5 章说的、摇滚喜欢它的原因。";
+      });
+      $("d1-all").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12);
+        d1Data().forEach(function (d, i) {
+          A.strum(voiceOf(d.rootPc, d.key), { delay: i * 1.2, spread: 0.03, gain: 0.55 });
+        });
+      });
+      $("d1-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：四种终止式 ---------- */
+      var CAD = {
+        auth: { cn: "正格终止", path: "Ⅰ – Ⅳ – Ⅴ – Ⅰ", feel: "最强。句号。", tail: [[7, "maj"], [0, "maj"]] },
+        plag: { cn: "变格终止", path: "Ⅰ – Ⅳ – Ⅰ", feel: "柔和。「阿门终止」。", tail: [[5, "maj"], [0, "maj"]] },
+        half: { cn: "半终止", path: "Ⅰ – Ⅳ – Ⅴ（停）", feel: "未完。逗号。", tail: [[7, "maj"]] },
+        dec: { cn: "阻碍终止", path: "Ⅰ – Ⅳ – Ⅴ – ⅵ", feel: "意外。破折号。", tail: [[7, "maj"], [9, "min"]] }
+      };
+      function playCad(k, offset) {
+        var c = CAD[k], t = offset || 0;
+        A.setDrive(0.12);
+        A.strum(voiceOf(0, "maj"), { delay: t, spread: 0.03, gain: 0.58 });
+        A.strum(voiceOf(5, "maj"), { delay: t + 1.3, spread: 0.03, gain: 0.58 });
+        c.tail.forEach(function (ch, i) {
+          A.strum(voiceOf(ch[0], ch[1]), { delay: t + 2.6 + i * 1.3, spread: 0.03, gain: 0.58 });
+        });
+        return t + 2.6 + c.tail.length * 1.3 + 0.9;
+      }
+      Object.keys(CAD).forEach(function (k) {
+        $("d2-" + k).addEventListener("click", function () {
+          A.stopAll(); playCad(k);
+          $("d2-cur").textContent = CAD[k].cn;
+          $("d2-path").textContent = CAD[k].path;
+          $("d2-feel").textContent = CAD[k].feel;
+        });
+      });
+      $("d2-cmp").addEventListener("click", function () {
+        A.stopAll();
+        var t = playCad("auth", 0);
+        playCad("dec", t + 0.6);
+        $("d2-cur").textContent = "正格 → 阻碍";
+        $("d2-path").textContent = "同样的前三个和弦，最后一个不同";
+        $("d2-feel").textContent = "前者落地，后者拐弯";
+        $("d2-msg").textContent = "前四个和弦完全一样，只有最后一个从 C 换成了 Am。听那一下「以为到家却没到」的落差。";
+      });
+      $("d2-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 3：进行播放器 ---------- */
+      var prog = [], pKey = 0, pMajor = true, pBpm = 88, handle = null, raf = null;
+      function pList() { return T.diatonic(pKey, pMajor ? "major" : "naturalMinor", 3); }
+      function buildPad() {
+        var host = $("d3-pad"); clear(host);
+        var list = pList(), fns = pMajor ? FN_MAJ : FN_MIN, rns = pMajor ? ROMAN_MAJ : ROMAN_MIN;
+        list.forEach(function (d, i) {
+          var card = document.createElement("div");
+          card.className = "dia-card " + fns[i];
+          var rn = document.createElement("div"); rn.className = "rn"; rn.textContent = rns[i];
+          var nm = document.createElement("div"); nm.className = "nm"; nm.textContent = T.name(d.rootPc) + d.sym;
+          card.appendChild(rn); card.appendChild(nm);
+          card.addEventListener("click", function () { prog.push(i); renderProg(); });
+          host.appendChild(card);
+        });
+      }
+      function renderProg(cur) {
+        var host = $("d3-chips"); clear(host);
+        var list = pList(), fns = pMajor ? FN_MAJ : FN_MIN, rns = pMajor ? ROMAN_MAJ : ROMAN_MIN;
+        prog.forEach(function (idx, i) {
+          var c = document.createElement("span");
+          c.className = "prog-chip " + fns[idx] + (i === cur ? " cur" : "");
+          c.textContent = rns[idx] + " " + T.name(list[idx].rootPc) + list[idx].sym;
+          host.appendChild(c);
+        });
+        $("d3-key").textContent = T.name(pKey) + (pMajor ? " 大调" : " 小调");
+        $("d3-names").textContent = prog.length
+          ? prog.map(function (i) { return T.name(list[i].rootPc) + list[i].sym; }).join(" – ") : "—";
+        $("d3-fn").textContent = prog.length
+          ? prog.map(function (i) { return fns[i]; }).join(" → ") : "—";
+      }
+      function stopProg() {
+        if (handle) { handle.stop(); handle = null; }
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        A.stopAll(); renderProg(-1);
+      }
+      $("d3-loop").addEventListener("click", function () {
+        if (!prog.length) { $("d3-msg").textContent = "先点上面的卡片排几个和弦。"; return; }
+        stopProg();
+        A.setDrive(0.14);
+        var list = pList();
+        var ev = prog.map(function (idx, i) {
+          return { t: i * 2, midis: voiceOf(list[idx].rootPc, list[idx].key), dur: 2, gain: 0.55, spread: 0.03 };
+        });
+        handle = A.sequence(ev, { bpm: pBpm, loop: true, lengthBeats: prog.length * 2 });
+        (function tick() {
+          if (!handle) return;
+          renderProg(Math.floor(handle.position() / 2) % prog.length);
+          raf = requestAnimationFrame(tick);
+        })();
+        var fns = pMajor ? FN_MAJ : FN_MIN;
+        var路 = prog.map(function (i) { return fns[i]; }).join("");
+        $("d3-msg").textContent = path.indexOf("DS") >= 0
+          ? "你的进行里出现了 D→S（属退回下属）。听听那一下泄气——张力已经拉满却往回走，这正是功能理论建议避开的走法。"
+          : "循环中。试着把「调」滑块拖一拖：罗马数字一个不变，和弦名全变了。";
+      });
+      $("d3-stop").addEventListener("click", stopProg);
+      $("d3-undo").addEventListener("click", function () { prog.pop(); renderProg(); });
+      $("d3-clear").addEventListener("click", function () { prog = []; stopProg(); });
+      KB.bindRange($("d3-bpm"), $("d3-bpmv"), function (v) { return v + " BPM"; },
+        function (v) { pBpm = v; });
+      KB.bindRange($("d3-root"), $("d3-keyv"), function (v) { return T.name(v); },
+        function (v) { pKey = v; buildPad(); renderProg(); });
+      function preset(list, major) {
+        return function () {
+          stopProg(); pMajor = major; prog = list.slice();
+          buildPad(); renderProg();
+          $("d3-msg").textContent = "已载入预设，点「循环播放」听。";
+        };
+      }
+      $("p-1546").addEventListener("click", preset([0, 4, 5, 3], true));
+      $("p-6415").addEventListener("click", preset([5, 3, 0, 4], true));
+      $("p-145").addEventListener("click", preset([0, 3, 4], true));
+      $("p-251").addEventListener("click", preset([1, 4, 0], true));
+      $("p-rock").addEventListener("click", preset([0, 6, 5, 6], false));
+      $("p-bad").addEventListener("click", preset([4, 3, 0], true));
+
+      update1(); buildPad(); renderProg();
+    });
+  </script>
+</body>
+</html>

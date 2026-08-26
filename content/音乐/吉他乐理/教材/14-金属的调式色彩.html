@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>14 金属的调式色彩 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 14 章：七个自然调式按亮暗排成阶梯、每个调式的特征音、弗里几亚与弗里几亚属的金属色彩，以及「邪恶感」到底来自 ♭2 还是三全音。">
+  <meta name="kb:tags" content="吉他,乐理,教材,调式,弗里几亚,多利亚,混合利底亚,利底亚,洛克里亚,和声小调,三全音,金属,ds,fljy">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .deg-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0; }
+    .deg-cell {
+      min-width: 50px; text-align: center; padding: 6px 4px; border-radius: 8px;
+      border: 1px solid var(--kb-border); background: var(--kb-surface-alt); font-size: 0.9em;
+    }
+    .deg-cell b { display: block; font-size: 1.05em; }
+    .deg-cell small { color: var(--kb-fg-muted); font-size: 0.76em; }
+    .deg-cell.mark { border-color: #dc2626; background: rgba(220,38,38,0.12); }
+    .deg-cell.mark b { color: #dc2626; }
+    .mode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .mode-grid .kb-btn { width: 100%; justify-content: center; }
+    .mode-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 14 章 · 金属的调式色彩</h1>
+        <p class="kb-lead">「调式」是吉他乐理里被讲得最多、也被讲得最糟的一个概念。多数教材的说法是「C 大调从 D 开始弹就是 D 多利亚」——这句话技术上没错，实践上却毫无用处，因为它没告诉你<strong>多利亚听起来是什么样、以及为什么</strong>。这一章换一个讲法：<strong>把七个调式放在同一个主音上比较，按亮到暗排成一条阶梯</strong>，你会发现每往下一级只降一个音、而且降的顺序是固定的。到最后我们会回答那个真正想问的问题——<strong>金属的「邪恶感」，到底是哪一个音带来的？</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用「同根音公式」而不是「从第几级开始」来理解调式；② 默写七个自然调式的亮暗阶梯与各自的特征音；③ 说出弗里几亚、弗里几亚属、洛克里亚在金属里各自的用法；④ 解释 ♭2 与三全音各自带来什么，以及为什么两者叠加最不安；⑤ 知道调式必须靠什么手段<strong>确立</strong>，否则会被听成关系大调。</p>
+        </div>
+
+        <h2>换一个理解方式</h2>
+        <p>传统说法：C 大调的七个音，从第 2 级 D 开始弹到 D，就是 <strong>D 多利亚</strong>。这没错，但它把注意力放在了错误的地方——听众听不出「你从第几个音开始弹」，只听得出<strong>色彩</strong>。</p>
+        <p>有用的说法是这样：<strong>把所有调式放在同一个主音上，写成相对主音的公式，然后互相比较。</strong></p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>调式</th><th>公式</th><th>特征音</th><th>相对上一行改了什么</th><th>性格</th></tr></thead>
+            <tbody>
+              <tr><td><strong>利底亚</strong> Lydian</td><td>1 2 3 <strong>♯4</strong> 5 6 7</td><td><strong>♯4</strong></td><td>—（最亮）</td><td>梦幻、悬浮、科幻感</td></tr>
+              <tr><td><strong>伊奥尼亚</strong> Ionian</td><td>1 2 3 4 5 6 7</td><td>—</td><td>♯4 → 4</td><td>大调。明亮、稳定</td></tr>
+              <tr><td><strong>混合利底亚</strong> Mixolydian</td><td>1 2 3 4 5 6 <strong>♭7</strong></td><td><strong>♭7</strong></td><td>7 → ♭7</td><td>明亮但不着急（第 13 章）</td></tr>
+              <tr><td><strong>多利亚</strong> Dorian</td><td>1 2 <strong>♭3</strong> 4 5 <strong>6</strong> ♭7</td><td><strong>♮6</strong></td><td>3 → ♭3</td><td>小调，但没那么悲；放克与硬摇滚爱用</td></tr>
+              <tr><td><strong>爱奥利亚</strong> Aeolian</td><td>1 2 ♭3 4 5 <strong>♭6</strong> ♭7</td><td><strong>♭6</strong></td><td>6 → ♭6</td><td>自然小调。摇滚金属的默认</td></tr>
+              <tr><td><strong>弗里几亚</strong> Phrygian</td><td>1 <strong>♭2</strong> ♭3 4 5 ♭6 ♭7</td><td><strong>♭2</strong></td><td>2 → ♭2</td><td><strong>阴冷、压迫；金属的招牌</strong></td></tr>
+              <tr><td><strong>洛克里亚</strong> Locrian</td><td>1 ♭2 ♭3 4 <strong>♭5</strong> ♭6 ♭7</td><td><strong>♭5</strong></td><td>5 → ♭5</td><td>无家可归（主和弦是减三和弦）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 这是一条阶梯，不是七个孤立的东西</p>
+          <p>看第四列：<strong>每往下一级，只降一个音，而且只降半音。</strong>降的顺序是固定的：<strong>4 → 7 → 3 → 6 → 2 → 5</strong>。</p>
+          <p>这条阶梯还有一个漂亮的对应：<strong>每往下一级，就是在五度圈上逆时针走一步</strong>（第 4 章）。所以「调式的亮暗」和「五度圈的位置」是同一件事的两种说法——<strong>音越少升、越多降，就越暗。</strong></p>
+          <p><strong>记忆方法</strong>：不要背七个公式，只背<strong>顺序</strong>（利、伊、混、多、爱、弗、洛）和<strong>降的次序</strong>（4 7 3 6 2 5）。任何一个调式都能从大调出发推出来。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：调式光谱（同一个主音，从最亮走到最暗）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：七个自然调式在同一主音上构成一条亮暗阶梯——利底亚、伊奥尼亚、混合利底亚、多利亚、爱奥利亚、弗里几亚、洛克里亚。相邻两个调式只差一个音（半音），依次降低第 4、7、3、6、2、5 级。特征音是区分某个调式与它上一级的那唯一一个音。</p></noscript>
+            <div id="md-sound"></div>
+            <div class="mode-grid" id="md-list"></div>
+            <div class="deg-row" id="md-cells"></div>
+            <div class="kb-readout">
+              <span>调式 <b id="md-name">E 爱奥利亚</b></span>
+              <span>公式 <b id="md-formula">—</b></span>
+              <span>特征音 <b id="md-char">—</b></span>
+              <span>主和弦 <b id="md-chord">—</b></span>
+            </div>
+            <div id="md-board"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">主音<span class="kb-control-value" id="md-rootv"></span>
+                <input type="range" id="md-root" min="0" max="11" step="1" value="4"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="md-scale" type="button">▶ 弹音阶</button>
+              <button class="kb-btn" id="md-char-b" type="button">▶ 只听主音 + 特征音</button>
+              <button class="kb-btn" id="md-ladder" type="button">▶ 从最亮走到最暗（七遍）</button>
+              <button class="kb-btn" id="md-stop" type="button">■ 停止</button>
+            </div>
+            <p id="md-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">红框标出的是<strong>特征音</strong>——它是这个调式区别于上一级的唯一一个音。点「只听主音 + 特征音」，你会发现整个调式的性格几乎全在这两个音的关系里。</p>
+          </div>
+        </div>
+
+        <h2>特征音：一个音就是一张身份证</h2>
+        <p>既然相邻调式只差一个音，那么<strong>那一个音就是这个调式的全部身份</strong>。这带来一条极其实用的写作原则：</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 不强调特征音，调式就不成立</p>
+          <p>如果你在 E 弗里几亚里写了一段旋律，却<strong>从头到尾避开 F（♭2）</strong>，那它听起来就和 E 爱奥利亚一模一样——因为剩下六个音完全相同。<strong>调式不是「用了哪些音」，而是「强调了哪个音」。</strong></p>
+          <p>所以用调式的正确方法是：<strong>让特征音出现在显眼的位置</strong>——落在强拍、出现在乐句开头或结尾、用长时值、或者干脆做成一个和弦（弗里几亚的 ♭Ⅱ、利底亚的 Ⅱ 大三和弦）。</p>
+        </div>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>调式</th><th>特征音</th><th>标志性和弦</th><th>怎么强调</th></tr></thead>
+            <tbody>
+              <tr><td>利底亚</td><td>♯4</td><td><strong>Ⅱ 大三和弦</strong>（如 C 利底亚里的 D）</td><td>Ⅰ 与 Ⅱ 来回摆，♯4 在旋律里长时值悬着</td></tr>
+              <tr><td>混合利底亚</td><td>♭7</td><td><strong>♭Ⅶ 大三和弦</strong></td><td>Ⅰ–♭Ⅶ–Ⅳ 循环（第 13 章）</td></tr>
+              <tr><td>多利亚</td><td>♮6</td><td><strong>Ⅳ 大三和弦</strong>（小调里的大四级）</td><td>ⅰ–Ⅳ 来回摆，♮6 用在乐句转折处</td></tr>
+              <tr><td><strong>弗里几亚</strong></td><td><strong>♭2</strong></td><td><strong>♭Ⅱ 大三和弦</strong></td><td><code>♭Ⅱ5 → ⅰ5</code> 半音下行（第 11 章）</td></tr>
+              <tr><td>洛克里亚</td><td>♭5</td><td>ⅰ 是<strong>减三和弦</strong></td><td>几乎无法强调——见下文</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>金属的三个调式</h2>
+        <p><strong>① 爱奥利亚（自然小调）——默认设置。</strong>第 5 章讲透了：♭3 给暗色、♭7 拒绝解决、♭Ⅵ 与 ♭Ⅶ 提供厚重的大三和弦。绝大多数重型音乐的底色都是它。</p>
+        <p><strong>② 弗里几亚——金属的招牌。</strong>它只比自然小调多降了一个第二级，但那个 ♭2 的效果不成比例地强烈：</p>
+        <ul>
+          <li>它<strong>紧贴着主音</strong>（半音），产生持续的压迫感——像有人站得太近；</li>
+          <li>它把第二级和弦变成 <strong>♭Ⅱ 大三和弦</strong>，而 <code>♭Ⅱ → ⅰ</code> 的半音下行是极强的落地方式（第 11 章例题 11.3）；</li>
+          <li>在吉他上它<strong>极其顺手</strong>：E 弗里几亚的 ♭2 就是 6 弦 1 品，紧挨着空弦。<code>F5 → E5</code> 只需把手型整体挪一品。</li>
+        </ul>
+        <p><strong>③ 弗里几亚属——异国的那一支。</strong>它不是自然调式，而是<strong>和声小调的第五级</strong>（第 5 章）：</p>
+        <pre><code>弗里几亚：      1 ♭2 ♭3 4 5 ♭6 ♭7
+弗里几亚属：    1 ♭2 <strong>3</strong>  4 5 ♭6 ♭7      ← 三度变成大三度</code></pre>
+        <p>关键在于 <strong>♭2 与 ♮3 之间隔了 3 个半音</strong>——这正是第 5 章那个<strong>增二度</strong>。它带来强烈的中东 / 弗拉门戈色彩，是新古典金属最标志性的音响之一（第 16 章会用它写乐句）。</p>
+        <p><strong>洛克里亚为什么几乎没人用</strong>：因为它的主和弦是<strong>减三和弦</strong>（1 ♭3 ♭5）——根音到五度是三全音。<strong>一个调式如果连主和弦都不稳定，就没有「家」可回。</strong>实践中它几乎从不作为整段的调式，而是作为<strong>局部色彩</strong>出现：某个 riff 片段短暂地用上 ♭5，制造两拍的失重，然后立刻回到爱奥利亚或弗里几亚。</p>
+
+        <h2>「邪恶感」到底是哪个音</h2>
+        <p>把候选者摆出来，逐个检验：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>候选</th><th>它做了什么</th><th>听感</th><th>在失真下</th></tr></thead>
+            <tbody>
+              <tr><td><strong>♭2</strong>（小二度）</td><td>紧贴主音上方半音</td><td><strong>压迫、阴冷、不放过你</strong></td><td>与主音先后弹很安全；同时弹会糊（第 11 章习题 11.7）</td></tr>
+              <tr><td><strong>♭5</strong>（三全音）</td><td>把八度对半分，没有根</td><td><strong>失重、不安、找不到落脚点</strong></td><td>最浑浊的音程（第 10 章）</td></tr>
+              <tr><td>♭3</td><td>小三度</td><td>忧郁——但只是「悲」，不是「邪」</td><td>浑浊</td></tr>
+              <tr><td>♭6</td><td>小六度</td><td>沉重、悲壮</td><td>中等</td></tr>
+              <tr><td>增二度（♭2→♮3）</td><td>三个半音的大跨步</td><td><strong>异国、仪式感</strong></td><td>取决于用法</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>结论是：没有单一的「邪恶音」，但 ♭2 与 ♭5 是两个最主要的贡献者，而且它们贡献的东西不一样。</strong></p>
+        <ul>
+          <li><strong>♭2 提供压迫感</strong>——它有明确的方向（向下半音落回主音），所以是一种<strong>有目标的紧张</strong>。弗里几亚听起来「阴森但有力」。</li>
+          <li><strong>♭5 提供失重感</strong>——它没有根、没有方向，所以是一种<strong>无处安放的紧张</strong>。听起来「不祥、悬空」。</li>
+          <li><strong>两者叠加就是洛克里亚</strong>：既被压迫又无处可逃。这正是它「太过了、没法当调式用」的原因——也是它作为短暂色彩时效果极强的原因。</li>
+        </ul>
+        <p>还有一个常被忽略的贡献者：<strong>音区</strong>。同样一个 ♭2，弹在 6 弦 1 品和弹在 1 弦 13 品，「邪恶」程度天差地别。<strong>低音区 + 失真 + 闷音</strong>本身就贡献了大量的威胁感（第 10 章：低频差音带来的体感冲击），音阶只是在这个基础上着色。<strong>不要把音色的功劳算到乐理头上。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：同一段 Riff，七种调式</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：固定 riff 的节奏与级数轮廓，只改变调式，色彩会完全改变。特别是第 2 级从 ♮2 降到 ♭2（爱奥利亚 → 弗里几亚），以及第 5 级从 ♮5 降到 ♭5（弗里几亚 → 洛克里亚），是两处最剧烈的变化。</p></noscript>
+            <div id="rf-tab"></div>
+            <div class="kb-readout">
+              <span>调式 <b id="rf-mode">E 爱奥利亚</b></span>
+              <span>实际音 <b id="rf-notes">—</b></span>
+              <span>级数轮廓 <b>1 – 1 – ♭2/2 – 1 – 1 – ♭3 – 5/♭5 – 1</b></span>
+            </div>
+            <div class="mode-grid" id="rf-list"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="rf-bv"></span>
+                <input type="range" id="rf-bpm" min="70" max="190" step="2" value="140"></label>
+              <label class="kb-control">失真<span class="kb-control-value" id="rf-dv"></span>
+                <input type="range" id="rf-drive" min="0" max="1" step="0.05" value="0.82"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="rf-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="rf-pd" type="button">🔥 换成弗里几亚属（和声小调第五级）</button>
+              <button class="kb-btn" id="rf-stop" type="button">■ 停止</button>
+            </div>
+            <p id="rf-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">同样的节奏、同样的级数位置，只有音在变。建议顺序：<strong>爱奥利亚 → 弗里几亚</strong>（听 ♭2 的压迫）→ <strong>洛克里亚</strong>（再加上 ♭5 的失重）→ <strong>弗里几亚属</strong>（♭2 配大三度的异国感）。</p>
+          </div>
+        </div>
+
+        <h2>怎么让调式「成立」</h2>
+        <p>最后一个、也是最容易被跳过的问题：<strong>你怎么知道听众听到的是 E 弗里几亚，而不是 C 大调？</strong>毕竟这两者用的是完全相同的七个音。</p>
+        <p>答案回到第 4 章习题 4.9：<strong>调不是音的集合，而是引力的中心。</strong>在没有属功能的重型音乐里，确立中心靠三件事：</p>
+        <ol>
+          <li><strong>持续低音。</strong>最强的一条（第 11 章）。让 E 反复出现在最低音、每小节回到它，主音地位不容置疑。<strong>这就是为什么弗里几亚 riff 几乎总是钉在一根空弦上。</strong></li>
+          <li><strong>主和弦。</strong>用 E5 或 Em 作为落脚点。注意<strong>强力和弦不表明大小</strong>，所以它对调式是「中性」的——这既是自由也是风险。</li>
+          <li><strong>特征音的位置。</strong>让 ♭2 出现在显眼处，最好做成 <code>F5 → E5</code> 的和弦运动。<strong>一个和弦的分量远大于一个旋律音。</strong></li>
+        </ol>
+        <p>反过来说，<strong>最常见的失败是：把调式当成「一串可以随便跑的音」</strong>——弹了一堆 C 大调的音、指望它听起来像 E 弗里几亚。结果听众听到的只是 C 大调，因为没有任何东西告诉他们 E 是家。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：同样七个音，谁是家？</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：C 大调与 E 弗里几亚使用完全相同的七个音。听众听到的是哪一个，完全取决于低音停在哪、乐句落在哪、以及主和弦是什么。同一串旋律配不同的持续低音，会被听成完全不同的调式。</p></noscript>
+            <div class="kb-readout">
+              <span>旋律音 <b>C D E F G A B（完全相同）</b></span>
+              <span>当前低音 <b id="ho-bass">—</b></span>
+              <span>听起来是 <b id="ho-mode">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="ho-c" type="button">▶ 低音钉在 C</button>
+              <button class="kb-btn" id="ho-e" type="button">▶ 低音钉在 E</button>
+              <button class="kb-btn" id="ho-a" type="button">▶ 低音钉在 A</button>
+              <button class="kb-btn" id="ho-none" type="button">▶ 完全没有低音</button>
+              <button class="kb-btn" id="ho-stop" type="button">■ 停止</button>
+            </div>
+            <p id="ho-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">四个按钮播放的<strong>旋律一模一样</strong>，只有低音不同。听完「没有低音」那一个你会发现：<strong>不给参照点时，耳朵会默认按 C 大调来听</strong>——因为那是这组音里最「省力」的解释。要让它变成弗里几亚，你必须主动把 E 钉住。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 14.1</p>
+          <p>写出 E 弗里几亚的七个音。它与 E 自然小调差哪一个音？与 C 大调是什么关系？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>套公式</strong>（1 ♭2 ♭3 4 5 ♭6 ♭7）从 E 起：<br>
+            E、<strong>F</strong>、G、A、B、C、D</p>
+            <p><strong>与 E 自然小调比较</strong>：E 自然小调 ＝ E <strong>F♯</strong> G A B C D。<strong>只差第二级：F♯ → F。</strong>其余六个音完全相同。</p>
+            <p><strong>与 C 大调的关系</strong>：E 弗里几亚的七个音 ＝ C D E F G A B ＝ <strong>C 大调的七个音，一个不差</strong>。也就是说，E 弗里几亚是 C 大调的「第三个调式」（从第 3 级 E 开始）。</p>
+            <p><strong>但这个关系只有记忆价值，没有听觉价值</strong>——正文说过，听众听不出「你从第几级开始」，只听得出<strong>谁是家</strong>。要让它成为弗里几亚而不是 C 大调，必须把 E 钉死（正文最后一节的三条手段）。</p>
+            <p><strong>吉他红利</strong>：E 弗里几亚的主音是 6 弦空弦、♭2 是 6 弦 1 品。<code>F5 → E5</code> 只需整体挪一品——这是整块指板上最容易按出的调式色彩，也是金属偏爱它的直接原因之一。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 14.2</p>
+          <p>写出 D 多利亚的七个音。它有几个升降号？它的特征音是哪一个，为什么？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>套公式</strong>（1 2 ♭3 4 5 <strong>6</strong> ♭7）从 D 起：<br>
+            D、E、F、G、A、<strong>B</strong>、C —— <strong>一个升降号都没有</strong>（它用的正是 C 大调的七个音）。</p>
+            <p><strong>特征音是 ♮6，也就是 B。</strong></p>
+            <p><strong>为什么是它</strong>：把 D 多利亚与<strong>同主音的自然小调</strong>（D 爱奥利亚 ＝ D E F G A <strong>B♭</strong> C）比较，唯一的差别就是第六级 B♮ vs B♭。<strong>这一个音就是多利亚的全部身份</strong>——避开它，听众只会听到 D 小调。</p>
+            <p><strong>它带来什么</strong>：♮6 让第四级和弦从小三和弦变成<strong>大三和弦</strong>（Dm 调式里的 G 大三和弦）。于是 <code>ⅰ – Ⅳ</code> 的来回摆动成了多利亚的招牌进行——小调的暗底色配上一个明亮的大四级，产生一种「暗但不悲、冷但有劲」的味道。这就是放克与硬摇滚偏爱它的原因（习题 14.6）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 14.3</p>
+          <p>弗里几亚属与和声小调是什么关系？为什么它听起来有「中东味」？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>关系</strong>：弗里几亚属是<strong>和声小调的第五级调式</strong>。以 A 和声小调（A B C D E F G♯）为例，从第五级 <strong>E</strong> 开始重排：<br>
+            E F G♯ A B C D ＝ <strong>E 弗里几亚属</strong>（公式 1 ♭2 <strong>3</strong> 4 5 ♭6 ♭7）。</p>
+            <p><strong>与普通弗里几亚的差别</strong>：只有第三级——弗里几亚是 ♭3（G），弗里几亚属是 <strong>♮3</strong>（G♯）。所以它的主和弦是<strong>大三和弦</strong>（E G♯ B），而不是小三和弦。名字里的「属」就来自这里：它的主和弦具有属七的结构（加上 ♭7 的 D 就是 E7）。</p>
+            <p><strong>「中东味」从哪来</strong>：看 ♭2（F）到 ♮3（G♯）之间——<strong>3 个半音，但字母只跨了 F–G 两个 → 增二度</strong>（第 5 章）。这个「跨了三个半音却只算二度」的大步伐，是阿拉伯、波斯、弗拉门戈音乐共有的特征音程。人耳听到它，会立刻联想到那些音乐传统。</p>
+            <p><strong>在金属里的位置</strong>：新古典金属（第 16 章）几乎把它当主食——既有弗里几亚的阴冷 ♭2，又有大三度带来的明亮与力量，还附赠一个异国音程。<code>♭Ⅱ → ⅰ</code> 的半音落地在这里同样成立，而且因为主和弦是大三和弦，落地感更强硬。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>把七个自然调式按「从亮到暗」排序，并写出每一步降低了第几级。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>顺序</strong>：利底亚 → 伊奥尼亚 → 混合利底亚 → 多利亚 → 爱奥利亚 → 弗里几亚 → 洛克里亚。</p>
+            <p><strong>每步降的级数</strong>：<strong>4 → 7 → 3 → 6 → 2 → 5</strong>。</p>
+            <ul>
+              <li>利底亚 →（降 4）→ 伊奥尼亚</li>
+              <li>伊奥尼亚 →（降 7）→ 混合利底亚</li>
+              <li>混合利底亚 →（降 3）→ 多利亚</li>
+              <li>多利亚 →（降 6）→ 爱奥利亚</li>
+              <li>爱奥利亚 →（降 2）→ 弗里几亚</li>
+              <li>弗里几亚 →（降 5）→ 洛克里亚</li>
+            </ul>
+            <p><strong>记忆提示</strong>：不必背七个公式，只背这条链。任何调式都可以从大调（伊奥尼亚）出发、沿链走几步推出来。<br>
+            <strong>验算方法</strong>：走到最后（洛克里亚）时，除了主音和第四级，其余五个音全部被降过 ——1 ♭2 ♭3 4 ♭5 ♭6 ♭7 ✓</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>混合利底亚的特征音是什么？它的标志性和弦是哪一个？举一个用它的和弦进行。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>特征音</strong>：<strong>♭7</strong>（与同主音大调相比，唯一被降低的音）。</p>
+            <p><strong>标志性和弦</strong>：<strong>♭Ⅶ 大三和弦</strong>。因为第七级降了半音，它上面的顺阶和弦从减三和弦变成了大三和弦。</p>
+            <p><strong>典型进行</strong>：<code>Ⅰ – ♭Ⅶ – Ⅳ</code>（A 调里是 A – G – D）。第 13 章讲过，它没有导音，因此可以无限循环——是硬摇滚主歌最常用的地毯之一。</p>
+            <p><strong>怎么确认自己确实在混合利底亚而不是大调</strong>：看有没有<strong>♭Ⅶ 和弦或旋律里的 ♭7</strong>。如果整段既没出现 ♭7、又没出现 ♭Ⅶ 和弦，那它就是普通大调——<strong>特征音不出现，调式就不成立</strong>（正文的警告框）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么洛克里亚几乎不能作为整段音乐的调式？它还能怎么用？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>核心问题：它的主和弦是减三和弦。</strong>洛克里亚的 1、♭3、♭5 构成一个减三和弦——根音到五度是<strong>三全音</strong>（第 3、6 章）。</p>
+            <p><strong>后果</strong>：一个调式的主和弦本该是最稳定的落脚点、是「家」。可减三和弦本身极不稳定、还急着解决到别处。<strong>于是这个调式没有家可回</strong>——所有运动都无处安放，长时间听会让人疲惫而不是紧张。</p>
+            <p><strong>还能怎么用</strong>，三种：</p>
+            <ol>
+              <li><strong>局部色彩。</strong>在弗里几亚或爱奥利亚的段落里，短暂地把第五级压成 ♭5（一两拍），制造失重，然后立刻回来。这是最常见也最有效的用法。</li>
+              <li><strong>配合 ⅶ 级和弦。</strong>在大调里，第七级上方的顺阶音阶就是洛克里亚。所以当和声走到 ⅶ° 或 Ⅴ7 时，独奏用洛克里亚是「正确」的——但那是几拍的事，不是整段。</li>
+              <li><strong>刻意的无调性效果。</strong>某些极端金属确实用它铺整段，目的就是那种「没有出口」的窒息感。<strong>这时它的「缺陷」正是它被选中的理由</strong>——但必须知道自己在放弃什么。</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>A 弗里几亚的 ♭2 是什么音？它在 6 弦第几品？写出 <code>♭Ⅱ5 → ⅰ5</code> 的两个和弦指法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>♭2</strong> ＝ A 上方一个半音 ＝ <strong>B♭</strong>（也写 A♯）。</p>
+            <p><strong>在 6 弦上</strong>：A 在 5 品，所以 B♭ 在 <strong>6 品</strong>。</p>
+            <p><strong>两个和弦</strong>（六弦根强力和弦，第 11 章）：<br>
+            <strong>♭Ⅱ5 ＝ B♭5</strong> ＝ <code>6, 8, 8, ×, ×, ×</code><br>
+            <strong>ⅰ5 ＝ A5</strong> ＝ <code>5, 7, 7, ×, ×, ×</code></p>
+            <p><strong>解析</strong>：两个和弦只差一品，手型整体挪一格即可——这就是弗里几亚在吉他上如此顺手的原因。<strong>把 B♭5 弹在强拍、A5 弹在解决位置，弗里几亚色彩立刻确立。</strong></p>
+            <p><strong>对比 E 弗里几亚</strong>：E 的 ♭2 是 F，在 6 弦 1 品，而主音是空弦——更方便。这就是为什么 E 弗里几亚是金属的默认选择；换到 A 弗里几亚需要按住 5 品，少了空弦的共鸣与解放的手指。<strong>第 15 章的降调，本质上就是在把这份便利搬到更低的音上。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>有人给你一段旋律，只用了 C D E F G A B 七个音，并声称它是「E 弗里几亚」。你怎么判断这个说法是真是假？给出至少四条检验标准。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>因为音的集合无法区分，必须看<strong>引力中心</strong>。四条标准，按可靠性排序：</p>
+            <ol>
+              <li><strong>低音停在哪。</strong>最强的证据。如果低音反复回到 E、段落起止都在 E，那就是 E 弗里几亚；如果回到 C，那就是 C 大调。<strong>低音是调式的最终裁判。</strong></li>
+              <li><strong>主和弦是什么。</strong>看反复出现、作为落脚点的和弦是 Em（或 E5）还是 C。如果整段的支点是 C 大三和弦，那说它是弗里几亚就是自欺欺人。</li>
+              <li><strong>F（♭2）出现在什么位置。</strong>弗里几亚的身份靠 ♭2。如果 F 只是偶尔一带而过、从不落在强拍、也从没做成 F 和弦，那这个调式特征根本没被表达出来。<strong>更强的证据是有没有 <code>F → E</code> 的半音下行落地。</strong></li>
+              <li><strong>乐句怎么收尾。</strong>每一句都落在 E 上，还是落在 C 上？听觉对「句尾」极其敏感，句尾音基本决定了听众感知的主音。</li>
+            </ol>
+            <p><strong>额外一条（很实用）</strong>：<strong>把伴奏去掉，只听旋律，然后自己哼一个「感觉对」的结束音。</strong>如果你自然而然哼出 C，那这段旋律就是 C 大调，无论作者怎么说。</p>
+            <p><strong>结论</strong>：调式的名字不是作者宣布的，<strong>是音乐本身建立的</strong>。「我用的是 X 调式」如果没有相应的低音、和弦与特征音支撑，就只是一个没有实现的意图。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么多利亚在放克与硬摇滚里比爱奥利亚（自然小调）更受欢迎？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>差别只有第六级（♮6 vs ♭6），但后果有三层：</p>
+            <ol>
+              <li><strong>它「暗但不悲」。</strong>♭3 保证了小调的底色，但 ♮6 抽掉了 ♭6 那种沉重的悲情。结果是一种<strong>冷静、有距离感的酷</strong>，而不是伤感。放克要的正是这个——有态度但不诉苦。</li>
+              <li><strong>它给出一个大三和弦的 Ⅳ。</strong>♮6 是第四级和弦的三音，所以多利亚的 Ⅳ 是<strong>大三和弦</strong>（爱奥利亚里是小三和弦）。<code>ⅰ – Ⅳ</code> 的来回摆动因此有了明暗对比，比 <code>ⅰ – ⅳ</code> 有劲得多。<strong>这个两和弦 vamp 是放克与硬摇滚最常见的地毯之一。</strong></li>
+              <li><strong>它与小调五声完全兼容。</strong>小调五声（1 ♭3 4 5 ♭7）不含第六级，所以它在多利亚和爱奥利亚里都成立。这意味着<strong>你可以用同一套五声盒子（第 12 章），只在需要色彩时加一个 ♮6</strong>——学习成本极低，收益却很明显。</li>
+            </ol>
+            <p><strong>实战提示</strong>：在小调五声乐句里加进 ♮6，是最省力的「让独奏听起来更高级」的手段之一。但要注意——<strong>如果伴奏用的是 ♭6（爱奥利亚），你的 ♮6 就会打架。</strong>调式必须和伴奏对齐，这是使用调式最基本的纪律。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>利底亚的 ♯4 与洛克里亚的 ♭5 是<strong>同一个音高</strong>（都是主音上方三全音）。为什么一个听起来梦幻明亮、另一个听起来不祥崩塌？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为周围的音不同——音的意义由上下文决定。</strong></p>
+            <p><strong>利底亚（1 2 3 ♯4 5 6 7）</strong>：注意它<strong>同时拥有完整的纯五度</strong>。主和弦是 1–3–5，结构完全稳定；♯4 是<strong>在稳定框架之外额外加上去的一抹亮色</strong>，像给一个正常的房间开了一扇天窗。而且它的上方紧邻着 5，随时可以解决过去。</p>
+            <p><strong>洛克里亚（1 ♭2 ♭3 4 ♭5 ♭6 ♭7）</strong>：五级<strong>本身被降掉了</strong>，主和弦变成 1–♭3–♭5 的减三和弦。这里的三全音不是「加上去的」，而是<strong>本该支撑房子的柱子塌了</strong>——你没有一个稳定的 5 可以退回去。</p>
+            <p><strong>用第 3 章的语言说</strong>：同一个音程（三全音），在<strong>有根的框架</strong>里是色彩，在<strong>无根的框架</strong>里是崩塌。</p>
+            <p><strong>更普遍的教训</strong>：<strong>没有「好听的音」和「难听的音」，只有「在这个上下文里起什么作用的音」。</strong>这条原则贯穿整本教材——第 3 章的不协和音程是推动力、第 10 章的差音在强力和弦里是助力在三度里是杂音、第 12 章的 ♭5 在经过位置是味道在落脚位置是错音。<strong>永远先问「它周围是什么」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明七个自然调式构成一条「每步只降一个音」的链，并解释降低的顺序为什么恰好是 <strong>4 → 7 → 3 → 6 → 2 → 5</strong>。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>第一步：写出七个公式的半音数集合。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>调式</th><th>半音数集合</th><th>与上一行的差</th></tr></thead>
+                <tbody>
+                  <tr><td>利底亚</td><td>0 2 4 <strong>6</strong> 7 9 11</td><td>—</td></tr>
+                  <tr><td>伊奥尼亚</td><td>0 2 4 <strong>5</strong> 7 9 11</td><td>6 → 5</td></tr>
+                  <tr><td>混合利底亚</td><td>0 2 4 5 7 9 <strong>10</strong></td><td>11 → 10</td></tr>
+                  <tr><td>多利亚</td><td>0 2 <strong>3</strong> 5 7 9 10</td><td>4 → 3</td></tr>
+                  <tr><td>爱奥利亚</td><td>0 2 3 5 7 <strong>8</strong> 10</td><td>9 → 8</td></tr>
+                  <tr><td>弗里几亚</td><td>0 <strong>1</strong> 3 5 7 8 10</td><td>2 → 1</td></tr>
+                  <tr><td>洛克里亚</td><td>0 1 3 5 <strong>6</strong> 8 10</td><td>7 → 6</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>每一行与上一行<strong>恰好有一个元素相差 1</strong>，其余六个完全相同。链成立。∎</p>
+            <p><strong>第二步：为什么是这个顺序。</strong>关键在于<strong>五度圈</strong>（第 4 章）。以 C 为例，把七个调式都建立在 C 上，看它们各自属于哪个「大调音阶家族」：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>C 调式</th><th>属于哪个大调的音</th><th>调号</th></tr></thead>
+                <tbody>
+                  <tr><td>C 利底亚</td><td>G 大调</td><td>1♯</td></tr>
+                  <tr><td>C 伊奥尼亚</td><td>C 大调</td><td>0</td></tr>
+                  <tr><td>C 混合利底亚</td><td>F 大调</td><td>1♭</td></tr>
+                  <tr><td>C 多利亚</td><td>B♭ 大调</td><td>2♭</td></tr>
+                  <tr><td>C 爱奥利亚</td><td>E♭ 大调</td><td>3♭</td></tr>
+                  <tr><td>C 弗里几亚</td><td>A♭ 大调</td><td>4♭</td></tr>
+                  <tr><td>C 洛克里亚</td><td>D♭ 大调</td><td>5♭</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>调号一路走 1♯ → 0 → 1♭ → 2♭ → 3♭ → 4♭ → 5♭</strong>，也就是<strong>在五度圈上逆时针每次走一格</strong>。而第 4 章讲过，每逆时针走一格就<strong>新增一个降号</strong>，且降号出现的顺序固定是 <strong>B E A D G C F</strong>。</p>
+            <p>把 C 调式里被降低的音依次列出来：F♯→F、B→B♭、E→E♭、A→A♭、D→D♭、G→G♭ ——<strong>正是降号顺序 B E A D G（前面多了一个 F♯→F 的还原）。</strong>而这些音在 C 上分别是第 4、7、3、6、2、5 级。∎</p>
+            <p><strong>结论</strong>：调式的亮暗阶梯、五度圈的位置、调号的增减，<strong>是同一件事的三种表述</strong>。理解了这一点，七个调式就不再是七个要背的公式，而是一条可以随时推导的直线。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>现代金属常在一首歌甚至一段里混用多个调式（比如 riff 用弗里几亚、独奏用爱奥利亚、桥段用多利亚）。这会不会破坏调性？请给出一套「混而不乱」的原则。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>不一定破坏，但需要纪律。</strong>先看清风险：调式混用的本质是<strong>在同一个主音上不断更换某几个音级</strong>。如果换得没有章法，听众就会失去参照，感觉「跑调」而不是「有色彩」。</p>
+            <p><strong>四条原则</strong>：</p>
+            <ol>
+              <li><strong>主音绝不动摇。</strong>这是最重要的一条。可以换调式，但主音必须始终是同一个音，并且靠低音、riff、段落起止反复确认。<strong>只要主音稳，听众就会把所有变化理解为「同一个家的不同天气」，而不是「换了个地方」。</strong>反过来，同时换主音又换调式，就真的乱了。</li>
+              <li><strong>一次只换一两个音。</strong>利用亮暗阶梯：相邻调式只差一个音，跨度小、听感自然。<strong>弗里几亚 → 爱奥利亚（升 ♭2）是一步，弗里几亚 → 多利亚是三步。</strong>三步以上的跳跃需要明确的段落分界（停顿、鼓的过门、织体变化）来掩护。</li>
+              <li><strong>在段落边界换，不要在句子中间换。</strong>调式变化要与音乐结构对齐——主歌 / 副歌 / 桥段各用一个调式是清晰的；一个乐句里前半弗里几亚后半多利亚则会显得摇摆不定。<strong>例外是刻意的「一句之内变色」，但那要作为效果处理，不是常态。</strong></li>
+              <li><strong>伴奏与主奏必须对齐。</strong>最常见的事故：吉他 riff 在弗里几亚（含 ♭2），独奏却在弹爱奥利亚（含 ♮2），两个相差半音的音同时响——第 10 章告诉我们这在高增益下会糊得一塌糊涂。<strong>换调式必须是全乐队一起换。</strong></li>
+            </ol>
+            <p><strong>一个好用的框架</strong>：把整首歌想成<strong>「一个主音 + 一条在阶梯上移动的指针」</strong>。主歌待在弗里几亚（暗），副歌升到爱奥利亚（稍亮），solo 段落升到多利亚（更亮更开），结尾落回弗里几亚。<strong>指针的移动本身就成了一条情绪曲线</strong>——这比在同一个调式里靠音量和速度做起伏要高级得多，也是前卫金属最常用的宏观结构手段。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 理解调式要用<strong>同根音公式</strong>，不要用「从第几级开始」。② 七个自然调式构成一条<strong>亮暗阶梯</strong>：利、伊、混、多、爱、弗、洛；相邻只差一个音，降的顺序是 <strong>4 → 7 → 3 → 6 → 2 → 5</strong>，等价于在五度圈上逆时针走一步。③ <strong>特征音是调式的身份证</strong>——不强调它，调式就不成立（弗里几亚的 ♭2、利底亚的 ♯4、多利亚的 ♮6、混合利底亚的 ♭7）。④ 金属三大调式：<strong>爱奥利亚（默认）、弗里几亚（招牌，♭2 + ♭Ⅱ 和弦）、弗里几亚属（和声小调第五级，♭2 配大三度 + 增二度的异国感）</strong>；洛克里亚因主和弦是减三和弦而无家可回，只能作局部色彩。⑤ 「邪恶感」没有单一来源：<strong>♭2 提供有方向的压迫，♭5 提供无方向的失重</strong>，两者叠加就是洛克里亚；此外<strong>低音区 + 失真 + 闷音</strong>本身贡献巨大，别把音色的功劳算到乐理头上。⑥ 调式靠<strong>持续低音、主和弦、特征音的位置</strong>来确立——否则会被听成关系大调。</p>
+          <p><strong>下一章预告</strong>：本章几次提到「E 弗里几亚顺手是因为主音在空弦」。那如果我想要一个更低的主音呢？第 15 章《降调、七弦与现代金属》会回答：Drop 调弦到底改变了什么、七弦八弦带来了什么新问题、djent 的音块与节奏是怎么设计的，以及 <strong>polymeter</strong> 这个让极少素材产生极长变化的数学工具。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./15-降调七弦与现代金属.html"><strong>下一章：第 15 章 · 降调、七弦与现代金属</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+      /* 亮 → 暗；char 为特征音（相对主音的半音数），null 表示它本身是参照系 */
+      var MODES = [
+        { k: "lydian", cn: "利底亚", char: 6, charLab: "♯4", tri: "maj", note: "梦幻、悬浮" },
+        { k: "ionian", cn: "伊奥尼亚（大调）", char: null, charLab: "—", tri: "maj", note: "明亮、稳定（参照系）" },
+        { k: "mixolydian", cn: "混合利底亚", char: 10, charLab: "♭7", tri: "maj", note: "明亮但不着急" },
+        { k: "dorian", cn: "多利亚", char: 9, charLab: "♮6", tri: "min", note: "暗但不悲，冷静的酷" },
+        { k: "aeolian", cn: "爱奥利亚（自然小调）", char: null, charLab: "—", tri: "min", note: "摇滚金属的默认（参照系）" },
+        { k: "phrygian", cn: "弗里几亚", char: 1, charLab: "♭2", tri: "min", note: "阴冷、压迫；金属招牌" },
+        { k: "locrian", cn: "洛克里亚", char: 6, charLab: "♭5", tri: "dim", note: "无家可回，只作局部色彩" }
+      ];
+      function degLabel(mi, s) {
+        if (MODES[mi].k === "lydian" && s === 6) return "♯4";
+        return T.DEGREES[s];
+      }
+
+      /* ---------- 演示 1：调式光谱 ---------- */
+      KBG.soundToggle($("md-sound"));
+      var mdRoot = 4, mdIdx = 4;
+      var mdBtns = [];
+      MODES.forEach(function (m, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = m.cn;
+        b.addEventListener("click", function () { mdIdx = i; updateMd(); playScale(); });
+        $("md-list").appendChild(b); mdBtns.push(b);
+      });
+      var fbMd = KBG.fretboard($("md-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "degree", root: 4, marks: [], title: "调式在指板上"
+      });
+      function mdSteps() { return T.SCALES[MODES[mdIdx].k].steps; }
+      function updateMd() {
+        var m = MODES[mdIdx], steps = mdSteps();
+        mdBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === mdIdx ? " on" : ""); });
+        var host = $("md-cells"); clear(host);
+        steps.forEach(function (s) {
+          var c = document.createElement("div");
+          c.className = "deg-cell" + (m.char === s ? " mark" : "");
+          var b = document.createElement("b"); b.textContent = T.name(T.mod12(mdRoot + s));
+          var sm = document.createElement("small"); sm.textContent = degLabel(mdIdx, s);
+          c.appendChild(b); c.appendChild(sm); host.appendChild(c);
+        });
+        $("md-name").textContent = T.name(mdRoot) + " " + m.cn;
+        $("md-formula").textContent = steps.map(function (s) { return degLabel(mdIdx, s); }).join(" ");
+        $("md-char").textContent = m.char === null ? "无（它是参照系）"
+          : m.charLab + " ＝ " + T.name(T.mod12(mdRoot + m.char));
+        $("md-chord").textContent = T.chordName(mdRoot, m.tri) + "（" + T.CHORDS[m.tri].cn + "）";
+        var pcs = steps.map(function (s) { return T.mod12(mdRoot + s); });
+        fbMd.setLabels("degree", mdRoot);
+        fbMd.setMarks(T.findOnBoard(TUN, pcs, 12).map(function (p) {
+          var d = T.mod12(p.pc - mdRoot);
+          return {
+            string: p.string, fret: p.fret,
+            kind: d === 0 ? "root" : (m.char !== null && d === m.char ? "third" : "note")
+          };
+        }));
+      }
+      function playScale() {
+        A.stopAll(); A.setDrive(0.2);
+        var base = 52 + T.mod12(mdRoot - 4);
+        var st = mdSteps().concat([12]);
+        A.sequence(st.map(function (s, i) { return { t: i * 0.42, midi: base + s, dur: 0.42 }; }), { bpm: 145 });
+      }
+      KB.bindRange($("md-root"), $("md-rootv"), function (v) { return T.name(v); },
+        function (v) { mdRoot = v; if (typeof fbMd !== "undefined") updateMd(); });
+      $("md-scale").addEventListener("click", playScale);
+      $("md-char-b").addEventListener("click", function () {
+        var m = MODES[mdIdx];
+        if (m.char === null) {
+          $("md-msg").textContent = m.cn + " 是参照系本身（大调 / 自然小调），没有「特征音」——其余五个调式都是相对它定义的。";
+          return;
+        }
+        A.stopAll(); A.setDrive(0.2);
+        var base = 52 + T.mod12(mdRoot - 4);
+        A.sequence([
+          { t: 0, midi: base, dur: 0.8 },
+          { t: 0.8, midi: base + m.char, dur: 1 },
+          { t: 1.8, midis: [base, base + m.char], dur: 1.8 }
+        ], { bpm: 110 });
+        $("md-msg").textContent = "主音 + " + m.charLab + "（" + T.INTERVALS[m.char].cn +
+          "）。整个调式的性格几乎全在这两个音的关系里。";
+      });
+      $("md-ladder").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.2);
+        var base = 52 + T.mod12(mdRoot - 4), ev = [], t = 0;
+        MODES.forEach(function (m) {
+          var st = T.SCALES[m.k].steps.concat([12]);
+          st.forEach(function (s, i) { ev.push({ t: t + i * 0.26, midi: base + s, dur: 0.26 }); });
+          t += st.length * 0.26 + 0.5;
+        });
+        A.sequence(ev, { bpm: 160 });
+        $("md-msg").textContent = "从最亮（利底亚）一路走到最暗（洛克里亚），七遍。每一遍只有一个音变了半音——注意色彩是怎样一级一级沉下去的。";
+      });
+      $("md-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：同一段 Riff，七种调式 ---------- */
+      /* riff 用「音阶级数下标」表示，换调式时下标不变、实际音随之改变 */
+      var RIFF = [0, 0, 1, 0, 0, 2, 4, 0];
+      var rfIdx = 4, rfBpm = 140, rfDrive = 0.82, rfH = null, rfRaf = null, rfTab = null, rfPD = false;
+      var rfBtns = [];
+      MODES.forEach(function (m, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = m.cn;
+        b.addEventListener("click", function () { rfPD = false; rfIdx = i; buildRf(); if (rfH) startRf(); });
+        $("rf-list").appendChild(b); rfBtns.push(b);
+      });
+      function rfSteps() {
+        return rfPD ? T.SCALES.phrygianDominant.steps : T.SCALES[MODES[rfIdx].k].steps;
+      }
+      function buildRf() {
+        var st = rfSteps();
+        rfBtns.forEach(function (b, i) { b.className = "kb-btn" + (!rfPD && i === rfIdx ? " on" : ""); });
+        clear($("rf-tab"));
+        rfTab = KBG.tab($("rf-tab"), {
+          tuning: TUN, labelMode: "none",
+          title: "E " + (rfPD ? "弗里几亚属" : MODES[rfIdx].cn) + " · 同一条 riff",
+          columns: RIFF.map(function (idx) {
+            return { notes: [{ string: 0, fret: st[idx] }], dur: 0.5, mute: true };
+          })
+        });
+        $("rf-mode").textContent = "E " + (rfPD ? "弗里几亚属" : MODES[rfIdx].cn);
+        $("rf-notes").textContent = RIFF.map(function (idx) {
+          return T.name(T.mod12(4 + st[idx]));
+        }).join(" ");
+      }
+      function startRf() {
+        stopRf(); A.setDrive(rfDrive);
+        var st = rfSteps();
+        rfH = A.sequence(RIFF.map(function (idx, i) {
+          return { t: i * 0.5, midi: 40 + st[idx], dur: 0.5, mute: true, gain: i % 2 === 0 ? 0.9 : 0.62 };
+        }), { bpm: rfBpm, loop: true, lengthBeats: 4 });
+        var starts = rfTab.beatsOf();
+        (function tick() {
+          if (!rfH) return;
+          var p = rfH.position(), k = 0;
+          for (var i = 0; i < starts.length; i++) if (p >= starts[i]) k = i;
+          rfTab.setCursor(k);
+          rfRaf = requestAnimationFrame(tick);
+        })();
+        $("rf-play").textContent = "⏸ 暂停";
+      }
+      function stopRf() {
+        if (rfH) { rfH.stop(); rfH = null; }
+        if (rfRaf) { cancelAnimationFrame(rfRaf); rfRaf = null; }
+        A.stopAll(); if (rfTab) rfTab.setCursor(null);
+        $("rf-play").textContent = "▶ 循环播放";
+      }
+      $("rf-play").addEventListener("click", function () { rfH ? stopRf() : startRf(); });
+      $("rf-pd").addEventListener("click", function () {
+        rfPD = !rfPD; buildRf(); if (rfH) startRf();
+        $("rf-pd").textContent = rfPD ? "↩ 回到自然调式" : "🔥 换成弗里几亚属（和声小调第五级）";
+        $("rf-msg").textContent = rfPD
+          ? "弗里几亚属：♭2 保留，三度换成大三度。♭2 到 ♮3 相隔三个半音（增二度）——那就是中东 / 新古典的味道来源。"
+          : "回到自然调式。";
+      });
+      $("rf-stop").addEventListener("click", stopRf);
+      KB.bindRange($("rf-bpm"), $("rf-bv"), function (v) { return v + " BPM"; },
+        function (v) { rfBpm = v; if (rfH) startRf(); });
+      KB.bindRange($("rf-drive"), $("rf-dv"), function (v) { return Math.round(v * 100) + "%"; },
+        function (v) { rfDrive = v; A.setDrive(v); });
+
+      /* ---------- 演示 3：谁是家 ---------- */
+      var MEL = [64, 65, 67, 64, 62, 60, 62, 64];      // E F G E D C D E（全是 C 大调的白键）
+      var HOME = {
+        c: { bass: 48, cn: "C（低音）", mode: "C 大调（伊奥尼亚）" },
+        e: { bass: 40, cn: "E（低音）", mode: "E 弗里几亚" },
+        a: { bass: 45, cn: "A（低音）", mode: "A 爱奥利亚（自然小调）" },
+        none: { bass: null, cn: "无", mode: "默认被听成 C 大调" }
+      };
+      function playHome(k) {
+        A.stopAll(); A.setDrive(0.25);
+        var h = HOME[k];
+        var ev = MEL.map(function (m, i) { return { t: i * 0.55, midi: m, dur: 0.55, gain: 0.8 }; });
+        if (h.bass !== null) {
+          for (var b = 0; b < 5; b++) ev.push({ t: b, midi: h.bass, dur: 1, gain: 0.55 });
+        }
+        A.sequence(ev, { bpm: 110 });
+        $("ho-bass").textContent = h.cn;
+        $("ho-mode").textContent = h.mode;
+        $("ho-msg").textContent = k === "none"
+          ? "没有低音时，耳朵会默认按 C 大调听——那是这组音里最省力的解释。要让它变成别的调式，你必须主动把主音钉住。"
+          : "旋律一个音都没变，只是低音钉在了 " + h.cn + "。听感却完全不同——这就是「调不是音的集合，而是引力的中心」。";
+      }
+      ["c", "e", "a", "none"].forEach(function (k) {
+        $("ho-" + k).addEventListener("click", function () { playHome(k); });
+      });
+      $("ho-stop").addEventListener("click", function () { A.stopAll(); });
+
+      updateMd(); buildRf();
+    });
+  </script>
+</body>
+</html>

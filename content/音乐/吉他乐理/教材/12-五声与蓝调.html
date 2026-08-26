@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12 五声与蓝调 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 12 章：五声音阶为什么「怎么弹都不难听」、五个盒子如何连接、蓝调音阶的 ♭5 从哪来、推弦与颤音如何把音高变成连续量，以及大小调五声混用。">
+  <meta name="kb:tags" content="吉他,乐理,教材,五声音阶,小调五声,大调五声,蓝调音阶,布鲁斯,推弦,颤音,盒子,box,wsyj,ldyj">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 0.88em; color: var(--kb-fg-muted); }
+    .kb-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 12 章 · 五声与蓝调</h1>
+        <p class="kb-lead">如果只允许一个吉他手学一个音阶，那一定是<strong>小调五声</strong>。摇滚、布鲁斯、硬摇滚、金属的绝大多数独奏都建立在这五个音上；很多传奇乐手一辈子主要用的就是它。它凭什么？答案出奇地简单——<strong>它把最容易出错的两个音删掉了</strong>。这一章讲清楚它的来历、五个盒子怎么连成整块指板、蓝调音是什么，以及吉他手最强的两件武器：<strong>推弦与颤音</strong>——它们把离散的十二平均律重新变回了连续的音高。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出大小调五声的公式，并解释「删掉哪两个音、为什么」；② 在指板上按出五个盒子并把它们连起来；③ 说清蓝调音阶的 ♭5 是什么、该怎么用；④ 解释布鲁斯的「中立三度」以及吉他如何用推弦模拟它；⑤ 正确使用全音 / 半音 / 微分推弦与颤音；⑥ 说明大小调五声混用为什么成立。</p>
+        </div>
+
+        <h2>删掉最容易出错的两个音</h2>
+        <p>先看构造。<strong>大调五声</strong>就是大调音阶去掉第 4 级和第 7 级：</p>
+        <pre><code>大调：      1  2  3  4  5  6  7
+大调五声：   1  2  3     5  6        （去掉 4 和 7）
+
+自然小调：   1  2  ♭3 4  5  ♭6 ♭7
+小调五声：   1     ♭3 4  5     ♭7    （去掉 2 和 ♭6）</code></pre>
+        <p><strong>为什么删这两个？</strong>第 7 章习题 7.8 算过一个关键事实：大调音阶里<strong>唯一的三全音出现在第 4 级与第 7 级之间</strong>（F 到 B）。把这两个音同时删掉，剩下的五个音里：</p>
+        <ul>
+          <li><strong>没有任何一对构成三全音</strong>（最不稳定的音程，第 3 章）；</li>
+          <li><strong>没有任何一对构成小二度</strong>（最不协和的音程）；</li>
+          <li>任意两个音之间最小是大二度。</li>
+        </ul>
+        <p>这就是「五声音阶怎么弹都不难听」的确切含义：<strong>它不是「更好听」，而是「没有雷」。</strong>在这五个音里随机乱按，也不会撞出刺耳的组合——对即兴演奏来说，这是压倒性的优势。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 大调五声与小调五声是同一组音</p>
+          <p>C 大调五声 ＝ C D E G A；A 小调五声 ＝ A C D E G。<strong>完全相同的五个音，只是主音不同</strong>——和关系大小调是同一个道理（第 5 章）。所以你只需要记<strong>一套盒子</strong>：把它当 A 小调五声用，还是当 C 大调五声用，取决于伴奏和你落在哪个音上。</p>
+          <p><strong>指板上的换算</strong>：小调五声的主音往下 3 品（小三度），就是对应大调五声的主音。E 小调五声（6 弦 0 品起）＝ G 大调五声（6 弦 3 品起）。</p>
+        </div>
+
+        <h2>五个盒子</h2>
+        <p>五个音，六根弦，在 12 品内会形成五个首尾相接的手型——和 CAGED 是同一个道理（第 6 章）。以 <strong>E 小调五声</strong>为例：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>盒子</th><th>起始品</th><th>6 弦</th><th>5 弦</th><th>4 弦</th><th>3 弦</th><th>2 弦</th><th>1 弦</th></tr></thead>
+            <tbody>
+              <tr><td><strong>盒 1</strong></td><td>0</td><td>0, 3</td><td>0, 2</td><td>0, 2</td><td>0, 2</td><td>0, 3</td><td>0, 3</td></tr>
+              <tr><td>盒 2</td><td>3</td><td>3, 5</td><td>2, 5</td><td>2, 5</td><td>2, 4</td><td>3, 5</td><td>3, 5</td></tr>
+              <tr><td>盒 3</td><td>5</td><td>5, 7</td><td>5, 7</td><td>5, 7</td><td>4, 7</td><td>5, 8</td><td>5, 7</td></tr>
+              <tr><td>盒 4</td><td>7</td><td>7, 10</td><td>7, 10</td><td>7, 9</td><td>7, 9</td><td>8, 10</td><td>7, 10</td></tr>
+              <tr><td>盒 5</td><td>10</td><td>10, 12</td><td>10, 12</td><td>9, 12</td><td>9, 12</td><td>10, 12</td><td>10, 12</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>盒 1 是所有人最先学的那个</strong>（也叫「主盒子」），因为它的根音在 6 弦上、手型对称、而且在 E 小调里正好落在空弦。但只会盒 1 的代价是：<strong>你被困在四个品的范围里</strong>——所有乐句听起来都在同一个音区，而且高把位那些最好推弦的位置永远用不上。</p>
+        <p>五个盒子的<strong>起始间隔是 3-2-2-3-2</strong>（加起来正好 12，和 CAGED 的 3-2-3-2-2 是同一类结构）。相邻盒子<strong>共享一整列音</strong>，所以连接点很好找：<strong>在共享列上换手型，手指几乎不用移动。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：五声盒子漫游（五个手型，一整块指板）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：小调五声在 12 品内形成五个首尾相接的手型，起始间隔 3-2-2-3-2。相邻盒子共享一整列音，因此可以在共享列上无缝换把位。加入 ♭5（蓝调音）后就得到蓝调音阶，它总是作为 4→♭5→5 的经过音使用。</p></noscript>
+            <div id="b-sound"></div>
+            <div id="b-board"></div>
+            <div class="kb-legend">
+              <span><i style="background:#dc2626"></i>根音</span>
+              <span><i style="background:#2563eb"></i>五声音</span>
+              <span><i style="background:#16a34a"></i>♭5 蓝调音</span>
+              <span><i style="background:#8b5cf6"></i>其他盒子（灰显时不参与）</span>
+            </div>
+            <div class="kb-readout">
+              <span>调 <b id="b-key">E 小调五声</b></span>
+              <span>音 <b id="b-notes">E G A B D</b></span>
+              <span>当前盒子 <b id="b-box">盒 1（0–3 品）</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">主音<span class="kb-control-value" id="b-rootv"></span>
+                <input type="range" id="b-root" min="0" max="11" step="1" value="4"></label>
+              <label class="kb-control">盒子<span class="kb-control-value" id="b-boxv"></span>
+                <input type="range" id="b-boxi" min="1" max="5" step="1" value="1"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="b-all" type="button">显示 / 隐藏其余盒子</button>
+              <button class="kb-btn" id="b-blue" type="button">➕ 加上 ♭5（蓝调音阶）</button>
+              <button class="kb-btn" id="b-play" type="button">▶ 弹本盒子上下行</button>
+              <button class="kb-btn" id="b-lick" type="button">▶ 一句经典乐句</button>
+              <button class="kb-btn" id="b-stop" type="button">■ 停止</button>
+            </div>
+            <p id="b-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">拖动「盒子」滑块，注意相邻两个盒子之间<strong>总有一整列音是重合的</strong>——那就是换把位的接缝。点「显示其余盒子」看整块指板：五声音阶其实是连续铺满的，盒子只是人为的切分。</p>
+          </div>
+        </div>
+
+        <h2>蓝调音阶：插进去一个 ♭5</h2>
+        <p>在小调五声的 4 与 5 之间塞一个 <strong>♭5</strong>，就得到<strong>蓝调音阶</strong>：</p>
+        <pre><code>小调五声：  1  ♭3  4     5  ♭7
+蓝调音阶：  1  ♭3  4  ♭5 5  ♭7      ← 多了一个 ♭5（blue note）</code></pre>
+        <p>这个 ♭5 就是第 3 章那个三全音。它极不稳定，所以<strong>几乎从不作为落脚点</strong>，而是当<strong>经过音</strong>：<code>4 → ♭5 → 5</code> 的半音上行（或 <code>5 → ♭5 → 4</code> 的下行）。第 11 章习题 11.9 讲的正是它的正确用法——<strong>短时值、弱拍、夹在两个稳定音之间。</strong></p>
+        <p>它加了一个音，却把五声音阶「零风险」的性质破坏了：现在音阶里有三全音了，乱按会撞车。<strong>这是一笔用安全换色彩的交易</strong>——蓝调音那股「脏而带劲」的味道，正来自这一点风险。</p>
+
+        <h2>真正的蓝调音：不在十二平均律里</h2>
+        <p>这里要说一件容易被教材跳过的事：<strong>布鲁斯歌手唱的「降三度」，其实不是我们钢琴上的那个小三度。</strong></p>
+        <p>布鲁斯来自非洲音乐传统，那里的音阶不遵守十二平均律。歌手唱的第三级往往落在<strong>大三度与小三度之间</strong>——一个大约比小三度高 30–50 音分的位置，音乐学上叫<strong>中立三度</strong>（neutral third）。第七级也有类似的情况。这些「落在缝里」的音就是最本源的 <strong>blue notes</strong>。</p>
+        <p>钢琴弹不出它（键之间没有缝），但<strong>吉他可以</strong>——这正是吉他成为布鲁斯核心乐器的技术原因：</p>
+        <ul>
+          <li><strong>推弦</strong>可以把音高连续地推到任意位置，包括那些不在品格上的位置；</li>
+          <li><strong>颤音</strong>可以让音高在一个小范围内摆动，模仿人声的抖动；</li>
+          <li><strong>滑音</strong>可以在两个音之间连续经过。</li>
+        </ul>
+        <p><strong>换句话说：布鲁斯吉他手用推弦，把十二平均律重新变回了连续的音高空间。</strong>第 1 章习题 1.9 说小提琴因为无品而拥有微调自由、吉他没有——推弦就是吉他手夺回这份自由的方式。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：推弦（把音高变成连续量）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：推弦把离散的品格音高变成连续的。全音推弦（2 个半音）与半音推弦（1 个半音）是标准用法；而 1/4 音（约 50 音分）的微分推弦用来模拟布鲁斯的「中立三度」——一个落在大小三度之间、钢琴无法弹出的音。</p></noscript>
+            <div class="kb-readout">
+              <span>起始音 <b id="bd-from">G（♭3）</b></span>
+              <span>推到 <b id="bd-to">A（4）</b></span>
+              <span>推弦幅度 <b id="bd-amt">全音（200 音分）</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">推弦幅度<span class="kb-control-value" id="bd-av"></span>
+                <input type="range" id="bd-amount" min="0" max="2" step="0.25" value="2"></label>
+              <label class="kb-control">推弦速度<span class="kb-control-value" id="bd-tv"></span>
+                <input type="range" id="bd-time" min="0.05" max="0.8" step="0.05" value="0.22"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="bd-bend" type="button">▶ 推上去</button>
+              <button class="kb-btn" id="bd-rel" type="button">▶ 推上去再放回</button>
+              <button class="kb-btn" id="bd-vib" type="button">▶ 颤音</button>
+              <button class="kb-btn" id="bd-blue" type="button">🎺 布鲁斯的「中立三度」（1/4 音）</button>
+              <button class="kb-btn" id="bd-cmp" type="button">🔀 小三度 → 中立三度 → 大三度</button>
+              <button class="kb-btn" id="bd-stop" type="button">■ 停止</button>
+            </div>
+            <p id="bd-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">重点听最后一个按钮：三个音依次响起，中间那个<strong>不在任何一个品格上</strong>。听出它既不「暗」也不「亮」，而是一种含混的、带哭腔的味道了吗——那就是 blue note。</p>
+          </div>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 推弦最常见的三个毛病</p>
+          <p><strong>① 推不到位。</strong>全音推弦要精确推到高两个半音，差 20 音分就明显走音。练法：先按住目标音听清楚，再推上去对比，反复直到不用想就能到位。<strong>推弦是音准问题，不是力气问题。</strong></p>
+          <p><strong>② 放回时失控。</strong>推上去容易，慢慢放回并保持音准很难——但「推上去再放回」恰恰是最有表现力的用法。放回时手指要主动控制，而不是松力。</p>
+          <p><strong>③ 蹭到隔壁弦。</strong>推弦时相邻的弦会被顶起来发声。解决办法是<strong>用其他手指同时闷住不该响的弦</strong>——高增益下这一点尤其致命，因为任何杂音都会被放大。</p>
+        </div>
+
+        <h2>大小调五声混用</h2>
+        <p>一个在硬摇滚与布鲁斯摇滚里极常见、却让初学者困惑的现象：<strong>明明伴奏是 A 大调（或 A7），主奏却在弹 A 小调五声，听起来还特别对。</strong></p>
+        <p>原因就是上一节说的「中立三度」：布鲁斯的传统本来就允许大三度和小三度<strong>并存</strong>。伴奏弹大三度（C♯），主奏弹小三度（C），两者的冲突不是错误，而是这个音乐语言的核心特征——第 8 章习题 8.5 的 <code>7♯9</code> 和弦就是把这种冲突凝固成了一个和弦。</p>
+        <p><strong>成熟的用法不是二选一，而是在两者之间来回切换</strong>：</p>
+        <ul>
+          <li><strong>小调五声</strong>：暗、粗粝、有攻击性。用在乐句开头、需要力量的地方。</li>
+          <li><strong>大调五声</strong>：亮、甜、放松。用在乐句结尾、需要「解决」的地方。</li>
+          <li><strong>切换点</strong>：通常在和弦变化的瞬间，或者一个乐句的中间。</li>
+        </ul>
+        <p><strong>指板上的操作极其简单</strong>：同一个根音的大调五声，比小调五声<strong>整体往下移 3 品</strong>。A 小调五声在 5 品，A 大调五声就在 2 品——两个盒子相邻，切换时手只需挪一下。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：大小调五声混用（同一个根音，两种颜色）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一根音上的小调五声（1 ♭3 4 5 ♭7）与大调五声（1 2 3 5 6）可以在布鲁斯语境里自由混用。小调五声暗而粗粝，大调五声亮而放松；在指板上，同根音的大调五声盒子比小调五声整体低 3 品。</p></noscript>
+            <div id="m-board"></div>
+            <div class="kb-readout">
+              <span>根音 <b id="m-root">A</b></span>
+              <span>小调五声 <b id="m-min">A C D E G</b></span>
+              <span>大调五声 <b id="m-maj">A B C♯ E F♯</b></span>
+              <span>共同音 <b id="m-both">A E</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="m-min-b" type="button">▶ 小调五声乐句</button>
+              <button class="kb-btn" id="m-maj-b" type="button">▶ 大调五声乐句</button>
+              <button class="kb-btn" id="m-mix" type="button">▶ 混用：暗起亮收</button>
+              <button class="kb-btn" id="m-chord" type="button">🎸 加上 A7 伴奏一起听</button>
+              <button class="kb-btn" id="m-stop" type="button">■ 停止</button>
+            </div>
+            <p id="m-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">「混用：暗起亮收」是布鲁斯乐句最常见的形状——用小三度起头制造张力，用大三度收尾获得解决。听第四个按钮时注意：伴奏的 C♯ 与主奏的 C 会短暂共存，那正是布鲁斯的味道。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 12.1</p>
+          <p>写出 A 小调五声与 A 大调五声的音，指出它们的共同音。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>A 小调五声</strong>（1 ♭3 4 5 ♭7）：<strong>A C D E G</strong>。<br>
+            <strong>A 大调五声</strong>（1 2 3 5 6）：<strong>A B C♯ E F♯</strong>。</p>
+            <p><strong>共同音</strong>：只有 <strong>A</strong> 与 <strong>E</strong> —— 主音和五度，也就是<strong>强力和弦的那两个音</strong>。</p>
+            <p><strong>这个结果很有意思</strong>：两个音阶共享的恰好是不带色彩的骨架音，而所有<strong>带色彩</strong>的音（三度、六度、七度）全都不同。这解释了两件事：① 为什么混用时切换的瞬间色彩变化那么明显（三个音全变了）；② 为什么在强力和弦伴奏上两种五声都能用——<strong>伴奏只给了 A 和 E，没有表态。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 12.2</p>
+          <p>E 小调五声等于哪个大调五声？在指板上怎么换算？请注意别和「同根音的大小调五声」搞混。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>E 小调五声</strong> ＝ E G A B D。把 <strong>G</strong> 当主音重排 ＝ G A B D E ＝ <strong>G 大调五声</strong>（1 2 3 5 6 ＝ G A B D E ✓）。</p>
+            <p><strong>换算规则</strong>：<strong>小调五声主音 + 小三度（3 品）＝ 对应的大调五声主音。</strong>这和关系大小调是同一条规则（第 5 章）。</p>
+            <p><strong>指板上</strong>：<strong>一个音都不用动，一个盒子都不用换。</strong>E 小调五声盒 1 和 G 大调五声用的是<strong>完全相同的位置</strong>——区别只在你把哪个音当作「家」、乐句落在哪里、伴奏是什么。</p>
+            <div class="kb-callout kb-warn">
+              <p class="kb-callout-title">⚠️ 别和「同根音」搞混</p>
+              <p><strong>关系</strong>（本题）：E 小调五声 ＝ G 大调五声 —— <strong>同一组音，位置相同</strong>。<br>
+              <strong>同根音</strong>（正文最后一节）：E 小调五声 vs E 大调五声 —— <strong>不同的音，盒子相差 3 品</strong>（E 大调五声 ＝ C♯ 小调五声，盒子在 E 小调盒子下方 3 品）。<br>
+              前者是「换个角度看同一组音」，后者是「换一组音」。混淆这两件事是五声音阶学习中最常见的错误。</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 12.3</p>
+          <p>蓝调音阶的 ♭5 该怎么用？为什么它几乎从不作为乐句的落脚点？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>它是经过音。</strong>标准用法是 <code>4 → ♭5 → 5</code> 的半音上行，或 <code>5 → ♭5 → 4</code> 的半音下行——<strong>夹在两个稳定音之间，快速经过。</strong></p>
+            <p><strong>为什么不能当落脚点</strong>，两条：</p>
+            <ol>
+              <li><strong>它是三全音</strong>（第 3 章）：把八度对半分、自转位不变、没有根音感。停在它上面，听觉找不到落脚点，会觉得乐句「断在半空」。</li>
+              <li><strong>在失真下它最糟</strong>（第 10 章）：三全音的差音偏离谐波位置 326 音分，是所有音程里最远的。长时间持续会明显浑浊。</li>
+            </ol>
+            <p><strong>正确用法的三个要点</strong>（与第 11 章习题 11.9 一致）：<strong>短时值、弱拍位置、前后都是稳定音。</strong>典型是把 4、♭5、5 弹成三个连续的十六分音符，重音落在 4 或 5 上。</p>
+            <p><strong>例外</strong>：如果你<strong>刻意</strong>要那股不安（某些金属与前卫作品），可以停在 ♭5 上——但必须反复强调它，让听众接受它是这段音乐的一部分。<strong>一次是错音，反复是风格。</strong></p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 E 小调五声的五个音与级数，并说出它在 6 弦上的前两个音在第几品。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>音</strong>：<strong>E G A B D</strong>；<strong>级数</strong>：1 ♭3 4 5 ♭7。</p>
+            <p><strong>6 弦上</strong>：E 在 <strong>0 品</strong>（空弦），G 在 <strong>3 品</strong>。这就是盒 1 在 6 弦上的两个音。</p>
+            <p><strong>解析</strong>：E 小调五声在标准调弦下是最方便的音阶之一——主音是空弦、盒 1 从 0 品开始、6 弦和 1 弦形状相同（第 2 章：两根 E 弦相差两个八度）。<strong>这就是为什么几乎所有吉他教材都从 E 小调五声开始。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>大调五声删掉了大调音阶的哪两个音级？为什么偏偏是这两个？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>删掉的是第 4 级和第 7 级。</strong></p>
+            <p><strong>为什么是它们</strong>：第 7 章习题 7.8 证明过，大调音阶里<strong>唯一的三全音</strong>就出现在第 4 级与第 7 级之间。此外，第 4 级与第 3 级、第 7 级与第 8 级（主音）之间都是<strong>小二度</strong>——也就是说，这两个音是音阶里全部不协和关系的源头。</p>
+            <p><strong>删掉它们的结果</strong>：剩下的五个音里，任意两音的间距只有大二度、小三度、大三度、纯四度、纯五度——<strong>全是协和或温和的音程，一个三全音和小二度都没有</strong>（习题 12.8 会严格证明）。</p>
+            <p><strong>代价</strong>：失去了导音（第 7 级），因此五声音阶<strong>没有强烈的解决感</strong>；也失去了第 4 级，因此下属功能变弱。这正好符合摇滚的需要（第 7 章习题 7.9）——<strong>安全、可循环、不催促。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>蓝调音阶比小调五声多了哪一个音？它在 E 小调里具体是什么音、在 6 弦第几品？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>多了 ♭5</strong>（也就是蓝调音 blue note）。</p>
+            <p><strong>在 E 小调里</strong>：♭5 ＝ E 上方 6 个半音 ＝ <strong>B♭</strong>（也写作 A♯）。在 6 弦上是<strong>第 6 品</strong>。</p>
+            <p><strong>解析</strong>：完整的 E 蓝调音阶 ＝ E G A <strong>B♭</strong> B D。注意 A、B♭、B 三个音<strong>连成半音</strong>——这就是那个经典的「4 → ♭5 → 5」半音爬升，在盒 1 里它落在 4 弦（或 5 弦）上，是最容易上手也最容易听出「布鲁斯味」的一处。</p>
+            <p><strong>顺带</strong>：B♭ 相对 E 是三全音，而 E–B♭ 这个音程你在第 10 章的演示里听过——它在高增益下最浑浊。<strong>所以蓝调音在重型音色里必须弹得更短、更靠弱拍。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>「全音推弦」推高几个半音？从 3 弦 7 品推一个全音，得到什么音？如果只推半音呢？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>全音推弦 ＝ 推高 2 个半音</strong>（等于往前 2 品）。<strong>半音推弦 ＝ 1 个半音</strong>（1 品）。</p>
+            <p><strong>3 弦 7 品</strong>：3 弦空弦是 G3（MIDI 55），7 品 ＝ 62 ＝ <strong>D4</strong>。<br>
+            推全音 → 64 ＝ <strong>E4</strong>；推半音 → 63 ＝ <strong>D♯4 / E♭4</strong>。</p>
+            <p><strong>验算方式</strong>：推弦推到位与否，可以用<strong>同音位置</strong>来对——3 弦 9 品也是 E4。练习时先按 9 品听清楚，再回到 7 品推上去，直到两者完全一致。<strong>这是练推弦音准最有效的方法，比凭感觉可靠得多。</strong></p>
+            <p><strong>补充</strong>：不同弦、不同把位的推弦手感差别很大——细弦好推、高把位好推、低把位的粗弦几乎推不动。所以谱面上写「推全音」的地方，实际弹的位置往往是有讲究的（第 2 章习题 2.6 的第二点）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>很多人一辈子只用盒 1。请给出三条具体理由说明这为什么是个问题，以及最省力的改进路径。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个问题</strong>：</p>
+            <ol>
+              <li><strong>音区被锁死。</strong>一个盒子只覆盖四个品、约两个八度中的一段。所有乐句都落在同一个音区，久了必然雷同——<strong>而「音区变化」是最容易被听众感知的对比手段之一</strong>（比换音阶明显得多）。</li>
+              <li><strong>可用技巧受限。</strong>推弦在低把位的粗弦上几乎推不动（习题 12.4），而盒 1 在 E 小调正好落在 0–3 品。<strong>你被困在整块指板上最不适合推弦的地方。</strong></li>
+              <li><strong>和弦对不上。</strong>独奏要跟着和弦走（第 16 章），而不同和弦的和弦音散落在指板各处。只守一个盒子，就只能靠「反正五声音阶不会错」蒙混过去，永远做不到「跟着和弦说话」。</li>
+            </ol>
+            <p><strong>最省力的改进路径</strong>（按性价比排序）：</p>
+            <ul>
+              <li><strong>第一步：学盒 2。</strong>它就在盒 1 上方，且与盒 1 <strong>共享一整列音</strong>。先只练「在共享列上从盒 1 滑进盒 2」这一个动作，立刻多出四个品的活动空间。</li>
+              <li><strong>第二步：学盒 4。</strong>为什么跳过 3？因为盒 4（E 小调在 7–10 品）是<strong>推弦最舒服的区域</strong>，而且根音在 6 弦和 4 弦上都很好找。学会它，表现力的提升比学盒 3 大得多。</li>
+              <li><strong>第三步：横向连接。</strong>不再想「盒子」，改成沿<strong>一根弦</strong>上下走。这一步会自然地把五个盒子融成一片。</li>
+            </ul>
+            <p><strong>一个常见的误区</strong>：先把五个盒子全背熟再说。实际上<strong>会两个盒子并能自如连接，远胜于会五个但每个都要停下来想。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>伴奏弹 A7（A C♯ E G），主奏弹 A 小调五声（含 C）。C 与 C♯ 相差半音，理论上是最不协和的关系。为什么它不算错，反而是布鲁斯的标志？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三层原因</strong>：</p>
+            <p><strong>① 历史与语言层面。</strong>布鲁斯源自非洲音乐传统，那里的第三级本来就唱在<strong>大小三度之间</strong>（中立三度）。当这套唱法遇上欧洲的十二平均律和弦，「三度冲突」就成了这个音乐的<strong>母语特征</strong>，而不是错误。听众的耳朵是被这套语言训练出来的——<strong>协和与否，一半是物理，一半是习惯。</strong></p>
+            <p><strong>② 时间层面。</strong>主奏的 C 通常是<strong>经过音或推弦的起点</strong>，只响很短一瞬，而且往往正被推向 C♯ 或 D。它不是一个持续的、与 C♯ 长时间对撞的音。<strong>纵向的冲突被横向的运动化解了</strong>——这正是第 11 章习题 11.7 那条不对称的另一个例子。</p>
+            <p><strong>③ 音区层面。</strong>主奏一般在高音区，伴奏和弦在中低音区，两者相隔一到两个八度。第 3 章说过，音程的摩擦会被距离稀释；<strong>相差半音的两个音，隔开一个八度就变成了「大七度 + 八度」，刺耳程度大幅下降。</strong></p>
+            <p><strong>但也有真正会出问题的情况</strong>：如果主奏在<strong>低音区、长时值、和 C♯ 同时持续</strong>，那确实会难听——尤其在高增益下（第 10 章）。所以这条自由是有边界的，边界就是上面三条的反面。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>既然 E 小调五声和 G 大调五声是同一组音、同样的盒子，那么「我现在弹的是小调五声还是大调五声」这个问题到底有没有意义？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>对手指没有意义，对耳朵和乐句有决定性意义。</strong></p>
+            <p><strong>手指层面</strong>：完全相同。同样的五个音、同样的位置、同样的手型。从这个角度说，「换音阶」是个伪问题。</p>
+            <p><strong>但下面三件事完全不同</strong>：</p>
+            <ol>
+              <li><strong>哪个音是「家」。</strong>弹 E 小调五声时，乐句落在 E 上有解决感；弹 G 大调五声时，落在 G 上才有解决感。<strong>落错音，整句话就没说完。</strong></li>
+              <li><strong>哪些音是「重点」。</strong>E 小调里 G 是 ♭3（色彩音）、D 是 ♭7（张力音）；G 大调里 G 是主音（最稳）、D 是 5（次稳）。<strong>同一个音在两种语境下的分量完全相反。</strong></li>
+              <li><strong>伴奏决定了答案。</strong>伴奏是 Em–C–D 你就在 E 小调，是 G–C–D 你就在 G 大调。<strong>不是你「选」音阶，是伴奏「告诉」你。</strong></li>
+            </ol>
+            <p><strong>结论</strong>：五声盒子只是<strong>可用音的地图</strong>；真正的音乐决策是<strong>「往哪走、在哪停」</strong>。这正是新手与老手最大的差别——新手在盒子里跑音阶，老手在盒子里<strong>说话</strong>。第 16 章会把这件事展开成一套具体的方法。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：小调五声音阶中<strong>任意两个音</strong>都不构成小二度或三全音。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>音级集合</strong>：小调五声相对主音是 <em class="kb-math">S ＝ {0, 3, 5, 7, 10}</em>（1 ♭3 4 5 ♭7）。</p>
+            <p><strong>方法</strong>：算出所有音对的<strong>音程类</strong>（interval class，即取两音差与 12 减去它之中较小的那个，范围 0–6）。C(5,2) ＝ 10 对：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>音对</th><th>0–3</th><th>0–5</th><th>0–7</th><th>0–10</th><th>3–5</th><th>3–7</th><th>3–10</th><th>5–7</th><th>5–10</th><th>7–10</th></tr></thead>
+                <tbody>
+                  <tr><td>差值</td><td>3</td><td>5</td><td>7</td><td>10</td><td>2</td><td>4</td><td>7</td><td>2</td><td>5</td><td>3</td></tr>
+                  <tr><td><strong>音程类</strong></td><td>3</td><td>5</td><td><strong>5</strong></td><td><strong>2</strong></td><td>2</td><td>4</td><td><strong>5</strong></td><td>2</td><td>5</td><td>3</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>出现过的音程类集合 ＝ {2, 3, 4, 5}</strong>。</p>
+            <p><strong>结论</strong>：<strong>1 从未出现</strong>（无小二度），<strong>6 从未出现</strong>（无三全音）。∎</p>
+            <p><strong>这个结果有多特殊</strong>：在十二个音里任选五个，一共有 <em class="kb-math">C(12,5) ＝ 792</em> 种组合，而<strong>同时避开音程类 1 和 6 的组合极少</strong>。五声音阶正是其中之一，而且它还额外满足「可以由连续五个纯五度生成」（C–G–D–A–E）——和大调音阶「连续七个五度」（第 4 章习题 4.8）是同一个构造原理，只是窗口更窄。</p>
+            <p><strong>推论</strong>：窗口越窄，音越少，越安全但越单调；窗口越宽，色彩越多但雷越多。<strong>五声（5 个）、大调（7 个）、半音阶（12 个）是同一条轴上的三个刻度</strong>——选哪个，就是在「安全」与「表现力」之间选一个点。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>习题 12.6 说大小三度并置是布鲁斯的特征。但第 10 章证明了相差半音的两个音在高增益下会严重浑浊。这两条如何共存？重型音乐里该怎么处理？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>先承认冲突是真的。</strong>C 与 C♯ 相差 1 个半音，第 10 章的表里小二度的差音偏离最近谐波 <strong>−198 音分</strong>——是所有音程里最离谱的之一。<strong>如果它们在同一台高增益音箱里同时长时间发声，一定糊。</strong></p>
+            <p><strong>所以布鲁斯摇滚的实际做法是让它们「不真正同时」或「不真正同一路」</strong>——五条对策，每一条都对应第 10 章的一个结论：</p>
+            <ol>
+              <li><strong>降增益。</strong>经典布鲁斯摇滚用的是中等 overdrive，不是现代金属的高增益。这直接减少了互调产物的量（第 10 章对策 ①）。</li>
+              <li><strong>分轨 / 分乐器。</strong>伴奏的大三度由第二吉他、钢琴或管乐承担，主奏的小三度单独一路。<code>失真(A)+失真(B) ≠ 失真(A+B)</code>（第 10 章习题 10.4）。</li>
+              <li><strong>拉开音区。</strong>主奏在高把位，伴奏在低中把位，相隔一到两个八度（第 10 章习题 10.6）。</li>
+              <li><strong>缩短时值。</strong>主奏的小三度是经过音或推弦起点，只存在一瞬。同时发声的时间窗口极短，来不及堆积。</li>
+              <li><strong>让伴奏放弃三度。</strong>最彻底的一招——伴奏改用<strong>强力和弦</strong>，把三度的表态权完全交给主奏。<strong>这正是硬摇滚与金属最终选择的方案</strong>：既然三度只能有一个，那就让它出现在最不容易糊的地方（高音区的单音旋律）。</li>
+            </ol>
+            <p><strong>更大的图景</strong>：这道题展示了整个第三篇的方法论——<strong>一个乐理上成立的手法，能不能用、怎么用，要由音色的物理条件来裁决。</strong>布鲁斯（中增益、多乐器）和金属（高增益、吉他为主）从同一个和声传统出发，却因为音色条件不同而演化出了不同的解法。<strong>风格差异的一部分，其实是物理约束的差异。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>五声音阶 ＝ 删掉最容易出错的两个音</strong>：大调去掉 4、7，小调去掉 2、♭6。删完之后音阶里<strong>没有小二度也没有三全音</strong>，所以「怎么弹都不难听」。② 大小调五声是<strong>同一组音</strong>（关系），但<strong>同根音</strong>的大小调五声是<strong>不同的音、盒子差 3 品</strong>——别混淆。③ 五个盒子起始间隔 <strong>3-2-2-3-2</strong>，相邻盒子共享一整列音，那就是换把位的接缝。④ <strong>蓝调音阶 ＝ 五声 + ♭5</strong>，♭5 是三全音，只能当<strong>短促的经过音</strong>。⑤ 真正的 blue note 落在<strong>大小三度之间</strong>，钢琴弹不出，<strong>吉他靠推弦拿回了连续音高</strong>。⑥ 大小调五声<strong>混用</strong>成立，因为布鲁斯语言本来就允许三度并置；但在高增益下必须用降增益、分轨、拉开音区、缩短时值等手段处理。</p>
+          <p><strong>下一章预告</strong>：五声管的是独奏的「说什么」，但它下面得有伴奏。第 13 章《摇滚的和弦进行》会把摇滚最常用的几套和弦骨架拆开——十二小节布鲁斯为什么是那个形状、混合利底亚为什么让属七变得可以久留、以及 <strong>♭Ⅵ–♭Ⅶ–Ⅰ</strong> 这个「一听就是摇滚」的进行到底借了谁的东西。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./13-摇滚的和弦进行.html"><strong>下一章：第 13 章 · 摇滚的和弦进行</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+
+      /* ---------- 演示 1：五声盒子 ---------- */
+      KBG.soundToggle($("b-sound"));
+      /* 五个盒子：start 是相对「6 弦主音品位」的偏移，off 是每根弦相对 start 的品位 */
+      var BOX = [
+        { start: 0, off: [[0, 3], [0, 2], [0, 2], [0, 2], [0, 3], [0, 3]] },
+        { start: 3, off: [[0, 2], [-1, 2], [-1, 2], [-1, 1], [0, 2], [0, 2]] },
+        { start: 5, off: [[0, 2], [0, 2], [0, 2], [-1, 2], [0, 3], [0, 2]] },
+        { start: 7, off: [[0, 3], [0, 3], [0, 2], [0, 2], [1, 3], [0, 3]] },
+        { start: 10, off: [[0, 2], [0, 2], [-1, 2], [-1, 2], [0, 2], [0, 2]] }
+      ];
+      var bRoot = 4, bBox = 1, bAll = false, bBlue = false;
+      var fbB = KBG.fretboard($("b-board"), {
+        tuning: TUN, fromFret: 1, toFret: 16, showOpen: true,
+        labels: "degree", root: 4, marks: [], title: "五声盒子"
+      });
+      function boxStart(i) {
+        var shift = T.mod12(bRoot - 4);
+        var b = BOX[i], s = b.start + shift;
+        var minOff = 0;
+        b.off.forEach(function (p) { p.forEach(function (o) { if (o < minOff) minOff = o; }); });
+        while (s + minOff < 0) s += 12;
+        while (s + 3 > 16) s -= 12;
+        while (s + minOff < 0) s += 12;
+        return s;
+      }
+      function boxPositions(i) {
+        var s = boxStart(i), out = [];
+        BOX[i].off.forEach(function (pair, str) {
+          pair.forEach(function (o) { out.push({ string: str, fret: s + o }); });
+        });
+        return out;
+      }
+      function updateB() {
+        var pcs = T.scalePcs(bRoot, "minorPentatonic");
+        var bluePc = T.mod12(bRoot + 6);
+        var inBox = {};
+        boxPositions(bBox - 1).forEach(function (p) { inBox[p.string + ":" + p.fret] = true; });
+        var marks = [];
+        var scan = pcs.slice();
+        if (bBlue) scan.push(bluePc);
+        T.findOnBoard(TUN, scan, 16).forEach(function (p) {
+          var key = p.string + ":" + p.fret;
+          var isBox = !!inBox[key];
+          var isBlue = (p.pc === bluePc);
+          if (!isBox && !bAll && !(isBlue && bBlue)) return;
+          marks.push({
+            string: p.string, fret: p.fret,
+            kind: isBlue ? "third" : (p.pc === bRoot ? "root" : (isBox ? "note" : "purple"))
+          });
+        });
+        fbB.setLabels("degree", bRoot);
+        fbB.setMarks(marks);
+        $("b-key").textContent = T.name(bRoot) + " 小调五声" + (bBlue ? " + ♭5（蓝调音阶）" : "");
+        $("b-notes").textContent = pcs.map(function (p) { return T.name(p); }).join(" ") +
+          (bBlue ? "  ＋ " + T.name(bluePc) : "");
+        var s = boxStart(bBox - 1);
+        $("b-box").textContent = "盒 " + bBox + "（" + s + "–" + (s + 3) + " 品）";
+      }
+      KB.bindRange($("b-root"), $("b-rootv"), function (v) { return T.name(v); },
+        function (v) { bRoot = v; if (typeof fbB !== "undefined") updateB(); });
+      KB.bindRange($("b-boxi"), $("b-boxv"), function (v) { return "盒 " + v; },
+        function (v) { bBox = v; if (typeof fbB !== "undefined") updateB(); });
+      $("b-all").addEventListener("click", function () {
+        bAll = !bAll; updateB();
+        $("b-msg").textContent = bAll
+          ? "紫色是其余盒子的音。看整块指板——五声音阶其实是连续铺满的，「盒子」只是人为切分。"
+          : "只显示当前盒子。注意相邻盒子之间总有一整列重合，那就是换把位的接缝。";
+      });
+      $("b-blue").addEventListener("click", function () {
+        bBlue = !bBlue; updateB();
+        $("b-blue").textContent = bBlue ? "➖ 去掉 ♭5" : "➕ 加上 ♭5（蓝调音阶）";
+        $("b-msg").textContent = bBlue
+          ? "绿点是 ♭5（三全音）。注意它总是夹在 4 和 5 之间——那正是它唯一安全的用法。"
+          : "回到纯五声：没有小二度，也没有三全音。";
+      });
+      function boxMidis() {
+        var out = [];
+        boxPositions(bBox - 1).forEach(function (p) { out.push(TUN[p.string] + p.fret); });
+        return out.sort(function (a, b) { return a - b; });
+      }
+      $("b-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.35);
+        var up = boxMidis(), all = up.concat(up.slice(0, -1).reverse());
+        A.sequence(all.map(function (m, i) { return { t: i * 0.28, midi: m, dur: 0.28 }; }), { bpm: 150 });
+      });
+      $("b-lick").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        var s = boxStart(bBox - 1), o = BOX[bBox - 1].off;
+        /* 3→1 弦上行，最后一个音推全音——最典型的五声乐句形状 */
+        var seq = [
+          { st: 3, oi: 0 }, { st: 3, oi: 1 }, { st: 4, oi: 0 }, { st: 4, oi: 1 },
+          { st: 5, oi: 0 }, { st: 5, oi: 1 }
+        ];
+        var ev = seq.map(function (n, i) {
+          return { t: i * 0.35, midi: TUN[n.st] + s + o[n.st][n.oi], dur: 0.35 };
+        });
+        A.sequence(ev, { bpm: 140 });
+        var last = TUN[5] + s + o[5][1];
+        A.pluck(last, { delay: seq.length * 0.35 * 60 / 140, dur: 1.6, gain: 0.85,
+          bend: { semitones: 2, time: 0.22, delay: 0.1 }, vibrato: { cents: 40, hz: 5.5, delay: 0.5 } });
+        $("b-msg").textContent = "六个音上行 + 一个全音推弦 + 颤音收尾。这是五声乐句最常见的形状，换任何一个盒子都能用。";
+      });
+      $("b-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：推弦 ---------- */
+      var bdAmt = 2, bdTime = 0.22, BD_FROM = 55;      // G3 ＝ E 小调的 ♭3
+      function updateBd() {
+        $("bd-from").textContent = T.name(BD_FROM, { octave: 1 }) + "（♭3）";
+        var to = BD_FROM + bdAmt;
+        $("bd-to").textContent = bdAmt % 1 === 0
+          ? T.name(Math.round(to), { octave: 1 }) + "（" + T.DEGREES[T.mod12(Math.round(to) - 4)] + "）"
+          : "介于 " + T.name(Math.floor(to), { octave: 1 }) + " 与 " + T.name(Math.ceil(to), { octave: 1 }) + " 之间";
+        $("bd-amt").textContent = (bdAmt * 100) + " 音分" +
+          (bdAmt === 2 ? "（全音）" : bdAmt === 1 ? "（半音）" : bdAmt === 0.5 ? "（1/4 音）" : "");
+      }
+      KB.bindRange($("bd-amount"), $("bd-av"), function (v) {
+        return v === 2 ? "全音" : v === 1 ? "半音" : v === 0.5 ? "1/4 音" : v + " 半音";
+      }, function (v) { bdAmt = v; updateBd(); });
+      KB.bindRange($("bd-time"), $("bd-tv"), function (v) { return v.toFixed(2) + " 秒"; },
+        function (v) { bdTime = v; });
+      $("bd-bend").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        A.pluck(BD_FROM, { dur: 2.2, gain: 0.85, bend: { semitones: bdAmt, time: bdTime, delay: 0.12 } });
+      });
+      $("bd-rel").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        A.pluck(BD_FROM, { dur: 2.6, gain: 0.85,
+          bend: { semitones: bdAmt, time: bdTime, delay: 0.12, hold: 0.45, release: true } });
+        $("bd-msg").textContent = "推上去再放回——放回时保持音准比推上去难得多，也更有表现力。";
+      });
+      $("bd-vib").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        A.pluck(BD_FROM, { dur: 2.4, gain: 0.85, vibrato: { cents: 45, hz: 5.5, delay: 0.2 } });
+        $("bd-msg").textContent = "颤音：音高在小范围内规律摆动，模仿人声的抖动。幅度与速度都是表现参数。";
+      });
+      $("bd-blue").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        A.pluck(BD_FROM, { dur: 2.2, gain: 0.85, bend: { semitones: 0.5, time: 0.02, delay: 0.02 },
+          vibrato: { cents: 30, hz: 5, delay: 0.4 } });
+        $("bd-msg").textContent = "1/4 音（50 音分）——落在小三度与大三度之间，钢琴上没有这个键。这就是最本源的 blue note。";
+      });
+      $("bd-cmp").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.4);
+        A.pluck(BD_FROM, { dur: 1.3, gain: 0.85 });                                   // 小三度
+        A.pluck(BD_FROM, { delay: 1.5, dur: 1.3, gain: 0.85,
+          bend: { semitones: 0.5, time: 0.02, delay: 0.02 } });                       // 中立三度
+        A.pluck(BD_FROM + 1, { delay: 3.0, dur: 1.6, gain: 0.85 });                   // 大三度
+        $("bd-msg").textContent = "小三度 → 中立三度 → 大三度。中间那个不在任何品格上，既不暗也不亮——那种含混的哭腔就是布鲁斯的核心音响。";
+      });
+      $("bd-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 3：大小调五声混用 ---------- */
+      var M_ROOT = 9, M_BASE = 57;                     // A / A3
+      var minPent = T.SCALES.minorPentatonic.steps;    // 0 3 5 7 10
+      var majPent = T.SCALES.majorPentatonic.steps;    // 0 2 4 7 9
+      var fbM = KBG.fretboard($("m-board"), {
+        tuning: TUN, fromFret: 1, toFret: 14, showOpen: false,
+        labels: "degree", root: M_ROOT, marks: [], title: "同根音的大小调五声"
+      });
+      (function initM() {
+        var minPcs = minPent.map(function (s) { return T.mod12(M_ROOT + s); });
+        var majPcs = majPent.map(function (s) { return T.mod12(M_ROOT + s); });
+        var marks = [];
+        T.findOnBoard(TUN, minPcs.concat(majPcs), 14, 1).forEach(function (p) {
+          var inMin = minPcs.indexOf(p.pc) >= 0, inMaj = majPcs.indexOf(p.pc) >= 0;
+          marks.push({
+            string: p.string, fret: p.fret,
+            kind: p.pc === M_ROOT ? "root" : (inMin && inMaj ? "warm" : (inMin ? "note" : "third"))
+          });
+        });
+        fbM.setMarks(marks);
+        $("m-root").textContent = T.name(M_ROOT);
+        $("m-min").textContent = minPcs.map(function (p) { return T.name(p); }).join(" ");
+        $("m-maj").textContent = majPcs.map(function (p) { return T.name(p); }).join(" ");
+        $("m-both").textContent = minPcs.filter(function (p) { return majPcs.indexOf(p) >= 0; })
+          .map(function (p) { return T.name(p); }).join(" ");
+      })();
+      function phrase(steps, desc) {
+        var idx = [4, 3, 2, 1, 0];
+        return idx.map(function (i, k) { return { t: k * 0.4, midi: M_BASE + steps[i], dur: 0.4 }; });
+      }
+      $("m-min-b").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        A.sequence(phrase(minPent).concat([{ t: 2.0, midi: M_BASE, dur: 1.6 }]), { bpm: 130 });
+        $("m-msg").textContent = "小调五声下行：暗、粗粝，带 ♭3 与 ♭7 的张力。";
+      });
+      $("m-maj-b").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.45);
+        A.sequence(phrase(majPent).concat([{ t: 2.0, midi: M_BASE, dur: 1.6 }]), { bpm: 130 });
+        $("m-msg").textContent = "大调五声下行：亮、甜、放松，带 3 与 6 的明快。";
+      });
+      $("m-mix").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.5);
+        var ev = [];
+        [minPent[4], minPent[3], minPent[2], minPent[1]].forEach(function (s, i) {
+          ev.push({ t: i * 0.35, midi: M_BASE + s, dur: 0.35 });
+        });
+        [majPent[2], majPent[1], majPent[0]].forEach(function (s, i) {
+          ev.push({ t: 1.4 + i * 0.35, midi: M_BASE + s, dur: 0.35 });
+        });
+        ev.push({ t: 2.45, midi: M_BASE, dur: 2 });
+        A.sequence(ev, { bpm: 130 });
+        $("m-msg").textContent = "前半句用小调五声（♭7 ♭3 起头制造张力），后半句切到大调五声（3 收尾获得解决）。这是布鲁斯乐句最常见的形状。";
+      });
+      $("m-chord").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.35);
+        A.strum([45, 49, 52, 55], { spread: 0.03, gain: 0.45 });     // A7：A C♯ E G
+        var ev = [];
+        [minPent[4], minPent[3], minPent[2], minPent[1], minPent[0]].forEach(function (s, i) {
+          ev.push({ t: 0.5 + i * 0.4, midi: M_BASE + s, dur: 0.4, gain: 0.85 });
+        });
+        A.sequence(ev, { bpm: 120 });
+        $("m-msg").textContent = "伴奏 A7 含大三度 C♯，主奏五声含小三度 C。两者短暂共存——不是错音，是布鲁斯的母语（习题 12.6）。";
+      });
+      $("m-stop").addEventListener("click", function () { A.stopAll(); });
+
+      updateB(); updateBd();
+    });
+  </script>
+</body>
+</html>

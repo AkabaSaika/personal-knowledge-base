@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>03 音程：和声的原子 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 3 章：度数与半音数两套计数法、大小增减完美的命名规则、协和度的物理来源、三全音的对称性，以及音程在指板上的固定形状。配听辨小测。">
+  <meta name="kb:tags" content="吉他,乐理,教材,音程,度数,协和,不协和,三全音,转位,泛音,yc,sqy">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-quiz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .kb-quiz-grid .kb-btn { width: 100%; justify-content: center; }
+    .kb-quiz-grid .kb-btn.ok { border-color: #16a34a; color: #16a34a; }
+    .kb-quiz-grid .kb-btn.no { border-color: #dc2626; color: #dc2626; opacity: 0.65; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 3 章 · 音程：和声的原子</h1>
+        <p class="kb-lead">音乐从来不是由孤立的音组成的。你把 6 弦 3 品这个 G 单独弹出来，它没有任何情绪；可一旦旁边响起一个 D，立刻有了「稳」的感觉；换成 A♭，立刻变得刺耳。<strong>情绪不在音里，在音与音的距离里。</strong>这个距离叫音程，它是和声的原子——三和弦是三个音程摞起来的，音阶是七个音程排成的队，Riff 是音程在时间上的运动。这一章给这些距离命名，解释「好听」和「难听」到底是什么物理现象，并让你看到：<strong>在指板上，音程就是形状。</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 区分「度数」与「半音数」两套计数法，并解释为什么两套都需要；② 读懂大、小、增、减、完全五种修饰词，说出十三个基本音程的名字；③ 用泛音重合解释协和与不协和，而不是背「三度好听、二度难听」；④ 说出三全音的两个特殊性质，并理解它为什么成了金属乐的招牌；⑤ 在指板上把任意音程当成<strong>固定形状</strong>直接按出来；⑥ 会做音程转位，并用「度数相加等于九」验算。</p>
+        </div>
+
+        <h2>两套计数法：度数与半音数</h2>
+        <p>说两个音之间的距离，有两种数法，而且它们<strong>都要用</strong>。</p>
+        <p><strong>半音数</strong>你已经会了：指板上隔几品就是几个半音。它精确，但和音名脱节。</p>
+        <p><strong>度数</strong>是数<strong>字母</strong>：从 C 到 E，经过 C、D、E 三个字母，就是「三度」。注意它<strong>从 1 开始数，把起点也算进去</strong>——所以 C 到 C 是「一度」而不是「零度」，这是初学者第一个坑。</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 度数不能相加</p>
+          <p>三度 + 三度 ≠ 六度，而是<strong>五度</strong>。因为两次都把中间那个音重复数了一遍。正确的加法是：把度数各减 1 再相加，最后加 1 —— (3−1) + (3−1) + 1 = 5。这个别扭的规则正是「度数从 1 开始」的代价。<strong>凡是要算的时候，一律换成半音数算完再翻译回去。</strong></p>
+        </div>
+        <p>为什么不干脆废掉度数？因为度数携带了<strong>半音数丢失的信息</strong>：C 到 D♯ 和 C 到 E♭ 都是 3 个半音，但前者是「增二度」（C–D 两个字母），后者是「小三度」（C–D–E 三个字母）。听起来一样，<strong>在乐理上是两件事</strong>——就像第 1 章说的，音名是职务名称。两套计数法合起来才能既精确又说清角色。</p>
+
+        <h2>大、小、增、减、完全</h2>
+        <p>光说「三度」不够，因为三度有两种宽度（3 个半音和 4 个半音）。修饰词就是用来补这一刀的，规则出奇地简单：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>度数</th><th>有几种宽度</th><th>修饰词</th></tr></thead>
+            <tbody>
+              <tr><td><strong>一、四、五、八度</strong></td><td>只有一种「标准」宽度</td><td>叫<strong>完全</strong>（纯）。加宽半音叫<strong>增</strong>，收窄半音叫<strong>减</strong>。</td></tr>
+              <tr><td><strong>二、三、六、七度</strong></td><td>有宽窄两种</td><td>宽的叫<strong>大</strong>，窄的叫<strong>小</strong>。大的再加宽叫<strong>增</strong>，小的再收窄叫<strong>减</strong>。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>为什么一四五八特殊？因为它们的频率比最简单（1:1、4:3、3:2、2:1），历史上被认为「无所谓明暗」，所以不分大小。二三六七则天生分两档，正好对应大调与小调的性格差异——这不是巧合，第 5 章会看到，<strong>小调之所以「暗」，就是因为三度、六度、七度都换成了小的那一档</strong>。</p>
+        <p>把十三个基本音程一次列全（以 C 为起点）：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>半音数</th><th>名称</th><th>简写</th><th>从 C 起</th><th>纯律比</th><th>协和度</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>纯一度</td><td>P1</td><td>C</td><td>1:1</td><td>完全协和</td></tr>
+              <tr><td>1</td><td>小二度</td><td>m2</td><td>D♭</td><td>16:15</td><td><strong>不协和</strong></td></tr>
+              <tr><td>2</td><td>大二度</td><td>M2</td><td>D</td><td>9:8</td><td>不协和</td></tr>
+              <tr><td>3</td><td>小三度</td><td>m3</td><td>E♭</td><td>6:5</td><td>不完全协和</td></tr>
+              <tr><td>4</td><td>大三度</td><td>M3</td><td>E</td><td>5:4</td><td>不完全协和</td></tr>
+              <tr><td>5</td><td>纯四度</td><td>P4</td><td>F</td><td>4:3</td><td>完全协和</td></tr>
+              <tr><td><strong>6</strong></td><td><strong>三全音</strong>（增四 / 减五）</td><td>TT</td><td>F♯ / G♭</td><td>45:32</td><td><strong>最不协和</strong></td></tr>
+              <tr><td>7</td><td>纯五度</td><td>P5</td><td>G</td><td>3:2</td><td><strong>完全协和</strong></td></tr>
+              <tr><td>8</td><td>小六度</td><td>m6</td><td>A♭</td><td>8:5</td><td>不完全协和</td></tr>
+              <tr><td>9</td><td>大六度</td><td>M6</td><td>A</td><td>5:3</td><td>不完全协和</td></tr>
+              <tr><td>10</td><td>小七度</td><td>m7</td><td>B♭</td><td>9:5</td><td>不协和</td></tr>
+              <tr><td>11</td><td>大七度</td><td>M7</td><td>B</td><td>15:8</td><td>不协和</td></tr>
+              <tr><td>12</td><td>纯八度</td><td>P8</td><td>C</td><td>2:1</td><td>完全协和</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>协和与不协和：泛音重合的程度</h2>
+        <p>第 1 章埋了这条线索，现在收网。一个音不只是一个频率，而是 <em class="kb-math">f</em>、<em class="kb-math">2f</em>、<em class="kb-math">3f</em>、<em class="kb-math">4f</em>…… 一整串<strong>泛音</strong>。两个音一起响，就是两串泛音摆在一起。</p>
+        <ul>
+          <li><strong>频率比越简单，重合的泛音越多。</strong>纯五度 3:2 —— 低音的 3f 与高音的 2f 是同一个频率，6f 与 4f 也是，重合了一半。耳朵接收到的是一片整齐的频率，判定「融合」。</li>
+          <li><strong>频率比越复杂，重合越少，而「差一点点」的泛音越多。</strong>小二度 16:15 —— 几乎没有泛音真正重合，却有大量泛音靠得极近。两个靠得很近的频率会产生<strong>拍频</strong>（beating）：音量以每秒几次的速度忽强忽弱，听起来就是那种「毛毛的、打架的」感觉。</li>
+        </ul>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 不协和不等于难听</p>
+          <p>不协和的音程是<strong>有张力</strong>的音程，而张力正是音乐前进的动力。属七和弦里那个三全音（第 8 章）之所以强烈地「想解决」，恰恰因为它不协和；金属乐大量使用小二度和三全音，要的就是那股不安。<strong>协和度是一把描述紧张程度的尺子，不是好坏的评分。</strong>一首全是协和音程的曲子会闷得让人睡着。</p>
+        </div>
+        <p>下面这个演示是本章最值得花时间的地方：<strong>音程听辨小测</strong>。它随机弹一个音程，你来猜是哪个。根音每次随机变化，所以你没法靠「记住某个音高」作弊——只能靠<strong>距离感</strong>，而距离感正是我们要练的东西。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：音程听辨小测（练耳，不是背表）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：音程识别靠的是两个音之间的相对距离感，而非绝对音高。常用的记忆锚点：纯五度＝强力和弦的声音；纯四度＝《婚礼进行曲》开头；大三度明亮、小三度忧郁；三全音极不稳定；大七度紧张得几乎要撞上八度。</p></noscript>
+            <div id="q-sound"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="q-new" type="button">🎲 出一题</button>
+              <button class="kb-btn" id="q-again" type="button">🔁 再听一次</button>
+              <button class="kb-btn" id="q-both" type="button">⏸ 同时听</button>
+              <button class="kb-btn" id="q-reset" type="button">重置计分</button>
+            </div>
+            <div class="kb-quiz-grid" id="q-grid"></div>
+            <div class="kb-readout">
+              <span>本题 <b id="q-state">点「出一题」开始</b></span>
+              <span>得分 <b id="q-score">0 / 0</b></span>
+            </div>
+            <p id="q-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">建议先只开 <strong>纯五度、大三度、小三度、纯八度</strong> 四个选项练熟，再逐步加入二度和七度。多数人练三五天就能稳定分辨大小三度——这是所有练耳里投入产出比最高的一项。</p>
+          </div>
+        </div>
+
+        <h2>三全音：把八度对半劈开的那一刀</h2>
+        <p>六个半音，正好是十二个半音的一半。这个位置带来两个别处没有的性质：</p>
+        <p><strong>性质一：它是自己的转位。</strong>把下面那个音升高八度，纯五度会变成纯四度，大三度会变成小六度——只有三全音变完还是三全音。它在音程表里<strong>照镜子照到自己</strong>。</p>
+        <p><strong>性质二：它把八度平分，因此没有「主次」。</strong>纯五度里你能清楚听出谁是根音；三全音里两个音势均力敌，听觉找不到落脚点。这种<strong>无根感</strong>就是它的全部魅力与全部麻烦。</p>
+        <figure>
+          <svg viewBox="0 0 620 210" width="620" height="210" role="img" aria-label="十二音圆盘：三全音把八度对半分，纯五度不对称">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <circle cx="150" cy="105" r="76" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <circle cx="430" cy="105" r="76" fill="none" stroke="var(--kb-border-strong)" stroke-width="1.5"/>
+              <g id="dots"><circle cx="150.0" cy="29.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="188.0" cy="39.2" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="215.8" cy="67.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="226.0" cy="105.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="215.8" cy="143.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="188.0" cy="170.8" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="150.0" cy="181.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="112.0" cy="170.8" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="84.2" cy="143.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="74.0" cy="105.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="84.2" cy="67.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="112.0" cy="39.2" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="430.0" cy="29.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="468.0" cy="39.2" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="495.8" cy="67.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="506.0" cy="105.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="495.8" cy="143.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="468.0" cy="170.8" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="430.0" cy="181.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="392.0" cy="170.8" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="364.2" cy="143.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="354.0" cy="105.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="364.2" cy="67.0" r="3.2" fill="var(--kb-fg-faint)"/><circle cx="392.0" cy="39.2" r="3.2" fill="var(--kb-fg-faint)"/></g>
+              <line x1="150" y1="29" x2="150" y2="181" stroke="#dc2626" stroke-width="3"/>
+              <circle cx="150" cy="29" r="7" fill="#dc2626"/><circle cx="150" cy="181" r="7" fill="#dc2626"/>
+              <text x="150" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="var(--kb-fg)">C</text>
+              <text x="150" y="199" text-anchor="middle" font-size="12" font-weight="700" fill="var(--kb-fg)">F♯</text>
+              <text x="150" y="105" text-anchor="middle" font-size="11.5" fill="#dc2626" font-weight="700">6 + 6</text>
+              <text x="150" y="122" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">正好对半</text>
+
+              <line x1="430" y1="29" x2="392.0" y2="170.8" stroke="var(--kb-accent)" stroke-width="3"/>
+              <circle cx="430" cy="29" r="7" fill="var(--kb-accent)"/><circle cx="392.0" cy="170.8" r="7" fill="var(--kb-accent)"/>
+              <text x="430" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="var(--kb-fg)">C</text>
+              <text x="378.0" y="176.8" text-anchor="middle" font-size="12" font-weight="700" fill="var(--kb-fg)">G</text>
+              <text x="430" y="105" text-anchor="middle" font-size="11.5" fill="var(--kb-accent)" font-weight="700">7 + 5</text>
+              <text x="430" y="122" text-anchor="middle" font-size="10.5" fill="var(--kb-fg-muted)">不对称 → 有主次</text>
+
+            </g>
+          </svg>
+          <figcaption>把十二个半音摆成钟面。三全音（左）把圆<strong>精确对半</strong>——两个音互为镜像，谁也不是根；纯五度（右）把圆分成 7 和 5 两段，不对称，于是耳朵能听出谁在支撑谁。</figcaption>
+        </figure>
+        <p>关于它「被中世纪教会禁止」「叫魔鬼音程（<em>diabolus in musica</em>）」的传说，需要澄清一下：<strong>这句拉丁文确实存在，但它是对位法教学里的一句口诀，意思是「这个音程难写、容易出错，避开它」，而不是宗教审判。</strong>不过传说本身已经成为文化事实——正因为几百年的「禁忌」名声，它在二十世纪被重金属乐队反过来当作招牌，成了「邪恶」的听觉符号。第 14 章讲金属调式色彩时，这个音程会是主角之一。</p>
+
+        <h2>音程在指板上是形状</h2>
+        <p>这是吉他相对钢琴最大的便宜：因为指板是<strong>等比</strong>的（第 1 章），一个音程无论在哪个调、哪个把位，<strong>手型完全一样</strong>。钢琴上 C–E 和 C♯–E♯ 的手型不同（白键黑键混排），吉他上则是同一个形状整体平移。</p>
+        <p>把常用音程的形状列成表——以根音在较粗弦为准：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>音程</th><th>同一根弦</th><th>跨一根弦</th><th>跨两根弦</th><th>你在哪见过</th></tr></thead>
+            <tbody>
+              <tr><td>大二度</td><td>+2 品</td><td>−3 品</td><td>—</td><td>音阶里相邻的两个音</td></tr>
+              <tr><td>小三度</td><td>+3 品</td><td>−2 品</td><td>—</td><td>小和弦的底色</td></tr>
+              <tr><td>大三度</td><td>+4 品</td><td>−1 品</td><td>—</td><td>大和弦的底色</td></tr>
+              <tr><td><strong>纯四度</strong></td><td>+5 品</td><td><strong>同一品</strong></td><td>—</td><td>横按时那根平平的食指</td></tr>
+              <tr><td>三全音</td><td>+6 品</td><td>+1 品</td><td>—</td><td>属七和弦的骨架</td></tr>
+              <tr><td><strong>纯五度</strong></td><td>+7 品</td><td><strong>+2 品</strong></td><td>—</td><td><strong>强力和弦！</strong></td></tr>
+              <tr><td>小六度</td><td>+8 品</td><td>+3 品</td><td>−2 品</td><td>小调的忧郁色</td></tr>
+              <tr><td>大六度</td><td>+9 品</td><td>+4 品</td><td>−1 品</td><td>乡村与放克的甜味</td></tr>
+              <tr><td>小七度</td><td>+10 品</td><td>+5 品</td><td><strong>同一品</strong></td><td>属七、布鲁斯</td></tr>
+              <tr><td>大七度</td><td>+11 品</td><td>+6 品</td><td>+1 品</td><td>大七和弦的「悬浮感」</td></tr>
+              <tr><td><strong>纯八度</strong></td><td>+12 品</td><td>+7 品</td><td><strong>+2 品</strong></td><td>第 2 章的形状 ①</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 跨过 2 弦，一律再 +1 品</p>
+          <p>上表默认路径不跨越 3–2 弦之间那个大三度。只要路径跨过了它，全部数值<strong>加一品</strong>——这就是第 2 章那条规则，它对音程形状同样成立，而且今后对和弦形状、音阶形状也成立。整本教材里，你只需要记住这<strong>一条</strong>例外。</p>
+        </div>
+        <p>看第五行和第六行：<strong>纯五度＝跨一根弦、进两品</strong>。这个两根手指的小三角形，就是整个重金属最基础的建筑材料。第 11 章会专门讲它，但你现在已经知道它为什么长这样了。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：音程形状浏览器（选一个音程，看它在指板上的所有长相）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一个音程在指板上是固定手型，可整体平移到任意根音；唯一的例外是跨越 3–2 弦时要多挪一品。纯五度＝跨一弦进两品，这正是强力和弦的形状。</p></noscript>
+            <div id="s-board"></div>
+            <div class="kb-readout">
+              <span>音程 <b id="s-name">纯五度</b></span>
+              <span>半音数 <b id="s-semi">7</b></span>
+              <span>纯律比 <b id="s-ratio">3:2</b></span>
+              <span>转位后 <b id="s-inv">纯四度</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">音程（半音数）<span class="kb-control-value" id="s-val"></span>
+                <input type="range" id="s-semi-ctl" min="1" max="12" step="1" value="7"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="s-play" type="button">▶ 同时弹响所有配对</button>
+              <button class="kb-btn" id="s-arp" type="button">▶ 逐对试听</button>
+              <button class="kb-btn" id="s-invert" type="button">🔄 听转位</button>
+              <button class="kb-btn" id="s-stop" type="button">■ 停止</button>
+            </div>
+            <p id="s-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">红点是根音，蓝点是音程的上方音。拉动滑块换音程——注意手型整体平移，形状不变。</p>
+          </div>
+        </div>
+
+        <h2>转位：把下面的音搬上去</h2>
+        <p>把音程里较低的那个音升高一个八度（或把高的降低一个八度），得到的新音程叫<strong>转位</strong>（inversion）。它有一条漂亮的规则：</p>
+        <pre><code>原度数 + 转位度数 = 9        （三度 ↔ 六度，四度 ↔ 五度，二度 ↔ 七度）
+原半音数 + 转位半音数 = 12
+大 ↔ 小        增 ↔ 减        完全 ↔ 完全</code></pre>
+        <p>所以：大三度转位是<strong>小六度</strong>（3+6=9，4+8=12，大变小 ✓）；纯五度转位是<strong>纯四度</strong>（5+4=9，7+5=12，完全不变 ✓）；三全音转位还是<strong>三全音</strong>（6+6=12，增四变减五——名字换了，声音没换）。</p>
+        <p>转位为什么重要？因为<strong>和弦的低音换人时，内部音程全部重排</strong>。同一个 C 大三和弦，根音在低音时你听到的是「大三度 + 小三度」；把 C 搬到最上面（第一转位），底下变成「小三度 + 纯四度」——和弦名没变，色彩和稳定感变了。第 6 章会用到这一点。</p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 3.1</p>
+          <p>C 到 A♭ 是什么音程？请分别用两套计数法说明。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>数度数（字母）</strong>：C–D–E–F–G–A，共 6 个字母 → <strong>六度</strong>。</p>
+            <p><strong>数半音</strong>：C→A♭ 在指板上是 8 品 → <strong>8 个半音</strong>。</p>
+            <p><strong>合起来</strong>：六度有大小两档，大六度是 9 个半音，小六度是 8 个 → 答案是<strong>小六度</strong>。</p>
+            <p><strong>验证一下命名的必要性</strong>：C 到 G♯ 也是 8 个半音，但字母只数到 G，是<strong>五度</strong> → 那叫「增五度」。同样的声音，两个名字，取决于它在调里干什么。这就是为什么两套计数法都得留着。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 3.2</p>
+          <p>5 弦 3 品是 C3。在指板上找出它上方的纯五度，给出<strong>两个</strong>不同位置，并说出各自用的是哪种形状。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先算目标音</strong>：C3 = 48，纯五度 = +7 → 55 = <strong>G3</strong>。</p>
+            <p><strong>位置一（同一根弦）</strong>：5 弦 3 + 7 = <strong>5 弦 10 品</strong>。手要跨 7 品，实战中很少这么按。</p>
+            <p><strong>位置二（跨一根弦）</strong>：4 弦空弦是 D3 = 50，55 − 50 = <strong>4 弦 5 品</strong>。相对根音是「跨一弦、进两品」——两根手指就够，这才是实用的那个。</p>
+            <p><strong>顺手认出它</strong>：5 弦 3 品 + 4 弦 5 品，这个小三角形就是 <strong>C5 强力和弦</strong>的下半部分。再把 3 弦 5 品（G3 的高八度 C4？不——3 弦 5 品是 C4）加上去，就是完整的 C5：根音、五度、八度。你已经按过一百遍，现在知道它的名字了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 3.3</p>
+          <p>小七度的转位是什么？用两条规则各验算一遍。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>规则一（度数相加等于 9）</strong>：小七度是七度 → 9 − 7 = <strong>二度</strong>。</p>
+            <p><strong>规则二（半音数相加等于 12）</strong>：小七度是 10 个半音 → 12 − 10 = <strong>2 个半音</strong>。</p>
+            <p><strong>规则三（大小互换）</strong>：原来是「小」，转位后是「大」。</p>
+            <p><strong>答案</strong>：<strong>大二度</strong>（二度、2 个半音、大）——三条规则互相印证，全部对上。</p>
+            <p><strong>为什么这个转位值得记</strong>：属七和弦（第 8 章）里根音与七音相隔小七度，听起来是「张力」；可一旦你把七音降八度放到低音，它和根音就变成了刺耳的大二度。这解释了一条实战规则——<strong>七音不要放在最低声部</strong>，否则和弦会浑浊。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>E 到 G 是什么音程？E 到 G♯ 呢？在 6 弦上分别是几品到几品？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>E 到 G</strong>：字母 E–F–G ＝ 三度；半音 E→F(1)→F♯(2)→G(3) ＝ 3 个半音 → <strong>小三度</strong>。6 弦上是 0 品到 3 品。</p>
+            <p><strong>E 到 G♯</strong>：字母还是 E–F–G ＝ 三度；半音 4 个 → <strong>大三度</strong>。6 弦上是 0 品到 4 品。</p>
+            <p><strong>解析</strong>：这一个半音的差别，就是 Em 和弦与 E 和弦的全部差别——你按 Em 时松开 3 弦 1 品的那根手指，做的正是「把大三度收窄成小三度」。整个大调 / 小调的对立，起点就在这里。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>强力和弦 E5（6 弦 0 品、5 弦 2 品、4 弦 2 品）由哪三个音组成？两两之间是什么音程？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个音</strong>：6 弦 0 品 ＝ E2，5 弦 2 品 ＝ B2，4 弦 2 品 ＝ E3。也就是 <strong>E–B–E</strong>。</p>
+            <p><strong>音程</strong>：E2→B2 ＝ 7 个半音 ＝ <strong>纯五度</strong>；B2→E3 ＝ 5 个半音 ＝ <strong>纯四度</strong>；E2→E3 ＝ 12 个半音 ＝ <strong>纯八度</strong>。</p>
+            <p><strong>解析</strong>：注意这三个音程<strong>全部是完全协和</strong>音程——纯五、纯四、纯八，纯律比分别是 3:2、4:3、2:1，全是最简单的整数比。强力和弦里<strong>一个不完全协和音程都没有</strong>，更没有三度。第 10 章会告诉你，这个「纯净配方」正是它能扛住高增益失真的原因。</p>
+            <p>顺带：因为里面没有三度，它<strong>既不是大和弦也不是小和弦</strong>——这就是它被写成「E5」而不是「E」或「Em」的原因，也是它能在任何调里平行移动的原因（第 11 章）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>6 弦 5 品到 5 弦 7 品是什么音程？不许换算成音名，直接用「形状」回答。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：跨一根弦、进两品 → <strong>纯五度</strong>。</p>
+            <p><strong>解析</strong>：查形状表——「纯五度：跨一根弦 +2 品」。因为路径没有跨过 3–2 弦，不用加那一品。</p>
+            <p><strong>验算</strong>：6 弦 5 品 ＝ 45 ＝ A2；5 弦 7 品 ＝ 52 ＝ E3；差 7 个半音 ✓。</p>
+            <p>这道题的意义在于<strong>不换算</strong>：熟练之后，你看到指板上两个点的相对位置就直接知道音程，不需要先算音名再算度数。这是所有指板高手的共同习惯——<strong>先看形状，后想名字。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>下列音程哪些属于「完全协和」？大三度、纯四度、小七度、纯八度、纯五度、大六度。并说出判断依据。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>纯四度、纯八度、纯五度</strong>（连同纯一度）。</p>
+            <p><strong>依据</strong>：看纯律频率比是否为<strong>最简单的整数比</strong>——纯一度 1:1、纯八度 2:1、纯五度 3:2、纯四度 4:3，分子分母都不超过 4。大三度 5:4、大六度 5:3 用到了 5，属于<strong>不完全协和</strong>；小七度 9:5、大二度 9:8 用到了 9，属于<strong>不协和</strong>。</p>
+            <p><strong>一条好记的经验</strong>：<strong>「完全协和」＝名字里带「纯」字的那几个。</strong>这不是巧合——正因为它们协和到「没有明暗之分」，才没有大小两档，才被叫作「完全 / 纯」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>你同时弹响两根弦，听到音量以每秒约 3 次的速度忽强忽弱。这是什么现象？如果其中一个音是 220 Hz，另一个可能是多少？这在实际弹琴时通常意味着什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>现象</strong>：<strong>拍频</strong>（beating）。两个频率接近的正弦波叠加时，合成波的振幅会以两者<strong>频率之差</strong>为速率起伏。</p>
+            <p><strong>计算</strong>：拍频 ＝ |<em class="kb-math">f₁</em> − <em class="kb-math">f₂</em>| ＝ 3 Hz，所以另一个音是 <strong>223 Hz 或 217 Hz</strong>。</p>
+            <p><strong>实战含义</strong>：3 Hz 的差距只有约 <strong>23 音分</strong>（不到四分之一个半音）——这不是任何一个正经音程，而是<strong>两根弦没调准</strong>。这正是调音的物理原理：弹响两个应当同音的弦，拍频越慢说明越接近，<strong>拍频消失时就调准了</strong>。这也是为什么用耳朵调音比用调音器更准的原因——人对拍频的敏感度远高于对绝对音高的敏感度。</p>
+            <p><strong>反过来用</strong>：十二弦吉他、合唱、以及吉他上的 chorus 效果器，都是<strong>故意</strong>制造几赫兹的失谐来产生绵密的起伏感。同一个物理现象，调音时是敌人，编曲时是朋友。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>横按时食指压住同一品的好几根弦，这一下同时按出了哪些音程？请逐对说明，并指出哪一对是例外。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>食指横压同一品，相邻两弦之间的音程就是<strong>两根空弦之间的音程</strong>（因为两边都加了同样多的品）：</p>
+            <ul>
+              <li>6–5 弦：<strong>纯四度</strong>；5–4 弦：<strong>纯四度</strong>；4–3 弦：<strong>纯四度</strong>；</li>
+              <li><strong>3–2 弦：大三度</strong> ← 例外；</li>
+              <li>2–1 弦：<strong>纯四度</strong>。</li>
+            </ul>
+            <p>把六根弦一起算：6 弦到 1 弦横跨 24 个半音 ＝ <strong>两个八度</strong>，所以横按的最低音与最高音是同名音——这正是横按听起来「饱满且不浑浊」的原因之一。</p>
+            <p><strong>更深一层</strong>：一整排纯四度堆叠起来（四度叠置）在现代和声里是有名字的，叫 <strong>quartal harmony</strong>，声音开阔而无明确大小调色彩。这就是为什么单独扫一个空的横按（不加任何按压的手指）听起来有点「空旷、悬浮」——你弹的其实是一个四度叠置和弦。金属乐里用高把位横按只压两三根弦制造的那种冷硬音块，走的也是这条路（第 15 章）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>把一个三全音的下方音降低半音、上方音升高半音，得到什么音程？把上方音降半音、下方音升半音呢？这两个结果解释了什么现象？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>向外扩张</strong>（下降半音、上升半音）：6 + 1 + 1 ＝ <strong>8 个半音 ＝ 小六度</strong>。</p>
+            <p><strong>向内收缩</strong>（下升半音、上降半音）：6 − 1 − 1 ＝ <strong>4 个半音 ＝ 大三度</strong>。</p>
+            <p><strong>解释了什么</strong>：这正是<strong>属七和弦为什么「想回家」</strong>的机制。以 G7（G–B–D–F）为例，其中 B 与 F 构成三全音。两个音各走半音<strong>向内收缩</strong>：B→C，F→E，得到 <strong>C–E</strong>，正是 C 大三和弦的根音与三音。也就是说，<strong>三全音天然指向一个解决目标</strong>，而且两个声部各自只需移动最小的距离（半音）。</p>
+            <p><strong>为什么这很重要</strong>：不协和音程之所以有「方向感」，不是因为它难听，而是因为它的两个音<strong>各自离某个协和音程只差半音</strong>。张力＋明确的出口＝推动力。第 7 章讲终止式、第 8 章讲属七时会反复用到这一条；而第 14 章会讲金属如何<strong>故意不解决</strong>，把三全音一直悬在那里当色彩用。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：在一个八度之内，三全音是<strong>唯一</strong>转位后仍等于自身的音程。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>证明</strong>：设音程为 <em class="kb-math">n</em> 个半音，0 ≤ <em class="kb-math">n</em> ≤ 12。转位规则是<em class="kb-math">n′ = 12 − n</em>。要求转位后等于自身，即</p>
+            <pre><code>n = 12 − n   ⟹   2n = 12   ⟹   n = 6</code></pre>
+            <p>方程在 [0, 12] 上<strong>只有唯一解</strong> <em class="kb-math">n</em> = 6，即三全音。∎</p>
+            <p><strong>容易被误判的一组</strong>：纯一度（0）与纯八度（12）互为转位，但它们是<strong>两个不同的音程</strong>（0 ≠ 12），不构成反例——0 转位得 12，12 转位得 0，谁都没有变成自己。</p>
+            <p><strong>音名层面的一个细节</strong>：三全音在<strong>声音上</strong>自转位不变，在<strong>写法上</strong>却会换名字——增四度转位成减五度。这也符合规则表（增 ↔ 减），并再次说明：音名记录的是职务，不是频率。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 3.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>把十二个半音等分的音程叫「对称音程」。一共有几个？各自把八度分成几份？它们在摇滚与金属里分别对应什么手法？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>找法</strong>：音程 <em class="kb-math">n</em> 能把八度等分，当且仅当 <em class="kb-math">n</em> 整除 12。12 的因数是 1、2、3、4、6、12：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>音程</th><th>半音</th><th>分成几份</th><th>得到的音组</th><th>在重型音乐里的用法</th></tr></thead>
+                <tbody>
+                  <tr><td>小二度</td><td>1</td><td>12</td><td>半音阶</td><td>半音爬行 Riff、恐怖片式的滑行；Thrash 里常用的 chromatic 连接</td></tr>
+                  <tr><td>大二度</td><td>2</td><td>6</td><td>全音阶</td><td>迷幻、失重感；属和弦上的 whole-tone 独奏（较少见但极有辨识度）</td></tr>
+                  <tr><td>小三度</td><td>3</td><td>4</td><td>减七和弦</td><td>新古典金属的招牌经过和弦，可任意平移十二次不变（第 16 章）</td></tr>
+                  <tr><td>大三度</td><td>4</td><td>3</td><td>增三和弦</td><td>不稳定的连接和弦，用于把一个大和弦「顶」向下一个</td></tr>
+                  <tr><td><strong>三全音</strong></td><td>6</td><td>2</td><td>三全音</td><td><strong>金属的招牌</strong>：Riff 骨架、弗里几亚色彩、无解决的悬置（第 14 章）</td></tr>
+                  <tr><td>纯八度</td><td>12</td><td>1</td><td>八度</td><td>八度双音旋律（octave riff），厚而不浑</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>它们的共同性质，也是它们被重型音乐偏爱的原因</strong>：对称音程<strong>没有根音</strong>。把一个减七和弦平移小三度，得到的还是同一组音；把三全音上下颠倒，还是三全音。这意味着它们<strong>可以整体平行移动而结构不变</strong>——正好契合吉他「形状平移」的物理特性，也正好制造那种「找不到落脚点」的不安感。</p>
+            <p><strong>反过来说</strong>，这也是它们的局限：没有根音就没有归属感，用多了会让音乐失去方向。成熟的写法是<strong>把对称结构当作张力段落，再用一个明确的调性和弦把它钉住</strong>——这几乎是所有优秀金属 Riff 的共同结构。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 音程有两套计数法：<strong>度数</strong>数字母（从 1 开始，不能相加）、<strong>半音数</strong>数品位（精确，可加减）；两套都要，因为度数携带「职务」信息。② <strong>一四五八度</strong>只有一种宽度，叫「完全」；<strong>二三六七度</strong>分大小。③ 协和度＝<strong>泛音重合的程度</strong>：比值越简单越融合，越复杂越产生拍频；不协和不等于难听，它是音乐前进的动力。④ <strong>三全音</strong>把八度对半分，是唯一自转位不变的音程，没有根音，因此不安——这正是金属乐要的东西。⑤ 在指板上，<strong>音程是可平移的固定形状</strong>；纯五度＝跨一弦进两品，就是强力和弦。<strong>跨过 3–2 弦一律多加一品</strong>。⑥ 转位规则：度数相加得 9，半音数相加得 12，大小互换、增减互换、完全不变。</p>
+          <p><strong>下一章预告</strong>：音程是原子，接下来要造分子。第 4 章《大调音阶、调号与五度圈》会把七个音按一个特定的间距模式排成队，看看这条队伍为什么能统治西方音乐三百年；顺便解决一个悬案——第 1 章说「音名是职务名称」，那么<strong>到底是谁在分配职务</strong>？答案就是调。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./04-大调音阶与五度圈.html"><strong>下一章：第 4 章 · 大调音阶、调号与五度圈</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+
+      /* ---------- 演示 1：音程听辨小测 ---------- */
+      KBG.soundToggle($("q-sound"));
+      var qAns = null, qRoot = 52, right = 0, total = 0, answered = false;
+      var grid = $("q-grid"), btns = [];
+      for (var n = 1; n <= 12; n++) {
+        (function (n) {
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "kb-btn";
+          b.textContent = T.INTERVALS[n].cn;
+          b.addEventListener("click", function () { answer(n); });
+          grid.appendChild(b); btns[n] = b;
+        })(n);
+      }
+      function clearMarks() {
+        for (var i = 1; i <= 12; i++) btns[i].className = "kb-btn";
+      }
+      function ask() {
+        clearMarks(); answered = false;
+        qAns = 1 + Math.floor(Math.random() * 12);
+        qRoot = 45 + Math.floor(Math.random() * 10);   // 根音随机，防止靠绝对音高作弊
+        $("q-state").textContent = "已播放，请选择";
+        play(false);
+      }
+      function play(together) {
+        if (qAns === null) return;
+        A.stopAll(); A.setDrive(0);
+        A.pluck(qRoot, { gain: 0.8 });
+        A.pluck(qRoot + qAns, { gain: 0.8, delay: together ? 0 : 0.75 });
+      }
+      function answer(n) {
+        if (qAns === null) { $("q-msg").textContent = "先点「出一题」。"; return; }
+        if (answered) return;
+        answered = true; total++;
+        if (n === qAns) {
+          right++;
+          btns[n].className = "kb-btn ok";
+          $("q-state").textContent = "✅ 答对了：" + T.INTERVALS[qAns].cn;
+          $("q-msg").textContent = "纯律比 " + T.INTERVALS[qAns].ratio + "，" + qAns + " 个半音。再来一题。";
+        } else {
+          btns[n].className = "kb-btn no";
+          btns[qAns].className = "kb-btn ok";
+          $("q-state").textContent = "❌ 正确答案是 " + T.INTERVALS[qAns].cn;
+          $("q-msg").textContent = "你选的是「" + T.INTERVALS[n].cn + "」（" + n + " 半音），实际是 " +
+            qAns + " 半音，差 " + Math.abs(n - qAns) + " 个半音。点「再听一次」对照着听。";
+        }
+        $("q-score").textContent = right + " / " + total;
+      }
+      $("q-new").addEventListener("click", ask);
+      $("q-again").addEventListener("click", function () { play(false); });
+      $("q-both").addEventListener("click", function () { play(true); });
+      $("q-reset").addEventListener("click", function () {
+        right = 0; total = 0; qAns = null; clearMarks();
+        $("q-score").textContent = "0 / 0"; $("q-state").textContent = "点「出一题」开始";
+      });
+
+      /* ---------- 演示 2：音程形状浏览器 ---------- */
+      var semi = 7, BASE = 5;
+      function pairsFor(n) {
+        var out = [];
+        for (var s = 0; s < 5; s++) {
+          var up = BASE + n - (TUN[s + 1] - TUN[s]);
+          if (up >= 0 && up <= 12) out.push([s, BASE, s + 1, up]);
+        }
+        return out;
+      }
+      var fbS = KBG.fretboard($("s-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "name", marks: [], title: "音程形状"
+      });
+      function updateShape() {
+        var ps = pairsFor(semi), marks = [];
+        ps.forEach(function (p) {
+          marks.push({ string: p[0], fret: p[1], kind: "root" });
+          marks.push({ string: p[2], fret: p[3], kind: "note" });
+        });
+        fbS.setMarks(marks);
+        var iv = T.INTERVALS[semi], inv = T.INTERVALS[12 - semi];
+        $("s-name").textContent = iv.cn;
+        $("s-semi").textContent = semi;
+        $("s-ratio").textContent = iv.ratio;
+        $("s-inv").textContent = inv.cn;
+        var gaps = ps.map(function (p) { return p[3] - p[1]; });
+        var uniq = gaps.filter(function (g, i) { return gaps.indexOf(g) === i; });
+        $("s-msg").textContent = "跨一根弦时的品位差：" + uniq.map(function (g) {
+          return (g >= 0 ? "+" : "") + g + " 品";
+        }).join(" / ") + (uniq.length > 1
+          ? "——两个数字不同，多出来的那一品正是跨过 3–2 弦大三度的补偿。"
+          : "——所有弦对上形状完全一致。");
+      }
+      KB.bindRange($("s-semi-ctl"), $("s-val"), function (v) { return v + " 半音"; },
+        function (v) { semi = v; if (typeof fbS !== "undefined") updateShape(); });
+      $("s-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        pairsFor(semi).forEach(function (p, i) {
+          A.strum([TUN[p[0]] + p[1], TUN[p[2]] + p[3]], { delay: i * 1.0, spread: 0.012, gain: 0.7 });
+        });
+      });
+      $("s-arp").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        var ev = [], t = 0;
+        pairsFor(semi).forEach(function (p) {
+          ev.push({ t: t, midi: TUN[p[0]] + p[1], dur: 0.5 });
+          ev.push({ t: t + 0.5, midi: TUN[p[2]] + p[3], dur: 0.5 });
+          t += 1.5;
+        });
+        A.sequence(ev, { bpm: 120 });
+      });
+      $("s-invert").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0);
+        var r = 52;
+        A.strum([r, r + semi], { spread: 0.012, gain: 0.7 });
+        A.strum([r + semi, r + 12], { delay: 1.6, spread: 0.012, gain: 0.7 });
+        $("s-msg").textContent = "先原位（" + T.INTERVALS[semi].cn + "），后转位（" +
+          T.INTERVALS[12 - semi].cn + "）。度数 " + (semi === 0 ? 1 : "") +
+          "相加得 9，半音数相加得 12。";
+      });
+      $("s-stop").addEventListener("click", function () { A.stopAll(); });
+
+      updateShape();
+    });
+  </script>
+</body>
+</html>

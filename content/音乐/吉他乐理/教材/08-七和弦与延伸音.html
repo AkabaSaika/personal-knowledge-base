@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>08 七和弦与延伸音 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 8 章：七和弦怎么叠出来、属七为什么张力最大、maj7 与 m7 的色彩、m7♭5 与 dim7、9/11/13 延伸音概览，以及和弦符号的完整读法。">
+  <meta name="kb:tags" content="吉他,乐理,教材,七和弦,属七,大七和弦,小七和弦,减七,延伸音,和弦符号,add9,qhx,shuqi">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .layer-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .layer-cell {
+      min-width: 62px; text-align: center; padding: 7px 5px; border-radius: 8px;
+      border: 1px solid var(--kb-border); background: var(--kb-surface-alt); font-size: 0.9em;
+    }
+    .layer-cell b { display: block; font-size: 1.06em; }
+    .layer-cell small { color: var(--kb-fg-muted); }
+    .layer-cell.on { border-color: var(--kb-accent); background: var(--kb-accent-soft); }
+    .layer-cell.on b { color: var(--kb-accent); }
+    .layer-cell.off { opacity: 0.35; }
+    .q-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .q-grid .kb-btn { width: 100%; justify-content: center; }
+    .q-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 8 章 · 七和弦与延伸音</h1>
+        <p class="kb-lead">三和弦是骨架，但骨架上只有三个音，色彩有限。再往上叠一层三度，和弦立刻从「黑白」变成「彩色」：<strong>maj7</strong> 悬浮而慵懒，<strong>m7</strong> 柔和而开阔，<strong>属七</strong>则是整个调性体系里张力最大的和弦——它内部藏着一个三全音，一响起来就在催你回家。这一章把第四个音加上去，顺便把那些看起来吓人的符号（<code>m7♭5</code>、<code>add9</code>、<code>13</code>）一次读懂。对重型乐手来说，本章还有一个特别的收获：<strong>你会明白为什么金属几乎不用七和弦，以及在哪些地方它偏偏要用。</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 叠出五种基本七和弦并说出各自结构；② 解释属七为什么张力最大、它怎么解决；③ 分辨 maj7 / m7 / 7 三者的色彩差异；④ 说清 dim7 与 m7♭5 的区别与用途；⑤ 读懂 9、11、13、add9、sus 等符号，知道哪些音可以省；⑥ 说出重型音色下为什么七和弦要慎用。</p>
+        </div>
+
+        <h2>再叠一层三度</h2>
+        <p>规则完全没变：<strong>隔一个取一个</strong>，只是这次取四个。从 C 大调的每一级出发：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>级</th><th>Ⅰmaj7</th><th>ⅱm7</th><th>ⅲm7</th><th>Ⅳmaj7</th><th>Ⅴ7</th><th>ⅵm7</th><th>ⅶm7♭5</th></tr></thead>
+            <tbody>
+              <tr><td>和弦</td><td>Cmaj7</td><td>Dm7</td><td>Em7</td><td>Fmaj7</td><td><strong>G7</strong></td><td>Am7</td><td>Bm7♭5</td></tr>
+              <tr><td>构成音</td><td>C E G B</td><td>D F A C</td><td>E G B D</td><td>F A C E</td><td>G B D F</td><td>A C E G</td><td>B D F A</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>注意这一行的性质顺序：<strong>maj7 – m7 – m7 – maj7 – 7 – m7 – m7♭5</strong>。和三和弦一样，它对任何大调都成立，而且有一个极重要的特征：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一个调里只有一个属七</p>
+          <p>七个顺阶七和弦里，<strong>只有第五级是「属七」结构（大三和弦 + 小七度）</strong>。这意味着：<strong>听到一个属七和弦，你基本就知道调在哪了</strong>——它是调性的路标。这条性质在爵士里被用来定位调、在流行里被用来转调（第 11 章），也是为什么它叫「属」七——它专属于属音那一级。</p>
+        </div>
+
+        <h2>五种基本七和弦</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>名称</th><th>结构（半音）</th><th>三和弦 + 七度</th><th>符号</th><th>色彩</th></tr></thead>
+            <tbody>
+              <tr><td><strong>大七和弦</strong></td><td>0 – 4 – 7 – 11</td><td>大三 + <strong>大七度</strong></td><td><code>Cmaj7</code> / <code>CM7</code> / <code>C△7</code></td><td>悬浮、慵懒、温柔。根音与七音只差半音，产生柔和的摩擦。</td></tr>
+              <tr><td><strong>属七和弦</strong></td><td>0 – 4 – 7 – <strong>10</strong></td><td>大三 + <strong>小七度</strong></td><td><code>C7</code></td><td><strong>张力最大</strong>。内含三全音，急着解决。布鲁斯的全部。</td></tr>
+              <tr><td><strong>小七和弦</strong></td><td>0 – 3 – 7 – 10</td><td>小三 + 小七度</td><td><code>Cm7</code></td><td>柔和、开阔、不催促。摇滚与放克的常客。</td></tr>
+              <tr><td><strong>半减七</strong></td><td>0 – 3 – 6 – 10</td><td>减三 + 小七度</td><td><code>Cm7♭5</code> / <code>Cø7</code></td><td>阴郁不稳。小调里的 ⅱ 级，通往属和弦的门。</td></tr>
+              <tr><td><strong>减七和弦</strong></td><td>0 – 3 – 6 – <strong>9</strong></td><td>减三 + <strong>减七度</strong></td><td><code>Cdim7</code> / <code>C°7</code></td><td>完全对称、无根。新古典金属的万能经过和弦。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>五个名字看起来很多，但记忆方法只有一句：<strong>先看下面的三和弦是什么，再看七音是大七度（11）还是小七度（10）。</strong>唯一的例外是减七和弦——它的七音是 9 个半音（减七度），也正因如此它才成为对称结构。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：逐层叠加（听张力一层层堆上去）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：和弦由三度层层叠加而成。根音 + 五度是骨架（无色彩）；加上三度决定大小；加上七度决定张力性质（大七度柔和悬浮、小七度紧张想解决）；再往上的 9、11、13 是色彩装饰。</p></noscript>
+            <div id="l-sound"></div>
+            <div class="layer-row" id="l-cells"></div>
+            <div class="kb-readout">
+              <span>和弦 <b id="l-name">C</b></span>
+              <span>当前音 <b id="l-notes">C E G</b></span>
+              <span>说明 <b id="l-desc">大三和弦：骨架 + 色彩</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="l-1" type="button">① 根 + 五（骨架）</button>
+              <button class="kb-btn kb-btn-primary" id="l-2" type="button">② 加三音</button>
+              <button class="kb-btn" id="l-3" type="button">③ 加七音</button>
+              <button class="kb-btn" id="l-4" type="button">④ 加九音</button>
+              <button class="kb-btn" id="l-climb" type="button">▶ 一层层加上去</button>
+              <button class="kb-btn" id="l-stop" type="button">■ 停止</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="l-maj" type="button">大七 maj7</button>
+              <button class="kb-btn" id="l-dom" type="button">属七 7</button>
+              <button class="kb-btn" id="l-min" type="button">小七 m7</button>
+            </div>
+            <p id="l-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">重点体验第 ③ 步：同一个 C 大三和弦，加 B（大七度）变得慵懒悬浮，加 B♭（小七度）立刻变得急躁——<strong>一个音的差别，一个是沙发，一个是弹簧。</strong></p>
+          </div>
+        </div>
+
+        <h2>属七：调性体系的引擎</h2>
+        <p>把 G7 拆开看：<strong>G – B – D – F</strong>。其中：</p>
+        <ul>
+          <li><strong>B 是 C 大调的导音</strong>，想上行半音到 C；</li>
+          <li><strong>F 是第四级</strong>，想下行半音到 E；</li>
+          <li>而 <strong>B 与 F 之间正好是三全音</strong>（第 3 章习题 3.7 算过）。</li>
+        </ul>
+        <p>于是属七和弦里有<strong>两条半音线同时绷着</strong>，而且它们指向的目标（C 和 E）恰好是主和弦的根音与三音。这就是它「非解决不可」的机械原理：</p>
+        <figure>
+          <svg viewBox="0 0 620 200" width="620" height="200" role="img" aria-label="G7 解决到 C：三全音向内收缩，导音上行、第四级下行">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <text x="120" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-fg)">G7</text>
+              <text x="470" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="var(--kb-fg)">C</text>
+              <g font-size="13.5">
+                <text x="120" y="60" text-anchor="middle" fill="#dc2626" font-weight="700">F（第 4 级）</text>
+                <text x="120" y="98" text-anchor="middle" fill="var(--kb-fg-muted)">D</text>
+                <text x="120" y="136" text-anchor="middle" fill="#dc2626" font-weight="700">B（导音）</text>
+                <text x="120" y="174" text-anchor="middle" fill="var(--kb-fg-muted)">G</text>
+                <text x="470" y="60" text-anchor="middle" fill="#16a34a" font-weight="700">E</text>
+                <text x="470" y="98" text-anchor="middle" fill="var(--kb-fg-muted)">（省略）</text>
+                <text x="470" y="136" text-anchor="middle" fill="#16a34a" font-weight="700">C</text>
+                <text x="470" y="174" text-anchor="middle" fill="var(--kb-fg-muted)">C / G</text>
+              </g>
+              <path d="M 190 56 C 300 56 330 58 400 58" fill="none" stroke="#dc2626" stroke-width="2"/>
+              <path d="M 404 58 l -9 -5 v 10 z" fill="#dc2626"/>
+              <text x="295" y="46" text-anchor="middle" font-size="11" fill="#dc2626">下行半音</text>
+              <path d="M 190 132 C 300 132 330 134 400 134" fill="none" stroke="#dc2626" stroke-width="2"/>
+              <path d="M 404 134 l -9 -5 v 10 z" fill="#dc2626"/>
+              <text x="295" y="152" text-anchor="middle" font-size="11" fill="#dc2626">上行半音</text>
+              <path d="M 120 70 L 120 124" stroke="#dc2626" stroke-width="2" stroke-dasharray="4 3"/>
+              <text x="60" y="100" font-size="11.5" fill="#dc2626" font-weight="700">三全音</text>
+              <text x="295" y="192" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">两个音各走最小的一步（半音），同时到位 → 最强的解决感</text>
+            </g>
+          </svg>
+          <figcaption>属七 → 主和弦：三全音<strong>向内收缩</strong>，导音上行、第四级下行，各走一个半音同时到位。这是西方调性音乐使用频率最高的一步和声运动。</figcaption>
+        </figure>
+        <p><strong>吉他实战提示</strong>：属七和弦只有四个音，而吉他有六根弦，所以总要重复或省略。<strong>可以省的是五音</strong>（它不携带任何色彩信息），<strong>绝对不能省的是三音和七音</strong>——那两个正是三全音的两端。这条规则在编配紧凑的和弦时非常有用：把 G7 弹成 G–B–F（三个音）就够了，比六根弦全扫更清晰。</p>
+
+        <h2>dim7 与 m7♭5：两个容易搞混的家伙</h2>
+        <p>它们的下三个音一模一样（都是减三和弦），只有七音差半音：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>Bm7♭5（半减七）</th><th>Bdim7（减七）</th></tr></thead>
+            <tbody>
+              <tr><td>构成音</td><td>B D F <strong>A</strong></td><td>B D F <strong>A♭</strong></td></tr>
+              <tr><td>结构</td><td>3 – 3 – <strong>4</strong></td><td>3 – 3 – <strong>3</strong></td></tr>
+              <tr><td>对称吗</td><td>否</td><td><strong>是</strong>（八度四等分）</td></tr>
+              <tr><td>从哪来</td><td>大调 ⅶ 级 / 小调 ⅱ 级（顺阶）</td><td>和声小调 ⅶ 级（第 5 章习题 5.6）</td></tr>
+              <tr><td>典型用途</td><td>小调里的 ⅱ–Ⅴ–ⅰ 起手</td><td>经过和弦、转调枢纽、新古典琶音</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>减七和弦的对称性值得再强调一次：<strong>Bdim7 = Ddim7 = Fdim7 = A♭dim7</strong>，四个名字同一个声音。因此十二个调里其实只有<strong>三个</strong>不同的减七和弦。它可以从任意一个音出发、以任意一个音结束，是转调最省事的跳板——也是为什么它在新古典金属的快速乐句里出现得那么频繁（第 16 章）。</p>
+
+        <h2>延伸音：9、11、13</h2>
+        <p>七和弦之上继续叠三度，就得到 9、11、13。注意编号——它们是<strong>超过八度</strong>的度数：</p>
+        <pre><code>1 → 3 → 5 → 7 → 9 → 11 → 13
+              ↑     ↑     ↑     ↑
+             七和弦  九    十一   十三
+
+9  ＝ 2 级 + 八度      11 ＝ 4 级 + 八度      13 ＝ 6 级 + 八度</code></pre>
+        <p>叠到 13 就用尽了七个音（1 3 5 7 9 11 13 覆盖了音阶全部七级），再往上就是重复。所以<strong>13 是延伸的终点</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>符号</th><th>含义</th><th>吉他上怎么办</th></tr></thead>
+            <tbody>
+              <tr><td><code>C9</code></td><td>C7 + 9 音（＝ C E G B♭ D）</td><td>五个音，六根弦勉强够。常省五音。</td></tr>
+              <tr><td><code>Cadd9</code></td><td>C 三和弦 <strong>直接加</strong> 9 音，<strong>不含七音</strong>（C E G D）</td><td>四个音，好按。<strong>吉他上极常用</strong>——开阔明亮又不复杂。</td></tr>
+              <tr><td><code>C11</code></td><td>理论上是 C7 + 9 + 11</td><td>11 音与三音相差半音，会打架，所以实际多写成 <code>C7sus4</code> 或省略三音。</td></tr>
+              <tr><td><code>C13</code></td><td>C7 + 13 音（常省 9、11）</td><td>实际弹 C E B♭ A 四个音即可，放克与灵魂乐的招牌。</td></tr>
+              <tr><td><code>C7♯9</code></td><td>C7 + 升九音（＝ C E G B♭ D♯）</td><td>大三度与升九度（＝小三度）同时存在，冲突而带劲，<strong>硬摇滚的经典音响</strong>。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 读符号的三步法</p>
+          <p>看到任何和弦符号，按顺序问三个问题：<strong>①「根音是谁？」</strong>（第一个字母）<strong>②「三音是大是小？」</strong>（有 <code>m</code> 就是小，没有就是大，有 <code>sus</code> 就是没有三音）<strong>③「七音有没有、是哪一种？」</strong>（<code>maj7</code> ＝ 大七度，光一个数字 <code>7</code> ＝ 小七度，没写就是没有）。剩下的括号数字都是<strong>装饰</strong>，可以最后再管，实在按不下就省略。这三步能读懂你在流行与摇滚里遇到的 95% 的符号。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：七和弦色彩对比（同一个根音，换七音）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一个根音上，maj7（大七度）柔和悬浮、7（小七度）紧张想解决、m7（小三 + 小七）柔和不催促、m7♭5 阴郁不稳、dim7 完全对称无根。区别集中在三音与七音这两个位置。</p></noscript>
+            <div class="q-grid" id="q-grid"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">根音<span class="kb-control-value" id="q-rootv"></span>
+                <input type="range" id="q-root" min="0" max="11" step="1" value="0"></label>
+            </div>
+            <div class="kb-readout">
+              <span>和弦 <b id="q-name">Cmaj7</b></span>
+              <span>构成音 <b id="q-notes">C E G B</b></span>
+              <span>级数 <b id="q-deg">1 3 5 7</b></span>
+              <span>色彩 <b id="q-mood">悬浮慵懒</b></span>
+            </div>
+            <div id="q-board"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="q-strum" type="button">▶ 齐奏</button>
+              <button class="kb-btn" id="q-arp" type="button">▶ 分解</button>
+              <button class="kb-btn" id="q-res" type="button">▶ 解决到 Ⅰ（听张力释放）</button>
+              <button class="kb-btn" id="q-tt" type="button">▶ 只听三音 + 七音</button>
+              <button class="kb-btn" id="q-stop" type="button">■ 停止</button>
+            </div>
+            <p id="q-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">「只听三音 + 七音」是本演示的重点：<strong>和弦的性格几乎全在这两个音之间</strong>。属七的那一对正好是三全音，所以最紧张。</p>
+          </div>
+        </div>
+
+        <h2>为什么金属几乎不用七和弦</h2>
+        <p>翻遍重金属曲库，你会发现 maj7 和 m7 出现得极少，而属七只在偏布鲁斯的硬摇滚里常见。原因有三条，且都很实在：</p>
+        <ol>
+          <li><strong>失真会把它糊掉。</strong>四个音在高增益下互相调制，产生的杂频远多于三个音（第 10 章会算这笔账）。三和弦已经勉强，七和弦基本是一团泥。</li>
+          <li><strong>它自带「解决」的期待。</strong>属七要求回家，而重型音乐的段落靠循环而非终止（第 7 章习题 7.9）。用了属七却不解决，听起来是「没写完」而不是「有力量」。</li>
+          <li><strong>音区冲突。</strong>金属的和声重心压得很低，而七音在低音区会与根音的泛音打架，浑浊感成倍放大。</li>
+        </ol>
+        <p><strong>那金属在哪里用它？</strong>三个地方，而且用得很讲究：</p>
+        <ul>
+          <li><strong>干净音段落</strong>：前奏、间奏、抒情桥段一旦切到 clean 音色，maj7 与 m7 立刻可用，而且因为对比强烈，效果特别好。这是重型专辑里 clean 段落听起来「高级」的常见原因。</li>
+          <li><strong>高音区的小音块</strong>：只弹三音与七音两根弦（不弹根音，让贝斯负责），失真下依然清晰。第 15 章的现代金属和声大量使用这一招。</li>
+          <li><strong>dim7 琶音</strong>：不作为和弦扫，而是<strong>拆成单音快速跑动</strong>——单音不存在互调问题，所以对称的 dim7 在新古典金属里畅通无阻（第 16 章）。</li>
+        </ul>
+        <p><strong>一句话</strong>：七和弦在重型音乐里不是被禁止，而是<strong>被移出了「和弦扫弦」这个位置</strong>，改到干净音色、稀疏织体和单音跑动里去了。理解这一点，比记住「金属不用七和弦」这条粗糙的规则有用得多。</p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 8.1</p>
+          <p>写出 G7 的构成音，指出其中的三全音，并说明它解决到哪个和弦、每个音各走几步。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>构成音</strong>：属七 ＝ 大三和弦 + 小七度 ＝ 0-4-7-10，从 G 起：<strong>G – B – D – F</strong>。</p>
+            <p><strong>三全音在哪</strong>：<strong>B 与 F</strong>。B→F 是 6 个半音 ✓（B→C→C♯→D→D♯→E→F）。</p>
+            <p><strong>解决到 C</strong>，各声部的走法：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>G7 的音</th><th>身份</th><th>走向</th><th>C 的音</th><th>步长</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>B</strong></td><td>C 大调导音</td><td>上行</td><td>C</td><td><strong>半音</strong></td></tr>
+                  <tr><td><strong>F</strong></td><td>C 大调第 4 级</td><td>下行</td><td>E</td><td><strong>半音</strong></td></tr>
+                  <tr><td>D</td><td>共同音附近</td><td>下行</td><td>C</td><td>全音</td></tr>
+                  <tr><td>G</td><td>根音</td><td>下行五度 / 保持</td><td>C 或 G</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>要点</strong>：两条最紧的线（B 和 F）各走<strong>最小的一步</strong>就同时到位，而且方向相反、向内收缩。声部走得越短，听感越「顺理成章」——这就是属七解决感强的机械原因，也是第 3 章习题 3.7 那道题的完整答案。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 8.2</p>
+          <p>Cmaj7 与 C7 只差一个音。是哪个？为什么一个听起来慵懒、另一个听起来急躁？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>Cmaj7</strong> ＝ C E G <strong>B</strong>（大七度，11 个半音）<br>
+            <strong>C7</strong> ＝ C E G <strong>B♭</strong>（小七度，10 个半音）<br>
+            差别只有<strong>七音的那半个音</strong>。</p>
+            <p><strong>为什么色彩差这么多</strong>：</p>
+            <ul>
+              <li><strong>Cmaj7</strong>：B 与根音 C 相差<strong>大七度</strong>（转位后是小二度）。这是一个不协和音程，但因为两个音离得远（相差近一个八度），摩擦被稀释成一层柔和的光晕——所以是「悬浮、慵懒」而不是「刺耳」。更关键的是，<strong>它内部没有三全音</strong>（C-E-G-B 里最不协和的就是 C-B），所以不产生方向性，可以一直停在那里。</li>
+              <li><strong>C7</strong>：B♭ 与三音 E 构成<strong>三全音</strong>（E→B♭ ＝ 6 个半音）。三全音有明确的解决出口，所以和弦立刻有了「要去哪」的方向感——它不再是一个可以停留的地方，而是一个箭头。</li>
+            </ul>
+            <p><strong>一句话</strong>：<strong>maj7 是家具，C7 是弹簧。</strong>前者用来待着，后者用来推你走。这也解释了为什么爵士的段落可以在 maj7 上停很久，而属七永远只是过渡。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 8.3</p>
+          <p>为什么说 Bdim7、Ddim7、Fdim7、A♭dim7 是<strong>同一个和弦</strong>？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>逐个写出构成音</strong>（减七和弦 ＝ 0-3-6-9，每层都是小三度）：</p>
+            <ul>
+              <li>Bdim7 ＝ B、D、F、A♭</li>
+              <li>Ddim7 ＝ D、F、A♭、B（＝C♭）</li>
+              <li>Fdim7 ＝ F、A♭、B（C♭）、D</li>
+              <li>A♭dim7 ＝ A♭、B（C♭）、D、F</li>
+            </ul>
+            <p><strong>四组音完全相同</strong>，只是排列顺序不同 ＝ 互为转位。</p>
+            <p><strong>根本原因</strong>：减七和弦把八度<strong>四等分</strong>（3 + 3 + 3 + 3 ＝ 12），是完全对称结构。按第 6 章习题 6.8 的判据，它的所有转位结构相同，因此<strong>四个音谁都可以当根音</strong>，听觉上无法区分。</p>
+            <p><strong>推论与用处</strong>：既然每个减七和弦覆盖 4 个可能的根音，十二个音就只能组成 <em class="kb-math">12 ÷ 4 ＝ 3</em> 个不同的减七和弦（习题 8.8 会严格证明）。这让它成为极强的<strong>转调枢纽</strong>：你以 Bdim7 的身份进去，可以以 Ddim7、Fdim7 或 A♭dim7 的身份出来，分别通往四个不同的调，而听众完全察觉不到接缝。新古典金属把这一条用到了极致。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 Am7 与 Dm7 的构成音。它们各自在 C 大调里是第几级？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Am7</strong> ＝ 0-3-7-10 从 A 起 ＝ <strong>A C E G</strong>，在 C 大调里是 <strong>ⅵm7</strong>。<br>
+            <strong>Dm7</strong> ＝ <strong>D F A C</strong>，在 C 大调里是 <strong>ⅱm7</strong>。</p>
+            <p><strong>解析</strong>：两个和弦的音全部来自 C 大调白键，符合「顺阶」定义。<br>
+            <strong>顺带一个有用的观察</strong>：Am7 ＝ A C E G，而 C 大三和弦 ＝ C E G —— <strong>Am7 就是 C 和弦下面加了一个 A</strong>。同理 Dm7 ＝ F 和弦（F A C）下面加个 D。这个视角在吉他上很实用：想弹 Am7 却一时想不起指法，弹一个 C 和弦、低音按 A 就行了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>A 大调的 Ⅴ7 是什么和弦？写出构成音，并指出它的三全音。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>A 大调</strong> ＝ A B C♯ D E F♯ G♯，第五级是 <strong>E</strong>。<br>
+            <strong>Ⅴ7 ＝ E7 ＝ E G♯ B D</strong>。</p>
+            <p><strong>三全音</strong>：<strong>G♯ 与 D</strong>（G♯→A→A♯→B→C→C♯→D ＝ 6 个半音 ✓）。</p>
+            <p><strong>解决</strong>：G♯ 是 A 的导音 → 上行半音到 A；D 是第四级 → 下行半音到 C♯。两者同时到位，得到 A 与 C♯，正是 A 大三和弦的根音与三音 ✓</p>
+            <p><strong>吉他提示</strong>：开放 E7 指法是 <code>020100</code>，只比 E（<code>022100</code>）少按一根手指——把 4 弦 2 品松开，D3 就出现了，这正是那个七音。<strong>又一次，一根手指的抬落改变了和弦的性质。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.3 <span class="kb-exercise-badge">基础</span></p>
+          <p><code>Cadd9</code> 和 <code>C9</code> 有什么区别？为什么吉他手更常用前者？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Cadd9</strong> ＝ C E G <strong>D</strong>（三和弦直接加 9 音，<strong>没有七音</strong>）——四个音。<br>
+            <strong>C9</strong> ＝ C E G <strong>B♭</strong> D（属七 + 9 音，<strong>含七音</strong>）——五个音。</p>
+            <p><strong>关键区别在七音</strong>：<code>add</code> 这个词的意思就是「只加这一个，不要中间那层」。有没有七音，决定了和弦是「明亮的大和弦 + 一点色彩」还是「一个带张力的属和弦」。</p>
+            <p><strong>为什么吉他手更常用 add9</strong>，三条：</p>
+            <ol>
+              <li><strong>好按。</strong>四个音，且 9 音（D）在吉他上到处都是空弦或近邻——最典型的 <code>Cadd9</code> 指法 <code>x32030</code> 只比 C 多按一根手指。</li>
+              <li><strong>不带方向。</strong>它保持大三和弦的稳定，只是加了一层空气感，因此可以放在任何位置而不制造「必须解决」的压力。这正是扫弦民谣与另类摇滚需要的。</li>
+              <li><strong>失真下也能活。</strong>因为没有七音，音数少、结构简单，中等增益下仍然清晰。<code>add9</code> 与 <code>sus2</code>（第 6 章）是重型音乐里少数能用的「彩色和弦」。</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>属七和弦有四个音，但吉他上常常只弹三个。哪一个音可以省？哪两个绝对不能省？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>可以省：五音。</strong><br>
+            <strong>不能省：三音和七音。</strong></p>
+            <p><strong>为什么</strong>：三音与七音正是<strong>三全音的两端</strong>——它们才是属七和弦的全部功能所在（例题 8.1）。把它们去掉，和弦就失去了方向性，也就不再是属和弦了。</p>
+            <p>而五音对根音是纯五度，本来就藏在根音的泛音列里（第 4 章习题 4.7），去掉它耳朵会自动补上，几乎察觉不到损失。</p>
+            <p><strong>实战推论</strong>：G7 可以只弹 <strong>G – B – F</strong>（根、三、七）。这种「省略五音」的三音和弦在爵士里叫 <strong>shell voicing</strong>，好处是<strong>清晰</strong>——音少，互相不打架，尤其在有贝斯的乐队里，根音甚至也可以交给贝斯，吉他只弹 B–F 两个音。</p>
+            <p><strong>这条规则在重型音乐里尤其重要</strong>：正文说过金属会「只弹三音与七音两根弦」，用的就是这个原理。音越少，失真下越干净——第 10 章会给出量化的解释。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p><code>E7♯9</code> 由哪些音组成？为什么它听起来又「脏」又好听？它和布鲁斯有什么关系？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>拆解</strong>：E7 ＝ E G♯ B D；9 音是 F♯，<strong>升九</strong>就是 F♯ 升半音 ＝ <strong>G</strong>（记谱上写作 F<span style="letter-spacing:-1px">♯♯</span>，但音高就是 G）。<br>
+            所以 <strong>E7♯9 ＝ E G♯ B D G</strong>。</p>
+            <p><strong>「脏」在哪</strong>：和弦里<strong>同时含有 G♯ 和 G</strong> —— 也就是<strong>大三度和小三度同时存在</strong>。按第 6 章的说法，这个和弦「既是大和弦又是小和弦」，两者相差半音，直接摩擦。理论上这是最刺耳的组合之一。</p>
+            <p><strong>为什么反而好听</strong>：因为它<strong>正好复刻了布鲁斯的核心语汇</strong>。布鲁斯歌手在大调伴奏上唱降三度（第 12 章会讲这些「蓝调音」），大小三度并置本来就是这个音乐的母语。E7♯9 把这种「唱和弹的冲突」凝固成了一个和弦。</p>
+            <p><strong>为什么它在吉他上特别常见</strong>：指法极顺手——<code>x7678x</code>（根音在 5 弦 7 品），四根手指一把抓，而且因为音都在中高音区，失真下也不太糊。它在硬摇滚与放克里是标志性音响，常被称作「Hendrix 和弦」。</p>
+            <p><strong>推论</strong>：把两个相差半音的音放在一起<strong>不一定难听</strong>，关键看它们所处的音区、间隔的八度数、以及听众有没有相应的听觉习惯。理论给出的是概率，不是判决。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>写出 A 小调的 <strong>ⅱ–Ⅴ–ⅰ</strong>（用七和弦）。其中哪个和弦不是自然小调顺阶的？它从哪来？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>ⅱ</strong>：A 自然小调第二级是 B，顺阶七和弦是 <strong>Bm7♭5</strong>（B D F A）。<br>
+            <strong>Ⅴ</strong>：第五级是 E。自然小调给的是 Em7（E G B D），但实践中几乎总是用 <strong>E7</strong>（E <strong>G♯</strong> B D）。<br>
+            <strong>ⅰ</strong>：<strong>Am7</strong>（A C E G）或 Am。</p>
+            <p><strong>不属于自然小调的是 E7</strong> ——它含 <strong>G♯</strong>，而 A 自然小调里第七级是 G。<strong>G♯ 来自和声小调</strong>（第 5 章）。</p>
+            <p><strong>为什么必须借</strong>：如果老老实实用 Em7，这个进行就没有导音，Ⅴ→ⅰ 的推力几乎为零，听起来像三个和弦随便排了排。<strong>小调的 ⅱ–Ⅴ–ⅰ 之所以成立，全靠从和声小调借来的那个 G♯。</strong>这也是为什么和声小调被叫作「和声」小调——它的存在理由就是为和声进行服务。</p>
+            <p><strong>吉他实战</strong>：Bm7♭5 可以按 <code>x2323x</code>，E7 按开放 <code>020100</code>，Am7 按 <code>x02010</code>。三个和弦低音走 B → E → A，正是沿五度圈连走两步（第 7 章习题 7.6），顺得不能再顺。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么 11 音加在<strong>大</strong>三和弦上会打架，加在<strong>小</strong>三和弦上却没问题？请用半音数说明。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>11 音的位置</strong>：11 ＝ 4 级 + 八度 ＝ 距根音 <strong>5 个半音</strong>（折合到一个八度内）。</p>
+            <p><strong>在大三和弦上</strong>：三音距根音 <strong>4 个半音</strong>。11 音（5）与三音（4）只差 <strong>1 个半音</strong> —— 小二度，最不协和的音程，而且两者都在和弦内部，音区接近，摩擦无处可躲。<strong>结果是浑浊而非色彩。</strong></p>
+            <p><strong>在小三和弦上</strong>：三音距根音 <strong>3 个半音</strong>。11 音（5）与三音（3）差 <strong>2 个半音</strong> —— 大二度，虽然也不协和，但已经是可以接受的「色彩性摩擦」，就像 add9 里 9 音与根音的关系。<strong>结果是开阔而非浑浊。</strong></p>
+            <p><strong>实践中的三条对策</strong>（当你确实想在大和弦上用四级）：</p>
+            <ol>
+              <li><strong>去掉三音</strong> → 变成 <code>C7sus4</code>，冲突消失（第 6 章的挂留和弦）。</li>
+              <li><strong>把 11 升半音</strong> → <code>Cmaj7♯11</code>，此时它距三音 2 个半音，不再打架。这个音阶来源是<strong>利底亚调式</strong>（第 14 章），色彩明亮而空灵，前卫金属很爱用。</li>
+              <li><strong>拉开音区</strong> → 把 11 音放到高两个八度，摩擦被距离稀释。</li>
+            </ol>
+            <p>这也解释了为什么和弦表里 <code>m11</code> 很常见而 <code>maj11</code> 几乎见不到——<strong>不是没人想用，是它本身不成立。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：十二个半音中只能组成 <strong>3 个</strong>不同的减七和弦。并回答：能组成几个不同的增三和弦？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>减七和弦的证明</strong>：以 <em class="kb-math">r</em> 为根音的减七和弦是音级集合<br>
+            <em class="kb-math">S(r) ＝ { r, r+3, r+6, r+9 }</em>（模 12）。</p>
+            <p>观察 <em class="kb-math">S(r+3) ＝ { r+3, r+6, r+9, r+12 } ＝ { r+3, r+6, r+9, r } ＝ S(r)</em>。<br>
+            所以 <em class="kb-math">S</em> 以 3 为周期：<em class="kb-math">S(0) ＝ S(3) ＝ S(6) ＝ S(9)</em>，<em class="kb-math">S(1) ＝ S(4) ＝ S(7) ＝ S(10)</em>，<em class="kb-math">S(2) ＝ S(5) ＝ S(8) ＝ S(11)</em>。</p>
+            <p>十二个根音被分成 <strong>3 个等价类，每类 4 个</strong>，因此只有 <strong>3 个</strong>不同的减七和弦。∎</p>
+            <p><strong>验证</strong>：这三个和弦是 {C, E♭, G♭, A}、{C♯, E, G, B♭}、{D, F, A♭, B} —— 恰好把十二个音不重不漏地分成三组 ✓</p>
+            <p><strong>增三和弦</strong>：<em class="kb-math">S(r) ＝ { r, r+4, r+8 }</em>，以 4 为周期，十二个根音分成 <strong>4 个等价类，每类 3 个</strong> → <strong>4 个</strong>不同的增三和弦。</p>
+            <p><strong>一般规律</strong>：把八度 <em class="kb-math">n</em> 等分的对称和弦，共有 <em class="kb-math">12 ÷ n</em> 个不同实例，每个覆盖 <em class="kb-math">n</em> 个根音名。<strong>覆盖得越多，转调时越万能，但也越没有个性</strong>——减七和弦（覆盖 4 个）是最好用的枢纽，代价是它在任何调里听起来都差不多。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p><strong>三全音代换</strong>：为什么 <code>D♭7</code> 可以代替 <code>G7</code> 解决到 C？请证明它们共享同一个「引擎」，并说明代换带来了什么好处。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>写出两个和弦</strong>：<br>
+            G7 ＝ G <strong>B</strong> D <strong>F</strong><br>
+            D♭7 ＝ D♭ <strong>F</strong> A♭ <strong>C♭</strong>（而 C♭ 就是 B 的同音异名）</p>
+            <p><strong>关键观察</strong>：两个和弦都含有 <strong>B 和 F</strong> ——同一个三全音！只是在 G7 里 B 是三音、F 是七音，在 D♭7 里 F 是三音、B（C♭）是七音，<strong>角色互换了</strong>。</p>
+            <p><strong>为什么必然如此</strong>：三全音自转位不变（第 3 章习题 3.8）。属七和弦的三音与七音相隔三全音；如果把根音移动三全音，那么新和弦的三音与七音正好是原来那两个音交换位置。所以<strong>相隔三全音的两个属七和弦，共享同一对「引擎音」</strong>。既然解决的动力全部来自这一对，它们当然可以互相代替。∎</p>
+            <p><strong>代换带来什么</strong>：</p>
+            <ol>
+              <li><strong>低音变成半音下行。</strong>原来是 G → C（下行纯五度），代换后是 D♭ → C（<strong>下行半音</strong>）。低音线因此可以走成 …D♭ → C 的顺滑级进，比五度跳跃更连贯。这是爵士里 <code>ⅱ–♭Ⅱ7–Ⅰ</code> 的由来。</li>
+              <li><strong>色彩变了。</strong>虽然引擎相同，D♭7 的根音与五音（D♭、A♭）在 C 调里都是「外音」，带来一层意外的紧张色彩，同时又保证解决感不减。</li>
+            </ol>
+            <p><strong>在重型音乐里能用吗</strong>：直接扫属七在高增益下会糊（正文说过），但这个<strong>思路</strong>完全可用——把「解决前一个和弦的根音换成目标音上方半音」，就得到了金属里极常见的<strong>半音下行强力和弦</strong>（如 F5 → E5）。虽然没有七和弦，但「半音逼近目标」的效果是同一件事。第 14 章讲弗里几亚时会看到，<strong>♭Ⅱ 到 ⅰ 的半音下行正是金属最偏爱的解决方式之一</strong>——它其实是三全音代换的极简版本。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 七和弦 ＝ 三和弦再叠一层三度；顺阶顺序恒为 <strong>maj7 – m7 – m7 – maj7 – 7 – m7 – m7♭5</strong>，<strong>一个调里只有一个属七</strong>，它是调性的路标。② <strong>属七</strong>内含三全音，三音与七音各走半音向内收缩即解决——这是调性音乐用得最多的一步。<strong>三音与七音不能省，五音可以省</strong>。③ <strong>maj7 是家具，7 是弹簧</strong>：差半音，一个可停留，一个必须走。④ <strong>dim7</strong> 完全对称，十二个调里只有 3 个不同的减七和弦，是最好用的转调枢纽；<strong>m7♭5</strong> 则是小调 ⅱ 级。⑤ 延伸音 9/11/13 是继续叠三度；<code>add9</code> 不含七音、好按且失真下能活，是吉他常客；<code>11</code> 在大和弦上会与三音差半音打架。⑥ 金属不是禁用七和弦，而是<strong>把它移到干净音色、稀疏织体和单音跑动里</strong>。</p>
+          <p><strong>下一章预告</strong>：和声讲完了，但音乐还有一条同样重要、却常被乐理书轻视的轴——<strong>时间</strong>。第 9 章《节奏与律动》会补上它：拍号、切分、三连音、TAB 的节奏记号，以及决定重型音乐生死的右手技术：<strong>闷音与 galloping</strong>。对摇滚金属来说，这一章的重要性不亚于前面任何一章。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./09-节奏与律动.html"><strong>下一章：第 9 章 · 节奏与律动</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+      /* ---------- 演示 1：逐层叠加 ---------- */
+      KBG.soundToggle($("l-sound"));
+      var L_ROOT = 48, lLevel = 2, lQual = "maj";
+      var L_DEF = {
+        maj: { third: 4, seventh: 11, cn: "Cmaj7", desc7: "大七度：柔和悬浮，没有方向，可以一直停着" },
+        dom: { third: 4, seventh: 10, cn: "C7", desc7: "小七度：与三音构成三全音，立刻有了「要去哪」的方向" },
+        min: { third: 3, seventh: 10, cn: "Cm7", desc7: "小三 + 小七：柔和开阔，不催促" }
+      };
+      function lSteps() {
+        var d = L_DEF[lQual];
+        if (lLevel === 1) return [0, 7];
+        if (lLevel === 2) return [0, d.third, 7];
+        if (lLevel === 3) return [0, d.third, 7, d.seventh];
+        return [0, d.third, 7, d.seventh, 14];
+      }
+      function updateL() {
+        var d = L_DEF[lQual], steps = lSteps();
+        var host = $("l-cells"); clear(host);
+        var all = [0, d.third, 7, d.seventh, 14];
+        var labs = ["1", "3", "5", "7", "9"];
+        all.forEach(function (s, i) {
+          var on = steps.indexOf(s) >= 0;
+          var c = document.createElement("div");
+          c.className = "layer-cell " + (on ? "on" : "off");
+          var b = document.createElement("b"); b.textContent = T.name(T.mod12(s));
+          var sm = document.createElement("small"); sm.textContent = labs[i];
+          c.appendChild(b); c.appendChild(sm); host.appendChild(c);
+        });
+        var names = { 1: "C5（强力和弦）", 2: lQual === "min" ? "Cm" : "C", 3: d.cn, 4: d.cn.replace("7", "9") };
+        var descs = {
+          1: "只有根音与五度，纯骨架——没有三音就没有大小之分（第 6 章）",
+          2: "加上三音，大小调色彩确定了",
+          3: d.desc7,
+          4: "再加 9 音，色彩更丰富，但音数也更多——失真下会开始浑浊"
+        };
+        $("l-name").textContent = names[lLevel];
+        $("l-notes").textContent = steps.map(function (s) { return T.name(T.mod12(s)); }).join(" ");
+        $("l-desc").textContent = descs[lLevel];
+        [1, 2, 3, 4].forEach(function (i) {
+          $("l-" + i).className = "kb-btn" + (i === lLevel ? " kb-btn-primary" : "");
+        });
+        ["maj", "dom", "min"].forEach(function (k) {
+          var id = { maj: "l-maj", dom: "l-dom", min: "l-min" }[k];
+          $(id).className = "kb-btn" + (k === lQual ? " kb-btn-primary" : "");
+        });
+      }
+      function playL() {
+        A.stopAll(); A.setDrive(0.1);
+        A.strum(lSteps().map(function (s) { return L_ROOT + s; }), { spread: 0.03, gain: 0.6 });
+      }
+      [1, 2, 3, 4].forEach(function (i) {
+        $("l-" + i).addEventListener("click", function () { lLevel = i; updateL(); playL(); });
+      });
+      ["maj", "dom", "min"].forEach(function (k) {
+        $({ maj: "l-maj", dom: "l-dom", min: "l-min" }[k]).addEventListener("click", function () {
+          lQual = k; updateL(); playL();
+        });
+      });
+      $("l-climb").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        var d = L_DEF[lQual];
+        [[0, 7], [0, d.third, 7], [0, d.third, 7, d.seventh], [0, d.third, 7, d.seventh, 14]]
+          .forEach(function (st, i) {
+            A.strum(st.map(function (s) { return L_ROOT + s; }), { delay: i * 1.5, spread: 0.03, gain: 0.58 });
+          });
+        $("l-msg").textContent = "四次扫弦：骨架 → 加三音 → 加七音 → 加九音。每加一层，色彩多一分，清晰度少一分——这个取舍在第 10 章会变成硬约束。";
+      });
+      $("l-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：七和弦色彩对比 ---------- */
+      var Q = [
+        { k: "maj7", cn: "大七 maj7", mood: "悬浮慵懒，可停留" },
+        { k: "dom7", cn: "属七 7", mood: "张力最大，含三全音，必须解决" },
+        { k: "m7", cn: "小七 m7", mood: "柔和开阔，不催促" },
+        { k: "m7b5", cn: "半减 m7♭5", mood: "阴郁不稳，小调的 ⅱ 级" },
+        { k: "dim7", cn: "减七 dim7", mood: "完全对称，无根，只作经过" },
+        { k: "mMaj7", cn: "小大七 mMaj7", mood: "小三度配大七度，悬疑" },
+        { k: "maj6", cn: "大六 6", mood: "明亮圆润，复古" }
+      ];
+      var qIdx = 0, qRoot = 0;
+      var qBtns = [];
+      Q.forEach(function (q, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = q.cn;
+        b.addEventListener("click", function () { qIdx = i; updateQ(); playQ(); });
+        $("q-grid").appendChild(b); qBtns.push(b);
+      });
+      var fbQ = KBG.fretboard($("q-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "degree", root: 0, marks: [], title: "和弦音在指板上"
+      });
+      function qSteps() { return T.CHORDS[Q[qIdx].k].steps; }
+      function qMidis() { return qSteps().map(function (s) { return 48 + qRoot + s; }); }
+      function updateQ() {
+        var st = qSteps();
+        qBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === qIdx ? " on" : ""); });
+        $("q-name").textContent = T.chordName(qRoot, Q[qIdx].k);
+        $("q-notes").textContent = st.map(function (s) { return T.name(T.mod12(qRoot + s)); }).join(" ");
+        $("q-deg").textContent = st.map(function (s) { return T.DEGREES[T.mod12(s)]; }).join(" ");
+        $("q-mood").textContent = Q[qIdx].mood;
+        var pcs = st.map(function (s) { return T.mod12(qRoot + s); });
+        fbQ.setLabels("degree", qRoot);
+        fbQ.setMarks(T.findOnBoard(TUN, pcs, 12).map(function (p) {
+          var d = T.mod12(p.pc - qRoot);
+          return {
+            string: p.string, fret: p.fret,
+            kind: d === 0 ? "root" : (d === st[1] ? "third" : (d === st[3] ? "warm" : "note"))
+          };
+        }));
+      }
+      function playQ() { A.stopAll(); A.setDrive(0.1); A.strum(qMidis(), { spread: 0.032, gain: 0.6 }); }
+      KB.bindRange($("q-root"), $("q-rootv"), function (v) { return T.name(v); },
+        function (v) { qRoot = v; if (typeof fbQ !== "undefined") updateQ(); });
+      $("q-strum").addEventListener("click", playQ);
+      $("q-arp").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.08);
+        var m = qMidis();
+        A.sequence(m.map(function (x, i) { return { t: i * 0.55, midi: x, dur: 0.55 }; })
+          .concat([{ t: m.length * 0.55, midis: m, dur: 2 }]), { bpm: 112 });
+      });
+      $("q-res").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        A.strum(qMidis(), { spread: 0.032, gain: 0.6 });
+        var tgt = 48 + T.mod12(qRoot + 5);
+        A.strum([tgt - 12, tgt, tgt + 4, tgt + 7], { delay: 1.8, spread: 0.032, gain: 0.6 });
+        $("q-msg").textContent = "把它当成 Ⅴ 级，解决到上方纯四度的大三和弦。属七的那一下最「到位」，maj7 则几乎没有解决感——因为它本来就不紧张。";
+      });
+      $("q-tt").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.06);
+        var st = qSteps();
+        if (st.length < 4) { $("q-msg").textContent = "这个和弦没有七音。"; return; }
+        var gap = st[3] - st[1];
+        A.strum([48 + qRoot + st[1], 48 + qRoot + st[3]], { spread: 0.02, gain: 0.72 });
+        $("q-msg").textContent = "三音与七音相隔 " + gap + " 个半音（" + T.INTERVALS[gap].cn + "）。" +
+          (gap === 6 ? "正是三全音——所以它张力最大、方向最明确。" : "不是三全音，所以没有强烈的解决方向。");
+      });
+      $("q-stop").addEventListener("click", function () { A.stopAll(); });
+
+      updateL(); updateQ();
+    });
+  </script>
+</body>
+</html>

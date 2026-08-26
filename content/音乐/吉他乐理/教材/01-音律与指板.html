@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 音、律与指板：一把等分的尺子 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 1 章：音高就是频率、八度就是频率翻倍、十二平均律为什么把八度切成十二份，以及一品＝一个半音这件事在指板上意味着什么。配可点击发声的指板与音程听辨演示。">
+  <meta name="kb:tags" content="吉他,乐理,教材,十二平均律,八度,半音,频率,音名,指板,标准调弦,yldzb,pjl">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：发声读数条 */
+    .kb-readout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      margin: 10px 0 2px;
+      padding: 8px 12px;
+      border: 1px solid var(--kb-border);
+      border-radius: 8px;
+      background: var(--kb-surface-alt);
+      font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 1 章 · 音、律与指板：一把等分的尺子</h1>
+        <p class="kb-lead">你已经按过成千上万次品格，但可能从没问过：<strong>为什么 6 弦空弦是 E，12 品也是 E，中间偏偏隔着 12 个品？</strong>为什么品格越往高把位越密，而不是等距排开？为什么 A♯ 和 B♭ 按的是同一个位置，却有两个名字？这一章不讲和弦、不讲音阶，只做一件事：把「指板」这个你天天摸的东西，还原成它真正的样子——<strong>一把按频率等比刻度的尺子</strong>。这把尺子上的每一格叫半音，而后面十五章要讲的一切，都是在这把尺子上量出来的距离。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说清音高、频率、八度三者的关系，并算出任意一个音的频率；② 解释十二平均律为什么是「十二」份、以及它相对纯律做了什么妥协；③ 在指板上把「一品＝一个半音」当成尺子来用，说出任意位置的音名；④ 读懂 <em class="kb-math">C</em>–<em class="kb-math">B</em> 七个字母加升降号的命名规则，理解同音异名；⑤ 说出六根空弦的音名与频率，并解释标准音 A4 = 440 Hz 的意义。</p>
+        </div>
+
+        <h2>一个音到底是什么：频率</h2>
+        <p>拨响一根弦，它开始来回振动，推动空气，空气推动你的耳膜。<strong>一秒钟来回多少次，就是这个音的频率</strong>，单位赫兹（Hz）。振动得快 → 你听着「高」；振动得慢 → 你听着「低」。就这么简单：<strong>音高＝频率</strong>，其余全是命名问题。</p>
+        <figure>
+          <svg viewBox="0 0 660 200" width="660" height="200" role="img" aria-label="弦振动示意：同一根弦按住不同品位时振动段变短、频率变高">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <text x="12" y="20" font-size="12.5" fill="var(--kb-fg-muted)">空弦：整段弦在振动 → 慢 → 低</text>
+              <line x1="60" y1="52" x2="620" y2="52" stroke="var(--kb-fg-muted)" stroke-width="1"/>
+              <path d="M 60 52 Q 340 14 620 52 Q 340 90 60 52" fill="var(--kb-accent)" opacity="0.18"/>
+              <path d="M 60 52 Q 340 14 620 52" fill="none" stroke="var(--kb-accent)" stroke-width="2"/>
+              <circle cx="60" cy="52" r="4" fill="var(--kb-fg)"/><circle cx="620" cy="52" r="4" fill="var(--kb-fg)"/>
+              <text x="632" y="56" font-size="11" fill="var(--kb-fg-muted)">琴桥</text>
+              <text x="6" y="56" font-size="11" fill="var(--kb-fg-muted)">上弦枕</text>
+              <text x="340" y="108" text-anchor="middle" font-size="12" fill="var(--kb-accent)" font-weight="700">E2 · 82.41 Hz</text>
+
+              <text x="12" y="140" font-size="12.5" fill="var(--kb-fg-muted)">按住 12 品：只剩一半弦在振动 → 快一倍 → 高八度</text>
+              <line x1="60" y1="168" x2="620" y2="168" stroke="var(--kb-fg-faint)" stroke-width="1" stroke-dasharray="4 3"/>
+              <line x1="340" y1="152" x2="340" y2="184" stroke="var(--kb-fg)" stroke-width="3"/>
+              <path d="M 340 168 Q 480 140 620 168 Q 480 196 340 168" fill="#dc2626" opacity="0.18"/>
+              <path d="M 340 168 Q 480 140 620 168" fill="none" stroke="#dc2626" stroke-width="2"/>
+              <circle cx="620" cy="168" r="4" fill="var(--kb-fg)"/>
+              <text x="480" y="192" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="700">E3 · 164.81 Hz</text>
+              <text x="352" y="148" font-size="11" fill="var(--kb-fg-muted)">手指＝新的「琴枕」</text>
+            </g>
+          </svg>
+          <figcaption>按品的物理意义只有一个：<strong>缩短振动段的长度</strong>。弦越短，振动越快，频率越高。12 品正好在弦长的中点，所以频率翻倍——这就是八度。</figcaption>
+        </figure>
+        <p>下面这个演示把这句话变成能听见的东西。点击 6 弦上任意一个品位，你会听到那个音，同时读到它的频率。<strong>请重点看两个数字</strong>：每往上一品，频率乘的那个固定倍数；以及走到 12 品时，频率与空弦的比。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：一根弦就是一把尺子（点品格发声）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：在 6 弦（空弦 E2 = 82.41 Hz）上每升高一品，频率就乘以固定的 1.0595 倍（即 2 的 12 次方根）；连乘 12 次正好是 2 倍，也就是 12 品处得到高八度的 E3 = 164.81 Hz。品格之间不是等距，而是等比。</p></noscript>
+            <div id="d1-sound"></div>
+            <div id="d1-board"></div>
+            <div class="kb-readout">
+              <span>音名 <b id="d1-name">—</b></span>
+              <span>频率 <b id="d1-freq">—</b></span>
+              <span>距空弦 <b id="d1-semi">—</b></span>
+              <span>与空弦频率比 <b id="d1-ratio">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d1-run" type="button">▶ 半音爬升：0 → 12 品</button>
+              <button class="kb-btn" id="d1-oct" type="button">🔁 空弦与 12 品交替</button>
+              <button class="kb-btn" id="d1-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d1-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点任意品格试试。听「半音爬升」时注意：每一步听起来的「远近」是一样的，虽然频率增加的绝对值越来越大。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 等距的是听感，不是频率</p>
+          <p>从 0 品到 1 品，频率增加约 4.9 Hz；从 11 品到 12 品，增加约 9.2 Hz——<strong>差了将近一倍</strong>。但你的耳朵听这两步是<strong>一样远</strong>的。因为听觉感受的是<strong>比例</strong>而不是差值：只要两个音的频率之比相同，你听到的「距离」就相同。这一条是整个乐理体系的地基，记住它，后面所有关于音程、音阶、和弦的规则都会变得自然。</p>
+        </div>
+
+        <h2>八度：频率翻倍的那个音</h2>
+        <p>在所有比例里，有一个特别到几乎不像音程：<strong>2:1</strong>。频率翻倍的两个音，听起来<strong>就是同一个音</strong>，只是一高一低——男声和女声唱同一句旋律，差的通常就是这个。它叫<strong>八度</strong>（octave）。</p>
+        <p>为什么翻倍这么特殊？因为一根振动的弦不只发出一个频率：它同时以整段、二等分、三等分……的方式振动，产生 <em class="kb-math">f</em>、<em class="kb-math">2f</em>、<em class="kb-math">3f</em>、<em class="kb-math">4f</em>…… 一整串<strong>泛音</strong>。当你把两个相差八度的音叠在一起，高音的整串泛音<strong>全部落在</strong>低音泛音的位置上——两个音的泛音完全重合，耳朵找不到任何冲突，于是判定「这是同一个东西」。</p>
+        <figure>
+          <svg viewBox="0 0 660 210" width="660" height="210" role="img" aria-label="泛音列示意：八度的泛音全部与根音泛音重合，纯五度重合一半，小二度几乎不重合">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <text x="10" y="16" font-size="12" fill="var(--kb-fg-muted)">频率轴（相对根音的倍数）→</text>
+              <line x1="40" y1="180" x2="640" y2="180" stroke="var(--kb-fg-muted)" stroke-width="1"/>
+              <g stroke="var(--kb-accent)" stroke-width="3">
+                <line x1="115" y1="180" x2="115" y2="120"/><line x1="190" y1="180" x2="190" y2="132"/>
+                <line x1="265" y1="180" x2="265" y2="142"/><line x1="340" y1="180" x2="340" y2="150"/>
+                <line x1="415" y1="180" x2="415" y2="156"/><line x1="490" y1="180" x2="490" y2="161"/>
+                <line x1="565" y1="180" x2="565" y2="165"/><line x1="640" y1="180" x2="640" y2="168"/>
+              </g>
+              <text x="115" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">f</text>
+              <text x="190" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">2f</text>
+              <text x="265" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">3f</text>
+              <text x="340" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">4f</text>
+              <text x="415" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">5f</text>
+              <text x="490" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">6f</text>
+              <text x="565" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">7f</text>
+              <text x="640" y="196" text-anchor="middle" font-size="10.5" fill="var(--kb-accent)">8f</text>
+              <text x="44" y="126" font-size="11.5" fill="var(--kb-accent)" font-weight="700">根音</text>
+
+              <g stroke="#16a34a" stroke-width="3">
+                <line x1="190" y1="100" x2="190" y2="52"/><line x1="340" y1="100" x2="340" y2="66"/>
+                <line x1="490" y1="100" x2="490" y2="76"/><line x1="640" y1="100" x2="640" y2="84"/>
+              </g>
+              <text x="44" y="60" font-size="11.5" fill="#16a34a" font-weight="700">高八度</text>
+              <text x="205" y="46" font-size="11" fill="#16a34a">它的泛音 2f、4f、6f、8f —— 一根不落地压在根音的泛音上</text>
+
+              <g stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5 3">
+                <line x1="128" y1="118" x2="128" y2="96"/><line x1="242" y1="118" x2="242" y2="102"/>
+                <line x1="355" y1="118" x2="355" y2="106"/>
+              </g>
+              <text x="44" y="112" font-size="11.5" fill="#dc2626" font-weight="700">小二度</text>
+              <text x="370" y="112" font-size="11" fill="#dc2626">泛音全都「差一点点」对不上 → 拍频 → 刺耳</text>
+            </g>
+          </svg>
+          <figcaption>协和与否，本质是<strong>泛音重合的程度</strong>。八度（2:1）全重合，纯五度（3:2）重合一半，小二度（16:15）几乎不重合，只剩下互相打架产生的「拍频」。第 3 章会把这张图展开成完整的音程表，第 10 章会告诉你失真如何放大这件事。</figcaption>
+        </figure>
+        <p>下面拉动滑块，选一个音程，亲耳比较它们的「合」与「不合」。同时留意画布里两条波形的关系——<strong>波形对得越齐，听起来越协和</strong>。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：频率比与协和度（先后听 / 同时听）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="d2-canvas" height="220"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：两个音的频率比越简单（八度 2:1、纯五度 3:2、纯四度 4:3），听起来越融合；比值越复杂（小二度 16:15、三全音 45:32），听起来越紧张。协和度不是文化习惯，而是频率比的简单程度。</p></noscript>
+            <div class="kb-readout">
+              <span>音程 <b id="d2-name">纯八度</b></span>
+              <span>平均律频率比 <b id="d2-et">2.0000</b></span>
+              <span>纯律理想比 <b id="d2-ji">2:1</b></span>
+              <span>误差 <b id="d2-cent">0.0 音分</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">上方音比根音高几个半音<span class="kb-control-value" id="d2-val"></span>
+                <input type="range" id="d2-semi" min="0" max="12" step="1" value="12"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d2-seq" type="button">▶ 先后听</button>
+              <button class="kb-btn" id="d2-both" type="button">▶ 同时听</button>
+              <button class="kb-btn" id="d2-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d2-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">试试 12（八度）、7（纯五度）、1（小二度）、6（三全音）这四个值，差别非常明显。</p>
+          </div>
+        </div>
+
+        <h2>十二平均律：把八度切成十二等份</h2>
+        <p>八度是天然的边界：走到 2 倍频率，音就「回来」了。问题是，从 1 倍走到 2 倍这一路上，我们该在哪里下脚？<strong>十二平均律</strong>（12-tone equal temperament）给的答案简单粗暴：<strong>切成 12 等份，每一份的比值都相同</strong>。</p>
+        <p>「等份」指的是<strong>比例上的等份</strong>，不是频率差的等份。设每一步乘的倍数是 <em class="kb-math">r</em>，走 12 步要恰好翻倍：</p>
+        <pre><code>r¹² = 2   ⟹   r = 2^(1/12) ≈ 1.059463
+任意音的频率：f = 440 × 2^((n − 69)/12)      （n 为 MIDI 音高编号，A4 = 69）</code></pre>
+        <p>这一步就是<strong>半音</strong>，在吉他上就是<strong>一品</strong>。所以：</p>
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📐 指板的三条换算</p>
+          <p>① <strong>1 品 = 1 半音</strong>，频率 × 1.0595；② <strong>2 品 = 1 全音</strong>；③ <strong>12 品 = 1 八度</strong>，频率 × 2，音名回到原点。指板上任意两点之间隔几品，就是隔几个半音——<strong>这是本书唯一需要你背的换算</strong>。</p>
+        </div>
+
+        <h3>为什么偏偏是 12 份</h3>
+        <p>因为 12 这个数字碰巧让<strong>最重要的那几个比例</strong>都落得很准。人耳最看重的是纯五度（3:2），而 <em class="kb-math">2^(7/12)</em> = 1.49831，与 1.5 只差 0.11%——完全听不出来。把常用音程摊开对比：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>音程</th><th>半音数</th><th>纯律理想比</th><th>纯律音分</th><th>平均律音分</th><th>误差</th><th>听得出吗</th></tr></thead>
+            <tbody>
+              <tr><td>纯八度</td><td>12</td><td>2 : 1</td><td>1200.0</td><td>1200</td><td>0.0</td><td>完美</td></tr>
+              <tr><td><strong>纯五度</strong></td><td>7</td><td>3 : 2</td><td>701.96</td><td>700</td><td>−1.96</td><td><strong>几乎听不出</strong></td></tr>
+              <tr><td>纯四度</td><td>5</td><td>4 : 3</td><td>498.04</td><td>500</td><td>+1.96</td><td>几乎听不出</td></tr>
+              <tr><td><strong>大三度</strong></td><td>4</td><td>5 : 4</td><td>386.31</td><td>400</td><td><strong>+13.69</strong></td><td><strong>偏高，听得出</strong></td></tr>
+              <tr><td>小三度</td><td>3</td><td>6 : 5</td><td>315.64</td><td>300</td><td>−15.64</td><td>偏低，听得出</td></tr>
+              <tr><td>大六度</td><td>9</td><td>5 : 3</td><td>884.36</td><td>900</td><td>+15.64</td><td>偏高，听得出</td></tr>
+              <tr><td>小二度</td><td>1</td><td>16 : 15</td><td>111.73</td><td>100</td><td>−11.73</td><td>本来就不协和</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>音分</strong>（cent）是把一个半音再切成 100 份的细度单位，一个八度 = 1200 音分。训练有素的耳朵大约能分辨 5–6 音分。所以上表说的是：<strong>十二平均律把五度和四度调得几乎完美，代价是三度和六度都被拧歪了十几个音分。</strong></p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">🤘 这里埋着金属乐的一条伏笔</p>
+          <p>平均律的五度只差 2 音分，三度却差近 14 音分——<strong>三度本来就是「不太准」的那个音</strong>。清音下你几乎察觉不到；但一旦挂上高增益失真，失真会把两个音「拌」出大量新频率，那点误差被成倍放大，大三度立刻变成一团糊。这正是<strong>强力和弦只要根音和五度、把三度扔掉</strong>的物理原因之一。第 10 章会让你把这件事亲耳听出来。</p>
+        </div>
+
+        <h3>品格为什么越往上越密</h3>
+        <p>既然频率是等比递增的，品格位置自然也得等比排布。设有效弦长（上弦枕到琴桥）为 <em class="kb-math">L</em>，第 <em class="kb-math">n</em> 品到上弦枕的距离是：</p>
+        <pre><code>d(n) = L × (1 − 2^(−n/12))
+
+d(1)  = L × 0.05613   ≈ L / 17.817     （老木匠的「十七又八」经验法则）
+d(12) = L × 0.5                        （正中间 → 频率翻倍 → 八度）
+d(24) = L × 0.75                       （再取剩下一半的一半）</code></pre>
+        <p>拉动下面的滑块换一把琴（Fender 常见 25.5″≈648 mm，Gibson 常见 24.75″≈629 mm），看品格位置如何随之整体缩放，但<strong>比例关系永远不变</strong>。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：品格尺子（等比刻度，不是等距）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="d3-canvas" height="170"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：第 n 品到上弦枕的距离是 L×(1−2^(−n/12))，因此品格间距逐格缩小；第 12 品恰好落在弦长正中间，第 24 品落在 3/4 处。换一把不同弦长的琴，所有品格按同一比例整体缩放。</p></noscript>
+            <div class="kb-readout">
+              <span>第 1 品 <b id="d3-f1">—</b></span>
+              <span>第 12 品 <b id="d3-f12">—</b></span>
+              <span>1→2 品间距 <b id="d3-g1">—</b></span>
+              <span>11→12 品间距 <b id="d3-g11">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">有效弦长<span class="kb-control-value" id="d3-val"></span>
+                <input type="range" id="d3-len" min="600" max="700" step="1" value="648"></label>
+            </div>
+          </div>
+        </div>
+
+        <h2>音名：给这十二个音起名字</h2>
+        <p>十二个半音，只有<strong>七个字母</strong>：<em class="kb-math">C D E F G A B</em>。剩下五个用升号 <strong>♯</strong>（升高一个半音）或降号 <strong>♭</strong>（降低一个半音）拼出来。为什么七个字母要管十二个位置？因为这套命名不是为吉他设计的，而是为<strong>大调音阶</strong>设计的——而大调音阶的七个音之间，间距本来就不是均匀的。</p>
+        <figure>
+          <svg viewBox="0 0 560 230" width="560" height="230" role="img" aria-label="从 E 到 E 一个八度的键盘图，与 6 弦 0 到 12 品一一对应；E-F 与 B-C 之间没有黑键">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <g fill="var(--kb-surface)" stroke="var(--kb-fg)" stroke-width="1.2">
+                <rect x="40" y="30" width="56" height="120" rx="3"/>
+                <rect x="96" y="30" width="56" height="120" rx="3"/>
+                <rect x="152" y="30" width="56" height="120" rx="3"/>
+                <rect x="208" y="30" width="56" height="120" rx="3"/>
+                <rect x="264" y="30" width="56" height="120" rx="3"/>
+                <rect x="320" y="30" width="56" height="120" rx="3"/>
+                <rect x="376" y="30" width="56" height="120" rx="3"/>
+                <rect x="432" y="30" width="56" height="120" rx="3"/>
+              </g>
+              <g font-size="13" font-weight="700" fill="var(--kb-fg)" text-anchor="middle">
+                <text x="68" y="128">E</text><text x="124" y="128">F</text><text x="180" y="128">G</text>
+                <text x="236" y="128">A</text><text x="292" y="128">B</text><text x="348" y="128">C</text>
+                <text x="404" y="128">D</text><text x="460" y="128">E</text>
+              </g>
+              <g font-size="10.5" fill="var(--kb-fg-muted)" text-anchor="middle">
+                <text x="68" y="145">0品</text><text x="124" y="145">1品</text><text x="180" y="145">3品</text>
+                <text x="236" y="145">5品</text><text x="292" y="145">7品</text><text x="348" y="145">8品</text>
+                <text x="404" y="145">10品</text><text x="460" y="145">12品</text>
+              </g>
+              <g fill="var(--kb-fg)" stroke="var(--kb-fg)" stroke-width="1">
+                <rect x="79" y="30" width="34" height="76" rx="2"/>
+                <rect x="135" y="30" width="34" height="76" rx="2"/>
+                <rect x="191" y="30" width="34" height="76" rx="2"/>
+                <rect x="303" y="30" width="34" height="76" rx="2"/>
+                <rect x="359" y="30" width="34" height="76" rx="2"/>
+              </g>
+              <g font-size="9.5" font-weight="700" fill="var(--kb-surface)" text-anchor="middle">
+                <text x="96" y="70">F♯</text><text x="152" y="70">G♯</text><text x="208" y="70">A♯</text>
+                <text x="320" y="70">C♯</text><text x="376" y="70">D♯</text>
+              </g>
+              <g font-size="9.5" font-weight="700" fill="var(--kb-surface)" text-anchor="middle" opacity="0.75">
+                <text x="96" y="84">G♭</text><text x="152" y="84">A♭</text><text x="208" y="84">B♭</text>
+                <text x="320" y="84">D♭</text><text x="376" y="84">E♭</text>
+              </g>
+              <g font-size="9" fill="var(--kb-surface)" text-anchor="middle" opacity="0.8">
+                <text x="96" y="98">2品</text><text x="152" y="98">4品</text><text x="208" y="98">6品</text>
+                <text x="320" y="98">9品</text><text x="376" y="98">11品</text>
+              </g>
+              <path d="M 68 168 L 68 178 L 124 178 L 124 168" fill="none" stroke="#dc2626" stroke-width="2"/>
+              <text x="96" y="194" text-anchor="middle" font-size="11.5" fill="#dc2626" font-weight="700">E→F 只差 1 品</text>
+              <path d="M 292 168 L 292 178 L 348 178 L 348 168" fill="none" stroke="#dc2626" stroke-width="2"/>
+              <text x="320" y="194" text-anchor="middle" font-size="11.5" fill="#dc2626" font-weight="700">B→C 只差 1 品</text>
+              <text x="180" y="216" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-muted)">其余相邻白键之间都夹着一个黑键 → 差 2 品（一个全音）</text>
+            </g>
+          </svg>
+          <figcaption>把 6 弦 0–12 品摊平，正好对应键盘上从 E 到 E 的一个八度。<strong>E–F 与 B–C 之间没有黑键</strong>，所以它们只差一个半音（一品）；其余相邻字母之间都差一个全音（两品）。这条不规则的间距，正是七个字母管十二个音的原因。</figcaption>
+        </figure>
+        <p>于是有了两条必须记住的例外：<strong>E 到 F 是半音，B 到 C 是半音</strong>，其余相邻字母（C–D、D–E、F–G、G–A、A–B）都是全音。在指板上验证极其容易：6 弦 0 品是 E，1 品就是 F；7 品是 B，8 品就是 C。</p>
+
+        <h3>同音异名：同一个品位，两个名字</h3>
+        <p>6 弦 2 品这个位置，比 F 高半音，所以叫 <strong>F♯</strong>；它同时比 G 低半音，所以也叫 <strong>G♭</strong>。同一个声音、同一个品位、两个名字，这叫<strong>同音异名</strong>（enharmonic equivalent）。</p>
+        <p>它不是冗余，而是<strong>上下文</strong>：一个音该叫什么，取决于它在当前调里扮演什么角色。E 大调里那个音是「升上去的 F」，写成 F♯；A♭ 大调里它是「降下来的 G」，写成 G♭。<strong>音高相同，功能不同，写法就不同。</strong>第 4 章讲调号时会给出完整的判定规则；在那之前，你只需要知道两个名字指的是同一个品位。</p>
+
+        <h2>标准调弦：六根空弦的名字与频率</h2>
+        <p>把上面所有东西合起来，就能读懂这张表——它是你今后查任何指板位置的起点。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>弦</th><th>音名</th><th>MIDI</th><th>频率 (Hz)</th><th>到下一根细弦相隔</th></tr></thead>
+            <tbody>
+              <tr><td>6（最粗）</td><td>E2</td><td>40</td><td>82.41</td><td>5 个半音 · 纯四度</td></tr>
+              <tr><td>5</td><td>A2</td><td>45</td><td>110.00</td><td>5 个半音 · 纯四度</td></tr>
+              <tr><td>4</td><td>D3</td><td>50</td><td>146.83</td><td>5 个半音 · 纯四度</td></tr>
+              <tr><td>3</td><td>G3</td><td>55</td><td>196.00</td><td><strong>4 个半音 · 大三度</strong></td></tr>
+              <tr><td>2</td><td>B3</td><td>59</td><td>246.94</td><td>5 个半音 · 纯四度</td></tr>
+              <tr><td>1（最细）</td><td>E4</td><td>64</td><td>329.63</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>注意那个<strong>异类</strong>：3 弦到 2 弦只隔 4 个半音，其余都是 5 个。这就是为什么用「五品调弦法」时，唯独 3 弦要按<strong>四品</strong>去对 2 弦空弦。这个看似别扭的设计是有代价也有回报的取舍，第 2 章会讲它换来了什么。</p>
+        <p>还有 <strong>A4 = 440 Hz</strong>：这是国际通用的调音基准。整个十二平均律体系是一张<strong>相对</strong>的比例网，必须钉一颗钉子才能落到具体频率上，440 Hz 就是那颗钉子。你的调音器、乐队的键盘、录音棚的软件，默认都钉在这里；有些乐队会整体降到 432 Hz 或升到 442 Hz，那只是把整张网平移，内部所有比例关系分毫不变。</p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 1.1</p>
+          <p>求 6 弦 7 品的音名与频率。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>第一步：数半音。</strong>6 弦空弦是 E2，7 品意味着往上走 7 个半音。从 E 开始数：F(1) F♯(2) G(3) G♯(4) A(5) A♯(6) <strong>B(7)</strong>。所以音名是 <strong>B2</strong>。</p>
+            <p><strong>第二步：算频率。</strong>频率乘 <em class="kb-math">2^(7/12)</em>：<br>
+            <em class="kb-math">82.41 × 2^(7/12) = 82.41 × 1.49831 ≈ 123.47 Hz</em>。</p>
+            <p><strong>顺带记住</strong>：7 个半音就是<strong>纯五度</strong>，是全书出现频率最高的音程（强力和弦就靠它）。E 往上的纯五度是 B——这个「E–B」的组合你会在后面见到无数次。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 1.2</p>
+          <p>已知 A4 = 440 Hz，不查表求出 A2 与 A5 的频率。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p>只用一条规则：<strong>八度＝频率翻倍</strong>，不需要动 <em class="kb-math">2^(1/12)</em>。</p>
+            <p>A2 比 A4 低<strong>两个</strong>八度 → 除以 2 两次：<em class="kb-math">440 ÷ 2 ÷ 2 = 110 Hz</em>（这正是 5 弦空弦）。<br>
+            A5 比 A4 高一个八度 → <em class="kb-math">440 × 2 = 880 Hz</em>。</p>
+            <p>音名后面的数字（A2、A4）叫<strong>八度标记</strong>，数字每加 1 就是高一个八度。所以只要认得一个 A，所有 A 都能秒算。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 1.3</p>
+          <p>验证「5 弦 5 品与 4 弦空弦是同一个音」，并解释为什么 3 弦要按 <strong>4 品</strong>才能对上 2 弦空弦。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>5 弦 5 品：</strong>5 弦空弦 A2，往上 5 个半音：A♯(1) B(2) C(3) C♯(4) <strong>D(5)</strong> → D3，正是 4 弦空弦。频率验证：<em class="kb-math">110 × 2^(5/12) = 110 × 1.33484 ≈ 146.83 Hz</em> ✓。</p>
+            <p><strong>为什么 3 弦是 4 品：</strong>回头看调弦表——6→5、5→4、4→3、2→1 这四组相邻弦都相隔 <strong>5 个半音</strong>，所以按 5 品刚好补上；唯独 3 弦（G3）到 2 弦（B3）只相隔 <strong>4 个半音</strong>（G→G♯→A→A♯→B），补 4 个半音就够了，按 5 品反而会高出一个半音。</p>
+            <p>换句话说，「五品调弦法」的那个例外不是玄学，就是<strong>数半音</strong>：相隔几个半音，就按第几品。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>5 弦空弦是 A2 = 110 Hz。那么 5 弦 12 品是什么音、多少赫兹？5 弦 24 品呢？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：5 弦 12 品是 <strong>A3 = 220 Hz</strong>；24 品是 <strong>A4 = 440 Hz</strong>。</p>
+            <p><strong>解析</strong>：12 品＝12 个半音＝一个八度＝频率翻倍，音名不变只升一个八度标记，所以 110 × 2 = 220 Hz。24 品是两个八度，再翻一倍得 440 Hz——正好是标准音 A4。这也是为什么很多琴的 24 品被叫作「两个八度」：一把 24 品的琴，每根弦的音域正好覆盖两个八度。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>6 弦 5 品是什么音？它和 5 弦空弦的关系是什么？请用「半音数」而不是「我记得是这样」来解释。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：6 弦 5 品是 <strong>A2</strong>，与 5 弦空弦是<strong>同一个音</strong>（同音高、同频率 110 Hz）。</p>
+            <p><strong>解析</strong>：6 弦空弦 E2 到 5 弦空弦 A2 相隔 5 个半音（E→F→F♯→G→G♯→A）。在 6 弦上按 5 品，正是把这 5 个半音补齐，于是两者重合。这就是「五品调弦法」的原理：<strong>不是记指法，而是数半音</strong>。顺带一提，5 个半音＝纯四度——这解释了标准调弦为什么被称作「以四度为主的调弦」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>下面哪几对相邻字母之间只差<strong>一个半音</strong>（一品）？C–D、E–F、G–A、B–C、A–B。请在 6 弦上分别指出这两对音的品位。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：只有 <strong>E–F</strong> 和 <strong>B–C</strong>。其余（C–D、G–A、A–B）都差一个全音（两品）。</p>
+            <p><strong>解析</strong>：在 6 弦上验证——0 品 E，1 品就是 F（相差一品）；7 品 B，8 品就是 C（相差一品）。而 3 品 G 到 5 品 A 隔了两品，中间 4 品是 G♯/A♭。</p>
+            <p>这两个「天生的半音」是七字母命名法的关键：正因为 E–F 与 B–C 之间没有空位，七个字母才能不重不漏地覆盖十二个音中的七个。第 4 章会看到，大调音阶的「全全半全全全半」结构，就是这两个半音位置的直接后果。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>1 弦 2 品是什么音？请写出它的<strong>两个</strong>名字，并说明什么时候该用哪一个。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：1 弦空弦是 E4，2 品往上两个半音 → <strong>F♯4</strong>，也可以写成 <strong>G♭4</strong>。</p>
+            <p><strong>解析</strong>：同一个品位、同一个频率（约 370.0 Hz），两个名字，这叫<strong>同音异名</strong>。选哪个取决于它在调里的角色：如果当前是 D 大调、E 大调、G 大调这类<strong>用升号</strong>的调，它是「升上去的 F」，写 F♯；如果是 D♭ 大调这类<strong>用降号</strong>的调，它是「降下来的 G」，写 G♭。</p>
+            <p>判断的完整规则要等第 4 章的调号；现在只需建立一个观念：<strong>音名不是音高的标签，而是音高在某个调里的职务名称。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一把有效弦长 648 mm 的琴，第 7 品到上弦枕的距离是多少？如果有人「想当然」地认为 24 个品应该等距排布，他会把第 7 品装在哪里？差多少？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>正确位置</strong>：<em class="kb-math">d(7) = 648 × (1 − 2^(−7/12)) = 648 × (1 − 0.66742) ≈ 215.5 mm</em>。</p>
+            <p><strong>等距假设</strong>：648 × 7/24 = <strong>189.0 mm</strong>，比正确位置<strong>短了约 26.5 mm</strong>——差不多整整一品的宽度。</p>
+            <p><strong>解析</strong>：等距是加法思维，等比才是听觉的真相。若真按等距装品，第 7 品发出的音会明显偏低（弦振动段太长），而且越往高把位偏得越离谱；到 24 品处，等距假设给出 648 mm（＝琴桥位置），意味着弦长为零——荒谬。这也解释了演示 3 里两行刻度为什么越走越分家：<strong>一个是等差数列，一个是等比数列。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么 12 品的自然泛音（手指轻触不按下去）最容易弹出来？还有哪两个位置也比较容易？分别得到什么音？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：12 品在弦长的 <strong>1/2</strong> 处，是二次谐波的节点，得到<strong>高一个八度</strong>的音；<strong>7 品</strong>（1/3 处）得到高一个八度加纯五度的音；<strong>5 品</strong>（1/4 处）得到高两个八度的音。</p>
+            <p><strong>解析</strong>：一根弦本来就同时以 <em class="kb-math">f</em>、<em class="kb-math">2f</em>、<em class="kb-math">3f</em>、<em class="kb-math">4f</em>…… 的方式在振动。轻触某个位置，等于强行把该点按住不动——凡是在那一点<strong>本来就不动</strong>（节点）的谐波得以保留，其余全被掐掉。1/2 处是 2f 的节点，1/3 处是 3f 的节点，1/4 处是 4f 的节点，所以这三处最灵。</p>
+            <p>注意 <em class="kb-math">3f</em> 相对 <em class="kb-math">f</em> 是「八度＋纯五度」，这正是纯律 3:2 的来源——<strong>泛音列是所有和声理论的源头</strong>，第 3 章会正式回到这里。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>平均律的纯五度只比理想值低约 2 音分，大三度却比理想值高约 14 音分。挂上高增益失真之后，哪一个更容易暴露问题？为什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>大三度</strong>更容易出问题。</p>
+            <p><strong>解析</strong>：分两层。第一层，14 音分本身就在人耳可分辨范围内（约 5–6 音分），清音下仔细听已经有点「发涩」。第二层才是关键：失真是<strong>非线性</strong>过程，两个频率 <em class="kb-math">f₁</em>、<em class="kb-math">f₂</em> 一起进去，出来的不只是它们的谐波，还有 <em class="kb-math">f₁ ± f₂</em>、<em class="kb-math">2f₁ − f₂</em> 这类<strong>互调产物</strong>。原本 14 音分的失谐，会在这些新生成的频率上被<strong>成倍放大</strong>，变成明显的拍频与浑浊感。</p>
+            <p>而纯五度只差 2 音分，且 3:2 的关系让互调产物大多落在已有的谐波上，不产生新的冲突。<strong>这就是强力和弦（只有根音、五度、八度）在重型音色下依旧干净的原因</strong>——不是审美选择，是物理约束。第 10 章会用可切增益的演示把这个过程摊开给你听。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>假设有人造了一把把八度切成 <strong>19 等份</strong>的吉他（19-TET）。纯五度和大三度分别落在第几步？误差各是多少音分？相比十二平均律，是更准还是更差？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>一步的大小</strong>：1200 ÷ 19 ≈ <strong>63.16 音分</strong>。</p>
+            <p><strong>纯五度</strong>（理想 701.96 音分）：701.96 ÷ 63.16 ≈ 11.11 → 取 <strong>11 步</strong> = 694.74 音分，误差 <strong>−7.2 音分</strong>（十二平均律是 −2.0）→ <strong>更差</strong>。</p>
+            <p><strong>大三度</strong>（理想 386.31 音分）：386.31 ÷ 63.16 ≈ 6.12 → 取 <strong>6 步</strong> = 378.95 音分，误差 <strong>−7.4 音分</strong>（十二平均律是 +13.7）→ <strong>准得多</strong>。</p>
+            <p><strong>解析与结论</strong>：19-TET 用「五度变差」换「三度变好」。对以三度叠置为核心的文艺复兴合唱、或某些爵士和声来说，这笔交易相当划算；但对<strong>以五度为骨架</strong>的摇滚与金属恰恰是灾难——强力和弦立刻多出 7 音分的失谐，高增益下会明显发抖。再加上一个八度 19 品意味着品格密度提高 58%，手指几乎按不下去。<strong>十二平均律赢在「五度极准 + 手能按到 + 十二个音可以循环转调」这三件事的组合</strong>，而不是在任何单项上最优。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 1.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>小提琴没有品，吉他有品。这个差别给了小提琴什么吉他得不到的自由？吉他为什么不能照做？现实中有人试过怎么绕过这个限制？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>小提琴的自由</strong>：手指落点连续可调，因此可以<strong>随和声上下文微调音高</strong>——需要一个甜美的大三度时，把它往下压十几个音分靠近纯律的 5:4；需要一个明亮的导音时，再往上顶一点。四重奏能奏出比钢琴「更纯」的和声，靠的就是这种实时微调。</p>
+            <p><strong>吉他为什么不能</strong>：两个硬约束。① <strong>品是横贯所有弦的金属条</strong>，位置一旦确定，六根弦在同一品上共享同一个音高刻度，无法为某一根弦单独让步；② 吉他是<strong>和弦乐器</strong>，六个音同时发声，即使能微调，一个音的「最佳位置」在不同和弦里也会互相打架。于是只能接受一个对所有调都<strong>同样略微不准、但绝不难听</strong>的折中——这正是平均律的设计目标。</p>
+            <p><strong>现实中的绕法</strong>：① <strong>补偿式琴桥</strong>（每根弦的有效长度单独微调），解决按弦张力带来的音准偏移；② <strong>扇形品</strong>（fanned frets / multi-scale），让低音弦更长、高音弦更短，改善张力与音色，但每根弦仍是平均律；③ <strong>曲线品</strong>（如 True Temperament 一类方案），把品条做成蜿蜒的形状，为每根弦在每一品上给出略微不同的位置，逼近某种折中律。这些方案都在「让吉他更准」这条路上，但没有一个能获得小提琴那种<strong>实时、按上下文变化</strong>的自由——那是无品乐器的专利。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>音高就是频率</strong>，耳朵感受的是频率的<strong>比值</strong>而非差值，所以「等距」的是听感，不是赫兹。② <strong>八度＝频率翻倍</strong>，因为高音的泛音全部落在低音的泛音上；协和度的本质是泛音重合的程度。③ <strong>十二平均律</strong>把八度切成 12 个等比的半音，<em class="kb-math">r = 2^(1/12) ≈ 1.0595</em>；它让五度几乎完美（−2 音分），代价是三度偏高约 14 音分——这个代价将在高增益失真下被放大，直接催生了强力和弦。④ 指板上 <strong>1 品＝1 半音、2 品＝1 全音、12 品＝1 八度</strong>，这是本书唯一需要背的换算。⑤ 七个字母管十二个音，靠的是 <strong>E–F 与 B–C 天生只差半音</strong>；同一个品位的两个名字（同音异名）反映的是它在调里的<strong>职务</strong>而非音高。</p>
+          <p><strong>下一章预告</strong>：这一章只用了一根弦。第 2 章《指板地图：调弦、八度形状与把位》会把六根弦拼起来——为什么 3 弦到 2 弦偏偏差一个大三度？同一个音在指板上有几个位置、怎么一眼找到？八度形状为什么是记住整块指板的最快路径？学完那一章，你会开始把指板当成一张<strong>可以查的地图</strong>，而不是一片需要死记的丛林。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./02-指板地图.html"><strong>下一章：第 2 章 · 指板地图：调弦、八度形状与把位</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory;
+      var redraws = [];
+      function $(id) { return document.getElementById(id); }
+      function cssVar(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+
+      /* ---------- 演示 1：一根弦就是一把尺子 ---------- */
+      var OPEN = 40;                       // 6 弦空弦 E2
+      var sel = -1;
+      KBG.soundToggle($("d1-sound"));
+
+      function d1Marks() {
+        var out = [];
+        for (var f = 0; f <= 12; f++) {
+          out.push({
+            string: 0, fret: f,
+            kind: f === sel ? "third" : ((f === 0 || f === 12) ? "root" : "note")
+          });
+        }
+        return out;
+      }
+      var fb1 = KBG.fretboard($("d1-board"), {
+        tuning: [OPEN], fromFret: 1, toFret: 12, showOpen: true,
+        clickable: true, labels: "name", marks: d1Marks(),
+        title: "6 弦 0–12 品，点击发声",
+        onClick: function (info) {
+          sel = info.fret;
+          fb1.setMarks(d1Marks());
+          fb1.flash(0, info.fret, "third");
+          A.setDrive(0.12);
+          A.pluck(info.midi, { gain: 0.85 });
+          $("d1-name").textContent = T.name(info.midi, { octave: 1 });
+          $("d1-freq").textContent = T.freq(info.midi).toFixed(2) + " Hz";
+          $("d1-semi").textContent = info.fret + " 个半音";
+          $("d1-ratio").textContent = Math.pow(2, info.fret / 12).toFixed(4) + " 倍";
+        }
+      });
+
+      $("d1-run").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12);
+        var ev = [];
+        for (var f = 0; f <= 12; f++) ev.push({ t: f * 0.5, midi: OPEN + f, dur: 0.5 });
+        A.sequence(ev, { bpm: 150 });
+        $("d1-msg").textContent = "十三个音，十二步。每一步的频率增量都不同（4.9 Hz → 9.2 Hz），但听起来一样远——因为比值恒定。";
+      });
+      $("d1-oct").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12);
+        A.sequence([
+          { t: 0, midi: OPEN, dur: 1 }, { t: 1, midi: OPEN + 12, dur: 1 },
+          { t: 2, midi: OPEN, dur: 1 }, { t: 3, midi: OPEN + 12, dur: 1 },
+          { t: 4, midis: [OPEN, OPEN + 12], dur: 2 }
+        ], { bpm: 96 });
+        $("d1-msg").textContent = "82.41 Hz 与 164.81 Hz：频率差了一倍，听起来却「是同一个音」。最后两个音叠在一起——完全融合，几乎分不出是两个音。";
+      });
+      $("d1-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：频率比与协和度 ---------- */
+      var ROOT = 52;                       // E3
+      var semi = 12;
+      var c2 = $("d2-canvas");
+      var ctx2 = KB.fitCanvas(c2, 220, function () { draw2(); });
+
+      function draw2() {
+        var w = c2.clientWidth || 600, h = 220;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx2.clearRect(0, 0, w, h);
+        var x0 = 76, x1 = w - 12, span = x1 - x0;
+        if (span < 60) return;
+        var CYC = 4, r = Math.pow(2, semi / 12);
+
+        /* 根音每个周期的分界线：看上方音是否在同一处「对齐」 */
+        ctx2.strokeStyle = faint; ctx2.globalAlpha = 0.45;
+        ctx2.setLineDash([3, 4]); ctx2.lineWidth = 1;
+        for (var k = 0; k <= CYC; k++) {
+          var gx = x0 + (span * k) / CYC;
+          ctx2.beginPath(); ctx2.moveTo(gx, 14); ctx2.lineTo(gx, h - 10); ctx2.stroke();
+        }
+        ctx2.setLineDash([]); ctx2.globalAlpha = 1;
+
+        var lanes = [
+          { y: 46, amp: 26, color: accent, cyc: CYC, label: "根音 E3" },
+          { y: 116, amp: 26, color: "#dc2626", cyc: CYC * r, label: "上方音" },
+          { y: 188, amp: 24, color: "#16a34a", cyc: null, label: "两者相加" }
+        ];
+        lanes.forEach(function (ln) {
+          ctx2.strokeStyle = faint; ctx2.globalAlpha = 0.5; ctx2.lineWidth = 1;
+          ctx2.beginPath(); ctx2.moveTo(x0, ln.y); ctx2.lineTo(x1, ln.y); ctx2.stroke();
+          ctx2.globalAlpha = 1;
+          ctx2.strokeStyle = ln.color; ctx2.lineWidth = 2;
+          ctx2.beginPath();
+          for (var i = 0; i <= span; i++) {
+            var t = i / span, v;
+            if (ln.cyc === null) {
+              v = (Math.sin(2 * Math.PI * CYC * t) + Math.sin(2 * Math.PI * CYC * r * t)) / 2;
+            } else {
+              v = Math.sin(2 * Math.PI * ln.cyc * t);
+            }
+            var px = x0 + i, py = ln.y - v * ln.amp;
+            if (i === 0) ctx2.moveTo(px, py); else ctx2.lineTo(px, py);
+          }
+          ctx2.stroke();
+          ctx2.fillStyle = muted;
+          ctx2.font = "12px -apple-system, PingFang SC, sans-serif";
+          ctx2.textAlign = "right";
+          ctx2.fillText(ln.label, x0 - 8, ln.y + 4);
+        });
+        ctx2.fillStyle = muted;
+        ctx2.font = "11px -apple-system, PingFang SC, sans-serif";
+        ctx2.textAlign = "left";
+        ctx2.fillText("虚线＝根音每走完一个周期。上方音若在虚线处也刚好走完整数个周期，两个音就「合得上」。", x0, 14);
+      }
+      redraws.push(draw2);
+
+      function update2() {
+        var iv = T.interval(semi);
+        var et = Math.pow(2, semi / 12);
+        var cents = 1200 * Math.log(iv.ratioVal) / Math.LN2 - 100 * semi;
+        $("d2-name").textContent = iv.cn;
+        $("d2-et").textContent = et.toFixed(4);
+        $("d2-ji").textContent = iv.ratio;
+        $("d2-cent").textContent = (cents >= 0 ? "+" : "") + cents.toFixed(1) + " 音分";
+      }
+      KB.bindRange($("d2-semi"), $("d2-val"), function (v) { return v + " 个半音"; },
+        function (v) { semi = v; draw2(); update2(); });
+
+      $("d2-seq").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0);
+        A.pluck(ROOT, { gain: 0.85 });
+        A.pluck(ROOT + semi, { delay: 0.8, gain: 0.85 });
+        $("d2-msg").textContent = "先后听，判断的是「距离感」；同时听，判断的才是「协和度」。两种听法要分开练。";
+      });
+      $("d2-both").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0);
+        A.pluck(ROOT, { gain: 0.7 });
+        A.pluck(ROOT + semi, { gain: 0.7 });
+        var iv = T.interval(semi);
+        $("d2-msg").textContent = "当前是「" + iv.cn + "」，理想频率比 " + iv.ratio +
+          "。比值越简单越融合——这就是协和度的全部秘密。";
+      });
+      $("d2-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 3：品格尺子 ---------- */
+      var L = 648;
+      var c3 = $("d3-canvas");
+      var ctx3 = KB.fitCanvas(c3, 170, function () { draw3(); });
+      function dist(n, len) { return len * (1 - Math.pow(2, -n / 12)); }
+
+      function draw3() {
+        var w = c3.clientWidth || 600, h = 170;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var fg = cssVar("--kb-fg", "#1e293b");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx3.clearRect(0, 0, w, h);
+        var x0 = 34, x1 = w - 26, span = x1 - x0;
+        if (span < 60) return;
+        ctx3.font = "11px -apple-system, PingFang SC, sans-serif";
+
+        /* 上排：真实的等比刻度 */
+        var yA = 58;
+        ctx3.strokeStyle = muted; ctx3.lineWidth = 1.4;
+        ctx3.beginPath(); ctx3.moveTo(x0, yA); ctx3.lineTo(x1, yA); ctx3.stroke();
+        ctx3.strokeStyle = fg; ctx3.lineWidth = 4;
+        ctx3.beginPath(); ctx3.moveTo(x0, yA - 15); ctx3.lineTo(x0, yA + 15); ctx3.stroke();
+        ctx3.beginPath(); ctx3.moveTo(x1, yA - 15); ctx3.lineTo(x1, yA + 15); ctx3.stroke();
+        var LABEL = { 1: 1, 3: 1, 5: 1, 7: 1, 9: 1, 12: 1, 15: 1, 17: 1, 19: 1, 21: 1, 24: 1 };
+        for (var n = 1; n <= 24; n++) {
+          var x = x0 + span * (dist(n, L) / L);
+          var big = (n === 12 || n === 24);
+          ctx3.strokeStyle = big ? accent : muted;
+          ctx3.lineWidth = big ? 2.4 : 1.2;
+          ctx3.beginPath(); ctx3.moveTo(x, yA - 13); ctx3.lineTo(x, yA + 13); ctx3.stroke();
+          if (LABEL[n]) {
+            ctx3.fillStyle = big ? accent : muted;
+            ctx3.textAlign = "center";
+            ctx3.fillText(String(n), x, yA - 19);
+          }
+        }
+        ctx3.fillStyle = accent; ctx3.textAlign = "left";
+        ctx3.fillText("等比（真实品格）：12 品落在正中间", x0, yA + 32);
+        ctx3.strokeStyle = accent; ctx3.setLineDash([4, 3]); ctx3.lineWidth = 1;
+        var xm = x0 + span * 0.5;
+        ctx3.beginPath(); ctx3.moveTo(xm, 18); ctx3.lineTo(xm, yA + 14); ctx3.stroke();
+        ctx3.setLineDash([]);
+        ctx3.fillStyle = accent; ctx3.textAlign = "center";
+        ctx3.fillText("弦长中点", xm, 14);
+
+        /* 下排：等距的错误直觉，用于对比 */
+        var yB = 132;
+        ctx3.strokeStyle = faint; ctx3.lineWidth = 1.2;
+        ctx3.beginPath(); ctx3.moveTo(x0, yB); ctx3.lineTo(x1, yB); ctx3.stroke();
+        for (var m = 1; m <= 24; m++) {
+          var xb = x0 + (span * m) / 24;
+          ctx3.strokeStyle = faint; ctx3.lineWidth = 1;
+          ctx3.beginPath(); ctx3.moveTo(xb, yB - 9); ctx3.lineTo(xb, yB + 9); ctx3.stroke();
+        }
+        ctx3.fillStyle = faint; ctx3.textAlign = "left";
+        ctx3.fillText("等距（想当然）：越往高把位错得越离谱，24 品处弦长归零", x0, yB + 26);
+      }
+      redraws.push(draw3);
+
+      function update3() {
+        $("d3-f1").textContent = dist(1, L).toFixed(1) + " mm";
+        $("d3-f12").textContent = dist(12, L).toFixed(1) + " mm（＝L/2）";
+        $("d3-g1").textContent = (dist(2, L) - dist(1, L)).toFixed(1) + " mm";
+        $("d3-g11").textContent = (dist(12, L) - dist(11, L)).toFixed(1) + " mm";
+      }
+      KB.bindRange($("d3-len"), $("d3-val"),
+        function (v) { return v + " mm（" + (v / 25.4).toFixed(2) + "″）"; },
+        function (v) { L = v; draw3(); update3(); });
+
+      /* 切换深浅色主题时重绘所有画布（SVG 用 CSS 变量会自动跟随） */
+      if (window.MutationObserver) {
+        new MutationObserver(function () {
+          redraws.forEach(function (f) { f(); });
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>00 大纲与学习路线 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材总纲：三篇十六章的学习路线——前九章讲透乐理，后七章接到摇滚与金属；每章配可点击发声的指板演示、TAB 谱例与分层习题。">
+  <meta name="kb:tags" content="吉他,电吉他,乐理,教材,大纲,学习路线,摇滚,金属,指板,jtyl,dgtyl">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    /* 本页专属：章节状态徽章 */
+    .toc-status {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 1px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .toc-todo {
+      color: var(--kb-fg-muted);
+      background: var(--kb-surface-alt);
+      border: 1px solid var(--kb-border);
+    }
+    .toc-done {
+      color: var(--kb-ok);
+      background: var(--kb-ok-soft);
+      border: 1px solid var(--kb-ok);
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>电吉他乐理教材：大纲与学习路线</h1>
+        <p class="kb-lead">这是一套写给<strong>会弹、但不懂为什么这么弹</strong>的电吉他乐手的乐理教材。你能照着 TAB 弹完一整首歌，会按 Em、G、C、D，但说不清它们凭什么排在一起；你知道小调五声那个「盒子」很好用，却不知道它从哪来、为什么一挪把位就不对味。这十六章就是来补这块的：<strong>前九章把乐理讲透，后七章把乐理接到失真上</strong>——用摇滚与金属真正在用的语汇讲强力和弦、Riff、五声、调式与降调。全程用<strong>指板 + TAB</strong> 解释，不要求你识五线谱；每章都有<strong>能点出声音</strong>的演示，因为乐理最终是要靠耳朵学会的。</p>
+
+        <h2>教材定位与用法</h2>
+        <ul>
+          <li><strong>适合谁</strong>：能按常见开放和弦、能照 TAB 弹几首歌，但乐理基本为零的电吉他手。不需要识谱，不需要会视奏，不需要有键盘。</li>
+          <li><strong>核心理念</strong>：<strong>先听见，再命名</strong>。每个概念先在演示里听出差别、在指板上看出形状，最后才告诉你它叫什么（音程、调式、属七、三全音……）。每章新术语不超过 6 个，首次出现给英文原名，之后只用中文。</li>
+          <li><strong>怎么用</strong>：每章约 30–50 分钟。<strong>手边放着琴读</strong>——所有指板图都可以直接照着按，演示的声音是给你对答案用的，不是替代你弹。习题分「基础 / 进阶 / 挑战」三档，全部附可折叠的完整解析，先做再看。</li>
+          <li><strong>范围取舍</strong>：不教持琴、拨片、基础练习等技术课题（那属于教程而非乐理）；不教五线谱视奏；配器与混音只在第 16 章末尾点到为止。爵士和声、无调性与序列音乐超出本教材范围，末章给出后续路径。</li>
+        </ul>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🔊 这套教材会出声</p>
+          <p>每一章都内置基于浏览器原生音频合成的演示：可点击发声的指板、音程听辨、和弦试听、节拍器，以及第 10 章的「同一个音程，清音 vs 高增益」对比。<strong>不需要装任何插件</strong>，但需要允许页面播放声音——浏览器规定必须由你先点一下才会出声。下面先试试音色：</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎸 音色试听：本教材的声音长什么样</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。本教材的所有发声演示均使用浏览器内置的 Web Audio 实时合成拨弦音色（Karplus–Strong 算法），并可切换失真增益——同一个和弦在清音与高增益下会呈现完全不同的和声效果，这正是第 10 章的主题。</p></noscript>
+            <div id="demo-sound"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="btn-clean" type="button">🎸 清音：Em 和弦</button>
+              <button class="kb-btn" id="btn-dirty" type="button">🤘 高增益：E5 强力和弦</button>
+              <button class="kb-btn" id="btn-run" type="button">🎵 E 小调五声跑动</button>
+              <button class="kb-btn" id="btn-stop" type="button">■ 停止</button>
+            </div>
+            <p id="demo-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点任意一个按钮开始。三个按钮用的是同一个合成引擎，差别只在<strong>增益</strong>与<strong>弹的音</strong>——这两件事正是全书的两条主线：和声（弹什么音）与音色（怎么让它响）。</p>
+          </div>
+        </div>
+
+        <h2>学习路线图</h2>
+        <figure>
+          <svg viewBox="0 0 680 200" width="680" height="200" role="img" aria-label="三篇学习路线：乐理地基、和声与节奏、摇滚与金属实战依次递进">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <rect x="10" y="35" width="192" height="130" rx="14" fill="var(--kb-accent)" opacity="0.12"/>
+              <rect x="10" y="35" width="192" height="130" rx="14" fill="none" stroke="var(--kb-accent)" stroke-width="1.5"/>
+              <text x="106" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第一篇 · 乐理地基</text>
+              <text x="106" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 1–5 章</text>
+              <text x="106" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">十二平均律 · 指板地图</text>
+              <text x="106" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">音程 · 大调 · 小调家族</text>
+              <text x="106" y="152" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">把指板变成有名字的地图</text>
+
+              <path d="M 208 100 h 30" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 238 100 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="244" y="35" width="192" height="130" rx="14" fill="#16a34a" opacity="0.10"/>
+              <rect x="244" y="35" width="192" height="130" rx="14" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="340" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第二篇 · 和声与节奏</text>
+              <text x="340" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 6–9 章</text>
+              <text x="340" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">三和弦 · 顺阶与功能</text>
+              <text x="340" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">七和弦 · 节奏与律动</text>
+              <text x="340" y="152" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">从单音到会走路的进行</text>
+
+              <path d="M 442 100 h 30" stroke="var(--kb-fg-muted)" stroke-width="2"/>
+              <path d="M 472 100 l -8 -5 v 10 z" fill="var(--kb-fg-muted)"/>
+
+              <rect x="478" y="35" width="192" height="130" rx="14" fill="#dc2626" opacity="0.10"/>
+              <rect x="478" y="35" width="192" height="130" rx="14" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+              <text x="574" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="var(--kb-fg)">第三篇 · 摇滚与金属</text>
+              <text x="574" y="90" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">第 10–16 章</text>
+              <text x="574" y="112" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">失真 · Riff · 五声与蓝调</text>
+              <text x="574" y="132" text-anchor="middle" font-size="12.5" fill="var(--kb-fg-muted)">进行 · 调式 · 降调 · 独奏</text>
+              <text x="574" y="152" text-anchor="middle" font-size="11.5" fill="var(--kb-fg-faint)">把乐理接到失真上</text>
+            </g>
+          </svg>
+          <figcaption>前两篇是纯乐理，任何乐器通用，只是全部用指板讲；第三篇才是电吉他与摇滚金属专属。第一篇是后两篇的公共语言，<strong>不建议跳过</strong>——第 12 章的五声盒子、第 14 章的调式色彩，都要靠第 3、4 章的音程与音阶才能讲得通。</figcaption>
+        </figure>
+
+        <h2>第一篇 · 乐理地基（第 1–5 章）</h2>
+        <p>目标：把「一堆按不完的品格」变成一张<strong>有名字、有距离感</strong>的地图。学完这五章，你随手按下一个把位，就能说出它是什么音、离根音几度。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>01</td><td><a href="./01-音律与指板.html">音、律与指板：一把等分的尺子</a></td>
+                <td>音高就是频率；八度＝频率翻倍；十二平均律为什么把八度切成 12 份；一品＝一个半音；音名、升降号与同音异名；标准音 A4 = 440Hz</td>
+                <td>发声演示：可点击的单弦指板（听到「一品一个半音」）；八度倍频对比；十二平均律频率表</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>02</td><td><a href="./02-指板地图.html">指板地图：调弦、八度形状与把位</a></td>
+                <td>标准调弦 EADGBE 的由来；为什么 2 弦偏偏差一个大三度；八度形状（跨两弦 / 跨三弦）；同一个音在指板上的多个位置；把位与手型</td>
+                <td>发声演示：全指板点击发声，切换「音名 / 级数」标注；点一个音高亮全指板所有同名音</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>03</td><td><a href="./03-音程.html">音程：和声的原子</a></td>
+                <td>度数与音数、大小增减完美；协和与不协和的物理来源（频率比与拍频）；三全音为什么刺耳；音程在指板上是固定形状</td>
+                <td>发声演示：音程听辨器（任选两音，同时/先后播放）；频率比可视化；音程形状叠加到指板</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>04</td><td><a href="./04-大调音阶与五度圈.html">大调音阶、调号与五度圈</a></td>
+                <td>全全半全全全半；七个级数各自的性格；调号从何而来；五度圈的构造与三种用法；大调音阶在指板上的形状</td>
+                <td>交互五度圈：点任一调 → 显示音阶、调号、顺阶和弦并逐音发声</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>05</td><td><a href="./05-小调家族.html">小调家族：自然、和声、旋律</a></td>
+                <td>自然小调＝大调的第六级；和声小调升七级换来导音；旋律小调；关系大小调 vs 同主音大小调；为什么摇滚偏爱小调</td>
+                <td>发声演示：同根音三种小调并排对比，高亮「被改动的那一个音」并即时听差别</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第二篇 · 和声与节奏（第 6–9 章）</h2>
+        <p>目标：从单音走到<strong>和弦与进行</strong>，并把节奏这条被大多数乐理书轻视、却决定摇滚生死的轴补上。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>06</td><td><a href="./06-三和弦与和弦符号.html">三和弦与和弦符号</a></td>
+                <td>叠三度造和弦；大 / 小 / 增 / 减四种三和弦；转位；开放和弦指法为什么长成那样；和弦＝音阶的切片</td>
+                <td>和弦构造器：选根音 + 性质 → 显示构成音、指板指法图并扫弦发声</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>07</td><td><a href="./07-顺阶和弦与和声功能.html">顺阶和弦与和声功能</a></td>
+                <td>罗马数字级数；大调与小调的顺阶和弦表；主—下属—属（T/S/D）三种功能；终止式；和弦进行为什么「想回家」</td>
+                <td>进行播放器：排出级数序列并循环播放，功能用色块标注</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>08</td><td><a href="./08-七和弦与延伸音.html">七和弦与延伸音</a></td>
+                <td>maj7 / m7 / 7 / m7♭5 / dim7；属七的张力与解决；sus2、sus4、add9；9、11、13 概览；和弦符号的完整读法</td>
+                <td>和弦构造器进阶版：逐层叠加 3、5、7、9 音，听张力一层层堆上去</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>09</td><td><a href="./09-节奏与律动.html">节奏与律动</a></td>
+                <td>拍号与时值；附点、切分、三连音；TAB 与节奏记号的读法；右手闷音（PM）、下拨上拨与 galloping</td>
+                <td>节奏机：调 BPM，切换扫弦型 / 闷音型 / 三连音 gallop，拍点可视化</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>第三篇 · 摇滚与金属实战（第 10–16 章）</h2>
+        <p>目标：把前九章的乐理接到<strong>失真、重型节奏与降调</strong>上，解释摇滚金属为什么长成现在这样——不是风格偏好，而是物理与和声共同逼出来的结果。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>章</th><th>标题</th><th>核心内容</th><th>图示 / 演示</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>10</td><td><a href="./10-失真的和声学.html">失真的和声学：金属为什么不弹大三度</a></td>
+                <td>削波如何产生新的谐波；互调失真；密集音程在高增益下为何浑浊；强力和弦（根＋五＋八）为何依然干净；频谱直觉</td>
+                <td><strong>本书的关键演示</strong>：同一个大三度 / 纯五度 / 强力和弦，切增益听浑浊度变化，同步显示波形与频谱</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>11</td><td><a href="./11-强力和弦与Riff语法.html">强力和弦与 Riff 语法</a></td>
+                <td>强力和弦没有大小之分，因此可以平行移动；根音走向；持续低音（pedal tone）；动机—变奏—发展；休止与切分的力量；闷音织体</td>
+                <td>Riff 搭建器：在指板上点出根音序列 + 选节奏型 → 生成 TAB 并循环播放</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>12</td><td><a href="./12-五声与蓝调.html">五声与蓝调</a></td>
+                <td>大小调五声的来源与互为关系；五个盒子怎么连起来；蓝调音 ♭5；推弦（全音 / 半音）与颤音；大小调五声混用</td>
+                <td>五声盒子漫游器：切换盒子 / 调性 / 大小调，点音发声；推弦音高滑移演示</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>13</td><td><a href="./13-摇滚的和弦进行.html">摇滚的和弦进行</a></td>
+                <td>Ⅰ–Ⅳ–Ⅴ 与十二小节布鲁斯；混合利底亚与属七的摇滚用法；♭Ⅵ–♭Ⅶ–Ⅰ；4536 与卡农进行；平行大小调借用</td>
+                <td>十二小节布鲁斯自动伴奏（可调 BPM 与调）；常见进行一键对比试听</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>14</td><td><a href="./14-金属的调式色彩.html">金属的调式色彩</a></td>
+                <td>七个自然调式在同根音下的色彩排序；爱奥利亚 / 弗里几亚 / 洛克里亚；弗里几亚属与和声小调；♭2 与三全音的「邪恶感」从何而来</td>
+                <td>同根音调式切换器：一段固定 Riff，切调式后实时改音，听色彩突变</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>15</td><td><a href="./15-降调七弦与现代金属.html">降调、七弦与现代金属</a></td>
+                <td>Drop D / Drop C / 降半音的三个动机（音域、张力、单指强力和弦）；七弦与八弦的低音区；Djent 的节奏与和声；奇数拍与 polymeter</td>
+                <td>调弦切换器：切换调弦后指板音名与指法实时重算；双层节拍（polymeter）可视化</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+              <tr>
+                <td>16</td><td><a href="./16-独奏构建与新古典技巧.html">独奏构建与新古典技巧</a></td>
+                <td>目标音与和弦音导向；乐句呼吸与一问一答；模进（三度 / 四度序列）；琶音与扫拨；和声小调的新古典语汇；速度与张力的分配</td>
+                <td>独奏骨架器：给定进行，高亮每个和弦下的「安全音 / 目标音」，可播放示范乐句</td>
+                <td><span class="toc-status toc-done">已上线</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>每章的固定结构</h2>
+        <ol>
+          <li><strong>学习目标</strong>：3–5 条「学完你能……」，写成可检验的动作而非知识点。</li>
+          <li><strong>直觉引入</strong>：从「你已经会弹的东西」切入——先在演示里<strong>听到</strong>现象，再问为什么。</li>
+          <li><strong>正文</strong>：现象 → 图示 / 发声演示 → 命名与规则。重要结论用提示框标出。</li>
+          <li><strong>例题</strong>：2–3 道带完整推导的例题，示范「怎么把规则用在指板上」（如：推出 A 大调的顺阶和弦并在五品把位找到它们）。</li>
+          <li><strong>习题</strong>：基础 3–4 题、进阶 2–3 题、挑战 1–2 题，全部附可折叠详解。</li>
+          <li><strong>要点回顾</strong>：kb-tip 提示框收束全章，并预告下一章。</li>
+        </ol>
+
+        <h2>记谱与演示约定</h2>
+        <ul>
+          <li><strong>谱例一律 TAB</strong>：六线，最上面一线是 1 弦（细弦 E），数字＝品位，<code>0</code> 是空弦。需要时在 TAB 上方标出<strong>音名或级数</strong>（<em class="kb-math">1 ♭3 4 ♭5 5 ♭7</em>），因为本教材关心的从来不是「按哪」，而是「这个音在调里扮演什么角色」。不使用五线谱。</li>
+          <li><strong>指板图</strong>：横向，最下面一线是 6 弦（粗弦 E）；<span style="color:#dc2626;font-weight:700;">红点</span>是根音，<span style="color:#2563eb;font-weight:700;">蓝点</span>是其他音阶音，<span style="color:#16a34a;font-weight:700;">绿点</span>标特征音（如调式的那个「决定色彩的音」）。</li>
+          <li><strong>发声演示</strong>：全部由浏览器实时合成，不加载任何音频文件。每章第一个演示上方有 🔊 开关与音量条，随时可静音。</li>
+          <li><strong>谱例全部原创</strong>：分析知名曲目时只用文字描述其手法（例如「以根音—♭3—4 为骨架的慢速强力和弦 Riff」），<strong>不抄录受版权保护的 TAB 或旋律</strong>。你听到的所有谱例都是为讲清某个原理而写的示例。</li>
+        </ul>
+
+        <h2>习题设计与样例</h2>
+        <p>习题分三档：<span class="kb-exercise-badge">基础</span> 直接套用本章规则，保证会用；<span class="kb-exercise-badge kb-adv">进阶</span> 需要把两个以上概念连起来；<span class="kb-exercise-badge kb-hard">挑战</span> 引向真实的创作与分析。答案默认折叠，且<strong>必须给解析而不只是结果</strong>。呈现形式如下（可展开试试）：</p>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 样例习题 <span class="kb-exercise-badge">基础</span></p>
+          <p>吉他 6 弦空弦是 E，12 品也是 E。为什么中间偏偏隔着 12 个品，而不是 10 个或 14 个？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：因为吉他用的是十二平均律——把一个八度<strong>等比</strong>切成 12 份，每份就是一个半音，也就是一品。12 品正好走完 12 个半音，回到高八度的同名音。</p>
+            <p><strong>解析</strong>：八度的物理定义是<strong>频率翻倍</strong>（6 弦空弦 E2 约 82.41 Hz，12 品 E3 约 164.81 Hz）。要让 12 步走完一次翻倍，每一步就必须乘以 <em class="kb-math">2<sup>1/12</sup></em> ≈ 1.0595，也就是约 5.95%。所以品格间距不是等距的直尺，而是<strong>越靠高把位越密</strong>——12 品恰好落在弦长的正中间（弦长减半 → 频率翻倍）。这也解释了为什么 12 品泛音最好按。选 12 而不是别的数字，是历史与数学共同妥协的结果：12 份能让纯五度（7 个半音）逼近理想的 3:2，误差只有约 0.1%，人耳几乎听不出。第 1 章会把这件事讲透。</p>
+          </details>
+        </section>
+
+        <h2>编写约定（供后续章节遵守）</h2>
+        <ul>
+          <li>文件名与页面标题都用 <code>NN 章名</code> 编号（如 <code>01 音、律与指板：一把等分的尺子</code>），保证导航树按学习顺序排列。</li>
+          <li>章节文件放本目录（<code>content/音乐/吉他乐理/教材/</code>）；共用的发声引擎、指板 / 和弦图 / TAB 渲染器放 <code>_media/guitar-kit.js</code>（<code>window.KBG</code>），各章只写页面专属逻辑，不重复造轮子。</li>
+          <li>示意图用内联 SVG（颜色取 CSS 变量以适配深浅色）；指板图、和弦图、TAB 一律调用 <code>KBG.*</code> 生成，保证全书视觉统一。</li>
+          <li>每个演示内必须有 <code>&lt;noscript&gt;</code> 兜底文案，写明该演示的核心结论——不开 JavaScript 的读者也能读懂这一页。</li>
+          <li>每写完一章：把本页对应行状态改为 <span class="toc-status toc-done">已上线</span> 并加链接 → 章末补「下一章」链接 → 重跑 <code>python3 scripts/build_index.py</code>。</li>
+        </ul>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">📌 当前进度</p>
+          <p>🎉 <strong>三篇十六章已全部上线。</strong>建议从<a href="./01-音律与指板.html">第 1 章《音、律与指板》</a>开始顺序阅读——前两篇是后一篇的公共语言，跳读第三篇会遇到大量回指。已经有基础的读者也可以直接跳到<a href="./10-失真的和声学.html">第 10 章《失真的和声学》</a>，那是全书的枢纽，也是整个第三篇的出发点。</p>
+        </div>
+
+        <h2>全书的三条主线</h2>
+        <p>十六章看似讲了很多东西，但真正贯穿始终的只有三条线索。写作时它们被刻意反复回指，读的时候留意一下会省很多力气：</p>
+        <ol>
+          <li><strong>音乐是距离。</strong>音高是频率，音程是比例，音阶是间距模式，和弦是叠起来的音程，进行是功能之间的运动——每一层都建立在下一层的距离关系上。所以第 1 章那把「等分的尺子」，是后面十五章共同的地基。</li>
+          <li><strong>吉他是一张可平移的地图。</strong>因为指板是等比的，音程、音阶、和弦在吉他上都是<strong>可整体平移的固定手型</strong>。CAGED、五声盒子、强力和弦、调式指法之所以成立，全都源于这一条。唯一的例外只有一个——<strong>3 弦到 2 弦那个大三度</strong>，它在全书出现了不下十次。</li>
+          <li><strong>规则有适用范围。</strong>这是第三篇真正的主题。「属七必须解决」假设了音乐是叙事；「三度提供色彩」假设了增益不高。<strong>知道规则很重要，知道规则为什么成立更重要</strong>——因为只有后者能告诉你它什么时候失效。</li>
+        </ol>
+        <p>还有一条不单独成章、却把三篇串成一条链的线索：<strong>物理约束会一路塑造到风格。</strong>十二平均律的大三度偏高 14 音分（第 1 章）→ 高增益下被互调放大成 67 音分的杂频（第 10 章）→ 金属放弃三度改用强力和弦（第 11 章）→ 和声色彩被迫转移到高音区的小音块（第 15 章）→ djent 织体成型。<strong>这条链条从物理走到风格，中间没有一步是任意的。</strong></p>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, msg = document.getElementById("demo-msg");
+      KBG.soundToggle(document.getElementById("demo-sound"));
+
+      function say(t) { msg.textContent = t; }
+
+      document.getElementById("btn-clean").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0);
+        A.strum([40, 47, 52, 55, 59, 64], { spread: 0.032 });   // 开放 Em
+        say("清音的 Em：六根弦六个音，三度、五度都听得清清楚楚，和弦的「颜色」是完整的。");
+      });
+      document.getElementById("btn-dirty").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.85);
+        A.strum([40, 47, 52], { spread: 0.01 });                 // E5 = E B E
+        say("高增益下的 E5：只剩根音、五度、八度三个音。为什么金属把三度扔掉了？失真会把音程之间「拌」出新的频率，三度一进来立刻发浑——第 10 章会让你亲耳听到这个过程。");
+      });
+      document.getElementById("btn-run").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.35);
+        var pcs = KBG.theory.scalePcs(4, "minorPentatonic");     // E 小调五声
+        var seq = [40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64].filter(function (m) {
+          return pcs.indexOf(KBG.theory.mod12(m)) >= 0;
+        });
+        var ev = seq.map(function (m, i) { return { t: i * 0.5, midi: m, dur: 0.5 }; });
+        ev.push({ t: seq.length * 0.5, midi: 64, dur: 2 });
+        A.sequence(ev, { bpm: 132 });
+        say("E 小调五声音阶从低音 E 一路爬到高音 E。这五个音就是摇滚独奏用得最多的一把梳子——第 12 章会讲它为什么好用、以及那个「盒子」从哪来。");
+      });
+      document.getElementById("btn-stop").addEventListener("click", function () {
+        A.stopAll(); say("已停止。");
+      });
+    });
+  </script>
+</body>
+</html>

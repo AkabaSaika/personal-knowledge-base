@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>06 三和弦与和弦符号 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 6 章：和弦是音阶的切片、四种三和弦的结构与性格、挂留和弦与强力和弦、转位与斜线记号，以及开放和弦指法背后的道理与 CAGED 体系。">
+  <meta name="kb:tags" content="吉他,乐理,教材,三和弦,和弦符号,叠三度,转位,挂留和弦,强力和弦,CAGED,开放和弦,shx,hxfh">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 0.88em; color: var(--kb-fg-muted); }
+    .kb-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+    .caged-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0 4px; }
+    .caged-row > div { text-align: center; }
+    .qual-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .qual-grid .kb-btn { width: 100%; justify-content: center; }
+    .qual-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 6 章 · 三和弦与和弦符号</h1>
+        <p class="kb-lead">你已经按了几百次 C、G、Am、Em，但可能从没问过：<strong>为什么是这几个指法？谁规定 C 和弦要按成 x32010？</strong>答案会让你有点意外——没人规定，那只是「用低把位的空弦凑齐三个特定音」的最省力解法。这一章从零开始造和弦：先看它怎么从音阶里切出来，再看四种基本三和弦各是什么性格，最后回头解释你手上那五个开放和弦形状的来历，并把它们串成 <strong>CAGED</strong>——一套让你在整块指板上按出任何和弦的地图。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用「叠三度」从任意音阶切出和弦；② 说出大、小、减、增四种三和弦的音程结构与符号写法；③ 解释挂留和弦与强力和弦为什么「没有大小」；④ 读懂 <code>C/E</code> 这类斜线记号，并说出转位改变了什么；⑤ 说清五个开放和弦形状的由来，并用 CAGED 把同一个和弦按在指板上五个位置。</p>
+        </div>
+
+        <h2>和弦是音阶的切片</h2>
+        <p>造和弦的规则只有一条：<strong>从音阶里隔一个取一个</strong>。取三个音就是三和弦，取四个就是七和弦（第 8 章）。</p>
+        <pre><code>C 大调音阶： C  D  E  F  G  A  B
+从 C 开始隔一个取：C ─ E ─ G        →  C 大三和弦
+从 D 开始：        D ─ F ─ A        →  D 小三和弦
+从 B 开始：        B ─ D ─ F        →  B 减三和弦</code></pre>
+        <p>「隔一个取一个」在音程上就是<strong>叠三度</strong>——每两个相邻音之间都是三度。为什么偏偏是三度？</p>
+        <ul>
+          <li><strong>二度太挤</strong>：C–D–E 三个音贴在一起，全是不协和的二度，听起来是一团音块而不是一个和弦。</li>
+          <li><strong>四度太空</strong>：C–F–B♭ 开阔但没有明确的明暗色彩（第 3 章习题 3.6 提到的四度叠置）。</li>
+          <li><strong>三度刚好</strong>：既足够协和（第 3 章：不完全协和，比值 5:4 和 6:5），<strong>又携带明暗信息</strong>——大三度亮、小三度暗。三度叠置是唯一能同时给出「稳定」和「色彩」的选择。</li>
+        </ul>
+
+        <h2>四种三和弦</h2>
+        <p>三个音、两层三度，每层可大可小，于是恰好有四种组合：</p>
+        <figure>
+          <svg viewBox="0 0 660 240" width="660" height="240" role="img" aria-label="四种三和弦的三度叠置结构：大、小、减、增">
+            <g font-family="-apple-system, PingFang SC, sans-serif" font-size="12">
+              <g id="tri"><text x="85" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--kb-fg)">大三和弦 C</text><circle cx="85" cy="200" r="18" fill="#dc2626"/><text x="85" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">C</text><circle cx="85" cy="140" r="18" fill="#16a34a"/><text x="85" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">E</text><circle cx="85" cy="80" r="18" fill="#2563eb"/><text x="85" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">G</text><line x1="85" y1="181" x2="85" y2="159" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="109" y="174" font-size="11" fill="var(--kb-fg-muted)">大三度 4</text><line x1="85" y1="121" x2="85" y2="99" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="109" y="114" font-size="11" fill="var(--kb-fg-muted)">小三度 3</text><text x="85" y="230" text-anchor="middle" font-size="11" fill="var(--kb-fg-faint)">明亮 · 稳定</text><text x="250" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--kb-fg)">小三和弦 Cm</text><circle cx="250" cy="200" r="18" fill="#dc2626"/><text x="250" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">C</text><circle cx="250" cy="140" r="18" fill="#16a34a"/><text x="250" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">E♭</text><circle cx="250" cy="80" r="18" fill="#2563eb"/><text x="250" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">G</text><line x1="250" y1="181" x2="250" y2="159" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="274" y="174" font-size="11" fill="var(--kb-fg-muted)">小三度 3</text><line x1="250" y1="121" x2="250" y2="99" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="274" y="114" font-size="11" fill="var(--kb-fg-muted)">大三度 4</text><text x="250" y="230" text-anchor="middle" font-size="11" fill="var(--kb-fg-faint)">忧郁 · 稳定</text><text x="415" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--kb-fg)">减三和弦 Cdim</text><circle cx="415" cy="200" r="18" fill="#dc2626"/><text x="415" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">C</text><circle cx="415" cy="140" r="18" fill="#16a34a"/><text x="415" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">E♭</text><circle cx="415" cy="80" r="18" fill="#2563eb"/><text x="415" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">G♭</text><line x1="415" y1="181" x2="415" y2="159" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="439" y="174" font-size="11" fill="var(--kb-fg-muted)">小三度 3</text><line x1="415" y1="121" x2="415" y2="99" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="439" y="114" font-size="11" fill="var(--kb-fg-muted)">小三度 3</text><text x="415" y="230" text-anchor="middle" font-size="11" fill="var(--kb-fg-faint)">含三全音 · 不稳</text><text x="580" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--kb-fg)">增三和弦 Caug</text><circle cx="580" cy="200" r="18" fill="#dc2626"/><text x="580" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">C</text><circle cx="580" cy="140" r="18" fill="#16a34a"/><text x="580" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">E</text><circle cx="580" cy="80" r="18" fill="#2563eb"/><text x="580" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">G♯</text><line x1="580" y1="181" x2="580" y2="159" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="604" y="174" font-size="11" fill="var(--kb-fg-muted)">大三度 4</text><line x1="580" y1="121" x2="580" y2="99" stroke="var(--kb-fg-muted)" stroke-width="1.5" stroke-dasharray="3 2"/><text x="604" y="114" font-size="11" fill="var(--kb-fg-muted)">大三度 4</text><text x="580" y="230" text-anchor="middle" font-size="11" fill="var(--kb-fg-faint)">八度三等分 · 无根</text></g>
+            </g>
+          </svg>
+          <figcaption>四种三和弦都由两层三度叠成，区别只在每层是大三度（4 个半音）还是小三度（3 个半音）。<strong>下层决定大小调色彩，上层决定稳定与否。</strong></figcaption>
+        </figure>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>和弦</th><th>结构（半音）</th><th>两层三度</th><th>符号</th><th>性格</th></tr></thead>
+            <tbody>
+              <tr><td><strong>大三和弦</strong></td><td>0 – 4 – 7</td><td>大 + 小</td><td><code>C</code></td><td>明亮、稳定。最「正」的声音。</td></tr>
+              <tr><td><strong>小三和弦</strong></td><td>0 – 3 – 7</td><td>小 + 大</td><td><code>Cm</code></td><td>忧郁、稳定。摇滚金属的主场。</td></tr>
+              <tr><td><strong>减三和弦</strong></td><td>0 – 3 – 6</td><td>小 + 小</td><td><code>Cdim</code> / <code>C°</code></td><td><strong>不稳定</strong>：里面藏着一个三全音，急着解决。</td></tr>
+              <tr><td><strong>增三和弦</strong></td><td>0 – 4 – 8</td><td>大 + 大</td><td><code>Caug</code> / <code>C+</code></td><td><strong>不稳定且无根</strong>：把八度三等分，悬浮。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>注意最后两个的「不稳定」来源不同：<strong>减三和弦</strong>不稳定是因为根音到五音是三全音（第 3 章：唯一自转位不变、最不协和的音程）；<strong>增三和弦</strong>不稳定是因为它是<strong>对称结构</strong>——C–E–G♯ 平移大三度还是同一组音，耳朵找不到谁是根。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：和弦构造器（选根音与性质，看构成音、听声音）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：三和弦 ＝ 根音 + 三度 + 五度。大三和弦 0-4-7、小三和弦 0-3-7、减三和弦 0-3-6、增三和弦 0-4-8；挂留和弦把三度换成二度（sus2，0-2-7）或四度（sus4，0-5-7），因此没有大小之分；强力和弦（0-7）干脆把三度删掉。</p></noscript>
+            <div id="b1-sound"></div>
+            <div class="qual-grid" id="b1-qual"></div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">根音<span class="kb-control-value" id="b1-rootv"></span>
+                <input type="range" id="b1-root" min="0" max="11" step="1" value="0"></label>
+            </div>
+            <div class="kb-readout">
+              <span>和弦 <b id="b1-name">C</b></span>
+              <span>构成音 <b id="b1-notes">C E G</b></span>
+              <span>级数 <b id="b1-deg">1 3 5</b></span>
+              <span>两层三度 <b id="b1-stack">大三度 + 小三度</b></span>
+            </div>
+            <div id="b1-board"></div>
+            <div class="kb-legend">
+              <span><i style="background:#dc2626"></i>根音</span>
+              <span><i style="background:#16a34a"></i>三音（决定大小）</span>
+              <span><i style="background:#2563eb"></i>五音</span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="b1-strum" type="button">▶ 齐奏</button>
+              <button class="kb-btn" id="b1-arp" type="button">▶ 分解（逐音听）</button>
+              <button class="kb-btn" id="b1-third" type="button">▶ 只听根音 + 三音</button>
+              <button class="kb-btn" id="b1-stop" type="button">■ 停止</button>
+            </div>
+            <p id="b1-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">建议做一遍这个实验：固定根音，在「大 → 小 → 减 → 增」之间来回切，只听「根音 + 三音」。四种和弦的性格差异，八成来自三音。</p>
+          </div>
+        </div>
+
+        <h2>挂留与强力：把三度请出去</h2>
+        <p>既然三度决定明暗，那把它拿掉会怎样？有三种拿法，都是实战里的常客：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>做法</th><th>结构</th><th>符号</th><th>效果</th></tr></thead>
+            <tbody>
+              <tr><td>三度<strong>换成二度</strong></td><td>0 – 2 – 7</td><td><code>Csus2</code></td><td>开阔、清澈，现代摇滚扫弦的常客</td></tr>
+              <tr><td>三度<strong>换成四度</strong></td><td>0 – 5 – 7</td><td><code>Csus4</code></td><td>悬而未决，强烈想「解决」回三度</td></tr>
+              <tr><td>三度<strong>直接删掉</strong></td><td>0 – 7 （常加 12）</td><td><code>C5</code></td><td><strong>强力和弦</strong>：只剩骨架，无明暗，可平行移动</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>sus</strong> 是 suspended 的缩写，本意是「悬留」——古典和声里它指一个音被从前一个和弦「拖」过来，暂时顶掉三度，随后再落回去。<code>Dsus4 → D</code> 那一下松手的感觉，就是这个词的字面意思。</p>
+        <p>而<strong>强力和弦</strong>把这件事做到了极端：它连替代品都不给，直接留一个空位。第 3 章习题 3.2 算过，它内部只有纯五度、纯四度、纯八度——<strong>全是完全协和音程，一个色彩音都没有</strong>。这带来两个后果：它<strong>既不是大和弦也不是小和弦</strong>（所以能在任何调里平行移动），以及它<strong>在高增益失真下依然干净</strong>。第 10 章会证明第二点，第 11 章会用足第一点。</p>
+
+        <h2>转位：低音换人</h2>
+        <p>和弦的三个音，谁在最低不是随便的。把根音之外的音放到最低，叫<strong>转位</strong>：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>形态</th><th>最低音</th><th>C 和弦举例</th><th>记号</th><th>听感</th></tr></thead>
+            <tbody>
+              <tr><td>原位</td><td>根音</td><td>C – E – G</td><td><code>C</code></td><td>最稳，「落地」</td></tr>
+              <tr><td>第一转位</td><td>三音</td><td>E – G – C</td><td><code>C/E</code></td><td>轻盈，适合低音级进</td></tr>
+              <tr><td>第二转位</td><td>五音</td><td>G – C – E</td><td><code>C/G</code></td><td>悬浮、有牵引力</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>斜线记号</strong> <code>C/E</code> 读作「C on E」，意思是「和弦是 C，但最低音弹 E」。它最常见的用途是<strong>让低音走成一条平滑的线</strong>：<code>C – G/B – Am</code> 的低音是 C→B→A，级进下行，比 C→G→A 的大跳好听得多。这条技巧在民谣、流行、以及重型音乐的抒情段落里到处都是。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：转位与低音线（同一个和弦，三种重心）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：转位不改变和弦的构成音与名称，只改变最低音，从而改变稳定感与低音走向。原位最稳，第一转位轻盈，第二转位悬浮。斜线记号 C/E 表示「C 和弦，低音弹 E」。</p></noscript>
+            <div class="kb-readout">
+              <span>当前 <b id="b2-cur">原位 C</b></span>
+              <span>由低到高 <b id="b2-notes">C E G</b></span>
+              <span>最低音 <b id="b2-bass">C（根音）</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="b2-i0" type="button">原位 C</button>
+              <button class="kb-btn" id="b2-i1" type="button">第一转位 C/E</button>
+              <button class="kb-btn" id="b2-i2" type="button">第二转位 C/G</button>
+              <button class="kb-btn" id="b2-cycle" type="button">▶ 三种连着听</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="b2-bad" type="button">▶ 低音大跳：C – G – Am</button>
+              <button class="kb-btn" id="b2-good" type="button">▶ 低音级进：C – G/B – Am</button>
+              <button class="kb-btn" id="b2-stop" type="button">■ 停止</button>
+            </div>
+            <p id="b2-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">最后两个按钮请务必对比着听：和弦名完全一样，只是把 G 的低音换成了 B，整段进行立刻「顺」了。这就是转位的实战价值。</p>
+          </div>
+        </div>
+
+        <h2>开放和弦为什么长成那样</h2>
+        <p>现在回答开头那个问题。以 C 大三和弦为例，它需要 <strong>C、E、G</strong> 三个音（可以重复，顺序不限）。在低把位，六根空弦提供的是 E A D G B E——其中 <strong>E 和 G 是现成的</strong>！于是任务只剩下：</p>
+        <ol>
+          <li>找一个 <strong>C</strong> 当低音 → 5 弦 3 品；</li>
+          <li>把不属于 C–E–G 的空弦按掉或不弹 → 4 弦空弦是 D（不属于），按到 2 品变成 E ✓；2 弦空弦是 B（不属于），按到 1 品变成 C ✓；</li>
+          <li>6 弦空弦是 E，属于和弦，但它比根音 C 还低，会让和弦变成转位 → <strong>干脆不弹</strong>（这就是 x32010 里那个 ×）。</li>
+        </ol>
+        <p>结果正是 <strong>x32010</strong>。<strong>没有任何神秘之处：它就是「用最少的手指、借最多的空弦、凑齐三个指定音、并让根音在最低」的最优解。</strong>其他四个开放和弦形状（A、G、E、D）都是同一道优化题在不同根音下的答案。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么恰好是 C-A-G-E-D 这五个</p>
+          <p>因为在低把位、以空弦为主的条件下，只有这五个根音能凑出「根音在最低、三个和弦音齐全、手指够得着」的解。F 和 B 凑不出来（所以初学者必须学横按才能弹 F），其余音则根本没有对应的空弦资源。<strong>这五个形状不是传统，是约束条件的解集。</strong></p>
+        </div>
+
+        <h2>CAGED：把五个形状搬到全指板</h2>
+        <p>关键的一步来了。既然这五个形状各自能弹出一个大三和弦，而<strong>形状是可以平移的</strong>（第 2、3 章反复出现的性质），那么把 C 形状整体往上移两品，就得到 D 和弦；移四品得到 E 和弦……只要把空弦换成食指横按即可。</p>
+        <p>于是<strong>同一个和弦可以用五种形状、在指板五个位置按出来</strong>，而且这五个位置<strong>首尾相接铺满整块指板</strong>，顺序永远是 <strong>C → A → G → E → D</strong>（然后循环）。这就是 CAGED 体系。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：CAGED（同一个和弦，五个位置）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：C、A、G、E、D 五个开放和弦形状都可以整体平移到任意根音（把空弦换成横按），从而在指板上给出同一个和弦的五个位置。五个形状首尾相接铺满指板，顺序恒为 C-A-G-E-D 循环。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">根音<span class="kb-control-value" id="b3-rootv"></span>
+                <input type="range" id="b3-root" min="0" max="11" step="1" value="0"></label>
+            </div>
+            <div class="caged-row" id="b3-boxes"></div>
+            <div class="kb-readout">
+              <span>和弦 <b id="b3-name">C</b></span>
+              <span>五个位置的起始品 <b id="b3-pos">—</b></span>
+            </div>
+            <div id="b3-board"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="b3-play" type="button">▶ 五个位置依次扫弦</button>
+              <button class="kb-btn" id="b3-stop" type="button">■ 停止</button>
+            </div>
+            <p id="b3-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">五个和弦图的音<strong>完全相同</strong>（只是八度分布不同），听起来却厚薄有别——这就是吉他编配里「换个把位弹同一个和弦」的意义。指板图上红点是根音，注意它们如何沿着第 2 章的八度形状串成一条线。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 6.1</p>
+          <p>写出 A 大调的 Ⅰ、Ⅳ、Ⅴ 三个和弦，并各说出构成音。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先写音阶</strong>：A 大调 ＝ A B C♯ D E F♯ G♯（第 4 章例题 4.1 推过 E 大调，方法相同）。</p>
+            <p><strong>逐级叠三度</strong>（隔一个取一个）：</p>
+            <ul>
+              <li><strong>Ⅰ</strong>：A – C♯ – E → <strong>A 大三和弦</strong>（4 + 3）</li>
+              <li><strong>Ⅳ</strong>：D – F♯ – A → <strong>D 大三和弦</strong>（4 + 3）</li>
+              <li><strong>Ⅴ</strong>：E – G♯ – B → <strong>E 大三和弦</strong>（4 + 3）</li>
+            </ul>
+            <p><strong>观察</strong>：Ⅰ、Ⅳ、Ⅴ 在大调里<strong>永远都是大三和弦</strong>——这不是巧合，第 7 章会证明它对任何大调都成立。也正因如此，「Ⅰ–Ⅳ–Ⅴ」成了摇滚与布鲁斯最基础的三件套（第 13 章）。</p>
+            <p><strong>吉他现实</strong>：A、D、E 三个和弦全都是开放和弦，全都好按。这就是 A 调（以及它的关系小调 F♯m）在吉他摇滚里极其常见的原因——<strong>乐理上的骨架和物理上的便利，在这里重合了。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 6.2</p>
+          <p>Bdim 由哪三个音组成？请指出它内部的三全音，并说明它为什么不稳定。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>构成音</strong>：减三和弦是「小三度 + 小三度」，从 B 起：B →(3) <strong>D</strong> →(3) <strong>F</strong>。所以是 <strong>B – D – F</strong>。</p>
+            <p><strong>三全音在哪</strong>：根音到五音 B→F ＝ <strong>6 个半音 ＝ 三全音</strong>。</p>
+            <p><strong>为什么不稳定</strong>：第 3 章说过，三全音把八度对半分，两个音势均力敌，耳朵找不到落脚点；而且它<strong>有明确的解决出口</strong>——向内收缩半音得到 C–E。所以 Bdim 天然指向 C 和弦。</p>
+            <p><strong>它从哪来</strong>：B–D–F 正是 C 大调的第七级顺阶和弦（Ⅶ）。B 是导音，F 是第四级，两者都急着解决（B→C 上行、F→E 下行）。<strong>Ⅶ 级减三和弦本质上是「去掉根音的属七和弦」</strong>——G7 ＝ G B D F，把 G 拿掉正好剩 B D F。这解释了它为什么和属七功能几乎等价（第 8 章会展开）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 6.3</p>
+          <p>开放 C 和弦按的是 <code>x32010</code>。如果要把它变成 <code>C/G</code>（低音弹 G），该怎么按？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>目标</strong>：让最低发声的音是 <strong>G</strong>，同时保持 C–E–G 三个音齐全。</p>
+            <p><strong>找 G</strong>：6 弦 3 品正是 G2，比现在的最低音 C3（5 弦 3 品）还低。</p>
+            <p><strong>答案</strong>：<code>332010</code> —— 只需把原本不弹的 6 弦按在 3 品。手型几乎不用变（无名指从 5 弦 3 品挪一下或加一根手指）。</p>
+            <p><strong>验算</strong>：从低到高依次是 G2、C3、E3、G3、C4、E4 ＝ G C E G C E，确实只有 C、E、G 三种音，最低音是 G ✓ 所以是 <strong>C 的第二转位</strong>。</p>
+            <p><strong>什么时候用它</strong>：当前一个和弦的低音是 G（比如刚弹完 G 和弦），或者后一个和弦低音是 A（G→A 级进）。典型进行 <code>G – C/G – G</code> 里低音一动不动，听起来像和弦在 G 这个支点上「呼吸」——这是民谣与硬摇滚抒情段落的常用手法。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 G 大调的 Ⅰ、Ⅳ、Ⅴ 和弦及其构成音。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>G 大调</strong> ＝ G A B C D E F♯。</p>
+            <p><strong>Ⅰ</strong> ＝ G – B – D ＝ <strong>G</strong>；<strong>Ⅳ</strong> ＝ C – E – G ＝ <strong>C</strong>；<strong>Ⅴ</strong> ＝ D – F♯ – A ＝ <strong>D</strong>。</p>
+            <p><strong>解析</strong>：三个都是大三和弦，与例题 6.1 的结论一致。<br>
+            <strong>顺带认出一件事</strong>：G–C–D 这三个和弦加上关系小调 Em，就是吉他上最常见的四件套，无数歌就用这四个和弦。它们全是开放和弦——G 调之所以在吉他上如此常见，原因和 A 调一样，是乐理骨架与物理便利的重合。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>Em 由哪三个音组成？把它变成 E 大三和弦要改哪一个音？在开放指法上对应哪根手指？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Em</strong> ＝ E – <strong>G</strong> – B（小三度 + 大三度）。<br>
+            <strong>E</strong> ＝ E – <strong>G♯</strong> – B（大三度 + 小三度）。<br>
+            要改的是<strong>三音</strong>：G → G♯，升高一个半音。</p>
+            <p><strong>指法对应</strong>：开放 Em 是 <code>022000</code>，开放 E 是 <code>022100</code> —— 多出来的那个「1」是 <strong>3 弦 1 品</strong>，正是把 3 弦空弦的 G 抬成 G♯。</p>
+            <p><strong>解析</strong>：这道题和第 3 章习题 3.1、第 5 章演示 1 说的是同一件事，只是这次落到了具体的一根手指上。<strong>整个大调 / 小调的对立，在吉他上就是这一根手指的抬与落。</strong>下次弹 Em → E 时留意一下，你按下去的不是「一个品位」，而是「和弦的性别」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>Csus4 由哪三个音组成？它「想」解决到哪里？为什么它没有大小之分？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>构成音</strong>：sus4 是 0–5–7 → <strong>C – F – G</strong>。</p>
+            <p><strong>想解决到哪</strong>：F 想下行半音到 <strong>E</strong>，也就是解决到 <strong>C 大三和弦</strong>（C–E–G）。这一步「松手」的感觉正是 sus4 的全部魅力。</p>
+            <p><strong>为什么没有大小之分</strong>：因为大小是由<strong>三度</strong>决定的，而 sus4 里根本没有三度——三音的位置被四音（F）顶掉了。既然三度缺席，就无从判断明暗。</p>
+            <p><strong>实战提示</strong>：sus4 极少单独使用，几乎总是「sus4 → 原和弦」成对出现，作为一个微型的张力—解决单元。吉他上最典型的是 <code>Dsus4 → D</code>（1 弦从 3 品松到 2 品）与 <code>Asus4 → A</code>（2 弦从 3 品松到 2 品）——都只需一根手指抬一下，所以它们在扫弦里被用得极其频繁。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么 F 大三和弦在低把位必须横按，而 C、G、D、A、E 不用？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>F 需要的音</strong>：F – A – C。</p>
+            <p><strong>可用的空弦</strong>：E A D G B E。其中 <strong>A 是现成的</strong>（5 弦空弦），但 <strong>F 和 C 都不是空弦</strong>，而且——关键在这里——<strong>要让 F 当最低音，就必须处理掉比它更低的 E</strong>。</p>
+            <p>6 弦空弦 E 只比 F 低一个半音，所以要么不弹 6 弦（那样最低音变成 5 弦，得从别处找 F），要么把 6 弦按到 1 品变成 F。选后者的话，食指已经压在 1 品；而 1 弦 1 品（F）和 2 弦 1 品（C）恰好也是需要的音——<strong>三根弦都要按 1 品，一根手指压过去最省力，横按就这样出现了</strong>。</p>
+            <p><strong>对比 C-A-G-E-D</strong>：这五个根音要么本身就是空弦（E、A、D），要么低把位有现成的和弦音可借（C、G），所以能凑出「不用横按」的解。<strong>F 和 B 是唯二凑不出来的自然音根音</strong>——这就是为什么初学者的第一道坎永远是 F 和 B（或 Bm）。</p>
+            <p>顺带说一句：这也解释了变调夹的作用原理——夹上第 1 品，原来的 E 形状就变成了 F，横按由夹子代劳。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用 CAGED 说明：把 E 形状横按移到第 5 品，得到的是什么和弦？请给出两种互相独立的验算方法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>A 大三和弦</strong>（指法 <code>577655</code>）。</p>
+            <p><strong>验算法一（看根音）</strong>：E 形状的根音在 <strong>6 弦</strong>。6 弦 5 品是 <strong>A</strong>（第 2 章：6 弦 5 品与 5 弦空弦同音）。形状是大三和弦，所以结果是 A 大三和弦。</p>
+            <p><strong>验算法二（逐弦算音名）</strong>：<code>577655</code> 从 6 弦起：<br>
+            6 弦 5 品 ＝ A2；5 弦 7 品 ＝ E3；4 弦 7 品 ＝ A3；3 弦 6 品 ＝ C♯4；2 弦 5 品 ＝ E4；1 弦 5 品 ＝ A4。<br>
+            音级集合 ＝ <strong>A、C♯、E</strong> ＝ A 大三和弦 ✓ 两法一致。</p>
+            <p><strong>这题的意义</strong>：验算法一是<strong>三秒钟</strong>的事，验算法二是<strong>三十秒</strong>的事。CAGED 的价值就在于把后者压缩成前者——你只需要知道「形状 + 根音在哪根弦」，就能立刻说出和弦名。反过来，如果有人问你「G♯ 大和弦怎么按」，你也能立刻回答：E 形状横按第 4 品，或 A 形状横按第 11 品。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>C 增三和弦 ＝ C – E – G♯。它的第一转位（E – G♯ – C）听起来像什么和弦？为什么会产生歧义？这个性质有什么用？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>结构分析</strong>：E → G♯ ＝ 4 个半音；G♯ → C ＝ 4 个半音（G♯→A→A♯→B→C）。所以第一转位的结构还是「大三度 + 大三度」＝ <strong>增三和弦</strong>。</p>
+            <p><strong>它像什么</strong>：像 <strong>E 增三和弦</strong>（E – G♯ – B♯，而 B♯ 就是 C 的同音异名）。同理第二转位像 <strong>G♯ 增三和弦</strong>。</p>
+            <p><strong>为什么歧义</strong>：因为增三和弦把八度<strong>三等分</strong>（第 3 章习题 3.9 的对称音程）。三个音互相之间都是大三度，<strong>谁都可以当根音</strong>，声音上完全无法区分。一个增三和弦在听觉上同时是三个和弦。</p>
+            <p><strong>有什么用</strong>：正因为它「同时是三个和弦」，它可以充当<strong>转调的枢纽</strong>——你以 C+ 的身份进去，以 E+ 的身份出来，听众察觉不到接缝。同样的道理，减七和弦（四等分）能一次连接四个调，威力更大，是新古典金属最爱的转调工具（第 16 章）。</p>
+            <p><strong>代价</strong>：对称 ＝ 无根 ＝ 不能久留。增和弦与减七和弦几乎从不作为段落的落脚点，只作为<strong>经过</strong>与<strong>跳板</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>一首歌的和弦写作 <code>C – G/B – Am – Am/G – F</code>。写出它的低音线，说出这种写法的名字，并解释它为什么好听。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>低音线</strong>：C → B → A → G → F —— <strong>一条完整的级进下行</strong>（每步一个音级）。</p>
+            <p><strong>名字</strong>：<strong>下行低音线</strong>（descending bassline / walking bass）。它是流行、民谣、硬摇滚抒情段落里最常见的编曲手法之一。</p>
+            <p><strong>为什么好听</strong>，三层原因：</p>
+            <ol>
+              <li><strong>低音区最适合级进。</strong>低频的大跳容易听起来断裂，而级进下行像一条连续下坠的线，牵引感极强，听众会不由自主地跟着它往下走。</li>
+              <li><strong>它把和弦变化「藏」了起来。</strong>五个和弦本来各不相同，但因为低音只是一步步往下挪，整段听起来像<strong>一个持续变形的东西</strong>，而不是五次切换。</li>
+              <li><strong>它制造了期待。</strong>一条下行的线天然让人想知道「它要下到哪里」——这本身就是推进力，而且完全不依赖导音。</li>
+            </ol>
+            <p><strong>注意其中的技巧</strong>：为了让低音走成级进，作曲者用了两个转位（G/B 和 Am/G），也就是<strong>牺牲了和弦的「正位」来成全低音线</strong>。这正是转位的核心用途——<strong>和弦决定和声，低音决定线条，两者可以分开设计。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：在四种三和弦里，<strong>只有增三和弦</strong>的三个转位结构完全相同。给出一般判据。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>建立模型</strong>：把一个三和弦在一个八度内的结构写成三段相邻音程 <em class="kb-math">(a, b, c)</em>，其中 <em class="kb-math">a</em> 是根音到三音、<em class="kb-math">b</em> 是三音到五音、<em class="kb-math">c</em> 是五音回到高八度根音，且 <em class="kb-math">a + b + c = 12</em>。<strong>转位就是把这个三元组循环移位</strong>。</p>
+            <p><strong>逐个计算</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>和弦</th><th>原位</th><th>第一转位</th><th>第二转位</th><th>是否全同</th></tr></thead>
+                <tbody>
+                  <tr><td>大三和弦</td><td>(4, 3, 5)</td><td>(3, 5, 4)</td><td>(5, 4, 3)</td><td>否</td></tr>
+                  <tr><td>小三和弦</td><td>(3, 4, 5)</td><td>(4, 5, 3)</td><td>(5, 3, 4)</td><td>否</td></tr>
+                  <tr><td>减三和弦</td><td>(3, 3, 6)</td><td>(3, 6, 3)</td><td>(6, 3, 3)</td><td>否</td></tr>
+                  <tr><td><strong>增三和弦</strong></td><td><strong>(4, 4, 4)</strong></td><td><strong>(4, 4, 4)</strong></td><td><strong>(4, 4, 4)</strong></td><td><strong>是</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>一般判据</strong>：三元组在循环移位下不变 ⟺ <em class="kb-math">a = b = c</em>。结合 <em class="kb-math">a + b + c = 12</em>，得 <em class="kb-math">a = b = c = 4</em> —— <strong>唯一解就是增三和弦</strong>。∎</p>
+            <p><strong>推广</strong>：把这个判据推到 <em class="kb-math">n</em> 个音的和弦，就得到「转位不变 ⟺ 把八度 <em class="kb-math">n</em> 等分」。四音和弦的解是 <em class="kb-math">12/4 = 3</em>，即每层小三度 —— 正是<strong>减七和弦</strong>。这两个（增三、减七）就是全部的「转位不变和弦」，也正是第 3 章习题 3.9 那张对称音程表的和弦版本。<strong>对称结构在乐理里反复出现，而且总是同一批面孔。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>以 C 大三和弦为例，写出 CAGED 五个形状各自占据的品位范围。相邻形状之间有什么关系？为什么恰好是<strong>五</strong>个形状铺满一个八度？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>五个形状（C 和弦）</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>形状</th><th>指法</th><th>占据品位</th><th>最低根音位置</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>C</strong> 型</td><td><code>x32010</code></td><td>0 – 3</td><td>5 弦 3 品</td></tr>
+                  <tr><td><strong>A</strong> 型</td><td><code>x35553</code></td><td>3 – 5</td><td>5 弦 3 品</td></tr>
+                  <tr><td><strong>G</strong> 型</td><td><code>875558</code></td><td>5 – 8</td><td>6 弦 8 品</td></tr>
+                  <tr><td><strong>E</strong> 型</td><td><code>8 10 10 9 8 8</code></td><td>8 – 10</td><td>6 弦 8 品</td></tr>
+                  <tr><td><strong>D</strong> 型</td><td><code>xx10 12 13 12</code></td><td>10 – 13</td><td>4 弦 10 品</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>相邻形状的关系</strong>：注意每一行的<strong>结束品位正是下一行的起始品位</strong>（3、5、8、10）。在这些交界品位上，两个形状<strong>共用同样的几个和弦音</strong>——它们不是五个孤立的指法，而是<strong>同一片连续的和弦音分布被切成的五段</strong>。这也是为什么 CAGED 能用来「换把位」：在交界处切换，手指几乎不用重新找音。</p>
+            <p><strong>为什么恰好五个</strong>：看起始品位的间隔 —— 0 → 3 → 5 → 8 → 10 →（12，回到 C 型的下一个八度）。间隔依次是 <strong>3、2、3、2、2</strong>，加起来正好 <strong>12</strong>，即一个八度。<strong>一个八度里正好塞下五段，所以是五个形状。</strong>再多一个就会重复，再少一个就会漏掉指板上的一块。</p>
+            <p><strong>更深一层</strong>：这个 3-2-3-2-2 的间隔序列不是随意的——它由标准调弦的结构（四个纯四度夹一个大三度）与大三和弦的音程结构共同决定。换一种调弦，CAGED 就不成立了；这也是第 2 章习题 2.5 里「全四度调弦会摧毁开放和弦体系」的另一种说法。<strong>CAGED 是标准调弦的专属产物。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 和弦 ＝ 从音阶里<strong>隔一个取一个</strong>（叠三度）；选三度是因为它既协和又携带明暗信息。② 四种三和弦：<strong>大 4+3、小 3+4、减 3+3、增 4+4</strong>；减和弦含三全音故不稳，增和弦对称故无根。③ <strong>三度决定性别</strong>；把它换成二度是 sus2、换成四度是 sus4、直接删掉就是<strong>强力和弦</strong>——后者内部全是完全协和音程，这是它能扛住失真的原因。④ <strong>转位</strong>只换低音、不换和弦名，记作 <code>C/E</code>；它的核心用途是<strong>让低音走成级进的线</strong>。⑤ 开放和弦形状不是传统，是「借空弦凑齐和弦音」的<strong>最优解</strong>；F 和 B 凑不出来，所以要横按。⑥ <strong>CAGED</strong> 五形状是同一片和弦音分布的五段切片，起始间隔 3-2-3-2-2 恰好铺满一个八度。</p>
+          <p><strong>下一章预告</strong>：现在你会造单个和弦了，但一首歌是<strong>一串</strong>和弦。第 7 章《顺阶和弦与和声功能》要回答：为什么某些和弦排在一起就是「对」的？为什么进行会让人觉得「想回家」？以及那个所有吉他手迟早要学会的东西——<strong>用罗马数字思考，而不是用和弦名思考。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./07-顺阶和弦与和声功能.html"><strong>下一章：第 7 章 · 顺阶和弦与和声功能</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+      /* ---------- 演示 1：和弦构造器 ---------- */
+      KBG.soundToggle($("b1-sound"));
+      var QUAL = [
+        { k: "maj", cn: "大三和弦", steps: [0, 4, 7] },
+        { k: "min", cn: "小三和弦", steps: [0, 3, 7] },
+        { k: "dim", cn: "减三和弦", steps: [0, 3, 6] },
+        { k: "aug", cn: "增三和弦", steps: [0, 4, 8] },
+        { k: "sus2", cn: "挂二 sus2", steps: [0, 2, 7] },
+        { k: "sus4", cn: "挂四 sus4", steps: [0, 5, 7] },
+        { k: "pow", cn: "强力和弦 5", steps: [0, 7] }
+      ];
+      var qIdx = 0, rootPc = 0;
+      var qBtns = [];
+      QUAL.forEach(function (q, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = q.cn;
+        b.addEventListener("click", function () { qIdx = i; update1(); });
+        $("b1-qual").appendChild(b); qBtns.push(b);
+      });
+      var fb1 = KBG.fretboard($("b1-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "degree", root: 0, marks: [], title: "和弦音在指板上"
+      });
+      function chordMidis() {
+        var q = QUAL[qIdx];
+        var base = 48 + rootPc;
+        var m = q.steps.map(function (s) { return base + s; });
+        if (q.k === "pow") m.push(base + 12);
+        return m;
+      }
+      function update1() {
+        var q = QUAL[qIdx];
+        qBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === qIdx ? " on" : ""); });
+        var pcs = q.steps.map(function (s) { return T.mod12(rootPc + s); });
+        var sym = { maj: "", min: "m", dim: "dim", aug: "aug", sus2: "sus2", sus4: "sus4", pow: "5" }[q.k];
+        $("b1-name").textContent = T.name(rootPc) + sym;
+        $("b1-notes").textContent = pcs.map(function (p) { return T.name(p); }).join(" ");
+        $("b1-deg").textContent = q.steps.map(function (s) { return T.DEGREES[s]; }).join(" ");
+        if (q.steps.length < 3) {
+          $("b1-stack").textContent = "只有 " + T.INTERVALS[7].cn + "（无三度 → 无大小）";
+        } else {
+          $("b1-stack").textContent = T.INTERVALS[q.steps[1]].cn + " + " +
+            T.INTERVALS[q.steps[2] - q.steps[1]].cn;
+        }
+        fb1.setLabels("degree", rootPc);
+        fb1.setMarks(T.findOnBoard(TUN, pcs, 12).map(function (p) {
+          var d = T.mod12(p.pc - rootPc);
+          return {
+            string: p.string, fret: p.fret,
+            kind: d === 0 ? "root" : (d === q.steps[1] ? "third" : "note")
+          };
+        }));
+      }
+      KB.bindRange($("b1-root"), $("b1-rootv"), function (v) { return T.name(v); },
+        function (v) { rootPc = v; if (typeof fb1 !== "undefined") update1(); });
+      $("b1-strum").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12); A.strum(chordMidis(), { spread: 0.03, gain: 0.62 });
+      });
+      $("b1-arp").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        var m = chordMidis();
+        A.sequence(m.map(function (x, i) { return { t: i * 0.6, midi: x, dur: 0.6 }; })
+          .concat([{ t: m.length * 0.6, midis: m, dur: 2 }]), { bpm: 110 });
+      });
+      $("b1-third").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.06);
+        var q = QUAL[qIdx], base = 48 + rootPc;
+        if (q.steps.length < 3) {
+          A.strum([base, base + 7], { spread: 0.02, gain: 0.7 });
+          $("b1-msg").textContent = "强力和弦没有三音——你听到的只有根音与五度，纯粹的骨架。";
+        } else {
+          A.strum([base, base + q.steps[1]], { spread: 0.02, gain: 0.7 });
+          $("b1-msg").textContent = "根音 + " + T.INTERVALS[q.steps[1]].cn +
+            "。和弦八成的性格就在这两个音之间。";
+        }
+      });
+      $("b1-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：转位 ---------- */
+      var INV = [
+        { cn: "原位 C", midis: [48, 52, 55], notes: "C E G", bass: "C（根音）" },
+        { cn: "第一转位 C/E", midis: [52, 55, 60], notes: "E G C", bass: "E（三音）" },
+        { cn: "第二转位 C/G", midis: [55, 60, 64], notes: "G C E", bass: "G（五音）" }
+      ];
+      function setInv(i) {
+        [0, 1, 2].forEach(function (j) {
+          $("b2-i" + j).className = "kb-btn" + (j === i ? " kb-btn-primary" : "");
+        });
+        $("b2-cur").textContent = INV[i].cn;
+        $("b2-notes").textContent = INV[i].notes;
+        $("b2-bass").textContent = INV[i].bass;
+        A.stopAll(); A.setDrive(0.1);
+        A.strum(INV[i].midis, { spread: 0.035, gain: 0.65 });
+      }
+      [0, 1, 2].forEach(function (i) { $("b2-i" + i).addEventListener("click", function () { setInv(i); }); });
+      $("b2-cycle").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        INV.forEach(function (v, i) { A.strum(v.midis, { delay: i * 1.5, spread: 0.035, gain: 0.65 }); });
+        $("b2-msg").textContent = "三个和弦名都叫 C，构成音也完全相同——变的只有最低音，以及随之而来的稳定感。";
+      });
+      var PROG_BAD = [[48, 52, 55, 60], [43, 50, 55, 59], [45, 52, 57, 60]];
+      var PROG_GOOD = [[48, 52, 55, 60], [47, 50, 55, 59], [45, 52, 57, 60]];
+      function playProg(list, label) {
+        A.stopAll(); A.setDrive(0.14);
+        list.forEach(function (ch, i) { A.strum(ch, { delay: i * 1.35, spread: 0.03, gain: 0.6 }); });
+        $("b2-msg").textContent = label;
+      }
+      $("b2-bad").addEventListener("click", function () {
+        playProg(PROG_BAD, "低音走 C → G → A：中间那一步向下跳了 5 个半音，段落被「顿」了一下。");
+      });
+      $("b2-good").addEventListener("click", function () {
+        playProg(PROG_GOOD, "低音走 C → B → A：每步一个音级，顺滑得多。和弦一个没换，只是把 G 弹成了 G/B。");
+      });
+      $("b2-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 3：CAGED ---------- */
+      var CAGED = ["C_maj", "A_maj", "G_maj", "E_maj", "D_maj"];
+      var CAGED_CN = ["C 型", "A 型", "G 型", "E 型", "D 型"];
+      var root3 = 0;
+      var fb3 = KBG.fretboard($("b3-board"), {
+        tuning: TUN, fromFret: 1, toFret: 15, showOpen: true,
+        labels: "degree", root: 0, marks: [], title: "和弦音沿指板的分布"
+      });
+      function update3() {
+        var host = $("b3-boxes"); clear(host);
+        var starts = [];
+        CAGED.forEach(function (k, i) {
+          var v = T.barre(k, root3, TUN);
+          var cell = document.createElement("div");
+          host.appendChild(cell);
+          KBG.chordbox(cell, {
+            title: CAGED_CN[i], frets: v.frets, fingers: v.fingers,
+            baseFret: v.baseFret, rootString: v.rootString, rows: 5
+          });
+          /* 起始品把空弦算作 0（与习题 6.9 的表格口径一致） */
+          var pos = v.frets.filter(function (f) { return f >= 0; });
+          starts.push(pos.length ? Math.min.apply(null, pos) : 0);
+        });
+        $("b3-name").textContent = T.name(root3) + " 大三和弦";
+        $("b3-pos").textContent = starts.join(" → ") + " 品";
+        var pcs = [root3, T.mod12(root3 + 4), T.mod12(root3 + 7)];
+        fb3.setLabels("degree", root3);
+        fb3.setMarks(T.findOnBoard(TUN, pcs, 15).map(function (p) {
+          var d = T.mod12(p.pc - root3);
+          return { string: p.string, fret: p.fret, kind: d === 0 ? "root" : (d === 4 ? "third" : "note") };
+        }));
+      }
+      KB.bindRange($("b3-root"), $("b3-rootv"), function (v) { return T.name(v); },
+        function (v) { root3 = v; if (typeof fb3 !== "undefined") update3(); });
+      $("b3-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.14);
+        CAGED.forEach(function (k, i) {
+          var v = T.barre(k, root3, TUN);
+          A.strum(T.voicingMidis(v.frets, TUN), { delay: i * 1.5, spread: 0.03, gain: 0.55 });
+        });
+        $("b3-msg").textContent = "五次扫弦，五个位置，同一个和弦。低把位薄而亮，高把位厚而闷——这就是编配时挑把位的依据。";
+      });
+      $("b3-stop").addEventListener("click", function () { A.stopAll(); });
+
+      update1(); update3();
+    });
+  </script>
+</body>
+</html>

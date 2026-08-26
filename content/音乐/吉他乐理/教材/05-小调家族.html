@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>05 小调家族：自然、和声、旋律 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 5 章：自然小调从哪来、和声小调为什么要升七级、旋律小调解决了什么问题，关系大小调与同主音大小调的区别，以及摇滚金属为什么住在小调里。">
+  <meta name="kb:tags" content="吉他,乐理,教材,小调,自然小调,和声小调,旋律小调,关系小调,同主音,导音,增二度,xdjz,hsxd">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .scale-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .scale-cell {
+      min-width: 52px; text-align: center; padding: 6px 4px; border-radius: 8px;
+      border: 1px solid var(--kb-border); background: var(--kb-surface-alt); font-size: 0.9em;
+    }
+    .scale-cell b { display: block; font-size: 1.06em; }
+    .scale-cell small { color: var(--kb-fg-muted); }
+    .scale-cell.diff { border-color: #dc2626; background: rgba(220,38,38,0.12); }
+    .scale-cell.diff b { color: #dc2626; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 5 章 · 小调家族：自然、和声、旋律</h1>
+        <p class="kb-lead">如果你弹的是摇滚或金属，那么<strong>你有八成的时间住在小调里</strong>。Em、Am、Dm 是吉他上最顺手的和弦，五声小调是独奏的默认工具，弗里几亚与和声小调是「邪恶」的音源。可「小调」并不是一个音阶，而是<strong>一家三口</strong>——自然、和声、旋律，它们只差一两个音，性格却天差地别。这一章把这家人一个个介绍清楚，并回答一个吉他手迟早会撞上的问题：<strong>为什么古典乐要费劲把小调的第七级升上去，而摇滚偏偏不肯升？</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说清自然小调与大调的关系，并用「相对主音的级数」写出它的公式；② 解释和声小调为什么要升第七级、代价是什么；③ 说出旋律小调解决了什么问题、以及现代音乐怎么用它；④ 分清<strong>关系</strong>大小调与<strong>同主音</strong>大小调，并知道各自的用途；⑤ 说出三个「摇滚金属偏爱小调」的具体理由，而不只是「小调听起来忧郁」。</p>
+        </div>
+
+        <h2>自然小调：同一批音，换个家</h2>
+        <p>第 4 章末尾那道挑战题已经点破：<strong>调不是音的集合，而是引力的中心。</strong>把 C 大调的七个音原封不动搬过来，只是让 <strong>A</strong> 当主音，就得到了 <strong>A 自然小调</strong>：</p>
+        <pre><code>C 大调：  C  D  E  F  G  A  B        （家在 C）
+A 自然小调：A  B  C  D  E  F  G      （家在 A，音一个没变）</code></pre>
+        <p>这一对叫<strong>关系大小调</strong>（relative major / minor）：同一个调号、同一批音，主音差一个小三度。规则是<strong>大调的第六级就是它的关系小调</strong>；反过来，小调的第三级就是它的关系大调。</p>
+        <p>但「用同一批音」只是记忆技巧，<strong>真正说明小调性格的，是把它和主音对齐来看</strong>。以主音为 1 重新编号：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>级数</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+            <tbody>
+              <tr><td><strong>大调</strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+              <tr><td><strong>自然小调</strong></td><td>1</td><td>2</td><td><strong>♭3</strong></td><td>4</td><td>5</td><td><strong>♭6</strong></td><td><strong>♭7</strong></td></tr>
+              <tr><td>半音数</td><td>0</td><td>2</td><td><strong>3</strong></td><td>5</td><td>7</td><td><strong>8</strong></td><td><strong>10</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>差别一目了然：<strong>三度、六度、七度全部降半音。</strong>其中<strong>♭3</strong> 是决定性的那一个——第 3 章说过，大三度与小三度只差一个半音，却是「明」与「暗」的分界。♭6 加深忧郁，♭7 则拿走了导音（后面细说）。</p>
+        <p>下面这个演示把同主音的大调与小调并排放，逐音对照。请重点听<strong>第 3 个音</strong>切换时那一瞬间的色彩变化：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：同主音大小调对照（差三个音，差一个世界）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同主音的大调与自然小调只有三个音不同——三、六、七级各降半音。其中第三级（大三度 vs 小三度）是决定「明 / 暗」的关键；单独把第三级换掉，色彩就已经翻转。</p></noscript>
+            <div id="c1-sound"></div>
+            <div class="scale-row" id="c1-major"></div>
+            <div class="scale-row" id="c1-minor"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="c1-maj" type="button">▶ A 大调音阶</button>
+              <button class="kb-btn" id="c1-min" type="button">▶ A 自然小调音阶</button>
+              <button class="kb-btn" id="c1-ab" type="button">🔀 只换第三级来回听</button>
+              <button class="kb-btn" id="c1-chord" type="button">▶ A 和弦 ⇄ Am 和弦</button>
+              <button class="kb-btn" id="c1-stop" type="button">■ 停止</button>
+            </div>
+            <p id="c1-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">红框标出的是两者不同的三个音。先听整条音阶，再点「只换第三级」——你会发现色彩几乎完全由那一个音决定。</p>
+          </div>
+        </div>
+
+        <h2>和声小调：把导音抢回来</h2>
+        <p>自然小调有一个「结构性缺陷」，而且它正好长在最要命的地方。</p>
+        <p>回忆第 4 章：调性音乐的引擎是<strong>导音</strong>——主音下方半音的那个音，急切地想上行解决。大调的第七级到主音正好是半音，所以引擎运转良好。可自然小调的 ♭7 到主音是<strong>一个全音</strong>（两个半音），拉力弱得多。它不再「非上行不可」，只是「可以上行」。</p>
+        <p>后果直接体现在和弦上。第 7 章会正式讲顺阶和弦，这里先看结论：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>调</th><th>第五级和弦</th><th>包含导音吗</th><th>回到主和弦的推力</th></tr></thead>
+            <tbody>
+              <tr><td>A 大调</td><td><strong>E</strong>（E G♯ B）大三和弦</td><td>有（G♯ → A 半音）</td><td>强</td></tr>
+              <tr><td>A 自然小调</td><td><strong>Em</strong>（E G B）小三和弦</td><td><strong>没有</strong>（G → A 全音）</td><td><strong>弱</strong></td></tr>
+              <tr><td>A 和声小调</td><td><strong>E</strong>（E G♯ B）大三和弦</td><td>有（G♯ → A 半音）</td><td>强</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>古典和声的解决办法简单粗暴：<strong>把第七级单独升回半音</strong>。得到的音阶叫<strong>和声小调</strong>（harmonic minor）——名字就来自它的动机：<strong>为了和声（属和弦）而改</strong>。</p>
+        <pre><code>A 自然小调：A  B  C  D  E  F  G
+A 和声小调：A  B  C  D  E  F  G♯     ← 只改这一个音
+公式：      1  2  ♭3  4  5  ♭6  7</code></pre>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 代价：一个增二度</p>
+          <p>升了第七级之后，♭6 到 ♮7（F 到 G♯）相隔 <strong>3 个半音</strong>，但字母只跨了 F–G 两个 → 这是一个<strong>增二度</strong>。它在音阶里显得格外突兀——一条本该平缓上行的队伍中间突然出现一个大跨步。古典时期认为它「难唱」，于是又发明了旋律小调来规避；而<strong>二十世纪的金属乐反过来把它当宝贝</strong>：那股浓烈的、近东风味的异国感，正是新古典金属（第 16 章）与弗里几亚属音阶（第 14 章）的招牌。同一个特征，一边嫌它碍事，一边拿它当卖点。</p>
+        </div>
+
+        <h2>旋律小调：为了唱得顺</h2>
+        <p>既然增二度是「升七级」惹出来的，那把中间的 ♭6 也升上去填平不就行了？这就是<strong>旋律小调</strong>（melodic minor）：</p>
+        <pre><code>A 旋律小调（上行）：A  B  C  D  E  F♯  G♯      公式 1 2 ♭3 4 5 6 7
+A 旋律小调（下行）：A  G  F  E  D  C  B        ← 还原成自然小调</code></pre>
+        <p>为什么下行要还原？因为升六升七的<strong>唯一理由是「推向主音」</strong>；下行时根本不需要推力，那两个升号反而会让音阶听起来像大调。所以古典写法是<strong>上行用升的、下行用自然的</strong>——这是整个乐理体系里少见的「方向敏感」规则。</p>
+        <p>不过在<strong>爵士与现代音乐</strong>里，通行做法是不管方向一律用上行式（有时干脆叫它 <em>jazz minor</em>），因为它只比大调少一个音（只有 ♭3），却带来一种独特的、既不明也不暗的悬浮色彩。</p>
+        <p>把三兄弟摆在一起：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：小调三兄弟（切换时注意「被改动的那个音」）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：三种小调的差别只在第六、七级——自然小调 ♭6 ♭7；和声小调 ♭6 ♮7（第七级升回，换来导音，代价是 ♭6→♮7 的增二度）；旋律小调 ♮6 ♮7（把六级也升上去填平增二度）。第七级是否为导音，直接决定第五级和弦是小三和弦还是大三和弦。</p></noscript>
+            <div id="c2-board"></div>
+            <div class="scale-row" id="c2-cells"></div>
+            <div class="kb-readout">
+              <span>音阶 <b id="c2-name">A 自然小调</b></span>
+              <span>公式 <b id="c2-formula">1 2 ♭3 4 5 ♭6 ♭7</b></span>
+              <span>第五级和弦 <b id="c2-five">Em（无导音）</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="c2-nat" type="button">自然小调</button>
+              <button class="kb-btn" id="c2-har" type="button">和声小调</button>
+              <button class="kb-btn" id="c2-mel" type="button">旋律小调（上行）</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="c2-play" type="button">▶ 弹音阶</button>
+              <button class="kb-btn" id="c2-cad" type="button">▶ 听 Ⅴ→Ⅰ 的推力差别</button>
+              <button class="kb-btn" id="c2-gap" type="button">▶ 单听第六级→第七级</button>
+              <button class="kb-btn" id="c2-stop" type="button">■ 停止</button>
+            </div>
+            <p id="c2-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">「听 Ⅴ→Ⅰ 的推力差别」是本章最值得反复听的一处：自然小调的 Em→Am 温吞、可以无限循环；和声小调的 E→Am 一步到位、几乎不容你想别的。</p>
+          </div>
+        </div>
+
+        <h2>关系 vs 同主音：两种「大小调配对」别搞混</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>关系大小调</th><th>同主音大小调</th></tr></thead>
+            <tbody>
+              <tr><td>例子</td><td>C 大调 ↔ <strong>A</strong> 小调</td><td>A 大调 ↔ <strong>A</strong> 小调</td></tr>
+              <tr><td>主音</td><td><strong>不同</strong>（差小三度）</td><td><strong>相同</strong></td></tr>
+              <tr><td>音的集合</td><td><strong>完全相同</strong></td><td>差 3 个音（3、6、7 级）</td></tr>
+              <tr><td>调号</td><td>相同</td><td>差 3 个升降号</td></tr>
+              <tr><td>听感关系</td><td>像同一个房间换了盏灯</td><td>像同一个人换了表情</td></tr>
+              <tr><td>典型用途</td><td>主歌小调、副歌关系大调（情绪打开）</td><td><strong>借用和弦</strong>：从同主音大调借 Ⅳ，从同主音小调借 ♭Ⅵ ♭Ⅶ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>吉他手最容易混的是「Am 的关系大调是 C，可为什么 Am 里经常出现 F 和 G，也出现 A 和 D？」——前者是<strong>关系</strong>调里的自然产物，后者是从<strong>同主音</strong>那边借来的。第 11 章会把借用讲透，现在只需把这两种配对分开。</p>
+
+        <h2>为什么摇滚与金属住在小调里</h2>
+        <p>「因为小调忧郁」只答对了三分之一。真正的原因有三条，而且后两条是<strong>吉他专属</strong>的：</p>
+        <p><strong>理由一：♭3 与 ♭7 是布鲁斯的遗产。</strong>摇滚的根在布鲁斯，而布鲁斯的核心就是把大调的三度和七度<strong>压低</strong>（第 12 章会讲这些「蓝调音」）。当整个流派的基因里写着「降三度、降七度」，落到乐理上自然就是小调地盘。</p>
+        <p><strong>理由二：♭7 拒绝解决，正合摇滚的脾气。</strong>古典和声费尽力气升七级，是为了<strong>推回主音</strong>；而摇滚要的往往是<strong>不回去</strong>——riff 无限循环、段落有力量但不「结束」。自然小调的 ♭7 不但没有导音的催促，还带来一个大三和弦 <strong>♭Ⅶ</strong>（A 小调里的 G 和弦）。<em>Ⅰ–♭Ⅶ–♭Ⅵ</em> 这类进行之所以听起来又厚又倔，就是因为它<strong>完全绕开了古典的引力系统</strong>（第 13 章会正式拆解）。</p>
+        <p><strong>理由三：吉他的物理构造偏袒小调。</strong>Em 和 Am 是六根弦上最容易按、空弦参与最多、共鸣最厚的两个和弦；而 E 小调五声（第 12 章）在标准调弦下几乎是「随便按都不难听」。再加上 6 弦空弦 E 是全琴最低音，Riff 只要回到它就自动确立主音——第 4 章挑战题说的「那根空弦就是调」。</p>
+        <p>下面这个演示用同一条乐句在四种音阶上跑一遍，你可以直接对比色彩：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：同一条乐句，四种颜色</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条 1–3–5–7–5–3–1 的乐句，只换音阶就会彻底改变色彩：大调明亮，自然小调忧郁且不催促，和声小调因为导音而紧张、并带有增二度的异国感，旋律小调则介于明暗之间。</p></noscript>
+            <div class="kb-readout">
+              <span>乐句 <b>1 – 3 – 5 – 7 – 5 – 3 – 1</b></span>
+              <span>当前 <b id="c3-cur">—</b></span>
+              <span>实际音 <b id="c3-notes">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="c3-maj" type="button">▶ 大调</button>
+              <button class="kb-btn" id="c3-nat" type="button">▶ 自然小调</button>
+              <button class="kb-btn" id="c3-har" type="button">▶ 和声小调</button>
+              <button class="kb-btn" id="c3-mel" type="button">▶ 旋律小调</button>
+              <button class="kb-btn" id="c3-all" type="button">▶ 四种连着听</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">失真增益<span class="kb-control-value" id="c3-dv"></span>
+                <input type="range" id="c3-drive" min="0" max="1" step="0.05" value="0.25"></label>
+              <button class="kb-btn" id="c3-stop" type="button">■ 停止</button>
+            </div>
+            <p id="c3-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">把失真拉到 0.8 再听一遍四种——你会发现<strong>差别变小了</strong>。这不是错觉：高增益会压缩音色差异、突出根音与五度。第 10 章会解释为什么，第 11 章会告诉你金属乐如何应对（答案是：把色彩交给 riff 的音，而不是和弦的三度）。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 5.1</p>
+          <p>写出 E 自然小调与 E 和声小调的七个音，并说出 E 小调的调号与关系大调。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>方法一（从关系大调抄）</strong>：E 的关系大调是它上方小三度 ＝ <strong>G 大调</strong>（1 个升号 F♯）。G 大调是 G A B C D E F♯，从 E 开始重排 → <strong>E F♯ G A B C D</strong>。</p>
+            <p><strong>方法二（用公式验算）</strong>：1 2 ♭3 4 5 ♭6 ♭7 → E、F♯、G、A、B、C、D ✓ 两法一致。</p>
+            <p><strong>E 和声小调</strong>：把第七级 D 升半音 → <strong>E F♯ G A B C D♯</strong>。</p>
+            <p><strong>调号</strong>：1 个升号（F♯）。注意<strong>和声小调的 D♯ 不写进调号</strong>——调号只记录关系大调的固定升降号，临时升的第七级作为<strong>临时记号</strong>写在音符前面。这是个常被忽略的细节：看到谱子上小调曲子里到处是临时升记号，多半就是和声小调在起作用。</p>
+            <p><strong>吉他视角</strong>：E 小调的主音是 6 弦和 1 弦的空弦，属音 B 是 2 弦空弦——三个最重要的音有三根空弦伺候。这就是它成为摇滚「默认调」的物理原因。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 5.2</p>
+          <p>在 A 小调里，第五级和弦既可以用 Em 也可以用 E。两者有什么区别？各自什么时候用？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>音的区别</strong>：Em ＝ E G B，来自<strong>自然</strong>小调；E ＝ E <strong>G♯</strong> B，来自<strong>和声</strong>小调。差别只在一个音：G 还是 G♯。</p>
+            <p><strong>听感区别</strong>：G♯ 是 A 的导音，离主音只有半音，因此 <strong>E→Am 有强烈的「必须回去」的推力</strong>；而 Em→Am 中 G 到 A 是全音，推力弱，听起来是<strong>平移</strong>而不是<strong>解决</strong>。</p>
+            <p><strong>什么时候用哪个</strong>：</p>
+            <ul>
+              <li><strong>要收尾、要「终于结束了」的效果</strong> → 用 <strong>E</strong>（或 E7）。古典、弗拉门戈、新古典金属、以及绝大多数需要明确终止的地方。</li>
+              <li><strong>要循环、要「一直转下去」的效果</strong> → 用 <strong>Em</strong>。摇滚 riff、民谣、大量流行歌的主歌。因为它不催你回家，段落可以无限重复而不腻。</li>
+            </ul>
+            <p><strong>一个非常常见的混搭</strong>：<strong>和弦用 E（借导音制造推力），旋律却用自然小调的 G（保持忧郁）</strong>。这会短暂地让 G 和 G♯ 同时存在于一小节里——听起来非但不错，反而是布鲁斯与硬摇滚最有味道的地方之一（第 12 章会正式讲这种「大小三度并存」）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 5.3</p>
+          <p>C 和声小调的增二度出现在哪两个音之间？为什么它不能写成小三度？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先写音阶</strong>：C 自然小调 ＝ C D E♭ F G A♭ B♭；升第七级 → <strong>C 和声小调 ＝ C D E♭ F G A♭ B</strong>。</p>
+            <p><strong>找增二度</strong>：在第六级 <strong>A♭</strong> 与第七级 <strong>B</strong> 之间——相隔 3 个半音。</p>
+            <p><strong>为什么不能叫小三度</strong>：因为度数数<strong>字母</strong>。A 到 B 只跨了两个字母 → 必然是「二度」；而正常的大二度是 2 个半音，这里有 3 个，所以是<strong>增</strong>二度。若写成 A♭ 到 C♭（＝B 的同音异名），字母跨 A–B–C 三个 → 那才是小三度，但那样音阶里就会出现两个 C，第七级也不成其为「B 的升降形式」了。</p>
+            <p><strong>听觉上的意义</strong>：这一步「跨了三个半音却只算二度」的大步伐，正是和声小调那股<strong>中东 / 弗拉门戈 / 新古典</strong>味道的来源。第 14 章讲弗里几亚属音阶时，我们会把这同一个增二度挪到音阶开头（♭2 到 ♮3），那时它会变得更加显眼。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出 D 自然小调的七个音，说出它的调号和关系大调。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>D E F G A B♭ C</strong>；调号 <strong>1 个降号（B♭）</strong>；关系大调 <strong>F 大调</strong>。</p>
+            <p><strong>解析</strong>：用公式 1 2 ♭3 4 5 ♭6 ♭7 从 D 推：D、E、F（♭3）、G、A、B♭（♭6）、C（♭7）。<br>
+            <strong>验算</strong>：关系大调 ＝ 小调主音上方小三度 ＝ D + 3 个半音 ＝ F；F 大调调号是 1♭ ✓ 与推导一致。<br>
+            注意第三级写 <strong>F</strong> 而不是 E♯：字母必须各用一次，D 后面是 E，再后面必须是 F。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>G 大调的关系小调是什么？A♭ 大调的呢？F♯ 小调的关系大调又是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>G 大调 → E 小调</strong>（G 的第六级是 E；也可以说「往下小三度」）。<br>
+            <strong>A♭ 大调 → F 小调</strong>（A♭ 往下 3 个半音 ＝ F）。<br>
+            <strong>F♯ 小调 → A 大调</strong>（小调往<strong>上</strong>小三度 ＝ 关系大调；F♯ + 3 ＝ A）。</p>
+            <p><strong>解析</strong>：两个方向别记反了——<strong>大调往下小三度找小调，小调往上小三度找大调</strong>。快速验算法是看调号：G 与 Em 都是 1♯ ✓；A♭ 与 Fm 都是 4♭ ✓；F♯m 与 A 都是 3♯ ✓。<strong>关系大小调的定义特征就是调号相同</strong>，任何时候拿这条验算都不会错。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>自然小调相对同主音大调降低了哪三个音级？如果只降其中一个，哪一个的效果最接近「变成小调」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>降低的三个</strong>：第 <strong>3</strong>、<strong>6</strong>、<strong>7</strong> 级。</p>
+            <p><strong>最关键的是第 3 级。</strong>只把三度降半音（其余保持大调），得到 1 2 ♭3 4 5 6 7 ——这已经足够让整体色彩翻转成「小调感」了（这个音阶本身有名字，叫「旋律小调上行」，见正文）。</p>
+            <p><strong>为什么是三度</strong>：因为<strong>三度是和弦的性别</strong>。主和弦是 1–3–5，三度决定它是大三和弦还是小三和弦；而主和弦是整首歌反复出现、听觉参照点最强的和弦。相比之下第 6、7 级不属于主和弦，只在旋律经过和别的和弦里露面，影响力小一个数量级。</p>
+            <p><strong>反过来的实验</strong>：只降 6、7 级而保留大三度，得到 1 2 3 4 5 ♭6 ♭7 ——这不但不像小调，反而是一种非常特别的色彩（混合利底亚 ♭6），常见于硬摇滚。第 14 章会回到它。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>B 和声小调的第七级是什么音？它的第五级和弦是什么和弦？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>B 自然小调</strong>（关系大调 D，2♯）：B C♯ D E F♯ G A。<br>
+            <strong>升第七级</strong>：A → <strong>A♯</strong>。所以 B 和声小调 ＝ B C♯ D E F♯ G A♯。</p>
+            <p><strong>第五级和弦</strong>：第五级是 F♯，往上叠三度取音阶内的音 → F♯、<strong>A♯</strong>、C♯ ＝ <strong>F♯ 大三和弦</strong>（若加七音 E 则是 F♯7）。</p>
+            <p><strong>解析</strong>：注意第七级写 A♯ 而不是 B♭——第七级的字母必须是 A（B 的前一个字母）。也正因为升上去的是这个音，第五级和弦的三音才从 A 变成 A♯，小三和弦才变成大三和弦。<strong>「升七级」和「Ⅴ 变大」是同一件事的两种说法。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用音程算给我看：为什么自然小调的第五级和弦是小三和弦，而和声小调的是大三和弦？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>以 A 小调为例，第五级是 <strong>E</strong>。和弦由「根音 + 三度 + 五度」构成，而三度和五度<strong>必须从音阶里取</strong>。</p>
+            <p><strong>自然小调</strong>（A B C D E F <strong>G</strong>）：E 的上方三度取 <strong>G</strong>。E→G ＝ <strong>3 个半音 ＝ 小三度</strong> → 小三和弦 <strong>Em</strong>。</p>
+            <p><strong>和声小调</strong>（A B C D E F <strong>G♯</strong>）：E 的上方三度取 <strong>G♯</strong>。E→G♯ ＝ <strong>4 个半音 ＝ 大三度</strong> → 大三和弦 <strong>E</strong>。</p>
+            <p><strong>关键洞察</strong>：第五级和弦的<strong>三音，正好是音阶的第七级</strong>（从 5 数三度：5→6→7）。所以「升第七级」必然、且只能、恰好改变第五级和弦的性质——这不是巧合，正是古典和声选择改第七级而不是别的音的原因：<strong>用最小的代价（改一个音）换取最大的收益（属和弦变强）。</strong></p>
+            <p>顺带：第七级还是第三级和弦的五音（3→4→5→6→7），所以和声小调的 Ⅲ 级会从 C 大三和弦变成 <strong>C 增三和弦</strong>（C E G♯）——这是那个「附带损伤」，见下一题。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>写出 A 和声小调的七个顺阶三和弦。哪两个是自然小调里没有的「新面孔」？它们在金属乐里有什么用？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>A 和声小调 ＝ A B C D E F G♯，逐级叠三度：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>级</th><th>ⅰ</th><th>ⅱ</th><th>Ⅲ</th><th>ⅳ</th><th>Ⅴ</th><th>Ⅵ</th><th>ⅶ</th></tr></thead>
+                <tbody>
+                  <tr><td>和弦</td><td>Am</td><td>Bdim</td><td><strong>C+</strong></td><td>Dm</td><td><strong>E</strong></td><td>F</td><td><strong>G♯dim</strong></td></tr>
+                  <tr><td>自然小调对应</td><td>Am</td><td>Bdim</td><td>C</td><td>Dm</td><td>Em</td><td>F</td><td>G</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三处变化</strong>：Ⅴ 从 Em 变成 <strong>E</strong>（这是目的）；Ⅲ 从 C 变成 <strong>C 增三和弦</strong>；ⅶ 从 G 变成 <strong>G♯ 减三和弦</strong>（加七音则是 <strong>G♯dim7</strong>）。后两个就是「新面孔」。</p>
+            <p><strong>在金属里的用途</strong>：</p>
+            <ul>
+              <li><strong>G♯dim7</strong>（G♯ B D F）：第 3 章习题 3.9 算过，减七和弦把八度四等分，可以<strong>每隔小三度平移而结构不变</strong>。新古典金属把它当成万能经过和弦——一个 dim7 琶音可以沿指板一路扫上去，听起来紧张、华丽、且永远不会「按错」。第 16 章会专门练它。</li>
+              <li><strong>C 增三和弦</strong>（C E G♯）：把八度三等分，同样无根感。用得较少，但作为「把一个和弦顶向下一个」的连接非常有效。</li>
+            </ul>
+            <p><strong>更重要的一点</strong>：这两个新和弦都是<strong>对称结构</strong>——升第七级这一个动作，等于给小调调性系统开了一扇通向对称和声的门。这就是为什么和声小调在新古典与前卫金属里的存在感，远远超过它在流行乐里的存在感。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>摇滚里极常见的进行 <strong>Am – G – F – G</strong>，其中 G 和 F 各来自哪个音阶？如果把它改成 <strong>Am – E – F – E</strong>，性格会怎么变？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Am – G – F – G</strong>：三个和弦<strong>全部来自 A 自然小调</strong>——Am 是 ⅰ，G 是 <strong>♭Ⅶ</strong>，F 是 <strong>♭Ⅵ</strong>。整段没有一个音出圈，也<strong>没有导音</strong>。</p>
+            <p><strong>性格</strong>：厚重、倔强、可以无限循环。因为缺少导音，它不产生「该结束了」的压力——你可以在这四个和弦上转二十遍都不觉得该走了。这正是摇滚 riff 段落最需要的性质。</p>
+            <p><strong>Am – E – F – E</strong>：E 是大三和弦，含 <strong>G♯</strong>，来自 <strong>A 和声小调</strong>。</p>
+            <p><strong>性格变化</strong>：每次 E 出现都在往 Am 上「推」，段落有了明确的呼吸单位和终止感；同时 E 与 F 之间的 <strong>G♯–F</strong>、以及 F 到 E 的半音下行，带来强烈的<strong>弗拉门戈 / 中东</strong>色彩。它不再适合无限循环，而适合一个有起有落的乐句。</p>
+            <p><strong>实战里两者常常混着用</strong>：主歌用 Am–G–F（自然小调，铺陈），进副歌前一小节换成 E（和声小调，制造推力），副歌落回 Am。<strong>这就是「小调三兄弟」的正确用法——它们不是三选一，而是同一个调里可切换的三种档位。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>「旋律小调上行升六升七、下行还原」这条规则在爵士与现代音乐里被普遍抛弃了。为什么古典时期需要它，而现代不需要？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>古典为什么需要</strong>：这条规则服务于两个当时压倒一切的约束。<br>
+            ① <strong>人声可唱性</strong>：古典时期的和声理论以声乐（尤其四部合唱）为核心，而增二度是公认难唱的音程。上行时既要导音、又要好唱，只能把六级也升上去填平。<br>
+            ② <strong>声部进行的方向性</strong>：升高的音<strong>倾向继续上行</strong>，降低的音倾向下行。上行乐句用升六升七，符合这条倾向；下行时若还用升六升七，就成了「升上去的音却往下走」，在当时的写作规范里是别扭的。所以下行还原成自然小调，让 ♭7 ♭6 顺势往下滑。</p>
+            <p><strong>现代为什么不需要</strong>：<br>
+            ① <strong>核心乐器变了</strong>。爵士与摇滚以器乐为主——萨克斯、钢琴、吉他弹增二度毫无难度，「可唱性」这条约束直接消失。<br>
+            ② <strong>音阶的用法变了</strong>。古典把音阶当成「旋律行进的轨道」，所以方向重要；爵士把音阶当成「某个和弦上可用的音的集合」（chord-scale 思维），集合无所谓方向。既然是集合，一个音阶就该有<strong>一个</strong>确定的内容，「上行一套下行一套」反而添乱。<br>
+            ③ <strong>它的色彩本身有价值</strong>。旋律小调上行式（1 2 ♭3 4 5 6 7）只比大调少一个音，却因为「小三度配大六度大七度」而产生一种既不明也不暗的独特悬浮感。爵士乐手发现，把它整体架在某些和弦上（如 minMaj7、以及作为变化属和弦的来源）非常好用——一旦它成了<strong>色彩工具</strong>而不是<strong>行进轨道</strong>，方向规则就彻底失去意义了。</p>
+            <p><strong>给吉他手的实用结论</strong>：你只需要记<strong>上行式</strong>（1 2 ♭3 4 5 6 7）。真要下行时的自然小调色彩，直接想「自然小调」就行，不必把它当成同一个音阶的另一面。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>一段 riff 只用了 <strong>E5 – A5 – D5 – G5</strong> 四个强力和弦（都不含三度）。它到底是 E 小调？E 多利亚？还是别的？为什么无法判定？请给出三种「用一个音把它钉死」的办法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>为什么无法判定</strong>：强力和弦只有根音、五度、八度，<strong>不含三度也不含七度</strong>——而恰恰是三度和七度决定调式色彩。四个根音 E、A、D、G 是四个音级，它们同时属于好几个以 E 为主音的音阶：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>候选调式</th><th>音阶</th><th>E A D G 都在里面吗</th></tr></thead>
+                <tbody>
+                  <tr><td>E 自然小调（爱奥利亚）</td><td>E F♯ G A B C D</td><td>✓</td></tr>
+                  <tr><td>E 多利亚</td><td>E F♯ G A B C♯ D</td><td>✓</td></tr>
+                  <tr><td>E 弗里几亚</td><td>E F G A B C D</td><td>✓</td></tr>
+                  <tr><td>E 小调五声</td><td>E G A B D</td><td>✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>四个和弦对这四种调式<strong>一视同仁</strong>，所以听感上它「是小调的某一种」，但具体哪一种由后续的旋律决定。<strong>这不是缺陷，而是重型音乐刻意保留的模糊性</strong>：它让 riff 保持开放，主唱与主奏可以往任意方向着色。</p>
+            <p><strong>三种钉死的办法</strong>：</p>
+            <ol>
+              <li><strong>加 C♯ → 多利亚。</strong>在 riff 或独奏里强调第六级 C♯（比如 E5 之后接一个 C♯ 的推弦），立刻得到多利亚那种「小调但不悲」的明亮感。这是硬摇滚与放克金属常用的着色。</li>
+              <li><strong>加 F♮ → 弗里几亚。</strong>把第二级压成 F（E 上方半音），瞬间变成弗里几亚——最「金属」的那种阴冷。只要在 E5 后面加一个 F5 强力和弦（半音上行），效果立竿见影。第 14 章会展开。</li>
+              <li><strong>加 F♯ 和 C♮ → 自然小调。</strong>用一段包含 F♯ 与 C 的旋律，把它锁定在爱奥利亚，即最标准的小调色彩。</li>
+            </ol>
+            <p><strong>更狠的第四种</strong>：<strong>什么都不加</strong>，让它一直悬着。大量经典金属 riff 正是靠这种「只有骨架没有色彩」的写法获得力量——三度一旦出现，音乐就有了明确情绪；没有三度，它就只剩纯粹的重量。第 10 章会告诉你，这个选择<strong>同时还是失真物理的要求</strong>：不是不想加三度，是加了会糊。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>自然小调</strong> ＝ 1 2 ♭3 4 5 ♭6 ♭7，与大调用同一批音但换了主音（关系大小调）；<strong>♭3 决定明暗</strong>。② <strong>和声小调</strong>把第七级升回，换来导音与大三和弦的 Ⅴ，代价是 ♭6→♮7 的<strong>增二度</strong>——古典嫌它难唱，金属拿它当卖点。③ <strong>旋律小调</strong>把第六级也升上去填平增二度；古典上行用、下行还原，现代一律用上行式。④ <strong>关系</strong>大小调（同音集合、不同主音）与<strong>同主音</strong>大小调（同主音、差三个音）是两回事，后者是借用和弦的来源。⑤ 摇滚金属住在小调里有三条理由：<strong>布鲁斯的 ♭3 ♭7 遗产</strong>、<strong>♭7 拒绝解决因而适合循环</strong>、<strong>吉他构造偏袒 Em/Am</strong>。⑥ 三兄弟不是三选一，而是<strong>同一个调里可随时切换的三种档位</strong>。</p>
+          <p><strong>下一章预告</strong>：第一篇到此结束——你已经能在指板上定位任意音、量出任意距离、并推出任意调的音阶。第二篇要把这些音<strong>摞起来</strong>。第 6 章《三和弦与和弦符号》会解释和弦是怎么从音阶里切出来的、四种三和弦的性格、以及一个你按了很久却可能从没想过的问题——<strong>开放和弦的指法为什么长成那个样子？</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./06-三和弦与和弦符号.html"><strong>下一章：第 6 章 · 三和弦与和弦符号</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+      var ROOTPC = 9, ROOT = 57;                 // A / A3
+      var MAJ = [0, 2, 4, 5, 7, 9, 11];
+      var NAT = [0, 2, 3, 5, 7, 8, 10];
+      var HAR = [0, 2, 3, 5, 7, 8, 11];
+      var MEL = [0, 2, 3, 5, 7, 9, 11];
+      var DEGLAB = ["1", "2", "3", "4", "5", "6", "7"];
+
+      function cells(host, steps, ref) {
+        while (host.firstChild) host.removeChild(host.firstChild);
+        steps.forEach(function (s, i) {
+          var d = document.createElement("div");
+          d.className = "scale-cell" + (ref && ref[i] !== s ? " diff" : "");
+          var b = document.createElement("b");
+          b.textContent = T.name(T.mod12(ROOTPC + s));
+          var sm = document.createElement("small");
+          sm.textContent = T.DEGREES[s];
+          d.appendChild(b); d.appendChild(sm);
+          host.appendChild(d);
+        });
+      }
+
+      /* ---------- 演示 1：同主音大小调 ---------- */
+      KBG.soundToggle($("c1-sound"));
+      cells($("c1-major"), MAJ, null);
+      cells($("c1-minor"), NAT, MAJ);
+      function playScale(steps, bpm) {
+        A.stopAll(); A.setDrive(0.08);
+        var st = steps.concat([12]);
+        A.sequence(st.map(function (s, i) { return { t: i * 0.45, midi: ROOT + s, dur: 0.45 }; }), { bpm: bpm || 138 });
+      }
+      $("c1-maj").addEventListener("click", function () {
+        playScale(MAJ);
+        $("c1-msg").textContent = "A 大调：A B C♯ D E F♯ G♯。明亮、上行到导音时有强烈的归家欲。";
+      });
+      $("c1-min").addEventListener("click", function () {
+        playScale(NAT);
+        $("c1-msg").textContent = "A 自然小调：A B C D E F G。三、六、七级都降了半音，末尾的 G→A 是全音，没有那股催促。";
+      });
+      $("c1-ab").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.06);
+        A.strum([ROOT, ROOT + 4, ROOT + 7], { spread: 0.02, gain: 0.65 });
+        A.strum([ROOT, ROOT + 3, ROOT + 7], { delay: 1.4, spread: 0.02, gain: 0.65 });
+        A.strum([ROOT, ROOT + 4, ROOT + 7], { delay: 2.8, spread: 0.02, gain: 0.65 });
+        A.strum([ROOT, ROOT + 3, ROOT + 7], { delay: 4.2, spread: 0.02, gain: 0.65 });
+        $("c1-msg").textContent = "根音和五度一动不动，只有中间那个音在 C♯ 与 C 之间切换——「明」与「暗」的全部差别就是这一个半音。";
+      });
+      $("c1-chord").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.15);
+        A.strum(T.voicingMidis(T.VOICINGS["A"].frets, TUN), { spread: 0.03, gain: 0.6 });
+        A.strum(T.voicingMidis(T.VOICINGS["Am"].frets, TUN), { delay: 1.8, spread: 0.03, gain: 0.6 });
+        $("c1-msg").textContent = "开放 A 与开放 Am：指法只差一根手指（3 弦从 2 品挪到 1 品），那根手指按的正是三音。";
+      });
+      $("c1-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：小调三兄弟 ---------- */
+      var MODES = {
+        nat: { steps: NAT, cn: "A 自然小调", f: "1 2 ♭3 4 5 ♭6 ♭7", five: "Em（E G B，无导音 → 推力弱）" },
+        har: { steps: HAR, cn: "A 和声小调", f: "1 2 ♭3 4 5 ♭6 7", five: "E（E G♯ B，有导音 → 推力强）" },
+        mel: { steps: MEL, cn: "A 旋律小调（上行）", f: "1 2 ♭3 4 5 6 7", five: "E（E G♯ B，同样有导音）" }
+      };
+      var curMode = "nat";
+      var fb2 = KBG.fretboard($("c2-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "degree", root: ROOTPC, marks: [], title: "A 小调家族在指板上"
+      });
+      function setMode(k) {
+        curMode = k;
+        ["nat", "har", "mel"].forEach(function (j) {
+          $("c2-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        var m = MODES[k];
+        cells($("c2-cells"), m.steps, k === "nat" ? null : NAT);
+        var pcs = m.steps.map(function (s) { return T.mod12(ROOTPC + s); });
+        fb2.setMarks(T.findOnBoard(TUN, pcs, 12).map(function (p) {
+          var deg = T.mod12(p.pc - ROOTPC);
+          return { string: p.string, fret: p.fret, kind: p.pc === ROOTPC ? "root" : (deg === 11 || deg === 9 ? "third" : "note") };
+        }));
+        $("c2-name").textContent = m.cn;
+        $("c2-formula").textContent = m.f;
+        $("c2-five").textContent = m.five;
+      }
+      ["nat", "har", "mel"].forEach(function (k) {
+        $("c2-" + k).addEventListener("click", function () {
+          setMode(k);
+          $("c2-msg").textContent = "绿点标出的是第六、七级——三兄弟的差别全在这两个位置。";
+        });
+      });
+      $("c2-play").addEventListener("click", function () { playScale(MODES[curMode].steps); });
+      $("c2-cad").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12);
+        var third = curMode === "nat" ? 3 : 4;          // Em 还是 E
+        var E = 52;
+        A.strum([E, E + 7, E + 12, E + 12 + third], { spread: 0.03, gain: 0.6 });
+        A.strum([ROOT - 12, ROOT, ROOT + 3, ROOT + 7], { delay: 1.7, spread: 0.03, gain: 0.6 });
+        $("c2-msg").textContent = curMode === "nat"
+          ? "Em → Am：平移感，可以一直转下去。摇滚 riff 段落要的就是这个。"
+          : "E → Am：G♯ 半音顶到 A，一步到位。古典、弗拉门戈与新古典金属要的就是这个。";
+      });
+      $("c2-gap").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.06);
+        var st = MODES[curMode].steps;
+        A.sequence([
+          { t: 0, midi: ROOT + st[5], dur: 1 },
+          { t: 1, midi: ROOT + st[6], dur: 1 },
+          { t: 2, midis: [ROOT + st[5], ROOT + st[6]], dur: 2 }
+        ], { bpm: 100 });
+        var gap = st[6] - st[5];
+        $("c2-msg").textContent = "第六级 → 第七级相隔 " + gap + " 个半音（" +
+          (gap === 3 ? "增二度——就是它带来那股中东 / 新古典味道" : "大二度，平顺") + "）。";
+      });
+      $("c2-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 3：同一条乐句，四种颜色 ---------- */
+      var PHRASE = [0, 2, 4, 6, 4, 2, 0];               // 1 3 5 7 5 3 1
+      var C3 = { maj: ["A 大调", MAJ], nat: ["A 自然小调", NAT], har: ["A 和声小调", HAR], mel: ["A 旋律小调", MEL] };
+      var drive3 = 0.25;
+      function playPhrase(k, delayBeats, bpm) {
+        var steps = C3[k][1];
+        var ev = PHRASE.map(function (idx, i) {
+          return { t: (delayBeats || 0) + i * 0.5, midi: ROOT + steps[idx], dur: 0.5 };
+        });
+        ev.push({ t: (delayBeats || 0) + PHRASE.length * 0.5, midi: ROOT, dur: 1.5 });
+        return ev;
+      }
+      function showPhrase(k) {
+        var steps = C3[k][1];
+        $("c3-cur").textContent = C3[k][0];
+        $("c3-notes").textContent = PHRASE.map(function (i) { return T.name(T.mod12(ROOTPC + steps[i])); }).join(" ");
+      }
+      ["maj", "nat", "har", "mel"].forEach(function (k) {
+        $("c3-" + k).addEventListener("click", function () {
+          A.stopAll(); A.setDrive(drive3);
+          showPhrase(k);
+          A.sequence(playPhrase(k), { bpm: 132 });
+        });
+      });
+      $("c3-all").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(drive3);
+        var ev = [], t = 0;
+        ["maj", "nat", "har", "mel"].forEach(function (k) {
+          ev = ev.concat(playPhrase(k, t)); t += 6;
+        });
+        A.sequence(ev, { bpm: 132 });
+        $("c3-cur").textContent = "大调 → 自然 → 和声 → 旋律";
+        $("c3-notes").textContent = "注意第 4 个音（七级）和第 2 个音（三级）";
+      });
+      KB.bindRange($("c3-drive"), $("c3-dv"), function (v) { return Math.round(v * 100) + "%"; },
+        function (v) { drive3 = v; A.setDrive(v); });
+      $("c3-stop").addEventListener("click", function () { A.stopAll(); });
+
+      setMode("nat"); showPhrase("nat");
+    });
+  </script>
+</body>
+</html>

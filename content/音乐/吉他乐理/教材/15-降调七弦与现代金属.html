@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>15 降调、七弦与现代金属 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 15 章：降调的三个动机、Drop 调弦到底改变了什么、七弦八弦的音域与代价、djent 的低音节奏 + 高音音块织体，以及 polymeter 的数学与用法。">
+  <meta name="kb:tags" content="吉他,乐理,教材,降调,Drop D,Drop C,七弦,八弦,djent,polymeter,奇数拍,现代金属,jd,dropd">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .tun-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .tun-grid .kb-btn { width: 100%; justify-content: center; }
+    .tun-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 15 章 · 降调、七弦与现代金属</h1>
+        <p class="kb-lead">上一章结尾留了个问题：E 弗里几亚之所以顺手，是因为主音正好是空弦。<strong>那我想要一个更低的主音怎么办？</strong>整个重型音乐近四十年的装备演化，基本就是在回答这一个问题——降半音、降全音、Drop D、Drop C、七弦、八弦，一步步把「那根好用的空弦」往下搬。这一章讲清楚每一步<strong>换来了什么、又付出了什么</strong>，然后进入现代金属的两项核心技术：<strong>低音节奏 + 高音音块</strong>的织体设计，以及 <strong>polymeter</strong> ——一个能让极少素材产生极长变化的数学工具。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出降调的三个动机与三类调弦各自的取舍；② 解释 Drop 调弦为什么能单指按强力和弦，以及它破坏了什么；③ 说清七弦八弦带来的音域代价与应对办法；④ 描述 djent 织体的构成，并用第 10 章的物理解释它为什么成立；⑤ 区分 polymeter 与 polyrhythm，并算出两个循环多久重合一次。</p>
+        </div>
+
+        <h2>降调的三个动机</h2>
+        <ol>
+          <li><strong>音域。</strong>最直白的一条：更低 ＝ 更重。第 10 章说过，强力和弦的差音会在根音低八度处堆出一个虚拟基频；根音越低，这个虚拟基频越进入「体感」区（40 Hz 以下），冲击力越强。</li>
+          <li><strong>张力与手感。</strong>降调后弦变松，推弦更容易、闷音的「噗」感更明显、拨弦时弦的摆幅更大——<strong>音色本身就变了，不只是音高变了</strong>。这也是为什么很多乐队降调后还要换更粗的弦：他们要的是音高降低，但不想要弦太松。</li>
+          <li><strong>单指强力和弦。</strong>这一条只有 Drop 系调弦才有，下面细讲。</li>
+        </ol>
+
+        <h2>三类调弦，三种取舍</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>例子</th><th>音名</th><th>最低音</th><th>形状怎么变</th><th>代价</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2"><strong>整体降调</strong></td><td>降半音 E♭</td><td>D♯ G♯ C♯ F♯ A♯ D♯</td><td>77.8 Hz</td><td rowspan="2"><strong>完全不变</strong>（所有弦等量下降）</td><td rowspan="2">音名整体偏移，与别人合奏要说清楚</td></tr>
+              <tr><td>降全音 D</td><td>D G C F A D</td><td>73.4 Hz</td></tr>
+              <tr><td rowspan="2"><strong>Drop 调弦</strong></td><td>Drop D</td><td><strong>D</strong> A D G B E</td><td>73.4 Hz</td><td rowspan="2"><strong>最低三弦变成 根–5–8</strong><br>可单指按强力和弦</td><td rowspan="2">6 弦音名全部下移两品；<strong>所有跨 6–5 弦的形状失效</strong></td></tr>
+              <tr><td>Drop C</td><td><strong>C</strong> G C F A D</td><td>65.4 Hz</td></tr>
+              <tr><td><strong>加弦</strong></td><td>七弦标准</td><td><strong>B</strong> E A D G B E</td><td>61.7 Hz</td><td>原六弦<strong>一个字不改</strong>，新弦按纯四度接上（第 2 章习题 2.7）</td><td>琴更宽更重；低频浑浊问题加剧</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三条路线的本质区别</p>
+          <p><strong>整体降调</strong>是「把整张地图平移」——你已有的一切知识与手型都原样有效，只是所有音名换了名字。<strong>加弦</strong>是「把地图延长」——原地图完全不动，只在边上接一块新的。只有 <strong>Drop 调弦</strong>是「把地图的一角撕下来重画」——它换来了一个极大的便利，代价是局部规则失效。</p>
+          <p>这也解释了三者各自的使用场景：想省事又要重 → 整体降调；想要更宽音域又不想重学 → 加弦；想要极致方便的低音 riff → Drop。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：调弦切换器（看指板与强力和弦如何变化）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：整体降调（降半音 / 降全音）不改变任何形状，只是整体变低；Drop 调弦把 6 弦单独降两个半音，使最低三弦成为「根音–纯五度–八度」，因此可以一根手指横按出强力和弦，代价是 6 弦音名全部下移两品、跨 6–5 弦的形状全部失效；加弦（七弦）则完全不改动原有六弦，只在低音侧接上一根纯四度。</p></noscript>
+            <div id="t-sound"></div>
+            <div class="tun-grid" id="t-list"></div>
+            <div class="kb-readout">
+              <span>调弦 <b id="t-name">标准调弦</b></span>
+              <span>空弦 <b id="t-notes">—</b></span>
+              <span>最低音 <b id="t-low">—</b></span>
+              <span>相邻弦距 <b id="t-gaps">—</b></span>
+            </div>
+            <div id="t-board"></div>
+            <div class="kb-readout">
+              <span>低三弦同品位弹出的是 <b id="t-power">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">品位<span class="kb-control-value" id="t-fv"></span>
+                <input type="range" id="t-fret" min="0" max="10" step="1" value="0"></label>
+              <button class="kb-btn" id="t-play" type="button">▶ 弹低三弦同品位</button>
+              <button class="kb-btn" id="t-open" type="button">▶ 扫全部空弦</button>
+              <button class="kb-btn" id="t-stop" type="button">■ 停止</button>
+            </div>
+            <p id="t-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">重点：切到 <strong>Drop D</strong> 或 <strong>Drop C</strong>，然后点「弹低三弦同品位」——一根手指按出来的就是完整的强力和弦。在标准调弦下同样的动作只会得到一堆四度叠置。</p>
+          </div>
+        </div>
+
+        <h2>Drop 调弦到底改变了什么</h2>
+        <p>标准调弦下，6–5–4 弦的间距是 <strong>5–5</strong>（两个纯四度）。把 6 弦降两个半音，间距变成 <strong>7–5</strong>：</p>
+        <pre><code>标准： E2 → A2 → D3     间距 5, 5     同品位三音 ＝ 根 + 4 + ♭7（四度叠置，不是和弦）
+Drop D： D2 → A2 → D3    间距 7, 5     同品位三音 ＝ 根 + 5 + 8（正是强力和弦！）</code></pre>
+        <p><strong>收益</strong>：一根手指横压三根弦就是一个完整的强力和弦。这带来三个连锁好处——</p>
+        <ul>
+          <li><strong>速度</strong>：换和弦只需平移一根手指，可以弹出标准调弦下几乎不可能的高速根音跳跃；</li>
+          <li><strong>解放其余手指</strong>：中指、无名指、小指全空着，可以同时处理装饰音、和弦扩展或闷音；</li>
+          <li><strong>更低的主音空弦</strong>：D（或 C、B）成了新的「万能持续低音」（第 11 章）。</li>
+        </ul>
+        <p><strong>代价</strong>（必须清楚地知道）：</p>
+        <ul>
+          <li><strong>6 弦的音名地图整体下移两品。</strong>原来 6 弦 5 品是 A，现在是 G。你在第 2 章建立的锚点，在 6 弦上全部作废（其余五弦不受影响）。</li>
+          <li><strong>所有跨 6–5 弦的形状失效。</strong>八度形状、音阶形状、和弦形状——凡是路径经过 6–5 弦的，都要重新推算（因为那一段的间距从 5 变成了 7）。</li>
+          <li><strong>开放和弦部分失效。</strong>依赖 6 弦空弦的 Em、G、E 等和弦都会变味。</li>
+        </ul>
+        <p><strong>一条实用的适应策略</strong>：把 Drop 调弦下的 6 弦当成「<strong>只用来弹根音的弦</strong>」，其余音乐活动仍在 5–1 弦上进行。这样你只需要重新记<strong>一根弦</strong>的音名，其余知识全部保留——绝大多数金属乐手正是这么做的。</p>
+
+        <h2>七弦、八弦：音域的代价</h2>
+        <p>加弦是最「无痛」的扩展方式：新增的低 B（七弦）或低 F♯（八弦）与相邻弦仍是<strong>纯四度</strong>，所有形状原样复用（第 2 章习题 2.7）。但音域的代价出现在物理层面：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>最低音</th><th>频率</th><th>问题</th></tr></thead>
+            <tbody>
+              <tr><td>E2（六弦标准）</td><td>82.4 Hz</td><td>基本没问题</td></tr>
+              <tr><td>B1（七弦）</td><td>61.7 Hz</td><td>谐波间隔变窄，和弦更易浑浊；需要更粗的弦或更长的弦长</td></tr>
+              <tr><td>F♯1（八弦）</td><td>46.2 Hz</td><td><strong>已经进入「更像鼓而不像音高」的区域</strong>；与底鼓、贝斯严重抢频段</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>为什么低频更容易糊</strong>：这是第 10 章的直接推论。两个音的差音是<strong>频率之差</strong>，而低音区所有频率本来就小，差音更容易落到 20–50 Hz 这个人耳分辨率极差、又被鼓和贝斯占满的区域。<strong>同一个音程，弹在低八度就是弹在更拥挤、更难分辨的地方。</strong></p>
+        <p><strong>三条应对</strong>（都在实践中被广泛采用）：</p>
+        <ol>
+          <li><strong>低音区只弹单音或强力和弦。</strong>单音不产生互调（第 10 章），强力和弦的差音自我强化。<strong>八弦琴上弹完整和弦几乎是自寻死路。</strong></li>
+          <li><strong>和声交给高音区。</strong>低音负责节奏与调中心，色彩由高把位的小音块承担——这就是下一节的 djent 织体。</li>
+          <li><strong>工程手段</strong>：扇形品（multi-scale，让低音弦更长以维持张力）、更高的输出拾音器、以及混音时给吉他做高通把 80 Hz 以下让给贝斯。</li>
+        </ol>
+
+        <h2>Djent：低音管节奏，高音管色彩</h2>
+        <p>现代金属最有辨识度的织体，可以概括成一句话：<strong>把和声与节奏拆到两个相距三四个八度的音区里，各干各的。</strong></p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>层</th><th>音区</th><th>内容</th><th>负责</th></tr></thead>
+            <tbody>
+              <tr><td><strong>低层</strong></td><td>40–90 Hz</td><td>一个音（通常是最低的空弦），密集闷音，节奏复杂</td><td>节奏、重量、调中心</td></tr>
+              <tr><td><strong>高层</strong></td><td>400–900 Hz</td><td>两三个音的小音块，常含不谐和音程（小二度、三全音、四度叠置）</td><td>色彩、张力</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>为什么这样就不糊了</strong>（第 10 章习题 10.9 的完整答案）：</p>
+        <ul>
+          <li>低层是<strong>单音</strong>，不产生互调；</li>
+          <li>高层<strong>只有两三个音</strong>，互调对数极少；</li>
+          <li>两层相隔三到四个八度，它们之间的差音落在几百赫兹，<strong>远离低音区那个虚拟基频</strong>，不会堆积；</li>
+          <li>低层大量闷音，<strong>缩短了同时发声的时间窗口</strong>。</li>
+        </ul>
+        <p><strong>由此换来的和声自由</strong>：那些在低把位绝对不能碰的音程——小二度、三全音、大七度——挪到高音区的小音块里就完全可用。<strong>这是重型音乐相对早期金属最大的和声进步：它在保住重量的同时把色彩自由度拿了回来。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：Djent 织体（两层分工）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：低音层是单音闷音（节奏密集、只负责重量与调中心），高音层是两三个音的小音块（负责色彩，可以使用低音区不敢用的不谐和音程）。两层相隔三到四个八度，互调产物被赶到无害区，因此同时听既重又清晰。单独听任何一层都不完整——这是一种依赖分层的织体。</p></noscript>
+            <canvas class="kb-canvas" id="dj-canvas" height="160"></canvas>
+            <div class="kb-readout">
+              <span>低层 <b id="dj-low">Drop C 空弦 C2（65 Hz）闷音</b></span>
+              <span>高层 <b id="dj-high">—</b></span>
+              <span>两层相隔 <b id="dj-gap">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">高层音块<span class="kb-control-value" id="dj-cv"></span>
+                <input type="range" id="dj-chord" min="0" max="3" step="1" value="1"></label>
+              <label class="kb-control">速度<span class="kb-control-value" id="dj-bv"></span>
+                <input type="range" id="dj-bpm" min="80" max="200" step="2" value="150"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="dj-both" type="button">▶ 两层一起</button>
+              <button class="kb-btn" id="dj-lowonly" type="button">▶ 只听低层</button>
+              <button class="kb-btn" id="dj-highonly" type="button">▶ 只听高层</button>
+              <button class="kb-btn" id="dj-stack" type="button">⚠️ 把音块搬到低音区（听它糊掉）</button>
+              <button class="kb-btn" id="dj-stop" type="button">■ 停止</button>
+            </div>
+            <p id="dj-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">最后一个按钮是本演示的重点：把完全相同的音块整体降三个八度，其余不变。<strong>同样的音、同样的增益，只是搬了个位置，就从「有色彩」变成了「一团泥」</strong>——第 10 章的结论在这里变成了可听的证据。</p>
+          </div>
+        </div>
+
+        <h2>Polymeter：让极少素材产生极长变化</h2>
+        <p>现代金属另一件招牌武器。先分清两个容易混的概念：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>Polymeter（多节拍）</th><th>Polyrhythm（多节奏）</th></tr></thead>
+            <tbody>
+              <tr><td>定义</td><td><strong>拍子长度相同，小节长度不同</strong></td><td><strong>把同一段时间分成不同的份数</strong></td></tr>
+              <tr><td>例子</td><td>吉他每 7 个八分循环，鼓每 8 个八分循环</td><td>一拍里同时有 3 连音和 4 连音</td></tr>
+              <tr><td>听感</td><td>重音位置逐渐<strong>漂移</strong>，几小节后重合</td><td>两条线<strong>互相错开</strong>，产生密集的交织</td></tr>
+              <tr><td>金属里</td><td><strong>极常见</strong>（djent 的核心）</td><td>较少，多用于过门</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Polymeter 的数学</strong>（第 9 章习题 9.8 已经算过）：吉他循环长度 <em class="kb-math">N</em> 个八分，鼓保持 4/4（8 个八分）。两者重新对齐需要 <em class="kb-math">lcm(N, 8)</em> 个八分：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>吉他循环 N</th><th>3</th><th>5</th><th>6</th><th>7</th><th>9</th><th>4 / 8</th></tr></thead>
+            <tbody>
+              <tr><td>lcm(N, 8)</td><td>24</td><td>40</td><td>24</td><td>56</td><td>72</td><td>8</td></tr>
+              <tr><td><strong>几个 4/4 小节后重合</strong></td><td><strong>3</strong></td><td><strong>5</strong></td><td>3</td><td><strong>7</strong></td><td><strong>9</strong></td><td>1（无效果）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>关键在于 <em class="kb-math">N</em> 与 8 是否互质</strong>：互质时周期最长（等于 <em class="kb-math">N</em> 本身），不互质时周期被缩短。<strong>所以 3、5、7、9 有效，4 和 8 完全没有效果。</strong></p>
+        <p><strong>它的价值</strong>：一段只有 7 个八分音符的素材，配上 4/4 的鼓，可以产生长达 <strong>7 小节</strong>的宏观变化——<strong>听众听到的是不断变化的重音关系，而演奏者其实一直在重复同一件事。</strong>这是「用最少素材换最多变化」的极致，也正是第 11 章习题 11.8 那条原则的数学化版本。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：Polymeter（吉他 N 拍 vs 鼓 4/4）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="pm-canvas" height="180"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：吉他循环长度 N 个八分与鼓的 8 个八分（4/4）叠加时，两者要经过 lcm(N,8) 个八分才重新对齐。N 与 8 互质（3、5、7、9）时周期最长、效果最明显；N 为 4 或 8 时完全没有漂移效果。</p></noscript>
+            <div class="kb-readout">
+              <span>吉他循环 <b id="pm-n">7 个八分</b></span>
+              <span>鼓 <b>4/4（8 个八分）</b></span>
+              <span>重合周期 <b id="pm-cycle">—</b></span>
+              <span>当前小节 <b id="pm-bar">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">吉他循环长度<span class="kb-control-value" id="pm-nv"></span>
+                <input type="range" id="pm-len" min="3" max="9" step="1" value="7"></label>
+              <label class="kb-control">速度<span class="kb-control-value" id="pm-bv"></span>
+                <input type="range" id="pm-bpm" min="80" max="190" step="2" value="140"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="pm-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="pm-drum" type="button">🥁 鼓：开</button>
+              <button class="kb-btn" id="pm-stop" type="button">■ 停止</button>
+            </div>
+            <p id="pm-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">把长度设成 <strong>8</strong> 看看——两条线永远对齐，什么都不会发生。再设回 <strong>7</strong>：吉他的重音每小节向前挪一个八分，七小节后才回到原点。<strong>演奏者在重复，听众在听变化。</strong></p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 15.1</p>
+          <p>Drop D 调弦下，6 弦 5 品是什么音？标准调弦下呢？这个差别意味着什么？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>标准调弦</strong>：6 弦空弦 E2（MIDI 40），5 品 ＝ 45 ＝ <strong>A2</strong>。<br>
+            <strong>Drop D</strong>：6 弦空弦 D2（MIDI 38），5 品 ＝ 43 ＝ <strong>G2</strong>。</p>
+            <p><strong>差别</strong>：同一个品位，音名<strong>低了两个半音</strong>。反过来说，<strong>要在 Drop D 上找到某个音，得比标准调弦往上走两品。</strong>原来 5 品的 A，现在在 7 品。</p>
+            <p><strong>意味着什么</strong>：你在第 2 章辛苦建立的 6 弦锚点（0=E, 3=G, 5=A, 7=B, 8=C, 10=D, 12=E）<strong>在 Drop D 下全部作废</strong>，要换成新的一套（0=D, 2=E, 5=G, 7=A, 9=B, 10=C, 12=D）。</p>
+            <p><strong>但只有 6 弦作废。</strong>5–1 弦一个音都没变。这就是正文那条实用策略的依据：<strong>把 Drop 调弦下的 6 弦当成「只弹根音的弦」</strong>，你只需要重记一根弦。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 15.2</p>
+          <p>Drop C 调弦下，用一根手指横按 6、5、4 弦的第 3 品，得到什么和弦？请验算它确实是强力和弦。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>Drop C 空弦</strong>：C2 G2 C3 F3 A3 D4，对应 MIDI 36、43、48、53、57、62。</p>
+            <p><strong>按第 3 品</strong>：<br>
+            6 弦：36 + 3 ＝ 39 ＝ <strong>D♯2（E♭2）</strong><br>
+            5 弦：43 + 3 ＝ 46 ＝ <strong>A♯2（B♭2）</strong><br>
+            4 弦：48 + 3 ＝ 51 ＝ <strong>D♯3（E♭3）</strong></p>
+            <p><strong>验算音程</strong>：46 − 39 ＝ <strong>7 个半音 ＝ 纯五度</strong> ✓；51 − 39 ＝ <strong>12 个半音 ＝ 纯八度</strong> ✓</p>
+            <p><strong>答案</strong>：<strong>E♭5 强力和弦</strong>（根音 E♭、五度 B♭、八度 E♭）。</p>
+            <p><strong>为什么成立</strong>：Drop 调弦把 6→5 弦的间距从 5 改成了 <strong>7</strong>（纯五度），6→4 弦从 10 改成了 <strong>12</strong>（纯八度）。所以同品位的三个音天然构成「根–五–八」——这正是强力和弦的定义（第 6、11 章）。<strong>调弦替你按好了和弦。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 15.3</p>
+          <p>吉他每 5 个八分音符循环一次，鼓保持 4/4。两者多久重合一次？吉他的重音会落在小节里的哪些位置？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>重合周期</strong>：<em class="kb-math">lcm(5, 8) ＝ 40</em> 个八分 ＝ <em class="kb-math">40 ÷ 8 ＝ <strong>5 个 4/4 小节</strong></em>。</p>
+            <p><strong>重音位置</strong>：吉他的循环起点落在第 0、5、10、15、20、25、30、35 个八分。对 8 取模得到它在小节里的位置：</p>
+            <pre><code>0 → 0     5 → 5     10 → 2    15 → 7
+20 → 4    25 → 1    30 → 6    35 → 3    40 → 0（回到原点）</code></pre>
+            <p><strong>位置序列：0, 5, 2, 7, 4, 1, 6, 3 —— 八个八分位置一个不漏，全部走遍</strong>，然后回到 0。</p>
+            <p><strong>这就是 polymeter 的全部魔法</strong>：吉他手一直在重复同一个 5 个八分的东西（<strong>手上毫无变化</strong>），但因为鼓提供了 4/4 的参照网格，听众感受到的是重音关系持续变化的五小节长句。</p>
+            <p><strong>为什么 5 与 8 互质很关键</strong>：正因为互质，8 次循环才能走遍全部 8 个位置。如果吉他循环是 4 个八分（与 8 不互质），重音就只会落在 0 和 4 两个位置——每小节完全一样，什么都不会发生。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>写出降半音调弦（E♭ standard）的六根空弦音名。最低音的频率是多少？这种调弦对已有的指法有什么影响？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>空弦</strong>：<strong>E♭ A♭ D♭ G♭ B♭ E♭</strong>（也写作 D♯ G♯ C♯ F♯ A♯ D♯）。</p>
+            <p><strong>最低音频率</strong>：E♭2 ＝ <em class="kb-math">82.41 × 2^(−1/12) ＝ 82.41 × 0.9439 ≈ <strong>77.78 Hz</strong></em>。</p>
+            <p><strong>对指法的影响</strong>：<strong>完全没有影响。</strong>六根弦等量下降，相邻弦间距（5-5-5-4-5）一个字没变，所有音阶、和弦、八度形状原样有效。</p>
+            <p><strong>真正的影响在别处</strong>：① 所有音名整体低了半音——你按 E 型和弦，实际发出的是 E♭，<strong>跟别人合奏时必须说清楚</strong>；② 弦变松，推弦更轻松、音色更「肥」；③ 主唱可能就是为了这半音才要求降调的。</p>
+            <p><strong>这是最省事的降调方式</strong>：想要更重一点、又完全不想重新学任何东西，就选它。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>Drop D 与降全音 D 的最低音相同吗？两者有什么本质区别？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>最低音相同</strong>：都是 <strong>D2 ＝ 73.42 Hz</strong>。</p>
+            <p><strong>但完全是两回事</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>Drop D</th><th>降全音 D</th></tr></thead>
+                <tbody>
+                  <tr><td>空弦</td><td>D <strong>A D G B E</strong></td><td><strong>D G C F A D</strong></td></tr>
+                  <tr><td>改了几根弦</td><td><strong>只有 6 弦</strong>（降 2 个半音）</td><td><strong>全部 6 根</strong>（各降 2 个半音）</td></tr>
+                  <tr><td>弦距</td><td><strong>7</strong>-5-5-4-5（变了）</td><td>5-5-5-4-5（不变）</td></tr>
+                  <tr><td>形状</td><td>跨 6–5 弦的全部失效</td><td>完全不变</td></tr>
+                  <tr><td>单指强力和弦</td><td><strong>可以</strong></td><td>不行</td></tr>
+                  <tr><td>其余五弦的音名</td><td>不变（还是 A D G B E）</td><td>全部低两个半音</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>一句话</strong>：<strong>Drop D 换来了单指强力和弦，代价是局部规则失效；降全音 D 什么都没换，也什么都没破坏。</strong>两者可以叠加——「Drop C」其实就是「降全音 + Drop」的组合（D G C F A D 再把 6 弦从 D 降到 C）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>七弦琴的第 7 弦是什么音？它与 6 弦相隔什么音程？为什么这个设计让吉他手几乎不用重新学习？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>第 7 弦 ＝ B1</strong>（约 61.7 Hz），与 6 弦 E2 相隔 <strong>5 个半音 ＝ 纯四度</strong>。</p>
+            <p><strong>为什么几乎不用重学</strong>：因为标准调弦里绝大多数相邻弦本来就是纯四度（第 2 章）。新增的第 7 弦沿用同一个间距，意味着：</p>
+            <ul>
+              <li><strong>八度形状照旧</strong>：7→5 弦是「跨两弦进两品」，7→4 弦是「跨三弦退三品」——和 6→4、6→3 完全一样（第 2 章习题 2.7）。</li>
+              <li><strong>强力和弦形状照旧</strong>：7 弦根的强力和弦是 <code>n, n+2, n+2</code>，与六弦根一模一样。</li>
+              <li><strong>那个碍事的大三度仍然只在 3–2 弦之间</strong>，位置没变。</li>
+            </ul>
+            <p><strong>结论</strong>：<strong>加弦是「延长地图」，不是「换一张地图」。</strong>这也是为什么七弦八弦能被吉他手快速接受，而全四度调弦（第 2 章习题 2.5）尽管更规整却几乎无人采用——<strong>兼容性比优雅更重要。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么 djent 织体的低音层通常只弹<strong>一个音</strong>？请给出两条理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>理由一：单音不产生互调失真</strong>（第 10 章）。一个音进入非线性只会生成它自身的整数倍谐波，永远和它属于同一个泛音列，所以再大的增益也只是「变厚」而不是「变糊」。低音区本来就是最容易浑浊的地方，用单音是最安全的选择。</p>
+            <p><strong>理由二：低音层的任务不是和声，是节奏与重量。</strong>它负责三件事——确立调中心（持续低音，第 11 章）、提供重量（差音堆出的虚拟基频，第 10 章）、承载复杂节奏（闷音、gallop、polymeter）。<strong>这三件事一个音就够了；加音只会稀释节奏的清晰度。</strong></p>
+            <p><strong>补充</strong>：这也是一种分工。既然色彩由高音层承担，低音层就应该把自由度全部投入到<strong>时间维度</strong>而不是<strong>音高维度</strong>。第 9 章习题 9.6 说过：当和声被简化到一个音，全部信息量就转移到了节奏与音色上——djent 是这句话最彻底的实现。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>正文说 Drop 调弦下「所有跨 6–5 弦的形状失效」。请用<strong>八度形状</strong>和<strong>纯五度形状</strong>各算一个例子说明，并给出修正后的正确形状。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>例一：八度形状（6 弦 → 4 弦）</strong><br>
+            标准调弦：6 弦 <em class="kb-math">n</em> 品 → 4 弦 <em class="kb-math">n+2</em> 品是八度（第 2 章形状 ①）。<br>
+            在 Drop D 下验算：6 弦 <em class="kb-math">n</em> 品 ＝ 38 + <em class="kb-math">n</em>；4 弦 <em class="kb-math">n+2</em> 品 ＝ 50 + <em class="kb-math">n</em> + 2 ＝ 52 + <em class="kb-math">n</em>。<br>
+            差 <strong>14 个半音 ＝ 大九度</strong>，<strong>不是八度</strong> ✗</p>
+            <p><strong>修正</strong>：要得到八度需要 38 + <em class="kb-math">n</em> + 12 ＝ 50 + <em class="kb-math">f</em> → <em class="kb-math">f ＝ n</em>。<br>
+            <strong>Drop D 下，6 弦与 4 弦的八度形状是「同一品位」</strong>——这正是单指强力和弦的另一种说法。</p>
+            <p><strong>例二：纯五度形状（6 弦 → 5 弦）</strong><br>
+            标准调弦：跨一弦、进两品（第 3 章）。<br>
+            Drop D 验算：38 + <em class="kb-math">n</em> vs 45 + <em class="kb-math">n</em> + 2 ＝ 47 + <em class="kb-math">n</em>，差 <strong>9 个半音 ＝ 大六度</strong> ✗</p>
+            <p><strong>修正</strong>：38 + <em class="kb-math">n</em> + 7 ＝ 45 + <em class="kb-math">f</em> → <em class="kb-math">f ＝ n</em>。<br>
+            <strong>Drop D 下，6→5 弦的纯五度也是「同一品位」。</strong></p>
+            <p><strong>统一的规律</strong>：Drop 调弦把 6 弦降了 2 个半音，所以<strong>所有以 6 弦为起点、终点在别的弦上的形状，品位都要减 2</strong>（或者说，起点要往上挪两品）。反过来，以 6 弦为终点的形状要加 2。</p>
+            <p><strong>实用记法</strong>：<strong>「涉及 6 弦，就补两品」</strong>——这一条能覆盖 Drop 调弦下的所有形状修正，比重新背一套形状省事得多。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>八弦琴最低音 F♯1 ≈ 46.25 Hz。用第 10 章的方法算一算：在这根弦上弹<strong>纯五度</strong>和<strong>大三度</strong>，差音各落在哪？为什么八弦琴上强力和弦仍然可行、三度却绝对不行？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>纯五度</strong>：上方音 ＝ <em class="kb-math">46.25 × 2^(7/12) ＝ 69.30 Hz</em>（C♯2）。<br>
+            差音 ＝ 69.30 − 46.25 ＝ <strong>23.05 Hz</strong>。<br>
+            <em class="kb-math">46.25 ÷ 23.05 ＝ 2.007</em> → 最接近整数 2，偏差 <strong>+6 音分</strong> ✓ <strong>归位良好</strong>。</p>
+            <p><strong>大三度</strong>：上方音 ＝ <em class="kb-math">46.25 × 2^(4/12) ＝ 58.27 Hz</em>（A♯1）。<br>
+            差音 ＝ 58.27 − 46.25 ＝ <strong>12.02 Hz</strong>。<br>
+            <em class="kb-math">46.25 ÷ 12.02 ＝ 3.848</em> → 最接近整数 4，偏差 <strong>−67 音分</strong> ✗</p>
+            <p><strong>关键在于这两个差音的绝对频率</strong>：</p>
+            <ul>
+              <li><strong>23 Hz</strong> 已经在人耳听觉下限（约 20 Hz）附近——它几乎不作为「音高」被听到，而是作为<strong>体感的低频压力</strong>，正好符合强力和弦「重」的需求。而且它归位准确，与根音的低八度重合，起加固作用。</li>
+              <li><strong>12 Hz 完全在听觉下限以下。</strong>它不会被听成一个音，而会被听成<strong>每秒 12 次的振幅起伏</strong>——也就是明显的「突突突」的颤动。<strong>这不是浑浊，这是抖动。</strong>在极低音区，失谐的差音不再表现为「音色变脏」，而是直接变成了节奏性的干扰。</li>
+            </ul>
+            <p><strong>结论</strong>：音区越低，三度的问题就越从「音色缺陷」变成「机械噪声」。<strong>八弦琴的低音区实际上只剩两种合法用法：单音，和强力和弦。</strong>这不是风格选择，是听觉物理划下的硬边界——也是为什么八弦琴的音乐必然演化成 djent 那种「低音单音 + 高音音块」的分层织体。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用自己的话说清 polymeter 与 polyrhythm 的区别，各举一个具体例子，并说明为什么金属更偏爱前者。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Polymeter（多节拍）</strong>：<strong>脉搏（拍）的长度相同，但循环的长度不同。</strong><br>
+            例：吉他弹一个 7 个八分音符的 riff 不断重复，鼓打标准 4/4（8 个八分一小节）。两条线的「一格」是一样长的，只是「一圈」不一样长。听感是<strong>重音位置逐渐漂移</strong>，7 小节后重合。</p>
+            <p><strong>Polyrhythm（多节奏）</strong>：<strong>把同一段时间分成不同的份数。</strong><br>
+            例：一拍之内，一个声部弹 3 个音（三连音），另一个声部弹 4 个音（十六分）。两条线的「一格」长度<strong>不同</strong>，只在每拍开头对齐。听感是<strong>密集的交织</strong>，像两个不同速度的齿轮。</p>
+            <p><strong>为什么金属更偏爱 polymeter</strong>，三条：</p>
+            <ol>
+              <li><strong>它可演奏。</strong>吉他手只需要重复一个固定的 riff（手上毫无变化），复杂性由鼓和听觉自动产生。而 polyrhythm 需要演奏者同时保持两种不同的分割感，难度高得多。</li>
+              <li><strong>它保住了律动。</strong>因为脉搏一致，身体仍然能跟得上；polyrhythm 容易让人失去落脚点，不适合需要「抡头」的音乐。</li>
+              <li><strong>它是「以少换多」的极致。</strong>7 个八分的素材换来 7 小节的宏观变化——正好契合重型音乐「素材极少、靠重复与变形」的写作哲学（第 11 章习题 11.8）。</li>
+            </ol>
+            <p><strong>实践中两者常叠加</strong>：主 riff 用 polymeter 提供长周期漂移，过门处插一个 polyrhythm 的三连音群制造瞬间的失控感，然后落回主 riff。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>设计一段 polymeter：吉他循环 7 个八分，鼓 4/4。要求吉他的重音在整个周期里<strong>走遍小节内的全部八个八分位置</strong>。写出设计，并验算位置序列。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>设计</strong>（Drop D，riff 长度 7 个八分，第 1 个八分是重音）：</p>
+            <pre><code>吉他（7 个八分为一循环，× 表示重音，· 表示闷音）：
+    ×  ·  ·  ×  ·  ·  ·   ｜  ×  ·  ·  ×  ·  ·  ·   ｜ …
+    1  2  3  4  5  6  7      1  2  3  4  5  6  7
+
+鼓（4/4，8 个八分一小节，每小节第 1 拍重音）：
+    ×  ·  ·  ·  ×  ·  ·  ·  ｜  ×  ·  ·  ·  ×  ·  ·  · ｜ …</code></pre>
+            <p><strong>验算重合周期</strong>：<em class="kb-math">lcm(7, 8) ＝ 56</em> 个八分 ＝ <em class="kb-math">56 ÷ 8 ＝ <strong>7 个 4/4 小节</strong></em>。</p>
+            <p><strong>吉他循环起点的绝对位置</strong>：0, 7, 14, 21, 28, 35, 42, 49（第 56 个回到原点）。<br>
+            <strong>对 8 取模（即在小节内的位置）</strong>：</p>
+            <pre><code>0 → 0     7 → 7     14 → 6    21 → 5
+28 → 4    35 → 3    42 → 2    49 → 1    56 → 0（复位）</code></pre>
+            <p><strong>位置序列：0, 7, 6, 5, 4, 3, 2, 1 —— 八个位置一个不漏，而且是整齐地倒着走。</strong>∎</p>
+            <p><strong>为什么必然走遍</strong>：因为 7 与 8 <strong>互质</strong>，所以 <em class="kb-math">7k mod 8</em> 在 <em class="kb-math">k ＝ 0…7</em> 时取遍 0–7 的全部值（数论里的基本结论）。<strong>互质 ＝ 走遍全部位置 ＝ 效果最大化。</strong></p>
+            <p><strong>写作提示</strong>：这种设计的听感是「每一小节吉他都比上一小节早半拍进来」，产生持续的、可预期又抓不住的推进。<strong>关键是鼓必须坚定地保持 4/4</strong>——它是那把参照尺。如果鼓也跟着吉他走 7，polymeter 就消失了，听众只会听到一个 7/8 拍的段落（第 9 章习题 9.9），效果完全不同。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>现代金属（尤其 djent）高度依赖录音与混音，现场往往难以还原。请列出三条具体原因，并给出对应的现场应对方案。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>原因一：分轨隔离了互调失真。</strong>录音里的「厚而清晰」，很大程度上来自两到四把吉他<strong>各自过各自的失真、再线性相加</strong>（第 10 章习题 10.4：<code>失真(A)+失真(B) ≠ 失真(A+B)</code>）。现场只有一两把琴，如果试图用一把琴弹完所有声部，互调立刻回来。<br>
+            <strong>应对</strong>：现场至少两把吉他分工（一把低音层、一把高音层），或使用双通道／双音箱系统把不同频段分开处理。</p>
+            <p><strong>原因二：频段分配依赖精细 EQ。</strong>低音层的虚拟基频（40 Hz 区）与贝斯、底鼓严重重叠（第 10 章习题 10.5）。录音里可以逐轨做高通与动态 EQ 腾位置，现场的房间声学会把这些努力毁掉一半。<br>
+            <strong>应对</strong>：现场普遍使用<strong>数字音箱模拟器直接进调音台</strong>（而不是拾麦克风），保证信号可控；并预先设定好高通点，把 80–100 Hz 以下让给贝斯。</p>
+            <p><strong>原因三：节奏对齐是后期做的。</strong>现代金属大量使用节奏量化（把演奏拉到网格上）。而 polymeter、奇数分组这些结构<strong>对时间误差极其敏感</strong>——两条线本来就在漂移，一旦演奏有偏差，听众就无法分辨「这是设计还是弹错了」。<br>
+            <strong>应对</strong>：现场用<strong>耳返节拍器（click track）</strong>并常配同步的预录轨；这也是为什么这类乐队几乎都用 in-ear monitor。</p>
+            <p><strong>一个更根本的观察</strong>：这三条都指向同一件事——<strong>这种音乐是「在录音室里被发明的」，它的美学建立在录音技术提供的可能性之上。</strong>这在音乐史上并不新鲜（多轨录音催生了很多风格），但值得清醒地意识到：<strong>当你听着专辑练琴却总觉得自己弹得不够「厚」，很可能不是技术问题，而是你在用一把琴对抗四条轨。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 降调三个动机：<strong>音域、张力手感、单指强力和弦</strong>。② 三类调弦的取舍——<strong>整体降调</strong>＝平移地图（形状全保留）；<strong>加弦</strong>＝延长地图（原地图不动，新弦仍是纯四度）；<strong>Drop 调弦</strong>＝重画一角（换来单指强力和弦，代价是 6 弦音名下移两品、跨 6–5 弦形状失效）。③ Drop 调弦的修正口诀：<strong>「涉及 6 弦，就补两品」</strong>。④ 音区越低，失谐差音的危害越大——<strong>八弦琴低音区只剩单音与强力和弦两种合法用法</strong>，这直接逼出了 djent 的分层织体。⑤ <strong>Djent ＝ 低音单音管节奏与重量 + 高音小音块管色彩</strong>，两层相隔三四个八度，互调产物被赶到无害区，因而低把位不敢用的不谐和音程在高音区重新可用。⑥ <strong>Polymeter</strong>（循环长度不同、脉搏相同）与 polyrhythm（分割份数不同）是两回事；周期 ＝ <em class="kb-math">lcm(N, 8)</em>，<strong>N 与 8 互质时重音走遍全部位置、效果最大</strong>。</p>
+          <p><strong>下一章预告</strong>：全书最后一章。前面十五章讲的都是「材料与结构」，第 16 章《独奏构建与新古典技巧》要讲<strong>怎么把它们变成话</strong>——目标音与和弦音导向、乐句的呼吸与问答、模进与琶音、和声小调的新古典语汇，以及速度与张力该怎么分配。<strong>那一章会把这本教材从头到尾串一遍。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./16-独奏构建与新古典技巧.html"><strong>下一章：第 16 章 · 独奏构建与新古典技巧</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+      function cssVar(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+      var redraws = [];
+
+      /* ---------- 演示 1：调弦切换器 ---------- */
+      KBG.soundToggle($("t-sound"));
+      var TUNS = ["standard", "halfDown", "fullDown", "dropD", "dropC", "dropB", "sevenB"];
+      var tIdx = 0, tFret = 0, fbT = null;
+      var tBtns = [];
+      TUNS.forEach(function (k, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = T.TUNINGS[k].cn;
+        b.addEventListener("click", function () { tIdx = i; buildT(); });
+        $("t-list").appendChild(b); tBtns.push(b);
+      });
+      function curTun() { return T.TUNINGS[TUNS[tIdx]].notes; }
+      function buildT() {
+        var tun = curTun(), info = T.TUNINGS[TUNS[tIdx]];
+        tBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === tIdx ? " on" : ""); });
+        if (fbT) fbT.destroy();
+        fbT = KBG.fretboard($("t-board"), {
+          tuning: tun, fromFret: 1, toFret: 12, showOpen: true,
+          labels: "name", marks: [], title: info.cn + " 指板音名"
+        });
+        var marks = [];
+        for (var s = 0; s < tun.length; s++) for (var f = 0; f <= 12; f++) {
+          marks.push({ string: s, fret: f, kind: (f === tFret && s < 3) ? "root" : "ghost" });
+        }
+        fbT.setMarks(marks);
+        $("t-name").textContent = info.cn;
+        $("t-notes").textContent = tun.map(function (m) { return T.name(m, { octave: 1 }); }).join(" ");
+        $("t-low").textContent = T.freq(tun[0]).toFixed(2) + " Hz（" + T.name(tun[0], { octave: 1 }) + "）";
+        var gaps = [];
+        for (var i = 0; i < tun.length - 1; i++) gaps.push(tun[i + 1] - tun[i]);
+        $("t-gaps").textContent = gaps.join(" – ") + " 个半音";
+        updatePower();
+      }
+      function updatePower() {
+        var tun = curTun();
+        var a = tun[1] - tun[0], b = tun[2] - tun[0];
+        var txt;
+        if (a === 7 && b === 12) {
+          txt = "根音 + 纯五度 + 纯八度 ＝ 完整强力和弦（一根手指就够）";
+        } else if (a === 5 && b === 10) {
+          txt = "根音 + 纯四度 + 小七度 ＝ 四度叠置，不是和弦（要按 n / n+2 / n+2 才是强力和弦）";
+        } else {
+          txt = "根音 + " + T.INTERVALS[T.mod12(a)].cn + " + " + T.INTERVALS[T.mod12(b)].cn;
+        }
+        var m = [tun[0] + tFret, tun[1] + tFret, tun[2] + tFret];
+        $("t-power").textContent = m.map(function (x) { return T.name(x, { octave: 1 }); }).join(" ") + " —— " + txt;
+        if (fbT) {
+          var marks = [];
+          for (var s = 0; s < tun.length; s++) for (var f = 0; f <= 12; f++) {
+            marks.push({ string: s, fret: f, kind: (f === tFret && s < 3) ? "root" : "ghost" });
+          }
+          fbT.setMarks(marks);
+        }
+      }
+      KB.bindRange($("t-fret"), $("t-fv"), function (v) { return v + " 品"; },
+        function (v) { tFret = v; if (fbT) updatePower(); });
+      $("t-play").addEventListener("click", function () {
+        var tun = curTun();
+        A.stopAll(); A.setDrive(0.8);
+        A.strum([tun[0] + tFret, tun[1] + tFret, tun[2] + tFret], { spread: 0.012, gain: 0.7 });
+      });
+      $("t-open").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.2);
+        A.strum(curTun(), { spread: 0.05, gain: 0.6 });
+      });
+      $("t-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：djent 织体 ---------- */
+      var DJ_LOW = 36;                                   // Drop C 空弦 C2
+      var CLUSTERS = [
+        { cn: "四度叠置（开阔冷硬）", steps: [0, 5, 10] },
+        { cn: "小二度 + 五度（尖锐）", steps: [0, 1, 7] },
+        { cn: "三全音双音（不祥）", steps: [0, 6] },
+        { cn: "加九（现代、带光）", steps: [0, 2, 7] }
+      ];
+      var DJ_HIGH = 74;                                  // D5 附近
+      var djIdx = 1, djBpm = 150, djH = null, djMode = "both";
+      var c2 = $("dj-canvas");
+      var ctx2 = KB.fitCanvas(c2, 160, function () { drawDj(); });
+      function drawDj() {
+        var w = c2.clientWidth || 600, h = 160;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx2.clearRect(0, 0, w, h);
+        var x0 = 46, x1 = w - 14, span = x1 - x0;
+        if (span < 80) return;
+        ctx2.font = "11px -apple-system, PingFang SC, sans-serif";
+        /* 对数频率轴 30 Hz – 2000 Hz */
+        function fx(f) { return x0 + span * (Math.log(f / 30) / Math.log(2000 / 30)); }
+        ctx2.strokeStyle = faint; ctx2.globalAlpha = 0.6; ctx2.lineWidth = 1;
+        ctx2.beginPath(); ctx2.moveTo(x0, 120); ctx2.lineTo(x1, 120); ctx2.stroke();
+        ctx2.globalAlpha = 1;
+        [50, 100, 200, 400, 800, 1600].forEach(function (f) {
+          ctx2.fillStyle = muted; ctx2.textAlign = "center";
+          ctx2.fillText(f + "", fx(f), 138);
+        });
+        ctx2.textAlign = "left"; ctx2.fillStyle = muted;
+        ctx2.fillText("频率（Hz，对数轴）", x0, 154);
+        /* 低层 */
+        var lowF = T.freq(DJ_LOW);
+        ctx2.strokeStyle = "#dc2626"; ctx2.lineWidth = 4;
+        ctx2.beginPath(); ctx2.moveTo(fx(lowF), 120); ctx2.lineTo(fx(lowF), 40); ctx2.stroke();
+        ctx2.fillStyle = "#dc2626"; ctx2.textAlign = "center";
+        ctx2.fillText("低层 " + lowF.toFixed(0) + " Hz", fx(lowF), 32);
+        /* 高层 */
+        var base = djMode === "stack" ? DJ_HIGH - 36 : DJ_HIGH;
+        CLUSTERS[djIdx].steps.forEach(function (s) {
+          var f = T.freq(base + s);
+          ctx2.strokeStyle = accent; ctx2.lineWidth = 3;
+          ctx2.beginPath(); ctx2.moveTo(fx(f), 120); ctx2.lineTo(fx(f), 56); ctx2.stroke();
+        });
+        var f0 = T.freq(base);
+        ctx2.fillStyle = accent; ctx2.textAlign = "center";
+        ctx2.fillText("高层音块", fx(f0 * 1.3), 48);
+        /* 间隔标注 */
+        var octaves = (Math.log(f0 / lowF) / Math.log(2));
+        ctx2.strokeStyle = muted; ctx2.setLineDash([3, 3]); ctx2.lineWidth = 1;
+        ctx2.beginPath(); ctx2.moveTo(fx(lowF), 92); ctx2.lineTo(fx(f0), 92); ctx2.stroke();
+        ctx2.setLineDash([]);
+        ctx2.fillStyle = octaves > 2.5 ? "#16a34a" : "#dc2626";
+        ctx2.textAlign = "center";
+        ctx2.fillText("相隔 " + octaves.toFixed(1) + " 个八度" +
+          (octaves > 2.5 ? "（安全）" : "（太近 → 互调堆积）"), (fx(lowF) + fx(f0)) / 2, 86);
+        $("dj-high").textContent = CLUSTERS[djIdx].cn + "（" +
+          CLUSTERS[djIdx].steps.map(function (s) { return T.name(base + s, { octave: 1 }); }).join(" ") + "）";
+        $("dj-gap").textContent = octaves.toFixed(1) + " 个八度";
+      }
+      redraws.push(drawDj);
+      function startDj(mode) {
+        djMode = mode;
+        if (djH) { djH.stop(); djH = null; }
+        A.stopAll(); A.setDrive(0.85);
+        var ev = [];
+        /* 低层：十六分闷音，第 6、7 格挖空（第 11 章：休止） */
+        if (mode !== "highonly") {
+          for (var i = 0; i < 16; i++) {
+            if (i === 6 || i === 7) continue;
+            ev.push({ t: i * 0.25, midi: DJ_LOW, dur: 0.25, mute: true, gain: i % 4 === 0 ? 0.95 : 0.6 });
+          }
+        }
+        /* 高层：在第 2 拍与第 4 拍后半落音块 */
+        if (mode !== "lowonly") {
+          var base = mode === "stack" ? DJ_HIGH - 36 : DJ_HIGH;
+          [1.5, 3.5].forEach(function (t) {
+            ev.push({ t: t, midis: CLUSTERS[djIdx].steps.map(function (s) { return base + s; }),
+              dur: 0.5, spread: 0.008, gain: 0.55 });
+          });
+        }
+        djH = A.sequence(ev, { bpm: djBpm, loop: true, lengthBeats: 4 });
+        drawDj();
+      }
+      $("dj-both").addEventListener("click", function () {
+        startDj("both");
+        $("dj-msg").textContent = "两层一起：低音密集闷音管节奏，高音音块管色彩。两者相隔三个多八度，互不干扰。";
+      });
+      $("dj-lowonly").addEventListener("click", function () {
+        startDj("lowonly");
+        $("dj-msg").textContent = "只有低层：节奏清楚、很重，但没有任何和声信息——单独听是不完整的。";
+      });
+      $("dj-highonly").addEventListener("click", function () {
+        startDj("highonly");
+        $("dj-msg").textContent = "只有高层：有色彩但没有重量与推进——同样不完整。这种织体的意义完全在于「分层」。";
+      });
+      $("dj-stack").addEventListener("click", function () {
+        startDj("stack");
+        $("dj-msg").textContent = "把完全相同的音块整体降三个八度，其余不变。听那一下糊掉——同样的音、同样的增益，只是搬到了低音区（第 10 章）。";
+      });
+      $("dj-stop").addEventListener("click", function () {
+        if (djH) { djH.stop(); djH = null; } A.stopAll();
+      });
+      KB.bindRange($("dj-chord"), $("dj-cv"), function (v) { return CLUSTERS[v].cn; },
+        function (v) { djIdx = v; drawDj(); if (djH) startDj(djMode); });
+      KB.bindRange($("dj-bpm"), $("dj-bv"), function (v) { return v + " BPM"; },
+        function (v) { djBpm = v; if (djH) startDj(djMode); });
+
+      /* ---------- 演示 3：Polymeter ---------- */
+      function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+      var pmN = 7, pmBpm = 140, pmH = null, pmRaf = null, pmDrum = true;
+      var c3 = $("pm-canvas");
+      var ctx3 = KB.fitCanvas(c3, 180, function () { drawPm(); });
+      function pmTotal() { return pmN * 8 / gcd(pmN, 8); }        // lcm(N,8)
+      function drawPm(pos) {
+        var w = c3.clientWidth || 600, h = 180;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx3.clearRect(0, 0, w, h);
+        var x0 = 52, x1 = w - 12, span = x1 - x0;
+        if (span < 80) return;
+        ctx3.font = "11px -apple-system, PingFang SC, sans-serif";
+        var total = pmTotal(), cw = span / total;
+        /* 小节线 */
+        for (var b = 0; b <= total / 8; b++) {
+          var bx = x0 + b * 8 * cw;
+          ctx3.strokeStyle = muted; ctx3.globalAlpha = 0.75; ctx3.lineWidth = 1.6;
+          ctx3.beginPath(); ctx3.moveTo(bx, 26); ctx3.lineTo(bx, 150); ctx3.stroke();
+        }
+        ctx3.globalAlpha = 1;
+        /* 鼓行 */
+        for (var i = 0; i < total; i++) {
+          var px = x0 + i * cw;
+          var isDown = (i % 8 === 0), isBack = (i % 8 === 4);
+          ctx3.fillStyle = isDown ? "#16a34a" : (isBack ? "#16a34a" : faint);
+          ctx3.globalAlpha = (isDown || isBack) ? 0.9 : 0.28;
+          var hh = isDown ? 34 : (isBack ? 24 : 10);
+          ctx3.fillRect(px + 1, 118 - hh, Math.max(2, cw - 2), hh);
+        }
+        /* 吉他行 */
+        for (var j = 0; j < total; j++) {
+          var gx = x0 + j * cw;
+          var isG = (j % pmN === 0);
+          ctx3.fillStyle = isG ? "#dc2626" : accent;
+          ctx3.globalAlpha = isG ? 0.92 : 0.3;
+          var gh = isG ? 34 : 10;
+          ctx3.fillRect(gx + 1, 58 - gh, Math.max(2, cw - 2), gh);
+        }
+        ctx3.globalAlpha = 1;
+        ctx3.fillStyle = muted; ctx3.textAlign = "right";
+        ctx3.fillText("吉他", x0 - 8, 54);
+        ctx3.fillText("鼓 4/4", x0 - 8, 114);
+        ctx3.textAlign = "left";
+        ctx3.fillText("红＝吉他循环起点　绿＝鼓的强拍与后拍　竖线＝小节线", x0, 168);
+        if (pos != null) {
+          var cx = x0 + (pos % total) * cw;
+          ctx3.strokeStyle = "#8b5cf6"; ctx3.lineWidth = 2.5;
+          ctx3.beginPath(); ctx3.moveTo(cx, 20); ctx3.lineTo(cx, 152); ctx3.stroke();
+          $("pm-bar").textContent = "第 " + (Math.floor((pos % total) / 8) + 1) + " / " + (total / 8) + " 小节";
+        }
+      }
+      redraws.push(function () { drawPm(); });
+      function updatePm() {
+        var total = pmTotal();
+        $("pm-n").textContent = pmN + " 个八分";
+        $("pm-cycle").textContent = "lcm(" + pmN + ", 8) ＝ " + total + " 个八分 ＝ " +
+          (total / 8) + " 小节" + (gcd(pmN, 8) === 1 ? "（互质，重音走遍全部位置）" : "（不互质，效果被削弱）");
+        drawPm();
+      }
+      function startPm() {
+        stopPm(); A.setDrive(0.8);
+        var total = pmTotal(), ev = [];
+        for (var i = 0; i < total; i++) {
+          var isG = (i % pmN === 0);
+          ev.push({ t: i * 0.5, midi: 38, dur: 0.5, mute: true, gain: isG ? 0.98 : 0.5 });
+        }
+        pmH = A.sequence(ev, { bpm: pmBpm, loop: true, lengthBeats: total / 2 });
+        if (pmDrum) A.metronome(pmBpm, { pattern: [1, 0, 1, 0] });
+        (function tick() {
+          if (!pmH) return;
+          drawPm(pmH.position() * 2);
+          pmRaf = requestAnimationFrame(tick);
+        })();
+        $("pm-play").textContent = "⏸ 暂停";
+      }
+      function stopPm() {
+        if (pmH) { pmH.stop(); pmH = null; }
+        if (pmRaf) { cancelAnimationFrame(pmRaf); pmRaf = null; }
+        A.stopAll(); drawPm(); $("pm-play").textContent = "▶ 循环播放";
+      }
+      $("pm-play").addEventListener("click", function () { pmH ? stopPm() : startPm(); });
+      $("pm-drum").addEventListener("click", function () {
+        pmDrum = !pmDrum;
+        $("pm-drum").textContent = pmDrum ? "🥁 鼓：开" : "🥁 鼓：关";
+        $("pm-msg").textContent = pmDrum
+          ? "鼓提供 4/4 的参照网格——没有它，polymeter 就不存在。"
+          : "关掉鼓之后，你只会听到一个规整的 " + pmN + " 拍循环——参照系消失，漂移感也就消失了。";
+        if (pmH) startPm();
+      });
+      $("pm-stop").addEventListener("click", stopPm);
+      KB.bindRange($("pm-len"), $("pm-nv"), function (v) { return v + " 个八分"; },
+        function (v) { pmN = v; updatePm(); if (pmH) startPm(); });
+      KB.bindRange($("pm-bpm"), $("pm-bv"), function (v) { return v + " BPM"; },
+        function (v) { pmBpm = v; if (pmH) startPm(); });
+
+      if (window.MutationObserver) {
+        new MutationObserver(function () { redraws.forEach(function (f) { f(); }); })
+          .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      }
+      buildT(); drawDj(); updatePm();
+    });
+  </script>
+</body>
+</html>

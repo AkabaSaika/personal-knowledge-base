@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 指板地图：调弦、八度形状与把位 · 知识库</title>
+  <meta name="kb:summary" content="电吉他乐理教材第 2 章：标准调弦 EADGBE 的由来与那个大三度例外、同一个音在指板上的多个位置、八度形状如何把整块指板串起来，以及把位的概念。">
+  <meta name="kb:tags" content="吉他,乐理,教材,指板,标准调弦,八度形状,把位,同音异位,CAGED,zbdt,bdxz">
+  <meta name="kb:created" content="2026-08-26">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 0.88em; color: var(--kb-fg-muted); }
+    .kb-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 2 章 · 指板地图：调弦、八度形状与把位</h1>
+        <p class="kb-lead">上一章只用了一根弦。可你手里有六根，而且它们<strong>互相错开</strong>——同一个音在指板上散落在两三个地方，同一个和弦形状挪到别处就变了名字。很多人学到这里就放弃了，转而去背指法图。这一章要做的正相反：告诉你这六根弦为什么这样排（包括那个看起来很碍事的例外），然后给你<strong>八度形状</strong>——一把能把整块指板串成地图的钥匙。学完这一章，你不再需要「背」某个音在哪，而是能<strong>推</strong>出来。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释标准调弦为什么以纯四度为主、以及 3 弦到 2 弦为什么是例外；② 说出任意品位的音名，并找出它在指板上的全部同音位置；③ 用三种八度形状，从任意一个已知音出发推出整块指板；④ 说清「把位」是什么，以及同一段旋律换把位后手感为什么变；⑤ 解释 1 弦与 6 弦同为 E 给吉他带来了什么便利。</p>
+        </div>
+
+        <h2>六根弦为什么这样排</h2>
+        <p>先看事实：相邻两根弦之间的距离是 <strong>5、5、5、4、5</strong> 个半音——四个纯四度夹着一个大三度。这个「不整齐」不是历史事故，而是一次<strong>刻意的取舍</strong>。</p>
+        <p>假设把它改成整齐的全四度调弦 <em class="kb-math">E–A–D–G–C–F</em>（确实有人这么弹，叫 all-fourths tuning）。好处立刻显现：所有音阶形状、所有和弦形状都可以在六根弦之间<strong>无差别平移</strong>，跨弦不用补品，指板变成一张完美的方格纸。代价呢？</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>标准调弦 E A D G B E</th><th>全四度调弦 E A D G C F</th></tr></thead>
+            <tbody>
+              <tr><td>形状一致性</td><td>跨过 2 弦要补一品，形状有两套</td><td>完全一致，一套走天下</td></tr>
+              <tr><td>开放和弦</td><td>C、G、D、E、A、Em… 都好按，空弦大量参与</td><td><strong>几乎全部崩溃</strong>，得重新发明指法</td></tr>
+              <tr><td>最高与最低弦</td><td>都是 E，<strong>相差整整两个八度</strong></td><td>E 与 F，差两个八度零一个半音</td></tr>
+              <tr><td>六弦扫弦的和声</td><td>一次扫弦自然铺出根—五—八的厚度</td><td>低音区偏挤，扫弦容易糊</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>取舍很清楚：<strong>标准调弦牺牲了形状的一致性，换来了「手按得到的和弦」与「首尾同名的两个 E」。</strong>吉他首先是一件和弦乐器，这笔交易划算。你今后遇到的每一个「为什么这里要多挪一品」，源头都在这里。</p>
+        <figure>
+          <svg viewBox="0 0 660 210" width="660" height="210" role="img" aria-label="标准调弦六根弦的音名与相邻弦的半音距离，3 弦到 2 弦是大三度例外">
+            <g font-family="-apple-system, PingFang SC, sans-serif">
+              <g font-size="13" font-weight="700" fill="var(--kb-fg)" text-anchor="middle">
+                <text x="70" y="40">E2</text><text x="70" y="58" font-size="10.5" font-weight="400" fill="var(--kb-fg-muted)">6 弦</text>
+                <text x="180" y="40">A2</text><text x="180" y="58" font-size="10.5" font-weight="400" fill="var(--kb-fg-muted)">5 弦</text>
+                <text x="290" y="40">D3</text><text x="290" y="58" font-size="10.5" font-weight="400" fill="var(--kb-fg-muted)">4 弦</text>
+                <text x="400" y="40">G3</text><text x="400" y="58" font-size="10.5" font-weight="400" fill="var(--kb-fg-muted)">3 弦</text>
+                <text x="510" y="40">B3</text><text x="510" y="58" font-size="10.5" font-weight="400" fill="var(--kb-fg-muted)">2 弦</text>
+                <text x="610" y="40">E4</text><text x="610" y="58" font-size="10.5" font-weight="400" fill="var(--kb-fg-muted)">1 弦</text>
+              </g>
+              <g stroke="var(--kb-accent)" stroke-width="2" fill="none">
+                <path d="M 92 78 C 110 100 140 100 158 78"/>
+                <path d="M 202 78 C 220 100 250 100 268 78"/>
+                <path d="M 312 78 C 330 100 360 100 378 78"/>
+                <path d="M 532 78 C 550 100 578 100 592 78"/>
+              </g>
+              <path d="M 422 78 C 440 108 468 108 488 78" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+              <g font-size="11.5" text-anchor="middle" fill="var(--kb-accent)">
+                <text x="125" y="118">5 半音</text><text x="235" y="118">5 半音</text>
+                <text x="345" y="118">5 半音</text><text x="562" y="118">5 半音</text>
+              </g>
+              <text x="455" y="126" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="700">4 半音</text>
+              <g font-size="11" text-anchor="middle" fill="var(--kb-fg-muted)">
+                <text x="125" y="134">纯四度</text><text x="235" y="134">纯四度</text>
+                <text x="345" y="134">纯四度</text><text x="562" y="134">纯四度</text>
+                <text x="455" y="142" fill="#dc2626">大三度 · 唯一的例外</text>
+              </g>
+              <rect x="20" y="160" width="620" height="38" rx="8" fill="var(--kb-accent)" opacity="0.10"/>
+              <text x="330" y="184" text-anchor="middle" font-size="12.5" fill="var(--kb-fg)">6 弦 E2 到 1 弦 E4：24 个半音 ＝ <tspan font-weight="700">整整两个八度</tspan>，首尾同名</text>
+            </g>
+          </svg>
+          <figcaption>标准调弦的结构：四个纯四度 + 一个大三度。那个大三度恰好把首尾拉回同一个音名 E，代价是所有跨过 2 弦的形状都要补一品。</figcaption>
+        </figure>
+
+        <h2>同一个音，指板上有好几个地方</h2>
+        <p>因为弦与弦之间只差 4–5 个半音，而一根弦上 12 品就走完一个八度，必然出现<strong>重叠</strong>：6 弦 5 品和 5 弦空弦是同一个 A2——不是「相似」，是<strong>频率完全相同</strong>的同一个音。</p>
+        <p>下面的演示是本章的主力工具。点击任意品位，它会发声，并<strong>把指板上所有同名的音一起点亮</strong>（同一个八度的用红色，其他八度用蓝色）。先随便点几个，感受一下同一个音名在指板上的分布密度。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 1：全指板地图（点击发声 · 高亮所有同名音）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：因为相邻弦只差 4–5 个半音而一根弦 12 品就是一个八度，同一个音名在 0–12 品范围内会出现 6–7 次；而<strong>频率完全相同</strong>的同一个音高，最多出现 3 次（如 E3 出现在 6 弦 12 品、5 弦 7 品、4 弦 2 品）。</p></noscript>
+            <div id="d1-sound"></div>
+            <div id="d1-board"></div>
+            <div class="kb-legend">
+              <span><i style="background:#dc2626"></i>同一个音高（频率相同）</span>
+              <span><i style="background:#2563eb"></i>同名但不同八度</span>
+              <span><i style="background:#16a34a"></i>你点的那一个</span>
+            </div>
+            <div class="kb-readout">
+              <span>音名 <b id="d1-name">—</b></span>
+              <span>同音高位置 <b id="d1-same">—</b></span>
+              <span>同名位置（0–12 品）<b id="d1-pc">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d1-lab" type="button">标注：音名 ⇄ 级数</button>
+              <button class="kb-btn" id="d1-clear" type="button">清空标注</button>
+              <button class="kb-btn" id="d1-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d1-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">点任意一个品位试试。留意红点：它们是<strong>同一个音</strong>，音高一模一样，只是弹的位置不同——换位置换的是音色和手感，不是音高。</p>
+          </div>
+        </div>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 同音异位不是冗余，是表现力</p>
+          <p>6 弦 12 品的 E3 和 4 弦 2 品的 E3 频率完全相同，但听起来<strong>不一样</strong>：粗弦高把位厚而闷，细弦低把位亮而清。这正是吉他手挑弦的理由——同一段旋律走哪几根弦，决定了它的音色。此外，同音异位还决定<strong>能不能按</strong>：一个和弦要六个音同时发声，只能在互不冲突的位置里挑，这就是为什么和弦指法看起来那么「随机」。</p>
+        </div>
+
+        <h2>八度形状：把整块指板串起来</h2>
+        <p>现在给你钥匙。既然一个音在指板上到处都是，与其一个个背，不如记住<strong>它和它的八度之间的固定形状</strong>——只要认得一个音，顺着形状走就能推出其余全部。</p>
+        <p>形状只有三种，全部来自上面那张调弦图：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>形状</th><th>走法</th><th>为什么</th><th>例</th></tr></thead>
+            <tbody>
+              <tr><td><strong>形状 ①</strong></td><td>往细弦方向<strong>跨两根弦、进两品</strong>（6→4 弦、5→3 弦）</td><td>跨过的两根弦是两个纯四度＝10 个半音，还差 2 个半音补足八度</td><td>6 弦 3 品 G2 → 4 弦 5 品 G3</td></tr>
+              <tr><td><strong>形状 ②</strong></td><td>往细弦方向<strong>跨两根弦、进三品</strong>（4→2 弦、3→1 弦）</td><td>路径里含那个大三度，只有 9 个半音，要多补一品</td><td>3 弦 5 品 C4 → 1 弦 8 品 C5</td></tr>
+              <tr><td><strong>形状 ③</strong></td><td>往细弦方向<strong>跨三根弦、退三品</strong>（6→3 弦、5→2 弦）</td><td>三个四度＝15 个半音，超了 3 个，退回来</td><td>6 弦 8 品 C3 → 3 弦 5 品 C4</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>记忆口诀：<strong>跨两弦要往前，低音侧进两品、跨过 2 弦进三品；跨三弦要往回退三品。</strong>下面的演示把每种形状在指板上的全部实例一次画出来——注意它们是<strong>严格平行</strong>的，这正是形状能当工具用的原因。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 2：三种八度形状（切换查看全部实例）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：八度形状共三种——跨两弦进两品（6→4、5→3 弦）、跨两弦进三品（4→2、3→1 弦，因为路径含那个大三度）、跨三弦退三品（6→3、5→2 弦）。三种形状在指板上严格平行，可整体平移到任意位置。</p></noscript>
+            <div id="d2-board"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="d2-s1" type="button">① 跨两弦 · 进两品</button>
+              <button class="kb-btn" id="d2-s2" type="button">② 跨两弦 · 进三品</button>
+              <button class="kb-btn" id="d2-s3" type="button">③ 跨三弦 · 退三品</button>
+              <button class="kb-btn" id="d2-play" type="button">▶ 依次试听</button>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">整体平移（品）<span class="kb-control-value" id="d2-val"></span>
+                <input type="range" id="d2-shift" min="0" max="7" step="1" value="3"></label>
+            </div>
+            <p id="d2-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">红点是起点，蓝点是它高八度的伙伴。拖动滑块整体平移——形状不变，这就是它能当工具用的原因。</p>
+          </div>
+        </div>
+
+        <h2>把位：手待在哪一块</h2>
+        <p><strong>把位</strong>（position）指的是左手食指落在第几品，那一带的四个品就是手不用移动能覆盖的范围。说「第五把位」，意思是食指管 5 品、中指 6 品、无名指 7 品、小指 8 品。</p>
+        <p>把位之所以重要，是因为<strong>同一个音阶在不同把位长得完全不一样</strong>——音还是那些音，但落在哪根弦、哪根手指上全变了。下面的演示让你把 C 大调音阶沿着指板推着走，看它如何一路变形：</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧪 演示 3：把位漫游（同一个音阶，五种长相）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一个音阶（这里是 C 大调）在指板上是连续铺满的，把位只是从中截取四个品宽的一段。换把位不改变音，只改变「哪根手指按哪个音」，因此手感与可用的连奏、推弦方式全变。</p></noscript>
+            <div id="d3-board"></div>
+            <div class="kb-readout">
+              <span>调 <b id="d3-key">C 大调</b></span>
+              <span>把位 <b id="d3-pos">—</b></span>
+              <span>本把位内音数 <b id="d3-cnt">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">把位（食指所在品）<span class="kb-control-value" id="d3-val"></span>
+                <input type="range" id="d3-pos-ctl" min="1" max="9" step="1" value="5"></label>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="d3-play" type="button">▶ 弹本把位内的音阶</button>
+              <button class="kb-btn" id="d3-all" type="button">显示 / 隐藏全指板</button>
+              <button class="kb-btn" id="d3-stop" type="button">■ 停止</button>
+            </div>
+            <p id="d3-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">灰色虚圈是本把位<strong>够不到</strong>的音阶音。注意：不管把位在哪，红点（根音 C）总在，只是换了根弦。</p>
+          </div>
+        </div>
+        <p>这里已经能看见 <strong>CAGED</strong> 的影子了：大调音阶在指板上一共有五段可循环的形状，分别以 C、A、G、E、D 五个开放和弦的样子为骨架，首尾相接铺满整个指板。第 6 章讲完三和弦以后我们会正式回到它。现在只需记住一件事：<strong>把位不改变音，只改变哪根手指按哪个音。</strong></p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 2.1</p>
+          <p>5 弦 7 品是什么音？在 0–12 品范围内，还有哪些位置能弹出<strong>频率完全相同</strong>的同一个音？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先定音名</strong>：5 弦空弦 A2（MIDI 45），加 7 个半音 → 52 → <strong>E3</strong>。</p>
+            <p><strong>再找同音位置</strong>：用各弦空弦的 MIDI 反推「要按第几品才能得到 52」。<br>
+            6 弦 E2 = 40 → 52 − 40 = <strong>12 品</strong> ✓<br>
+            5 弦 A2 = 45 → 52 − 45 = <strong>7 品</strong> ✓（题目给的）<br>
+            4 弦 D3 = 50 → 52 − 50 = <strong>2 品</strong> ✓<br>
+            3 弦 G3 = 55 → 52 − 55 = −3，<strong>够不着</strong>（要往琴枕外面按）✗</p>
+            <p><strong>答案</strong>：6 弦 12 品、5 弦 7 品、4 弦 2 品，共三处。</p>
+            <p>注意到规律了吗——每往细弦方向挪一根，品位就减少 5（因为相邻弦差 5 个半音）。这个减法就是你今后找同音位置的全部方法。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 2.2</p>
+          <p>已知 6 弦 8 品是 C3。<strong>只用八度形状</strong>（不许一个个数半音），找出 0–12 品内所有的 C。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>起点</strong>：6 弦 8 品 = C3。</p>
+            <p><strong>用形状 ③</strong>（跨三弦、退三品）：6 弦 8 品 → 3 弦 5 品 = <strong>C4</strong>。</p>
+            <p><strong>用形状 ②</strong>（跨两弦、进三品，因为路径含大三度）：3 弦 5 品 → 1 弦 8 品 = <strong>C5</strong>。</p>
+            <p><strong>回头补同音位置</strong>：6 弦 8 品往细弦挪一根、品位减 5 → 5 弦 3 品，也是 <strong>C3</strong>。同理 3 弦 5 品 → 2 弦 1 品（这里跨过大三度，减 4 而不是 5）＝ <strong>C4</strong>。再用形状 ①：5 弦 3 品 → 3 弦 5 品（已有）；4 弦呢？2 弦 1 品往粗弦回推、加 5 → 4 弦 ... 直接算：60 − 50 = <strong>10 品</strong> ＝ C4。</p>
+            <p><strong>答案（六处）</strong>：6 弦 8 品、5 弦 3 品（两个 C3）；4 弦 10 品、3 弦 5 品、2 弦 1 品（三个 C4）；1 弦 8 品（一个 C5）。</p>
+            <p>把这六个点在指板上连起来看，你会发现它们组成一个反复出现的斜向图案——这个图案就是你以后「一眼看到所有根音」的依据，第 6 章讲和弦时会天天用到。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 2.3</p>
+          <p>为什么形状 ① 是「跨两弦进两品」，而形状 ② 却要「进三品」？请用半音数算给我看。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>形状 ①（6→4 弦）</strong>：跨过的是 6→5 和 5→4 两个纯四度 ＝ 5 + 5 ＝ <strong>10 个半音</strong>。八度需要 12，还差 2 → 往前进 <strong>2 品</strong>。</p>
+            <p><strong>形状 ②（3→1 弦）</strong>：跨过的是 3→2（<strong>大三度，只有 4 个半音</strong>）和 2→1（纯四度 5 个半音）＝ <strong>9 个半音</strong>。八度需要 12，还差 3 → 往前进 <strong>3 品</strong>。</p>
+            <p><strong>结论</strong>：差别的全部来源就是那个大三度比纯四度<strong>少了一个半音</strong>。所以有一条万能规则：<strong>凡是跨过 2 弦的形状，都要比不跨 2 弦的同类形状多挪一品。</strong>这条规则不止管八度，第 6 章的和弦形状、第 12 章的五声盒子，全都遵守它。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>4 弦 5 品是什么音？在 0–12 品内找出它的全部同音位置。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：4 弦空弦 D3 = 50，加 5 → 55 → <strong>G3</strong>。同音位置：5 弦 10 品、4 弦 5 品、<strong>3 弦空弦</strong>，共三处。</p>
+            <p><strong>解析</strong>：55 − 45 = 10（5 弦 10 品）；55 − 55 = 0（3 弦空弦）；6 弦要 55 − 40 = 15 品，超出 12 品范围。3 弦空弦也算一个位置——空弦是最容易被忘掉的同音位置，而它恰恰是最好用的那个（不占手指，还能延音）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>6 弦 3 品是 G2。用八度形状写出比它高一个八度、和高两个八度的位置各一个。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>高一个八度</strong>：形状 ①，跨两弦进两品 → <strong>4 弦 5 品</strong>（G3）。</p>
+            <p><strong>高两个八度</strong>：从 4 弦 5 品再用形状 ②（跨两弦进三品，因为 4→2 弦跨过了大三度）→ <strong>2 弦 8 品</strong>（G4）。</p>
+            <p><strong>解析</strong>：验算 2 弦空弦 B3 = 59，加 8 = 67 = G4 ✓，比 G2（43）正好高 24 个半音 ＝ 两个八度 ✓。这条「① 接 ②」的路径是吉他上最常用的走法之一：从 6 弦低音出发，两步够到高两个八度，中间的手型几乎不用移动把位。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>标准调弦里，哪两根相邻弦不是纯四度关系？这一个例外给指法带来了哪两个具体后果？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：<strong>3 弦（G3）到 2 弦（B3）</strong>，是大三度（4 个半音），其余全是纯四度（5 个半音）。</p>
+            <p><strong>后果一</strong>：所有<strong>跨过 2 弦</strong>的形状都要多挪一品——八度形状如此，音阶形状如此，和弦形状也如此。你按横按和弦时那个「1 弦和 2 弦好像错位了」的别扭感，就来自这里。</p>
+            <p><strong>后果二</strong>：<strong>五品调弦法在 3 弦上要改按 4 品</strong>。同样是「补齐两弦之间的距离」，别处补 5 个半音，这里只需补 4 个。</p>
+            <p>额外一条好处：正因为少了这一个半音，1 弦才落在 E 而不是 F，6 弦与 1 弦得以同名——见下一题。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>1 弦和 6 弦空弦都是 E，相差几个八度？这件事给吉他手带来了什么实际便利？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>答案</strong>：E2（40）到 E4（64），相差 24 个半音 ＝ <strong>整整两个八度</strong>。</p>
+            <p><strong>便利一：形状可以整体套用。</strong>6 弦和 1 弦的音名分布<strong>完全一样</strong>（只差两个八度），所以你记住 6 弦上的音名，1 弦就白送了。同理 5 弦和 2 弦……不，注意 5 弦与 2 弦<strong>不</strong>同名（A 与 B），这个便利只有 6/1 弦这一对独享。</p>
+            <p><strong>便利二：E 调与 E 小调在吉他上格外顺手。</strong>两根空弦都是主音，扫任何和弦都容易蹭到，能量厚。这也是摇滚与金属长期偏爱 E 小调的物理原因之一——第 15 章讲 Drop D 时你会看到，把 6 弦再降到 D 只是把这个便利平移到了 D 上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>假设把吉他改成全四度调弦 <em class="kb-math">E–A–D–G–C–F</em>。列出你会得到什么、失去什么，并判断：对一个只弹金属 Riff 的人来说，这笔交易值不值？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>得到</strong>：① 所有形状（音阶、琶音、八度、和弦）在六根弦之间可无差别平移，不再有「跨 2 弦补一品」这条例外；② 指板变成规则的方格纸，视觉与心算负担骤降；③ 大跨度的琶音与横向连接更容易设计。</p>
+            <p><strong>失去</strong>：① <strong>开放和弦体系崩塌</strong>——C、G、D、E、A、Em 这些依赖空弦的指法全部作废；② 1 弦不再是 E，6/1 弦同名的对称性消失，空弦共鸣变差；③ 几乎所有既有教材、TAB、指法记忆全部失效。</p>
+            <p><strong>对纯金属 Riff 手来说</strong>：这笔交易<strong>比对民谣吉他手划算得多</strong>。金属 Riff 大量使用<strong>强力和弦</strong>（只用根音+五度+八度，本来就靠平移，不依赖开放和弦），主要活动在低音三根弦上，而这三根弦在两种调弦里<strong>完全相同</strong>（E–A–D）。也就是说，改成全四度对他影响很小，却换来了高音弦上更整齐的独奏形状。</p>
+            <p><strong>但现实里少有人改</strong>，原因不在乐理而在生态：合作、扒谱、教学、买谱全都以标准调弦为默认。真正想要「更规则的低音区」的人走了另一条路——加弦（七弦、八弦）或降调，而不是重排全部六根。第 15 章会展开。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>同一段旋律，在第 5 把位弹和在第 12 把位弹，音高完全相同。那么换把位到底换到了什么？请至少说出三点，并各举一个「必须换把位」的场景。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>① 音色。</strong>高把位、粗弦的音厚而暗；低把位、细弦的音亮而薄。场景：一段抒情主题想要「醇」，就挪到 3 弦高把位而不是 1 弦低把位弹——这是布鲁斯与硬摇滚主奏最常用的音色手段。</p>
+            <p><strong>② 可用的技巧。</strong>推弦需要弦有余量：低把位弦张力大、推起来费力且容易走音，高把位轻松得多；反过来，高把位品间距小，快速跑动更省距离但容易蹭到隔壁弦。场景：一个需要整音推弦的乐句，几乎一定安排在 7 品以上。</p>
+            <p><strong>③ 手的经济性与连接方式。</strong>把位决定了哪些音「不用移动手就够得到」，也决定了能不能用空弦、能不能连奏（hammer-on / pull-off）。场景：需要快速换到下一个和弦时，选一个离下一个和弦近的把位，哪怕这个把位本身弹起来稍别扭。</p>
+            <p><strong>常被忽略的第四点</strong>：把位还决定了<strong>能同时按住哪些音</strong>。旋律加和声（双音、和弦音伴着旋律）时，把位选错就是「物理上按不到」。这也是为什么职业乐手编排独奏时，第一步往往不是想弹什么音，而是想<strong>待在哪一块</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>七弦琴在 6 弦外侧加了一根低音 B 弦（比 6 弦低一个纯四度）。① 音域向下扩展了多少？② 从 7 弦到 5 弦的八度形状是哪一种？③ 从 7 弦到 4 弦呢？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>①</strong> 纯四度 ＝ <strong>5 个半音</strong>。原来最低音 E2（82.41 Hz），现在是 B1（约 61.74 Hz）。</p>
+            <p><strong>②</strong> 7 弦（B1）到 6 弦（E2）是纯四度，6 弦到 5 弦也是纯四度，两个纯四度 ＝ 10 个半音 → 补 2 品，正是<strong>形状 ①（跨两弦进两品）</strong>。也就是说，低音区完全沿用你已经会的形状，不需要新学。</p>
+            <p><strong>③</strong> 7→4 弦跨了三个纯四度 ＝ 15 个半音，超出八度 3 个 → <strong>形状 ③（跨三弦退三品）</strong>。</p>
+            <p><strong>为什么这题重要</strong>：七弦、八弦琴之所以能被吉他手快速接受，正是因为新增的弦仍然是<strong>纯四度</strong>关系，所有低音区形状原样复用；那个碍事的大三度依然只在 3–2 弦之间。换句话说，加弦是「延长地图」，不是「换一张地图」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>证明：在 0–12 品范围内，任何一个<strong>确定音高</strong>（比如 C4，不是「所有的 C」）最多只能在 <strong>3 个</strong>位置弹出来。并指出哪些音高只有 <strong>1 个</strong>位置。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>最多 3 个的证明</strong>：设某个音高在第 <em class="kb-math">s</em> 弦第 <em class="kb-math">f</em> 品（0 ≤ <em class="kb-math">f</em> ≤ 12）。要在更细的弦上弹出同一个音高，品位必须减去两弦之间的半音数。相邻弦间距是 4 或 5，因此：</p>
+            <ul>
+              <li>跨 1 根弦：至少减 4 品；</li>
+              <li>跨 2 根弦：至少减 4 + 4 ＝ 8 品（实际标准调弦里是 9 或 10）；</li>
+              <li>跨 3 根弦：至少减 4 + 4 + 5 ＝ 13 品 &gt; 12。</li>
+            </ul>
+            <p>最后一行是关键：<strong>跨三根弦所需的品位差一定超过 12</strong>，所以起点在 0–12 品内时，终点必然落到负品位（琴枕之外）。于是同一个音高最多只能出现在<strong>相邻的三根弦</strong>上 → 最多 3 个位置。∎</p>
+            <p><strong>只有 1 个位置的音高</strong>：两端的音。<br>
+            <strong>低端</strong>：E2–G♯2（6 弦 0–4 品）。因为 5 弦最低是 A2，比 G♯2 还高，所以这几个音只有 6 弦弹得出。<br>
+            <strong>高端</strong>：C5–E5（1 弦 8–12 品）。因为 2 弦在 12 品处最高只到 B4，再往上只有 1 弦够得着。</p>
+            <p><strong>推论（很实用）</strong>：中音区的音有三个位置可挑，编配自由度最大；而两端的音<strong>没得选</strong>——这就是为什么写超低音 Riff 时手被死死钉在 6 弦上，也是为什么金属乐手想要更低的音时只能<strong>降调或加弦</strong>，而不能靠换位置解决。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>设计一套心算法，让你能在 <strong>3 秒内</strong>说出指板上任意一个品位的音名。写出你的规则，并解释它为什么比「把 78 个位置全背下来」快。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>可行的方案不止一种，下面这套四条规则是最省记忆的：</p>
+            <p><strong>规则 1 · 只背两根弦的锚点。</strong>把 6 弦（＝1 弦）的自然音位置背熟：<strong>0=E，1=F，3=G，5=A，7=B，8=C，10=D，12=E</strong>。5 弦同理：<strong>0=A，2=B，3=C，5=D，7=E，8=F，10=G，12=A</strong>。这是全部需要死记的内容——16 个点，不是 78 个。</p>
+            <p><strong>规则 2 · 12 品对称。</strong>任何弦上第 <em class="kb-math">n</em> 品与第 <em class="kb-math">n</em>+12 品同名。于是 12 品以上直接减 12。</p>
+            <p><strong>规则 3 · 同音位置迁移。</strong>要找 4 弦或 3 弦上的音，从 6/5 弦的锚点用<strong>八度形状</strong>推过去：形状 ①（跨两弦进两品）把 6 弦搬到 4 弦、5 弦搬到 3 弦。</p>
+            <p><strong>规则 4 · 2 弦和 1 弦另有捷径。</strong>1 弦和 6 弦完全同名，直接抄规则 1；2 弦从 5 弦用形状 ③（跨三弦退三品）推，或者记住 2 弦自己的锚点：<strong>0=B，1=C，3=D，5=E，6=F，8=G，10=A，12=B</strong>。</p>
+            <p><strong>为什么比死记快</strong>：死记 78 个位置是 <em class="kb-math">O(n)</em> 的记忆量，而且彼此孤立，忘一个就断一处，回忆时没有交叉验证。上面这套是 <strong>16 个锚点 + 3 条变换规则</strong>：记忆量降到五分之一，且任意两条路径可以<strong>互相验算</strong>（从 6 弦推过来和从 5 弦推过来必须得到同一个答案，错了立刻发现）。</p>
+            <p><strong>更重要的是它可迁移</strong>：换成 Drop D、降半音、七弦，死记法要全部重来；锚点＋形状法只需换掉锚点，形状原样不动。第 15 章会直接用上这一点。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 标准调弦是<strong>四个纯四度夹一个大三度</strong>，它牺牲形状一致性，换来了可按的开放和弦与首尾同名的两个 E。② 相邻弦只差 4–5 个半音，所以同一个音高在指板上有<strong>最多 3 个</strong>位置——换位置换的是音色与手感，不是音高。③ <strong>三种八度形状</strong>（跨两弦进两品 / 跨两弦进三品 / 跨三弦退三品）是把整块指板串起来的钥匙；所有差异的唯一来源，就是那个比纯四度少一个半音的大三度。④ <strong>凡是跨过 2 弦的形状，都要多挪一品</strong>——这条规则今后会反复出现。⑤ <strong>把位</strong>只决定哪根手指按哪个音，不改变音高；但它决定了音色、可用技巧和「能不能同时按住」。</p>
+          <p><strong>下一章预告</strong>：现在你能说出指板上任意一个音的名字了，但音乐不是由孤立的音组成的，而是由<strong>音与音之间的距离</strong>组成的。第 3 章《音程：和声的原子》会给这些距离命名，解释协和与不协和到底是什么物理现象，并让你看到——音程在指板上是<strong>固定的形状</strong>，认出形状就等于认出了声音。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./03-音程.html"><strong>下一章：第 3 章 · 音程：和声的原子</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="./_media/guitar-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, TUN = T.TUNINGS.standard.notes;
+      function $(id) { return document.getElementById(id); }
+
+      /* ---------- 演示 1：全指板地图 ---------- */
+      var selS = null, selF = null, labMode = "name";
+      KBG.soundToggle($("d1-sound"));
+
+      function marks1() {
+        var out = [];
+        var selMidi = (selS === null) ? null : TUN[selS] + selF;
+        for (var s = 0; s < 6; s++) {
+          for (var f = 0; f <= 12; f++) {
+            var midi = TUN[s] + f, kind = "ghost";
+            if (selMidi !== null) {
+              if (s === selS && f === selF) kind = "third";
+              else if (midi === selMidi) kind = "root";
+              else if (T.mod12(midi) === T.mod12(selMidi)) kind = "note";
+            }
+            out.push({ string: s, fret: f, kind: kind });
+          }
+        }
+        return out;
+      }
+      var fb1 = KBG.fretboard($("d1-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true, clickable: true,
+        labels: "name", marks: marks1(), title: "标准调弦全指板，点击发声",
+        onClick: function (info) {
+          selS = info.string; selF = info.fret;
+          fb1.setLabels(labMode, T.mod12(info.midi));
+          fb1.setMarks(marks1());
+          fb1.flash(info.string, info.fret, "third");
+          A.setDrive(0.12);
+          A.pluck(info.midi, { gain: 0.85 });
+
+          var same = [], pc = 0;
+          for (var s = 0; s < 6; s++) for (var f = 0; f <= 12; f++) {
+            var m = TUN[s] + f;
+            if (m === info.midi) same.push((6 - s) + " 弦 " + f + " 品");
+            if (T.mod12(m) === T.mod12(info.midi)) pc++;
+          }
+          $("d1-name").textContent = T.name(info.midi, { octave: 1 });
+          $("d1-same").textContent = same.length + " 处：" + same.join("、");
+          $("d1-pc").textContent = pc + " 处";
+          $("d1-msg").textContent = same.length === 1
+            ? "这个音在 0–12 品内只有一个位置——它落在指板的两端，没得挑。习题 2.8 会证明这件事。"
+            : "红点是和你点的那个音「频率完全相同」的位置，共 " + same.length + " 处；蓝点同名但差八度。";
+        }
+      });
+      $("d1-lab").addEventListener("click", function () {
+        labMode = labMode === "name" ? "degree" : "name";
+        fb1.setLabels(labMode, selS === null ? 0 : T.mod12(TUN[selS] + selF));
+        $("d1-msg").textContent = labMode === "degree"
+          ? "已切到「级数」标注：以你点的音为 1，其余音显示它相对这个音的度数。第 3 章会解释这些数字。"
+          : "已切回「音名」标注。";
+      });
+      $("d1-clear").addEventListener("click", function () {
+        selS = null; selF = null;
+        fb1.setLabels("name", 0); fb1.setMarks(marks1());
+        $("d1-name").textContent = "—"; $("d1-same").textContent = "—"; $("d1-pc").textContent = "—";
+      });
+      $("d1-stop").addEventListener("click", function () { A.stopAll(); });
+
+      /* ---------- 演示 2：三种八度形状 ---------- */
+      /* 每项：[起点弦, 起点品偏移, 终点弦, 终点品偏移]，弦索引 0 = 6 弦 */
+      var SHAPES = {
+        s1: { pairs: [[0, 0, 2, 2], [1, 0, 3, 2]], cn: "跨两弦 · 进两品", tip: "路径是两个纯四度＝10 个半音，补 2 个半音正好八度。" },
+        s2: { pairs: [[2, 0, 4, 3], [3, 0, 5, 3]], cn: "跨两弦 · 进三品", tip: "路径跨过了 3–2 弦那个大三度，只有 9 个半音，要多补一品。" },
+        s3: { pairs: [[0, 3, 3, 0], [1, 3, 4, 0]], cn: "跨三弦 · 退三品", tip: "三个纯四度＝15 个半音，超出八度 3 个，所以往回退三品。" }
+      };
+      var curShape = "s1", shift = 3;
+      function drawShape() {
+        var sh = SHAPES[curShape], out = [];
+        sh.pairs.forEach(function (p) {
+          out.push({ string: p[0], fret: p[1] + shift, kind: "root" });
+          out.push({ string: p[2], fret: p[3] + shift, kind: "note" });
+        });
+        fb2.setMarks(out);
+        $("d2-msg").textContent = sh.cn + "：" + sh.tip + " 红点是起点，蓝点比它高八度。";
+      }
+      var fb2 = KBG.fretboard($("d2-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: true,
+        labels: "name", marks: [], title: "八度形状"
+      });
+      ["s1", "s2", "s3"].forEach(function (k) {
+        $("d2-" + k).addEventListener("click", function () {
+          curShape = k;
+          ["s1", "s2", "s3"].forEach(function (j) {
+            $("d2-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          drawShape();
+        });
+      });
+      KB.bindRange($("d2-shift"), $("d2-val"), function (v) { return "+" + v; },
+        function (v) { shift = v; if (typeof fb2 !== "undefined") drawShape(); });
+      $("d2-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.12);
+        var sh = SHAPES[curShape], ev = [], t = 0;
+        sh.pairs.forEach(function (p) {
+          ev.push({ t: t, midi: TUN[p[0]] + p[1] + shift, dur: 1 });
+          ev.push({ t: t + 1, midi: TUN[p[2]] + p[3] + shift, dur: 1 });
+          ev.push({ t: t + 2, midis: [TUN[p[0]] + p[1] + shift, TUN[p[2]] + p[3] + shift], dur: 1.5 });
+          t += 3.5;
+        });
+        A.sequence(ev, { bpm: 108 });
+      });
+
+      /* ---------- 演示 3：把位漫游 ---------- */
+      var pos = 5, showAll = true;
+      var PCS = T.scalePcs(0, "major");     // C 大调
+      function marks3() {
+        var out = [];
+        T.findOnBoard(TUN, PCS, 12).forEach(function (p) {
+          var inPos = p.fret >= pos && p.fret <= pos + 3;
+          if (!inPos && !showAll) return;
+          out.push({
+            string: p.string, fret: p.fret,
+            kind: inPos ? (p.pc === 0 ? "root" : "note") : "ghost"
+          });
+        });
+        return out;
+      }
+      var fb3 = KBG.fretboard($("d3-board"), {
+        tuning: TUN, fromFret: 1, toFret: 12, showOpen: false,
+        labels: "degree", root: 0, marks: [], title: "C 大调音阶的把位"
+      });
+      function update3() {
+        fb3.setMarks(marks3());
+        var n = T.findOnBoard(TUN, PCS, pos + 3, pos).length;
+        $("d3-pos").textContent = "第 " + pos + " 把位（" + pos + "–" + (pos + 3) + " 品）";
+        $("d3-cnt").textContent = n + " 个";
+      }
+      KB.bindRange($("d3-pos-ctl"), $("d3-val"), function (v) { return "第 " + v + " 把位"; },
+        function (v) { pos = v; if (typeof fb3 !== "undefined") update3(); });
+      $("d3-play").addEventListener("click", function () {
+        A.stopAll(); A.setDrive(0.1);
+        var notes = T.findOnBoard(TUN, PCS, pos + 3, pos)
+          .map(function (p) { return p.midi; })
+          .sort(function (a, b) { return a - b; });
+        var uniq = notes.filter(function (m, i) { return i === 0 || m !== notes[i - 1]; });
+        A.sequence(uniq.map(function (m, i) { return { t: i * 0.5, midi: m, dur: 0.5 }; }), { bpm: 144 });
+        $("d3-msg").textContent = "第 " + pos + " 把位内共 " + uniq.length +
+          " 个不同音高，从低到高弹一遍。换个把位再听——同样是 C 大调，覆盖的音域完全不同。";
+      });
+      $("d3-all").addEventListener("click", function () { showAll = !showAll; update3(); });
+      $("d3-stop").addEventListener("click", function () { A.stopAll(); });
+
+      drawShape(); update3();
+    });
+  </script>
+</body>
+</html>
