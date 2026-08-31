@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>08 鼓：节奏的骨架 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 8 章：底鼓、军鼓、镲片的分工与合成原理；backbeat 为什么是摇滚的定义特征；常见 groove 的构造与密度阶梯；过门的写法；双踩的代价；鼓与吉他的三种对齐关系。">
+  <meta name="kb:tags" content="编曲,鼓,底鼓,军鼓,踩镲,groove,backbeat,过门,fill,双踩,对齐,gjzdgj,gu">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .dm { display: grid; grid-template-columns: 4.6em repeat(16, 1fr); gap: 3px; margin: 10px 0 4px; }
+    .dm-lab { font-size: .8em; color: var(--kb-fg-muted); align-self: center; white-space: nowrap; }
+    .dm-cell {
+      height: 26px; min-width: 0; padding: 0; cursor: pointer;
+      border: 1px solid var(--kb-border); border-radius: 4px;
+      background: var(--kb-surface-alt); transition: background .1s;
+    }
+    .dm-cell.b4 { border-left-color: var(--kb-fg-muted); }
+    .dm-cell.on { background: var(--kb-accent); border-color: var(--kb-accent); }
+    .dm-cell.cur { box-shadow: 0 0 0 2px #f59e0b inset; }
+    .dm-cell:focus-visible { outline: 2px solid var(--kb-accent); outline-offset: 1px; }
+    .dm-nums { display: grid; grid-template-columns: 4.6em repeat(16, 1fr); gap: 3px;
+      font-size: .72em; color: var(--kb-fg-faint); text-align: center; }
+    .drum-btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .drum-btns .kb-btn { font-size: .86em; }
+    @media (max-width: 560px) {
+      .dm, .dm-nums { grid-template-columns: 3.4em repeat(16, 1fr); gap: 2px; }
+      .dm-cell { height: 22px; }
+      .dm-lab { font-size: .72em; }
+    }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 8 章 · 鼓：节奏的骨架</h1>
+        <p class="kb-lead">鼓是乐队里唯一一件<strong>不提供音高、却决定一切</strong>的乐器。它定义速度、定义律动、定义段落边界，还负责第 7 章里最珍贵的两块地——最低的 50 Hz 和最高的 10 kHz。这一章从一面鼓是怎么发声的开始，一直讲到重型音乐里最关键的一个问题：<strong>鼓和吉他到底该不该打在同一个点上。</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出底鼓、军鼓、镲片各自的功能，以及它们分别靠什么被听见；② 解释 backbeat 为什么是摇滚的定义特征；③ 用一张 16 格网格写出并改造常见 groove；④ 把过门写在对的地方、用对的密度；⑤ 判断什么时候该用双踩、以及用了之后贝斯要怎么改；⑥ 在三种鼓—吉他对齐关系中做出选择。</p>
+        </div>
+
+        <h2>三件核心，三种功能</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>件</th><th>功能</th><th>靠什么被听见</th><th>频段（第 7 章）</th></tr></thead>
+            <tbody>
+              <tr><td><strong>底鼓 Kick</strong></td><td>重心、脚步；标记「正拍在哪」</td><td><strong>音头</strong>（3–5 kHz 的「咔」），不是低频量</td><td>40–80 Hz + 1 kHz 以上音头</td></tr>
+              <tr><td><strong>军鼓 Snare</strong></td><td>标点；标记「后拍在哪」</td><td>音体（约 200 Hz）+ 噪声的「啪」</td><td>180–220 Hz 音体 + 1–5 kHz 噪声</td></tr>
+              <tr><td><strong>踩镲 / 叮叮</strong></td><td>时间网格；提供密度感</td><td>高频的密集颗粒</td><td>4–16 kHz</td></tr>
+              <tr><td>擦片 Crash</td><td>标记段落开始</td><td>宽频的一次爆发 + 长衰减</td><td>900 Hz–10 kHz</td></tr>
+              <tr><td>嗵鼓 Tom</td><td>过门；填补中低频</td><td>有音高感的鼓声</td><td>120–220 Hz</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 底鼓靠音头被听见，不靠低频</p>
+          <p>这是第 7 章分工方案的直接后果，但值得单独强调，因为它违反直觉：<strong>你在小音箱、手机、车里听到的底鼓「点」，几乎全部来自 3–5 kHz 的音头</strong>，而不是 50 Hz 的低频——那个频率手机根本发不出来。</p>
+          <p>所以当有人说「底鼓不够有力」时，八成要加的是<strong>音头</strong>而不是低频。加低频只会让它在大音箱上更轰，在小音箱上仍然消失。</p>
+        </div>
+
+        <h2>一面鼓是怎么做出来的</h2>
+        <p>本书所有的鼓声都是合成的，配方公开——理解它对写鼓有直接帮助，因为<strong>你会知道每一件鼓的能量分布在哪，也就知道它会跟谁打架。</strong></p>
+        <figure>
+          <svg viewBox="0 0 720 210" width="720" height="210" role="img" aria-label="底鼓合成原理示意图：一条从 62 Hz 快速降到 38 Hz 的扫频正弦，乘上一条指数衰减包络，再加上一段 6 毫秒的高通噪声点击，合成出既有低频冲击又有高频音头的底鼓">
+            <text x="8" y="14" font-size="12" fill="var(--kb-fg-muted)">底鼓 ＝ 扫频正弦 × 衰减包络 ＋ 6 ms 高通点击</text>
+            <g font-size="11" fill="var(--kb-fg-muted)">
+              <rect x="8" y="28" width="200" height="120" fill="none" stroke="var(--kb-border)" rx="5"/>
+              <text x="16" y="44">① 扫频正弦</text>
+              <path d="M16 110 Q26 78 36 110 Q48 142 60 110 Q76 78 92 110 Q112 142 132 110 Q156 78 180 110" fill="none" stroke="var(--kb-accent)" stroke-width="1.8"/>
+              <text x="16" y="132" font-size="10">62 Hz → 38 Hz（时间常数 18 ms）</text>
+              <text x="216" y="95" font-size="18" fill="var(--kb-fg)">×</text>
+              <rect x="238" y="28" width="200" height="120" fill="none" stroke="var(--kb-border)" rx="5"/>
+              <text x="246" y="44">② 指数包络</text>
+              <path d="M246 62 C286 62 300 132 430 138" fill="none" stroke="#16a34a" stroke-width="1.8"/>
+              <text x="246" y="132" font-size="10">τ ＝ 115 ms（总长 550 ms）</text>
+              <text x="446" y="95" font-size="18" fill="var(--kb-fg)">＋</text>
+              <rect x="466" y="28" width="246" height="120" fill="none" stroke="var(--kb-border)" rx="5"/>
+              <text x="474" y="44">③ 高通噪声点击</text>
+              <g stroke="#dc2626" stroke-width="1.4">
+                <line x1="478" y1="110" x2="478" y2="72"/><line x1="483" y1="110" x2="483" y2="126"/>
+                <line x1="488" y1="110" x2="488" y2="80"/><line x1="493" y1="110" x2="493" y2="122"/>
+                <line x1="498" y1="110" x2="498" y2="92"/><line x1="503" y1="110" x2="503" y2="118"/>
+                <line x1="508" y1="110" x2="508" y2="100"/><line x1="513" y1="110" x2="513" y2="114"/>
+                <line x1="518" y1="110" x2="518" y2="106"/>
+              </g>
+              <text x="474" y="132" font-size="10">1.2 kHz 以上，6 ms，幅度 0.45 —— 小音箱上的「点」全靠它</text>
+            </g>
+            <text x="8" y="172" font-size="11.5" fill="var(--kb-fg)">结果：40–80 Hz 的胸口冲击 ＋ 1 kHz 以上的音头。<tspan fill="var(--kb-accent)">两端都要，中间（100–250 Hz）让给贝斯。</tspan></text>
+            <text x="8" y="192" font-size="11" fill="var(--kb-fg-muted)">军鼓同理：0.60 × 带通噪声（900 Hz–7 kHz）＋ 0.40 × 180 Hz 音体。镲片则是两级高通的噪声，12 dB/oct 滚降。</text>
+          </svg>
+          <figcaption>本书鼓引擎的配方。每一件鼓都是「一个包络 × 一个音源」，参数写在 <code>assets/js/band-kit.js</code> 的 <code>PIECES</code> 表里。</figcaption>
+        </figure>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🥁 演示 1：听一遍鼓组，看它们各自占哪</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：逐件试听底鼓、军鼓、嗵鼓、闭镲、开镲、叮叮、擦片，并显示每一件实测的频段与谱峰。可以看到底鼓（37–80 Hz，峰 39 Hz）与镲片（3.8–16 kHz，峰 15.8 kHz）分居频谱两端，军鼓（180 Hz–5 kHz）横跨中频，而擦片（900 Hz–10 kHz）几乎覆盖了整个中高频——这就是它只该用在段落开头的原因。</p></noscript>
+            <div id="d-sound"></div>
+            <div class="drum-btns" id="d-btns"></div>
+            <div class="kb-readout">
+              <span>选中 <b id="d-name">—</b></span>
+              <span>频段 <b id="d-band">—</b></span>
+              <span>谱峰 <b id="d-peak">—</b></span>
+              <span>时长 <b id="d-dur">—</b></span>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">表里的频段是对合成结果的<strong>实测值</strong>（谱峰与 −10 dB 边界）。注意擦片：<strong>900 Hz 到 10 kHz</strong>，一件乐器盖住了人声与镲片两块地——所以它一小节里最多出现一次，而且通常只在段落的第一拍。</p>
+          </div>
+        </div>
+
+        <h2>Groove 是一张 16 格的网格</h2>
+        <p>把一小节 4/4 拍切成 16 个十六分音符格，几乎所有摇滚与金属的 groove 都能写在这张网格上。三条基本规则：</p>
+        <ol>
+          <li><strong>底鼓在正拍</strong>（第 1、9 格，也就是第 1、3 拍）——它定义重心。</li>
+          <li><strong>军鼓在后拍</strong>（第 5、13 格，也就是第 2、4 拍）——这就是 <strong>backbeat</strong>。</li>
+          <li><strong>镲片填格子</strong>——四分、八分还是十六分，直接决定这一段的密度感。</li>
+        </ol>
+        <figure>
+          <svg viewBox="0 0 720 150" width="720" height="150" role="img" aria-label="16 格网格上的基本摇滚 groove：踩镲填在八个八分音符位置，底鼓落在第 1 和第 9 格，军鼓落在第 5 和第 13 格">
+            <text x="8" y="14" font-size="12" fill="var(--kb-fg-muted)">基本摇滚 groove（一小节 ＝ 16 个十六分格）</text>
+            <g font-size="10" fill="var(--kb-fg-faint)" text-anchor="middle">
+              <text x="90" y="140">1</text><text x="250" y="140">2</text>
+              <text x="410" y="140">3</text><text x="570" y="140">4</text>
+            </g>
+            <g>
+              <text x="8" y="42" font-size="11" fill="var(--kb-fg-muted)">踩镲</text>
+              <text x="8" y="72" font-size="11" fill="var(--kb-fg-muted)">军鼓</text>
+              <text x="8" y="102" font-size="11" fill="var(--kb-fg-muted)">底鼓</text>
+            </g>
+            <g>
+              <!-- 16 列，起点 x=60，列宽 40 -->
+              <g fill="none" stroke="var(--kb-border)">
+                <rect x="60" y="28" width="640" height="20" rx="3"/>
+                <rect x="60" y="58" width="640" height="20" rx="3"/>
+                <rect x="60" y="88" width="640" height="20" rx="3"/>
+              </g>
+              <g stroke="var(--kb-border)" stroke-width="0.7">
+                <line x1="100" y1="28" x2="100" y2="108"/><line x1="140" y1="28" x2="140" y2="108"/>
+                <line x1="180" y1="28" x2="180" y2="108"/><line x1="260" y1="28" x2="260" y2="108"/>
+                <line x1="300" y1="28" x2="300" y2="108"/><line x1="340" y1="28" x2="340" y2="108"/>
+                <line x1="420" y1="28" x2="420" y2="108"/><line x1="460" y1="28" x2="460" y2="108"/>
+                <line x1="500" y1="28" x2="500" y2="108"/><line x1="580" y1="28" x2="580" y2="108"/>
+                <line x1="620" y1="28" x2="620" y2="108"/><line x1="660" y1="28" x2="660" y2="108"/>
+              </g>
+              <g stroke="var(--kb-fg-muted)" stroke-width="1.4">
+                <line x1="220" y1="28" x2="220" y2="108"/><line x1="380" y1="28" x2="380" y2="108"/>
+                <line x1="540" y1="28" x2="540" y2="108"/>
+              </g>
+              <g fill="#8b5cf6">
+                <rect x="62" y="30" width="36" height="16" rx="2"/><rect x="142" y="30" width="36" height="16" rx="2"/>
+                <rect x="222" y="30" width="36" height="16" rx="2"/><rect x="302" y="30" width="36" height="16" rx="2"/>
+                <rect x="382" y="30" width="36" height="16" rx="2"/><rect x="462" y="30" width="36" height="16" rx="2"/>
+                <rect x="542" y="30" width="36" height="16" rx="2"/><rect x="622" y="30" width="36" height="16" rx="2"/>
+              </g>
+              <g fill="#d97706">
+                <rect x="222" y="60" width="36" height="16" rx="2"/><rect x="542" y="60" width="36" height="16" rx="2"/>
+              </g>
+              <g fill="#dc2626">
+                <rect x="62" y="90" width="36" height="16" rx="2"/><rect x="382" y="90" width="36" height="16" rx="2"/>
+              </g>
+            </g>
+            <text x="222" y="124" font-size="10.5" fill="#d97706">↑ backbeat</text>
+            <text x="542" y="124" font-size="10.5" fill="#d97706">↑ backbeat</text>
+          </svg>
+          <figcaption>最基本的摇滚 groove。底鼓（红）在第 1、3 拍，军鼓（橙）在第 2、4 拍，踩镲（紫）填八分。</figcaption>
+        </figure>
+
+        <h2>Backbeat：摇滚的定义特征</h2>
+        <p>在大多数音乐传统里，重音落在正拍（1 和 3）。<strong>摇滚把重音搬到了 2 和 4</strong>——这就是 backbeat，而它由军鼓来打。</p>
+        <p>为什么这件事这么重要？</p>
+        <ul>
+          <li><strong>它制造了持续的轻微冲突。</strong>底鼓在 1、3 说「这里是正拍」，军鼓在 2、4 说「这里才是重音」。两者的张力就是摇滚「往前推」的感觉来源。</li>
+          <li><strong>它是身体的。</strong>2 和 4 上的重音正好对应人点头、拍手的位置——这不是巧合，摇滚乐是给身体听的。</li>
+          <li><strong>它稳定到可以被打破。</strong>正因为 backbeat 是默认预期，把军鼓挪到别处（第 15 格、第 4 格）才成为一个有效的手法（第 14 章）。</li>
+        </ul>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 密度阶梯</p>
+          <p>底鼓与军鼓的位置基本固定，<strong>真正调节段落密度的是镲片</strong>：</p>
+          <p><strong>四分踩镲</strong>（4 格）＝ 空、克制，适合主歌前半；<strong>八分踩镲</strong>（8 格）＝ 默认档位；<strong>十六分踩镲</strong>（16 格）＝ 紧张、推进，适合预副歌；<strong>换成叮叮或开镲</strong>＝ 打开、变亮，适合副歌。</p>
+          <p><strong>这是编曲里最便宜的密度旋钮</strong>——不加任何乐器，不占任何新频段（镲片本来就在那儿），却能明显改变段落的能量档位（第 5 章的「密度」维度）。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎛️ 演示 2：鼓机 —— 点格子写你自己的 groove</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一张 16 格 × 5 行的网格，可以点亮任意格子来编写一小节的鼓型，并即时循环播放。内置基本摇滚、八分推进、半速、Gallop 对齐、双踩五个预设。可以直观地看到：底鼓在第 1、9 格、军鼓在第 5、13 格是绝大多数摇滚 groove 的骨架，而改变镲片的密度就改变了整段的能量档位。</p></noscript>
+            <div class="dm-nums" id="dm-nums"></div>
+            <div class="dm" id="dm-grid"></div>
+            <div class="kb-readout">
+              <span>预设 <b id="dm-preset">基本摇滚</b></span>
+              <span>击点数 <b id="dm-hits">—</b></span>
+              <span>低频事件 <b id="dm-low">—</b></span>
+              <span>镲片密度档 <b id="dm-dens">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="dm-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="dm-gtr" type="button">＋ 加上吉他 riff</button>
+              <button class="kb-btn" id="dm-clear" type="button">清空</button>
+              <button class="kb-btn" id="dm-stop" type="button">■ 停止</button>
+            </div>
+            <div class="drum-btns" id="dm-presets"></div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">「低频事件」数的是底鼓的击点——<strong>这个数字直接对应第 7 章说的低频拥挤程度</strong>。试试「双踩」预设：底鼓从 2 个变成 16 个，低频瞬间被填满。这时再点「＋ 加上吉他 riff」，你会听到贝斯与吉他的低音都被埋掉了。</p>
+          </div>
+        </div>
+
+        <h2>过门：写在哪，写多密</h2>
+        <p>第 6 章讲过过门的功能（标记边界、制造小缺口）。这里补三条具体的写法：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>位置</th><th>长度</th><th>用在哪</th></tr></thead>
+            <tbody>
+              <tr><td>第 4 小节最后一拍</td><td>1 拍</td><td>四小节乐句之间的小标记——<strong>用得最多，也最容易用滥</strong></td></tr>
+              <tr><td>第 8 小节最后一拍</td><td>1–2 拍</td><td>八小节段落的中点或结尾，默认档位</td></tr>
+              <tr><td>整个第 8 小节</td><td>1 小节</td><td>主歌 → 副歌这种大落差；通常配擦片落地</td></tr>
+              <tr><td>连续两小节</td><td>2 小节</td><td>桥段 → 最后一遍副歌；全曲最多用一次</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 过门期间其他乐器必须让路</p>
+          <p>吉他继续弹满，过门就<strong>听不见了</strong>——这是第 7 章掩蔽效应的直接后果：嗵鼓的 120–220 Hz 正好埋在失真吉他最厚的位置。</p>
+          <p>两种做法：① 让吉他在过门那一拍<strong>休止</strong>；② 让吉他<strong>跟着过门打同样的点</strong>（齐奏）。前者更空、更清楚，后者更重、更整齐。<strong>不要让吉他在过门上继续弹自己的东西</strong>——那是两件乐器同时说话。</p>
+        </div>
+
+        <h2>双踩：能量的顶点手段</h2>
+        <p>双踩（double bass，两只脚交替踩底鼓）能把底鼓密度从每小节 2 击提到 8 击甚至 16 击。它的效果毋庸置疑，但代价必须说清楚：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>代价</th><th>后果</th><th>对策</th></tr></thead>
+            <tbody>
+              <tr><td><strong>低频被填满</strong></td><td>贝斯的基频被掩蔽，整体变糊（第 7 章）</td><td>双踩段落里<strong>贝斯改弹长音</strong>，或者只在重音上跟</td></tr>
+              <tr><td><strong>失去重心</strong></td><td>底鼓每格都在，「正拍在哪」的信息消失</td><td>靠<strong>军鼓</strong>维持骨架；军鼓的位置在双踩段落里比平时更重要</td></tr>
+              <tr><td><strong>没有升级空间</strong></td><td>用了之后，后面的段落无处可去（第 5 章）</td><td>把它<strong>留到副歌或最后一遍</strong>，不要用在主歌</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>一条实用建议</strong>：双踩最有效的用法不是「整段都踩」，而是<strong>「在段落的某几个位置踩两拍」</strong>。断续的双踩既保留了重心，又制造了局部的爆发，而且不会把低频长期占满。整段双踩应该留给全曲能量最高的那一段。</p>
+
+        <h2>鼓与吉他的对齐</h2>
+        <p>这是重型编曲里最关键、也最少被明说的一个问题：<strong>底鼓应该打在吉他 riff 的哪些音上？</strong></p>
+        <p>有三种基本关系：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>关系</th><th>做法</th><th>听感</th><th>适合</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 各走各的</strong></td><td>底鼓只管 1、3 拍，riff 自己 gallop</td><td>层次分明，鼓与吉他是两个声部</td><td>经典摇滚、旋律金属；<strong>人声段落</strong></td></tr>
+              <tr><td><strong>② 跟重音</strong></td><td>底鼓打在 riff 的<strong>重音</strong>上（每拍的第一个音）</td><td>更整齐，但仍有独立的律动</td><td>默认选择，绝大多数情况</td></tr>
+              <tr><td><strong>③ 完全齐奏</strong></td><td>底鼓与 riff <strong>每一个音都对齐</strong></td><td>像一件巨大的乐器；极重，但没有对位</td><td>Breakdown、Groove Metal 的重点段落</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么完全齐奏听起来「更大」</p>
+          <p>因为听觉会把<strong>同时发生的能量归并成一个事件</strong>。底鼓的 50 Hz、贝斯的 100 Hz、吉他的 800 Hz 如果打在同一个瞬间，大脑不会听成三件乐器，而会听成<strong>一件覆盖 50 Hz 到 5 kHz 的巨型乐器</strong>——这正是第 7 章习题 7.9 提到的、现代金属处理低频拥挤的第四条对策。</p>
+          <p><strong>但它的代价是失去对位。</strong>整首歌都齐奏，音乐就只剩一个声部了——所以齐奏是<strong>局部手段</strong>，用在 breakdown 和重点乐句上，不是默认状态。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎯 演示 3：鼓与吉他的三种对齐关系</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条 gallop riff 配三种底鼓写法——① 底鼓只管第 1、3 拍（各走各的），② 底鼓打在每拍第一个音上（跟重音），③ 底鼓与 riff 每一个音都对齐（完全齐奏）。版本 ① 层次最清楚，版本 ③ 最重但失去了对位，版本 ② 是绝大多数情况下的默认选择。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="al-name">—</b></span>
+              <span>底鼓击点 <b id="al-kick">—</b></span>
+              <span>跟上的 riff 音 <b id="al-hit">—</b></span>
+              <span>代价 <b id="al-cost">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="al-a" type="button">▶ ① 各走各的</button>
+              <button class="kb-btn" id="al-b" type="button">▶ ② 跟重音</button>
+              <button class="kb-btn" id="al-c" type="button">▶ ③ 完全齐奏</button>
+              <button class="kb-btn" id="al-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">吉他弹的是完全相同的 gallop riff（<a href="../../吉他乐理/教材/09-节奏与律动.html#三连音shuffle-与-gallop">上一本第 9 章</a>），只有底鼓的写法在变。<strong>请注意版本 ③ 的重量是怎么来的——不是音量，是对齐。</strong></p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 8.1</p>
+          <p>「鼓听起来很平，整首歌都是一个感觉。」但鼓手说他已经在副歌打得更用力了。怎么办？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>「更用力」只是音量维度，而音量是最弱的对比手段（第 5 章）。</strong>鼓的段落对比要靠<strong>写法</strong>，不是力度。按成本从低到高有四档：</p>
+            <ol>
+              <li><strong>改镲片（最便宜）。</strong>主歌四分踩镲 → 副歌八分或叮叮。<strong>不加任何东西，密度档位就变了。</strong>这一条通常就解决了大半问题。</li>
+              <li><strong>改镲片的种类。</strong>主歌闭镲（暗、收）→ 副歌开镲或叮叮（亮、开）。这同时改变了密度和音色，而且高频一打开，整个混音都会显得更大。</li>
+              <li><strong>改底鼓密度。</strong>主歌每小节 2 击 → 副歌 4 击（八分底鼓）。注意这会占用低频，要同时看贝斯在弹什么（第 9 章）。</li>
+              <li><strong>加擦片与过门。</strong>副歌第一拍一次擦片，段落转换处一小节过门。<strong>这两样是「标记」，本身不改变密度，但让边界变清楚。</strong></li>
+            </ol>
+            <p><strong>还有一条反向的</strong>：<strong>把主歌的鼓减掉。</strong>主歌只打踩镲与后拍军鼓、底鼓极简——副歌什么都不用改就已经大了一圈。这是第 5 章「减法优先」在鼓上的应用，而且它顺带把主歌的低频腾了出来，人声会更清楚。</p>
+            <p><strong>一个自检</strong>：把主歌和副歌的鼓分别写成 16 格网格，摆在一起看。<strong>如果两张网格的「点」看起来差不多，那不管打多用力，听起来都会是一个感觉。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 8.2</p>
+          <p>副歌用了整段双踩，结果贝斯完全听不见，整体反而没有变重。诊断并给出方案。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>诊断：双踩把 40–120 Hz 全部占满，贝斯的基频被掩蔽了（第 7 章）。</strong>而贝斯是把和声和低频黏在一起的那一层——它消失之后，剩下的是「很多低频冲击 + 中高频的吉他」，中间断了一层，所以听起来<strong>吵但不重</strong>。</p>
+            <p><strong>三个层次的方案，可以叠加</strong>：</p>
+            <ol>
+              <li><strong>改贝斯的写法（首选，零成本）。</strong>双踩段落里贝斯<strong>不要跟着每一击弹</strong>——改成弹长音（每小节或每两拍一个持续的根音）。这样贝斯在底鼓的间隙里始终有能量，不会被一击一击地打断。<strong>底鼓管瞬态，贝斯管持续，两者分工。</strong></li>
+              <li><strong>让双踩断续。</strong>不要整段踩，改成「每两小节踩一小节」或「只在乐句末尾踩两拍」。<strong>断续的双踩比连续的更重</strong>，因为它有对比，而且给贝斯留出了呼吸的位置。</li>
+              <li><strong>检查底鼓音色。</strong>如果底鼓很厚（100 Hz 有很多能量），16 击叠起来就是一堵低频墙。双踩用的底鼓应该<strong>更点、更短</strong>——强调 3–5 kHz 的音头，收紧低频尾巴。这也是为什么金属的底鼓音色听起来那么「咔哒」。</li>
+            </ol>
+            <p><strong>还要检查一件事：军鼓在干什么。</strong>双踩之下「正拍在哪」的信息消失了，全靠军鼓维持骨架。如果军鼓这时也在打十六分滚奏，那整段就彻底失去了重心——<strong>双踩段落里，军鼓应该比平时更规整，不是更花。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 8.3</p>
+          <p>一段 breakdown 想要「最重」的效果。鼓和吉他应该怎么配合？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>用完全齐奏，并且把周围做空。</strong>两件事缺一不可。</p>
+            <p><strong>第一件：对齐。</strong>底鼓、贝斯、吉他<strong>每一个音都打在同一个瞬间</strong>。听觉会把同时发生的能量归并成一个事件，于是 50 Hz 的冲击、100 Hz 的厚度、800 Hz 的中频、3 kHz 的攻击被听成<strong>一件覆盖六个八度的巨型乐器</strong>，而不是三件各自为政的乐器。</p>
+            <p><strong>第二件：周围要空。</strong>Breakdown 的「重」有一半来自它前面那一段（第 5、6 章）。典型做法：</p>
+            <ul>
+              <li>Breakdown <strong>之前</strong>放一次半拍到一拍的静默；</li>
+              <li>Breakdown <strong>之中</strong>大量使用休止——重型的 breakdown 通常音符很少，音与音之间是空的。<strong>那些空隙不是没写完，它们就是重量的来源。</strong></li>
+              <li>镲片<strong>不要打满</strong>。持续的踩镲会把空隙填上，重量立刻消失。通常只在重音上配一次擦片或中国镲。</li>
+            </ul>
+            <p><strong>一个具体的配方</strong>：吉他弹稀疏的低音重音（比如每小节只有 3–4 个音），底鼓与贝斯完全跟随，军鼓只在其中一两个重音上加入，镲片几乎不打，重音之间全空。<strong>音符数越少，每一个音越重。</strong></p>
+            <p><strong>为什么不能整首歌都这么写</strong>：因为齐奏消灭了对位——所有乐器变成了一个声部，音乐失去了层次。<strong>齐奏是局部的爆发手段，它的效果完全依赖于周围段落不是这样写的。</strong></p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>底鼓靠什么被听见？为什么「加低频」经常不能让它更有力？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>底鼓靠 3–5 kHz 的音头被听见，不靠 50 Hz 的低频。</strong></p>
+            <p>两个原因：</p>
+            <ol>
+              <li><strong>回放设备的现实。</strong>手机、笔记本、大部分车载音响都放不出 50 Hz。<strong>你在这些设备上听到的底鼓「点」，100% 来自音头。</strong>加低频对它们完全没有影响。</li>
+              <li><strong>时间分辨率。</strong>低频的一个周期很长（50 Hz ＝ 20 ms），听觉很难从中判断「它落在哪一瞬间」。而底鼓的功能恰恰是<strong>标记时间位置</strong>——这需要高频。</li>
+            </ol>
+            <p><strong>所以「底鼓不够有力」时应该加音头。</strong>加低频只会让它在大音箱上更轰、在小音箱上依然消失，还顺带挤掉了贝斯的地盘（第 7 章）。</p>
+            <p><strong>本书鼓引擎的做法</strong>：底鼓 ＝ 62→38 Hz 的扫频正弦（管冲击）＋ 一段 6 毫秒的 1.2 kHz 高通噪声点击（管音头），后者幅度 0.45。<strong>去掉那 6 毫秒，底鼓在手机上就消失了。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是 backbeat？为什么说它是摇滚的定义特征？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Backbeat ＝ 把重音放在第 2、4 拍（由军鼓打），而不是传统的第 1、3 拍。</strong></p>
+            <p>它之所以是定义性的，有三层：</p>
+            <ol>
+              <li><strong>它制造持续的轻微冲突。</strong>底鼓在 1、3 说「这里是小节的骨架」，军鼓在 2、4 说「这里才是重音」。这两个信息的错位就是摇滚「往前推」的感觉来源——<strong>一种低强度、可持续的张力</strong>，能撑住一整首歌而不疲劳。</li>
+              <li><strong>它是身体的。</strong>2 和 4 正是人自然点头、拍手的位置。摇滚乐是给身体听的音乐，backbeat 是它与身体的接口。</li>
+              <li><strong>它稳定到可以被打破。</strong>正因为 backbeat 是听众的默认预期，把军鼓挪走（挪到第 15 格、或者干脆半速）才会产生强烈的效果（第 14 章）。<strong>没有默认，就没有打破。</strong></li>
+            </ol>
+            <p><strong>一个验证</strong>：把一段摇滚的军鼓从 2、4 挪到 1、3，其余全部不动。它会立刻不像摇滚了——听起来像进行曲或者民谣。<strong>一件乐器的两个位置，决定了整个风格。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说「镲片是编曲里最便宜的密度旋钮」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为改镲片密度不花任何代价，却能明显改变段落的能量档位。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>档位</th><th>格数</th><th>感觉</th><th>用在</th></tr></thead>
+                <tbody>
+                  <tr><td>四分踩镲</td><td>4</td><td>空、克制</td><td>主歌前半、间奏</td></tr>
+                  <tr><td>八分踩镲</td><td>8</td><td>默认</td><td>主歌后半、大部分段落</td></tr>
+                  <tr><td>十六分踩镲</td><td>16</td><td>紧张、推进</td><td>预副歌、build</td></tr>
+                  <tr><td>开镲 / 叮叮</td><td>8</td><td>打开、变亮</td><td>副歌</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>「便宜」体现在三点</strong>：① <strong>不加乐器</strong>——镲片本来就在编曲里；② <strong>不占新频段</strong>——4 kHz 以上那块地没人跟它抢（第 7 章）；③ <strong>不需要别人配合</strong>——改镲片不影响吉他、贝斯、人声在弹什么。</p>
+            <p><strong>对比一下「加一把吉他」</strong>：要多一条轨、要占 80 Hz–5 kHz 的地、要重新考虑声像与人声的关系。<strong>同样是提一档密度，成本差了一个数量级。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么过门期间其他乐器必须让路？有哪两种让路方式，各自的效果是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为掩蔽。</strong>嗵鼓的能量在 120–220 Hz，正好埋在失真吉他最厚的位置；军鼓的噪声在 1–5 kHz，也和吉他重叠。吉他继续弹满，过门就<strong>物理上听不见了</strong>（第 7 章）。</p>
+            <p><strong>两种让路方式</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>做法</th><th>效果</th><th>适合</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>休止</strong></td><td>吉他与贝斯在过门那一拍完全停</td><td>更空、更清楚；过门成为焦点</td><td>主歌 → 副歌，需要一个明显的缺口时</td></tr>
+                  <tr><td><strong>齐奏</strong></td><td>吉他跟着过门打同样的点</td><td>更重、更整齐；过门成为全乐队的动作</td><td>桥段 → 最后一遍副歌，需要重量时</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>必须避免的第三种</strong>：吉他在过门期间继续弹它自己的东西。这时两件乐器在同一个频段同时说不同的话——<strong>结果是两个都听不清，而且接缝反而变糊了。</strong></p>
+            <p><strong>顺带一条</strong>：这条规则不只适用于过门。任何时候有一件乐器要成为焦点（独奏、人声的关键句、一次擦片落地），周围都必须让路。<strong>「让路」是编曲里最常用、也最常被忘记的动作。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>双踩有哪三项代价？针对每一项给出对策。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>代价</th><th>后果</th><th>对策</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>低频被填满</strong></td><td>贝斯基频被掩蔽，整体吵但不重</td><td>贝斯改弹<strong>长音</strong>；底鼓音色收紧低频、加强音头</td></tr>
+                  <tr><td><strong>失去重心</strong></td><td>底鼓每格都在，「正拍在哪」的信息消失</td><td>靠<strong>军鼓</strong>维持骨架；双踩段落里军鼓要更规整而不是更花</td></tr>
+                  <tr><td><strong>没有升级空间</strong></td><td>用过之后，后面的段落无处可去</td><td><strong>留到副歌或最后一遍</strong>；主歌绝不要用</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>还有一个通用对策，同时缓解三项：把双踩改成断续的。</strong>不要整段踩，只在乐句末尾或每两小节踩上两拍。这样：低频有间隙让贝斯呼吸；重心靠没踩的部分维持；而且断续本身就是对比，反而<strong>比连续踩听起来更重</strong>（第 5 章）。</p>
+            <p><strong>一条更根本的观察</strong>：双踩是能量的<strong>顶点</strong>手段，而顶点只能有一个。整首歌都踩，等于把顶点铺平了——这和「主歌写太满」是同一个错误（第 5 章陷阱二），只是发生在鼓上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>鼓与吉他的三种对齐关系分别适合什么场合？为什么「完全齐奏」不能作为默认状态？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>关系</th><th>听感</th><th>适合</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 各走各的</strong>（底鼓只管 1、3）</td><td>层次分明，两个独立声部</td><td>经典摇滚、旋律金属；尤其是<strong>有人声的段落</strong>——鼓和吉他各占一层，人声才有位置</td></tr>
+                  <tr><td><strong>② 跟重音</strong>（底鼓打每拍第一个音）</td><td>整齐，但保留独立律动</td><td><strong>默认选择</strong>，绝大多数段落</td></tr>
+                  <tr><td><strong>③ 完全齐奏</strong>（每个音都对齐）</td><td>像一件巨型乐器，极重</td><td>Breakdown、Groove Metal 的重点乐句</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>为什么齐奏不能当默认</strong>：因为它<strong>消灭了对位</strong>。当鼓、贝斯、吉他打在完全相同的点上时，乐队就只剩一个声部了——音乐失去了层次，也失去了「几个人一起演奏」的感觉。</p>
+            <p>更要命的是<strong>它没有留下升级空间</strong>：如果整首歌都是齐奏，breakdown 来的时候你没有任何东西可以改变。<strong>齐奏之所以重，正是因为它前后的段落不是齐奏的。</strong></p>
+            <p><strong>还有一个实际问题</strong>：齐奏对演奏精度要求极高。三件乐器差 20 毫秒，听觉就会听成「糊」而不是「重」——这是为什么现代金属的制作要对齐到网格上（第 15 章）。而「各走各的」写法对时值误差宽容得多。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用演示 2 的鼓机做一个实验：从「基本摇滚」出发，只改镲片一行，做出三个能量档位明显不同的版本。写下你的三张网格，并说明每一档适合哪个段落。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>参考答案（底鼓固定在第 1、9 格，军鼓固定在第 5、13 格，<strong>只有镲片行在变</strong>）：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>档位</th><th>镲片格</th><th>感觉</th><th>用在</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>A · 空</strong></td><td>1、5、9、13（四分）</td><td>克制、有空隙，每一击都清楚</td><td>主歌前半；人声进来的地方</td></tr>
+                  <tr><td><strong>B · 默认</strong></td><td>1、3、5、7、9、11、13、15（八分）</td><td>标准的摇滚推进感</td><td>主歌后半、间奏</td></tr>
+                  <tr><td><strong>C · 紧</strong></td><td>全部 16 格（十六分）</td><td>紧张、往前赶</td><td>预副歌、build（第 6 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>实验里应该注意到的三件事</strong>：</p>
+            <ol>
+              <li><strong>「击点数」变了很多，「低频事件」一个没变。</strong>密度提升完全没有消耗低频预算——这就是镲片便宜的原因（第 7 章）。</li>
+              <li><strong>A 档听起来不只是「更空」，还更重。</strong>因为底鼓和军鼓周围有了空隙，它们的瞬态更突出。<strong>减法能让保留下来的东西变强</strong>（第 5 章）。</li>
+              <li><strong>C 档单独听很带劲，但如果整首歌都是 C 档，它就变成了背景噪声。</strong>密度和音量一样，是相对的。</li>
+            </ol>
+            <p><strong>进一步的实验</strong>：把 A 档的镲片改成开镲（把「闭镲」行清空、只在同样的格子上放开镲）。你会发现<strong>格数一样，感觉完全不同</strong>——开镲的长衰减填满了空隙，密度感反而接近 B 档。<strong>密度不只由「有几个点」决定，也由「每个点持续多久」决定。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首歌的五个段落（主歌 A、预副歌、副歌、桥段、最后一遍副歌）各写一套鼓的方案，要求能量曲线单调可辨、顶点唯一，并说明每一步用了哪个维度。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>段落</th><th>底鼓</th><th>军鼓</th><th>镲片</th><th>额外</th><th>能量</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>主歌 A</strong></td><td>1、9（每小节 2 击）</td><td>5、13</td><td>四分闭镲</td><td>无过门</td><td>低</td></tr>
+                  <tr><td><strong>预副歌</strong></td><td>1、3、9、11</td><td>5、13</td><td><strong>十六分闭镲</strong></td><td>末小节军鼓滚奏</td><td>中</td></tr>
+                  <tr><td><strong>副歌</strong></td><td>1、3、9、11</td><td>5、13</td><td><strong>叮叮 / 开镲</strong>（八分）</td><td>首拍擦片</td><td>高</td></tr>
+                  <tr><td><strong>桥段</strong></td><td><strong>1（每小节 1 击）</strong></td><td><strong>9（半速）</strong></td><td>无 / 极轻</td><td>无</td><td><strong>最低</strong></td></tr>
+                  <tr><td><strong>最后一遍副歌</strong></td><td>八分底鼓 ＋ <strong>乐句末两拍双踩</strong></td><td>5、13 ＋ 装饰</td><td>叮叮 ＋ 中国镲</td><td>首拍擦片 ＋ 前置两小节大过门</td><td><strong>顶点</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>逐步的维度说明</strong>：</p>
+            <ul>
+              <li><strong>主歌 → 预副歌</strong>：动的是<strong>镲片密度</strong>（四分 → 十六分）和<strong>底鼓密度</strong>（2 → 4）。没有加任何新元素，成本为零。</li>
+              <li><strong>预副歌 → 副歌</strong>：镲片密度反而<strong>降回八分</strong>，但换成了叮叮/开镲——<strong>密度降了，亮度升了</strong>。这个反直觉的处理很重要：如果副歌的镲片比预副歌还密，预副歌就白推了。<strong>副歌需要的是「打开」，不是「更紧」。</strong></li>
+              <li><strong>副歌 → 桥段</strong>：所有维度<strong>同时降到最低</strong>。这是全曲唯一一次大幅减法，它的作用是为最后一遍挖出落差（第 5 章、第 13 章）。</li>
+              <li><strong>桥段 → 最后一遍副歌</strong>：落差最大，所以用上了唯一一次<strong>双踩</strong>、唯一一次<strong>中国镲</strong>、唯一一次<strong>两小节大过门</strong>。三个「唯一」保证了顶点是唯一的。</li>
+            </ul>
+            <p><strong>这套方案的关键在于「节约」</strong>：双踩、中国镲、大过门都只用一次。如果副歌就用了双踩，最后一遍就没有牌可打——<strong>能量曲线的顶点必须靠「留着没用的手段」造出来</strong>，而不是靠把所有手段都用满。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 8.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为什么现代重型音乐的鼓越来越依赖「对齐到网格」，而经典摇滚的鼓允许（甚至需要）一定的时值偏差？这个差别的根源是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>根源在第 7 章：频谱拥挤程度不同，对时间精度的要求就不同。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>经典摇滚</th><th>现代重型</th></tr></thead>
+                <tbody>
+                  <tr><td>吉他失真程度</td><td>中等，动态还在</td><td>极高，动态被压扁</td></tr>
+                  <tr><td>吉他占的频段</td><td>约 4 个八度</td><td>约 6 个八度</td></tr>
+                  <tr><td>吉他轨数</td><td>1–2</td><td>4 或更多</td></tr>
+                  <tr><td>鼓—吉他关系</td><td>多为「各走各的」</td><td>大量<strong>齐奏</strong></td></tr>
+                  <tr><td>时值偏差的后果</td><td>「有人味」</td><td><strong>「糊」</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>关键在最后两行。</strong>「各走各的」写法里，鼓和吉他本来就在不同的时间点上，差几毫秒只是律动的松紧，听觉会解释成<strong>演奏风格</strong>。而齐奏写法里，鼓和吉他<strong>本应打在同一个瞬间</strong>——这时 20 毫秒的偏差就不再是风格，而是<strong>一个本该合并的事件被拆成了两个</strong>，听觉解释成「糊」。</p>
+            <p><strong>换句话说</strong>：齐奏是把「同时发生的能量归并成一件巨型乐器」的技巧（本章），而这个归并有一个非常窄的时间窗口。<strong>越依赖齐奏，对精度的要求越高。</strong></p>
+            <p><strong>还有两个叠加因素</strong>：</p>
+            <ul>
+              <li><strong>轨数。</strong>四轨吉他各自有一点偏差，误差会累积成一片模糊的前沿。经典摇滚只有一两轨，容错高得多。</li>
+              <li><strong>失真的压缩效应。</strong>失真把动态压扁之后，所有音符一样响；轻微超前或滞后的音不再「小声地在旁边」，而是<strong>和主音同样大声地在旁边</strong>——偏差被放大了（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>）。</li>
+            </ul>
+            <p><strong>结论与代价</strong>：网格对齐不是审美偏好，而是这套编曲方式的<strong>技术前提</strong>。它的代价是失去了律动的人味——所以现代制作会用另外的手段找补：保留细微的力度变化、让某些声部（尤其是人声与独奏）不对齐、在段落之间保留速度的微小起伏。<strong>这就是第 15 章的主题：制作方式会反过来决定编曲能怎么写，也决定了要花力气去弥补什么。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 三件核心的功能：<strong>底鼓 ＝ 重心（靠 3–5 kHz 音头被听见，不靠低频）、军鼓 ＝ 标点、镲片 ＝ 时间网格</strong>。② <strong>backbeat</strong>（军鼓在 2、4）是摇滚的定义特征——它制造持续的轻微冲突，而且稳定到可以被打破。③ 一小节 16 格：<strong>底鼓在 1、9，军鼓在 5、13，镲片填密度</strong>。④ <strong>镲片是最便宜的密度旋钮</strong>：不加乐器、不占新频段、不需要别人配合。⑤ 过门期间其他乐器必须让路——<strong>休止（更空）或齐奏（更重），不能各弹各的</strong>。⑥ 双踩的三项代价：填满低频、失去重心、没有升级空间；<strong>断续的双踩比连续的更重</strong>。⑦ 鼓与吉他的三种对齐：<strong>各走各的 / 跟重音（默认）/ 完全齐奏</strong>；齐奏让能量归并成一件巨型乐器，但消灭对位，只能是局部手段。⑧ 越依赖齐奏，<strong>对时间精度的要求越高</strong>——这是现代重型必须对齐网格的技术原因。</p>
+          <p><strong>下一章预告</strong>：底鼓已经把低频的一半占走了。第 9 章《贝斯：和声与节奏的枢纽》处理另一半——贝斯到底该跟鼓还是跟吉他、根音与走音怎么选、失真贝斯为什么在现代金属里几乎是标配，以及本章反复提到的那个问题：<strong>底鼓踩满的时候，贝斯该弹什么。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./09-贝斯和声与节奏的枢纽.html"><strong>下一章：第 9 章 · 贝斯：和声与节奏的枢纽</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, D = KBB.drums, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      function hz(f) { return f >= 1000 ? (f / 1000).toFixed(1) + " kHz" : Math.round(f) + " Hz"; }
+
+      var rig = null, ticker = null;
+      function stopAll() {
+        if (ticker) { ticker.stop(); ticker = null; }
+        if (rig) { rig.dispose(); rig = null; }
+        A.stopAll();
+        clearHead();
+      }
+
+      /* ---------- 演示 1：逐件试听 ---------- */
+      KBG.soundToggle($("d-sound"));
+      var ORDER = ["kick", "snare", "tom", "hh", "hho", "ride", "crash"];
+      ORDER.forEach(function (k) {
+        var spec = D.PIECES[k];
+        var btn = document.createElement("button");
+        btn.type = "button"; btn.className = "kb-btn";
+        btn.textContent = spec.cn;
+        btn.addEventListener("click", function () {
+          D.hit(k, { gain: 0.9 });
+          $("d-name").textContent = spec.cn;
+          $("d-band").textContent = spec.band;
+          $("d-peak").textContent = hz(spec.peak);
+          $("d-dur").textContent = Math.round(spec.dur * 1000) + " ms";
+          Array.prototype.forEach.call($("d-btns").children, function (b) {
+            b.className = "kb-btn" + (b === btn ? " kb-btn-primary" : "");
+          });
+        });
+        $("d-btns").appendChild(btn);
+      });
+
+      /* ---------- 演示 2：鼓机 ---------- */
+      var ROWS = [
+        { id: "crash", cn: "擦片" },
+        { id: "hh",    cn: "闭镲" },
+        { id: "snare", cn: "军鼓" },
+        { id: "tom",   cn: "嗵鼓" },
+        { id: "kick",  cn: "底鼓" }
+      ];
+      var STEPS = 16;
+      var grid = {};                       /* grid[rowId] = [bool × 16] */
+      var cells = {};
+      ROWS.forEach(function (r) { grid[r.id] = new Array(STEPS).fill(false); cells[r.id] = []; });
+
+      var numRow = $("dm-nums");
+      var spacer = document.createElement("span");
+      numRow.appendChild(spacer);
+      for (var i = 0; i < STEPS; i++) {
+        var n = document.createElement("span");
+        n.textContent = i % 4 === 0 ? String(i / 4 + 1) : "·";
+        numRow.appendChild(n);
+      }
+      ROWS.forEach(function (r) {
+        var lab = document.createElement("span");
+        lab.className = "dm-lab";
+        lab.textContent = r.cn;
+        $("dm-grid").appendChild(lab);
+        for (var s = 0; s < STEPS; s++) {
+          (function (step) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "dm-cell" + (step % 4 === 0 ? " b4" : "");
+            b.setAttribute("aria-label", r.cn + " 第 " + (step + 1) + " 格");
+            b.setAttribute("aria-pressed", "false");
+            b.addEventListener("click", function () {
+              grid[r.id][step] = !grid[r.id][step];
+              b.classList.toggle("on", grid[r.id][step]);
+              b.setAttribute("aria-pressed", grid[r.id][step] ? "true" : "false");
+              $("dm-preset").textContent = "自定义";
+              syncDm(); restartDm();
+            });
+            cells[r.id].push(b);
+            $("dm-grid").appendChild(b);
+          })(s);
+        }
+      });
+
+      var PRESETS = {
+        "基本摇滚": { hh: [0, 2, 4, 6, 8, 10, 12, 14], snare: [4, 12], kick: [0, 8] },
+        "八分推进": { hh: [0, 2, 4, 6, 8, 10, 12, 14], snare: [4, 12], kick: [0, 2, 8, 10], crash: [0] },
+        "半速":     { hh: [0, 4, 8, 12], snare: [8], kick: [0] },
+        "Gallop 对齐": { hh: [0, 2, 4, 6, 8, 10, 12, 14], snare: [4, 12], kick: [0, 2, 3, 8, 10, 11] },
+        "双踩":     { hh: [0, 4, 8, 12], snare: [4, 12], crash: [0],
+                      kick: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      };
+      function loadPreset(name) {
+        var p = PRESETS[name] || {};
+        ROWS.forEach(function (r) {
+          for (var s = 0; s < STEPS; s++) {
+            var on = !!(p[r.id] && p[r.id].indexOf(s) >= 0);
+            grid[r.id][s] = on;
+            cells[r.id][s].classList.toggle("on", on);
+            cells[r.id][s].setAttribute("aria-pressed", on ? "true" : "false");
+          }
+        });
+        $("dm-preset").textContent = name;
+        syncDm();
+      }
+      Object.keys(PRESETS).forEach(function (name) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = name;
+        b.addEventListener("click", function () { loadPreset(name); restartDm(); });
+        $("dm-presets").appendChild(b);
+      });
+      function syncDm() {
+        var hits = 0, low = 0, hh = 0;
+        ROWS.forEach(function (r) {
+          grid[r.id].forEach(function (v) {
+            if (!v) return;
+            hits++;
+            if (r.id === "kick") low++;
+            if (r.id === "hh") hh++;
+          });
+        });
+        $("dm-hits").textContent = hits + " 个";
+        $("dm-low").textContent = low + " 击 / 小节";
+        $("dm-dens").textContent = hh <= 4 ? "四分（空）" : hh <= 8 ? "八分（默认）" : "十六分（紧）";
+      }
+      function dmEvents() {
+        var ev = [];
+        ROWS.forEach(function (r) {
+          grid[r.id].forEach(function (v, s) {
+            if (v) ev.push({ t: s / 4, piece: r.id, gain: r.id === "crash" ? 0.55 : 0.85 });
+          });
+        });
+        return ev;
+      }
+      var withGtr = false;
+      function dmTracks() {
+        var tr = [{ id: "dr", name: "鼓", inst: "drums", gain: 1, events: dmEvents() }];
+        if (withGtr) {
+          var g = [], b = [];
+          R.events([0, 0, 3, 5], "gallop", { mute: true }).forEach(function (e) { g.push(e); });
+          [0, 0, 3, 5].forEach(function (r, i) { b.push({ t: i, midi: R.ROOT - 12 + r, dur: 1, gain: 0.9 }); });
+          tr.push({ id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: b });
+          tr.push({ id: "g1", name: "吉他 L", inst: "guitar", gain: 0.8, pan: -0.7, drive: 0.82, events: g });
+          tr.push({ id: "g2", name: "吉他 R", inst: "guitar", gain: 0.76, pan: 0.7, drive: 0.82, events: g });
+        }
+        return tr;
+      }
+      function clearHead() {
+        ROWS.forEach(function (r) {
+          cells[r.id].forEach(function (c) { c.classList.remove("cur"); });
+        });
+      }
+      function startDm() {
+        stopAll();
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: 4, loop: true, tracks: dmTracks() });
+        rig.play();
+        $("dm-play").textContent = "⏸ 暂停";
+        var last = -1;
+        ticker = KB.makeLoop(function () {
+          if (!rig) return;
+          var st = Math.floor(rig.position() * 4) % STEPS;
+          if (st === last) return;
+          last = st;
+          clearHead();
+          ROWS.forEach(function (r) { cells[r.id][st].classList.add("cur"); });
+        });
+        ticker.start();
+      }
+      function restartDm() { if (rig) startDm(); }
+      $("dm-play").addEventListener("click", function () {
+        if (rig) { stopAll(); $("dm-play").textContent = "▶ 循环播放"; return; }
+        startDm();
+      });
+      $("dm-gtr").addEventListener("click", function () {
+        withGtr = !withGtr;
+        $("dm-gtr").className = "kb-btn" + (withGtr ? " kb-btn-primary" : "");
+        $("dm-gtr").textContent = withGtr ? "－ 去掉吉他 riff" : "＋ 加上吉他 riff";
+        restartDm();
+      });
+      $("dm-clear").addEventListener("click", function () {
+        ROWS.forEach(function (r) {
+          for (var s = 0; s < STEPS; s++) {
+            grid[r.id][s] = false;
+            cells[r.id][s].classList.remove("on");
+            cells[r.id][s].setAttribute("aria-pressed", "false");
+          }
+        });
+        $("dm-preset").textContent = "空白";
+        syncDm(); restartDm();
+      });
+      $("dm-stop").addEventListener("click", function () {
+        stopAll(); $("dm-play").textContent = "▶ 循环播放";
+      });
+      loadPreset("基本摇滚");
+
+      /* ---------- 演示 3：鼓与吉他的对齐 ---------- */
+      var RIFF = [0, 0, 3, 5];
+      var AL = {
+        a: { name: "① 各走各的", kicks: [0, 2], cost: "无——但重量最低，层次最清楚" },
+        b: { name: "② 跟重音", kicks: [0, 1, 2, 3], cost: "低频事件翻倍；仍保留独立律动" },
+        c: { name: "③ 完全齐奏", kicks: null, cost: "低频几乎被填满，且失去对位" }
+      };
+      function alignSpec(k) {
+        var g = [], bs = [], dr = [], kicks = [];
+        for (var q = 0; q < 2; q++) {
+          var off = q * 4;
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + off }));
+          });
+          RIFF.forEach(function (r, i) { bs.push({ t: off + i, midi: R.ROOT - 12 + r, dur: 1, gain: 0.9 }); });
+          /* 军鼓固定在 2、4 拍（backbeat），镲片八分 */
+          [1, 3].forEach(function (t) { dr.push({ t: off + t, piece: "snare", gain: 0.85 }); });
+          for (var t8 = 0; t8 < 4; t8 += 0.5) dr.push({ t: off + t8, piece: "hh", gain: 0.4 });
+          var ks = AL[k].kicks;
+          if (ks) {
+            ks.forEach(function (t) { kicks.push(off + t); });
+          } else {
+            /* 与 gallop 的每一个音对齐：每拍 0 / 0.5 / 0.75 */
+            for (var i2 = 0; i2 < 4; i2++) [0, 0.5, 0.75].forEach(function (s) { kicks.push(off + i2 + s); });
+          }
+        }
+        kicks.forEach(function (t) { dr.push({ t: t, piece: "kick", gain: 0.9 }); });
+        return {
+          perBar: kicks.length / 2,
+          tracks: [
+            { id: "dr", name: "鼓", inst: "drums", gain: 1, events: dr },
+            { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: bs },
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.82, pan: -0.75, drive: 0.82, events: g },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.78, pan: 0.75, drive: 0.82, events: g }
+          ]
+        };
+      }
+      Object.keys(AL).forEach(function (k) {
+        $("al-" + k).addEventListener("click", function () {
+          Object.keys(AL).forEach(function (j) {
+            $("al-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var spec = alignSpec(k);
+          $("al-name").textContent = AL[k].name;
+          $("al-kick").textContent = spec.perBar + " 击 / 小节";
+          $("al-hit").textContent = spec.perBar + " / 12（" + Math.round(spec.perBar / 12 * 100) + "%）";
+          $("al-cost").textContent = AL[k].cost;
+          stopAll();
+          $("dm-play").textContent = "▶ 循环播放";
+          rig = KBB.tracks({ bpm: BPM, lengthBeats: 8, loop: true, tracks: spec.tracks });
+          rig.play();
+        });
+      });
+      $("al-stop").addEventListener("click", function () {
+        stopAll(); $("dm-play").textContent = "▶ 循环播放";
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { stopAll(); $("dm-play").textContent = "▶ 循环播放"; }
+      });
+    });
+  </script>
+</body>
+</html>

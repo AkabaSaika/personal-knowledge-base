@@ -322,49 +322,74 @@
    * 2. KBG.audio — 发声引擎
    * 音色用 Karplus–Strong 算法离线合成（噪声激励 + 衰减延迟线），
    * 结果缓存成 AudioBuffer，比正弦波像吉他得多，且不依赖任何采样文件。
-   * 信号链：BufferSource → 音量 → 失真(WaveShaper) → 低通(箱体) → 高通 → 总音量 → 分析器
+   * 信号链：BufferSource → 音量 → 通道(失真 → 低通 → 高通 → 补偿 → 音量 → 声像) → 总音量 → 分析器
+   * 通道可实例化（KBG.audio.channel），多轨编曲每轨走一条独立通道。
    * ================================================================ */
-  var ctx = null, master = null, shaper = null, lp = null, hp = null, post = null, ana = null;
+  var ctx = null, master = null, ana = null, main = null;
   var bufCache = {};
   var live = [];          // 正在发声的节点，供 stopAll 掐断
   var timers = [];        // 待触发的 setTimeout，供 stopAll 清理
-  var enabled = true, volume = 0.5, drive = 0;
+  var enabled = true, volume = 0.5;
+
+  /* 一条通道 ＝ input → 失真 → 低通(箱体) → 高通 → 补偿 → 音量 → 声像 → master
+   * 多轨编曲需要每轨独立的失真/音量/声像，所以信号链被做成可实例化的「通道」。
+   * 默认通道 main 的行为与单通道时代完全一致，旧页面无需改动。 */
+  function makeChain(opts) {
+    opts = opts || {};
+    var ch = {
+      drive: opts.drive == null ? 0 : opts.drive,
+      lpOpen: opts.lp == null ? 6000 : opts.lp,      // drive 为 0 时的低通截止
+      input: ctx.createGain(),
+      shaper: ctx.createWaveShaper(),
+      lp: ctx.createBiquadFilter(),
+      hp: ctx.createBiquadFilter(),
+      post: ctx.createGain(),
+      vol: ctx.createGain(),
+      pan: ctx.createStereoPanner ? ctx.createStereoPanner() : null
+    };
+    ch.shaper.oversample = "4x";
+    ch.lp.type = "lowpass"; ch.lp.frequency.value = ch.lpOpen;
+    ch.hp.type = "highpass"; ch.hp.frequency.value = opts.hp == null ? 85 : opts.hp;
+    ch.post.gain.value = 1;
+    ch.vol.gain.value = opts.gain == null ? 1 : opts.gain;
+    ch.input.connect(ch.shaper); ch.shaper.connect(ch.lp);
+    ch.lp.connect(ch.hp); ch.hp.connect(ch.post); ch.post.connect(ch.vol);
+    if (ch.pan) { ch.pan.pan.value = opts.pan == null ? 0 : opts.pan; ch.vol.connect(ch.pan); ch.pan.connect(master); }
+    else ch.vol.connect(master);
+    applyDrive(ch);
+    return ch;
+  }
 
   function ensure() {
     if (ctx) return ctx;
     var AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return null;
     ctx = new AC();
-    shaper = ctx.createWaveShaper();
-    shaper.oversample = "4x";
-    lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 6000;
-    hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 85;
-    post = ctx.createGain(); post.gain.value = 1;
     master = ctx.createGain(); master.gain.value = volume;
-    shaper.connect(lp); lp.connect(hp); hp.connect(post);
-    post.connect(master); master.connect(ctx.destination);
-    applyDrive();
+    master.connect(ctx.destination);
+    main = makeChain({ drive: 0 });
     return ctx;
   }
 
   /* drive 0 → 完全干净（旁路整形器）；1 → 高增益近似硬削波 */
-  function applyDrive() {
-    if (!shaper) return;
-    if (drive <= 0.001) {
-      shaper.curve = null;
-      lp.frequency.value = 6000;
-      post.gain.value = 1;
+  function applyDrive(ch) {
+    if (!ch) return;
+    var d = ch.drive;
+    if (d <= 0.001) {
+      ch.shaper.curve = null;
+      ch.lp.frequency.value = ch.lpOpen;
+      ch.post.gain.value = 1;
       return;
     }
-    var k = 0.6 + drive * 26;
+    var k = 0.6 + d * 26;
     var n = 1024, curve = new Float32Array(n), norm = Math.tanh(k);
     for (var i = 0; i < n; i++) {
       var x = (i / (n - 1)) * 2 - 1;
       curve[i] = Math.tanh(k * x) / norm;
     }
-    shaper.curve = curve;
-    lp.frequency.value = 5200 - 2000 * drive;   // 增益越大越需要箱体滚降压住毛刺
-    post.gain.value = 1 / (1 + 2.2 * drive);    // 补偿削波带来的响度提升
+    ch.shaper.curve = curve;
+    ch.lp.frequency.value = 5200 - 2000 * d;   // 增益越大越需要箱体滚降压住毛刺
+    ch.post.gain.value = 1 / (1 + 2.2 * d);    // 补偿削波带来的响度提升
   }
 
   /* Karplus–Strong：生成一次拨弦的波形 */
@@ -429,13 +454,42 @@
   var A = {
     /* 是否已经出过声（用于提示用户点一下才有声音） */
     started: function () { return !!ctx; },
+
+    /* 下面三个供 band-kit 这类扩展库接入同一条总线与生命周期管理 */
+    ctx: function () { return ensure(); },              // 取（必要时创建）AudioContext
+    busInput: function () { var c = ensure(); return c ? main.input : null; },  // 默认通道入口
+    track: function (n) { track(n); },                  // 注册节点，纳入 stopAll 管理
+
     now: function () { var c = ensure(); return c ? c.currentTime : 0; },
     isEnabled: function () { return enabled; },
     setEnabled: function (v) { enabled = !!v; if (!enabled) A.stopAll(); },
     getVolume: function () { return volume; },
     setVolume: function (v) { volume = Math.max(0, Math.min(1, v)); if (master) master.gain.value = volume; },
-    getDrive: function () { return drive; },
-    setDrive: function (d) { drive = Math.max(0, Math.min(1, d)); applyDrive(); },
+    getDrive: function () { return main ? main.drive : 0; },
+    setDrive: function (d) {
+      var c = ensure(); if (!c) return;
+      main.drive = Math.max(0, Math.min(1, d)); applyDrive(main);
+    },
+
+    /* 新建一条独立通道：多轨编曲里每个声部走一条，各自有失真/音量/声像。
+     * opts: {drive, gain, pan, lp, hp}。lp 默认 6000（吉他箱体感），
+     * 鼓这类需要高频的声部传 lp:18000、hp:20 即可得到接近直通的链路。 */
+    channel: function (opts) {
+      var c = ensure(); if (!c) return null;
+      var ch = makeChain(opts);
+      return {
+        _chain: ch,
+        input: ch.input,
+        getDrive: function () { return ch.drive; },
+        setDrive: function (d) { ch.drive = Math.max(0, Math.min(1, d)); applyDrive(ch); },
+        getGain: function () { return ch.vol.gain.value; },
+        setGain: function (g) { ch.vol.gain.value = Math.max(0, g); },
+        getPan: function () { return ch.pan ? ch.pan.pan.value : 0; },
+        setPan: function (v) { if (ch.pan) ch.pan.pan.value = Math.max(-1, Math.min(1, v)); },
+        hasPan: !!ch.pan,
+        dispose: function () { try { ch.vol.disconnect(); if (ch.pan) ch.pan.disconnect(); } catch (e) { /* 已断开 */ } }
+      };
+    },
 
     /* 分析器节点（频谱/波形可视化用），首次调用时插入到总线末端 */
     analyser: function () {
@@ -491,7 +545,8 @@
       }
       var g = c.createGain();
       g.gain.value = opts.gain == null ? 0.8 : opts.gain;
-      src.connect(g); g.connect(shaper);
+      var dest = (opts.channel && opts.channel.input) ? opts.channel.input : main.input;
+      src.connect(g); g.connect(dest);
       src.start(when);
       if (opts.dur) {
         g.gain.setValueAtTime(g.gain.value, when + opts.dur);
@@ -512,7 +567,7 @@
       for (var i = 0; i < list.length; i++) {
         out.push(A.pluck(list[i], {
           at: base + i * spread, gain: opts.gain == null ? 0.62 : opts.gain,
-          mute: opts.mute, dur: opts.dur
+          mute: opts.mute, dur: opts.dur, channel: opts.channel, detune: opts.detune
         }));
       }
       return out;
@@ -536,12 +591,15 @@
       function fire(cycleStart) {
         events.forEach(function (e) {
           var at = cycleStart + e.t * spb;
+          var chan = e.channel || opts.channel;
           var o = {
-            at: at, gain: e.gain, mute: e.mute,
-            dur: e.dur ? e.dur * spb * 0.98 : undefined, detune: e.detune
+            at: at, gain: e.gain, mute: e.mute, channel: chan,
+            dur: e.dur ? e.dur * spb * 0.98 : undefined, detune: e.detune,
+            bend: e.bend, vibrato: e.vibrato
           };
-          if (e.midis) A.strum(e.midis, { at: at, gain: e.gain, mute: e.mute, spread: e.spread, dur: o.dur });
-          else A.pluck(e.midi, o);
+          if (e.midis) A.strum(e.midis, { at: at, gain: e.gain, mute: e.mute, spread: e.spread, dur: o.dur, channel: chan, detune: e.detune });
+          else if (e.midi != null) A.pluck(e.midi, o);
+          else if (e.play) e.play(at);          /* 任意自定义发声（鼓等），由 band-kit 使用 */
         });
       }
       function cycle(cycleStart) {

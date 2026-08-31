@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>16 从 Demo 到成品 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 16 章：五个阶段的完整工作流与各自的完成标准；十种常见失败模式的症状—原因—对策对照；交互式自查清单；什么时候停手；全书结语与后续学习路径。">
+  <meta name="kb:tags" content="作曲,编曲,工作流,自查清单,失败模式,demo,成品,结语,cdemodcp,gzl">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+    .dx-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .dx-list .kb-btn { font-size: .86em; }
+    .dx-body { margin: 10px 0 0; padding: 10px 14px; border: 1px solid var(--kb-border);
+      border-radius: 8px; background: var(--kb-surface-alt); }
+    .dx-body h4 { margin: 0 0 6px; font-size: .96em; }
+    .dx-body ol { margin: 6px 0 0; padding-left: 1.4em; }
+    .dx-body li { margin: 3px 0; font-size: .93em; }
+    .ck-group { margin: 14px 0 6px; font-weight: 600; font-size: .95em; color: var(--kb-accent); }
+    .ck-item { display: flex; align-items: flex-start; gap: 9px; padding: 6px 10px;
+      border: 1px solid var(--kb-border); border-radius: 7px; margin: 4px 0;
+      background: var(--kb-surface-alt); font-size: .92em; transition: opacity .15s; }
+    .ck-item.done { opacity: .5; }
+    .ck-item input { margin-top: 3px; flex: none; }
+    .ck-item label { cursor: pointer; }
+    .ck-item .ref { color: var(--kb-fg-muted); font-size: .86em; margin-left: 4px; }
+    .ck-bar { height: 8px; border-radius: 999px; background: var(--kb-border);
+      overflow: hidden; margin: 10px 0 4px; }
+    .ck-bar i { display: block; height: 100%; background: var(--kb-accent); width: 0; transition: width .2s; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 16 章 · 从 Demo 到成品</h1>
+        <p class="kb-lead">前十五章给了原理、手段和纪律。这一章给<strong>流程</strong>——按什么顺序做、每一步做到什么程度算完成、卡住的时候怎么诊断、以及什么时候该停手。本章的两个演示是全书最实用的两件工具：一个<strong>症状诊断器</strong>和一份<strong>可以逐条勾选的自查清单</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 按五个阶段推进一首歌，并判断每个阶段是否完成；② 从症状反推真正的原因，而不是治标；③ 用自查清单在半小时内检查一份编曲；④ 判断什么时候应该停手；⑤ 知道这两本书之后往哪里走。</p>
+        </div>
+
+        <h2>五个阶段</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>阶段</th><th>做什么</th><th>产出</th><th><strong>完成标准</strong></th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 素材</strong></td><td>写动机与 riff，筛选</td><td>2–4 个候选片段</td><td><strong>能哼出来、能被复述</strong>（第 1 章）</td></tr>
+              <tr><td><strong>② 结构</strong></td><td>排段落顺序，画能量曲线</td><td>一张段落表 ＋ 一条曲线</td><td><strong>三条纪律全过</strong>：顶点唯一、顶点前有谷、不是直线（第 13 章）</td></tr>
+              <tr><td><strong>③ 编曲</strong></td><td>逐段定主角、分频段、摆声像</td><td>每段每轨的配置</td><td><strong>主频段清单没有两行相同</strong>；编制曲线有起有落（第 7、12 章）</td></tr>
+              <tr><td><strong>④ 制作</strong></td><td>录音、加倍、对齐、EQ、混音</td><td>一份可播放的混音</td><td><strong>挂着总线压缩听，段落对比仍然成立</strong>（第 15 章）</td></tr>
+              <tr><td><strong>⑤ 检查</strong></td><td>逐条过自查清单</td><td>一份修改列表</td><td>清单全过，或明确知道哪几条<strong>故意</strong>不过</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 阶段不能跳，也不该来回跑</p>
+          <p><strong>最常见的错误是从阶段 ① 直接跳到阶段 ④</strong>——有了一条好 riff 就开始录音、加效果、调音色。结果是花了很多时间做出一段很好听的循环，而它<strong>不是一首歌</strong>。</p>
+          <p><strong>第二常见的错误是在阶段 ④ 发现结构问题，回头改阶段 ②。</strong>这时候所有录音都要重来。<strong>结构问题必须在结构阶段解决</strong>——而那个阶段花的时间可能只有半小时。</p>
+          <p><strong>一条经验</strong>：阶段 ② 和 ③ 加起来应该占整个流程的时间不到 20%，但它们决定了 80% 的结果。<strong>在这两个阶段多花一小时，比在阶段 ④ 多花十小时有用。</strong></p>
+        </div>
+
+        <h2>十种常见失败模式</h2>
+        <p>下面这张表把全书的诊断经验压缩成了一页。<strong>注意「表面原因」与「真正的原因」那两列几乎从不相同</strong>——这正是编曲最难的地方。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>症状</th><th>直觉的处理（通常错）</th><th><strong>真正的原因</strong></th><th>章节</th></tr></thead>
+            <tbody>
+              <tr><td>副歌不够炸</td><td>加吉他、推音量</td><td><strong>主歌太满</strong>；或对比只画在音量上</td><td>第 5 章</td></tr>
+              <tr><td>副歌来得太突然</td><td>加一个鼓过门</td><td><strong>缺少连接段</strong>——没有制造缺口</td><td>第 6 章</td></tr>
+              <tr><td>混音一片糊</td><td>调 EQ</td><td><strong>编制太满 ＋ 频段争地</strong></td><td>第 7、12 章</td></tr>
+              <tr><td>底鼓没有力度</td><td>加低频</td><td><strong>缺音头</strong>；或与贝斯在时间上重合</td><td>第 8、9 章</td></tr>
+              <tr><td>贝斯听不见</td><td>把贝斯推大</td><td><strong>缺中高频内容</strong>（被掩蔽，推不动）</td><td>第 9 章</td></tr>
+              <tr><td>听不清词</td><td>把人声推大</td><td><strong>时间上没让路</strong>——riff 在每个音节上都在动</td><td>第 11 章</td></tr>
+              <tr><td>听到一半想跳过</td><td>加更多变化</td><td><strong>顶点在前半</strong>，或曲线是直线</td><td>第 13 章</td></tr>
+              <tr><td>很满但没有重点</td><td>再加一层</td><td><strong>每一秒都没有明确的主角</strong></td><td>第 11、12 章</td></tr>
+              <tr><td>工程里炸，导出就没了</td><td>母带再推一点</td><td><strong>对比画在音量上</strong>，被压缩抹平</td><td>第 5、15 章</td></tr>
+              <tr><td>一直很猛但不打动人</td><td>写更猛的 riff</td><td><strong>没有任何一处足够弱</strong></td><td>第 13 章</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 这张表的元规律</p>
+          <p><strong>十条里有七条的正确对策是「减」，而十条直觉处理里有九条是「加」。</strong></p>
+          <p>这不是巧合。加法是可见的、可以立刻动手的、能给人「我在工作」的感觉；减法要求你先承认某个已经做好的东西是多余的。<strong>但听觉测量的是变化，而变化既可以向上也可以向下——而向下那一边几乎总是空着的。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🩺 演示 1：症状诊断器</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：把上表做成可点击的诊断器——选一个症状，给出直觉处理为什么不对、真正的原因是什么、按什么顺序处理，以及对应的章节。十种症状覆盖了本书讨论过的绝大多数问题，而它们的对策有七种是减法。</p></noscript>
+            <div class="dx-list" id="dx-list"></div>
+            <div class="dx-body" id="dx-body"></div>
+          </div>
+        </div>
+
+        <h2>自我批评清单</h2>
+        <p>清单的价值不在于它包含了什么高深的东西，而在于<strong>它绕开了你的判断力</strong>。写完一首歌之后，你已经听了它上百遍，几乎不可能客观。<strong>清单是外部的、机械的、不受疲劳影响的。</strong></p>
+        <p>使用方法：</p>
+        <ol>
+          <li><strong>放一天再查。</strong>当天查会漏掉一半。</li>
+          <li><strong>逐条过，不要跳。</strong>「这条肯定没问题」正是最容易出问题的那条。</li>
+          <li><strong>不通过的项写下来，不要当场改。</strong>先收集完整的清单，再一起处理——否则你会陷进第一个问题里。</li>
+          <li><strong>允许「故意不过」。</strong>有些条目在特定风格下确实不适用（第 15 章：规则是条件性的）。但你必须<strong>明确知道</strong>自己在违反哪一条、为什么。</li>
+        </ol>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">✅ 演示 2：交互式自查清单（19 项）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一份分四组共 19 项的编曲自查清单——结构（5 项）、编曲（6 项）、混音前置（4 项）、整体（4 项）。每一项都对应本书的一个具体章节，勾选后显示进度，并汇总尚未通过的条目。清单的价值在于它绕开了作者已经听了上百遍之后失效的判断力。</p></noscript>
+            <div class="kb-readout">
+              <span>已通过 <b id="ck-n">0 / 19</b></span>
+              <span>结构 <b id="ck-g1">0 / 5</b></span>
+              <span>编曲 <b id="ck-g2">0 / 6</b></span>
+              <span>混音前置 <b id="ck-g3">0 / 4</b></span>
+              <span>整体 <b id="ck-g4">0 / 4</b></span>
+            </div>
+            <div class="ck-bar"><i id="ck-fill"></i></div>
+            <div id="ck-host"></div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="ck-clear" type="button">全部清空</button>
+              <button class="kb-btn" id="ck-all" type="button">全部勾上</button>
+            </div>
+            <div class="dx-body" id="ck-summary"></div>
+          </div>
+        </div>
+
+        <h2>什么时候停手</h2>
+        <p>这是一个真实存在、但很少被讨论的问题。三个停手信号：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>信号</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><td><strong>清单全过</strong></td><td>结构、编曲、混音前置、整体四组都通过，或者不通过的项你能说清为什么。<strong>这是最硬的一个标准。</strong></td></tr>
+              <tr><td><strong>改动开始互相抵消</strong></td><td>改 A 让 B 变差，改回 B 又让 A 变差——说明你已经到了这份编曲的局部最优。<strong>再改就是在原地转圈。</strong></td></tr>
+              <tr><td><strong>你已经听不出差别了</strong></td><td>连续工作四小时之后，听觉疲劳会让你既听不出问题也听不出改进。<strong>这时的任何决定都不可信。</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 一个必须警惕的陷阱：无限打磨</p>
+          <p>一首歌可以永远改下去，而<strong>改动的边际收益会迅速趋近于零，甚至变成负数</strong>——过度打磨的作品往往会失去最初那个让人想写它的东西。</p>
+          <p><strong>一个实用的止损规则</strong>：如果一处改动<strong>需要你反复 A/B 才能确定哪个更好</strong>，那它对听众来说不存在差别。<strong>直接选先做的那个，然后往下走。</strong></p>
+          <p><strong>更重要的是</strong>：写第二首歌带来的进步，几乎总是大于把第一首再改十遍。<strong>完成比完美有用得多。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎵 演示 3：全书示范曲（完整播放）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：把全书用作示范的那首 E 小调 148 BPM 的曲子完整播放一遍——前奏、主歌、预副歌、副歌、桥段、最后一遍副歌。每一段的编配都遵循本书的结论：主歌为人声让路、预副歌只改密度不加轨、副歌加入高八度层、桥段减到最少、最后一遍靠前面的谷而不是更多的轨数成为顶点。时间轴上会显示当前段落与能量。</p></noscript>
+            <div id="s-sound"></div>
+            <div id="s-timeline"></div>
+            <div class="kb-readout">
+              <span>当前段落 <b id="s-sec">—</b></span>
+              <span>在场轨数 <b id="s-n">—</b></span>
+              <span>这一段在做什么 <b id="s-what">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="s-play" type="button">▶ 播放整首</button>
+              <button class="kb-btn" id="s-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">这是本书从第 3 章起一直在用的那段素材，现在按全书的结论完整编配了一遍。<strong>它不复杂——六个段落、四到七条轨、一条 riff 的几个变体。但它遵守了每一条纪律，而这就够了。</strong></p>
+          </div>
+        </div>
+
+        <h2>全书结语</h2>
+        <p>回头看，这本书讲了很多具体的东西——六个对比维度、八个功能频段、四种双吉他分工、八件变化工具、十种失败模式。但如果把它们全部拿掉，剩下的只有<strong>四条听觉机制</strong>和<strong>一个提问方式</strong>。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 四条机制</p>
+          <p><strong>① 听觉测量的是变化，不是绝对值。</strong>持续不变的刺激会被适应掉。所以「炸」是落差，不是响度；所以想让某处更强，先让它前面更弱。<em>（第 5、6、13 章）</em></p>
+          <p><strong>② 听觉一次只能跟随一条线。</strong>所以任何时刻都要有且只有一个主角；所以让路首先是时间问题；所以两个主角等于没有主角。<em>（第 11、12 章）</em></p>
+          <p><strong>③ 同时发生的能量会被归并成一个事件。</strong>所以齐奏听起来像一件巨型乐器；所以几毫秒的偏差就是「重」与「糊」的分界；所以去相关能产生宽度。<em>（第 8、10、15 章）</em></p>
+          <p><strong>④ 掩蔽发生在耳朵里，不在音箱里。</strong>所以推音量解决不了听不见；所以频谱是有限的地皮；所以 EQ 只能决定谁输。<em>（第 7、9 章）</em></p>
+        </div>
+        <p>而那个提问方式是：</p>
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 遇到任何问题，先问这三句</p>
+          <p><strong>① 这一秒谁是主角？</strong>——答不上来就是问题所在。</p>
+          <p><strong>② 它前面能不能更弱？</strong>——在「怎么让它更强」之前问。</p>
+          <p><strong>③ 这条规则解决的是哪个约束？我有那个约束吗？</strong>——在照搬任何规范之前问。</p>
+        </div>
+        <p>本书里所有的做法都是这四条机制在某组特定约束下的推论。<strong>约束会变——技术会变、投放媒介会变、风格会变。</strong>2010 年代的响度战争塑造了「能量曲线必须画在内容上」这条结论；如果有一天动态范围重新被珍视，这条结论就要改。<strong>但那四条机制不会变，因为它们是耳朵的性质。</strong></p>
+        <p>所以，如果这两本书只留下一句话给你，它应该是：</p>
+        <p style="text-align:center;font-size:1.12em;margin:18px 0;"><strong>记住机制，其余的自己推。</strong></p>
+
+        <h2>两本书的位置</h2>
+        <p>这套教材到此完成。两本书回答的是两个不同层次的问题：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th><a href="../../吉他乐理/教材/00-大纲与学习路线.html">《电吉他乐理》</a></th><th>《摇滚与金属的作曲与编曲》</th></tr></thead>
+            <tbody>
+              <tr><td>回答</td><td>音与音的关系</td><td>段落与段落、乐器与乐器的关系</td></tr>
+              <tr><td>视角</td><td>一把吉他</td><td>一支乐队 ＋ 一首歌的时间轴</td></tr>
+              <tr><td>单位</td><td>音、音程、和弦、riff</td><td>动机、段落、曲式、声部、频段</td></tr>
+              <tr><td>核心约束</td><td><strong>失真的物理性质</strong>（互调、压缩）</td><td><strong>听觉的感知性质</strong>（变化、注意力、掩蔽、归并）</td></tr>
+              <tr><td>典型问题</td><td>「这个和弦为什么这么脏」</td><td>「副歌为什么不够炸」</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>两本书交汇的地方特别多，这不是巧合</strong>：强力和弦是失真逼出来的解（上一本第 11 章），而它同时决定了贝斯不能弹三度（本书第 9 章）；降调改变了频谱格局（上一本第 15 章），于是吉他必须高通、贝斯必须双轨、编曲必须依赖齐奏（本书第 7、9、15 章）。<strong>物理约束向上传导，最终变成了编曲惯例。</strong></p>
+
+        <h2>接下来往哪走</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方向</th><th>做什么</th><th>为什么</th></tr></thead>
+            <tbody>
+              <tr><td><strong>写十首歌</strong></td><td>每首用不同的曲式（第 4 章），限时完成</td><td><strong>这是回报最高的一条。</strong>写十首平庸的歌，比把一首改一百遍学到的多得多</td></tr>
+              <tr><td><strong>扒结构，不扒谱</strong></td><td>听你喜欢的作品，只记段落表与能量曲线</td><td>不需要扒音，二十分钟就能分析一首；<strong>一个月能积累三十份结构样本</strong></td></tr>
+              <tr><td><strong>做混音练习</strong></td><td>找分轨素材，只练「让人声清楚」这一件事</td><td>把第 7、11 章的内容变成手上的直觉</td></tr>
+              <tr><td><strong>录一次自己的乐队</strong></td><td>哪怕很粗糙</td><td><strong>第 15 章的所有内容只有亲手做过才会真正理解</strong></td></tr>
+              <tr><td>系统补乐理</td><td>和声学、配器法</td><td>本书刻意回避了古典配器的术语体系；如果要写更复杂的东西，那是下一步</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 最后一条建议</p>
+          <p><strong>不要在写歌的时候想着这本书。</strong>写的时候凭直觉，写完之后再拿清单来查——这是清单存在的全部意义。</p>
+          <p>分析性思维和生成性思维用的不是同一套状态，同时开着两个会把两个都做不好。<strong>先写完，再批评。</strong></p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 16.1</p>
+          <p>一首歌卡在「有一条很好的 riff，但写不下去」。用工作流的哪个阶段来突破？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>问题几乎肯定在阶段 ②（结构），而卡住的人通常在阶段 ①（继续写素材）或阶段 ④（开始录音调音色）里打转。</strong></p>
+            <p><strong>正确的做法：暂时不写任何新素材，先排结构。</strong></p>
+            <ol>
+              <li><strong>拿一张纸，写下段落顺序。</strong>前奏 → 主歌 → 预副歌 → 副歌 → …… 不需要知道每段弹什么，先把格子列出来。</li>
+              <li><strong>给每段标一个能量值</strong>（第 13 章），过三条纪律。这一步花五分钟。</li>
+              <li><strong>把已有的 riff 放进某一个格子。</strong>它是主歌还是副歌？——<strong>这个问题本身就会告诉你还缺什么。</strong></li>
+              <li><strong>剩下的格子用「已有 riff 的变形」填</strong>（第 1 章的六种变形）。你会发现绝大多数格子不需要新素材，只需要现有素材的另一个版本。</li>
+            </ol>
+            <p><strong>为什么这样管用</strong>：「写不下去」几乎从来不是素材不够，而是<strong>不知道下一段应该起什么作用</strong>。结构给出了这个作用（第 3 章：每个段落都有功能），有了功能，写什么就变成了一个受约束的、容易得多的问题。</p>
+            <p><strong>一个常见的具体情形</strong>：你有一条很猛的 riff，一直想不出副歌。<strong>很可能它本来就是副歌，你缺的是主歌</strong>——而主歌比副歌好写得多，因为它只需要比副歌弱（第 5 章）。<strong>把 riff 减稀一半，就是主歌。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 16.2</p>
+          <p>用自查清单查了一遍，结果十九项里有十一项不通过。从哪里开始改？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>按组的顺序改，不要按严重程度改。</strong>顺序是：结构 → 编曲 → 混音前置 → 整体。</p>
+            <p><strong>理由</strong>：这四组之间存在<strong>依赖关系</strong>——</p>
+            <ul>
+              <li><strong>结构组不通过</strong>，那么编曲组的很多项会自动跟着不通过（比如「编制曲线有起有落」依赖「有一个谷段」）。<strong>修好结构，编曲组可能自动过掉几项。</strong></li>
+              <li><strong>编曲组不通过</strong>，那么混音前置组基本没救（比如「人声清楚」依赖「riff 在时间上让了路」）。</li>
+              <li><strong>整体组</strong>是前三组的综合结果，它几乎不能单独修。</li>
+            </ul>
+            <p><strong>所以正确的做法</strong>：</p>
+            <ol>
+              <li>只看结构组的 5 项，把不通过的全部修好；</li>
+              <li><strong>重新过一遍完整清单</strong>——通常会发现编曲组自动过掉了两三项；</li>
+              <li>再处理编曲组剩下的；</li>
+              <li>依此类推。</li>
+            </ol>
+            <p><strong>十一项不通过听起来很糟，但通常不是。</strong>大多数情况下真正独立的问题只有三四个，其余是它们的下游表现。<strong>这正是「症状 ≠ 原因」在清单层面的体现。</strong></p>
+            <p><strong>一个例外</strong>：如果结构组全过、编曲组全过，只有混音前置组不过——那是好消息，说明这首歌的骨架是对的，剩下的都是可以在混音阶段解决的。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 16.3</p>
+          <p>已经改了两个星期，每次都觉得「还差一点」。怎么判断该不该停？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>用三个客观标准，不要用「感觉」——因为两个星期之后你的感觉已经不可信了。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>标准</th><th>怎么判断</th><th>结论</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>清单</strong></td><td>十九项是否全过，不过的项能否说清理由</td><td>全过 → <strong>可以停</strong></td></tr>
+                  <tr><td><strong>改动是否互相抵消</strong></td><td>改 A 让 B 变差，改回 B 又让 A 变差</td><td>是 → <strong>已到局部最优，停</strong></td></tr>
+                  <tr><td><strong>A/B 测试</strong></td><td>一处改动需要反复 A/B 才能确定哪个更好</td><td>是 → <strong>对听众不存在差别，停</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>「还差一点」这个感觉本身值得分析</strong>，它通常是三种情况之一：</p>
+            <ol>
+              <li><strong>确实还有一个具体问题没解决。</strong>如果是这样，你应该能说出它是什么——「副歌进来不够有力」「桥段太长」。<strong>说得出就去改。</strong></li>
+              <li><strong>听觉疲劳。</strong>听了几百遍之后，任何东西都会失去冲击力。<strong>放一个星期再听，通常就没这个感觉了。</strong></li>
+              <li><strong>它和你脑子里那个理想版本不一样。</strong>这是最常见的，也是唯一无解的——<strong>因为脑子里那个版本不存在，它没有具体的编配、没有具体的音色，只有一种感觉。</strong>任何真实的作品都不可能匹配它。</li>
+            </ol>
+            <p><strong>对第三种情况的处理</strong>：接受它，发出去，然后写下一首。<strong>那个「理想版本」的感觉是好事——它是你审美超前于技术的证据，也正是驱动你进步的东西。</strong>但它不应该阻止你完成作品。</p>
+            <p><strong>一条硬规则</strong>：<strong>给每首歌设一个截止日期。</strong>到期就发，无论感觉如何。写十首歌带来的进步远大于把一首改一百遍——而截止日期是唯一能保证你写到第十首的机制。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>五个阶段各自的完成标准是什么？为什么阶段 ② 和 ③ 值得多花时间？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ul>
+              <li><strong>① 素材</strong>：能哼出来、能被复述（第 1 章）。</li>
+              <li><strong>② 结构</strong>：能量曲线的三条纪律全过——顶点唯一、顶点前有谷、不是直线（第 13 章）。</li>
+              <li><strong>③ 编曲</strong>：主频段清单没有两行相同；编制曲线有起有落（第 7、12 章）。</li>
+              <li><strong>④ 制作</strong>：挂着总线压缩听，段落对比仍然成立（第 15 章）。</li>
+              <li><strong>⑤ 检查</strong>：清单全过，或明确知道哪几条<strong>故意</strong>不过。</li>
+            </ul>
+            <p><strong>为什么阶段 ② 和 ③ 值得多花时间</strong>：</p>
+            <ol>
+              <li><strong>它们决定的东西下游改不了。</strong>结构错了要重排段落，编曲错了要重录——而这两个阶段本身只需要纸笔和几十分钟。</li>
+              <li><strong>它们决定了 80% 的结果，却只占 20% 的时间。</strong>投入产出比是所有阶段里最高的。</li>
+              <li><strong>阶段 ④ 的很多问题其实是 ②③ 的下游表现</strong>（例题 16.2）。在阶段 ④ 花十小时解决的问题，可能在阶段 ② 花十分钟就避免了。</li>
+            </ol>
+            <p><strong>最常见的两个流程错误</strong>：① 从 ① 直接跳到 ④（有了 riff 就开始录），结果做出一段好听的循环而不是一首歌；② 在 ④ 发现结构问题回头改 ②，所有录音重来。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>十种失败模式里，为什么「直觉的处理」几乎全是加法，而「正确的对策」大多是减法？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个原因叠加：</strong></p>
+            <ol>
+              <li><strong>加法可见，减法不可见。</strong>加一轨吉他是一个可以立刻动手、能听出变化、能给人「我在工作」感觉的动作。删一轨则要求你先承认某个已经做好的东西是多余的——这在心理上困难得多（第 12 章的沉没成本）。</li>
+              <li><strong>症状描述本身诱导加法。</strong>「副歌不够炸」这个描述天然指向「让副歌更炸」，而正确答案往往是「让主歌更不炸」。<strong>问题的措辞把注意力锁在了错误的一端。</strong></li>
+              <li><strong>加法的余量小，减法的余量大。</strong>顶点通常已接近满（频谱、声像、动态都有物理上限），而谷几乎没有下限。<strong>所以减法这一边永远还有空间，加法这一边经常已经到头了。</strong></li>
+            </ol>
+            <p><strong>底层机制是同一条</strong>：听觉测量的是变化，而变化有两个方向。人的注意力天然偏向「向上」那个方向，但两个方向的效果是<strong>等价</strong>的——而「向下」那一边通常空着。</p>
+            <p><strong>一个可以随身携带的纠偏习惯</strong>：每次想加东西时，<strong>先花三十秒想一想「有没有减的版本」</strong>。不需要真的去减，只要想一想——这个习惯足以纠正大部分偏差。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>自查清单为什么必须「放一天再查」「逐条过不跳」「不当场改」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>规则</th><th>它防的是什么</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>放一天再查</strong></td><td><strong>听觉疲劳与熟悉度。</strong>听过上百遍之后，你的大脑会自动补全所有缺陷——你听到的是你脑子里的版本，不是音箱里的版本</td></tr>
+                  <tr><td><strong>逐条过不跳</strong></td><td><strong>确认偏误。</strong>「这条肯定没问题」正是你已经不再客观的那一条。清单的价值在于它是机械的</td></tr>
+                  <tr><td><strong>不当场改</strong></td><td><strong>陷进第一个问题。</strong>当场改会让你在第 3 条上花两小时，剩下 16 条永远查不完；而且第 3 条的问题可能是第 1 条的下游（例题 16.2）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>共同的目标：绕开你自己的判断力。</strong>写完一首歌之后你是这个作品最不客观的听众——你知道每一处的意图，所以你会「听到」意图而不是结果。</p>
+            <p><strong>清单不需要高深</strong>，它只需要是<strong>外部的、机械的、不受疲劳影响的</strong>。这也是为什么它有效的原因和飞行前检查单一样：不是因为飞行员不懂，而是因为人在熟悉的事情上必然会跳步。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>三个停手信号是什么？为什么「需要反复 A/B 才能决定」意味着应该停？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>清单全过</strong>，或不通过的项你能说清为什么。</li>
+              <li><strong>改动开始互相抵消</strong>——改 A 让 B 变差，改回 B 又让 A 变差。说明到了这份编曲的局部最优。</li>
+              <li><strong>你已经听不出差别了</strong>——听觉疲劳之下的任何决定都不可信。</li>
+            </ol>
+            <p><strong>为什么「需要反复 A/B」意味着该停</strong>：</p>
+            <p>因为<strong>你是在最有利的条件下做这个比较的</strong>——你知道差别在哪、你可以瞬间切换、你可以听十遍。而听众是在完全不同的条件下听的：一次、不知道有 B 版本、在通勤或健身的背景噪声里。</p>
+            <p><strong>如果在最有利的条件下你都需要反复比较，那么在真实的收听条件下，这个差别不存在。</strong></p>
+            <p><strong>正确的处理</strong>：选先做的那个（因为它更可能是直觉的选择），然后往下走。<strong>把时间花在那些「一听就知道哪个更好」的改动上——那些才是听众能感知到的。</strong></p>
+            <p><strong>一条推广</strong>：这个判据也适用于混音里的很多决定（这个混响是 1.8 s 还是 2.0 s？这条吉他推 0.5 dB 还是 1 dB？）。<strong>凡是需要 A/B 才能确定的，都不重要。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>全书结语给出了四条听觉机制。请为每一条各找出本书里至少三个由它推出的具体做法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>机制</th><th>由它推出的做法</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 听觉测量的是变化</strong></td><td>减主歌优于加副歌（第 5 章）；减法 build 与 drop 前的静默（第 6 章）；桥段挖谷（第 13 章）；「把一个元素用在所有地方等于没有用它」（第 12 章）；休止是最强的重音（上一本第 11 章）；断续的双踩比连续的更重（第 8 章）</td></tr>
+                  <tr><td><strong>② 一次只能跟随一条线</strong></td><td>任何时刻只有一个主角（第 11 章）；问答结构（第 11 章）；主歌的贝斯不要写得太花（第 9 章）；和声人声要低 6 dB（第 11 章）；织体反转是主角交接（第 14 章）；过门期间其他乐器让路（第 8 章）</td></tr>
+                  <tr><td><strong>③ 同时发生的能量会被归并</strong></td><td>齐奏听起来像巨型乐器（第 8 章）；double tracking 必须去相关（第 10 章）；量化对齐的必要性与 0–5 ms 窗口（第 15 章）；breakdown 的配器（第 8、9 章）；复制粘贴的两轨会合成为正中一个点（第 10 章）</td></tr>
+                  <tr><td><strong>④ 掩蔽发生在耳朵里</strong></td><td>频谱是有限的地皮、主频段规则（第 7 章）；「调大一点」为什么无效（第 7、9、11 章）；贝斯要失真才听得见（第 9 章）；吉他做高通（第 15 章）；声像是第二块地（第 10 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>值得注意的是有些做法同时由多条机制支持</strong>，这类做法通常最可靠：</p>
+            <ul>
+              <li><strong>「让路」</strong>——由 ② （注意力）和 ④ （掩蔽）共同推出；</li>
+              <li><strong>「减法优先」</strong>——由 ① （变化）和 ④ （频谱有限）共同推出；</li>
+              <li><strong>「breakdown 要稀」</strong>——由 ① （落差）和 ③ （归并）共同推出。</li>
+            </ul>
+            <p><strong>反过来，只由一条机制支持的做法，适用范围通常更窄</strong>——比如「升调副歌」只利用了机制 ①，所以它在不同风格里的效果差异很大。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用「这一秒谁是主角 / 它前面能不能更弱 / 这条规则解决哪个约束」这三句，诊断一个你熟悉的作品里你觉得最弱的一段。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>这是一道开放题，但诊断的结构是固定的。下面是一个示范（对象是一段「听着很满却记不住」的副歌）：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>问句</th><th>回答</th><th>推出的动作</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 这一秒谁是主角？</strong></td><td>说不上来——人声、riff、双踩都在同一强度上</td><td><strong>选一个当主角</strong>：如果是人声，riff 退到长音、双踩改基本型（第 11 章）</td></tr>
+                  <tr><td><strong>② 它前面能不能更弱？</strong></td><td>前面的预副歌已经是满编，和副歌几乎一样</td><td><strong>把预副歌减到两轨、去掉双踩</strong>——副歌不用改就大了一圈（第 5、6 章）</td></tr>
+                  <tr><td><strong>③ 这条规则解决哪个约束？</strong></td><td>这首歌用了「四轨吉他 ＋ 激进高通」，但它是标准调弦、两人乐队</td><td><strong>那套规范解决的是降调 ＋ 四轨的约束，这首歌没有</strong>——高通可以温和，吉他可以更厚（第 15 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三句话的分工</strong>：</p>
+            <ul>
+              <li><strong>第 ① 句诊断「这一段内部」</strong>——它是横截面的检查，逐秒可用；</li>
+              <li><strong>第 ② 句诊断「这一段与它的邻居」</strong>——它是纵向的检查，处理落差；</li>
+              <li><strong>第 ③ 句诊断「你正在遵守的规范本身」</strong>——它是元层面的检查，防止照搬。</li>
+            </ul>
+            <p><strong>三句覆盖了三个不同的尺度，这也是为什么它们合起来足够用。</strong>本书十六章的绝大多数具体建议，都可以从这三句加上四条机制重新推导出来。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「不要在写歌的时候想着这本书」——请解释这条建议，并说明清单应该在什么时候用。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为生成与批评是两种互相干扰的状态。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>生成（写）</th><th>批评（查）</th></tr></thead>
+                <tbody>
+                  <tr><td>需要的状态</td><td>发散、快速、不评判</td><td>收敛、系统、严格</td></tr>
+                  <tr><td>速度</td><td>快 —— 想到就记下来</td><td>慢 —— 逐条过</td></tr>
+                  <tr><td>同时开着会怎样</td><td colspan="2"><strong>每写一句就评判一句，结果是既写不快也查不全</strong>——最常见的表现是「写了四小节就删掉重写」，一天下来什么也没有</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>正确的分工</strong>：</p>
+            <ol>
+              <li><strong>写的时候凭直觉，尽量快，允许粗糙。</strong>目标是把整首歌的骨架写完——哪怕每一段都很糙。</li>
+              <li><strong>放一天。</strong></li>
+              <li><strong>然后拿清单来查</strong>，收集完整的问题列表。</li>
+              <li><strong>再回到生成状态去改</strong>，改的时候同样不要边改边查。</li>
+            </ol>
+            <p><strong>为什么这条建议放在全书最后</strong>：因为读完十六章之后，最大的风险恰恰是<strong>知识变成写作时的枷锁</strong>——每写一个音都在想「这符合第几章」。<strong>那会让你写不出任何东西。</strong></p>
+            <p><strong>本书真正的目标</strong>是让这些原理沉到直觉里，让你在写的时候<strong>自然而然</strong>地把主歌写得克制、自然而然地在桥段挖谷。<strong>而通向直觉的路径是「写 → 查 → 改 → 再写下一首」的反复，不是在写的时候查表。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为你自己写一份精简版的自查清单——不超过 7 条，且必须覆盖结构、编曲、制作三个层面。说明你为什么选这 7 条。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>这是一道开放题。下面是一份参考答案，选取标准是「<strong>命中率最高 ＋ 检查成本最低</strong>」：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>#</th><th>条目</th><th>层面</th><th>为什么入选</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><strong>能量曲线有起有落，顶点唯一，且顶点前是全曲最深的谷</strong></td><td>结构</td><td>一条覆盖了第 13 章的三条纪律；<strong>命中率最高的单条</strong></td></tr>
+                  <tr><td>2</td><td><strong>顶点在全曲 70–85%，之后还有着陆段</strong></td><td>结构</td><td>「听到一半想跳过」的直接检查</td></tr>
+                  <tr><td>3</td><td><strong>逐秒问「谁是主角」，都答得上来</strong></td><td>编曲</td><td>一条覆盖了让路、织体、注意力三章的内容</td></tr>
+                  <tr><td>4</td><td><strong>主歌明显比副歌空；编制曲线不是单调上升</strong></td><td>编曲</td><td>「副歌不够炸」十次有八次是它</td></tr>
+                  <tr><td>5</td><td><strong>每一轨都能填出「存在感来自 ___ Hz」，且没有两行相同</strong></td><td>编曲</td><td>一条覆盖第 7 章全部；顺带筛掉了该删的轨</td></tr>
+                  <tr><td>6</td><td><strong>把主歌与副歌调成同响度后，仍能听出哪个是副歌</strong></td><td>制作</td><td>检查对比是否画在内容上（第 5、15 章）；<strong>一个动作验证一整章</strong></td></tr>
+                  <tr><td>7</td><td><strong>逐轨静音，每一轨都有人想念</strong></td><td>制作</td><td>第 12 章的静音测试；直接给出删除列表</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>选取的三条原则</strong>：</p>
+            <ol>
+              <li><strong>优先选「一条覆盖一章」的条目。</strong>第 1、3、5、6 条各自压缩了一整章的内容。</li>
+              <li><strong>优先选「检查成本低」的条目。</strong>第 6 条只需要调两次音量；第 2 条只需要看时间轴。<strong>成本高的条目会被跳过，跳过的条目等于不存在。</strong></li>
+              <li><strong>优先选「能直接给出行动」的条目。</strong>第 7 条查完就得到了一份删除列表；而「混音听起来清楚吗」这类条目即使不通过也不知道该做什么。</li>
+            </ol>
+            <p><strong>被淘汰的典型条目</strong>：「和声进行有没有新意」（无法客观判断）、「音色好不好」（成本高且主观）、「有没有钩子」（重要，但在阶段 ① 就该解决，不属于成品检查）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 16.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本书说「记住机制，其余的自己推」。请用四条机制，自行推导一条本书<strong>没有</strong>讲过的编曲建议，并说明它的适用条件。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>这是全书最后一道题，也是最能检验你是否真正掌握的一道。下面给三个示范推导。</p>
+            <p><strong>推导一：关于混响</strong></p>
+            <ul>
+              <li><strong>前提</strong>：机制 ③（同时发生的能量会被归并）＋ 机制 ④（掩蔽）。</li>
+              <li><strong>推理</strong>：混响是把一个瞬态事件在时间上「抹开」。抹开之后它不再与其他声部归并成一个事件，而且它的能量占据了原本空着的时间空隙——那些空隙里可能有别的乐器。</li>
+              <li><strong>推出的建议</strong>：<strong>需要齐奏重量的段落（breakdown、重音）应该用极短的混响甚至完全干；而需要空间感的段落（桥段、氛围）可以用长混响。混响量应该跟着段落变，而不是整首一个设置。</strong></li>
+              <li><strong>适用条件</strong>：依赖齐奏的风格。不依赖齐奏的风格（后摇）可以全程长混响。</li>
+            </ul>
+            <p><strong>推导二：关于同一首歌里多个歌手的分配</strong></p>
+            <ul>
+              <li><strong>前提</strong>：机制 ②（一次只能跟随一条线）。</li>
+              <li><strong>推理</strong>：两个主唱同时唱不同的词会互相争主角位；但如果他们<strong>轮流</strong>唱，就成了问答结构，两者都清楚。</li>
+              <li><strong>推出的建议</strong>：<strong>双主唱应当按乐句轮流，或者一人主歌一人副歌；同时唱只用在需要「整体」而不是「个人」的时刻（合唱式的副歌尾句）。</strong></li>
+              <li><strong>适用条件</strong>：任何有歌词可懂度要求的风格。极端金属的双嘶吼可以叠加，因为那里没有可懂度要求（第 11 章习题 11.9）。</li>
+            </ul>
+            <p><strong>推导三：关于淡入淡出</strong></p>
+            <ul>
+              <li><strong>前提</strong>：机制 ①（听觉测量的是变化）。</li>
+              <li><strong>推理</strong>：淡出是一个<strong>缓慢</strong>的变化，而缓慢的变化会被适应机制吃掉——听众感知不到「正在变小」，只会在某一刻发现「已经没了」。</li>
+              <li><strong>推出的建议</strong>：<strong>淡出是最弱的结束方式。</strong>如果要用，淡出应当短（4 小节以内）；更好的做法是硬收，或者用一次编制的骤降（从满编到只剩一件乐器）来结束——<strong>那是一次突变，听觉能感知到。</strong></li>
+              <li><strong>适用条件</strong>：几乎所有情况。例外是刻意追求「消失感」的氛围作品，那里的目标恰恰是让结束不被感知到。</li>
+            </ul>
+            <p><strong>三个推导的共同结构</strong>：</p>
+            <ol>
+              <li>选一条机制；</li>
+              <li>把它应用到本书没讨论过的对象上（混响、多主唱、淡出）；</li>
+              <li>推出一条具体建议；</li>
+              <li><strong>明确写出它依赖的约束</strong>——这一步不能省，因为省了它就变成了一条盲目的规则（第 15 章）。</li>
+            </ol>
+            <p><strong>如果你能做这件事，这两本书的目的就达到了。</strong>剩下的一切——新风格、新技术、新的投放媒介——你都可以自己推。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 五个阶段：<strong>素材 → 结构 → 编曲 → 制作 → 检查</strong>，各有明确的完成标准；<strong>阶段 ② ③ 只占 20% 的时间却决定 80% 的结果</strong>。② 十种失败模式里，<strong>直觉处理几乎全是加法，正确对策大多是减法</strong>——因为加法可见、症状措辞诱导向上、而向下那一边通常空着。③ 自查清单的三条使用规则：<strong>放一天再查 · 逐条过不跳 · 不当场改</strong>；它的价值是绕开你已经失效的判断力。④ 清单按<strong>结构 → 编曲 → 混音前置 → 整体</strong>的顺序修，因为后面几组大量依赖前面几组。⑤ 三个停手信号：<strong>清单全过 · 改动互相抵消 · 需要反复 A/B 才能决定</strong>（那意味着差别不存在）。⑥ 全书归结为<strong>四条听觉机制</strong>（变化 / 一条线 / 归并 / 掩蔽）与<strong>三句提问</strong>（谁是主角 / 前面能否更弱 / 这条规则解决哪个约束）。⑦ <strong>不要在写歌时想着这本书</strong>——先写完，再批评。⑧ <strong>完成比完美有用</strong>：写十首歌的进步远大于把一首改一百遍。</p>
+          <p><strong>全书到此结束。</strong>感谢你读到这里——现在去写歌吧。回到<a href="./00-大纲与学习路线.html">教材大纲</a>可以随时查阅任何一章，<a href="../../吉他乐理/教材/00-大纲与学习路线.html">上一本《电吉他乐理》</a>则随时可以回去补乐理的部分。</p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, SONG = KBB.song, BPM = SONG.bpm;
+      function $(id) { return document.getElementById(id); }
+      function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+
+      /* ---------- 演示 1：症状诊断器 ---------- */
+      var DX = [
+        { s: "副歌不够炸", wrong: "加吉他、推音量",
+          why: "副歌通常已接近满，加不动；而音量会被压缩链路抹平。",
+          real: "主歌太满（参照点太高），或者对比只画在音量上。",
+          steps: ["把主歌减稀：拿掉一把吉他、鼓只打踩镲、贝斯改长音",
+                  "检查两把吉他是不是同度加倍——改成一原位一高八度",
+                  "改发音方式：主歌闷音、副歌放开延音",
+                  "最后才补 1 dB 音量"],
+          ch: "第 5、10、12 章" },
+        { s: "副歌来得太突然", wrong: "加一个鼓过门",
+          why: "过门是标点不是句子；它标记了边界，却没有制造期待。",
+          real: "缺少连接段——没有人在副歌之前制造缺口。",
+          steps: ["把主歌的后 4 小节改造成预副歌，停在属功能上不解决",
+                  "密度提一档（闷音 gallop → 八分）但不到副歌的水平",
+                  "提前引入副歌的一个元素（一个和弦、一句和声）",
+                  "落点前加半拍静默"],
+          ch: "第 6 章" },
+        { s: "混音一片糊", wrong: "调 EQ",
+          why: "EQ 只能在已有能量里做取舍，不能创造空间。",
+          real: "编制太满 ＋ 多件乐器争同一频段。",
+          steps: ["写主频段清单：每轨一句「存在感来自 ___ Hz」，填不出的先删",
+                  "逐轨静音测试：删掉它再把别的推 1 dB，一样好就删",
+                  "把重复信息合并（两轨弹一样的东西留一轨）",
+                  "剩下的冲突才交给 EQ"],
+          ch: "第 7、12 章" },
+        { s: "底鼓没有力度", wrong: "加低频",
+          why: "小音箱与手机放不出 50 Hz；你听到的「点」全部来自 3–5 kHz 的音头。",
+          real: "缺音头；或者贝斯每一下都和它砸在同一瞬间。",
+          steps: ["加音头（3–5 kHz），而不是低频",
+                  "让贝斯在底鼓落点让开：改弹长音",
+                  "确认分工：底鼓拿两端（50 Hz ＋ 4 kHz），贝斯拿中间（100 Hz）",
+                  "检查吉他有没有做高通"],
+          ch: "第 8、9、15 章" },
+        { s: "贝斯听不见", wrong: "把贝斯推大",
+          why: "这是掩蔽问题，推不动——掩蔽它的东西也一起变大了。",
+          real: "贝斯缺中高频内容，能量全挤在被占满的 80–250 Hz。",
+          steps: ["给贝斯加失真，或并行一条失真轨（500 Hz–2 kHz）",
+                  "检查吉他有没有做高通（100 Hz）",
+                  "检查贝斯的写法：是不是每一下都和底鼓重合",
+                  "做完再补 1–2 dB"],
+          ch: "第 9 章" },
+        { s: "听不清词", wrong: "把人声推大",
+          why: "2–4 kHz 被四轨失真吉他占了，推音量改变不了相对关系。",
+          real: "时间上没让路——riff 在人声的每个音节上都在动。",
+          steps: ["改问答结构：人声唱时吉他弹长和弦，乐句之间 riff 才动",
+                  "人声段落把吉他减到一对",
+                  "声像推到 ±100%，中间彻底腾给人声",
+                  "最后才做 2.5 kHz 的窄凹陷"],
+          ch: "第 11 章" },
+        { s: "听到一半想跳过", wrong: "加更多变化",
+          why: "问题不在缺变化，而在能量曲线的形状。",
+          real: "顶点在前半段，或者曲线是一条直线（没有谷）。",
+          steps: ["列出每段的能量值，画成曲线",
+                  "过三条纪律：顶点唯一？顶点前有谷？是不是直线？",
+                  "把最满的编配挪到倒数第二个大段之后",
+                  "把桥段减到全曲最低"],
+          ch: "第 13 章" },
+        { s: "很满但没有重点", wrong: "再加一层",
+          why: "满是问题本身，不是解法。",
+          real: "每一秒都没有明确的主角。",
+          steps: ["逐秒问「现在谁是主角」，答不上来的地方就是问题",
+                  "为每一段选一个主角，其余全部让路",
+                  "静音测试，删掉没有主频段的轨",
+                  "检查是不是两个声部在同一位置同音量"],
+          ch: "第 11、12 章" },
+        { s: "工程里炸，导出就没了", wrong: "母带再推一点",
+          why: "压缩链路四级处理会把 4 dB 削到不足 1 dB。",
+          real: "对比画在音量上，而不是内容上。",
+          steps: ["把对比转移到内容：织体、音区、密度、律动",
+                  "混音时挂着总线压缩听",
+                  "做归一化测试：两段调成同响度，还听得出副歌吗",
+                  "音量降级为 1–2 dB 的辅助"],
+          ch: "第 5、15 章" },
+        { s: "一直很猛但不打动人", wrong: "写更猛的 riff",
+          why: "处处是顶点等于没有顶点。",
+          real: "全曲没有任何一处足够弱。",
+          steps: ["找出可以变弱的段落——主歌、桥段、间奏的前半",
+                  "把桥段减到只剩三轨甚至更少",
+                  "在最重的段落前加一次静默",
+                  "检查：全曲最低点和最高点的落差有多大"],
+          ch: "第 5、13 章" }
+      ];
+      var dxIdx = 0;
+      function renderDx(i) {
+        dxIdx = i;
+        Array.prototype.forEach.call($("dx-list").children, function (b, k) {
+          b.className = "kb-btn" + (k === i ? " kb-btn-primary" : "");
+        });
+        var d = DX[i], host = $("dx-body");
+        clear(host);
+        function line(label, text, strong) {
+          var p = document.createElement("p");
+          p.style.margin = "4px 0";
+          p.style.fontSize = ".93em";
+          var b = document.createElement("strong");
+          b.textContent = label;
+          p.appendChild(b);
+          var s = document.createElement(strong ? "strong" : "span");
+          s.textContent = text;
+          if (strong) s.style.color = "#dc2626";
+          p.appendChild(s);
+          host.appendChild(p);
+        }
+        var h = document.createElement("h4");
+        h.textContent = "症状：" + d.s;
+        host.appendChild(h);
+        line("直觉的处理：", d.wrong);
+        line("为什么不对：", d.why);
+        line("真正的原因：", d.real, true);
+        var ol = document.createElement("ol");
+        d.steps.forEach(function (t) {
+          var li = document.createElement("li");
+          li.textContent = t;
+          ol.appendChild(li);
+        });
+        host.appendChild(ol);
+        var ref = document.createElement("p");
+        ref.style.cssText = "margin:8px 0 0;font-size:.88em;color:var(--kb-fg-muted);";
+        ref.textContent = "详见 " + d.ch;
+        host.appendChild(ref);
+      }
+      DX.forEach(function (d, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = d.s;
+        b.addEventListener("click", function () { renderDx(i); });
+        $("dx-list").appendChild(b);
+      });
+      renderDx(0);
+
+      /* ---------- 演示 2：自查清单 ---------- */
+      var CK = [
+        { g: "结构", t: "能量曲线有起有落，不是单调上升也不是平线", r: "第 13 章" },
+        { g: "结构", t: "顶点唯一——没有第二段和它一样高", r: "第 13 章" },
+        { g: "结构", t: "顶点前是全曲最深的谷", r: "第 13 章" },
+        { g: "结构", t: "顶点落在全曲 70–85%，之后还有着陆段", r: "第 13 章" },
+        { g: "结构", t: "每个段落都能说出它的功能（承诺 / 兑现 / 打断 / 连接）", r: "第 3、6 章" },
+        { g: "编曲", t: "逐秒问「谁是主角」，都答得上来", r: "第 11 章" },
+        { g: "编曲", t: "主歌明显比副歌空；编制曲线有起有落", r: "第 5、12 章" },
+        { g: "编曲", t: "每一轨都能填出「存在感来自 ___ Hz」，且没有两行相同", r: "第 7 章" },
+        { g: "编曲", t: "人声段落里 riff 在乐句之间动，不在音节上动", r: "第 11 章" },
+        { g: "编曲", t: "底鼓与贝斯有明确分工（两端 / 中间，瞬态 / 持续）", r: "第 8、9 章" },
+        { g: "编曲", t: "特殊手段不超过三件，且每件只用一次", r: "第 14 章" },
+        { g: "混音前置", t: "吉他做了高通，中间位置留给了人声与低频", r: "第 10、15 章" },
+        { g: "混音前置", t: "加倍轨来自两次独立演奏，不是复制粘贴", r: "第 10 章" },
+        { g: "混音前置", t: "需要齐奏的地方对齐了；人声与独奏没有被量化", r: "第 15 章" },
+        { g: "混音前置", t: "逐轨静音，每一轨都有人想念", r: "第 12 章" },
+        { g: "整体", t: "把主歌与副歌调成同响度后，仍能听出哪个是副歌", r: "第 5、15 章" },
+        { g: "整体", t: "挂着总线压缩听，段落对比仍然成立", r: "第 15 章" },
+        { g: "整体", t: "在手机 / 笔记本上听，底鼓的「点」和人声的词都还在", r: "第 8、11 章" },
+        { g: "整体", t: "全曲长度在预算内，没有可以整段删掉的重复", r: "第 4、13 章" }
+      ];
+      var GROUPS = ["结构", "编曲", "混音前置", "整体"];
+      var state = CK.map(function () { return false; });
+      var boxes = [];
+      GROUPS.forEach(function (g) {
+        var h = document.createElement("div");
+        h.className = "ck-group";
+        h.textContent = g;
+        $("ck-host").appendChild(h);
+        CK.forEach(function (c, i) {
+          if (c.g !== g) return;
+          var row = document.createElement("div");
+          row.className = "ck-item";
+          var cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.id = "ck-" + i;
+          var lab = document.createElement("label");
+          lab.setAttribute("for", "ck-" + i);
+          lab.textContent = c.t;
+          var ref = document.createElement("span");
+          ref.className = "ref";
+          ref.textContent = "（" + c.r + "）";
+          lab.appendChild(ref);
+          cb.addEventListener("change", function () { state[i] = cb.checked; syncCk(); });
+          row.appendChild(cb); row.appendChild(lab);
+          $("ck-host").appendChild(row);
+          boxes.push({ i: i, cb: cb, row: row });
+        });
+      });
+      function syncCk() {
+        var n = state.filter(Boolean).length;
+        $("ck-n").textContent = n + " / " + CK.length;
+        $("ck-n").className = n === CK.length ? "ok" : n === 0 ? "warn" : "";
+        GROUPS.forEach(function (g, gi) {
+          var idx = CK.map(function (c, i) { return c.g === g ? i : -1; }).filter(function (i) { return i >= 0; });
+          var done = idx.filter(function (i) { return state[i]; }).length;
+          $("ck-g" + (gi + 1)).textContent = done + " / " + idx.length;
+        });
+        $("ck-fill").style.width = Math.round(n / CK.length * 100) + "%";
+        boxes.forEach(function (b) { b.row.classList.toggle("done", state[b.i]); });
+        var host = $("ck-summary");
+        clear(host);
+        var fails = CK.map(function (c, i) { return state[i] ? null : c; }).filter(Boolean);
+        var h = document.createElement("h4");
+        h.textContent = fails.length ? "尚未通过（" + fails.length + " 项）—— 按下面的顺序处理" : "全部通过 —— 可以停手了";
+        host.appendChild(h);
+        if (!fails.length) {
+          var p = document.createElement("p");
+          p.style.cssText = "margin:4px 0;font-size:.93em;";
+          p.textContent = "四组全过。剩下的判断交给另外两个停手信号：改动是否开始互相抵消，以及你是否还听得出差别。";
+          host.appendChild(p);
+          return;
+        }
+        GROUPS.forEach(function (g) {
+          var list = fails.filter(function (c) { return c.g === g; });
+          if (!list.length) return;
+          var p = document.createElement("p");
+          p.style.cssText = "margin:6px 0 2px;font-size:.92em;";
+          var b = document.createElement("strong");
+          b.textContent = g + "：";
+          p.appendChild(b);
+          p.appendChild(document.createTextNode(list.map(function (c) { return c.t; }).join("；")));
+          host.appendChild(p);
+        });
+        var tip = document.createElement("p");
+        tip.style.cssText = "margin:8px 0 0;font-size:.88em;color:var(--kb-fg-muted);";
+        tip.textContent = "按「结构 → 编曲 → 混音前置 → 整体」的顺序修：后面几组大量依赖前面几组，修好结构之后重查一遍，常常会自动过掉几项。";
+        host.appendChild(tip);
+      }
+      $("ck-clear").addEventListener("click", function () {
+        state = state.map(function () { return false; });
+        boxes.forEach(function (b) { b.cb.checked = false; });
+        syncCk();
+      });
+      $("ck-all").addEventListener("click", function () {
+        state = state.map(function () { return true; });
+        boxes.forEach(function (b) { b.cb.checked = true; });
+        syncCk();
+      });
+      syncCk();
+
+      /* ---------- 演示 3：全书示范曲 ---------- */
+      KBG.soundToggle($("s-sound"));
+      var ORDER = ["intro", "verse", "pre", "chorus", "bridge", "chorus"];
+      var spec = SONG.build(ORDER);
+      var tl = KBB.timeline($("s-timeline"), spec.sections, { label: "示范曲 · 段落与能量（竖线是播放头）" });
+      var WHAT = {
+        前奏: "两轨吉他确立主 riff，不加鼓与贝斯 —— 把宽度维度重置到最低",
+        主歌: "加入节奏组；吉他闷音 gallop，为人声让出频谱与注意力",
+        预副歌: "只改密度不加轨，和声停在属功能上制造缺口",
+        副歌: "加入高八度层与和声，放开延音，鼓加密 ＋ 擦片",
+        桥段: "全曲最低点：减到最少，为最后一遍挖出落差"
+      };
+      /* 副歌之外的段落不用高八度层与和声，这正是第 12 章的「按段落配置」 */
+      function sectionsOf(key) {
+        return spec.sections.filter(function (s) { return s.name === key; })
+          .map(function (s) { return [s.at, s.at + s.beats]; });
+      }
+      function onlyChorus(events) {
+        var rs = sectionsOf("副歌");
+        return events.filter(function (e) {
+          return rs.some(function (r) { return e.t >= r[0] && e.t < r[1]; });
+        });
+      }
+      function octaveOf(events) {
+        return onlyChorus(events).map(function (e) {
+          var o = Object.assign({}, e, { mute: false, gain: (e.gain || 0.8) * 0.7 });
+          if (o.midis) o.midis = o.midis.map(function (m) { return m + 12; });
+          if (o.midi != null) o.midi = o.midi + 12;
+          return o;
+        });
+      }
+      function tracksOf() {
+        var b = spec.tracks;
+        var oct = octaveOf(b[2].events);
+        return [
+          Object.assign({}, b[0], { gain: 1.0 }),
+          Object.assign({}, b[1], { gain: 0.95 }),
+          Object.assign({}, b[2], { name: "吉他 L", gain: 0.8, pan: -0.9, hp: 100 }),
+          Object.assign({}, b[3], { name: "吉他 R", gain: 0.78, pan: 0.9, hp: 100 }),
+          { id: "g3", name: "高八度层 L", inst: "guitar", gain: 0.55, pan: -0.45, drive: 0.8, hp: 150, events: oct },
+          { id: "g4", name: "高八度层 R", inst: "guitar", gain: 0.53, pan: 0.45, drive: 0.8, hp: 150,
+            events: oct.map(function (e) { return Object.assign({}, e, { t: e.t + 0.012 }); }) }
+        ];
+      }
+      var rig = null, ticker = null;
+      function stopSong() {
+        if (ticker) { ticker.stop(); ticker = null; }
+        if (rig) { rig.dispose(); rig = null; }
+        A.stopAll();
+        tl.setPos(null);
+        $("s-play").textContent = "▶ 播放整首";
+        $("s-sec").textContent = "—";
+        $("s-n").textContent = "—";
+        $("s-what").textContent = "—";
+      }
+      $("s-play").addEventListener("click", function () {
+        if (ticker) { stopSong(); return; }
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: spec.lengthBeats, loop: true, tracks: tracksOf() });
+        rig.play();
+        $("s-play").textContent = "⏸ 暂停";
+        ticker = KB.makeLoop(function () {
+          if (!rig || !rig.isPlaying()) return;
+          var p = rig.position();
+          tl.setPos(p);
+          var s = tl.sectionAt(p);
+          if (!s) return;
+          $("s-sec").textContent = s.name;
+          $("s-n").textContent = (s.name === "副歌" ? 6 : s.name === "前奏" ? 2 : 4) + " 轨";
+          $("s-what").textContent = WHAT[s.name] || "—";
+        });
+        ticker.start();
+      });
+      $("s-stop").addEventListener("click", stopSong);
+
+      new MutationObserver(function () { tl.redraw(); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopSong(); });
+    });
+  </script>
+</body>
+</html>

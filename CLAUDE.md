@@ -21,7 +21,13 @@
    | `content/分类/子分类/系列/页面.html` | `../../../../` |
 4. **填 meta**：`<title>标题 · 知识库</title>`、`kb:summary`（120 字内摘要）、`kb:tags`（逗号分隔，可放拼音别名）、`kb:created`（当天日期 YYYY-MM-DD）。
 5. **写正文**（排版约定见下）。媒体文件放同级 `_media/` 目录（`_` 前缀目录不会被索引）。
-6. **按需追加库**：页面用了 `<model-viewer>` 时，在页尾脚本区追加 `<script src="{{ROOT}}assets/vendor/model-viewer-umd.min.js" defer></script>`。
+6. **按需追加库**：在页尾脚本区（`app.js` 之后）按需追加，注意先后顺序：
+
+   | 需要什么 | 追加的脚本 | 暴露 |
+   |---|---|---|
+   | 3D 模型 `<model-viewer>` | `{{ROOT}}assets/vendor/model-viewer-umd.min.js` | — |
+   | 发声、指板图、和弦图、TAB | `{{ROOT}}assets/js/guitar-kit.js` | `window.KBG` |
+   | 鼓、贝斯、多轨混音、段落时间轴、频段图 | 先 guitar-kit，再 `{{ROOT}}assets/js/band-kit.js` | `window.KBB` |
 7. **重建索引**：`python3 scripts/build_index.py`，warning 必须清零（脚本会检查 h1 数量、ROOT 深度、img alt、_media 引用是否存在等）。
 8. **抽查**：`curl -s "http://127.0.0.1:8923/<url编码路径>"` 返回 200，或浏览器打开确认导航树/搜索可见本页。
 
@@ -42,6 +48,22 @@
 - 画布取色用 `getComputedStyle` 读 CSS 变量（`--kb-fg`、`--kb-accent` 等），保证深浅色主题都可读。
 - 参考实现：`content/物理/力学/单摆.html`。
 
+## 音乐类页面约定（guitar-kit / band-kit）
+
+音乐教材的发声与图形能力集中在两个共享库里，**不要在页面里重复实现**：
+
+- **`assets/js/guitar-kit.js`（`KBG`）**
+  - `KBG.theory`：音名/音程/音阶/和弦/顺阶/五度圈/CAGED 与横按形状推导——**全书的乐理真值来源**，习题与控件共用，避免各页各写一份而互相矛盾。
+  - `KBG.audio`：Karplus–Strong 拨弦合成 + 可调失真链、推弦/揉弦、`sequence`/`metronome`。**只在首次用户手势时创建 AudioContext，绝不自动播放**；页面隐藏时自动 `stopAll()`。
+  - `KBG.audio.channel({drive,gain,pan,lp,hp})`：独立通道，多轨编曲每个声部走一条；`pluck/strum/sequence` 都可传 `channel`。
+  - `KBG.fretboard / chordbox / tab`：SVG 指板、和弦指法图、六线谱与播放光标。
+  - `KBG.soundToggle(host)`：页面级 🔊 开关 + 音量，每章第一个演示上方放一个。
+- **`assets/js/band-kit.js`（`KBB`，依赖 KBG）**
+  - `KBB.drums` / `KBB.bass`：离线渲染并缓存的鼓组与贝斯音色。`KBB.drums.PIECES` 里的频段数字是**对合成结果的实测值**，改音色必须重测并同步该表。
+  - `KBB.tracks(spec)`：多轨播放器，静音/独奏靠改通道音量**实时生效**，不打断循环。每轨可传 `lp`/`hp` 覆盖通道滤波（贝斯双轨分频、吉他高通 A/B 靠它）。
+  - `KBB.mixer / KBB.timeline / KBB.spectrum`：混音台 UI、段落时间轴、频段占位图。三者都返回 `redraw()`——**页面必须挂一个监听 `data-theme` 的 MutationObserver 调它**，否则切主题后 canvas 不重绘（颜色取自 CSS 变量）。
+- 合成参数改动后要做**数值验证**（无法靠耳朵时的替代手段）：用 node 打桩 Web Audio 抓出波形，测音高（细粒度 DFT）、扫频轨迹（过零点法）、能量频段。
+
 ## 媒体资源约定
 
 - 图片 SVG/WebP/PNG；视频 MP4(H.264)；3D 模型 **.glb ≤ 10MB 且必须配 `poster` 图**（file:// 降级显示）。
@@ -56,7 +78,8 @@
 - **编号命名**：文件名与页面标题都用 `NN 章名` 前缀（`01-向量从箭头到数组.html` / 标题 `01 向量：从箭头到数组`），保证导航树按学习顺序排序。
 - **每章固定结构**：学习目标 → 直觉引入 → 正文（图示/交互演示）→ 例题（带完整解答）→ 习题（基础 3–4 / 进阶 2–3 / 挑战 1–2，全部折叠详解）→ 要点回顾（kb-tip，含下一章预告）。
 - **写完一章的收尾动作**：① 在大纲页把该章状态改为“已上线”并加链接；② 章末加“下一章”链接（若已存在）；③ 重跑索引。
-- 现行教材：线性代数（`content/数学/线性代数/教材/`，三篇十二章全部完成）。
+- 现行教材：线性代数（`content/数学/线性代数/教材/`）、上流工程、游戏设计、**电吉他乐理**（`content/音乐/吉他乐理/教材/`，三篇十六章，全部完成）、**摇滚与金属的作曲与编曲**（`content/音乐/作曲与编曲/教材/`，电吉他乐理的续篇，三篇十六章，全部完成）。
+- 音乐类教材之间**互相链接**：续篇直接指向前一本的具体章节与小节锚点，不重复讲解乐理。
 
 ## 修改共享层（assets/、scripts/、模板）时
 
@@ -80,3 +103,5 @@
 | 纯 CSS 动画 | `content/物理/波与振动/简谐波.html` |
 | 滑块 + canvas 交互模拟 | `content/物理/力学/单摆.html` |
 | 3D 模型 (model-viewer + glb) | `content/数学/立体几何/正方体.html` |
+| 发声 + 指板 + TAB (guitar-kit) | `content/音乐/吉他乐理/教材/01-音律与指板.html` |
+| 鼓 + 多轨混音 (band-kit) | `content/音乐/作曲与编曲/教材/`（见该书大纲页） |

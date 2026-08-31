@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>07 频谱是一块地 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 7 章：频率是有限的地皮；八个功能频段；掩蔽效应为什么让「调大一点」失效；重型编曲的三处争地（底鼓对贝斯、吉他对人声、吉他对镲片）与四种解决手段。">
+  <meta name="kb:tags" content="编曲,频谱,频段,掩蔽,masking,底鼓,贝斯,人声,EQ,音区,pgsykd,pd">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+    .inst-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .inst-list .kb-btn { font-size: .86em; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 7 章 · 频谱是一块地</h1>
+        <p class="kb-lead">第一篇写完了歌。从这一章起，问题变成：<strong>怎么把一支乐队装进这首歌里，而不让它变成一团糊。</strong>而「糊」这件事有一个非常物理的解释——频率是<strong>有限的地皮</strong>，你的每一件乐器都要占一块地，而重型音乐的乐器偏偏都想占同一块。理解了这一点，你会发现编曲里大量看似风格化的惯例，其实都是同一个约束下的最优解。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出八个功能频段各自住着谁；② 解释掩蔽效应，以及为什么「把它调大一点」经常无效；③ 指出重型编曲里的三处主要争地；④ 按正确的优先级使用四种解决手段，并理解「EQ 解决不了编曲问题」这句话的含义；⑤ 用「每件乐器一个主频段」自查一份编曲。</p>
+        </div>
+
+        <h2>频率轴是对数的</h2>
+        <p>人耳听到的音高与频率不是线性关系，而是<strong>对数关系</strong>——每升高一个八度，频率<strong>翻一倍</strong>（<a href="../../吉他乐理/教材/01-音律与指板.html">上一本第 1 章</a>）。这带来一个对编曲极其重要的后果：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 低频的地皮少得可怜</p>
+          <p>从 20 Hz 到 20 kHz 一共只有大约 <strong>10 个八度</strong>。而其中：</p>
+          <p><strong>最低的两个八度（20–80 Hz）</strong>住着底鼓和贝斯的基频；<strong>最高的两个八度（5–20 kHz）</strong>基本只有镲片和空气感。真正拥挤的是中间那六个八度，而<strong>吉他、贝斯的上半部、人声、军鼓、镲片的下半部全都挤在里面</strong>。</p>
+        </div>
+
+        <figure>
+          <svg viewBox="0 0 720 250" width="720" height="250" role="img" aria-label="对数频率轴示意图：横轴从 40 Hz 到 16 kHz 按八度等距排列，标出底鼓、贝斯、吉他、人声、镲片各自占据的频段，中低频区域重叠最严重">
+            <text x="10" y="16" font-size="12" fill="var(--kb-fg-muted)">频率轴（对数）：每格一个八度，格宽相同 —— 但住的人一点也不平均</text>
+            <line x1="40" y1="212" x2="700" y2="212" stroke="var(--kb-fg-muted)" stroke-width="1"/>
+            <g font-size="11" fill="var(--kb-fg-muted)" text-anchor="middle">
+              <line x1="40" y1="208" x2="40" y2="216" stroke="var(--kb-fg-muted)"/><text x="40" y="230">40</text>
+              <line x1="150" y1="208" x2="150" y2="216" stroke="var(--kb-fg-muted)"/><text x="150" y="230">80</text>
+              <line x1="260" y1="208" x2="260" y2="216" stroke="var(--kb-fg-muted)"/><text x="260" y="230">160</text>
+              <line x1="370" y1="208" x2="370" y2="216" stroke="var(--kb-fg-muted)"/><text x="370" y="230">320</text>
+              <line x1="480" y1="208" x2="480" y2="216" stroke="var(--kb-fg-muted)"/><text x="480" y="230">1.3k</text>
+              <line x1="590" y1="208" x2="590" y2="216" stroke="var(--kb-fg-muted)"/><text x="590" y="230">5k</text>
+              <line x1="700" y1="208" x2="700" y2="216" stroke="var(--kb-fg-muted)"/><text x="700" y="230">20k</text>
+              <text x="370" y="245" fill="var(--kb-fg-faint)">Hz（每 110 px ＝ 1 个八度，最右两格各含 2 个八度）</text>
+            </g>
+            <g font-size="11">
+              <rect x="40" y="30" width="120" height="20" fill="#dc2626" opacity="0.55" rx="3"/>
+              <text x="46" y="44" fill="#fff">底鼓 40–80</text>
+              <rect x="40" y="56" width="230" height="20" fill="#2563eb" opacity="0.55" rx="3"/>
+              <text x="46" y="70" fill="#fff">贝斯 41–250</text>
+              <rect x="150" y="82" width="420" height="20" fill="#16a34a" opacity="0.55" rx="3"/>
+              <text x="156" y="96" fill="#fff">失真吉他 80–5k（基频只到 350，其余全是失真产生的谐波）</text>
+              <rect x="250" y="108" width="290" height="20" fill="#d97706" opacity="0.6" rx="3"/>
+              <text x="256" y="122" fill="#fff">人声 150–4k（清晰度集中在 1–3k）</text>
+              <rect x="500" y="134" width="200" height="20" fill="#8b5cf6" opacity="0.55" rx="3"/>
+              <text x="506" y="148" fill="#fff">镲片 2k–16k</text>
+            </g>
+            <rect x="250" y="26" width="290" height="160" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5 4" rx="4"/>
+            <text x="395" y="180" font-size="11.5" fill="#dc2626" text-anchor="middle">↑ 拥挤区：吉他 · 人声 · 军鼓 · 贝斯上部 全在这三个八度里</text>
+          </svg>
+          <figcaption>可听范围约 10 个八度，但乐队的绝大部分能量挤在中间三个八度里。这就是「糊」的来源。</figcaption>
+        </figure>
+
+        <h2>八个功能频段</h2>
+        <p>混音师习惯把频谱分成若干个「功能区」。下面这张表用的是重型音乐的视角：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>频段</th><th>俗称</th><th>住着谁</th><th>过多会怎样</th></tr></thead>
+            <tbody>
+              <tr><td><strong>20–60 Hz</strong></td><td>超低 / Sub</td><td>底鼓的最低部分、五弦贝斯的低 B</td><td>小音箱完全听不见，却吃掉大量功率与动态余量</td></tr>
+              <tr><td><strong>60–120 Hz</strong></td><td>低频基座</td><td><strong>底鼓音体 + 贝斯基频</strong>——最激烈的争地</td><td>轰、闷、一片糊</td></tr>
+              <tr><td><strong>120–250 Hz</strong></td><td>厚度</td><td>吉他的低音弦、军鼓音体、贝斯上部</td><td>「箱声」，浑浊</td></tr>
+              <tr><td><strong>250–500 Hz</strong></td><td>泥区</td><td>几乎所有乐器都在这里有能量</td><td><strong>最容易糊的一段</strong>，重型混音常在这里做减法</td></tr>
+              <tr><td><strong>500 Hz–1 kHz</strong></td><td>中低</td><td>吉他的「肉」、人声的胸腔感</td><td>盒装感、鼻音</td></tr>
+              <tr><td><strong>1–3 kHz</strong></td><td>存在感</td><td><strong>人声清晰度 + 吉他的攻击</strong>——第二处争地</td><td>刺耳、听久了累</td></tr>
+              <tr><td><strong>3–6 kHz</strong></td><td>攻击 / Pick</td><td>拨片声、底鼓音头、军鼓的「啪」</td><td>尖锐、疲劳</td></tr>
+              <tr><td><strong>6–16 kHz</strong></td><td>空气</td><td>镲片、失真吉他的毛刺、齿音</td><td>嘶嘶声、廉价感</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 失真让吉他的地盘暴涨</p>
+          <p>一把六弦吉他的<strong>基频</strong>最高只到大约 350 Hz（一弦十二品）。但加了失真之后，削波产生的谐波会一路延伸到 5 kHz 以上（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>）。</p>
+          <p><strong>后果</strong>：失真吉他不是一件占三个八度的乐器，而是<strong>占六个八度</strong>的乐器。这就是为什么「加一把吉他」在重型编曲里代价那么大——它抢的不只是它自己那块地。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🗺️ 演示 1：频段占位图（点乐器名开关它的地盘）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：把底鼓、贝斯、失真吉他、人声、军鼓、镲片各自占据的频段画在同一条对数频率轴上，红色斜线标出重叠区。六件乐器全部在场时有 10 处两两重叠；逐个关掉乐器，你会看到重叠数迅速下降——这正是「减一件乐器」在重型编曲里价值那么高的原因。</p></noscript>
+            <div class="inst-list" id="sp-btns"></div>
+            <div id="sp-host"></div>
+            <div class="kb-readout">
+              <span>在场乐器 <b id="sp-n">6</b></span>
+              <span>重叠处 <b id="sp-clash">—</b></span>
+              <span>底鼓 ∩ 贝斯 <b id="sp-kb">—</b></span>
+              <span>吉他 ∩ 人声 <b id="sp-gv">—</b></span>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">试试只留「底鼓 + 贝斯 + 吉他」——重叠仍然存在，因为这三件本来就住在一起。<strong>重叠本身不是问题，问题是重叠区里有没有两个都想当主角的。</strong></p>
+          </div>
+        </div>
+
+        <h2>掩蔽：为什么「调大一点」经常没用</h2>
+        <p><strong>掩蔽（masking）</strong>是听觉的一个基本机制：当两个声音的频率接近时，<strong>强的那个会让弱的那个听不见</strong>——不是变小声，是<strong>感知不到</strong>。</p>
+        <p>它有三条对编曲直接有用的性质：</p>
+        <ol>
+          <li><strong>掩蔽发生在同一个频段内。</strong>离得越近，掩蔽越强；隔了两个八度，几乎互不干扰。</li>
+          <li><strong>向上掩蔽远强于向下掩蔽。</strong>一个强的低频会掩蔽它<strong>上方</strong>的频率，反过来则弱得多。这条对重型音乐是坏消息——我们的低频能量特别大。</li>
+          <li><strong>掩蔽发生在耳朵里，不是在音箱里。</strong>所以它<strong>不能靠推音量解决</strong>：你把被掩蔽的乐器调大，掩蔽它的那个也一起变大了（因为整体在压缩），相对关系没变。</li>
+        </ol>
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚫 最常见的错误循环</p>
+          <p>贝斯听不清 → 把贝斯调大 → 低频过多、整体变糊 → 把吉他也调大以保持平衡 → 更糊 → 把人声调大 → <strong>所有东西都很大，什么都听不清</strong>。</p>
+          <p>这个循环的每一步都是局部合理的，整体却把混音推向了灾难。<strong>出口不在音量旋钮上，在编曲上。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🔊 演示 2：挤在一起 vs 错开音区（同样的音符，不同的摆位）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一段音乐的三个版本——① 贝斯与吉他在同一个八度、主音线也落在吉他的音区里；② 把主音线的音量推高 5 dB；③ 贝斯降八度、主音线升八度。版本 ① 糊；版本 ② 仍然糊（音量解决不了掩蔽）；版本 ③ 三件乐器各自清晰。这说明掩蔽的出口在音区安排，不在音量。</p></noscript>
+            <div id="m-sound"></div>
+            <div class="kb-readout">
+              <span>版本 <b id="m-name">—</b></span>
+              <span>贝斯基频 <b id="m-bass">—</b></span>
+              <span>主音线 <b id="m-lead">—</b></span>
+              <span>与吉他重叠 <b id="m-ov">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="m-clash" type="button">▶ ① 全挤在同一个八度</button>
+              <button class="kb-btn" id="m-loud" type="button">▶ ② 把主音线推高 5 dB</button>
+              <button class="kb-btn" id="m-spread" type="button">▶ ③ 贝斯降八度 + 主音线升八度</button>
+              <button class="kb-btn" id="m-stop" type="button">■ 停止</button>
+            </div>
+            <p id="m-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">三个版本的<strong>音符完全一样</strong>，只有音区和音量不同。请特别注意版本 ②——主音线明明更响了，却并没有更清楚，只是让整体更吵。<strong>这就是掩蔽推不动的证据。</strong></p>
+          </div>
+        </div>
+
+        <h2>三处争地</h2>
+        <p>重型编曲里的频段冲突高度集中，主要就三处：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>争地</th><th>频段</th><th>症状</th><th>标准解法</th></tr></thead>
+            <tbody>
+              <tr><td><strong>底鼓 ∩ 贝斯</strong></td><td>40–120 Hz</td><td>低频轰、底鼓的「点」消失、整体没有力度</td><td><strong>分工分频</strong>：底鼓要 sub（40–60）+ 音头（3–5k），贝斯要基频与厚度（80–250）</td></tr>
+              <tr><td><strong>吉他 ∩ 人声</strong></td><td>1–3 kHz</td><td>唱得很用力却听不清词</td><td><strong>编曲避让</strong>：人声进来时吉他减层、减密度（第 11 章）</td></tr>
+              <tr><td><strong>吉他 ∩ 镲片</strong></td><td>5–10 kHz</td><td>整体嘶嘶、听十分钟就累</td><td>吉他适度滚降高频；镲片别打太满</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>第一处是最容易毁掉一首歌的。</strong>底鼓和贝斯是重型音乐的地基，而它们的基频几乎完全重合。经典的分工方案是让两者<strong>各取一半</strong>：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 底鼓与贝斯的分工</p>
+          <p><strong>底鼓拿走两端：</strong>40–60 Hz 的胸口冲击 + 3–5 kHz 的「咔」（音头）。<br>
+          <strong>贝斯拿走中间：</strong>80–250 Hz 的基频与厚度。</p>
+          <p>这样底鼓的存在感来自<strong>音头</strong>而不是低频量，贝斯的存在感来自<strong>基频</strong>而不是超低——两者各有各的地盘，同时响也不打架。</p>
+          <p>顺带一提：本书的鼓引擎正是这样设计的。底鼓是 62→38 Hz 的扫频正弦加上一段 6 毫秒的高通点击，所以它在小音箱上仍然听得见「点」——第 8 章会拆开讲。</p>
+        </div>
+
+        <h2>四种手段，按优先级</h2>
+        <p>发现冲突之后，可用的手段有四种。<strong>顺序非常重要：</strong></p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>优先级</th><th>手段</th><th>做什么</th><th>代价</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td><strong>编曲避让</strong></td><td>让两件乐器<strong>不要同时出现</strong>——人声进来时吉他退到简单的长音</td><td>零。而且顺带让段落有了对比（第 5 章）</td></tr>
+              <tr><td><strong>2</strong></td><td><strong>音区错开</strong></td><td>把其中一件整体挪一个八度</td><td>零，但受乐器音域与旋律设计约束</td></tr>
+              <tr><td><strong>3</strong></td><td><strong>分工分频</strong></td><td>约定谁拿哪一段（底鼓 / 贝斯的经典分工）</td><td>需要在写作时就想好，不能事后补</td></tr>
+              <tr><td><strong>4</strong></td><td>EQ 互补</td><td>一个切掉的频段正好是另一个保留的</td><td><strong>只能挽救，不能创造</strong>；切多了乐器会变薄</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「EQ 解决不了编曲问题」</p>
+          <p>这句话在录音棚里被说了几十年，含义是精确的：<strong>EQ 只能在已有的能量里做取舍，不能凭空创造空间。</strong>如果四把吉他、贝斯、人声全都在 1–3 kHz 争地，EQ 能做的只是决定谁输——而无论谁输，那件乐器都会变薄。</p>
+          <p><strong>真正的解法是在写的时候就不要让六件乐器同时出现在同一个频段。</strong>这是编曲的工作，不是混音的。第 11、12、15 章会反复回到这个主题。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">📊 演示 3：实时频谱分析仪（独奏各轨，看它住在哪）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一边播放全乐队，一边用实时频谱看每件乐器占据的频率范围。逐个独奏可以看到：底鼓的能量集中在低频并在 1 kHz 以上有一个音头，贝斯的峰值稳定在 100 Hz 附近，失真吉他从 80 Hz 一路铺到 5 kHz 且最强的部分落在 1–3 kHz（正是人声的地盘），镲片集中在 4 kHz 以上。全奏时能量峰值常常落在 250–500 Hz 的泥区——那里没有任何一件乐器把它当主频段，却每件乐器都往里堆。</p></noscript>
+            <div id="an-host"></div>
+            <div class="kb-readout">
+              <span>当前 <b id="an-name">全奏</b></span>
+              <span>能量峰值 <b id="an-peak">—</b></span>
+              <span>主要频段 <b id="an-band">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="an-play" type="button">▶ 播放</button>
+              <button class="kb-btn" id="an-all" type="button">全奏</button>
+              <button class="kb-btn" id="an-dr" type="button">只鼓</button>
+              <button class="kb-btn" id="an-ba" type="button">只贝斯</button>
+              <button class="kb-btn" id="an-gt" type="button">只吉他</button>
+              <button class="kb-btn" id="an-ld" type="button">只主音线</button>
+              <button class="kb-btn" id="an-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">横轴是对数频率（与演示 1 同一把尺子），纵轴是能量。<strong>请对比「只吉他」与「全奏」——吉他一件乐器就覆盖了大半张图，这就是它在重型编曲里代价高的原因。</strong></p>
+            <p style="margin:6px 0 0;font-size:0.9em;color:var(--kb-fg-muted);">「能量峰值」是<strong>瞬时</strong>读数，会随着当前响的是哪个音而跳动——请看曲线的<strong>形状</strong>，不要盯着那个数字。几个稳定的观察：<strong>只贝斯</strong>的峰值稳定在 100 Hz 附近；<strong>只吉他</strong>的最强区落在 1–3 kHz，正好压在人声的清晰度频段上；<strong>全奏</strong>的峰值经常落到 250–500 Hz 的泥区——那里不是任何一件乐器的主频段，却是每件乐器都往里倒能量的地方。<strong>这就是重型混音要在泥区做减法的原因。</strong></p>
+          </div>
+        </div>
+
+        <h2>一条自查规则：每件乐器一个主频段</h2>
+        <p>把上面所有内容压缩成一条可操作的规则：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 主频段规则</p>
+          <p><strong>为编曲里的每一件乐器写下一个句子：「它的存在感来自 ___ Hz 附近。」</strong></p>
+          <p>如果两件乐器填的是同一个数字，其中一件必须让路——改音区、改出现时机，或者干脆删掉。<strong>如果你填不出某件乐器的数字，那它多半可以删掉。</strong></p>
+        </div>
+        <p>一份典型的重型编曲填完之后大致是这样：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>乐器</th><th>主频段</th><th>存在感来自</th></tr></thead>
+            <tbody>
+              <tr><td>底鼓</td><td>50 Hz + 4 kHz</td><td>胸口的冲击 + 音头的「咔」</td></tr>
+              <tr><td>贝斯</td><td>100 Hz</td><td>基频的厚度</td></tr>
+              <tr><td>节奏吉他</td><td>800 Hz–2 kHz</td><td>中频的「肉」与拨片攻击</td></tr>
+              <tr><td>军鼓</td><td>200 Hz + 3 kHz</td><td>音体 + 啪</td></tr>
+              <tr><td>人声</td><td>2 kHz</td><td>清晰度</td></tr>
+              <tr><td>镲片</td><td>8 kHz 以上</td><td>空气感</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>注意这张表里没有两行填了同一个数字。</strong>这不是巧合，而是一份编曲能听清的必要条件。当你想再加一件乐器时，先问：<strong>它的主频段是多少？那里已经有人了吗？</strong></p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 7.1</p>
+          <p>「低频一片糊，底鼓完全没有力度。」诊断并给出处理顺序。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>几乎可以肯定是底鼓与贝斯在 60–120 Hz 争地。</strong>「底鼓没力度」通常不是底鼓太小，而是它的低频被贝斯的基频掩蔽了——而由于掩蔽发生在耳朵里，把底鼓调大只会让低频更多、更糊。</p>
+            <p><strong>处理顺序（从编曲到混音）</strong>：</p>
+            <ol>
+              <li><strong>先检查贝斯在弹什么。</strong>如果贝斯每一下都跟着底鼓齐奏，两者的能量在时间上完全重合，冲突最严重。让贝斯在底鼓落下的那一瞬间<strong>稍微让开</strong>——弹长音、或者把某些点改成休止（第 9 章）。<strong>这是编曲手段，零成本。</strong></li>
+              <li><strong>确认分工。</strong>底鼓要 40–60 Hz 的冲击 + 3–5 kHz 的音头；贝斯要 80–250 Hz 的基频与厚度。如果底鼓的音色本身就没有音头，无论怎么 EQ 都救不出「点」——<strong>换音色比调 EQ 有效得多。</strong></li>
+              <li><strong>再看有没有别的东西在抢低频。</strong>吉他如果没有做高通，它的 80–200 Hz 会加进来一起糊。重型混音里节奏吉他通常从 80–100 Hz 往下切掉。</li>
+              <li><strong>最后才是 EQ 互补</strong>：在贝斯上切掉底鼓的主频点，或反之。这一步只是收尾，如果前三步没做，它救不了。</li>
+            </ol>
+            <p><strong>一个快速验证</strong>：把贝斯静音听底鼓，再把底鼓静音听贝斯。如果<strong>单听都很好，合起来就糊</strong>，那就是典型的争地——问题在关系，不在任何一件乐器本身。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 7.2</p>
+          <p>副歌里人声听不清词。乐队坚持「四把吉他不能减」。除了减吉他，还能做什么？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p>冲突在 <strong>1–3 kHz</strong>：人声的清晰度和失真吉他的攻击住在同一段。四把吉他不减的前提下，按有效性排序有五个办法：</p>
+            <ol>
+              <li><strong>把两把吉他改成高八度。</strong>四轨不减，但其中两轨挪到上面去——<strong>四轨还在，1–3 kHz 的堆积却减半了</strong>。这是「音区错开」，也顺带让副歌的织体更宽（第 5 章、第 10 章）。</li>
+              <li><strong>让吉他在人声的乐句之间动，在乐句之上静。</strong>人声唱的时候吉他弹长和弦，人声换气的空当吉他再加花。<strong>这是时间上的避让，比频率上的避让更有效</strong>（第 11 章）。</li>
+              <li><strong>把外侧两把吉他的声像拉到极宽。</strong>人声在正中，宽的吉他与它的空间位置分开，掩蔽感会明显下降。<strong>声像是频谱之外的第二块地。</strong></li>
+              <li><strong>改旋律音区。</strong>如果人声主要在 300–600 Hz，那它正好埋在吉他最厚的地方；把副歌旋律升高一些，让它落在吉他相对稀疏的位置（第 2 章）。</li>
+              <li><strong>最后才是 EQ</strong>：在吉他上做一个 2 kHz 附近的窄凹陷，跟着人声的电平联动。<strong>能用，但四轨叠加之后每轨都挖，吉他会明显变薄。</strong></li>
+            </ol>
+            <p><strong>值得对乐队说的一句话</strong>：前三个办法都<strong>没有减少任何一把吉他</strong>，但它们解决问题的效果比 EQ 好得多。「不能减」通常反对的是「层数变少」，而不是「摆位改变」——先谈摆位，往往就不用谈减了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 7.3</p>
+          <p>为什么「加一把失真吉他」的代价，比「加一把清音吉他」大得多？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>因为失真让一件乐器占的地皮暴涨了大约一倍（按八度算）。</strong></p>
+            <p>一把六弦吉他的基频范围是 82 Hz（六弦空弦）到大约 350 Hz（一弦十二品），<strong>约 2 个八度</strong>。清音演奏时，能量主要就在这个范围加上几个不太强的谐波，大致占 3 个八度。</p>
+            <p>加上失真之后，削波会产生密集的高次谐波（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>），能量一路延伸到 5 kHz 以上——<strong>变成约 6 个八度</strong>。也就是说：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>清音吉他</th><th>失真吉他</th></tr></thead>
+                <tbody>
+                  <tr><td>占据范围</td><td>约 80–1200 Hz（≈ 4 个八度）</td><td>约 80–5000 Hz（≈ 6 个八度）</td></tr>
+                  <tr><td>与人声争地</td><td>轻微</td><td><strong>严重</strong>（1–3 kHz 全覆盖）</td></tr>
+                  <tr><td>与镲片争地</td><td>几乎没有</td><td>有（5 kHz 以上的毛刺）</td></tr>
+                  <tr><td>动态</td><td>大，会自然让路</td><td><strong>被压扁</strong>，始终占满</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>最后一行常被忽略，但它很关键</strong>：失真本身就是一种极端的压缩（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>）。清音吉他弹轻时会自然退到背景里，给别人腾出空间；失真吉他弹轻弹重差不多响，<strong>它会一直占着那块地不走</strong>。</p>
+            <p><strong>实践含义</strong>：在需要腾空间的段落（主歌、人声密集处），把一把失真吉他换成清音，往往比减一把失真吉他更划算——层数没少，占地却少了一半。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说「低频的地皮少得可怜」？请用八度来解释。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为频率轴是对数的：每升高一个八度，频率翻一倍。</strong></p>
+            <p>从 20 Hz 到 20 kHz 一共大约 10 个八度。而低频端的 20–80 Hz 只有 2 个八度，却要同时容纳底鼓的冲击与贝斯的基频——<strong>两件乐队里能量最大的乐器，共用两个八度。</strong></p>
+            <p>对比一下高频端：5–20 kHz 同样是 2 个八度，但那里基本只住着镲片和空气感，几乎没有竞争。</p>
+            <p><strong>更关键的是中间：</strong>150 Hz–2.5 kHz 大约 4 个八度，却住着吉他、人声、军鼓、贝斯上部、镲片下部——<strong>拥挤程度和低频端一样严重，只是不那么明显</strong>，因为它糊起来是「浑浊」而不是「轰」。</p>
+            <p><strong>推论</strong>：在编曲上分配频段时，不能按「赫兹数」平均分——40–120 Hz 只有 80 Hz 宽，却和 5–15 kHz 那 10000 Hz 宽的一段一样重要（都是约 1.5–2 个八度）。<strong>听觉按八度计价，不按赫兹。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>掩蔽效应的三条性质是什么？哪一条解释了「把它调大一点」为什么经常失效？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>掩蔽发生在同一频段内。</strong>频率越接近掩蔽越强；隔两个八度基本互不干扰。</li>
+              <li><strong>向上掩蔽远强于向下掩蔽。</strong>强的低频会掩蔽它上方的频率，反之则弱得多。对低频能量巨大的重型音乐来说这是坏消息。</li>
+              <li><strong>掩蔽发生在耳朵里，不在音箱里。</strong></li>
+            </ol>
+            <p><strong>是第 ③ 条解释了「调大」为什么失效。</strong>掩蔽是听觉神经的特性，不是电平的特性——被掩蔽的乐器调大之后，你听到的确实更响了，但掩蔽它的那件乐器同样存在，两者的<strong>相对</strong>关系没变；而且现代混音总线上有压缩，整体推高之后所有东西一起被压回来，相对关系更是原封不动。</p>
+            <p><strong>第 ② 条则解释了重型音乐特有的「一糊糊一片」</strong>：低频过量时，被掩蔽的不只是低频，连中频的清晰度也一起掉——这就是为什么「切掉一些 200 Hz」经常能让整个混音突然打开。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>重型编曲里的三处主要争地分别在哪个频段？各自的典型症状是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>争地</th><th>频段</th><th>症状</th></tr></thead>
+                <tbody>
+                  <tr><td>底鼓 ∩ 贝斯</td><td><strong>40–120 Hz</strong></td><td>低频轰、底鼓的「点」消失、整体没有力度</td></tr>
+                  <tr><td>吉他 ∩ 人声</td><td><strong>1–3 kHz</strong></td><td>唱得很用力却听不清词</td></tr>
+                  <tr><td>吉他 ∩ 镲片</td><td><strong>5–10 kHz</strong></td><td>整体嘶嘶、听十分钟就疲劳</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>第一处最致命</strong>，因为底鼓和贝斯是整首歌的地基，而且低频出问题会顺着向上掩蔽把中频也拖下水。<strong>第二处最影响传播</strong>——听不清词的歌很难被记住（第 1 章：钩子要能被复述）。<strong>第三处最隐蔽</strong>，它不会让人说「难听」，只会让人听十分钟就想关掉。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>底鼓与贝斯的经典分工方案是什么？为什么这样分？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>底鼓拿两端，贝斯拿中间。</strong></p>
+            <ul>
+              <li><strong>底鼓</strong>：40–60 Hz（胸口的冲击）+ 3–5 kHz（音头的「咔」）。</li>
+              <li><strong>贝斯</strong>：80–250 Hz（基频与厚度）。</li>
+            </ul>
+            <p><strong>为什么这样分</strong>：底鼓是一个<strong>瞬态</strong>事件，它需要被「听见位置」而不是「听见音高」——而位置感来自高频音头，因为高频的时间分辨率远好于低频。贝斯则相反，它要提供<strong>持续的和声基础</strong>，需要的是稳定的基频能量。</p>
+            <p><strong>这个分工的妙处</strong>：两者的需求天然不冲突。底鼓不需要 100 Hz 的量，贝斯不需要 4 kHz 的音头。<strong>一旦按需求分配，重叠区就只剩下不重要的部分。</strong></p>
+            <p><strong>反过来说，冲突通常来自「都想要全部」</strong>：底鼓调得很厚（要 100 Hz）、贝斯又加了很多失真（占了 3 kHz）。这时两者在两端都撞上了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么解决频段冲突的四种手段里，「编曲避让」排第一而「EQ」排最后？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为四种手段处理的是同一个问题的不同阶段，越早介入代价越小、收益越大。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>手段</th><th>介入阶段</th><th>它改变的是</th><th>副作用</th></tr></thead>
+                <tbody>
+                  <tr><td>编曲避让</td><td>写作</td><td>两件乐器<strong>是否同时存在</strong></td><td>无，还顺带制造了段落对比</td></tr>
+                  <tr><td>音区错开</td><td>写作 / 编配</td><td>能量落在哪个八度</td><td>无，但受音域与旋律约束</td></tr>
+                  <tr><td>分工分频</td><td>选音色 / 录音</td><td>各自的音色重心</td><td>要提前想好，事后难改</td></tr>
+                  <tr><td>EQ</td><td>混音</td><td>已有能量的取舍</td><td><strong>被切的那件会变薄</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>关键区别</strong>：前三种是「<strong>让冲突不发生</strong>」，第四种是「<strong>冲突已经发生了，决定谁输</strong>」。EQ 不能创造空间，只能在已有能量里做减法——这就是「EQ 解决不了编曲问题」的确切含义。</p>
+            <p><strong>但 EQ 不是没用</strong>：当前三种都做过之后，剩下的残余冲突正是 EQ 最擅长处理的——小幅、精准、只在窄频段上。<strong>它是收尾工具，不是解决方案。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「主频段规则」说：如果你填不出某件乐器的主频段，那它多半可以删掉。请解释这条规则背后的道理，并说明它的例外。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>道理</strong>：一件乐器要被听见，必须在某个频段上是<strong>最突出的那一个</strong>。如果它在每个频段都只是「有一点」，那它对听感的贡献就只剩下「让总能量更多」——而总能量变多正是「糊」的定义。<strong>填不出主频段 ＝ 它没有任何一处是主角 ＝ 它只在添乱。</strong></p>
+            <p><strong>三个例外</strong>（它们确实没有主频段，但有价值）：</p>
+            <ol>
+              <li><strong>加倍轨（double tracking）。</strong>第二把弹一模一样内容的吉他没有自己的主频段，它的作用是<strong>让第一把变宽变厚</strong>——它是修饰而不是声部（第 15 章）。</li>
+              <li><strong>胶水层。</strong>很轻的合成器铺底、房间环境声、氛围噪声。它们的作用是填补空隙、让别的东西粘在一起，存在感本来就应该在意识阈值以下。</li>
+              <li><strong>只在特定瞬间出现的元素。</strong>一次擦片、一个音效、一句和声。它不需要长期占地，因为它只占一瞬间——<strong>时间维度上的独占，等价于频率维度上的主频段。</strong></li>
+            </ol>
+            <p><strong>共同点</strong>：这三种例外都是<strong>明确知道自己不是主角</strong>的。危险的是那种「说不清为什么在这儿，但删了好像少了点什么」的轨——<strong>那个「少了点什么」往往只是音量少了，删掉再把别的推 1 dB，通常更好。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>演示 2 的版本 ② 把主音线推高了 5 dB，却并没有更清楚。请从掩蔽的三条性质出发解释，并说明什么情况下推音量<strong>确实</strong>有用。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>解释</strong>：主音线落在吉他的同一个八度里（性质 ①：同频段掩蔽最强），而失真吉他在那个频段的能量远大于单音线（性质 ②：强掩蔽弱）。推高 5 dB 之后，主音线的绝对电平上去了，但<strong>掩蔽它的吉他还在原地</strong>——需要推到高出吉他很多才能突围，而那时它已经吵得不能听了（性质 ③：掩蔽在听觉里发生，不能靠电平绕过）。</p>
+            <p><strong>推音量确实有用的三种情况</strong>：</p>
+            <ol>
+              <li><strong>没有掩蔽者时。</strong>如果这条主音线本来就在一个没人占的频段（比如升八度之后），那它太小声就是单纯的电平问题，推上去立刻解决。</li>
+              <li><strong>差距很小时。</strong>掩蔽不是开关而是渐变。如果两者只差 1–2 dB，推一点确实能让它冒出来。<strong>但这时通常也说明冲突本来就不严重。</strong></li>
+              <li><strong>作为其他手段的收尾。</strong>先错开音区、先让吉他退一步，最后补 1–2 dB 让它稳稳站住——<strong>这和第 5 章「音量适合做形容词，不适合做动词」是同一句话。</strong></li>
+            </ol>
+            <p><strong>一个诊断方法</strong>：把可能的掩蔽者静音。如果目标乐器立刻变清楚，那是掩蔽问题，推音量没用；如果静音之后它仍然太小，那才是电平问题。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一支「双吉他 + 贝斯 + 鼓 + 主唱 + 副歌和声人声」的六声部乐队，填一张完整的主频段表。要求没有两行填同一个数字，并说明每一处冲突是怎么避开的。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>声部</th><th>主频段</th><th>存在感来自</th><th>与谁可能冲突 → 怎么避开</th></tr></thead>
+                <tbody>
+                  <tr><td>底鼓</td><td><strong>50 Hz + 4 kHz</strong></td><td>冲击 + 音头</td><td>贝斯 → 分工分频（底鼓不要 100 Hz）</td></tr>
+                  <tr><td>贝斯</td><td><strong>100 Hz</strong></td><td>基频厚度</td><td>底鼓 → 同上；吉他 → 吉他做 80 Hz 高通</td></tr>
+                  <tr><td>吉他 L / R（节奏）</td><td><strong>900 Hz</strong></td><td>中频的「肉」</td><td>人声 → <strong>声像拉宽</strong>，人声居中；且人声乐句处减密度</td></tr>
+                  <tr><td>军鼓</td><td><strong>200 Hz + 3 kHz</strong></td><td>音体 + 啪</td><td>吉他 → 军鼓的 3 kHz 是瞬态，时间上只占一瞬</td></tr>
+                  <tr><td>主唱</td><td><strong>2 kHz</strong></td><td>辅音清晰度</td><td>吉他 → 见上；军鼓 → 时间错开</td></tr>
+                  <tr><td>和声人声</td><td><strong>2 kHz，但只在副歌</strong></td><td>宽度与厚度</td><td>主唱 → <strong>声像拉到两侧 + 音量低 6 dB + 只在副歌出现</strong></td></tr>
+                  <tr><td>镲片</td><td><strong>9 kHz</strong></td><td>空气感</td><td>吉他毛刺 → 吉他适度滚降高频</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>需要专门说明的两行</strong>：</p>
+            <ul>
+              <li><strong>军鼓的 3 kHz 与主唱的 2 kHz 挨得很近，为什么不算冲突？</strong>因为军鼓是<strong>瞬态</strong>——它每次只占几十毫秒。掩蔽需要能量在时间上重叠，而军鼓和人声在时间上几乎不重合（人声的元音是持续的，军鼓在拍点上一闪而过）。<strong>这提示了一个重要的补充：频谱是二维的，频率之外还有时间。</strong></li>
+              <li><strong>和声人声与主唱填了同一个数字，这不是违规吗？</strong>是，所以它必须靠<strong>另外两个维度</strong>让开：声像（拉到两侧，主唱居中）和时间（只在副歌出现）。<strong>当频率维度无法让开时，用声像和时间让开——这是编曲里最常用的补救。</strong></li>
+            </ul>
+            <p><strong>由此得到一条推广</strong>：主频段规则的完整形式应该是「<strong>每件乐器要在频率、时间、声像这三个维度构成的空间里有一块独占的位置</strong>」。频率只是最容易看见的那一维。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 7.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>现代重型音乐普遍降调（Drop C、Drop B 甚至更低，见<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html">上一本第 15 章</a>）。从本章的频谱视角看，降调制造了什么新问题？为什么现代金属的制作听起来反而更「清楚」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>降调制造的问题：吉他闯进了贝斯和底鼓的地盘。</strong></p>
+            <p>标准调弦的六弦空弦是 82 Hz。降到 Drop B 之后，最低音大约 62 Hz——<strong>已经低于底鼓的主频峰值</strong>。于是原本的三方分工（底鼓 40–60 / 贝斯 80–250 / 吉他 80 以上）变成了三件乐器全部挤在 60–250 Hz 里。</p>
+            <p>同时还有第二个问题：<strong>低频上的失真会产生大量互调产物</strong>（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>），把 200–500 Hz 的泥区填得更满。这就是为什么降调越多，和弦越不能弹得复杂——低音区的失真本来就糊。</p>
+            <p><strong>那为什么现代金属的制作听起来更清楚？</strong>因为整套制作规范就是围绕这个问题演化出来的：</p>
+            <ol>
+              <li><strong>节奏吉他做激进的高通</strong>——常见做法是从 100 Hz 甚至更高切起。<strong>吉他放弃低频，把那块地完全让给贝斯和底鼓。</strong>听起来单轨很薄，但四轨叠起来加上贝斯托底，整体反而更结实。</li>
+              <li><strong>贝斯分成两轨</strong>：一轨干净的低频（保基频），一轨失真的中高频（保存在感）。这样贝斯在 100 Hz 有地基，在 1 kHz 有清晰度，而且两块地互不干扰。</li>
+              <li><strong>底鼓做得极「点」</strong>——音头非常突出，低频反而收紧。因为在如此拥挤的低频里，底鼓靠量是抢不赢的，只能靠<strong>瞬态</strong>。</li>
+              <li><strong>编曲上大量使用齐奏</strong>：吉他、贝斯、底鼓在同一个瞬间打同一个点。<strong>既然频率上分不开，就让它们在时间上完全对齐——听觉会把对齐的能量归并成「一件很大的乐器」，而不是「几件互相打架的乐器」。</strong></li>
+            </ol>
+            <p><strong>结论</strong>：降调没有让频谱变宽，它只是把吉他挪进了本来就最挤的地方。现代金属的「清楚」不是因为它避开了这个问题，而是因为它<strong>用整套编曲与制作规范把这个问题的每一面都处理了一遍</strong>——每一条规范单独看都很反直觉（吉他不要低频？底鼓不要厚？），合起来才成立。这也是本书第三篇要讲的主题：<strong>制作会反过来决定编曲能怎么写。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>频率轴是对数的</strong>：可听范围约 10 个八度，但乐队的能量挤在中间三四个八度里——听觉按八度计价，不按赫兹。② <strong>失真让吉他从占 3 个八度变成占 6 个</strong>，这是它在重型编曲里代价高的根本原因。③ <strong>掩蔽</strong>发生在耳朵里、同频段内、向上强于向下——所以「调大一点」经常无效。④ 三处争地：<strong>底鼓 ∩ 贝斯（40–120 Hz）、吉他 ∩ 人声（1–3 kHz）、吉他 ∩ 镲片（5–10 kHz）</strong>。⑤ 四种手段的优先级：<strong>编曲避让 &gt; 音区错开 &gt; 分工分频 &gt; EQ</strong>；EQ 只能决定谁输，不能创造空间。⑥ 底鼓与贝斯的经典分工：<strong>底鼓拿两端（50 Hz + 4 kHz），贝斯拿中间（100 Hz）</strong>。⑦ 自查规则：<strong>每件乐器写一句「它的存在感来自 ___ Hz」，不能有两行相同</strong>；填不出的多半可以删。⑧ 频率之外还有<strong>时间</strong>与<strong>声像</strong>两个维度——频率上让不开时，从这两处让。</p>
+          <p><strong>下一章预告</strong>：地皮分好了，接下来一件一件把乐器摆进去。第 8 章《鼓：节奏的骨架》从最底层开始——底鼓、军鼓、镲片的分工，常见 groove 的构造，过门写在哪里，双踩什么时候用，以及重型音乐里最关键的一条：<strong>鼓与吉他怎么对齐</strong>。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./08-鼓节奏的骨架.html"><strong>下一章：第 8 章 · 鼓：节奏的骨架</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      function hz(f) { return f >= 1000 ? (f / 1000).toFixed(1) + " kHz" : Math.round(f) + " Hz"; }
+
+      /* ---------- 演示 1：频段占位图 ---------- */
+      var BANDS = [
+        { name: "底鼓",     lo: 37,   hi: 80,    row: 0, color: "#dc2626" },
+        { name: "贝斯",     lo: 41,   hi: 250,   row: 1, color: "#2563eb" },
+        { name: "失真吉他", lo: 80,   hi: 5000,  row: 2, color: "#16a34a" },
+        { name: "人声",     lo: 150,  hi: 4000,  row: 3, color: "#d97706" },
+        { name: "军鼓",     lo: 180,  hi: 5000,  row: 4, color: "#8b5cf6" },
+        { name: "镲片",     lo: 2400, hi: 16000, row: 5, color: "#0891b2" }
+      ];
+      var shown = {};
+      BANDS.forEach(function (b) { shown[b.name] = true; });
+      var sp = KBB.spectrum($("sp-host"), BANDS, { label: "频段占位图　红色斜线 ＝ 重叠区" });
+      BANDS.forEach(function (b) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "kb-btn kb-btn-primary";
+        btn.textContent = b.name;
+        btn.addEventListener("click", function () {
+          shown[b.name] = !shown[b.name];
+          btn.className = "kb-btn" + (shown[b.name] ? " kb-btn-primary" : "");
+          sp.setHidden(b.name, !shown[b.name]);
+          syncSp();
+        });
+        $("sp-btns").appendChild(btn);
+      });
+      function syncSp() {
+        var vis = BANDS.filter(function (b) { return shown[b.name]; });
+        var clash = 0;
+        for (var i = 0; i < vis.length; i++) {
+          for (var j = i + 1; j < vis.length; j++) {
+            if (Math.min(vis[i].hi, vis[j].hi) > Math.max(vis[i].lo, vis[j].lo)) clash++;
+          }
+        }
+        $("sp-n").textContent = String(vis.length);
+        $("sp-clash").textContent = clash + " 处";
+        function pair(a, b, el) {
+          var o = (shown[a] && shown[b]) ? sp.overlap(a, b) : null;
+          el.textContent = o ? (hz(o.lo) + " – " + hz(o.hi)) : "—";
+          el.className = o ? "warn" : "";
+        }
+        pair("底鼓", "贝斯", $("sp-kb"));
+        pair("失真吉他", "人声", $("sp-gv"));
+      }
+      syncSp();
+
+      /* ---------- 共用：多轨谱面 ---------- */
+      var RIFF = [0, 0, 3, 5];
+      /* 主音线：两小节一循环，落点都在和弦音上（第 2 章） */
+      var MEL = [
+        [{ t: 0, d: 0, dur: 1 }, { t: 1, d: 3, dur: 1 }, { t: 2, d: 7, dur: 1.5 }, { t: 3.5, d: 5, dur: 0.5 }],
+        [{ t: 0, d: 3, dur: 1 }, { t: 1, d: 5, dur: 1 }, { t: 2, d: 7, dur: 2 }]
+      ];
+      function band(opts) {
+        opts = opts || {};
+        var bars = opts.bars || 4;
+        var gtr = [], gtr2 = [], bass = [], drums = [], lead = [];
+        for (var q = 0; q < bars; q++) {
+          var off = q * 4;
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            gtr.push(Object.assign({}, e, { t: e.t + off }));
+            gtr2.push(Object.assign({}, e, { t: e.t + off }));
+          });
+          RIFF.forEach(function (r, i) {
+            bass.push({ t: off + i, midi: (opts.bassRoot == null ? R.ROOT : opts.bassRoot) + r,
+              dur: 1, gain: 0.9 });
+          });
+          R.drumPattern(1, "basic").forEach(function (e) { drums.push(Object.assign({}, e, { t: e.t + off })); });
+          MEL[q % 2].forEach(function (n) {
+            lead.push({ t: off + n.t, midi: (opts.leadRoot == null ? 64 : opts.leadRoot) + n.d,
+              dur: n.dur, gain: 0.85 });
+          });
+        }
+        return {
+          beats: bars * 4,
+          tracks: [
+            { id: "dr", name: "鼓", inst: "drums", gain: 1, events: drums },
+            { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: bass },
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.82, pan: -0.75, drive: 0.82, events: gtr },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.78, pan: 0.75, drive: 0.82, events: gtr2 },
+            { id: "ld", name: "主音线", inst: "guitar", gain: opts.leadGain == null ? 0.9 : opts.leadGain,
+              pan: 0, drive: 0.2, events: lead }
+          ]
+        };
+      }
+
+      var rig = null;
+      function stopRig() {
+        if (rig) { rig.dispose(); rig = null; }
+        stopAnalyser();
+        A.stopAll();
+      }
+      /* 演示 3 的播放槽在下面定义，这里提前声明，保证两个演示互不串音 */
+      function stopAnalyser() {
+        if (typeof loop !== "undefined" && loop) loop.stop();
+        if (typeof anRig !== "undefined" && anRig) { anRig.dispose(); anRig = null; }
+        an = null;
+        if ($("an-peak")) { $("an-peak").textContent = "—"; $("an-band").textContent = "—"; }
+        if (typeof drawAn === "function") drawAn();
+      }
+      function startRig(spec) {
+        stopRig();
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: spec.beats, loop: true, tracks: spec.tracks });
+        rig.play();
+        return rig;
+      }
+
+      /* ---------- 演示 2：挤在一起 vs 错开音区 ---------- */
+      KBG.soundToggle($("m-sound"));
+      var M = {
+        clash:  { name: "① 全挤在同一个八度", bassRoot: R.ROOT, leadRoot: 52, leadGain: 0.9,
+                  ov: "完全重合", warn: true },
+        loud:   { name: "② 同上，主音线推高 5 dB", bassRoot: R.ROOT, leadRoot: 52, leadGain: 1.6,
+                  ov: "仍然完全重合（只是更吵）", warn: true },
+        spread: { name: "③ 贝斯降八度 + 主音线升八度", bassRoot: R.ROOT - 12, leadRoot: 64, leadGain: 0.9,
+                  ov: "基本错开", warn: false }
+      };
+      Object.keys(M).forEach(function (k) {
+        $("m-" + k).addEventListener("click", function () {
+          Object.keys(M).forEach(function (j) {
+            $("m-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = M[k];
+          $("m-name").textContent = v.name;
+          $("m-bass").textContent = hz(T.freq(v.bassRoot)) + "（" + (v.bassRoot === R.ROOT ? "E2" : "E1") + "）";
+          $("m-lead").textContent = hz(T.freq(v.leadRoot)) + " – " + hz(T.freq(v.leadRoot + 7)) +
+            "（" + (v.leadRoot === 52 ? "E3–B3" : "E4–B4") + "）";
+          $("m-ov").textContent = v.ov;
+          $("m-ov").className = v.warn ? "warn" : "ok";
+          startRig(band({ bassRoot: v.bassRoot, leadRoot: v.leadRoot, leadGain: v.leadGain }));
+        });
+      });
+      $("m-stop").addEventListener("click", stopRig);
+
+      /* ---------- 演示 3：实时频谱分析仪 ---------- */
+      var cv = document.createElement("canvas");
+      cv.className = "kb-canvas";
+      $("an-host").appendChild(cv);
+      var H2 = 150;
+      var c2 = KB.fitCanvas(cv, H2, function () { drawAn(); });
+      var an = null, data = null, anRig = null;
+      var FMIN = 30, FMAX = 16000;
+      var BANDNAMES = [
+        [60, "超低（20–60）"], [120, "低频基座（60–120）"], [250, "厚度（120–250）"],
+        [500, "泥区（250–500）"], [1000, "中低（500–1k）"], [3000, "存在感（1–3k）"],
+        [6000, "攻击（3–6k）"], [99999, "空气（6k 以上）"]
+      ];
+      function cssv(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+      function drawAn() {
+        var w = cv.clientWidth || 600;
+        c2.clearRect(0, 0, w, H2);
+        var x0 = 8, x1 = w - 8, span = x1 - x0;
+        if (span < 60) return;
+        var muted = cssv("--kb-fg-muted", "#64748b"), faint = cssv("--kb-fg-faint", "#94a3b8");
+        var acc = cssv("--kb-accent", "#2563eb");
+        c2.font = "11px -apple-system, PingFang SC, sans-serif";
+        function fx(f) { return x0 + span * (Math.log(f / FMIN) / Math.log(FMAX / FMIN)); }
+        [50, 100, 250, 500, 1000, 2000, 4000, 8000].forEach(function (f) {
+          var px = fx(f);
+          c2.strokeStyle = faint; c2.globalAlpha = 0.3; c2.lineWidth = 1;
+          c2.beginPath(); c2.moveTo(px, 6); c2.lineTo(px, H2 - 18); c2.stroke();
+          c2.globalAlpha = 1; c2.fillStyle = muted; c2.textAlign = "center";
+          c2.fillText(f >= 1000 ? (f / 1000) + "k" : String(f), px, H2 - 5);
+        });
+        if (!an) {
+          c2.fillStyle = muted; c2.textAlign = "center";
+          c2.fillText("点「播放」开始，实时频谱会画在这里", x0 + span / 2, H2 / 2);
+          return;
+        }
+        an.getByteFrequencyData(data);
+        var sr = A.ctx() ? A.ctx().sampleRate : 44100;
+        var nb = data.length, top = H2 - 20, peakV = 0, peakF = 0;
+        c2.beginPath();
+        c2.moveTo(x0, top);
+        for (var px = 0; px <= span; px++) {
+          var f = FMIN * Math.pow(FMAX / FMIN, px / span);
+          var bin = Math.min(nb - 1, Math.round(f / (sr / 2) * nb));
+          var v = data[bin] / 255;
+          if (v > peakV) { peakV = v; peakF = f; }
+          c2.lineTo(x0 + px, top - v * (top - 8));
+        }
+        c2.lineTo(x1, top);
+        c2.closePath();
+        c2.fillStyle = acc; c2.globalAlpha = 0.28; c2.fill();
+        c2.globalAlpha = 1; c2.strokeStyle = acc; c2.lineWidth = 1.5; c2.stroke();
+        if (peakV > 0.08) {
+          $("an-peak").textContent = hz(peakF);
+          for (var i = 0; i < BANDNAMES.length; i++) {
+            if (peakF < BANDNAMES[i][0]) { $("an-band").textContent = BANDNAMES[i][1]; break; }
+          }
+        }
+      }
+      var loop = KB.makeLoop(function () { drawAn(); });
+      drawAn();
+      var SOLO = {
+        all: { cn: "全奏", ids: null },
+        dr:  { cn: "只鼓", ids: ["dr"] },
+        ba:  { cn: "只贝斯", ids: ["ba"] },
+        gt:  { cn: "只吉他", ids: ["g1", "g2"] },
+        ld:  { cn: "只主音线", ids: ["ld"] }
+      };
+      function applySolo(k) {
+        if (!anRig) return;
+        var ids = SOLO[k].ids;
+        anRig.tracks.forEach(function (t) {
+          anRig.setSolo(t.id, !!(ids && ids.indexOf(t.id) >= 0));
+        });
+        $("an-name").textContent = SOLO[k].cn;
+        Object.keys(SOLO).forEach(function (j) {
+          $("an-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+      }
+      $("an-play").addEventListener("click", function () {
+        if (anRig) return;
+        stopRig();
+        anRig = KBB.tracks({ bpm: BPM, lengthBeats: 16, loop: true, tracks: band({ bars: 4 }).tracks });
+        anRig.play();
+        an = A.analyser();
+        if (an) data = new Uint8Array(an.frequencyBinCount);
+        loop.start();
+        applySolo("all");
+      });
+      Object.keys(SOLO).forEach(function (k) {
+        $("an-" + k).addEventListener("click", function () { applySolo(k); });
+      });
+      $("an-stop").addEventListener("click", function () {
+        stopAnalyser();
+        A.stopAll();
+      });
+
+      /* 主题切换后重绘两张 canvas */
+      new MutationObserver(function () { sp.redraw(); drawAn(); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) stopRig();
+      });
+    });
+  </script>
+</body>
+</html>

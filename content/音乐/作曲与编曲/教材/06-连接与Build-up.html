@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>06 连接：Pre-chorus、Build-up 与 Drop · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 6 章：连接段的三项任务（制造缺口、预告、转移状态）；预副歌的三种写法；build 的四种手段与「减法 build」；drop 前的静默为什么让下一拍更重。">
+  <meta name="kb:tags" content="作曲,编曲,连接,预副歌,pre-chorus,build-up,drop,静默,过门,fill,张力,ljy,bui">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .dim-list { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+    .dim-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); transition: opacity .15s;
+    }
+    .dim-row.off { opacity: .45; }
+    .dim-row .dn { min-width: 6.5em; font-weight: 600; font-size: .94em; }
+    .dim-row .dd { flex: 1 1 240px; font-size: .86em; color: var(--kb-fg-muted); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 6 章 · 连接：Pre-chorus、Build-up 与 Drop</h1>
+        <p class="kb-lead">第 5 章讲的是主歌与副歌之间要有多大的<strong>落差</strong>。这一章讲怎么<strong>走过</strong>这段落差。业余作品里最常缺的一段音乐，既不是主歌也不是副歌，而是夹在两者之间的那 4 到 8 小节——它没有名字上的存在感，却决定了副歌进来的那一瞬间是「终于来了」还是「哦，换段了」。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出连接段的三项任务，并判断一段连接完成了哪几项；② 写出三种类型的预副歌；③ 用四种手段搭一个 build，并知道各自的边际效用；④ 理解「减法 build」为什么常常比加法更有效；⑤ 正确使用 drop 前的静默，知道它的长度上限在哪。</p>
+        </div>
+
+        <h2>连接段在做什么</h2>
+        <p>先说一个反直觉的事实：<strong>连接段的价值不在它自己好不好听，而在它让下一段变成什么样。</strong>它是全曲唯一一种「为别人服务」的段落——你不会有人因为预副歌写得好而单曲循环，但会有人因为预副歌没写而觉得副歌「不够炸」。</p>
+        <p>它有三项任务，按重要性排序：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>任务</th><th>含义</th><th>怎么做</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 制造缺口</strong></td><td>让听众产生一个「必须被填上」的期待</td><td>停在属功能上不解决；把和声悬在半空（见<a href="../../吉他乐理/教材/07-顺阶和弦与和声功能.html#三种功能主下属属">上一本第 7 章</a>）</td></tr>
+              <tr><td><strong>② 预告</strong></td><td>让副歌来临时是「意料之中」而非「突如其来」</td><td>提前用上副歌的某个元素——一个和弦、一句和声、鼓的律动</td></tr>
+              <tr><td><strong>③ 转移状态</strong></td><td>把主歌的织体、音区、能量搬到副歌需要的位置</td><td>渐进地加密度、升音区、加轨</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 只完成一项也是有效的连接</p>
+          <p>很多经典的连接段只做了第 ① 项——四小节全部停在 <em class="kb-math">Ⅴ</em> 上，什么也不加。<strong>缺口比铺垫更重要</strong>：铺垫解决的是「顺不顺」，缺口解决的是「想不想听下一段」。如果只能做一件事，做缺口。</p>
+        </div>
+
+        <h2>预副歌：三种写法</h2>
+        <p>Pre-chorus（预副歌）是最常见的连接段，通常 4 或 8 小节。三种典型写法：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>做法</th><th>效果</th><th>适合</th></tr></thead>
+            <tbody>
+              <tr><td><strong>上行推进型</strong></td><td>和声逐级上行（如 <em class="kb-math">ⅵ → Ⅳ → Ⅴ</em>），旋律与密度同步爬升</td><td>最直接的「越来越紧」</td><td>主流摇滚、旋律金属</td></tr>
+              <tr><td><strong>收紧型</strong></td><td>和声节奏加快（每两拍换 → 每拍换），音区反而收窄</td><td>压缩感、不安</td><td>硬摇滚、Groove Metal</td></tr>
+              <tr><td><strong>悬停型</strong></td><td>整段停在一个属和弦或一个持续音上，只靠鼓推进</td><td>最强的缺口感</td><td>Riff 驱动的金属、后摇</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>三种都必须避免的一件事：把预副歌写成第二个副歌。</strong>这是最常见的失败——你写了一段很有旋律、很满、很好听的预副歌，结果副歌进来时反而降级了。<strong>预副歌的能量必须低于副歌，通常也应当只比主歌高一点。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🔗 演示 1：有预副歌 vs 没有预副歌</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同样的主歌与副歌，中间插入 4 小节停在 ⅴ 上的预副歌之后，副歌进入的瞬间明显更有分量——因为预副歌先制造了一个「必须被填上」的缺口。去掉预副歌，两段只是先后相接，副歌听起来像「换了一段」而不是「终于来了」。</p></noscript>
+            <div id="p-sound"></div>
+            <div class="kb-readout">
+              <span>版本 <b id="p-name">—</b></span>
+              <span>结构 <b id="p-struct">—</b></span>
+              <span>副歌落点 <b id="p-land">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="p-off" type="button">▶ 无预副歌（主歌 → 副歌）</button>
+              <button class="kb-btn" id="p-on" type="button">▶ 有预副歌（主歌 → 预副歌 → 副歌）</button>
+              <button class="kb-btn" id="p-toomuch" type="button">▶ 反例：预副歌写成第二个副歌</button>
+              <button class="kb-btn" id="p-stop" type="button">■ 停止</button>
+            </div>
+            <p id="p-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">留意第三个版本：预副歌本身很好听，但它把能量提前用光了，副歌进来时<strong>没有升级</strong>——这就是「第二个副歌」陷阱。</p>
+          </div>
+        </div>
+
+        <h2>Build-up 的四种手段</h2>
+        <p>Build-up（推进段）是连接段的强化版本，任务只有一个：<strong>在固定的小节数内把能量从 A 抬到 B</strong>。可用的手段就四种：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>手段</th><th>做法</th><th>边际效用</th><th>注意</th></tr></thead>
+            <tbody>
+              <tr><td><strong>密度</strong></td><td>音符逐小节变密：四分 → 八分 → 十六分</td><td><strong>高</strong></td><td>最可靠的一种；密到十六分就到顶了</td></tr>
+              <tr><td><strong>音高</strong></td><td>和声或 riff 逐级上行</td><td><strong>高</strong></td><td>要留出上行空间，别从太高的地方起步</td></tr>
+              <tr><td><strong>节奏（鼓）</strong></td><td>军鼓滚奏逐渐加密，踩镲换成擦片</td><td>中高</td><td>是四种里最「显形」的，容易用俗</td></tr>
+              <tr><td><strong>音量</strong></td><td>整体渐强</td><td><strong>低</strong></td><td>同第 5 章：会被压缩抹平，只能做辅助</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>四种手段可以叠加，但<strong>叠加不是线性的</strong>——两种一起用效果远好于一种，四种全开相对三种的提升就很有限了。原因和第 5 章一样：听觉对<strong>内容变化</strong>敏感，而音量只是振幅。</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ build 的长度有硬上限</p>
+          <p><strong>4 小节几乎总是对的，8 小节要有理由，16 小节基本是错的。</strong>build 的本质是「未兑现的期待」，而期待有保质期——超过大约 10 秒，听众会从「快来了」切换到「怎么还不来」。电子乐里常见的长 build 之所以成立，是因为它靠滤波扫频与不断变化的音色维持注意力；一支乐队用常规配置做 16 小节 build，几乎必然拖沓。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">📈 演示 2：Build-up 构建器（四种手段可单独开关）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一段 4 小节的 build 后接副歌落点，四种手段（密度、音高、鼓的滚奏、音量）可以逐个开关。全部关闭时 build 只是重复，副歌落点毫无准备；打开密度或音高中的任意一个，推进感立刻出现；四种全开相对三种全开的提升很有限——边际效用递减。</p></noscript>
+            <div class="dim-list" id="b-dims"></div>
+            <div class="kb-readout">
+              <span>已开启 <b id="b-on">0 / 4</b></span>
+              <span>推进感 <b id="b-verdict">没有推进，只是重复</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="b-play" type="button">▶ 循环播放（4 小节 build → 副歌落点）</button>
+              <button class="kb-btn" id="b-all" type="button">全部开启</button>
+              <button class="kb-btn" id="b-none" type="button">全部关闭</button>
+              <button class="kb-btn" id="b-onlyvol" type="button">只开音量</button>
+              <button class="kb-btn" id="b-stop" type="button">■ 停止</button>
+            </div>
+            <p id="b-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">先「全部关闭」听一遍（副歌落点像是硬接上去的）→ 只开「密度」→ 再加「音高」→ 最后全开。<strong>注意从两项到四项的提升，比从零项到两项小得多。</strong></p>
+          </div>
+        </div>
+
+        <h2>减法 build</h2>
+        <p>还有第五种手段，它不在上面那张表里，因为它的方向是反的：<strong>在 build 的最后一段把东西拿掉。</strong></p>
+        <p>典型做法：build 到第 3 小节能量最高，第 4 小节突然只剩鼓、或只剩人声、或只剩一个持续音。听众已经被推到了准备接受高潮的状态，你却把地板抽走了——<strong>那个空缺会被听觉自动补上，而它补上的东西比你实际能做出来的更大。</strong></p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么减法 build 有效</p>
+          <p>因为对比是相对的（第 5 章）。加法 build 提高的是 build 段的绝对能量，而<strong>落差 = 副歌 − build 末端</strong>。把 build 末端<strong>降下来</strong>，落差反而变大了。而且这个做法不消耗任何频谱预算，也不会让 build 段变得拥挤。</p>
+          <p>这条推论在本书里会反复出现：<strong>凡是想让某处更强，先看看它前面能不能更弱。</strong></p>
+        </div>
+
+        <h2>Drop 前的静默</h2>
+        <p>减法 build 推到极致，就是<strong>静默</strong>——副歌落点前空掉半拍到两拍，什么都不响。</p>
+        <p>它为什么有效，有两个原因：</p>
+        <ul>
+          <li><strong>听觉的对比机制。</strong>一个音的「响」是相对于它前面的背景而言的。把背景清零，同样的一击就变重了——这与<a href="../../吉他乐理/教材/09-节奏与律动.html#切分把重音挪到不该在的地方">上一本第 9 章</a>里「休止是最强的重音」是同一条原理，只是尺度从一拍放大到了一小节。</li>
+          <li><strong>时间感的悬置。</strong>静默期间听众失去了节拍参照，会本能地数着等下一击。等待本身就是张力。</li>
+        </ul>
+        <p><strong>但静默的长度有一个很窄的窗口：</strong></p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>长度</th><th>效果</th></tr></thead>
+            <tbody>
+              <tr><td><strong>0 拍</strong></td><td>没有静默，落点靠 build 自身的惯性进入——最稳妥，但也最平</td></tr>
+              <tr><td><strong>半拍</strong></td><td>最常用。像是「吸了一口气」，几乎不会出错</td></tr>
+              <tr><td><strong>一拍</strong></td><td>戏剧性明显，需要 build 足够强才撑得住</td></tr>
+              <tr><td><strong>两拍及以上</strong></td><td><strong>开始失去节拍参照</strong>——听众可能数错，落点会显得「晚了」而不是「重」</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>两拍是分水岭。</strong>超过它，你需要额外的东西来维持时间感：一声延音的擦片、一段人声、一个逐渐消失的混响尾巴。金属里常见的做法是让军鼓的最后一击带上很长的混响，用那条尾巴当作节拍的「扶手」。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🤫 演示 3：drop 前的静默有多长才对</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：build 与副歌落点的位置固定不变，只改变两者之间的静默长度（0 / 半拍 / 一拍 / 两拍）。半拍到一拍时落点最重；到两拍时听觉开始失去节拍参照，落点听起来不是「更重」而是「晚了」。</p></noscript>
+            <div class="kb-readout">
+              <span>静默 <b id="s-len">—</b></span>
+              <span>效果 <b id="s-eff">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="s-0" type="button">▶ 0 拍</button>
+              <button class="kb-btn" id="s-05" type="button">▶ 半拍</button>
+              <button class="kb-btn" id="s-1" type="button">▶ 一拍</button>
+              <button class="kb-btn" id="s-2" type="button">▶ 两拍</button>
+              <button class="kb-btn" id="s-stop" type="button">■ 停止</button>
+            </div>
+            <p id="s-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">副歌落点始终落在同一拍上（第 9 拍），变的只是它前面空了多久。<strong>请注意「两拍」版本——落点没有变重，只是变得不确定。</strong></p>
+          </div>
+        </div>
+
+        <h2>过门：最短的连接</h2>
+        <p>鼓的过门（fill）是尺度最小的连接段，通常只有一拍到一小节。它的任务和大尺度连接完全一样，只是压缩到了极致：<strong>标记段落边界 + 制造一个小缺口 + 把注意力交给下一段的第一拍。</strong></p>
+        <p>三条实用规则：</p>
+        <ol>
+          <li><strong>过门的密度应当与它要连接的落差成正比。</strong>主歌到主歌用一拍的小过门；主歌到副歌用一小节；桥段到最后一遍副歌可以用两小节的大过门加擦片。</li>
+          <li><strong>过门期间其他乐器通常要让路。</strong>吉他继续弹满，过门就听不见了。让吉他在过门那一拍休止，或者跟着过门一起打点。</li>
+          <li><strong>不要每四小节一个过门。</strong>这是初学编鼓最常见的问题——过门成了标点符号，反而失去了标记功能。<strong>过门要稀，才有力。</strong></li>
+        </ol>
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚫 一个必须避免的写法</p>
+          <p><strong>用过门去掩盖没写好的连接。</strong>如果主歌到副歌之间缺的是缺口与预告，加一个华丽的过门不会解决问题——它只会让接缝更显眼。<strong>过门是标点，不是句子。</strong>先把连接写对，再考虑要不要加过门。</p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 6.1</p>
+          <p>你的歌是「主歌 8 小节 → 副歌 8 小节」，反馈是「副歌来得太突然」。但你不想加长歌曲。怎么办？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>把主歌的后 4 小节改造成预副歌，总长度不变。</strong></p>
+            <p>具体做法：</p>
+            <ol>
+              <li><strong>和声</strong>：前 4 小节保持主歌进行不动；后 4 小节改成 <em class="kb-math">ⅳ – ⅳ – ⅴ – ⅴ</em>，<strong>停在 ⅴ 上不解决</strong>。这一步就制造了缺口（任务 ①）。</li>
+              <li><strong>密度</strong>：后 4 小节把闷音 gallop 改成八分，密度提一档但不到副歌的水平（任务 ③）。</li>
+              <li><strong>鼓</strong>：第 4 小节最后一拍加一个过门，标记边界。</li>
+              <li><strong>可选</strong>：在第 3–4 小节提前引入副歌里的某一个元素——比如副歌的和声人声先出一句「啊」（任务 ②）。</li>
+            </ol>
+            <p><strong>为什么这样做比「加 4 小节」更好</strong>：主歌 8 小节里的后半段本来就在做重复，信息量最低；把它改造成连接段，<strong>等于用零成本换来了一个完整的功能段落</strong>。第 4 章讲的「重复的经济学」在这里正好反过来用——重复不是免费的，它占着时间。</p>
+            <p><strong>常见的错误答案</strong>：在主歌与副歌之间加一个鼓过门。过门是标点不是句子，它标记了边界，但没有制造缺口——「太突然」的感觉不会消失。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 6.2</p>
+          <p>你写了一段 8 小节的 build，越听越觉得拖。逐项检查该怎么做？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>按这个顺序检查，命中率从高到低：</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>检查项</th><th>症状</th><th>处理</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 太长了</strong></td><td>8 小节在 148 BPM 下约 13 秒，超过了期待的保质期</td><td><strong>直接砍成 4 小节。</strong>这一条命中率最高，先试它</td></tr>
+                  <tr><td><strong>② 前 4 小节没在变</strong></td><td>build 其实只有后半段在推进，前半段是原地踏步</td><td>让推进<strong>从第 1 小节就开始</strong>，或者把前 4 小节删掉</td></tr>
+                  <tr><td><strong>③ 只用了音量</strong></td><td>渐强了，但内容没变</td><td>加上密度或音高（第 5 章的同一条教训）</td></tr>
+                  <tr><td><strong>④ 起点太高</strong></td><td>build 一开始就接近满，没有上行空间</td><td><strong>把起点降下来</strong>——减法优先</td></tr>
+                  <tr><td><strong>⑤ 没有缺口</strong></td><td>和声一直待在主和弦上，听不出「悬着」</td><td>把后半段挪到属功能上</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>如果 8 小节是必须的</strong>（比如现场需要这段时间做别的事），那就把它拆成<strong>两个 4 小节的台阶</strong>：第 1–4 小节推到一个中间平台并稍作停顿，第 5–8 小节从那里重新推。<strong>两段短 build 比一段长 build 好，因为期待被兑现了一次（虽然是小的），计时器重置了。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 6.3</p>
+          <p>Breakdown 前你想用一次静默。乐队试了两拍，鼓手每次都进错。除了缩短，还有什么办法？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>问题的本质是：静默期间没有任何东西在计时。</strong>两拍已经到了失去节拍参照的边界，所以需要给一个「扶手」。四种做法，都不会破坏静默的效果：</p>
+            <ol>
+              <li><strong>留一条衰减尾巴。</strong>静默前最后一击（军鼓或擦片）带很长的混响或延音，让它的尾巴横跨整个静默区。听觉能从尾巴的衰减里估计时间——<strong>这是金属里最常用的做法。</strong></li>
+              <li><strong>留一个最小的计时器。</strong>静默期间保留极轻的踩镲或一个持续的低音嗡鸣。它不破坏「空」的感觉，但提供了拍点。</li>
+              <li><strong>把静默改成半空。</strong>不是全部停，而是只留一件乐器弹一个长音。严格说这不再是静默，但张力保留了九成，而进入的准确性大幅提高。</li>
+              <li><strong>用人声或采样填。</strong>一句念白、一个音效——同样能计时，还顺带增加了内容。</li>
+            </ol>
+            <p><strong>另外值得考虑的</strong>：两拍静默用在 breakdown 前是<strong>偏长</strong>的选择。breakdown 本身已经是巨大的能量落差，静默半拍就足够了——<strong>两个强手段叠加，效果不一定更好。</strong>先试半拍，如果确实不够再往上加。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>连接段的三项任务是什么？如果只能完成一项，应该选哪一项，为什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三项任务</strong>：① <strong>制造缺口</strong>——让听众产生一个必须被填上的期待；② <strong>预告</strong>——让副歌来临时是意料之中而非突如其来；③ <strong>转移状态</strong>——把织体、音区、能量搬到副歌需要的位置。</p>
+            <p><strong>只能选一项就选 ①「制造缺口」。</strong></p>
+            <p><strong>理由</strong>：② 和 ③ 解决的是「顺不顺」——没有它们，副歌听起来可能有点生硬，但仍然是副歌。而 ① 解决的是「<strong>想不想听下一段</strong>」——没有缺口，副歌进来时听众没有任何期待要被满足，再大的能量也只是「换了一段」。</p>
+            <p><strong>而且它最便宜</strong>：把连接段停在属功能上不解决，四小节什么都不用加，缺口就有了。这也是「悬停型」预副歌能成立的原因。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>预副歌的三种写法各是什么？分别适合什么场合？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ul>
+              <li><strong>上行推进型</strong>：和声逐级上行（如 <em class="kb-math">ⅵ → Ⅳ → Ⅴ</em>），旋律与密度同步爬升。效果是最直接的「越来越紧」，适合主流摇滚与旋律金属——<strong>它同时完成了三项任务</strong>，是最全面的一种。</li>
+              <li><strong>收紧型</strong>：和声节奏加快（每两拍换 → 每拍换），但音区反而收窄。效果是压缩感与不安，适合硬摇滚与 Groove Metal。它靠的不是「变大」而是「变紧」。</li>
+              <li><strong>悬停型</strong>：整段停在一个属和弦或持续音上，只靠鼓推进。缺口感最强，适合 Riff 驱动的金属与后摇。<strong>它几乎只做任务 ①，但做到了极致。</strong></li>
+            </ul>
+            <p><strong>共同的禁忌</strong>：不能写成第二个副歌。预副歌的能量必须<strong>低于</strong>副歌，通常只比主歌高一点——否则副歌进来时是降级而不是升级。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>Build 的四种手段是什么？按边际效用排序，并说明为什么音量排在最后。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>密度</strong>（音符逐小节变密：四分 → 八分 → 十六分）——最可靠，且几乎不出错。</li>
+              <li><strong>音高</strong>（和声或 riff 逐级上行）——同样有效，但要留出上行空间。</li>
+              <li><strong>节奏 / 鼓</strong>（军鼓滚奏加密、踩镲换擦片）——效果明显，但最容易用俗。</li>
+              <li><strong>音量</strong>（整体渐强）——最弱。</li>
+            </ol>
+            <p><strong>音量排最后的原因和第 5 章完全一样</strong>：① 它会被制作链路上的动态压缩抹平；② 它没有内容——同样的东西更响，不构成推进；③ 它有上限，而 build 的终点本来就要接近满值。</p>
+            <p><strong>但它是好的辅助</strong>：和密度或音高一起用时，渐强会让整段推进更连贯。<strong>问题只出在把它当成唯一手段的时候。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说「4 小节的 build 几乎总是对的，16 小节基本是错的」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为 build 的本质是「未兑现的期待」，而期待有保质期。</strong></p>
+            <p>在常见的摇滚速度（140–160 BPM）下：4 小节 ≈ 6–7 秒，8 小节 ≈ 13 秒，16 小节 ≈ 26 秒。<strong>大约 10 秒是一个转折点</strong>——超过它，听众的内心独白会从「快来了」变成「怎么还不来」。前者是张力，后者是不耐烦。</p>
+            <p><strong>为什么电子乐可以做长 build</strong>：因为它有乐队没有的维持手段——滤波扫频、不断变化的合成音色、渐进加入的层次，这些让 build 段本身持续提供<strong>新信息</strong>。一支乐队用常规配置（吉他 + 贝斯 + 鼓）做 16 小节，第 5 小节之后基本就没有新东西了。</p>
+            <p><strong>如果必须做长</strong>：拆成两个 4 小节的台阶，中间给一次小的兑现（一个重音、一个短暂的落点）。<strong>期待被兑现一次，计时器就重置了。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「减法 build」为什么有效？它和第 5 章的哪条原则是同一件事？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>做法</strong>：build 到第 3 小节能量最高，第 4 小节突然把大部分东西拿掉——只剩鼓、或只剩人声、或只剩一个持续音，然后落到副歌。</p>
+            <p><strong>为什么有效</strong>：因为落差的公式是</p>
+            <pre><code>落差 = 副歌能量 − build 末端能量</code></pre>
+            <p>加法 build 试图提高左边那一项，但副歌通常已经接近满值，能提高的余地很小。<strong>减法 build 降低右边那一项，而 build 末端离满值很远，可减的余地很大。</strong></p>
+            <p><strong>与第 5 章的关系</strong>：这就是「<strong>任何提高副歌的手段，都有一个降低主歌的等效版本，而且后者通常更好</strong>」的同一条原则，只是把「主歌」换成了「build 末端」。它在本书里会反复出现——<strong>凡是想让某处更强，先看看它前面能不能更弱。</strong></p>
+            <p><strong>额外的好处</strong>：减法 build 不消耗频谱预算，也不会让推进段变得拥挤；而且那个突然的空缺会被听觉自动补上，<strong>补上的东西比你实际能做出来的更大</strong>。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>静默超过两拍时，听觉会发生什么？该如何补救而不破坏静默的效果？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>发生的事：听众失去节拍参照。</strong>静默期间没有任何声音在标记拍点，听觉只能靠内部计时估计——而人的内部节拍在两拍以上就开始明显漂移。结果是落点听起来不是「更重」，而是「<strong>晚了</strong>」或「不确定」。演奏者同样会受影响，这也是为什么乐队排练长静默时经常进不齐。</p>
+            <p><strong>四种补救，按对静默感的破坏程度从小到大</strong>：</p>
+            <ol>
+              <li><strong>衰减尾巴</strong>——静默前最后一击带很长的混响或延音，用衰减曲线当计时器。<strong>几乎不破坏静默感，是首选。</strong></li>
+              <li><strong>最小计时器</strong>——保留极轻的踩镲或一个持续低频嗡鸣。</li>
+              <li><strong>半空而非全空</strong>——只留一件乐器弹一个长音。张力保留约九成，准确性大幅提高。</li>
+              <li><strong>用内容填</strong>——一句念白、一个音效、一段采样。这时已经不是静默了，但仍然是有效的连接。</li>
+            </ol>
+            <p><strong>但首先应该问的是：真的需要两拍吗？</strong>半拍是最常用的长度，一拍已经很有戏剧性。<strong>长静默是高风险手段，而它换来的收益并不随长度线性增长。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么「加一个华丽的过门」无法解决「副歌来得太突然」的问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为过门和连接段解决的不是同一个问题。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>过门（fill）</th><th>连接段</th></tr></thead>
+                <tbody>
+                  <tr><td>尺度</td><td>一拍到一小节</td><td>4 到 8 小节</td></tr>
+                  <tr><td>做的事</td><td><strong>标记</strong>边界、交接注意力</td><td><strong>制造</strong>缺口、预告、转移状态</td></tr>
+                  <tr><td>比喻</td><td>标点符号</td><td>句子</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>「太突然」的实质是<strong>缺少期待</strong>——听众在副歌到来之前没有被引导去期待任何东西。过门只是在接缝处贴了一个标签，说「这里要换段了」；它甚至会<strong>让接缝更显眼</strong>，因为它把注意力吸引到了那个位置。</p>
+            <p><strong>正确的顺序</strong>：先用连接段制造缺口（哪怕只是把最后 4 小节挪到属功能上），再考虑要不要加过门。<strong>过门是给写对了的连接锦上添花的，不是用来补救的。</strong></p>
+            <p><strong>顺带一条</strong>：过门用得太频繁（每四小节一个）会彻底失去标记功能——它变成了背景纹理。<strong>过门要稀，才有力。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首 E 小调、148 BPM 的歌设计从主歌到副歌的完整连接方案。要求：总长 4 小节，同时完成三项任务，并且用上至少一次减法。写出逐小节的编配。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>下面是一个把三项任务与减法 build 全部装进 4 小节的方案（约 6.5 秒）：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>小节</th><th>和声</th><th>吉他</th><th>贝斯</th><th>鼓</th><th>完成的任务</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>ⅳ（A）</td><td>两轨，八分，闷音</td><td>跟根音，八分</td><td>基本型</td><td>③ 转移（密度比主歌高一档）</td></tr>
+                  <tr><td>2</td><td>ⅵ♭（C）</td><td>两轨，八分，开始放开</td><td>八分 + 经过音</td><td>基本型 + 加密踩镲</td><td>③ + ② 预告（C 是副歌的首和弦）</td></tr>
+                  <tr><td>3</td><td>ⅴ（B）</td><td>两轨，十六分，闷音收紧</td><td>十六分持续</td><td>军鼓十六分滚奏</td><td>① 缺口（停在属功能）+ ③</td></tr>
+                  <tr><td>4</td><td>ⅴ（B）持续</td><td><strong>全部停止</strong></td><td><strong>停止</strong></td><td>前 3.5 拍：滚奏收尾；<strong>最后半拍静默</strong></td><td>① 缺口拉满（<strong>减法</strong>）</td></tr>
+                  <tr><td>→ 副歌第 1 拍</td><td>ⅵ♭（C）</td><td>四轨全开，放开延音，高八度加倍</td><td>回到根音</td><td>擦片 + 全奏</td><td>兑现</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>设计说明</strong>：</p>
+            <ul>
+              <li><strong>任务 ①</strong>由第 3–4 小节的 <em class="kb-math">ⅴ</em> 完成——停在属功能上不解决，是最便宜也最有效的缺口。副歌落到 <em class="kb-math">♭Ⅵ</em> 而不是 <em class="kb-math">ⅰ</em>，是一个<strong>被推迟的解决</strong>，张力还会再留一会儿（<a href="../../吉他乐理/教材/07-顺阶和弦与和声功能.html#终止式句子怎么收尾">上一本第 7 章</a>）。</li>
+              <li><strong>任务 ②</strong>由第 2 小节的 C 完成——它是副歌的首和弦，提前露一次面，副歌进来时就有「认出来了」的感觉。</li>
+              <li><strong>任务 ③</strong>由密度的三级爬升完成：八分 → 八分 → 十六分。</li>
+              <li><strong>减法</strong>用在第 4 小节：吉他与贝斯提前一小节退场，最后半拍全空。<strong>落差因此不是「副歌 − 满编的 build」，而是「副歌 − 静默」。</strong></li>
+            </ul>
+            <p><strong>为什么长度定在 4 小节</strong>：6.5 秒远在期待的保质期之内。如果乐队希望更长，正确的做法不是把这 4 小节拉成 8 小节，而是在它<strong>前面</strong>再加一个 4 小节的低能量平台段——把 build 拆成两个台阶（例题 6.2）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 6.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本章的三个演示都在说同一件事的不同侧面。请用一句话概括这件事，并说明它为什么同时解释了「预副歌」「减法 build」「drop 前的静默」这三个看起来不相关的技巧。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>一句话：连接段的价值不在于它加了什么，而在于它让下一段的落点变成了什么。</strong></p>
+            <p>三个技巧都是这条原则的实例，只是操作的对象不同：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>技巧</th><th>操作的对象</th><th>怎么让落点变重</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>预副歌</strong></td><td>期待</td><td>制造一个未解决的和声缺口，副歌成为「被需要的答案」</td></tr>
+                  <tr><td><strong>减法 build</strong></td><td>参照点</td><td>把落点<strong>前</strong>的能量拉低，落差自动变大</td></tr>
+                  <tr><td><strong>drop 前的静默</strong></td><td>参照点 + 时间感</td><td>把参照点降到零，并让听众数着拍等</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>这三者共享的深层机制</strong>：<strong>听觉系统测量的是变化，不是绝对值</strong>（第 5 章习题 5.9）。所以「让某处更强」有两条路——把它抬高，或者把它旁边压低。而后者几乎总是更便宜、余量更大、副作用更小。</p>
+            <p><strong>由此可以推出一条通用的诊断问句</strong>，它在本书剩下的十章里会一直有用：</p>
+            <div class="kb-callout kb-tip">
+              <p class="kb-callout-title">💡 「这里不够 X」的通用第一问</p>
+              <p><strong>不要问「这里怎么才能更 X」，先问「<strong>它前面那一段能不能更不 X</strong>」。</strong></p>
+            </div>
+            <p><strong>反过来也成立</strong>：如果一首歌处处都很满、很猛，却没有一处让人起鸡皮疙瘩，那问题不在于哪里不够猛，而在于<strong>没有任何一处足够弱</strong>。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 连接段的三项任务：<strong>制造缺口 &gt; 预告 &gt; 转移状态</strong>；只能做一项就做缺口——它决定的是「想不想听下一段」。② 预副歌三种写法：<strong>上行推进型 / 收紧型 / 悬停型</strong>；共同禁忌是把它写成第二个副歌。③ build 的四种手段按边际效用：<strong>密度 &gt; 音高 &gt; 鼓 &gt; 音量</strong>；叠加是非线性的，两种到三种是性价比区间。④ <strong>build 的长度上限</strong>：4 小节几乎总对，8 小节要有理由，16 小节基本是错的——期待的保质期约 10 秒。⑤ <strong>减法 build</strong>：降低 build 末端比抬高副歌更有效，因为落差 = 副歌 − build 末端。⑥ <strong>静默的窗口很窄</strong>：半拍最稳，一拍很强，两拍开始失去节拍参照——需要衰减尾巴或最小计时器作扶手。⑦ <strong>过门是标点，不是句子</strong>；它补救不了缺失的连接，而且要稀才有力。</p>
+          <p><strong>下一章预告</strong>：第一篇到此结束——你已经能写出一首结构完整的歌了。第二篇转向<strong>编曲</strong>：怎么把一支乐队摆进这首歌里。第 7 章《频谱是一块地》先讲最基础的约束——<strong>频率是有限的地皮，每件乐器都要有自己的位置</strong>，而重型音乐里抢地最凶的两个是底鼓和贝斯。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./07-频谱是一块地.html"><strong>下一章：第 7 章 · 频谱是一块地</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+
+      /* 把若干「段」拼成多轨谱面。每段可按小节号动态给出 roots / rhy / gain / 鼓 */
+      function mk(segs, opts) {
+        opts = opts || {};
+        var gtr = [], gtr2 = [], bass = [], drums = [], bar = 0;
+        segs.forEach(function (s) {
+          for (var q = 0; q < s.bars; q++) {
+            var off = (bar + q) * 4;
+            var roots = typeof s.roots === "function" ? s.roots(q) : s.roots;
+            var rhy = typeof s.rhy === "function" ? s.rhy(q) : (s.rhy || "gallop");
+            var g = typeof s.gain === "function" ? s.gain(q) : (s.gain == null ? 1 : s.gain);
+            if (roots) {
+              R.events(roots, rhy, { mute: s.mute !== false, octave: s.oct || 0 }).forEach(function (e) {
+                gtr.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * g }));
+              });
+              if (s.two !== false) {
+                R.events(roots, rhy, { mute: s.mute !== false, octave: (s.oct || 0) + (s.oct2 || 0) }).forEach(function (e) {
+                  gtr2.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * g }));
+                });
+              }
+              if (s.bass !== false) {
+                roots.forEach(function (r, i) {
+                  if (r === null) return;
+                  bass.push({ t: off + i, midi: R.ROOT - 12 + r, dur: s.bassLong ? 4 : 1, gain: 0.88 * g });
+                });
+              }
+            }
+            var de = s.drumsFn ? s.drumsFn(q) : (s.drums ? R.drumPattern(1, s.drums) : []);
+            de.forEach(function (e) {
+              drums.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * g }));
+            });
+            if (s.crash && q === 0) drums.push({ t: off, piece: "crash", gain: 0.62 });
+          }
+          bar += s.bars;
+        });
+        var pan = opts.pan == null ? 0.75 : opts.pan;
+        return {
+          beats: bar * 4,
+          tracks: [
+            { id: "dr", name: "鼓", inst: "drums", gain: 1, events: drums },
+            { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: bass },
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.85, pan: -pan, drive: 0.82, events: gtr },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.8, pan: pan, drive: 0.82, events: gtr2 }
+          ]
+        };
+      }
+
+      /* 每个演示一个播放槽，互不干扰 */
+      var slots = {};
+      function play(key, spec) {
+        stopAllSlots();
+        var rig = KBB.tracks({ bpm: BPM, lengthBeats: spec.beats, loop: true, tracks: spec.tracks });
+        slots[key] = rig;
+        rig.play();
+        return rig;
+      }
+      var BPLAY = "▶ 循环播放（4 小节 build → 副歌落点）";
+      function stopAllSlots() {
+        Object.keys(slots).forEach(function (k) {
+          if (slots[k]) { slots[k].dispose(); slots[k] = null; }
+        });
+        A.stopAll();
+        if ($("b-play")) $("b-play").textContent = BPLAY;
+      }
+
+      var VERSE  = { bars: 4, roots: [0, 0, 3, 5], rhy: "gallop", mute: true, drums: "basic" };
+      var CHORUS = { bars: 4, roots: [8, 3, 10, 0], rhy: "quarter", mute: false, oct2: 1,
+                     drums: "driving", crash: true };
+
+      /* ---------- 演示 1：有没有预副歌 ---------- */
+      KBG.soundToggle($("p-sound"));
+      var PRE_GOOD = { bars: 4, rhy: "eighth", mute: true, two: false, drums: "basic", gain: 0.95,
+                       roots: function (q) { return q < 2 ? [5, 5, 5, 5] : [7, 7, 7, 7]; } };
+      var PRE_BAD  = { bars: 4, roots: [8, 3, 10, 0], rhy: "quarter", mute: false, oct2: 1,
+                       drums: "driving", crash: true };
+      var P = {
+        off: { name: "无预副歌", struct: "主歌 4 + 副歌 4",
+               land: "没有准备，直接切换", segs: [VERSE, CHORUS] },
+        on:  { name: "有预副歌（悬停型）", struct: "主歌 4 + 预副歌 4（ⅳ ⅳ ⅴ ⅴ）+ 副歌 4",
+               land: "停在 ⅴ 上制造缺口 → 副歌兑现", segs: [VERSE, PRE_GOOD, CHORUS] },
+        toomuch: { name: "反例：预副歌 = 第二个副歌", struct: "主歌 4 +「副歌」4 + 副歌 4",
+               land: "能量提前用光，副歌没有升级", segs: [VERSE, PRE_BAD, CHORUS] }
+      };
+      ["off", "on", "toomuch"].forEach(function (k) {
+        $("p-" + k).addEventListener("click", function () {
+          ["off", "on", "toomuch"].forEach(function (j) {
+            $("p-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = P[k];
+          $("p-name").textContent = v.name;
+          $("p-struct").textContent = v.struct;
+          $("p-land").textContent = v.land;
+          play("p", mk(v.segs, { pan: 0.85 }));
+        });
+      });
+      $("p-stop").addEventListener("click", stopAllSlots);
+
+      /* ---------- 演示 2：build-up 构建器 ---------- */
+      var BD = [
+        { k: "dens",  cn: "密度", desc: "音符逐小节变密：八分 → 八分 → 十六分 → 十六分" },
+        { k: "pitch", cn: "音高", desc: "和声逐级上行：ⅰ → ♭Ⅲ → ⅳ → ⅴ（停在属功能上）" },
+        { k: "roll",  cn: "鼓",   desc: "军鼓滚奏逐小节加密：四分 → 八分 → 八分 → 十六分" },
+        { k: "vol",   cn: "音量", desc: "整体渐强约 4 dB" }
+      ];
+      var bOn = {}, bRows = [];
+      BD.forEach(function (d) {
+        bOn[d.k] = false;
+        var row = document.createElement("div");
+        row.className = "dim-row off";
+        var btn = document.createElement("button");
+        btn.type = "button"; btn.className = "kb-btn kbb-mini"; btn.textContent = "关";
+        var nm = document.createElement("span"); nm.className = "dn"; nm.textContent = d.cn;
+        var dd = document.createElement("span"); dd.className = "dd"; dd.textContent = d.desc;
+        btn.addEventListener("click", function () { bOn[d.k] = !bOn[d.k]; syncB(); rebuildB(); });
+        row.appendChild(btn); row.appendChild(nm); row.appendChild(dd);
+        $("b-dims").appendChild(row);
+        bRows.push({ d: d, row: row, b: btn });
+      });
+      function syncB() {
+        bRows.forEach(function (r) {
+          r.b.textContent = bOn[r.d.k] ? "开" : "关";
+          r.b.classList.toggle("on", bOn[r.d.k]);
+          r.row.classList.toggle("off", !bOn[r.d.k]);
+        });
+        var n = BD.filter(function (d) { return bOn[d.k]; }).length;
+        $("b-on").textContent = n + " / 4";
+        $("b-verdict").textContent =
+          n === 0 ? "没有推进，只是重复" :
+          (bOn.vol && n === 1) ? "几乎没有推进 —— 音量单独用不起作用" :
+          n === 1 ? "有推进，但还比较单薄" :
+          n === 2 ? "推进感明确（性价比最高的区间）" :
+          n === 3 ? "很强的推进" : "拉满；第 4 项带来的提升已经很小";
+      }
+      var ROLLSTEP = [1, 0.5, 0.5, 0.25];
+      function buildSegs() {
+        var build = {
+          bars: 4, mute: true, two: false,
+          roots: function (q) {
+            var r = bOn.pitch ? [0, 3, 5, 7][q] : 0;
+            return [r, r, r, r];
+          },
+          rhy: function (q) { return bOn.dens ? ["eighth", "eighth", "sixteen", "sixteen"][q] : "eighth"; },
+          gain: function (q) { return bOn.vol ? [0.60, 0.72, 0.85, 1.0][q] : 0.85; },
+          drumsFn: function (q) {
+            if (!bOn.roll) return R.drumPattern(1, "basic");
+            var ev = [], step = ROLLSTEP[q], t;
+            for (t = 0; t < 4; t += step) ev.push({ t: t, piece: "snare", gain: 0.42 + 0.34 * (t / 4) });
+            for (t = 0; t < 4; t += 1) ev.push({ t: t, piece: "kick", gain: 0.85 });
+            return ev;
+          }
+        };
+        var land = { bars: 2, roots: [0, 0, 0, 0], rhy: "quarter", mute: false, oct2: 1,
+                     drums: "driving", crash: true };
+        return [build, land];
+      }
+      function rebuildB() {
+        var was = !!slots.b;
+        stopAllSlots();
+        if (was) { play("b", mk(buildSegs(), { pan: 0.85 })); $("b-play").textContent = "⏸ 暂停"; }
+      }
+      $("b-play").addEventListener("click", function () {
+        if (slots.b) { stopAllSlots(); return; }
+        play("b", mk(buildSegs(), { pan: 0.85 }));
+        $("b-play").textContent = "⏸ 暂停";
+      });
+      $("b-all").addEventListener("click", function () { BD.forEach(function (d) { bOn[d.k] = true; }); syncB(); rebuildB(); });
+      $("b-none").addEventListener("click", function () { BD.forEach(function (d) { bOn[d.k] = false; }); syncB(); rebuildB(); });
+      $("b-onlyvol").addEventListener("click", function () {
+        BD.forEach(function (d) { bOn[d.k] = (d.k === "vol"); }); syncB(); rebuildB();
+        $("b-msg").textContent = "只开音量：build 渐强了约 4 dB，但音符、和声、鼓型一个都没变——推进感几乎为零。";
+      });
+      $("b-stop").addEventListener("click", function () {
+        stopAllSlots();
+      });
+
+      /* ---------- 演示 3：drop 前的静默 ---------- */
+      var GAPS = {
+        "0":  { len: "0 拍", eff: "落点靠 build 的惯性进入 —— 稳妥，但也最平" },
+        "05": { len: "半拍", eff: "像吸了一口气；最常用，几乎不会出错" },
+        "1":  { len: "一拍", eff: "戏剧性明显，需要 build 足够强才撑得住" },
+        "2":  { len: "两拍", eff: "开始失去节拍参照 —— 落点显得「晚了」而不是「重」" }
+      };
+      var GAPVAL = { "0": 0, "05": 0.5, "1": 1, "2": 2 };
+      function gapSpec(n) {
+        var pre = {
+          bars: 2, mute: true, two: false, gain: function (q) { return 0.8 + 0.2 * q; },
+          roots: function (q) { return q === 0 ? [5, 5, 5, 5] : [7, 7, 7, 7]; },
+          rhy: function (q) { return q === 0 ? "eighth" : "sixteen"; },
+          drumsFn: function (q) {
+            var ev = [], step = q === 0 ? 0.5 : 0.25, t;
+            for (t = 0; t < 4; t += step) ev.push({ t: t, piece: "snare", gain: 0.4 + 0.34 * (t / 4) });
+            for (t = 0; t < 4; t += 1) ev.push({ t: t, piece: "kick", gain: 0.85 });
+            return ev;
+          }
+        };
+        var land = { bars: 2, roots: [0, 0, 0, 0], rhy: "quarter", mute: false, oct2: 1,
+                     drums: "driving", crash: true };
+        var spec = mk([pre, land], { pan: 0.85 });
+        /* 落点固定在第 9 拍，只把它前面的 n 拍清空 */
+        spec.tracks.forEach(function (t) {
+          t.events = t.events.filter(function (e) { return e.t < 8 - n || e.t >= 8; });
+        });
+        return spec;
+      }
+      Object.keys(GAPS).forEach(function (k) {
+        $("s-" + k).addEventListener("click", function () {
+          Object.keys(GAPS).forEach(function (j) {
+            $("s-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          $("s-len").textContent = GAPS[k].len;
+          $("s-eff").textContent = GAPS[k].eff;
+          play("s", gapSpec(GAPVAL[k]));
+        });
+      });
+      $("s-stop").addEventListener("click", stopAllSlots);
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) stopAllSlots();
+      });
+      syncB();
+    });
+  </script>
+</body>
+</html>

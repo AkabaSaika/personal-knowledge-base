@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>09 贝斯：和声与节奏的枢纽 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 9 章：贝斯同时属于节奏组与和声组；跟鼓还是跟吉他的四种写法；根音、五度、八度与走音的取舍；与底鼓抢频段的时间解法；失真贝斯与双轨分频为什么是现代金属的标配。">
+  <meta name="kb:tags" content="编曲,贝斯,bass,根音,走音,八度,失真贝斯,双轨,底鼓,枢纽,bshsyjzdsn,bs">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 9 章 · 贝斯：和声与节奏的枢纽</h1>
+        <p class="kb-lead">贝斯是乐队里最容易被忽略、也最容易证明其必要性的乐器——把它静音，你不会觉得「少了一件乐器」，你会觉得<strong>整首歌塌了</strong>。原因在于它同时属于两个组：节奏上它跟鼓，和声上它跟吉他。<strong>它是唯一横跨这两边的声部</strong>，这既是它的价值，也是它所有麻烦的来源。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释贝斯的双重身份，以及为什么它静音之后整体会「塌」；② 在四种贝斯写法之间做选择；③ 用根音、五度、八度与走音写出一条有方向的贝斯线；④ 用<strong>时间</strong>而不是 EQ 解决贝斯与底鼓的冲突；⑤ 说清失真贝斯与双轨分频在现代金属里解决的是什么问题。</p>
+        </div>
+
+        <h2>两个身份</h2>
+        <p>先做一个思想实验：把一首歌里的吉他全部静音，你还能听出和弦进行吗？<strong>能</strong>——贝斯的根音就够了。把贝斯静音呢？你会听到一堆和弦在空中飘着，<strong>没有落地的地方</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>身份</th><th>它对谁负责</th><th>做什么</th><th>做不好会怎样</th></tr></thead>
+            <tbody>
+              <tr><td><strong>节奏组成员</strong></td><td>底鼓</td><td>把和声钉在节奏网格上；与底鼓一起构成低频的「地面」</td><td>律动松散，整体没有推进力</td></tr>
+              <tr><td><strong>和声组成员</strong></td><td>吉他 / 键盘</td><td>提供每个和弦的<strong>低音</strong>——也就决定了这个和弦听起来是什么（转位，<a href="../../吉他乐理/教材/06-三和弦与和弦符号.html#转位低音换人">上一本第 6 章</a>）</td><td>和弦失去重心，进行听起来含糊</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么「贝斯静音 ＝ 整首塌了」</p>
+          <p>因为它是<strong>连接层</strong>。鼓提供时间但没有音高，吉他提供音高但（在重型编曲里）低频被切掉了。<strong>贝斯是唯一同时有音高和低频的声部</strong>——它把节奏组的「地面」和和声组的「建筑」焊在一起。</p>
+          <p>抽掉它，鼓和吉他之间就出现了一条 80–250 Hz 的裂缝（第 7 章）。听觉的反应不是「少了一件乐器」，而是「这个混音是空心的」。</p>
+        </div>
+
+        <h2>跟鼓还是跟吉他</h2>
+        <p>贝斯的双重身份意味着它每一刻都要选边。四种典型写法：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>写法</th><th>怎么弹</th><th>效果</th><th>适合</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 根音长音</strong></td><td>每个和弦一个持续的根音</td><td>最稳、最不抢戏；给人声与吉他让出全部空间</td><td><strong>主歌</strong>、有人声的段落、双踩段落</td></tr>
+              <tr><td><strong>② 跟底鼓</strong></td><td>只在底鼓落下的点上弹</td><td>律动最紧；低频事件与鼓完全同步</td><td>Groove Metal、律动型的段落</td></tr>
+              <tr><td><strong>③ 跟吉他齐奏</strong></td><td>与 riff 的每一个音对齐</td><td>最重；三件乐器归并成一件（第 8 章）</td><td><strong>Breakdown</strong>、riff 主导的段落</td></tr>
+              <tr><td><strong>④ 独立走线</strong></td><td>八度跳跃、走音、切分，自成一条旋律</td><td>最有音乐性；给编曲增加一个真正的声部</td><td>经典摇滚、前卫、间奏与桥段</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>绝大多数歌不会从头到尾只用一种。</strong>一首典型的重型作品可能是：主歌用 ①（给人声让路）→ 预副歌用 ②（收紧律动）→ 副歌用 ③ 或 ②（加重）→ 桥段用 ④（增加音乐性）。<strong>贝斯写法的变化，本身就是第 5 章说的「织体」维度。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎸 演示 1：四种贝斯写法 ＋ 静音对比</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条 gallop riff 配四种贝斯写法——根音长音、跟底鼓、跟吉他齐奏、独立走线，以及一个「贝斯静音」的对照。静音版本听起来不是「少了一件乐器」，而是整体空心——因为鼓与吉他之间失去了 80–250 Hz 的连接层。四种写法里，根音长音最不抢戏，齐奏最重，独立走线最有音乐性但也最容易与吉他打架。</p></noscript>
+            <div id="b-sound"></div>
+            <div class="kb-readout">
+              <span>写法 <b id="b-name">—</b></span>
+              <span>音符 / 小节 <b id="b-notes">—</b></span>
+              <span>与底鼓重合 <b id="b-sync">—</b></span>
+              <span>适合 <b id="b-use">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="b-long" type="button">▶ ① 根音长音</button>
+              <button class="kb-btn" id="b-kick" type="button">▶ ② 跟底鼓</button>
+              <button class="kb-btn" id="b-unison" type="button">▶ ③ 跟吉他齐奏</button>
+              <button class="kb-btn" id="b-walk" type="button">▶ ④ 独立走线</button>
+              <button class="kb-btn" id="b-mute" type="button">▶ ⓪ 贝斯静音（对照）</button>
+              <button class="kb-btn" id="b-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">请先听「贝斯静音」，再听任意一个有贝斯的版本。<strong>差别不在音量，在于低频有没有「地面」。</strong>然后比较 ① 和 ③：音符数差了六倍，但重量的差别远没有六倍——因为重量来自<strong>对齐</strong>，不是数量。</p>
+          </div>
+        </div>
+
+        <h2>音符怎么选</h2>
+        <p>贝斯手的音符库其实很小，四类就够写绝大多数东西：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>音</th><th>作用</th><th>用量</th></tr></thead>
+            <tbody>
+              <tr><td><strong>根音</strong></td><td>默认；确立和弦</td><td><strong>70% 以上</strong>。重型音乐里比例更高</td></tr>
+              <tr><td><strong>八度</strong></td><td>提供动力与起伏，不改变和声</td><td>常用；八度跳跃是最安全的「加花」</td></tr>
+              <tr><td><strong>五度</strong></td><td>加厚，仍然不改变和弦性质</td><td>适量；连续用会失去根音感</td></tr>
+              <tr><td><strong>走音</strong>（经过音）</td><td>连接两个和弦，制造方向感</td><td><strong>少量，且只在和弦切换处</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 贝斯上的三度是危险的</p>
+          <p>重型音乐的吉他弹的是<strong>强力和弦</strong>——根音 + 五度，<strong>没有三度</strong>（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html">上一本第 11 章</a>）。这是有意为之：失真会让三度产生大量互调产物，听起来浑浊（上一本第 10 章）。</p>
+          <p>如果贝斯这时弹了三度，你就<strong>把吉他刻意回避的那个音加回来了</strong>，而且是加在能量最大的低频区——效果通常比吉他自己弹三度还糟。</p>
+          <p><strong>规则</strong>：重型编曲里贝斯以根音、八度、五度为主；三度只在清音段落、或者作为极短的经过音使用。</p>
+        </div>
+        <p><strong>关于走音</strong>：它的价值是<strong>制造方向感</strong>——告诉听众「下一个和弦要来了」。所以它几乎总是出现在和弦切换<strong>之前</strong>的最后半拍或一拍，而不是段落中间。一个和弦持续四拍时在中间加一串走音，听起来只会是躁动，不是流动。</p>
+
+        <h2>与底鼓抢地：用时间，不用 EQ</h2>
+        <p>第 7 章说过，底鼓与贝斯在 40–120 Hz 是最激烈的争地。除了分工分频，还有一个更根本的解法：<strong>在时间上分工。</strong></p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 瞬态归底鼓，持续归贝斯</p>
+          <p>底鼓是一个 <strong>500 毫秒的事件</strong>，能量集中在最初的几十毫秒；贝斯是一个<strong>持续</strong>的声音，可以横跨整个小节。</p>
+          <p>所以最优的分工不是「谁占哪个频率」，而是「<strong>谁占哪一段时间</strong>」：底鼓落下的瞬间它是主角，之后的空隙里贝斯是主角。做法上非常简单——<strong>贝斯弹长音，而不是每一击都跟着底鼓砸。</strong></p>
+        </div>
+        <p>这就解释了第 8 章留下的那个问题：<strong>双踩踩满的时候，贝斯该弹什么？</strong>答案是<strong>长音</strong>。底鼓每格都在，如果贝斯也每格都跟，两者就在每一格上争同一块地；而贝斯弹长音时，它在底鼓的每一次衰减间隙里都还在响——<strong>听觉把它们解释成「一层持续的低频 + 一串冲击」，而不是「16 次打架」。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🥊 演示 2：双踩之下，贝斯的三种活法</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：在底鼓每小节 16 击的双踩之下，贝斯有三种写法——跟每一击、只跟重音、弹长音。跟每一击时低频完全糊住，贝斯与底鼓互相掩蔽；只跟重音好一些；弹长音时贝斯在底鼓的每次衰减间隙里都还在响，听觉把两者解释成「一层持续低频 + 一串冲击」而不是互相打架，整体反而更重。</p></noscript>
+            <div class="kb-readout">
+              <span>贝斯写法 <b id="dd-name">—</b></span>
+              <span>贝斯音符 / 小节 <b id="dd-notes">—</b></span>
+              <span>低频事件总数 <b id="dd-low">—</b></span>
+              <span>结果 <b id="dd-res">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="dd-follow" type="button">▶ 跟每一击（16 个音）</button>
+              <button class="kb-btn" id="dd-accent" type="button">▶ 只跟重音（4 个音）</button>
+              <button class="kb-btn" id="dd-hold" type="button">▶ 弹长音（1 个音）</button>
+              <button class="kb-btn" id="dd-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">三个版本的<strong>鼓完全一样</strong>，只有贝斯在变。请注意「弹长音」版本听起来<strong>并没有更弱</strong>——恰恰相反，因为低频不再自相冲突，整体反而更结实。<strong>这是「少即是多」在频谱上的字面含义。</strong></p>
+          </div>
+        </div>
+
+        <h2>失真贝斯与双轨分频</h2>
+        <p>现代金属里失真贝斯几乎是标配。它解决的不是「贝斯不够猛」，而是两个具体的问题：</p>
+        <ol>
+          <li><strong>可听性。</strong>纯净贝斯的能量集中在 80–250 Hz，而这块地在四轨吉他 + 底鼓的夹击下几乎没有余量。<strong>失真把能量搬到 500 Hz–2 kHz</strong>，那里相对空一些——于是贝斯在小音箱和手机上也能被听见。</li>
+          <li><strong>填补 riff 的空隙。</strong>重型 riff 里有大量休止（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html#休止什么都不弹也是一种弹法">上一本第 11 章</a>）。吉他停下的那些瞬间，如果贝斯是纯净的低频，整个中频会短暂地空掉；失真贝斯有中高频内容，可以把这些空隙<strong>连起来</strong>，让音墙显得连续。</li>
+        </ol>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 双轨分频：现代金属的标准做法</p>
+          <p>问题在于：<strong>失真会削掉低频。</strong>把贝斯整轨失真，你得到了可听性，却失去了地基。</p>
+          <p>标准解法是<strong>把贝斯分成两轨</strong>：</p>
+          <p><strong>低频轨</strong>——完全干净，做低通（约 200 Hz 以下），负责地基；<br>
+          <strong>中高频轨</strong>——重度失真，做高通（约 200 Hz 以上），负责可听性与空隙填充。</p>
+          <p>两轨来自同一次演奏，所以它们完全同步；分开处理之后，<strong>贝斯同时在 100 Hz 有地基、在 1 kHz 有存在感，而且这两块地互不干扰</strong>——正是第 7 章「主频段规则」的一个精巧应用：一件乐器占了两个主频段，但它们隔得足够远。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🔥 演示 3：干净 / 失真 / 双轨分频</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条贝斯线的三种处理——完全干净、整轨失真、双轨分频（干净低频轨 + 失真中高频轨）。干净版本在四轨吉他之下几乎听不见；整轨失真听得见了但地基变薄；双轨分频同时保住了 100 Hz 的地基与 1 kHz 的存在感。可以随时把吉他静音，验证贝斯本身在三种处理下的差别。</p></noscript>
+            <div class="kb-readout">
+              <span>处理 <b id="f-name">—</b></span>
+              <span>贝斯轨数 <b id="f-tracks">—</b></span>
+              <span>地基（100 Hz） <b id="f-low">—</b></span>
+              <span>存在感（1 kHz） <b id="f-mid">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="f-clean" type="button">▶ 完全干净</button>
+              <button class="kb-btn" id="f-dist" type="button">▶ 整轨失真</button>
+              <button class="kb-btn" id="f-split" type="button">▶ 双轨分频</button>
+              <button class="kb-btn" id="f-gtr" type="button">🔇 吉他静音</button>
+              <button class="kb-btn" id="f-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">先在有吉他的情况下比较三者（这才是真实的使用场景），再点「吉他静音」单独听贝斯。<strong>你会发现干净版本单听最好听，混在一起却最听不见——这正是第 7 章说的：单轨好听和混音里能听见是两回事。</strong></p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 9.1</p>
+          <p>贝斯手抱怨「我在混音里完全听不见自己」。他想把贝斯推大 4 dB。你怎么建议？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先做一个诊断动作：把四轨吉他静音，单独听贝斯。</strong></p>
+            <ul>
+              <li><strong>如果这时贝斯很清楚</strong>——那是掩蔽问题，推 4 dB 没用（第 7 章）。</li>
+              <li><strong>如果这时贝斯本身就很闷</strong>——那是音色问题，推 4 dB 只会让低频更多。</li>
+            </ul>
+            <p>实践中几乎总是第一种。按顺序处理：</p>
+            <ol>
+              <li><strong>给贝斯加中高频内容。</strong>纯净贝斯的能量集中在 80–250 Hz，那块地已经被底鼓和吉他的低端塞满了。用失真或者一条并行的失真轨，把一部分能量搬到 500 Hz–2 kHz——<strong>那里相对空，而且正好是小音箱能放出来的范围</strong>。这一条通常直接解决问题。</li>
+              <li><strong>检查吉他有没有做高通。</strong>四轨吉他如果都保留了 80–200 Hz，贝斯的地盘就被侵占了。现代重型的做法是节奏吉他从 100 Hz 往下切掉——<strong>吉他放弃低频，换来整体更结实。</strong></li>
+              <li><strong>检查贝斯的写法。</strong>如果贝斯每一下都和底鼓砸在同一个瞬间，它就总是在最不利的时刻发声。改成长音或错开（本章）。</li>
+              <li><strong>最后</strong>：做完上面三步，再补 1–2 dB。这时它会稳稳站住。</li>
+            </ol>
+            <p><strong>要对贝斯手说的一句话</strong>：「你听不见自己」和「你太小声」是两个问题。<strong>前者的解法是让你占一块没人要的地，不是在别人的地上喊得更大声。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 9.2</p>
+          <p>一段主歌的贝斯写得很花——八度跳跃、走音、切分俱全，单独听非常好听。但整段的人声听起来很吃力。为什么？怎么改？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>因为主歌是给人声的段落，而这条贝斯线在跟人声争注意力。</strong></p>
+            <p>这是编曲里最经典的冲突之一，而且它不是频谱问题（贝斯和人声频段离得很远），是<strong>注意力</strong>问题：</p>
+            <ul>
+              <li><strong>听觉一次只能跟随一条旋律线。</strong>一条有方向、有起伏的贝斯线本身就是旋律，它会和人声抢这个位置。</li>
+              <li><strong>信息密度过高。</strong>主歌的任务是铺陈与建立（第 3 章），它需要的是稳定的底座，不是第二条旋律。</li>
+              <li><strong>它还消耗了升级空间。</strong>主歌就把贝斯写满了，桥段和间奏还能怎么写？</li>
+            </ul>
+            <p><strong>怎么改</strong>：</p>
+            <ol>
+              <li><strong>主歌改成根音长音</strong>（写法 ①）。这是最直接的解法，通常立刻见效。</li>
+              <li><strong>把那条好听的贝斯线搬到间奏或桥段去。</strong><strong>它不是写得不好，是放错了段落</strong>——那些没有人声的地方正需要一条有音乐性的线来撑住注意力。</li>
+              <li><strong>如果一定要在主歌保留一点动作</strong>：只在人声<strong>换气的空当</strong>加花——乐句之间的一两拍。这是第 11 章会详细讲的「时间上的让路」。</li>
+            </ol>
+            <p><strong>一条通用原则</strong>：<strong>任何时刻只能有一个主角。</strong>贝斯在主歌当配角、在间奏当主角，这不是委屈它，这是让它的每一段都有效。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 9.3</p>
+          <p>Breakdown 段落里，贝斯到底该不该跟吉他完全齐奏？如果齐奏，还有必要保留贝斯吗？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>该齐奏，而且必须保留贝斯——它在齐奏里提供的东西吉他给不了。</strong></p>
+            <p>Breakdown 的重量来自「同时发生的能量被归并成一件巨型乐器」（第 8 章）。这件巨型乐器要覆盖尽可能宽的频谱，而各件乐器的分工是：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>声部</th><th>它贡献的频段</th><th>没有它会怎样</th></tr></thead>
+                <tbody>
+                  <tr><td>底鼓</td><td>50 Hz 冲击 + 4 kHz 音头</td><td>失去瞬态，重音变钝</td></tr>
+                  <tr><td><strong>贝斯</strong></td><td><strong>80–250 Hz 的持续能量</strong></td><td><strong>重音一击即散，没有「余重」</strong></td></tr>
+                  <tr><td>吉他</td><td>200 Hz–5 kHz</td><td>失去中高频的攻击</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>关键在贝斯那一行。</strong>现代重型的吉他做了高通（第 7 章），它在 100 Hz 附近几乎没有能量；底鼓是瞬态，几十毫秒就衰减了。<strong>所以重音落下之后那段「还在轰」的低频，只能来自贝斯。</strong>没有它，breakdown 听起来是「咔、咔、咔」而不是「轰、轰、轰」。</p>
+            <p><strong>具体写法建议</strong>：</p>
+            <ul>
+              <li>贝斯与吉他<strong>音符完全对齐</strong>，但<strong>音长更长</strong>——吉他闷音短促，贝斯让它延续到下一个重音之前。这样既有齐奏的对齐感，又有低频的持续。</li>
+              <li>用双轨分频（本章）：低频轨给持续能量，失真轨跟着吉他的攻击。</li>
+              <li>贝斯弹<strong>根音</strong>，不要跟吉他的五度——那块地吉他已经占了。</li>
+            </ul>
+            <p><strong>一句话总结</strong>：齐奏统一的是<strong>时间</strong>，不是<strong>频段</strong>。每件乐器仍然各自负责一段频谱，只是它们同时开始。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么把贝斯静音时，听感是「整首歌塌了」而不是「少了一件乐器」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为贝斯是连接层，不是并列的一层。</strong></p>
+            <ul>
+              <li><strong>鼓</strong>提供时间，但没有音高；</li>
+              <li><strong>吉他</strong>提供音高与和声，但在重型编曲里低频被切掉了（第 7 章）；</li>
+              <li><strong>贝斯是唯一同时有音高和低频的声部</strong>。</li>
+            </ul>
+            <p>抽掉它，鼓和吉他之间就出现了一条 80–250 Hz 的<strong>裂缝</strong>：和声悬在中频没有落地的地方，低频只剩一串没有音高的冲击。听觉不会把这解释成「少了一件乐器」，而会解释成「<strong>这个混音是空心的</strong>」。</p>
+            <p><strong>一个类比</strong>：乐队像一栋建筑，鼓是地基，吉他是墙，<strong>贝斯是把墙固定在地基上的那一层</strong>。少一面墙房子还在，少了那一层，整栋楼就浮起来了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>四种贝斯写法各自适合什么段落？为什么一首歌通常要用到不止一种？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>写法</th><th>适合</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 根音长音</strong></td><td>主歌、有人声处、双踩段落</td><td>最不抢戏；把注意力与频谱都让出去</td></tr>
+                  <tr><td><strong>② 跟底鼓</strong></td><td>Groove Metal、律动型段落</td><td>低频事件与鼓完全同步，律动最紧</td></tr>
+                  <tr><td><strong>③ 跟吉他齐奏</strong></td><td>Breakdown、riff 主导段落</td><td>三件乐器归并成一件巨型乐器（第 8 章）</td></tr>
+                  <tr><td><strong>④ 独立走线</strong></td><td>间奏、桥段、经典摇滚</td><td>增加一个真正的声部，撑住没有人声的段落</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>为什么要用不止一种</strong>：因为<strong>贝斯写法的变化本身就是一个对比维度</strong>（第 5 章的「织体」）。从长音换成齐奏，是一次明显的段落升级，而且成本为零——不加轨、不占新频段、不推音量。</p>
+            <p><strong>典型的一首歌</strong>：主歌 ①（让人声）→ 预副歌 ②（收紧）→ 副歌 ② 或 ③（加重）→ 桥段 ④（增加音乐性）→ 最后一遍副歌 ③（最重）。<strong>五个段落，四种写法，能量曲线自然就有了层次。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么重型编曲里贝斯要避免弹三度？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为吉他刻意不弹三度，贝斯弹了就等于把它加回来——而且加在最不利的位置。</strong></p>
+            <p>推理链条：</p>
+            <ol>
+              <li>失真是一种非线性处理，会产生大量<strong>互调产物</strong>（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>）。</li>
+              <li>音程越复杂，互调产物越不协和。三度（尤其是大三度）在高失真下会产生明显的浑浊。</li>
+              <li>所以重型音乐用<strong>强力和弦</strong>——只有根音与五度，五度的互调产物落在根音的谐波上，非常干净（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html">上一本第 11 章</a>）。</li>
+              <li><strong>贝斯在低频区，波长最长、能量最大，互调产物也最脏。</strong>在这里弹三度，效果比吉他自己弹还糟。</li>
+            </ol>
+            <p><strong>什么时候可以弹</strong>：① 清音或轻失真的段落；② 作为极短的经过音（走音）快速带过；③ 贝斯本身完全干净、且低频轨做了低通的情况下。</p>
+            <p><strong>顺带一条</strong>：这也是为什么重型音乐的和声色彩主要靠<strong>调式</strong>（<a href="../../吉他乐理/教材/14-金属的调式色彩.html">上一本第 14 章</a>）而不是靠和弦的复杂度——在失真的约束下，能用的和弦本来就不多。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>走音（经过音）应该放在哪里？为什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>放在和弦切换之前的最后半拍或一拍。</strong></p>
+            <p><strong>理由</strong>：走音的功能是<strong>制造方向感</strong>——它是一个不属于当前和弦的音，听觉会觉得它「不稳定、要去某个地方」，于是自然地期待下一个和弦。这个期待必须<strong>紧接着被兑现</strong>，否则它只是一个错音。</p>
+            <p><strong>放错位置会怎样</strong>：</p>
+            <ul>
+              <li><strong>放在和弦中间</strong>——制造了期待却没有兑现，听起来是躁动而不是流动。</li>
+              <li><strong>放得太多</strong>——每个和弦都在走，方向感就消失了（处处是方向 ＝ 没有方向，和第 5 章「处处是顶点 ＝ 没有顶点」是同一回事）。</li>
+              <li><strong>放在段落开头</strong>——段落开头需要的是确立，不是过渡。</li>
+            </ul>
+            <p><strong>一个可靠的配方</strong>：一个四拍的和弦，前三拍半弹根音（或根音 + 八度），最后半拍弹一个走音接到下一个和弦的根音。<strong>半音接近（下一个根音的上方或下方半音）最有力</strong>，因为它的指向性最明确（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html">上一本第 11 章</a>的半音逼近）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「瞬态归底鼓，持续归贝斯」——请解释这条分工，并说明它为什么比 EQ 更好。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>这条分工的依据是两件乐器在时间上的天然差别：</strong></p>
+            <ul>
+              <li><strong>底鼓</strong>是一个 500 毫秒的事件，能量高度集中在最初的几十毫秒——它本质上是一个<strong>瞬态</strong>。</li>
+              <li><strong>贝斯</strong>是持续声，可以横跨整个小节。</li>
+            </ul>
+            <p>所以最优的分工不是「谁占哪个频率」，而是「<strong>谁占哪一段时间</strong>」：底鼓落下的那一瞬间它是主角；之后的衰减间隙里贝斯是主角。<strong>做法极其简单——贝斯弹长音，而不是每一击都跟着砸。</strong></p>
+            <p><strong>为什么比 EQ 好</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>时间分工</th><th>EQ 分工</th></tr></thead>
+                <tbody>
+                  <tr><td>代价</td><td><strong>零</strong>——只是换个弹法</td><td>被切的一方会变薄</td></tr>
+                  <tr><td>两者都完整吗</td><td><strong>是</strong>——各自在自己的时段里拥有全部频段</td><td>否——各自永久失去一块</td></tr>
+                  <tr><td>介入阶段</td><td>写作</td><td>混音（第 7 章：越晚介入越被动）</td></tr>
+                  <tr><td>对回放设备的依赖</td><td>无</td><td>有——切法要按目标设备调整</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>更根本的差别</strong>：EQ 是在「两者必须同时存在」这个前提下做取舍，而时间分工<strong>取消了这个前提</strong>。这和第 7 章「编曲避让优先于 EQ」是同一条原则——<strong>只是这里避让的维度是时间而不是频率。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>双踩段落里贝斯弹长音，听起来「并没有更弱，反而更结实」。请解释这个反直觉的结果。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为低频的问题从来不是「量不够」，而是「有没有互相打架」。</strong></p>
+            <p>对比两种情形：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>贝斯跟每一击（16 个音）</th><th>贝斯弹长音（1 个音）</th></tr></thead>
+                <tbody>
+                  <tr><td>低频事件数</td><td>32（16 底鼓 + 16 贝斯）</td><td>17（16 底鼓 + 1 贝斯）</td></tr>
+                  <tr><td>每一击的清晰度</td><td>低——两个瞬态在同一瞬间竞争</td><td><strong>高</strong>——底鼓独占瞬态</td></tr>
+                  <tr><td>击与击之间</td><td><strong>空</strong>（两者一起衰减）</td><td><strong>有贝斯在响</strong></td></tr>
+                  <tr><td>听觉的解释</td><td>「一串糊在一起的低频」</td><td><strong>「一层持续低频 ＋ 一串清晰的冲击」</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>关键在第三行。</strong>贝斯跟着砸时，它和底鼓在同一时刻起、同一时刻衰减，间隙里什么都没有——低频是<strong>断续</strong>的。而长音把间隙填满，低频变成<strong>连续</strong>的一层，底鼓的每一击都踩在这层地面上。</p>
+            <p><strong>「结实」这个词是准确的</strong>：结实来自连续的支撑，不来自更多的冲击。</p>
+            <p><strong>这条经验可以推广</strong>：<strong>当两件乐器都在做瞬态时，让其中一件改做持续。</strong>它适用于任何一对争地的乐器——鼓与贝斯、节奏吉他与主音吉他、人声与和声。<strong>把它们从「同时说同一句话」变成「一个说、一个托」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>失真贝斯解决了什么问题？为什么要分成两轨，而不是整轨失真？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>失真解决两个问题</strong>：</p>
+            <ol>
+              <li><strong>可听性。</strong>纯净贝斯的能量集中在 80–250 Hz，这块地在四轨吉他 + 底鼓的夹击下没有余量，而且<strong>手机和笔记本根本放不出来</strong>。失真把一部分能量搬到 500 Hz–2 kHz，那里相对空，而且所有设备都能放。</li>
+              <li><strong>填补 riff 的空隙。</strong>重型 riff 里有大量休止（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html#休止什么都不弹也是一种弹法">上一本第 11 章</a>）。吉他停下的瞬间，如果贝斯只有低频，整个中频会短暂空掉。失真贝斯有中高频内容，能把这些空隙<strong>连起来</strong>，音墙显得连续。</li>
+            </ol>
+            <p><strong>为什么不能整轨失真</strong>：因为<strong>失真会削掉低频</strong>——削波把波形压成方波，能量向高次谐波转移，基频反而变弱。整轨失真的结果是「听得见了，但地基没了」，而地基正是贝斯最不可替代的贡献（习题 9.1）。</p>
+            <p><strong>双轨分频的解法</strong>：</p>
+            <ul>
+              <li><strong>低频轨</strong>：完全干净，低通约 200 Hz，负责地基；</li>
+              <li><strong>中高频轨</strong>：重度失真，高通约 200 Hz，负责可听性与空隙填充。</li>
+            </ul>
+            <p>两轨来自同一次演奏，天然同步。分开处理之后，贝斯<strong>同时拥有 100 Hz 的地基和 1 kHz 的存在感</strong>。</p>
+            <p><strong>这在第 7 章的框架里是什么？</strong>是「主频段规则」的一次精巧运用：<strong>一件乐器占了两个主频段，但它们隔了三个八度，互不干扰。</strong>底鼓其实用的是同一个招数（50 Hz 冲击 + 4 kHz 音头）——<strong>「占两端、让中间」是重型编曲里反复出现的模式。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首歌的五个段落写出完整的贝斯方案（写法 · 音符选择 · 音色处理），并说明每一次改变服务的是哪个编曲目标。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>段落</th><th>写法</th><th>音符</th><th>音色</th><th>服务的目标</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>主歌</strong></td><td>① 根音长音</td><td>纯根音，每和弦一个</td><td>干净为主，失真轨压低</td><td><strong>给人声让出注意力与频谱</strong>（第 11 章）</td></tr>
+                  <tr><td><strong>预副歌</strong></td><td>② 跟底鼓</td><td>根音 + 八度交替</td><td>失真轨提上来</td><td><strong>收紧律动、提升密度</strong>（第 6 章 build）</td></tr>
+                  <tr><td><strong>副歌</strong></td><td>② 跟底鼓（更密）</td><td>根音为主，切换处加走音</td><td>双轨全开</td><td><strong>能量顶点之一；走音让和声进行更有推力</strong></td></tr>
+                  <tr><td><strong>桥段</strong></td><td>④ 独立走线</td><td>八度跳跃 + 走音 + 切分</td><td>偏干净，中频突出</td><td><strong>没有人声时撑住注意力；同时把能量降到全曲最低</strong>（第 13 章）</td></tr>
+                  <tr><td><strong>最后一遍副歌</strong></td><td>③ 跟吉他齐奏</td><td>纯根音，长音延续</td><td>双轨全开 + 失真更重</td><td><strong>全曲最重的一段；齐奏让乐队归并成一件巨型乐器</strong>（第 8 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三个值得注意的设计</strong>：</p>
+            <ol>
+              <li><strong>音符密度不是单调递增的。</strong>桥段的音符最多（独立走线），但它的<strong>能量</strong>最低——因为音色干净、编制稀疏、没有齐奏。<strong>密度和能量是两个维度</strong>，不要混为一谈（第 5 章）。</li>
+              <li><strong>最后一遍副歌的音符反而变少了</strong>（纯根音齐奏）。这正是第 8 章的结论：<strong>重量来自对齐，不来自数量。</strong></li>
+              <li><strong>音色的变化贯穿全曲</strong>——失真轨的比例从主歌到最后一遍逐步提高。这是一条<strong>不占任何频谱预算的能量曲线</strong>，而且它是压缩抹不掉的（第 5 章）。</li>
+            </ol>
+            <p><strong>一个自检</strong>：把这五段的贝斯单独连起来听。它应该像一条<strong>有起伏的线</strong>，而不是五段无关的东西。<strong>如果单听贝斯就能听出这首歌的结构，那这份编曲多半是对的。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 9.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本章出现了两次「占两端、让中间」——底鼓（50 Hz + 4 kHz）与双轨贝斯（100 Hz + 1 kHz）。请解释这个模式为什么反复出现，并在编曲里再找出两个例子。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>为什么反复出现</strong>：因为它同时解决了两个互相矛盾的需求。</p>
+            <ul>
+              <li>一件乐器要<strong>被听见</strong>，需要在某个频段上是主角（第 7 章的主频段规则）；</li>
+              <li>但重型编曲里<strong>中频最拥挤</strong>，而低频与高频相对空。</li>
+            </ul>
+            <p>「占两端」的乐器把自己的两个主频段放在竞争最少的地方，<strong>而且这两个频段隔得足够远（三个八度以上），不会互相掩蔽</strong>——一件乐器等于免费获得了两块地。中间那块最挤的地则让给了真正需要它的人。</p>
+            <p><strong>另外两个例子</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>例子</th><th>两端</th><th>让出的中间</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>军鼓</strong></td><td>200 Hz 音体 ＋ 3–5 kHz 的「啪」</td><td>500 Hz–2 kHz 让给吉他与人声</td></tr>
+                  <tr><td><strong>双吉他的八度分工</strong>（第 10 章）</td><td>一对在原位（低）、一对高八度（高）</td><td>中间留出一条缝给人声</td></tr>
+                  <tr><td>（第三个）<strong>人声的处理</strong></td><td>200 Hz 胸腔感 ＋ 2–4 kHz 辅音清晰度</td><td>500 Hz–1 kHz 常被切掉以避开吉他</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>由此得到一条可推广的编曲原则</strong>：</p>
+            <div class="kb-callout kb-tip">
+              <p class="kb-callout-title">💡 双主频段策略</p>
+              <p><strong>当一件乐器必须在拥挤的环境里被听见时，不要试图在拥挤区赢，而要在它的两侧各占一块。</strong>听觉会把这两块自动合成为一件完整的乐器——你既得到了地基，也得到了存在感，而且都没有和别人正面竞争。</p>
+            </div>
+            <p><strong>它的反面同样有教益</strong>：一件乐器如果<strong>只在中频有能量</strong>（比如一把没有做任何处理的清音吉他），它在重型编曲里几乎必然被埋掉——不是因为它太小声，而是因为它正好待在所有人都想要的那块地上，而且没有任何一端属于它。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 贝斯的<strong>双重身份</strong>：节奏上跟鼓，和声上跟吉他；它是唯一同时有音高与低频的声部，所以静音之后是「塌」而不是「少」。② 四种写法：<strong>根音长音（让路）/ 跟底鼓（律动）/ 跟吉他齐奏（重）/ 独立走线（音乐性）</strong>；一首歌通常要用到三四种，写法变化本身就是对比维度。③ 音符以<strong>根音为主（70% 以上）</strong>，八度提供动力，五度加厚，<strong>走音只放在和弦切换前的最后半拍</strong>。④ 重型编曲里<strong>贝斯避免三度</strong>——吉他刻意不弹的东西不要在低频区加回来。⑤ <strong>瞬态归底鼓，持续归贝斯</strong>：用时间分工代替 EQ，零成本且两者都完整。⑥ 双踩之下贝斯<strong>弹长音</strong>——低频从断续变连续，听起来更结实而不是更弱。⑦ <strong>失真贝斯</strong>解决可听性与空隙填充；<strong>双轨分频</strong>（干净低频 + 失真中高频）同时保住地基与存在感。⑧ <strong>「占两端、让中间」</strong>是重型编曲反复出现的模式，底鼓、军鼓、双轨贝斯、双吉他八度分工全都是它的实例。</p>
+          <p><strong>下一章预告</strong>：低频已经安排好了。第 10 章《双吉他：四种分工》处理中频那块最挤的地——同度加倍、八度、三度和声、节奏＋主音，四种分工各自解决什么问题；以及声像这块「频谱之外的第二块地」该怎么用。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./10-双吉他四种分工.html"><strong>下一章：第 10 章 · 双吉他：四种分工模式</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      var RIFF = [0, 0, 3, 5];
+      var BARS = 2;
+
+      var rig = null;
+      function stopAll() { if (rig) { rig.dispose(); rig = null; } A.stopAll(); }
+      function start(tracks, beats) {
+        stopAll();
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: beats, loop: true, tracks: tracks });
+        rig.play();
+      }
+
+      /* 共用：吉他两轨 + 基本鼓 */
+      function guitars() {
+        var g = [];
+        for (var q = 0; q < BARS; q++) {
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + q * 4 }));
+          });
+        }
+        return [
+          { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.82, pan: -0.75, drive: 0.82, hp: 100, events: g },
+          { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.78, pan: 0.75, drive: 0.82, hp: 100, events: g }
+        ];
+      }
+      function basicDrums() {
+        var d = [];
+        for (var q = 0; q < BARS; q++) {
+          R.drumPattern(1, "basic").forEach(function (e) { d.push(Object.assign({}, e, { t: e.t + q * 4 })); });
+        }
+        return { id: "dr", name: "鼓", inst: "drums", gain: 1, events: d };
+      }
+      function bassTrack(events, opts) {
+        opts = opts || {};
+        return Object.assign({ id: "ba", name: "贝斯", inst: "bass", gain: 0.95,
+          drive: 0.25, events: events }, opts);
+      }
+      function low(deg) { return R.ROOT - 12 + deg; }
+
+      /* ---------- 演示 1：四种写法 ---------- */
+      KBG.soundToggle($("b-sound"));
+      var KICKS = [0, 2];            /* 基本鼓型里底鼓落在每小节的第 1、3 拍 */
+      function bassEvents(kind) {
+        var ev = [];
+        for (var q = 0; q < BARS; q++) {
+          var off = q * 4;
+          if (kind === "long") {
+            ev.push({ t: off + 0, midi: low(0), dur: 2, gain: 0.92 });
+            ev.push({ t: off + 2, midi: low(3), dur: 1, gain: 0.92 });
+            ev.push({ t: off + 3, midi: low(5), dur: 1, gain: 0.92 });
+          } else if (kind === "kick") {
+            KICKS.forEach(function (t) {
+              ev.push({ t: off + t, midi: low(RIFF[t]), dur: 2, gain: 0.95 });
+            });
+          } else if (kind === "unison") {
+            RIFF.forEach(function (r, i) {
+              [0, 0.5, 0.75].forEach(function (s, j) {
+                ev.push({ t: off + i + s, midi: low(r), dur: j === 0 ? 0.5 : 0.25,
+                  gain: j === 0 ? 0.95 : 0.66 });
+              });
+            });
+          } else if (kind === "walk") {
+            ev.push({ t: off + 0,   midi: low(0),      dur: 0.5, gain: 0.95 });
+            ev.push({ t: off + 0.5, midi: low(0) + 12, dur: 0.5, gain: 0.7 });
+            ev.push({ t: off + 1,   midi: low(0),      dur: 0.5, gain: 0.9 });
+            ev.push({ t: off + 1.5, midi: low(0) + 12, dur: 0.5, gain: 0.7 });
+            ev.push({ t: off + 2,   midi: low(3),      dur: 0.5, gain: 0.95 });
+            ev.push({ t: off + 2.5, midi: low(3) + 12, dur: 0.5, gain: 0.7 });
+            ev.push({ t: off + 3,   midi: low(5),      dur: 0.5, gain: 0.95 });
+            ev.push({ t: off + 3.5, midi: low(1),      dur: 0.5, gain: 0.8 });  /* 半音走音接回主音 */
+          }
+        }
+        return ev;
+      }
+      var W = {
+        long:   { cn: "① 根音长音", use: "主歌、有人声处、双踩段落" },
+        kick:   { cn: "② 跟底鼓",   use: "Groove Metal、律动型段落" },
+        unison: { cn: "③ 跟吉他齐奏", use: "Breakdown、riff 主导段落" },
+        walk:   { cn: "④ 独立走线", use: "间奏、桥段、经典摇滚" },
+        mute:   { cn: "⓪ 贝斯静音（对照）", use: "——" }
+      };
+      Object.keys(W).forEach(function (k) {
+        $("b-" + k).addEventListener("click", function () {
+          Object.keys(W).forEach(function (j) {
+            $("b-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var ev = k === "mute" ? [] : bassEvents(k);
+          var perBar = ev.length / BARS;
+          var onKick = ev.filter(function (e) {
+            var t = e.t % 4;
+            return KICKS.indexOf(t) >= 0;
+          }).length / BARS;
+          $("b-name").textContent = W[k].cn;
+          $("b-notes").textContent = k === "mute" ? "0" : perBar + " 个";
+          $("b-sync").textContent = k === "mute" ? "—" : onKick + " / " + perBar;
+          $("b-use").textContent = W[k].use;
+          var tracks = [basicDrums()].concat(guitars());
+          if (k !== "mute") tracks.splice(1, 0, bassTrack(ev));
+          start(tracks, BARS * 4);
+        });
+      });
+      $("b-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 2：双踩之下的贝斯 ---------- */
+      function ddDrums() {
+        var d = [];
+        for (var q = 0; q < BARS; q++) {
+          var off = q * 4;
+          for (var t = 0; t < 4; t += 0.25) d.push({ t: off + t, piece: "kick", gain: 0.8 });
+          [1, 3].forEach(function (b) { d.push({ t: off + b, piece: "snare", gain: 0.88 }); });
+          for (var h = 0; h < 4; h += 1) d.push({ t: off + h, piece: "hh", gain: 0.4 });
+        }
+        return { id: "dr", name: "鼓", inst: "drums", gain: 1, events: d };
+      }
+      var DD = {
+        follow: { cn: "跟每一击", n: 16, res: "低频完全糊住 —— 两个瞬态在每一格上正面竞争", ok: false,
+                  ev: function (off) { var e = []; for (var t = 0; t < 4; t += 0.25)
+                    e.push({ t: off + t, midi: low(0), dur: 0.25, gain: 0.9 }); return e; } },
+        accent: { cn: "只跟重音", n: 4, res: "好一些，但每拍仍有一次正面冲突", ok: false,
+                  ev: function (off) { var e = []; for (var t = 0; t < 4; t += 1)
+                    e.push({ t: off + t, midi: low(0), dur: 1, gain: 0.92 }); return e; } },
+        hold:   { cn: "弹长音", n: 1, res: "低频从断续变连续 —— 最结实", ok: true,
+                  ev: function (off) { return [{ t: off, midi: low(0), dur: 4, gain: 0.95 }]; } }
+      };
+      Object.keys(DD).forEach(function (k) {
+        $("dd-" + k).addEventListener("click", function () {
+          Object.keys(DD).forEach(function (j) {
+            $("dd-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var ev = [];
+          for (var q = 0; q < BARS; q++) ev = ev.concat(DD[k].ev(q * 4));
+          $("dd-name").textContent = DD[k].cn;
+          $("dd-notes").textContent = DD[k].n + " 个";
+          $("dd-low").textContent = (16 + DD[k].n) + " 个 / 小节";
+          $("dd-res").textContent = DD[k].res;
+          $("dd-res").className = DD[k].ok ? "ok" : "warn";
+          start([ddDrums(), bassTrack(ev)].concat(guitars()), BARS * 4);
+        });
+      });
+      $("dd-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 3：干净 / 失真 / 双轨分频 ---------- */
+      var gtrMuted = false, curF = null;
+      var F = {
+        clean: { cn: "完全干净", n: "1 轨", lowTxt: "强", lowOk: true, midTxt: "弱", midOk: false,
+                 tracks: function (ev) { return [bassTrack(ev, { drive: 0, lp: 4000, hp: 30 })]; } },
+        dist:  { cn: "整轨失真", n: "1 轨", lowTxt: "弱", lowOk: false, midTxt: "强", midOk: true,
+                 tracks: function (ev) { return [bassTrack(ev, { drive: 0.72, lp: 4000, hp: 120 })]; } },
+        split: { cn: "双轨分频", n: "2 轨", lowTxt: "强", lowOk: true, midTxt: "强", midOk: true,
+                 tracks: function (ev) {
+                   return [
+                     bassTrack(ev, { id: "ba", name: "贝斯 · 低频轨", drive: 0, lp: 200, hp: 30, gain: 1.0 }),
+                     bassTrack(ev, { id: "ba2", name: "贝斯 · 失真轨", drive: 0.8, lp: 4000, hp: 200, gain: 0.8 })
+                   ];
+                 } }
+      };
+      function fBassEvents() {
+        var ev = [];
+        for (var q = 0; q < BARS; q++) {
+          var off = q * 4;
+          RIFF.forEach(function (r, i) { ev.push({ t: off + i, midi: low(r), dur: 1, gain: 0.92 }); });
+        }
+        return ev;
+      }
+      function playF(k) {
+        curF = k;
+        Object.keys(F).forEach(function (j) {
+          $("f-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        var v = F[k];
+        $("f-name").textContent = v.cn + (gtrMuted ? "（吉他已静音）" : "");
+        $("f-tracks").textContent = v.n;
+        $("f-low").textContent = v.lowTxt;  $("f-low").className = v.lowOk ? "ok" : "warn";
+        $("f-mid").textContent = v.midTxt;  $("f-mid").className = v.midOk ? "ok" : "warn";
+        var tracks = [basicDrums()].concat(v.tracks(fBassEvents()));
+        if (!gtrMuted) tracks = tracks.concat(guitars());
+        start(tracks, BARS * 4);
+      }
+      Object.keys(F).forEach(function (k) {
+        $("f-" + k).addEventListener("click", function () { playF(k); });
+      });
+      $("f-gtr").addEventListener("click", function () {
+        gtrMuted = !gtrMuted;
+        $("f-gtr").className = "kb-btn" + (gtrMuted ? " kb-btn-primary" : "");
+        $("f-gtr").textContent = gtrMuted ? "🔊 恢复吉他" : "🔇 吉他静音";
+        if (curF) playF(curF);
+      });
+      $("f-stop").addEventListener("click", stopAll);
+
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopAll(); });
+    });
+  </script>
+</body>
+</html>

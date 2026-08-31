@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>15 制作对编曲的反作用 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 15 章：分轨、double tracking、声像、EQ 高通、量化对齐、压缩与响度归一化各自的编曲含义；重型制作规范与编曲惯例之间的反馈循环。">
+  <meta name="kb:tags" content="编曲,制作,混音,分轨,double tracking,高通,量化,压缩,响度,反作用,zzdbqdfzy,zz">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 15 章 · 制作对编曲的反作用</h1>
+        <p class="kb-lead">到这里为止，本书讨论的一切都发生在「编曲」这个阶段。但真实的作品要经过录音、分轨、加倍、声像、EQ、压缩、母带、流媒体投放——<strong>而这一整条链路会反过来决定编曲能怎么写。</strong>本章处理这个循环。它也解释了重型音乐里那些看起来反直觉的惯例（吉他不要低频？底鼓不要厚？）究竟是从哪来的。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出五个制作环节各自的<strong>编曲含义</strong>；② 解释为什么现代重型的节奏吉他要做激进的高通；③ 理解量化对齐的收益与代价，以及怎么找补；④ 说清压缩与响度归一化为什么让音量维度失效、让编曲更重要；⑤ 描述「制作规范 ⇄ 编曲惯例」这个反馈循环。</p>
+        </div>
+
+        <h2>五个环节的编曲含义</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>制作环节</th><th>技术上做了什么</th><th><strong>编曲含义</strong></th></tr></thead>
+            <tbody>
+              <tr><td><strong>分轨录音</strong></td><td>每个声部单独录、单独处理</td><td>编曲可以做得比现场精细得多；<strong>但「一起演奏」的整体感需要人工重建</strong></td></tr>
+              <tr><td><strong>Double tracking</strong></td><td>同一段内容录多遍</td><td><strong>这是编曲决定，不是混音技巧</strong>——录音时决定，事后补不了（第 10 章）</td></tr>
+              <tr><td><strong>声像</strong></td><td>把各轨放在立体声场的不同位置</td><td>提供了频谱之外的第二块地；<strong>它决定了「几轨」才有意义</strong>（第 10 章）</td></tr>
+              <tr><td><strong>EQ / 高通</strong></td><td>切掉各轨不需要的频段</td><td><strong>逼着编曲提前分配主频段</strong>；单轨会变薄，合起来才结实（第 7 章）</td></tr>
+              <tr><td><strong>压缩 / 限制 / 响度归一化</strong></td><td>压平动态、提高平均响度</td><td><strong>音量维度失效</strong>；能量曲线必须画在内容上（第 5、13 章）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一条贯穿本章的观察</p>
+          <p><strong>制作链路不是「把编曲录下来」，它会改变编曲的最优解。</strong></p>
+          <p>同一条 riff，在一支只用两支话筒录现场的乐队里和在一个四轨分轨 + 网格对齐的工程里，最优的写法是不同的——<strong>不是风格偏好不同，是约束条件不同。</strong></p>
+        </div>
+
+        <h2>EQ 高通：吉他为什么要放弃低频</h2>
+        <p>现代重型制作里，节奏吉他通常从 <strong>80–120 Hz</strong> 往下切掉。单独听这样的吉他会觉得薄，很多人第一次做时会本能地把它调回来。<strong>但这个规范是对的，理由在第 7 章已经全部给过：</strong></p>
+        <ol>
+          <li><strong>吉他的基频最低只到 82 Hz</strong>（六弦空弦，降调更低）。80 Hz 以下的能量<strong>不是音高，是箱体的隆隆声</strong>——它不携带任何和声信息。</li>
+          <li><strong>那块地已经有两个主人了</strong>：底鼓（40–80 Hz）与贝斯（80–250 Hz）。四轨吉他各自往里加一点，累积起来足以把低频糊死。</li>
+          <li><strong>四轨叠加会放大低频。</strong>四轨的 100 Hz 相干叠加约 +6 到 +12 dB，而中频因为各轨的谐波不同，叠加得平缓得多。<strong>不切的话，四轨吉他在低频比在中频响得多——恰好和你想要的相反。</strong></li>
+        </ol>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「单轨听起来薄，合起来才结实」</p>
+          <p>这是重型混音里最反直觉、也最重要的一条经验。</p>
+          <p><strong>单轨的目标不是好听，是「在混音里占对位置」。</strong>一把切掉了低频的吉他单听很薄，但四轨叠加 + 贝斯托底 + 底鼓打点之后，整体反而比「四轨都很饱满」更结实——因为每一层都待在自己的地盘上，没有互相掩蔽。</p>
+          <p><strong>推论：不要在单轨 solo 的状态下调 EQ。</strong>单轨听感和它在混音里的贡献是两回事（第 12 章的静音测试同理）。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🔪 演示 1：吉他高通前后（单听 vs 合听）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：四轨节奏吉他在两种设置下——① 不做高通（保留 40 Hz 以下）；② 从 110 Hz 高通。单独听吉他时 ① 明显更饱满；但把底鼓与贝斯加回来之后，② 的整体更结实、贝斯更清楚，而 ① 的低频糊成一片。这就是「单轨听起来薄，合起来才结实」。</p></noscript>
+            <div id="q-sound"></div>
+            <div class="kb-readout">
+              <span>吉他高通 <b id="q-hp">—</b></span>
+              <span>在场 <b id="q-with">—</b></span>
+              <span>单听吉他 <b id="q-solo">—</b></span>
+              <span>合听整体 <b id="q-mix">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="q-full" type="button">▶ 不做高通（40 Hz）</button>
+              <button class="kb-btn" id="q-cut" type="button">▶ 高通 110 Hz</button>
+              <button class="kb-btn" id="q-only" type="button">🎸 只听吉他</button>
+              <button class="kb-btn" id="q-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">建议顺序：先点「只听吉他」，在两种高通之间来回切——<strong>不做高通明显更饱满</strong>。然后关掉「只听吉他」，把底鼓和贝斯加回来，再切一次——<strong>结论会反过来。</strong></p>
+          </div>
+        </div>
+
+        <h2>量化对齐：收益与代价</h2>
+        <p>第 8 章习题 8.9 已经给出了原因：<strong>越依赖齐奏，对时间精度的要求越高。</strong>现代重型大量使用鼓—贝斯—吉他的完全齐奏，而齐奏的效果（把同时发生的能量归并成一件巨型乐器）有一个很窄的时间窗口。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>偏差</th><th>听感</th></tr></thead>
+            <tbody>
+              <tr><td><strong>0–5 ms</strong></td><td>归并成一个事件——<strong>「一件巨型乐器」</strong></td></tr>
+              <tr><td>5–15 ms</td><td>开始变宽、变厚；有些制作会<strong>刻意</strong>用这个范围（第 10 章的去相关）</td></tr>
+              <tr><td><strong>15–30 ms</strong></td><td>被听成两个事件的模糊叠加——<strong>「糊」</strong></td></tr>
+              <tr><td>30 ms 以上</td><td>听成两次独立的击打</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 对齐的代价，以及怎么找补</p>
+          <p><strong>代价：失去律动的人味。</strong>完全量化的演奏在节奏上是精确的，但也是机械的——人类演奏中细微的超前/滞后正是「groove」的来源。</p>
+          <p><strong>四种找补手段</strong>：</p>
+          <p>① <strong>保留力度变化</strong>——即使时值对齐了，每一击的力度仍然应该起伏；<br>
+          ② <strong>让某些声部不对齐</strong>——人声与主音吉他通常保留自由度，它们不参与齐奏；<br>
+          ③ <strong>保留速度的微小起伏</strong>——段落之间可以有 1–2 BPM 的变化；<br>
+          ④ <strong>只对齐需要齐奏的地方</strong>——breakdown 和重音必须准，主歌的伴奏可以松一点。</p>
+          <p><strong>第 ④ 条最重要，也最常被忽略：对齐不是一个全局开关。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎯 演示 2：齐奏的时间窗口</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一段吉他、贝斯、底鼓完全齐奏的重音，三个版本的各声部之间分别有 0、10、28 毫秒的时间偏差。0 ms 时三件乐器归并成一件覆盖六个八度的巨型乐器；10 ms 时开始变宽但仍然成立；28 ms 时被听成模糊的叠加，重量明显下降。这解释了为什么依赖齐奏的编曲必须对齐到网格。</p></noscript>
+            <div class="kb-readout">
+              <span>最大偏差 <b id="g-dev">—</b></span>
+              <span>听觉的解释 <b id="g-hear">—</b></span>
+              <span>重量 <b id="g-weight">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="g-0" type="button">▶ 0 ms（完全对齐）</button>
+              <button class="kb-btn" id="g-10" type="button">▶ 10 ms</button>
+              <button class="kb-btn" id="g-28" type="button">▶ 28 ms</button>
+              <button class="kb-btn" id="g-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">28 ms 在音乐上是<strong>非常小</strong>的一个量——148 BPM 下一个十六分音符是 101 毫秒，28 ms 只有它的四分之一多一点。<strong>但对齐奏来说，这已经足够毁掉效果了。</strong></p>
+          </div>
+        </div>
+
+        <h2>压缩：音量维度为什么失效</h2>
+        <p>本书从第 5 章起反复说「音量是最没用的对比维度」。这里给出完整的原因链：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>环节</th><th>做什么</th><th>对你推的 4 dB 的影响</th></tr></thead>
+            <tbody>
+              <tr><td>① 各轨压缩</td><td>压平单轨的动态</td><td>轨内的强弱差被削平</td></tr>
+              <tr><td>② 总线压缩</td><td>压低整体最响的部分</td><td><strong>副歌被压得最多</strong></td></tr>
+              <tr><td>③ 母带限制</td><td>削峰、提高平均响度</td><td>剩下的差再被压一次</td></tr>
+              <tr><td>④ 流媒体响度归一化</td><td>把整首拉到统一响度目标</td><td>整体平移，段落差不变但已所剩无几</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>四级处理之后，你在工程里推的 4 dB 可能只剩不到 1 dB。</strong>而这正是「工程里听着挺炸，导出之后就没了」的完整解释（第 5 章例题 5.3）。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一个反直觉的结论：编曲的重要性因此上升了</p>
+          <p>过去（动态范围大的年代）可以靠演奏与混音的<strong>强弱起伏</strong>做出的效果，现在必须靠<strong>编曲内容</strong>做出来——因为压缩能压振幅，压不掉「这一段多了一条八度吉他」。</p>
+          <p>所以现代重型制作那么依赖分层、织体设计、编制的段落变化，<strong>不是因为它们更「高级」，而是因为它们是唯一压不掉的对比。</strong></p>
+          <p><strong>操作建议</strong>：混音时<strong>挂着总线压缩去听</strong>。你会立刻发现哪些对比是真的、哪些是假的——而这个发现会直接改变你的编曲决定。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">📉 演示 3：压缩之后还剩下什么</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：三个版本的「主歌 → 副歌」——① 副歌推高 4 dB（工程里听到的）；② 同样的做法经过压缩链路之后实际剩下的约 1 dB；③ 不推音量，改用内容（副歌加高八度吉他层、放开延音、加密底鼓）。① 听起来不错但它不是成品；② 几乎听不出段落变化；③ 的音量差为零，段落感却最强——而且压缩对它没有任何影响。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="c-name">—</b></span>
+              <span>副歌音量差 <b id="c-db">—</b></span>
+              <span>内容差异 <b id="c-content">—</b></span>
+              <span>压缩后还剩 <b id="c-after">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="c-raw" type="button">▶ ① 副歌 +4 dB（工程里）</button>
+              <button class="kb-btn" id="c-comp" type="button">▶ ② 压缩之后实际剩下的</button>
+              <button class="kb-btn" id="c-content-btn" type="button">▶ ③ 用内容做对比（音量差 0）</button>
+              <button class="kb-btn" id="c-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">版本 ② 是版本 ① 真正会被听到的样子。<strong>请注意版本 ③——它的音量差是零，段落感却比 ① 还强，而且这个效果在任何压缩链路下都不会衰减。</strong></p>
+          </div>
+        </div>
+
+        <h2>反作用的完整循环</h2>
+        <p>现在可以把整条链路串起来。以现代重型音乐为例：</p>
+        <figure>
+          <svg viewBox="0 0 720 260" width="720" height="260" role="img" aria-label="制作与编曲之间的反馈循环：降调导致吉他侵占低频，于是吉他做高通；吉他没有低频，于是贝斯分双轨补中频；低频拥挤于是靠齐奏在时间上对齐；齐奏要求高精度于是量化对齐；量化让律动机械，于是靠力度与不对齐的声部找补；这些规范又反过来使降调成为可行的选择">
+            <g font-size="11.5">
+              <rect x="16" y="26" width="152" height="46" rx="7" fill="none" stroke="#dc2626" stroke-width="1.6"/>
+              <text x="92" y="46" fill="var(--kb-fg)" text-anchor="middle">降调 / 七弦</text>
+              <text x="92" y="62" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">吉他闯进 60–250 Hz</text>
+
+              <rect x="208" y="26" width="152" height="46" rx="7" fill="none" stroke="var(--kb-border)"/>
+              <text x="284" y="46" fill="var(--kb-fg)" text-anchor="middle">吉他做激进高通</text>
+              <text x="284" y="62" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">放弃 100 Hz 以下</text>
+
+              <rect x="400" y="26" width="152" height="46" rx="7" fill="none" stroke="var(--kb-border)"/>
+              <text x="476" y="46" fill="var(--kb-fg)" text-anchor="middle">贝斯分双轨</text>
+              <text x="476" y="62" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">干净低频 ＋ 失真中频</text>
+
+              <rect x="560" y="106" width="146" height="46" rx="7" fill="none" stroke="var(--kb-border)"/>
+              <text x="633" y="126" fill="var(--kb-fg)" text-anchor="middle">大量使用齐奏</text>
+              <text x="633" y="142" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">频率分不开就对齐时间</text>
+
+              <rect x="400" y="186" width="152" height="46" rx="7" fill="none" stroke="var(--kb-border)"/>
+              <text x="476" y="206" fill="var(--kb-fg)" text-anchor="middle">必须量化对齐</text>
+              <text x="476" y="222" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">齐奏窗口只有几毫秒</text>
+
+              <rect x="208" y="186" width="152" height="46" rx="7" fill="none" stroke="var(--kb-border)"/>
+              <text x="284" y="206" fill="var(--kb-fg)" text-anchor="middle">律动变机械</text>
+              <text x="284" y="222" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">靠力度与自由声部找补</text>
+
+              <rect x="16" y="106" width="152" height="46" rx="7" fill="none" stroke="#16a34a" stroke-width="1.6"/>
+              <text x="92" y="126" fill="var(--kb-fg)" text-anchor="middle">这套规范成熟了</text>
+              <text x="92" y="142" fill="var(--kb-fg-muted)" text-anchor="middle" font-size="10">于是降调变得可行</text>
+            </g>
+            <g stroke="var(--kb-fg-muted)" fill="none" stroke-width="1.3" marker-end="url(#ar)">
+              <path d="M168 49 L204 49"/>
+              <path d="M360 49 L396 49"/>
+              <path d="M552 60 Q600 78 626 102"/>
+              <path d="M600 152 Q560 180 556 205"/>
+              <path d="M400 209 L364 209"/>
+              <path d="M208 205 Q120 200 92 156"/>
+              <path d="M92 106 L92 76" stroke-dasharray="5 4" stroke="#16a34a"/>
+            </g>
+            <defs>
+              <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--kb-fg-muted)"/>
+              </marker>
+            </defs>
+            <text x="360" y="252" font-size="11" fill="#16a34a" text-anchor="middle">绿色虚线：闭环 —— 制作规范成熟之后，反过来使最初那个选择（降调）成为可能</text>
+          </svg>
+          <figcaption>制作与编曲之间是一个<strong>闭环</strong>，不是单向的流程。每一条看起来反直觉的规范，都是链条上一环的必然后果。</figcaption>
+        </figure>
+        <p><strong>这个循环有三个重要含义</strong>：</p>
+        <ol>
+          <li><strong>孤立地看任何一条规范都会觉得奇怪。</strong>「吉他不要低频」「底鼓不要厚」「贝斯要失真」——单独看每一条都反直觉，放进链条里就全都必然。</li>
+          <li><strong>换一个环节，整条链都要重算。</strong>如果你不降调、只用两轨吉他、不做齐奏，那么「吉他做 110 Hz 高通」对你可能就是错的。<strong>规范来自约束，约束变了规范就变。</strong></li>
+          <li><strong>编曲决定必须知道自己的下游是什么。</strong>为分轨制作写的编曲和为现场写的编曲不同；为流媒体做的动态设计和为黑胶做的不同。<strong>「这首歌最终以什么形式被听到」是一个编曲问题。</strong></li>
+        </ol>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 给不同下游的三条不同建议</p>
+          <p><strong>为流媒体 / 现代重型制作</strong>：能量曲线画在内容上；四轨吉他做高通；齐奏处必须对齐；不要指望音量。</p>
+          <p><strong>为现场演出</strong>：编制不能超过台上的人数；<strong>动态范围可以更大</strong>（现场没有响度归一化）；避免依赖精确对齐的段落；<strong>视觉动作也是编曲的一部分</strong>——安静的桥段在现场会更有效。</p>
+          <p><strong>为不做重度压缩的风格</strong>（后摇、氛围、古典跨界）：<strong>音量重新成为有效维度</strong>；可以做很长的 build；分层可以更少更透明。</p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 15.1</p>
+          <p>吉他手拒绝做高通：「切掉之后我的音色就薄了。」怎么回应？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>他说得对——单轨确实变薄了。分歧不在事实，在评价标准。</strong></p>
+            <p><strong>三个可以直接验证的论据：</strong></p>
+            <ol>
+              <li><strong>切掉的不是音，是隆隆声。</strong>六弦空弦的基频是 82 Hz（降调更低）。<strong>80 Hz 以下的能量不携带任何和声信息</strong>——它是箱体共振与话筒的低频拾取。切掉它，一个音高都没少。</li>
+              <li><strong>四轨叠加会放大低频。</strong>四轨的 100 Hz 是相干的，叠加约 +6 到 +12 dB；而中频因为各轨谐波不同，叠加平缓得多。<strong>不切的话，四轨吉他在低频比在中频还响——恰好和你想要的相反。</strong></li>
+              <li><strong>那块地已经有主人了。</strong>底鼓在 40–80 Hz，贝斯在 80–250 Hz。吉他挤进去的结果是三个人抢一块地，谁都不清楚（第 7 章）。</li>
+            </ol>
+            <p><strong>最有说服力的做法是让他自己听</strong>（演示 1 就是这个实验）：</p>
+            <ol>
+              <li>先只听吉他，在切与不切之间来回——他会觉得不切更好；</li>
+              <li>再把贝斯与底鼓加回来，同样来回切——<strong>结论会反过来</strong>；</li>
+              <li>最后把贝斯 solo 出来听，对比两种情况下贝斯的清晰度。</li>
+            </ol>
+            <p><strong>要说的核心一句话</strong>：<strong>单轨的目标不是好听，是「在混音里占对位置」。</strong>吉他放弃低频换来的是整体更结实——而观众听到的是整体，不是那一轨。</p>
+            <p><strong>一个折中</strong>：如果乐队只有两轨吉他（不是四轨），高通可以温和一些（80 Hz 而不是 110 Hz）。<strong>规范来自约束，约束变了规范就该变。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 15.2</p>
+          <p>把所有轨都量化到网格之后，歌听起来「死板」。怎么办？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>关键在于：对齐不应该是一个全局开关。</strong>先分清哪些地方必须准、哪些地方不必。</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>声部 / 位置</th><th>要不要对齐</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Breakdown、重音、齐奏段</strong></td><td><strong>必须准</strong>（0–5 ms）</td><td>齐奏的效果窗口只有几毫秒（演示 2）</td></tr>
+                  <tr><td>底鼓与贝斯</td><td>准</td><td>低频的对齐直接影响「结实」的感觉</td></tr>
+                  <tr><td>节奏吉他（主歌）</td><td>可以松</td><td>那里不依赖齐奏；松一点有人味</td></tr>
+                  <tr><td><strong>人声</strong></td><td><strong>不要对齐</strong></td><td>人声的表现力大部分在时值的自由度里</td></tr>
+                  <tr><td><strong>主音吉他 / 独奏</strong></td><td><strong>不要对齐</strong></td><td>同上；它不参与齐奏</td></tr>
+                  <tr><td>镲片</td><td>可以松</td><td>它提供的是纹理不是骨架</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>另外三个找补手段</strong>：</p>
+            <ol>
+              <li><strong>保留力度变化。</strong>时值对齐不等于力度也要一样。每一击的力度起伏是 groove 的重要来源——很多编程鼓听起来假，问题不在时值而在<strong>力度全都一样</strong>。</li>
+              <li><strong>保留速度的微小起伏。</strong>段落之间给 1–2 BPM 的变化（主歌稍慢、副歌稍快），这在真实演奏里本来就会发生。</li>
+              <li><strong>加倍轨不要对齐到彼此。</strong>四轨吉他如果全部量化到同一个网格点，它们就变回了「复制粘贴」（第 10 章）——<strong>宽度需要的正是那几毫秒的差异。</strong></li>
+            </ol>
+            <p><strong>最后一条最容易踩坑</strong>：量化的本意是让齐奏更准，但过度量化会杀掉 double tracking 的去相关效果。<strong>正确的做法是「各轨对齐到网格，但保留各自的微小偏差」——量化力度不要拉到 100%。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 15.3</p>
+          <p>同一首歌要出「录音室版」和「现场版」。编曲上应该有哪些不同？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>录音室版</th><th>现场版</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>编制上限</strong></td><td>不限（分轨叠加）</td><td><strong>不能超过台上的人数</strong>——四轨吉他现场只有两把</td></tr>
+                  <tr><td><strong>宽度</strong></td><td>靠 double tracking（第 10 章）</td><td><strong>做不出来</strong>——两把吉他只能左右各一；要靠别的补</td></tr>
+                  <tr><td><strong>动态范围</strong></td><td>被压缩链路限制</td><td><strong>可以大得多</strong>——现场没有响度归一化，音量重新有效</td></tr>
+                  <tr><td><strong>依赖精确对齐的段落</strong></td><td>可以有</td><td><strong>要少</strong>——现场做不到几毫秒的精度</td></tr>
+                  <tr><td><strong>桥段 / 安静段</strong></td><td>靠编制减法</td><td><strong>更有效</strong>——还叠加了视觉与场内气氛</td></tr>
+                  <tr><td><strong>可跟随性</strong></td><td>要求中等</td><td><strong>要求高</strong>——观众要能跟上、能跟唱</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三条具体的改编建议</strong>：</p>
+            <ol>
+              <li><strong>用能量替代宽度。</strong>录音室版靠四轨吉他做出的「大」，现场要靠<strong>动态对比</strong>做出来——把主歌做得更空，副歌相对就更大。<strong>现场的音量差是真的，不会被压掉。</strong></li>
+              <li><strong>把依赖精度的段落改写。</strong>录音室的 breakdown 如果是十六分级别的齐奏，现场应该改成更慢、更稀的重音——<strong>音符越少越好对齐，而且现场本来就更适合稀疏的重击。</strong></li>
+              <li><strong>加长安静段。</strong>录音室里 8 小节的桥段，现场可以拉到 12–16 小节——<strong>因为现场的安静有观众的注意力和视觉在支撑，不会像唱片里那样显得拖。</strong></li>
+            </ol>
+            <p><strong>更一般的结论</strong>：<strong>「这首歌最终以什么形式被听到」是一个编曲问题，不是一个后期问题。</strong>录音室版和现场版不该是同一份编曲的两次演奏，而应该是同一首歌的两份编曲。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么现代重型的节奏吉他要做激进的高通？请给出三条理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>切掉的不携带和声信息。</strong>六弦空弦基频 82 Hz，80 Hz 以下的能量是箱体共振与低频拾取，不是音高。</li>
+              <li><strong>那块地已经有两个主人</strong>：底鼓（40–80 Hz）与贝斯（80–250 Hz）。四轨吉他各加一点，累积起来足以把低频糊死（第 7 章）。</li>
+              <li><strong>四轨叠加会放大低频。</strong>各轨的低频是高度相干的（都是同一个基频区），叠加约 +6 到 +12 dB；而中频因为谐波结构各不相同，叠加平缓得多。<strong>结果是不切的话，四轨吉他在低频比在中频还响。</strong></li>
+            </ol>
+            <p><strong>代价与回报</strong>：单轨会明显变薄，但四轨叠加 + 贝斯托底 + 底鼓打点之后整体更结实——因为每一层都在自己的地盘上。<strong>「单轨听起来薄，合起来才结实」。</strong></p>
+            <p><strong>一条重要的限定</strong>：这个规范的前提是「四轨吉他 + 降调 + 分轨制作」。如果乐队只有两轨吉他、不降调，高通可以温和得多（80 Hz 而不是 110 Hz）。<strong>规范来自约束条件，不是绝对真理。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>齐奏的时间窗口有多宽？超出之后会发生什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>偏差</th><th>听感</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>0–5 ms</strong></td><td>归并成一个事件 —— <strong>「一件巨型乐器」</strong>（第 8 章）</td></tr>
+                  <tr><td>5–15 ms</td><td>开始变宽、变厚；<strong>可以刻意利用</strong>（double tracking 的去相关，第 10 章）</td></tr>
+                  <tr><td><strong>15–30 ms</strong></td><td>被听成两个事件的模糊叠加 —— <strong>「糊」</strong></td></tr>
+                  <tr><td>30 ms 以上</td><td>听成两次独立的击打</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>为什么这些数字这么小</strong>：148 BPM 下一个十六分音符是 101 毫秒，所以 28 ms 只有它的四分之一多一点——<strong>在音乐记谱的尺度上完全看不见，但对听觉的事件归并来说已经太大了。</strong></p>
+            <p><strong>一个有趣的观察</strong>：5–15 ms 这个区间是<strong>同一个物理现象的两种用法</strong>——用在需要齐奏的地方是缺陷（不够准），用在需要宽度的地方是特性（去相关）。<strong>差别只在于你想要「一个事件」还是「一片声音」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>列出压缩链路的四个环节，说明它们各自怎么削弱你在工程里推的 4 dB。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>各轨压缩</strong>——压平单轨的动态，轨内的强弱差先被削平一次。</li>
+              <li><strong>总线压缩</strong>——压低整体最响的部分，而<strong>副歌正是最响的部分</strong>，所以它被压得最多。</li>
+              <li><strong>母带限制</strong>——削峰、提高平均响度，剩下的差再被压一次。</li>
+              <li><strong>流媒体响度归一化</strong>——把整首拉到统一的响度目标。它是整体平移，不改变段落间的差，<strong>但此时那个差已经所剩无几了</strong>。</li>
+            </ol>
+            <p><strong>四级之后，4 dB 可能只剩不到 1 dB。</strong>这就是「工程里听着挺炸，导出之后就没了」的完整解释（第 5 章例题 5.3）。</p>
+            <p><strong>两条操作建议</strong>：</p>
+            <ul>
+              <li><strong>混音时挂着总线压缩听。</strong>你会立刻发现哪些对比是真的。</li>
+              <li><strong>做归一化测试</strong>：把主歌和副歌各截一段，调成同样响度再听。<strong>如果还能听出哪个是副歌，你的对比是真的。</strong></li>
+            </ul>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说「double tracking 是编曲决定而不是混音技巧」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为它必须在录音时决定，事后补不了。</strong></p>
+            <p>真正的 double tracking 需要<strong>两次独立的演奏</strong>——两次演奏之间的时值、音高、音色差异让信号去相关，听觉才无法把它们合成为一个点声源（第 10 章）。</p>
+            <p><strong>而这三种差异里，只有前两种能用效果器模拟：</strong></p>
+            <ul>
+              <li>时值差 → 短延迟；</li>
+              <li>音高差 → 调制；</li>
+              <li><strong>音色差 → 模拟不出来</strong>。两次演奏的拨片位置、角度、力度都不同，谐波分布因此不同——这一层无法合成。</li>
+            </ul>
+            <p><strong>后果</strong>：如果录音时只弹了一遍，后期能做出「宽」，但做不出「宽而且厚」。而在四轨叠加时这个差别会被放大（第 10 章习题 10.5）——四轨模拟版本共享同一次演奏的谐波结构，会相干叠加成尖锐的共振峰。</p>
+            <p><strong>这就是为什么它属于编曲</strong>：<strong>「这一段几轨、哪几轨是加倍、哪几轨是八度」必须在进录音棚之前定下来</strong>（第 10 章习题 10.8）。这和「加多少混响」这类可以事后调整的决定，性质完全不同。</p>
+            <p><strong>一条推广</strong>：<strong>凡是「事后补不了」的决定都属于编曲。</strong>宽度、编制、齐奏与否、段落长度——这些都是。EQ、混响、压缩量则不是。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「压缩让编曲变得更重要」——请完整论证这个反直觉的结论。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>论证分三步：</strong></p>
+            <p><strong>第一步：区分「振幅」与「内容」。</strong>音乐里制造对比的手段可以分成两类——改变振幅的（音量、力度、动态起伏），和改变内容的（编制、音区、密度、织体、律动、和声节奏）。</p>
+            <p><strong>第二步：压缩链路专门压缩振幅。</strong>各轨压缩 → 总线压缩 → 母带限制 → 响度归一化，四级处理的目标全都是<strong>缩小振幅的动态范围</strong>。但它们对内容维度<strong>几乎没有影响</strong>——压缩器不会把八度吉他压掉，不会把闷音变成延音，不会把四轨变成两轨。</p>
+            <p><strong>第三步：因此对比的重担全部转移到了内容维度，而内容维度归编曲管。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>动态范围大的年代</th><th>现在</th></tr></thead>
+                <tbody>
+                  <tr><td>段落对比靠什么</td><td>演奏力度 ＋ 混音音量 ＋ 编曲</td><td><strong>几乎只剩编曲</strong></td></tr>
+                  <tr><td>「更大」怎么做</td><td>推上去就行</td><td>必须<strong>多一层内容</strong></td></tr>
+                  <tr><td>编曲的容错</td><td>较高（混音能补）</td><td><strong>很低</strong>——混音补不了</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>结论</strong>：现代重型制作那么依赖分层设计、织体规划、编制的段落变化，<strong>不是审美上的「更高级」，而是技术条件下的必然</strong>——那是唯一压不掉的对比。</p>
+            <p><strong>一个有力的旁证</strong>：不做重度压缩的风格（后摇、氛围、古典跨界）确实可以用简单得多的编曲，因为它们还保留着动态这个维度。<strong>约束越强的地方，编曲的技术含量越高。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>量化对齐既是必需的又会杀掉 double tracking 的效果。这个矛盾怎么解？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>矛盾的来源</strong>：齐奏需要各声部之间偏差 &lt; 5 ms（归并成一件巨型乐器），而 double tracking 需要各加倍轨之间偏差 5–15 ms（去相关成一片宽度）。<strong>同一个物理量，两个相反的目标。</strong></p>
+            <p><strong>解法：区分「跨声部」与「同声部内」。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>目标</th><th>做法</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>跨声部</strong>（吉他 vs 贝斯 vs 底鼓）</td><td>齐奏 → 越准越好</td><td>各声部<strong>整体</strong>对齐到网格</td></tr>
+                  <tr><td><strong>同声部内</strong>（吉他 L1 vs L2 vs R1 vs R2）</td><td>去相关 → 需要差异</td><td><strong>保留各轨的微小偏差</strong>，不要把它们互相量化</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>具体操作</strong>：量化每一轨到网格时，<strong>量化力度不要拉到 100%</strong>（常见值是 70–85%）。这样每轨都靠近网格点（跨声部足够准），但各轨仍保留自己那几毫秒的个性（同声部内仍然去相关）。</p>
+            <p><strong>还有一个更简单的判断</strong>：</p>
+            <ul>
+              <li><strong>需要「一个事件」的地方 → 对齐。</strong>Breakdown 的重音、底鼓与贝斯、riff 与底鼓的齐奏点。</li>
+              <li><strong>需要「一片声音」的地方 → 保留差异。</strong>加倍轨、和声人声、氛围层。</li>
+            </ul>
+            <p><strong>这个区分其实贯穿全书</strong>：第 8 章的「归并成巨型乐器」和第 10 章的「去相关成一片宽」，是同一个听觉机制的两端。<strong>知道自己要的是哪一端，就知道该对齐还是该分开。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「制作规范 ⇄ 编曲惯例」的反馈循环里，如果改变其中一个环节（比如不降调），下游会发生什么连锁反应？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>把链条重走一遍，每一环都要重算：</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>环节</th><th>降调（Drop B）</th><th>标准调弦（E）</th></tr></thead>
+                <tbody>
+                  <tr><td>吉他最低音</td><td>约 62 Hz —— <strong>低于底鼓峰值</strong></td><td>82 Hz —— 在贝斯之上</td></tr>
+                  <tr><td>吉他高通</td><td><strong>必须激进（100–120 Hz）</strong></td><td>温和即可（70–80 Hz）</td></tr>
+                  <tr><td>贝斯</td><td><strong>几乎必须双轨分频</strong>（低频被挤）</td><td>单轨常常够用</td></tr>
+                  <tr><td>和弦复杂度</td><td><strong>只能强力和弦</strong>（低频互调太脏）</td><td>可以用三度、挂留、七和弦</td></tr>
+                  <tr><td>齐奏依赖</td><td><strong>高</strong>——频率分不开只能对齐时间</td><td>中——频率上还有余地</td></tr>
+                  <tr><td>对精度的要求</td><td><strong>很高</strong>，必须量化</td><td>中，可以保留人味</td></tr>
+                  <tr><td>底鼓音色</td><td><strong>极「点」</strong>，低频收紧</td><td>可以更厚</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>结论：改一个环节，整条链都要重算。</strong>一支不降调的经典摇滚乐队如果照搬现代金属的制作规范（激进高通、双轨贝斯、全量化），结果会是<strong>薄、冷、没有人味</strong>——因为那些规范解决的问题它根本没有。</p>
+            <p><strong>反过来也成立</strong>：一支 Drop B 的乐队如果照搬经典摇滚的做法（吉他保留低频、贝斯单轨、松散的律动），结果会是<strong>糊成一团</strong>。</p>
+            <p><strong>这条观察的普遍价值</strong>：<strong>音乐制作里的「规则」几乎全都是条件性的。</strong>遇到任何一条规范，正确的问题不是「它对不对」，而是「<strong>它解决的是哪个约束？我有那个约束吗？</strong>」——本书里的每一条建议都应该这样对待。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首歌写两份编曲：一份为流媒体发行的录音室版，一份为现场演出版。列出所有差异并说明理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>项目</th><th>录音室版</th><th>现场版</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>副歌吉他</strong></td><td>四轨（两对加倍 ＋ 一对八度）</td><td><strong>两把</strong>，一原位一八度，声像 L100/R100</td><td>台上只有两个吉他手；八度分工在两轨时收益最大（第 10 章）</td></tr>
+                  <tr><td><strong>主歌吉他</strong></td><td>一轨居中偏一点</td><td><strong>一把弹，另一把休息或弹清音</strong></td><td>现场也要保住宽度维度的升级空间</td></tr>
+                  <tr><td><strong>段落对比</strong></td><td>靠编制（内容维度）</td><td><strong>编制 ＋ 音量</strong></td><td>现场没有响度归一化，<strong>音量重新是有效维度</strong></td></tr>
+                  <tr><td><strong>Breakdown</strong></td><td>十六分级别的密集齐奏</td><td><strong>更慢、更稀的重音</strong></td><td>现场做不到几毫秒的对齐；音符越少越好对齐</td></tr>
+                  <tr><td><strong>桥段长度</strong></td><td>8 小节</td><td><strong>12–16 小节</strong></td><td>现场的安静有观众注意力与视觉支撑，不显得拖</td></tr>
+                  <tr><td><strong>和声人声</strong></td><td>四轨（三度 ＋ 八度）</td><td><strong>一到两人，只唱关键句</strong></td><td>台上人数限制；只唱关键句反而更清楚</td></tr>
+                  <tr><td><strong>贝斯</strong></td><td>双轨分频</td><td><strong>单轨 ＋ 分频音箱/DI</strong></td><td>现场用信号分路实现同样的分工</td></tr>
+                  <tr><td><strong>速度</strong></td><td>固定 148</td><td><strong>可以略快 2–4 BPM</strong></td><td>现场的能量与紧张感会让原速显得拖</td></tr>
+                  <tr><td><strong>结尾</strong></td><td>尾奏 4 小节淡出</td><td><strong>硬收 ＋ 一次全奏重音</strong></td><td>现场需要一个明确的结束点让观众鼓掌</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三条贯穿的原则</strong>：</p>
+            <ol>
+              <li><strong>录音室的「层数」在现场要换成「动态」。</strong>做不出四轨的宽度，就用更大的音量差补——而现场的音量差不会被压掉。</li>
+              <li><strong>录音室的「精度」在现场要换成「稀疏」。</strong>对不齐十六分，就把它改成四分——<strong>更少的音符现场反而更重。</strong></li>
+              <li><strong>现场多了一个录音室没有的维度：视觉与互动。</strong>安静的桥段、乐手停下的动作、观众的合唱段——这些都是编曲资源，应该被主动使用。</li>
+            </ol>
+            <p><strong>一句总结</strong>：<strong>录音室版和现场版不该是同一份编曲的两次演奏，而应该是同一首歌的两份编曲。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 15.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本章说「音乐制作里的规则几乎全都是条件性的」。请回顾本书，找出至少四条曾被当作规则给出、但其实依赖特定约束的建议，并说明各自的前提。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>本书给过的建议</th><th>它依赖的约束</th><th>约束不成立时</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>「音量是最没用的对比维度」</strong>（第 5 章）</td><td>重度压缩 ＋ 响度归一化的发行链路</td><td><strong>现场、后摇、古典跨界里音量完全有效</strong></td></tr>
+                  <tr><td><strong>「吉他要做激进高通」</strong>（本章）</td><td>四轨吉他 ＋ 降调 ＋ 分轨制作</td><td>两轨、标准调弦时应温和得多</td></tr>
+                  <tr><td><strong>「贝斯避免三度」</strong>（第 9 章）</td><td>高失真 ＋ 低音区</td><td>清音、中高音区时三度完全可用</td></tr>
+                  <tr><td><strong>「必须量化对齐」</strong>（第 8 章、本章）</td><td>大量使用齐奏的编曲</td><td>「各走各的」写法对偏差宽容得多</td></tr>
+                  <tr><td><strong>「build 不能超过 8 小节」</strong>（第 6 章）</td><td>常规乐队编制，没有持续提供新信息的手段</td><td>电子乐用滤波扫频可以做很长的 build</td></tr>
+                  <tr><td><strong>「2–4 kHz 决定人声清晰度」</strong>（第 11 章）</td><td>清唱，有辅音</td><td><strong>嘶吼没有清晰辅音，这条基本失效</strong></td></tr>
+                  <tr><td><strong>「四轨是宽度的上限」</strong>（第 10 章）</td><td>立体声投放</td><td>环绕声 / 空间音频里上限不同</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>那么，本书里有没有<em>不</em>依赖约束的东西？</strong>有，但很少，而且它们全都不是「做法」而是「机制」：</p>
+            <ul>
+              <li><strong>听觉测量的是变化，不是绝对值</strong>（第 5 章习题 5.9、第 13 章习题 13.9）——这是感知系统的性质，不依赖任何技术条件。</li>
+              <li><strong>听觉一次只能跟随一条线</strong>（第 11 章）——注意力的限制。</li>
+              <li><strong>同时发生的能量会被归并成一个事件</strong>（第 8 章）——事件归并机制。</li>
+              <li><strong>掩蔽发生在耳朵里</strong>（第 7 章）——听觉生理。</li>
+            </ul>
+            <p><strong>这四条是本书真正的地基。</strong>其余的一切——六个对比维度、四种让路手段、八件工具、三条纪律——都是这四条机制在<strong>某组特定约束下</strong>推导出来的做法。</p>
+            <p><strong>学习编曲的正确方式因此是</strong>：<strong>记住机制，理解每条做法是从哪条机制、在什么约束下推出来的。</strong>这样当你遇到本书没写过的情形（新风格、新技术、新投放媒介）时，你可以自己推。<strong>而只背做法的人，在约束改变时会全盘失效。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>制作链路会改变编曲的最优解</strong>，不只是「把编曲录下来」。② 五个环节的编曲含义：分轨（更精细，但整体感要人工重建）、double tracking（<strong>是编曲决定，事后补不了</strong>）、声像（第二块地）、EQ 高通（逼着提前分配主频段）、压缩（<strong>音量维度失效</strong>）。③ <strong>吉他高通</strong>的三条理由：切掉的不是音高、那块地已有主人、四轨叠加会放大低频；<strong>「单轨听起来薄，合起来才结实」</strong>。④ 齐奏的时间窗口：<strong>0–5 ms 归并成一件巨型乐器，15–30 ms 就糊了</strong>；而 5–15 ms 同一个量在加倍轨上反而是去相关的宽度。⑤ <strong>对齐不是全局开关</strong>：齐奏段必须准，人声与独奏不要对齐，加倍轨要保留差异（量化力度 70–85%）。⑥ 压缩链路四级处理让 4 dB 只剩不到 1 dB——<strong>因此编曲的重要性反而上升了</strong>，内容维度是唯一压不掉的对比。⑦ 「制作规范 ⇄ 编曲惯例」是一个<strong>闭环</strong>：改一个环节，整条链都要重算。⑧ <strong>音乐制作里的规则几乎全是条件性的</strong>；真正不依赖约束的只有四条听觉机制——记住机制，做法可以自己推。</p>
+          <p><strong>下一章预告</strong>：全书的最后一章。第 16 章《从 Demo 到成品》给出一份完整的工作流程、一张逐条可执行的自查清单、常见失败模式的对照表，以及全书结语与后续的学习路径。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./16-从Demo到成品.html"><strong>下一章：第 16 章 · 从 Demo 到成品</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      var RIFF = [0, 0, 3, 5], BARS = 4, SPB = 60 / BPM;
+      function low(d) { return R.ROOT - 12 + d; }
+
+      var rig = null;
+      function stopAll() { if (rig) { rig.dispose(); rig = null; } A.stopAll(); }
+      function start(tracks, beats) {
+        stopAll();
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: beats, loop: true, tracks: tracks });
+        rig.play();
+      }
+      function riffEvents(bars, shift, detune) {
+        var g = [];
+        for (var q = 0; q < bars; q++) {
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + q * 4 + (shift || 0), detune: detune || 0 }));
+          });
+        }
+        return g;
+      }
+      function drumsTrack(bars) {
+        var d = [];
+        for (var q = 0; q < bars; q++) {
+          R.drumPattern(1, "basic").forEach(function (e) { d.push(Object.assign({}, e, { t: e.t + q * 4 })); });
+        }
+        return { id: "dr", name: "鼓", inst: "drums", gain: 1, events: d };
+      }
+      function bassTrack(bars) {
+        var b = [];
+        for (var q = 0; q < bars; q++) RIFF.forEach(function (r, i) {
+          b.push({ t: q * 4 + i, midi: low(r), dur: 1, gain: 0.9 });
+        });
+        return { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: b };
+      }
+
+      /* ---------- 演示 1：吉他高通 ---------- */
+      KBG.soundToggle($("q-sound"));
+      var hpOn = false, gtrOnly = false;
+      function qTracks() {
+        var hp = hpOn ? 110 : 40;
+        var tr = [];
+        if (!gtrOnly) { tr.push(drumsTrack(BARS)); tr.push(bassTrack(BARS)); }
+        [[-0.95, 0.72, 0], [0.95, 0.7, 0.009], [-0.5, 0.6, 0.005], [0.5, 0.58, 0.013]].forEach(function (c, i) {
+          tr.push({ id: "g" + i, name: "吉他 " + (i + 1), inst: "guitar", gain: c[1], pan: c[0],
+            drive: 0.82, hp: hp, events: riffEvents(BARS, c[2] * SPB, (i - 1.5) * 4) });
+        });
+        return tr;
+      }
+      function syncQ() {
+        $("q-hp").textContent = hpOn ? "110 Hz" : "40 Hz（几乎不切）";
+        $("q-with").textContent = gtrOnly ? "只有四轨吉他" : "四轨吉他 ＋ 底鼓 ＋ 贝斯";
+        $("q-solo").textContent = hpOn ? "偏薄" : "饱满";
+        $("q-solo").className = hpOn ? "warn" : "ok";
+        $("q-mix").textContent = hpOn ? "结实，贝斯清楚" : "低频糊成一片，贝斯被埋";
+        $("q-mix").className = hpOn ? "ok" : "warn";
+        $("q-full").className = "kb-btn" + (hpOn ? "" : " kb-btn-primary");
+        $("q-cut").className = "kb-btn" + (hpOn ? " kb-btn-primary" : "");
+        $("q-only").className = "kb-btn" + (gtrOnly ? " kb-btn-primary" : "");
+        $("q-only").textContent = gtrOnly ? "🎚️ 加回鼓与贝斯" : "🎸 只听吉他";
+      }
+      function replayQ() { if (rig) start(qTracks(), BARS * 4); }
+      $("q-full").addEventListener("click", function () { hpOn = false; syncQ(); start(qTracks(), BARS * 4); });
+      $("q-cut").addEventListener("click", function () { hpOn = true; syncQ(); start(qTracks(), BARS * 4); });
+      $("q-only").addEventListener("click", function () { gtrOnly = !gtrOnly; syncQ(); replayQ(); });
+      $("q-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 2：齐奏的时间窗口 ---------- */
+      var GG = {
+        "0":  { ms: 0,  hear: "一个事件 —— 一件覆盖六个八度的巨型乐器", weight: "最重", ok: true },
+        "10": { ms: 10, hear: "开始变宽变厚，仍然成立", weight: "较重", ok: true },
+        "28": { ms: 28, hear: "两个事件的模糊叠加 —— 糊", weight: "明显下降", ok: false }
+      };
+      function unisonSpec(ms) {
+        var off = (ms / 1000) / SPB;
+        var g = [], b = [], d = [];
+        for (var q = 0; q < BARS; q++) {
+          [0, 1.5, 2.5].forEach(function (t) {
+            var at = q * 4 + t;
+            d.push({ t: at, piece: "kick", gain: 1 });
+            b.push({ t: at + off * 0.5, midi: low(0), dur: 1.2, gain: 0.98 });
+            g.push({ t: at + off, midis: [R.ROOT, R.ROOT + 7, R.ROOT + 12],
+              dur: 0.4, mute: true, spread: 0.006, gain: 0.98 });
+          });
+          d.push({ t: q * 4 + 2.5, piece: "snare", gain: 0.9 });
+          if (q === 0) d.push({ t: 0, piece: "crash", gain: 0.55 });
+        }
+        return [{ id: "dr", name: "鼓", inst: "drums", gain: 1, events: d },
+          { id: "ba", name: "贝斯", inst: "bass", gain: 0.98, drive: 0.3, events: b },
+          { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.85, pan: -0.8, drive: 0.82, hp: 110, events: g },
+          { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.83, pan: 0.8, drive: 0.82, hp: 110,
+            events: g.map(function (e) { return Object.assign({}, e, { t: e.t + 0.01, detune: 6 }); }) }];
+      }
+      Object.keys(GG).forEach(function (k) {
+        $("g-" + k).addEventListener("click", function () {
+          Object.keys(GG).forEach(function (j) {
+            $("g-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = GG[k];
+          $("g-dev").textContent = v.ms + " ms";
+          $("g-hear").textContent = v.hear;
+          $("g-weight").textContent = v.weight;
+          $("g-weight").className = v.ok ? "ok" : "warn";
+          start(unisonSpec(v.ms), BARS * 4);
+        });
+      });
+      $("g-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 3：压缩之后还剩下什么 ---------- */
+      function verseChorus(chorusGain, contentBoost) {
+        var g = [], g2 = [], oct = [], b = [], d = [];
+        /* 前 4 小节主歌，后 4 小节副歌 */
+        for (var q = 0; q < 8; q++) {
+          var isCho = q >= 4, off = q * 4;
+          var gain = isCho ? chorusGain : 1;
+          var roots = isCho ? [8, 3, 10, 0] : RIFF;
+          var rhy = (isCho && contentBoost) ? "quarter" : "gallop";
+          var mute = !(isCho && contentBoost);
+          R.events(roots, rhy, { mute: mute }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * gain }));
+            g2.push(Object.assign({}, e, { t: e.t + off + 0.009, gain: (e.gain || 0.8) * gain, detune: 6 }));
+            if (isCho && contentBoost) {
+              var o = Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * 0.6 * gain, mute: false });
+              if (o.midis) o.midis = o.midis.map(function (m) { return m + 12; });
+              oct.push(o);
+            }
+          });
+          roots.forEach(function (r, i) {
+            if (r === null) return;
+            b.push({ t: off + i, midi: low(r), dur: 1, gain: 0.9 * gain });
+          });
+          R.drumPattern(1, (isCho && contentBoost) ? "driving" : "basic").forEach(function (e) {
+            d.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * gain }));
+          });
+          if (isCho && q === 4 && contentBoost) d.push({ t: off, piece: "crash", gain: 0.6 });
+        }
+        return [{ id: "dr", name: "鼓", inst: "drums", gain: 1, events: d },
+          { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: b },
+          { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.8, pan: -0.9, drive: 0.82, hp: 110, events: g },
+          { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.78, pan: 0.9, drive: 0.82, hp: 110, events: g2 },
+          { id: "g3", name: "高八度层", inst: "guitar", gain: 0.55, pan: 0.4, drive: 0.8, hp: 150, events: oct }];
+      }
+      var C = {
+        raw:  { cn: "① 副歌 +4 dB（工程里）", db: "+4.0 dB", content: "无 —— 内容完全相同",
+                after: "约 +0.8 dB", ok: false, g: 1.58, boost: false },
+        comp: { cn: "② 压缩之后实际剩下的", db: "+0.8 dB", content: "无 —— 内容完全相同",
+                after: "+0.8 dB（就是它本身）", ok: false, g: 1.10, boost: false },
+        cont: { cn: "③ 用内容做对比", db: "0 dB", content: "高八度层 ＋ 放开延音 ＋ 加密底鼓 ＋ 擦片",
+                after: "全部保留", ok: true, g: 1.0, boost: true }
+      };
+      Object.keys(C).forEach(function (k) {
+        var btn = $(k === "cont" ? "c-content-btn" : "c-" + k);
+        btn.addEventListener("click", function () {
+          Object.keys(C).forEach(function (j) {
+            $(j === "cont" ? "c-content-btn" : "c-" + j).className =
+              "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = C[k];
+          $("c-name").textContent = v.cn;
+          $("c-db").textContent = v.db;
+          $("c-content").textContent = v.content;
+          $("c-after").textContent = v.after;
+          $("c-after").className = v.ok ? "ok" : "warn";
+          start(verseChorus(v.g, v.boost), 32);
+        });
+      });
+      $("c-stop").addEventListener("click", stopAll);
+
+      syncQ();
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopAll(); });
+    });
+  </script>
+</body>
+</html>

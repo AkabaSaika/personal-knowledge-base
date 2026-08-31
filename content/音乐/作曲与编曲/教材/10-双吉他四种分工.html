@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10 双吉他：四种分工 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 10 章：声像是频谱之外的第二块地；双吉他的四种分工（同度加倍、八度、三度和声、节奏＋主音）；为什么同度加倍必须是两次真实演奏；四把吉他的摆位方案。">
+  <meta name="kb:tags" content="编曲,双吉他,声像,pan,加倍,double tracking,八度,三度和声,摆位,sjtszfg,sjt">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 10 章 · 双吉他：四种分工</h1>
+        <p class="kb-lead">第 7 章说过，失真吉他是占地最大的乐器——一件就覆盖六个八度。那么两把吉他呢？<strong>两把吉他不是「两倍的吉他」</strong>：用错了只是同一块地上站了两个人，混音更糊、什么都没多；用对了，它打开的是一个频谱之外的<strong>新维度</strong>。这一章讲那个维度是什么，以及四种把两把吉他分开的方法。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释声像为什么是「第二块地」，以及中间的位置为什么最贵；② 在四种双吉他分工之间做选择，说出各自增加了什么、风险是什么；③ 理解同度加倍<strong>必须是两次真实演奏</strong>的原因；④ 给四把吉他排出一套摆位方案；⑤ 判断什么时候应该只用一把。</p>
+        </div>
+
+        <h2>声像：频谱之外的第二块地</h2>
+        <p>到目前为止我们只在一个维度上分配空间：频率。但立体声给了我们第二个维度——<strong>左右</strong>。</p>
+        <p>它的价值在于：<strong>占同一频段、但声像位置不同的两件乐器，掩蔽会显著下降。</strong>听觉系统会先按方位把声音分组，再在组内做频率分析——所以「同一个频段的两个声音」如果来自不同方向，是可以被分别听见的。</p>
+        <figure>
+          <svg viewBox="0 0 720 260" width="720" height="260" role="img" aria-label="声像与频率的二维分配图：横轴是声像从左到右，纵轴是频率从低到高。底鼓、贝斯、军鼓、人声占据中间，两把吉他分居左右，镲片略微偏开，中间的位置最拥挤">
+            <text x="8" y="16" font-size="12" fill="var(--kb-fg-muted)">编曲空间是二维的：横轴 ＝ 声像，纵轴 ＝ 频率</text>
+            <line x1="60" y1="232" x2="700" y2="232" stroke="var(--kb-fg-muted)"/>
+            <line x1="60" y1="30" x2="60" y2="232" stroke="var(--kb-fg-muted)"/>
+            <g font-size="11" fill="var(--kb-fg-muted)" text-anchor="middle">
+              <text x="120" y="250">左 100%</text><text x="380" y="250">中</text><text x="640" y="250">右 100%</text>
+            </g>
+            <g font-size="11" fill="var(--kb-fg-muted)" text-anchor="end">
+              <text x="54" y="215">50 Hz</text><text x="54" y="170">150 Hz</text>
+              <text x="54" y="120">1 kHz</text><text x="54" y="60">8 kHz</text>
+            </g>
+            <rect x="330" y="26" width="100" height="206" fill="#dc2626" opacity="0.08"/>
+            <text x="380" y="40" font-size="10.5" fill="#dc2626" text-anchor="middle">中间 ＝ 最贵的位置</text>
+            <g font-size="11" text-anchor="middle">
+              <ellipse cx="380" cy="212" rx="46" ry="14" fill="#dc2626" opacity="0.6"/><text x="380" y="216" fill="#fff">底鼓</text>
+              <ellipse cx="380" cy="176" rx="46" ry="14" fill="#2563eb" opacity="0.6"/><text x="380" y="180" fill="#fff">贝斯</text>
+              <ellipse cx="380" cy="140" rx="44" ry="14" fill="#8b5cf6" opacity="0.6"/><text x="380" y="144" fill="#fff">军鼓</text>
+              <ellipse cx="380" cy="104" rx="44" ry="14" fill="#d97706" opacity="0.7"/><text x="380" y="108" fill="#fff">人声</text>
+              <ellipse cx="150" cy="122" rx="62" ry="15" fill="#16a34a" opacity="0.6"/><text x="150" y="127" fill="#fff">吉他 L</text>
+              <ellipse cx="610" cy="122" rx="62" ry="15" fill="#16a34a" opacity="0.6"/><text x="610" y="127" fill="#fff">吉他 R</text>
+              <ellipse cx="240" cy="62" rx="46" ry="13" fill="#0891b2" opacity="0.6"/><text x="240" y="66" fill="#fff">镲片 L</text>
+              <ellipse cx="520" cy="62" rx="46" ry="13" fill="#0891b2" opacity="0.6"/><text x="520" y="66" fill="#fff">镲片 R</text>
+            </g>
+          </svg>
+          <figcaption>中间那条窄带被底鼓、贝斯、军鼓、人声四件乐器占满了——它们都必须在中间。吉他之所以能被推到两边，正因为它是编曲里少数「可以不在中间」的东西。</figcaption>
+        </figure>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么中间最贵</p>
+          <p>四件乐器必须待在正中，而且理由各不相同：</p>
+          <p><strong>底鼓与贝斯</strong>——低频本来就没有方位感（波长太长，人耳无法定位），偏到一边只会让能量分配失衡；<strong>军鼓</strong>——它是节奏的中轴，偏了整个律动就歪了；<strong>人声</strong>——它是主角，主角站在舞台中央。</p>
+          <p><strong>所以「把吉他推到两边」不是风格选择，而是必需品。</strong>如果吉他也在中间，中间就有六件乐器，而两侧空着。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">↔️ 演示 1：声像滑块 —— 从单声道到全宽</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：两把弹同一条 riff 的吉他，声像从 0（都在中间）连续拉到 ±100%。在 0 的位置两把吉他叠在一起，听起来只是「更响的一把」；拉开之后中间空出位置，贝斯与军鼓立刻变清楚，而吉他本身听起来更宽。这个变化不消耗任何频谱预算。</p></noscript>
+            <div id="p-sound"></div>
+            <div class="kb-interactive-controls">
+              <label for="p-range">声像宽度</label>
+              <input type="range" id="p-range" min="0" max="100" value="75" step="1">
+              <span id="p-val">±75%</span>
+              <button class="kb-btn kb-btn-primary" id="p-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="p-stop" type="button">■ 停止</button>
+            </div>
+            <div class="kb-readout">
+              <span>吉他 L 实际声像 <b id="p-l">—</b></span>
+              <span>吉他 R <b id="p-r">—</b></span>
+              <span>中间的拥挤度 <b id="p-mid">—</b></span>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">把滑块拉到 0，再拉回 100，来回几次。<strong>注意变化的不只是吉他——贝斯和军鼓在吉他拉开之后会明显变清楚</strong>，因为中间腾出来了。这是「让路」的另一种形式：不是让出频段，而是让出方位。</p>
+          </div>
+        </div>
+
+        <h2>四种分工</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>分工</th><th>第二把弹什么</th><th>增加了什么</th><th>风险</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 同度加倍</strong><br>double tracking</td><td>和第一把<strong>完全一样</strong>的内容，但必须是<strong>另一次演奏</strong></td><td>宽度与厚度。<strong>不增加信息</strong></td><td>如果是复制粘贴，等于没做（见下节）</td></tr>
+              <tr><td><strong>② 八度</strong></td><td>高八度（偶尔低八度）</td><td><strong>音区宽度</strong>——第 5 章里最有效的织体手段</td><td>高八度会侵入人声频段，人声段落要小心</td></tr>
+              <tr><td><strong>③ 三度和声</strong></td><td>顺阶的三度（大三或小三，随音阶）</td><td><strong>和声信息</strong>——真正多出一个声部</td><td>高失真下三度会浑浊（第 9 章）；只适合单音线</td></tr>
+              <tr><td><strong>④ 节奏 ＋ 主音</strong></td><td>一把弹和弦、一把弹旋律线</td><td><strong>功能分层</strong>：伴奏与主角分开</td><td>主音线要有足够的存在感，否则会被节奏吉他埋掉</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>选择的依据不是「哪种更好」，而是「这一段缺什么」：</strong>缺宽度用 ①，缺高度用 ②，缺和声内容用 ③，缺主角用 ④。<strong>而在同一首歌里换一种分工，本身就是一次段落升级</strong>（第 5 章的织体维度）。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎼 演示 2：四种分工，同一条旋律线</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条主音线，第二把吉他用四种方式配合——同度加倍（只增加宽度）、高八度（增加音区宽度，效果最明显）、顺阶三度和声（增加真正的和声信息）、以及一把弹节奏和弦另一把弹旋律（功能分层）。四者增加的东西完全不同，选哪一种取决于这一段缺什么。</p></noscript>
+            <div class="kb-readout">
+              <span>分工 <b id="t-name">—</b></span>
+              <span>第二把在弹 <b id="t-what">—</b></span>
+              <span>增加了 <b id="t-add">—</b></span>
+              <span>风险 <b id="t-risk">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="t-unison" type="button">▶ ① 同度加倍</button>
+              <button class="kb-btn" id="t-octave" type="button">▶ ② 八度</button>
+              <button class="kb-btn" id="t-third" type="button">▶ ③ 三度和声</button>
+              <button class="kb-btn" id="t-split" type="button">▶ ④ 节奏 ＋ 主音</button>
+              <button class="kb-btn" id="t-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">比较 ① 和 ②：<strong>八度的效果明显大得多，成本却完全一样</strong>（都是多一轨）。这就是第 5 章说「织体是最强的对比维度」的具体含义——<strong>关键不在于多了一轨，而在于那一轨带来了新的信息。</strong></p>
+          </div>
+        </div>
+
+        <h2>同度加倍：必须是两次演奏</h2>
+        <p>这是新手最常犯、也最容易纠正的一个错误：<strong>把一条吉他轨复制一份，一份摆左、一份摆右。</strong></p>
+        <p><strong>这样做什么效果都没有。</strong>两个完全相同的信号分别送到左右，在听觉里合成为一个位于正中的声音——<strong>结果只是这把吉他变响了 3 dB，而且还是在中间。</strong>你花了一轨的代价，什么也没买到，反而把最贵的中间位置又占了一次。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 宽度来自「不完全一样」</p>
+          <p>真正的 double tracking 是<strong>把同一段内容再弹一遍</strong>。两次演奏之间必然存在微小差异：</p>
+          <ul>
+            <li><strong>时值</strong>——每个音早或晚几毫秒；</li>
+            <li><strong>音高</strong>——推弦力度、按弦力度带来几音分的偏差；</li>
+            <li><strong>音色</strong>——拨片位置、力度略有不同。</li>
+          </ul>
+          <p>正是这些差异让两个信号<strong>去相关（decorrelated）</strong>，听觉无法再把它们合成为一个点声源，于是听成了一片「宽」。</p>
+          <p><strong>这也解释了为什么加倍不增加信息</strong>：两把弹的是同一件事，多出来的只有空间感。它是修饰，不是声部（第 7 章习题 7.6 的第一个例外）。</p>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 用效果器模拟能替代真弹两遍吗</p>
+          <p><strong>部分可以，但不完全。</strong>短延迟（10–30 ms）加上轻微的音高调制确实能制造宽度，这类效果器很常见。但它模拟的只有<strong>时值和音高</strong>两项差异，缺少<strong>音色</strong>差异——两次真实演奏的谐波分布是不同的，这一点合成不出来。</p>
+          <p>实际的区别是：模拟版本听起来「宽但薄」，真弹版本「宽而且厚」。<strong>在四轨叠加的重型制作里，这个差别相当明显</strong>，所以专业录音几乎总是真弹多遍（第 15 章）。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">👯 演示 3：复制粘贴 vs 真弹两遍</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：两把吉他弹完全相同内容并分别摆到左右。如果两轨的信号一模一样（复制粘贴），它们在听觉里合成为一个位于正中的点声源，只是变响了；如果两轨之间有几毫秒的时值差与几音分的音高差（模拟真弹两遍），信号去相关，听觉无法定位到一个点，于是听成一片宽。可以调节偏差量，观察从「一个点」到「一片宽」的过渡。</p></noscript>
+            <div class="kb-interactive-controls">
+              <label for="w-range">两轨之间的偏差</label>
+              <input type="range" id="w-range" min="0" max="100" value="0" step="1">
+              <span id="w-val">0%</span>
+              <button class="kb-btn kb-btn-primary" id="w-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="w-copy" type="button">复制粘贴（0%）</button>
+              <button class="kb-btn" id="w-real" type="button">真弹两遍（100%）</button>
+              <button class="kb-btn" id="w-stop" type="button">■ 停止</button>
+            </div>
+            <div class="kb-readout">
+              <span>时值偏差 <b id="w-t">—</b></span>
+              <span>音高偏差 <b id="w-c">—</b></span>
+              <span>听感 <b id="w-res">—</b></span>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">滑块从 0 拉到 100 时请注意：<strong>响度几乎没变，位置却从「正中的一个点」散成了「左右一整片」</strong>。这就是去相关的全部作用——它不改变能量，只改变能量的空间分布。</p>
+          </div>
+        </div>
+
+        <h2>四把吉他怎么摆</h2>
+        <p>现代重型制作里四轨节奏吉他是常态。两种主流摆法：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>方案</th><th>摆位</th><th>特点</th><th>适合</th></tr></thead>
+            <tbody>
+              <tr><td><strong>A · 双层加倍</strong></td><td>第一对 L100 / R100，第二对 L60 / R60，<strong>四次独立演奏</strong></td><td>最宽、最厚；中间仍然完全空着</td><td>副歌、需要最大音墙的地方</td></tr>
+              <tr><td><strong>B · 分工摆位</strong></td><td>原位一对 L100 / R100，高八度一对 L55 / R55</td><td>宽度 ＋ 音区高度；<strong>信息量比 A 大</strong></td><td>副歌、最后一遍；需要「更高」而不只是「更厚」时</td></tr>
+              <tr><td>C · 主歌简化</td><td>只留一对，L70 / R70</td><td>为人声让出宽度与频谱</td><td>主歌、有人声的段落</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>三条摆位原则</strong>：</p>
+        <ol>
+          <li><strong>永远成对。</strong>三轨吉他摆不平衡；奇数轨要么把多出来的一轨放中间（但中间很贵），要么就不要那一轨。</li>
+          <li><strong>外圈给最重要的一对。</strong>L100/R100 的位置听感最宽、也最不干扰中间——把主 riff 放在这里。</li>
+          <li><strong>内圈不要太靠中间。</strong>L30 以内基本等于中间了，那就是在和人声抢地。<strong>要么出去，要么删掉。</strong></li>
+        </ol>
+        <div class="kb-callout kb-danger">
+          <p class="kb-callout-title">🚫 什么时候应该只用一把</p>
+          <p><strong>主歌、有人声的段落、以及任何需要「空」的地方。</strong></p>
+          <p>四轨吉他在主歌里的问题不只是频谱拥挤，还有<strong>它把宽度用光了</strong>——副歌进来时你没有更宽的东西可以给。第 5 章说过「主歌写太满，副歌无处可去」，在双吉他上的具体表现就是：<strong>主歌一对、副歌两对，宽度维度才有升级空间。</strong></p>
+          <p>还有一种情况：<strong>某一段的重点是一个具体的乐句</strong>（一句人声、一段独奏、一个 riff 的变体）。这时候多一把吉他只会让那个乐句更难听清。<strong>焦点越明确，编制应该越简单。</strong></p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 10.1</p>
+          <p>「我把吉他轨复制了一份摆左右，为什么听起来一点也不宽？」</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>因为两个完全相同的信号送到左右，在听觉里会合成为一个位于正中的点声源。</strong>你得到的不是「宽」，而是「响了 3 dB 的一把吉他，仍然在中间」。</p>
+            <p>更糟的是这还有两个副作用：① 你占用了最贵的中间位置（人声、贝斯、底鼓、军鼓都在那里）；② 你多花了一轨的混音空间却什么也没买到。</p>
+            <p><strong>正确的做法，按效果从好到差：</strong></p>
+            <ol>
+              <li><strong>真的再弹一遍。</strong>两次演奏的时值、音高、音色都会有微小差异，信号自然去相关，宽度是真实的。<strong>这是唯一能同时得到「宽」和「厚」的方法。</strong></li>
+              <li><strong>用短延迟 + 音高调制模拟。</strong>右轨延迟 10–30 ms 并加轻微的音高漂移。能得到宽度，但缺少音色差异，听起来「宽但薄」。</li>
+              <li><strong>只是把单轨居中。</strong>如果没有条件弹两遍，<strong>一轨居中比两轨复制更诚实</strong>——至少你知道自己只有一把吉他，不会误以为已经有音墙了。</li>
+            </ol>
+            <p><strong>一个快速验证方法</strong>：把混音切成单声道（左右相加）。如果切换前后吉他的音量几乎没变，说明两轨是相关的（复制粘贴）；如果切到单声道后吉他明显变响，说明它们真的去相关了——<strong>这个响度变化就是「宽度」的物理证据。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 10.2</p>
+          <p>副歌已经用了四轨同度加倍，仍然觉得不够大。加到六轨会更好吗？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>不会。加倍的边际效用在四轨之后急剧下降，而代价是线性增长的。</strong></p>
+            <p>原因：同度加倍<strong>不增加信息</strong>，它只增加宽度与厚度。而宽度有一个物理上限——声像最多就是 L100 到 R100，四轨已经把这个空间填满了。第五、六轨没有新位置可去，只能往中间挤，<strong>而中间是最贵的位置</strong>。</p>
+            <p><strong>正确的下一步是换维度，不是加数量：</strong></p>
+            <ol>
+              <li><strong>把其中一对改成高八度。</strong>四轨不变，但从「四把弹同样的东西」变成「两把原位 + 两把高八度」。<strong>这一步增加的是信息量，效果远大于加两轨</strong>（演示 2 里 ① 和 ② 的差别）。</li>
+              <li><strong>检查主歌。</strong>「副歌不够大」十次里有八次是主歌太满（第 5 章）。主歌减到一对，副歌的四轨立刻显得大了一倍——<strong>而且这一步不花任何代价。</strong></li>
+              <li><strong>检查中间有没有被占。</strong>如果四轨里有一对摆得太内（L30 以内），它们其实在和人声抢地。往外推。</li>
+              <li><strong>检查是不是别的维度缺了。</strong>「不够大」有时其实是「低频不够」（贝斯写法，第 9 章）、「不够高」（音区）、或者「鼓不够开」（镲片，第 8 章）。<strong>吉他轨数是最容易想到的旋钮，但通常不是那个真正卡住的。</strong></li>
+            </ol>
+            <p><strong>一个经验数字</strong>：第 1 轨到第 2 轨的提升最大，第 2 到第 4 有明显提升，第 4 之后几乎听不出来，而混音的浑浊度仍在增加。<strong>四轨是绝大多数情况下的合理上限。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 10.3</p>
+          <p>想给一段主音线加三度和声，试了之后觉得很浑浊。怎么办？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先确认三个可能的原因，它们的解法完全不同。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>原因</th><th>怎么判断</th><th>解法</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 失真太重</strong></td><td>把两轨的失真调小，浑浊感明显减轻</td><td>和声段落<strong>降低失真量</strong>；这是最常见的原因（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>）</td></tr>
+                  <tr><td><strong>② 音区太低</strong></td><td>把整体升八度试试，如果变清楚就是它</td><td>三度和声<strong>要写在中高音区</strong>；低把位的三度在失真下几乎必然糊</td></tr>
+                  <tr><td><strong>③ 用了平行三度而不是顺阶三度</strong></td><td>某几个音特别刺</td><td>改成<strong>顺阶</strong>——按音阶取上方第三个音，大三小三随音阶变化</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>如果三条都排查过还是浑浊，改用这两个替代方案：</strong></p>
+            <ul>
+              <li><strong>改成四度或五度和声。</strong>五度的互调产物落在根音的谐波上，在高失真下非常干净——这正是强力和弦的原理（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html">上一本第 11 章</a>）。听感比三度硬朗，很适合金属。</li>
+              <li><strong>改成八度。</strong>最干净的选择，而且宽度效果最好。<strong>失去的是和声信息，换来的是绝对的清晰。</strong></li>
+            </ul>
+            <p><strong>一条经验</strong>：三度和声是<strong>旋律金属</strong>的语言，不是极端金属的语言。风格越重、失真越高、音区越低，三度就越不适用——这不是审美偏好，是失真的物理约束（第 9 章）。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说声像是「第二块地」？它和频谱的关系是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为编曲空间是二维的：频率 × 方位。</strong></p>
+            <p>第 7 章只用了一个维度——每件乐器占一段频率。但立体声提供了第二个维度：<strong>占同一频段、但方位不同的两件乐器，掩蔽会显著下降。</strong>听觉系统会先按方位把声音分组，再在组内分析频率，所以「同一频段的两个声音」如果来自不同方向，是可以被分别听见的。</p>
+            <p><strong>这带来一个重要的推论</strong>：当两件乐器在频率上实在让不开时（比如四轨吉他和人声都要 1–3 kHz），还有一条出路——<strong>把它们在方位上分开</strong>。第 7 章习题 7.8 里的和声人声就是这么处理的。</p>
+            <p><strong>但这块地比频谱那块小得多</strong>：方位只有从左到右一条线，而且中间那一段被底鼓、贝斯、军鼓、人声占满了。<strong>实际可用的只有两侧</strong>——所以它主要是吉他（和镲片、和声人声）的地盘。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>哪四件乐器必须待在正中？各自的理由是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>乐器</th><th>为什么必须在中间</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>底鼓</strong></td><td>低频波长太长，人耳无法定位方向；偏到一边只会造成左右能量失衡</td></tr>
+                  <tr><td><strong>贝斯</strong></td><td>同上，而且它是整首歌的地基，必须稳定居中</td></tr>
+                  <tr><td><strong>军鼓</strong></td><td>它是节奏的中轴（backbeat，第 8 章），偏了整个律动就歪了</td></tr>
+                  <tr><td><strong>人声</strong></td><td>它是主角，主角站在舞台中央；而且听众判断「谁在唱」需要一个稳定的方位</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>由此得到本章最重要的一条推论</strong>：既然中间已经有四件乐器，<strong>吉他被推到两侧就不是风格选择，而是必需品</strong>。它恰好是编曲里少数「可以不在中间」的东西——这既是它的义务，也是它的特权。</p>
+            <p><strong>还可以推出</strong>：镲片、和声人声、氛围层、加倍轨这些「可以偏」的元素，应该<strong>主动去两侧</strong>，把中间留给必须在那里的四件。<strong>能让的都让开，中间才够用。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>四种双吉他分工各自「增加了什么」？请按「增加的信息量」排序。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>排序</th><th>分工</th><th>增加了</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><strong>④ 节奏 ＋ 主音</strong></td><td><strong>一个完整的独立声部</strong>——伴奏与主角分层，信息量最大</td></tr>
+                  <tr><td>2</td><td><strong>③ 三度和声</strong></td><td><strong>和声信息</strong>——第二把弹的是不同的音</td></tr>
+                  <tr><td>3</td><td><strong>② 八度</strong></td><td><strong>音区宽度</strong>——音名相同但位置不同，介于「新信息」与「修饰」之间</td></tr>
+                  <tr><td>4</td><td><strong>① 同度加倍</strong></td><td><strong>只有宽度与厚度，没有信息</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>但「信息量大」不等于「更该用」。</strong>四种的选择依据是「这一段缺什么」：</p>
+            <ul>
+              <li>缺<strong>宽度</strong>（音墙不够厚）→ ①；</li>
+              <li>缺<strong>高度</strong>（副歌不够亮、不够大）→ ②；</li>
+              <li>缺<strong>和声色彩</strong>（旋律太单薄）→ ③；</li>
+              <li>缺<strong>主角</strong>（段落里没人在说话，比如间奏）→ ④。</li>
+            </ul>
+            <p><strong>顺带注意</strong>：信息量越大的分工，占的频谱越多、越容易和人声打架。<strong>所以主歌通常用 ①（或者只用一把），副歌才用 ② 或 ③。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么复制粘贴的两轨吉他听起来在中间，而不是在两边？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为两个完全相同的信号分别从左右到达耳朵时，听觉会把它们判断为「同一个来自正前方的声源」。</strong></p>
+            <p>这是双耳定位的基本机制：大脑通过比较左右耳信号的<strong>时间差</strong>和<strong>强度差</strong>来判断方位。当左右信号完全一致时，时间差与强度差都是零——<strong>这正是「正前方」的定义</strong>。</p>
+            <p>所以复制粘贴的结果是：能量翻倍（响了约 3 dB），位置仍在正中，宽度为零。<strong>你花了一轨，只买到了 3 dB。</strong></p>
+            <p><strong>去相关是怎么解决这个问题的</strong>：两次真实演奏之间有几毫秒的时值差和几音分的音高差。这些差异让左右信号的<strong>时间差与强度差随频率不断变化</strong>——大脑无法从中解出一个稳定的方位，于是把它感知为「一片弥散的、有宽度的声音」而不是一个点。</p>
+            <p><strong>一句话</strong>：<strong>点声源需要一致，宽度需要不一致。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用效果器模拟 double tracking，和真弹两遍相比缺了什么？为什么在四轨叠加时这个差别会被放大？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>缺的是音色差异。</strong>真弹两遍的两次演奏，除了时值和音高不同，<strong>谐波分布也不同</strong>——拨片接触弦的位置、角度、力度都不可能完全重复，而这些直接改变泛音的相对强度。效果器只能模拟时值（延迟）和音高（调制），做不出这一层。</p>
+            <p><strong>听感上的差别</strong>：模拟版本「宽但薄」，真弹版本「宽而且厚」。</p>
+            <p><strong>为什么四轨叠加会放大这个差别</strong>，有两个原因：</p>
+            <ol>
+              <li><strong>相同的成分会相干叠加，不同的成分不会。</strong>四轨模拟版本共享同一次演奏的谐波结构，那些谐波会精确地同相叠加，形成尖锐的共振峰——听起来「硬」「窄」。四轨真弹版本的谐波各不相同，叠加后是一片平滑的能量分布——听起来「厚」。</li>
+              <li><strong>误差的性质不同。</strong>效果器的延迟是<strong>固定的</strong>（比如都是 20 ms），四轨叠加后仍然是固定的梳状滤波，会产生可闻的染色。真弹的偏差是<strong>随机的</strong>，四轨叠加后互相抵消，反而更平滑。</li>
+            </ol>
+            <p><strong>实践建议</strong>：如果只能做两轨，模拟和真弹的差别还可以接受；<strong>如果要做四轨，一定要真弹四遍</strong>——否则你只是把同一个染色叠了四次。这也是为什么专业重型制作的吉他录音时间那么长（第 15 章）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么「同度加倍从四轨加到六轨」几乎没有提升，而「把四轨里的一对改成高八度」提升明显？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为两者动的是不同的维度，而其中一个已经饱和了。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>加到六轨</th><th>改一对为高八度</th></tr></thead>
+                <tbody>
+                  <tr><td>动的维度</td><td>宽度 / 厚度</td><td><strong>音区</strong></td></tr>
+                  <tr><td>该维度的状态</td><td><strong>已饱和</strong>——声像最宽就是 L100–R100，四轨已填满</td><td><strong>完全没用过</strong></td></tr>
+                  <tr><td>新轨能去哪</td><td>只能往中间挤——而中间最贵</td><td>去上方一个八度，那里相对空</td></tr>
+                  <tr><td>增加的信息</td><td>无</td><td>有（新的音区内容）</td></tr>
+                  <tr><td>频谱代价</td><td>1–3 kHz 更拥挤</td><td>能量分散到更宽的范围，反而更清楚</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>这是第 5 章「六个对比维度」的一个具体应用</strong>：当某个维度已经推到头时，继续推它的收益趋近于零，而<strong>换一个还没用过的维度，收益是巨大的</strong>。</p>
+            <p><strong>可以推广成一条诊断问句</strong>：<strong>「我正在推的这个维度，是不是已经满了？」</strong>如果是，答案不在这个旋钮上。四轨吉他、双踩全开、音量推到顶——这些都是「已经满了」的信号，继续推只会浪费。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>三度和声在什么条件下会浑浊？请从失真的物理机制解释，并给出三个替代方案。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>机制</strong>：失真是非线性处理，会产生<strong>互调产物</strong>——两个频率 <em class="kb-math">f₁</em>、<em class="kb-math">f₂</em> 同时输入时，输出里会出现 <em class="kb-math">f₂ ± f₁</em>、<em class="kb-math">2f₁ ± f₂</em> 等一大堆新频率（<a href="../../吉他乐理/教材/10-失真的和声学.html">上一本第 10 章</a>）。</p>
+            <p>这些产物是否协和，取决于两个音的频率比：</p>
+            <ul>
+              <li><strong>八度（2:1）</strong>——所有互调产物都落在原有谐波上，完全干净；</li>
+              <li><strong>五度（3:2）</strong>——产物落在根音的谐波序列上，非常干净（<strong>这就是强力和弦的原理</strong>）；</li>
+              <li><strong>大三度（5:4）</strong>——产物落在原有谐波之外，形成新的、不属于和弦的频率，听起来浑浊。</li>
+            </ul>
+            <p><strong>三个加剧因素</strong>：① <strong>失真越重</strong>，互调产物越多越强；② <strong>音区越低</strong>，产物落在越容易被听成「泥」的频段；③ <strong>轨数越多</strong>，产物之间又会互相产生更多产物。</p>
+            <p><strong>三个替代方案</strong>：</p>
+            <ol>
+              <li><strong>改五度或四度和声。</strong>互调干净，听感硬朗，非常适合金属。</li>
+              <li><strong>改八度。</strong>最干净，宽度效果也最好；代价是失去和声信息。</li>
+              <li><strong>保留三度，但降低失真 + 升高音区。</strong>这是旋律金属的标准做法——<strong>双主音的三度和声几乎总是写在中高把位，而且用的失真比节奏吉他轻。</strong></li>
+            </ol>
+            <p><strong>一条风格上的观察</strong>：三度和声是旋律金属的标志性语言，而在极端金属里几乎见不到。这不是审美差异，<strong>而是失真量的物理后果</strong>——风格越重，能用的音程越少。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首歌的五个段落设计完整的吉他摆位方案（轨数 · 分工 · 声像），要求宽度维度有单调的升级空间，并说明每一步的理由。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>段落</th><th>轨数</th><th>分工</th><th>声像</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>前奏</strong></td><td>2</td><td>同度加倍</td><td>L100 / R100</td><td>确立主 riff 与全宽的听感基准</td></tr>
+                  <tr><td><strong>主歌</strong></td><td><strong>1</strong></td><td>—</td><td><strong>居中偏一点，L20</strong></td><td><strong>给人声让出宽度与频谱</strong>；同时把宽度维度重置到最低</td></tr>
+                  <tr><td><strong>预副歌</strong></td><td>2</td><td>同度加倍</td><td>L70 / R70</td><td>宽度回来一半，制造推进感（第 6 章）</td></tr>
+                  <tr><td><strong>副歌</strong></td><td>4</td><td>两对同度加倍</td><td>L100 / R100 ＋ L60 / R60</td><td>宽度推满，音墙成形</td></tr>
+                  <tr><td><strong>桥段</strong></td><td><strong>1 或 0</strong></td><td>清音 / 单音线</td><td>居中</td><td>全曲能量最低点，为最后一遍挖出落差</td></tr>
+                  <tr><td><strong>最后一遍副歌</strong></td><td>4</td><td><strong>原位一对 ＋ 高八度一对</strong></td><td>L100 / R100 ＋ L55 / R55</td><td><strong>轨数不变，但换了维度</strong>——增加的是音区高度而不是宽度</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>设计里的三个关键决定</strong>：</p>
+            <ol>
+              <li><strong>主歌只用一把，而且偏一点摆。</strong>这是整套方案的基础——<strong>如果主歌就用两对，后面所有的「更宽」都无处可去</strong>（第 5 章）。偏一点（L20 而不是正中）是为了不和人声正面重叠。</li>
+              <li><strong>最后一遍副歌没有加轨数。</strong>还是四轨，但一对改成了高八度。理由见习题 10.6：<strong>宽度维度在副歌已经饱和，继续加轨没有收益；换到音区维度，收益巨大。</strong></li>
+              <li><strong>桥段几乎清空。</strong>它不是「弱一点的副歌」，而是全曲的谷底。<strong>最后一遍的顶点是由这个谷底定义的</strong>（第 5 章、第 13 章）。</li>
+            </ol>
+            <p><strong>一个自检</strong>：把六个段落的「宽度」画成一条曲线——2 → 1 → 2 → 4 → 1 → 4。<strong>它应该看起来像一条有起伏的曲线，而不是一条不断上升的直线。</strong>单调上升的编曲会在中途就把所有牌打完。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 10.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本章的「宽度」与第 7 章的「频段」都是有限资源，但它们的耗尽方式不同。请比较两者，并说明这个差别对编曲决策意味着什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>频段（第 7 章）</th><th>宽度（本章）</th></tr></thead>
+                <tbody>
+                  <tr><td>资源的形状</td><td>约 10 个八度，<strong>但分布极不均匀</strong>——中间三四个八度最挤</td><td>一条从 L100 到 R100 的线，<strong>中间那一小段被四件乐器占死</strong></td></tr>
+                  <tr><td>怎么耗尽</td><td><strong>逐渐变糊</strong>——每加一件乐器就更浑浊一点，没有明确的界线</td><td><strong>突然饱和</strong>——四轨填满两侧之后，第五轨无处可放</td></tr>
+                  <tr><td>耗尽的信号</td><td>「听不清词」「低频轰」「泥区堆积」</td><td>「加了轨却听不出差别」</td></tr>
+                  <tr><td>补救手段</td><td>EQ 可以部分挽救（虽然代价是变薄）</td><td><strong>混音阶段几乎无法补救</strong>——宽度必须在录音时做出来</td></tr>
+                  <tr><td>能否事后增加</td><td>不能，但可以重新分配</td><td><strong>不能</strong>——去相关必须来自演奏本身</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>对编曲决策的三点含义</strong>：</p>
+            <ol>
+              <li><strong>宽度必须提前规划。</strong>频段的问题可以在混音里改善，宽度不能——<strong>如果录的时候只弹了一遍，后期做不出真正的宽</strong>。所以在进录音棚之前就要决定哪些段落几轨（习题 10.8）。</li>
+              <li><strong>宽度饱和的信号比频谱拥挤更明确。</strong>「加了轨却没差别」是一个清晰的停止信号，而「有点糊」是渐进的、容易被忽略的。<strong>好消息是宽度会明确地告诉你「够了」；坏消息是频谱不会。</strong></li>
+              <li><strong>两者要一起看。</strong>把一对吉他改成高八度，同时动了两个维度——它在宽度上没有变化（还是两对），但在频段上把能量搬到了更空的地方。<strong>最好的编曲决定往往是同时改善两个维度的那一个。</strong></li>
+            </ol>
+            <p><strong>还有一个第三维度值得记住</strong>：<strong>时间</strong>（第 9 章的「瞬态归底鼓，持续归贝斯」、第 7 章习题 7.8 的「和声人声只在副歌出现」）。<strong>频率、方位、时间——编曲的完整空间是三维的，而绝大多数人只在第一维上思考。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>声像是第二块地</strong>：同频段但不同方位的乐器，掩蔽显著下降。② <strong>中间最贵</strong>——底鼓、贝斯（无方位感）、军鼓（节奏中轴）、人声（主角）必须在那里，所以吉他去两侧不是风格而是必需。③ 四种分工：<strong>同度加倍（宽度）/ 八度（音区）/ 三度和声（和声信息）/ 节奏＋主音（功能分层）</strong>；按「这一段缺什么」来选。④ <strong>同度加倍必须是两次真实演奏</strong>——复制粘贴的两轨会合成为正中的一个点，只是响了 3 dB。⑤ 宽度来自<strong>去相关</strong>：时值、音高、音色的微小差异；效果器能模拟前两项，模拟不了第三项。⑥ 四轨是<strong>宽度的实际上限</strong>；再往上应该换维度（改高八度），而不是加轨数。⑦ <strong>主歌只用一把</strong>，宽度维度才有升级空间。⑧ 编曲的完整空间是三维的：<strong>频率 × 方位 × 时间</strong>。</p>
+          <p><strong>下一章预告</strong>：中频的地已经被四轨吉他占了，而还有一位主角要进来。第 11 章《人声：给它留出位置》讲这场冲突怎么解——人声的频段在哪、旋律与 riff 为什么会打架、让路的四种手段，以及和声人声该怎么摆。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./11-人声给它留出位置.html"><strong>下一章：第 11 章 · 人声：给它留出位置</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      var RIFF = [0, 0, 3, 5], BARS = 2;
+      var SPB = 60 / BPM;                      /* 一拍多少秒，用于把毫秒换算成拍 */
+
+      var rig = null, owner = null;          /* owner 标明当前发声的是哪个演示 */
+      function stopAll() {
+        if (rig) { rig.dispose(); rig = null; }
+        owner = null;
+        A.stopAll();
+        if ($("p-play")) $("p-play").textContent = "▶ 循环播放";
+        if ($("w-play")) $("w-play").textContent = "▶ 循环播放";
+      }
+      function start(tracks, beats, who) {
+        stopAll();
+        owner = who || null;
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: beats, loop: true, tracks: tracks });
+        rig.play();
+        return rig;
+      }
+      function rhythmEvents(opts) {
+        opts = opts || {};
+        var g = [];
+        for (var q = 0; q < BARS; q++) {
+          R.events(RIFF, "gallop", { mute: true, octave: opts.octave || 0 }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + q * 4 + (opts.shift || 0), detune: opts.detune || 0 }));
+          });
+        }
+        return g;
+      }
+      function drumsTrack() {
+        var d = [];
+        for (var q = 0; q < BARS; q++) {
+          R.drumPattern(1, "basic").forEach(function (e) { d.push(Object.assign({}, e, { t: e.t + q * 4 })); });
+        }
+        return { id: "dr", name: "鼓", inst: "drums", gain: 1, events: d };
+      }
+      function bassTrack() {
+        var b = [];
+        for (var q = 0; q < BARS; q++) {
+          RIFF.forEach(function (r, i) { b.push({ t: q * 4 + i, midi: R.ROOT - 12 + r, dur: 1, gain: 0.9 }); });
+        }
+        return { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: b };
+      }
+
+      /* ---------- 演示 1：声像滑块 ---------- */
+      KBG.soundToggle($("p-sound"));
+      var panW = 0.75;
+      function panTracks() {
+        var g = rhythmEvents();
+        return [drumsTrack(), bassTrack(),
+          { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.82, pan: -panW, drive: 0.82, hp: 100, events: g },
+          { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.8, pan: panW, drive: 0.82, hp: 100,
+            events: rhythmEvents({ shift: 0.012 * SPB, detune: 6 }) }];
+      }
+      function syncPan() {
+        var mix = (owner === "p" && rig) ? rig.readMix() : null;
+        function find(id) { return mix ? mix.filter(function (m) { return m.id === id; })[0] : null; }
+        var l = find("g1"), r = find("g2");
+        $("p-l").textContent = l ? Math.round(l.pan * 100) + "%" : Math.round(-panW * 100) + "%（未播放）";
+        $("p-r").textContent = r ? "＋" + Math.round(r.pan * 100) + "%" : "＋" + Math.round(panW * 100) + "%（未播放）";
+        var crowd = panW < 0.15 ? "6 件（吉他也挤在中间）" : panW < 0.5 ? "4 件 ＋ 半个吉他" : "4 件（底鼓·贝斯·军鼓·人声位）";
+        $("p-mid").textContent = crowd;
+        $("p-mid").className = panW < 0.15 ? "warn" : "ok";
+      }
+      KB.bindRange($("p-range"), $("p-val"), function (v) { return "±" + v + "%"; }, function (v) {
+        panW = v / 100;
+        if (owner === "p" && rig) { rig.setPan("g1", -panW); rig.setPan("g2", panW); }
+        syncPan();
+      });
+      $("p-play").addEventListener("click", function () {
+        if (owner === "p") { stopAll(); syncPan(); return; }
+        start(panTracks(), BARS * 4, "p");
+        $("p-play").textContent = "⏸ 暂停";
+        syncPan();
+      });
+      $("p-stop").addEventListener("click", function () { stopAll(); syncPan(); });
+
+      /* ---------- 演示 2：四种分工 ---------- */
+      /* 主音线：E 自然小调，两小节 */
+      var SCALE = [0, 2, 3, 5, 7, 8, 10];
+      function thirdUp(d) {
+        var i = SCALE.indexOf(((d % 12) + 12) % 12);
+        if (i < 0) return d + 3;
+        var oct = Math.floor(d / 12) * 12;
+        var j = i + 2;
+        return oct + SCALE[j % 7] + (j >= 7 ? 12 : 0);
+      }
+      var LEAD_BASE = R.ROOT + 12;             /* E3 —— 比 riff 根音高一个八度 */
+      var LEAD = [
+        [7, 8, 7, 5, 3, 5, 7, 5],
+        [7, 10, 12, 10, 8, 7, 5, 3]
+      ];
+      function leadEvents(map, opts) {
+        opts = opts || {};
+        var ev = [];
+        for (var q = 0; q < BARS; q++) {
+          LEAD[q].forEach(function (d, i) {
+            ev.push({ t: q * 4 + i * 0.5 + (opts.shift || 0), midi: LEAD_BASE + map(d),
+              dur: 0.5, mute: false, gain: 0.85, detune: opts.detune || 0 });
+          });
+        }
+        return ev;
+      }
+      var TW = {
+        unison: { cn: "① 同度加倍", what: "完全相同的旋律（另一次演奏）", add: "宽度与厚度，无新信息",
+                  risk: "若是复制粘贴则等于没做",
+                  g2: function () { return leadEvents(function (d) { return d; }, { shift: 0.011 * SPB, detune: 7 }); } },
+        octave: { cn: "② 八度", what: "高八度的同一条旋律", add: "音区宽度（最有效的织体手段）",
+                  risk: "高八度会侵入人声频段",
+                  g2: function () { return leadEvents(function (d) { return d + 12; }); } },
+        third:  { cn: "③ 三度和声", what: "顺阶三度之上的旋律", add: "真正的和声信息",
+                  risk: "高失真 / 低音区下会浑浊",
+                  g2: function () { return leadEvents(thirdUp); } },
+        split:  { cn: "④ 节奏 ＋ 主音", what: "第一把改弹节奏和弦，第二把弹旋律", add: "功能分层：伴奏与主角分开",
+                  risk: "主音线容易被节奏吉他埋掉",
+                  g2: null }
+      };
+      Object.keys(TW).forEach(function (k) {
+        $("t-" + k).addEventListener("click", function () {
+          Object.keys(TW).forEach(function (j) {
+            $("t-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = TW[k];
+          $("t-name").textContent = v.cn;
+          $("t-what").textContent = v.what;
+          $("t-add").textContent = v.add;
+          $("t-risk").textContent = v.risk;
+          var g1, g2;
+          if (k === "split") {
+            g1 = { id: "g1", name: "吉他 L（节奏）", inst: "guitar", gain: 0.78, pan: -0.8,
+                   drive: 0.82, hp: 100, events: rhythmEvents() };
+            g2 = { id: "g2", name: "吉他 R（主音）", inst: "guitar", gain: 0.9, pan: 0.35,
+                   drive: 0.55, events: leadEvents(function (d) { return d; }) };
+          } else {
+            g1 = { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.86, pan: -0.75,
+                   drive: 0.55, events: leadEvents(function (d) { return d; }) };
+            g2 = { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.84, pan: 0.75,
+                   drive: 0.55, events: v.g2() };
+          }
+          start([drumsTrack(), bassTrack(), g1, g2], BARS * 4, "t");
+        });
+      });
+      $("t-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 3：复制粘贴 vs 真弹两遍 ---------- */
+      var devi = 0;                            /* 0–1 */
+      function widthTracks() {
+        var msT = 14 * devi, cents = 9 * devi;
+        var g1 = rhythmEvents();
+        var g2 = rhythmEvents({ shift: (msT / 1000) / SPB, detune: cents });
+        return [drumsTrack(), bassTrack(),
+          { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.82, pan: -1, drive: 0.82, hp: 100, events: g1 },
+          { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.82, pan: 1, drive: 0.82, hp: 100, events: g2 }];
+      }
+      function syncW() {
+        var msT = (14 * devi).toFixed(1), cents = (9 * devi).toFixed(1);
+        $("w-t").textContent = msT + " ms";
+        $("w-c").textContent = cents + " 音分";
+        var txt = devi < 0.08 ? "两轨完全相关 → 合成为正中的一个点，只是响了约 3 dB"
+          : devi < 0.4 ? "开始去相关 → 位置变模糊，宽度出现"
+          : "充分去相关 → 左右一整片，听不出点声源";
+        $("w-res").textContent = txt;
+        $("w-res").className = devi < 0.08 ? "warn" : devi < 0.4 ? "" : "ok";
+      }
+      function restartW() {
+        if (owner !== "w") return;
+        start(widthTracks(), BARS * 4, "w");
+        $("w-play").textContent = "⏸ 暂停";
+      }
+      KB.bindRange($("w-range"), $("w-val"), function (v) { return v + "%"; }, function (v) {
+        devi = v / 100; syncW(); restartW();
+      });
+      $("w-play").addEventListener("click", function () {
+        if (owner === "w") { stopAll(); return; }
+        start(widthTracks(), BARS * 4, "w");
+        $("w-play").textContent = "⏸ 暂停";
+      });
+      $("w-copy").addEventListener("click", function () { $("w-range").value = 0; devi = 0; $("w-val").textContent = "0%"; syncW(); restartW(); });
+      $("w-real").addEventListener("click", function () { $("w-range").value = 100; devi = 1; $("w-val").textContent = "100%"; syncW(); restartW(); });
+      $("w-stop").addEventListener("click", stopAll);
+
+      syncPan(); syncW();
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) stopAll();
+      });
+    });
+  </script>
+</body>
+</html>

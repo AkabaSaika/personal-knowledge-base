@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11 人声：给它留出位置 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 11 章：人声的频段与它的两个主频段；与吉他冲突的三个来源；让路的四种手段（时间、频率、方位、密度）；riff 与人声的问答结构；和声人声的摆位。">
+  <meta name="kb:tags" content="编曲,人声,vocal,让路,问答,和声人声,清晰度,掩蔽,rsgtlcwz,rs">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+    .dim-list { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+    .dim-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); transition: opacity .15s;
+    }
+    .dim-row.off { opacity: .45; }
+    .dim-row .dn { min-width: 7.5em; font-weight: 600; font-size: .94em; }
+    .dim-row .dd { flex: 1 1 240px; font-size: .86em; color: var(--kb-fg-muted); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 11 章 · 人声：给它留出位置</h1>
+        <p class="kb-lead">人声是唯一一件<strong>听众会自动当作主角</strong>的乐器。你不需要把它调大，人类的听觉本来就会优先解析声音里的语音成分——但前提是它<strong>解析得出来</strong>。而第 7 到第 10 章我们刚刚把四轨吉他放进了 1–3 kHz，那正好是人声清晰度所在的频段。这一章讲这场冲突怎么解，答案里最有效的一项和频率无关。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出人声的两个主频段以及各自负责什么；② 指出人声与吉他冲突的三个来源，包括那个不是频率问题的；③ 按有效性排序使用让路的四种手段；④ 用问答结构把 riff 和人声在时间上分开；⑤ 给和声人声选择正确的摆位与音量。</p>
+        </div>
+
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 关于本章的演示</p>
+          <p>本书的音频引擎没有人声合成。<strong>下面所有演示里的「人声」都用一条居中的清音单音线代替</strong>——它的音区、音符时值与乐句呼吸都按真实的主唱旋律设计，频段落在 300 Hz–1.5 kHz，与人声的基频范围一致。</p>
+          <p>它当然不是真的人声（缺少辅音的高频成分与共振峰），但<strong>本章讨论的冲突与让路机制在它身上完全成立</strong>：一条居中的、要被听清的中频旋律，正是人声在编曲里的位置。</p>
+        </div>
+
+        <h2>人声的两个主频段</h2>
+        <p>人声不是一个单一频段的乐器，它和底鼓、双轨贝斯一样采用<strong>「占两端、让中间」</strong>的模式（第 9 章）：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>频段</th><th>负责</th><th>不足会怎样</th><th>过多会怎样</th></tr></thead>
+            <tbody>
+              <tr><td><strong>150–300 Hz</strong></td><td>胸腔感、厚度、「这是个真人」</td><td>单薄、像广播</td><td>浑浊、闷（而且这里已经很挤了）</td></tr>
+              <tr><td>300 Hz–1 kHz</td><td>基频的主体、元音</td><td>没有身体</td><td>盒装感、鼻音</td></tr>
+              <tr><td><strong>2–4 kHz</strong></td><td><strong>辅音、清晰度、听得清词</strong></td><td><strong>听不清唱什么</strong></td><td>刺耳、听久了累</td></tr>
+              <tr><td>6 kHz 以上</td><td>齿音、气声、空气感</td><td>不够亲密</td><td>嘶嘶声</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 「听得清词」几乎完全取决于 2–4 kHz</p>
+          <p>元音携带的是<strong>音高与响度</strong>，辅音携带的是<strong>信息</strong>——而辅音（t、k、s、ch）的能量集中在 2–4 kHz。</p>
+          <p>所以「唱得很用力却听不清词」这个症状，几乎总是意味着 2–4 kHz 被别的东西占了。<strong>而失真吉他的攻击恰好就在那里</strong>（第 7 章）。这不是巧合造成的偶然冲突，而是重型音乐结构性的矛盾。</p>
+        </div>
+
+        <h2>冲突的三个来源</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>来源</th><th>发生在哪</th><th>症状</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 清晰度争夺</strong></td><td>2–4 kHz：失真吉他的攻击 vs 人声的辅音</td><td>听不清词</td></tr>
+              <tr><td><strong>② 泥区堆积</strong></td><td>250–500 Hz：所有乐器都在这里有能量</td><td>人声闷、缺乏亲密感</td></tr>
+              <tr><td><strong>③ 节奏冲突</strong></td><td><strong>时间轴上</strong>——riff 的音符正好落在人声的音节上</td><td>两者互相打断，都听不完整</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>请特别注意第三条：它不是频率问题。</strong>就算你把 EQ 调得完美，如果 riff 在人声唱词的每一个音节上都砸一下，听众仍然会觉得吃力——因为<strong>听觉一次只能跟随一条线</strong>。这也是本章最重要的结论：<strong>让路首先是时间问题，其次才是频率问题。</strong></p>
+
+        <h2>让路的四种手段</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>优先级</th><th>手段</th><th>做什么</th><th>代价</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td><strong>时间</strong></td><td>riff 在人声乐句<strong>之间</strong>动，人声唱的时候弹长音</td><td>零；而且顺带做出了问答结构</td></tr>
+              <tr><td><strong>2</strong></td><td><strong>密度</strong></td><td>人声段落减到一对吉他，甚至一把（第 10 章）</td><td>零；而且给副歌留出了升级空间</td></tr>
+              <tr><td><strong>3</strong></td><td><strong>方位</strong></td><td>吉他声像从 ±50% 拉到 ±100%，把中间彻底让出来</td><td>零；但两侧的空间是有限的</td></tr>
+              <tr><td><strong>4</strong></td><td>频率</td><td>吉他在 2–3 kHz 做窄凹陷，或整体滚降高频</td><td>吉他变薄；<strong>只能挽救，不能创造</strong>（第 7 章）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>这个排序和第 7 章的四种手段是同一条逻辑</strong>：越早介入、越靠编曲的手段代价越小。前三项全部是<strong>零成本</strong>的编曲决定，而且每一项都顺带解决了别的问题。EQ 排在最后，因为它是唯一一个会让某件乐器<strong>变差</strong>的手段。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎤 演示 1：四种让路手段逐个开关</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一条居中的主唱旋律线，配四轨密集的失真吉他。四种让路手段可以逐个开启——时间（riff 只在乐句之间动）、密度（四轨减为两轨）、方位（声像拉到 ±100%）、频率（吉他滚降 2 kHz 以上）。全部关闭时旋律几乎听不出来；只开「时间」一项，清晰度就有显著改善；而单独开「频率」这一项的效果最弱，还让吉他变薄了。</p></noscript>
+            <div id="v-sound"></div>
+            <div class="dim-list" id="v-dims"></div>
+            <div class="kb-readout">
+              <span>已开启 <b id="v-on">0 / 4</b></span>
+              <span>人声清晰度 <b id="v-clarity">很差</b></span>
+              <span>吉他损失 <b id="v-cost">无</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="v-play" type="button">▶ 循环播放</button>
+              <button class="kb-btn" id="v-all" type="button">全部开启</button>
+              <button class="kb-btn" id="v-none" type="button">全部关闭</button>
+              <button class="kb-btn" id="v-onlyeq" type="button">只开频率（EQ）</button>
+              <button class="kb-btn" id="v-onlytime" type="button">只开时间</button>
+              <button class="kb-btn" id="v-stop" type="button">■ 停止</button>
+            </div>
+            <p id="v-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">建议顺序：「全部关闭」→「只开频率」→「只开时间」→「全部开启」。<strong>请特别比较「只开频率」和「只开时间」——前者是绝大多数人的第一反应，后者的效果明显更好，而且不损失任何东西。</strong></p>
+          </div>
+        </div>
+
+        <h2>问答：把 riff 和人声在时间上分开</h2>
+        <p>时间上让路的标准做法，就是<strong>问答结构</strong>——第 1 章讲动机时提过它，这里是它在编曲尺度上的应用。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 问答的基本形状</p>
+          <p><strong>人声唱两小节 → riff 答两小节 → 人声唱两小节 → riff 答两小节。</strong></p>
+          <p>人声唱的时候，吉他弹长和弦或干脆休止；人声停下的空当，riff 才出来把动作做完。<strong>两个主角轮流上场，谁都不用抢。</strong></p>
+          <p>这个结构在摇滚与蓝调里有近百年的历史，而它之所以稳固，是因为它同时解决了三件事：① 人声听得清；② riff 有它自己的高光时刻；③ 段落有了内部的呼吸（<a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html#乐句呼吸与问答">上一本第 16 章</a>）。</p>
+        </div>
+        <p><strong>一个常见的顾虑是「这样 riff 出现得太少了」。</strong>恰恰相反——<strong>riff 在只出现一半的时间里，反而更容易被记住</strong>。它每次出现都在一个安静的背景上，而且每次都被期待着。这与第 5 章「休止是最强的重音」是同一条原理，只是尺度放大到了两小节。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">💬 演示 2：齐头并进 vs 问答</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同样的旋律与同样的 riff，两种组织方式——① 齐头并进：riff 全程不停，人声在它上面唱；② 问答：人声唱两小节时吉他只弹长和弦，人声停下的两小节 riff 才出来。第二种听起来人声更清楚、riff 也更有存在感，而且两者的素材完全没有变化。</p></noscript>
+            <div class="kb-readout">
+              <span>方式 <b id="q-name">—</b></span>
+              <span>riff 出现比例 <b id="q-ratio">—</b></span>
+              <span>人声清晰度 <b id="q-clar">—</b></span>
+              <span>riff 记忆点 <b id="q-mem">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="q-together" type="button">▶ ① 齐头并进（riff 全程不停）</button>
+              <button class="kb-btn" id="q-call" type="button">▶ ② 问答（轮流上场）</button>
+              <button class="kb-btn" id="q-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">版本 ② 里 riff 只占了一半的时间，<strong>但它听起来更突出</strong>——因为它每次出现都在一个安静的背景上。<strong>少出现一半，效果反而更强，这在编曲里是常态而不是例外。</strong></p>
+          </div>
+        </div>
+
+        <h2>和声人声</h2>
+        <p>和声人声（backing vocals）是副歌最有效的加法之一，但它有一个致命的陷阱：<strong>它和主唱在完全相同的频段。</strong></p>
+        <p>第 7 章习题 7.8 已经给过答案——<strong>当频率维度无法让开时，用方位和时间让开</strong>。具体到和声人声，是三条规则：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>规则</th><th>做法</th><th>为什么</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 拉到两侧</strong></td><td>成对摆在 ±70% 以上，主唱居中</td><td>方位上分开，掩蔽显著下降（第 10 章）</td></tr>
+              <tr><td><strong>② 低 5–8 dB</strong></td><td>明显低于主唱</td><td>它是<strong>配角</strong>；等音量的和声会让人不知道该听谁</td></tr>
+              <tr><td><strong>③ 只在副歌</strong></td><td>主歌完全不用</td><td>时间上独占；而且这样它才是一个<strong>对比手段</strong>（第 5 章）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>音程选择</strong>：八度最安全（也最厚），五度硬朗，三度最甜但在重型编曲里要小心（第 10 章）。<strong>最常用的其实是「八度 + 三度」两层</strong>——八度提供厚度，三度提供色彩，而且它们分居不同音区，不会互相糊。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎶 演示 3：和声人声的三种摆法</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：给主唱旋律加一层三度和声，三种摆法——① 居中、等音量（错误做法：两条线在同一位置同音量，听不出谁是主角）；② 两侧、低 6 dB（正确做法：主唱依然清楚，副歌明显变宽）；③ 两侧的三度 ＋ 更外侧的八度（副歌的完整做法：厚度与色彩兼得）。</p></noscript>
+            <div class="kb-readout">
+              <span>摆法 <b id="h-name">—</b></span>
+              <span>和声声像 <b id="h-pan">—</b></span>
+              <span>相对主唱 <b id="h-gain">—</b></span>
+              <span>结果 <b id="h-res">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="h-bad" type="button">▶ ① 居中 · 等音量（错误）</button>
+              <button class="kb-btn" id="h-good" type="button">▶ ② 两侧 · 低 6 dB</button>
+              <button class="kb-btn" id="h-full" type="button">▶ ③ 三度 ＋ 八度两层</button>
+              <button class="kb-btn" id="h-solo" type="button">▶ ⓪ 只有主唱（对照）</button>
+              <button class="kb-btn" id="h-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">版本 ① 是最常见的错误：两条旋律线在同一个位置、同一个音量，听觉不知道该跟哪一条，<strong>结果是两条都没听清</strong>。改成 ② 之后，主唱重新成为主角，而副歌确实变宽了——<strong>你没有失去和声，只是把它放到了配角的位置上。</strong></p>
+          </div>
+        </div>
+
+        <h2>人声不在的时候</h2>
+        <p>最后一件事：<strong>人声离开之后，中间就空出来了。</strong>间奏、独奏、前奏、桥段的器乐部分——这些段落有一块最贵的地皮突然无人认领。</p>
+        <p>处理方式有三种，而<strong>「什么都不做」是最糟的一种</strong>：</p>
+        <ol>
+          <li><strong>让一件乐器搬进中间。</strong>独奏吉他、一条清晰的贝斯走线（第 9 章写法 ④）、键盘。<strong>器乐段落需要一个主角，否则听众会觉得「这段在等什么」。</strong></li>
+          <li><strong>把吉他收窄一点。</strong>人声在的时候吉他在 ±100%，人声走了可以收到 ±80%，让音墙填满整个立体声场。<strong>这是一个几乎没人注意、但确实有效的细节。</strong></li>
+          <li><strong>就让它空着——但要是有意的。</strong>某些氛围段落的空旷感正是靠中间的空。这时应该配合整体减法（编制变稀），而不是保持满编却没有主角。</li>
+        </ol>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一条贯穿全书的推论</p>
+          <p><strong>任何时刻都要有且只有一个主角。</strong></p>
+          <p>人声在的时候，人声是主角，其他所有人让路；人声走了，必须有人接班。<strong>「没有主角」和「两个主角」一样糟</strong>——前者让人走神，后者让人吃力。</p>
+          <p>这条原则可以用来检查任何一个段落：<strong>指着任意一秒问「现在谁是主角」，如果答不上来，那一秒就有问题。</strong></p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 11.1</p>
+          <p>主唱说「我在副歌完全听不见自己，能不能把我调大」。混音师照做了，结果整段变吵，词还是听不清。诊断并给出方案。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>诊断：2–4 kHz 被四轨失真吉他占了，这是掩蔽问题，推音量无效（第 7 章）。</strong>把人声推大之后，它在 2–4 kHz 的能量确实增加了，但吉他还在那里；两者一起变响，相对关系没变，只是总电平上去了——所以「更吵，但没更清楚」。</p>
+            <p><strong>按四种手段的优先级处理：</strong></p>
+            <ol>
+              <li><strong>时间（先做这个）。</strong>检查 riff 是不是在人声的每个音节上都在动。如果是，改成：人声唱时吉他弹长和弦或延音，乐句之间 riff 才做动作。<strong>这一步通常就解决了一大半，而且它是免费的。</strong></li>
+              <li><strong>密度。</strong>副歌四轨里有两轨改成<strong>高八度</strong>（第 10 章）。四轨还在，但 1–3 kHz 的堆积减半，而且副歌听起来反而更大。</li>
+              <li><strong>方位。</strong>把外圈那对吉他推到 ±100%，内圈那对至少到 ±60%。<strong>中间必须彻底腾给人声。</strong></li>
+              <li><strong>频率（最后）。</strong>在吉他上做一个 2.5 kHz 附近的窄凹陷，最好用侧链跟着人声电平联动——人声唱的时候凹一点，不唱的时候恢复。<strong>四轨都挖会让吉他明显变薄，所以幅度要小。</strong></li>
+              <li><strong>然后把人声的音量调回去。</strong>做完前四步，人声通常不需要比原来更大。</li>
+            </ol>
+            <p><strong>要对乐队说的话</strong>：「听不见」和「太小声」是两个不同的问题。<strong>前者的解法是让开，不是喊得更大声</strong>——而让开的前三种方式都不需要任何人少弹一个音，只是换个时机、换个音区、换个位置。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 11.2</p>
+          <p>写了一段很好的 riff，但主唱说「这段没法唱，riff 太满了」。你不想改 riff。有什么办法？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>不改 riff 的内容，改它出现的时机——用问答结构。</strong></p>
+            <p>具体做法：把段落切成两小节一组，riff 只在<strong>偶数组</strong>出现；奇数组人声唱，吉他弹长和弦（或者只弹 riff 的第一个音然后延音）。</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>小节</th><th>人声</th><th>吉他</th></tr></thead>
+                <tbody>
+                  <tr><td>1–2</td><td><strong>唱</strong></td><td>长和弦 / 延音</td></tr>
+                  <tr><td>3–4</td><td>停（换气）</td><td><strong>完整 riff</strong></td></tr>
+                  <tr><td>5–6</td><td><strong>唱</strong></td><td>长和弦</td></tr>
+                  <tr><td>7–8</td><td>停</td><td><strong>完整 riff ＋ 过门收尾</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三个额外的好处</strong>：</p>
+            <ol>
+              <li><strong>riff 反而更突出。</strong>它现在每次出现都在一个安静的背景上，而且听众在等它。<strong>出现频率减半，记忆点反而更强。</strong></li>
+              <li><strong>主唱有地方换气。</strong>连续唱八小节对任何人都是负担；问答结构天然给出了呼吸点（<a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html#乐句呼吸与问答">上一本第 16 章</a>）。</li>
+              <li><strong>段落有了内部起伏。</strong>八小节不再是一个静态的织体，而是「唱—答—唱—答」四个小事件。</li>
+            </ol>
+            <p><strong>如果连这样都还是太满</strong>，那问题可能不在编排而在 riff 本身：一条每个十六分格都有音的 riff，即使只占一半时间也很难和人声共存。这时可以保留 riff 的<strong>节奏骨架</strong>但减少音数——把连续十六分改成 gallop，或者只保留每拍的第一个音。<strong>这仍然是同一条 riff，只是它的简化版。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 11.3</p>
+          <p>副歌加了和声人声，结果听起来「乱」，主唱反而不突出了。检查哪里出了问题？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>按这三条检查，命中率从高到低：</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>检查</th><th>错误的做法</th><th>正确的做法</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 声像</strong></td><td>和声也在中间</td><td><strong>成对摆到 ±70% 以上</strong>，主唱独占中间</td></tr>
+                  <tr><td><strong>② 音量</strong></td><td>和声与主唱等响</td><td><strong>低 5–8 dB</strong>——它是配角</td></tr>
+                  <tr><td><strong>③ 出现范围</strong></td><td>整首歌都有</td><td><strong>只在副歌</strong>（时间上让开，同时成为对比手段）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>「乱」的具体机制</strong>：两条旋律线在同一个方位、同一个音量、同一个频段，听觉无法判断哪一条是主线，于是在两者之间反复切换。<strong>结果不是「听到了两条」，而是「两条都没听清」</strong>——这和第 5 章「两个主角等于没有主角」是同一件事。</p>
+            <p><strong>如果三条都做对了还是乱</strong>，再看两个进阶因素：</p>
+            <ul>
+              <li><strong>和声的音程选错了。</strong>三度和声在密集的重型编曲里容易糊（第 10 章）。改成<strong>八度</strong>试试——八度和声不会被听成「另一条旋律」，而会被听成「同一条旋律变厚了」，几乎不可能乱。</li>
+              <li><strong>和声唱的词太清楚。</strong>如果和声和主唱唱完全一样的词、一样的节奏，两者会互相干扰。常见的做法是<strong>和声只唱关键的几个词或只唱元音</strong>——把辅音留给主唱，和声只提供厚度。</li>
+            </ul>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>人声的两个主频段是什么？为什么「听得清词」几乎完全取决于其中一个？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>两个主频段</strong>：<strong>150–300 Hz</strong>（胸腔感、厚度）和 <strong>2–4 kHz</strong>（辅音、清晰度）。中间的 300 Hz–1 kHz 是基频主体，6 kHz 以上是齿音与气声。</p>
+            <p><strong>「听得清词」取决于 2–4 kHz</strong>，因为：</p>
+            <ul>
+              <li><strong>元音</strong>（a、o、i）携带的是音高与响度，能量在低频；</li>
+              <li><strong>辅音</strong>（t、k、s、ch、f）携带的是<strong>信息</strong>——区分「山」和「三」的正是辅音，而辅音的能量集中在 2–4 kHz。</li>
+            </ul>
+            <p>把 2–4 kHz 拿掉，你还能听出旋律和情绪，但听不出在唱什么——这正是电话音质的听感。</p>
+            <p><strong>为什么这对重型音乐特别要命</strong>：失真吉他的攻击（拨片声、削波产生的高次谐波）恰好也在 2–4 kHz。<strong>这不是偶然的冲突，而是这个风格结构性的矛盾</strong>——它的标志性音色和它的可懂度天生抢同一块地。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>人声与吉他冲突的三个来源是什么？哪一个不是频率问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>清晰度争夺</strong>——2–4 kHz：失真吉他的攻击 vs 人声的辅音。症状是「听不清词」。</li>
+              <li><strong>泥区堆积</strong>——250–500 Hz：所有乐器都在这里有能量。症状是人声闷、缺乏亲密感。</li>
+              <li><strong>节奏冲突</strong>——<strong>不是频率问题</strong>。riff 的音符正好落在人声的音节上，两者互相打断。</li>
+            </ol>
+            <p><strong>第三条为什么重要</strong>：因为它是唯一一个 EQ 完全无能为力的。你可以把频段调得完美，但如果 riff 在人声唱词的每一个音节上都砸一下，听众仍然会觉得吃力——<strong>听觉一次只能跟随一条线</strong>，这是注意力的限制，不是频谱的限制。</p>
+            <p><strong>由此得到本章的核心结论</strong>：<strong>让路首先是时间问题，其次才是频率问题。</strong>而大多数人的第一反应是拿起 EQ——那恰好是四种手段里排最后的一个。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>让路的四种手段按优先级排序，并说明为什么 EQ 排最后。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>时间</strong>——riff 在人声乐句之间动，人声唱时弹长音。代价为零，且顺带做出问答结构。</li>
+              <li><strong>密度</strong>——人声段落减到一对吉他甚至一把。代价为零，且给副歌留出升级空间。</li>
+              <li><strong>方位</strong>——吉他声像拉到 ±100%，中间彻底让出。代价为零，但两侧空间有限。</li>
+              <li><strong>频率（EQ）</strong>——吉他在 2–3 kHz 做窄凹陷。<strong>吉他会变薄。</strong></li>
+            </ol>
+            <p><strong>EQ 排最后有两个理由</strong>：</p>
+            <ul>
+              <li><strong>它是唯一有代价的。</strong>前三种都只是「换个时机 / 换个音区 / 换个位置」，没有任何东西变差。EQ 是从吉他身上拿走一块，永久地。</li>
+              <li><strong>它只能挽救，不能创造</strong>（第 7 章）。如果四轨吉他 + 人声全都要 2–4 kHz，EQ 只能决定谁输；而前三种手段<strong>取消了「必须同时在场」这个前提</strong>。</li>
+            </ul>
+            <p><strong>但 EQ 不是没用</strong>：做完前三步之后剩下的残余冲突，正是 EQ 最擅长处理的——小幅、精准、窄频段。<strong>它是收尾工具。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>和声人声的三条规则是什么？各自解决什么问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>规则</th><th>解决的问题</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 成对拉到 ±70% 以上</strong></td><td>和声与主唱在完全相同的频段，<strong>频率上让不开就从方位上让</strong>（第 10 章）</td></tr>
+                  <tr><td><strong>② 低 5–8 dB</strong></td><td>确立主次。等音量的两条旋律线会让听觉在两者间反复切换，<strong>结果两条都没听清</strong></td></tr>
+                  <tr><td><strong>③ 只在副歌</strong></td><td>时间上独占；而且这样它才是一个<strong>对比手段</strong>——主歌没有、副歌才有，落差自然出现（第 5 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三条规则其实是同一件事的三个维度</strong>：和声人声在<strong>频率</strong>上无法与主唱分开，所以它必须在<strong>方位</strong>（规则 ①）、<strong>响度</strong>（规则 ②）、<strong>时间</strong>（规则 ③）上全部让开。<strong>让开的维度越多，它越安全。</strong></p>
+            <p><strong>音程选择的补充</strong>：八度最安全（听成「变厚」而不是「另一条线」），五度硬朗，三度最甜但在高失真环境里要小心（第 10 章）。<strong>最常用的是「八度 + 三度」两层</strong>——它们分居不同音区，互不干扰。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么问答结构里「riff 只出现一半时间，反而更突出」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个机制叠加：</strong></p>
+            <ol>
+              <li><strong>它每次出现都在一个安静的背景上。</strong>齐头并进时，riff 的背景是「riff 自己刚刚弹过的东西」——听觉已经适应了；问答时，它的背景是长和弦与人声，<strong>对比度大得多</strong>。这是第 5 章「对比是相对的」在两小节尺度上的表现。</li>
+              <li><strong>它被期待着。</strong>人声唱完之后有一个空当，听众知道要发生什么。<strong>被期待的东西感知强度更高</strong>——这是第 6 章连接段那一套机制。</li>
+              <li><strong>它不再和人声争注意力。</strong>齐头并进时听众的注意力被分成两半；问答时 riff 独占那两小节的全部注意力。<strong>50% 的时间 × 100% 的注意力，胜过 100% 的时间 × 50% 的注意力。</strong></li>
+            </ol>
+            <p><strong>这条规律的推广形式</strong>：<strong>在编曲里，一个元素的感知强度约等于「它占的时间 × 它独占注意力的程度」，而第二项通常比第一项重要得多。</strong></p>
+            <p><strong>它解释了很多别的现象</strong>：为什么独奏要留白（<a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html">上一本第 16 章</a>）；为什么过门要稀（第 8 章）；为什么擦片一小节最多一次（第 8 章）；为什么双踩要断续（第 8、9 章）。<strong>全部是同一条规律。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「把两轨吉他改成高八度」既能给人声让路，又能让副歌更大。请解释这一个动作为什么同时改善了两件事。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为它把能量从最挤的频段搬到了最空的频段，而这个搬运同时服务两个目标。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>改之前（四轨同音区）</th><th>改之后（两轨原位 ＋ 两轨高八度）</th></tr></thead>
+                <tbody>
+                  <tr><td>1–3 kHz 的能量</td><td>四轨全在这里</td><td><strong>只剩两轨</strong>——人声的地盘腾出一半</td></tr>
+                  <tr><td>3–6 kHz 的能量</td><td>只有失真的边缘</td><td><strong>多了两轨的基频与低次谐波</strong></td></tr>
+                  <tr><td>总能量</td><td>相同</td><td>相同</td></tr>
+                  <tr><td>人声清晰度</td><td>差</td><td><strong>明显改善</strong></td></tr>
+                  <tr><td>副歌的「大」</td><td>厚，但不高</td><td><strong>音区更宽 ＝ 感知更大</strong>（第 5 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>关键在于「音区宽度」和「频段拥挤」是同一个事实的两面</strong>：把能量分散到更宽的频率范围，既减少了任何单一频段的堆积，又让整体听起来覆盖面更广。<strong>而听觉对「覆盖面广」的解释就是「大」。</strong></p>
+            <p><strong>这是编曲里最值得追求的一类动作</strong>：<strong>同时改善两个维度</strong>。第 10 章习题 10.9 提过这一点——最好的编曲决定往往不是在一个维度上做取舍，而是找到那个让两个维度同时变好的选项。</p>
+            <p><strong>它的代价（要诚实说明）</strong>：高八度的吉他在 3–6 kHz，那里住着镲片和底鼓的音头。如果镲片打得很满，这一招的收益会打折扣——<strong>没有免费的地，只有相对空的地。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「任何时刻都要有且只有一个主角」——请用这条原则检查一个器乐间奏，说明「没有主角」和「两个主角」各自的症状与解法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>没有主角</th><th>两个主角</th></tr></thead>
+                <tbody>
+                  <tr><td>典型情形</td><td>人声走了，四轨吉他继续弹伴奏织体，没人接班</td><td>独奏吉他在弹，同时贝斯也在走一条复杂的线</td></tr>
+                  <tr><td>症状</td><td>「这段在等什么」；听众走神、想快进</td><td>「很忙但抓不住」；听着累</td></tr>
+                  <tr><td>频谱表现</td><td><strong>中间空着</strong>——最贵的地皮无人认领</td><td>两条线互相掩蔽、互相打断</td></tr>
+                  <tr><td>解法</td><td>让一件乐器搬进中间：独奏、贝斯走线、键盘</td><td>选一个当主角，另一个退回伴奏（弹长音 / 减密度）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>检查方法</strong>：指着段落里的任意一秒问「<strong>现在谁是主角</strong>」。答不上来就是「没有主角」；答出两个就是「两个主角」。</p>
+            <p><strong>一个容易忽略的第三种情况</strong>：<strong>主角是「整体」。</strong>Breakdown、齐奏段落、氛围段落里，主角可以是全乐队作为一个整体（第 8 章的「巨型乐器」）。这时的检查标准变成：<strong>所有乐器是不是真的在做同一件事？</strong>如果有一件在做别的（比如镲片在打满、贝斯在走线），那它就是那个多出来的第二主角，应该被拿掉。</p>
+            <p><strong>为什么这条原则这么有用</strong>：因为它把「编曲好不好」这个模糊问题，变成了一个可以逐秒回答的具体问题。<strong>它是本书里最接近「检查清单」的一条</strong>——第 16 章会把它写进自查表。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首歌的主歌设计完整的「给人声让路」方案，要求四种手段各用到至少一次，并说明每一处让路换来了什么额外的好处。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>#</th><th>做法</th><th>用的手段</th><th>额外的好处</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><strong>riff 只在乐句之间出现</strong>（人声唱两小节 → riff 答两小节）</td><td>时间</td><td>riff 反而更突出；主唱有换气点；段落有了内部起伏</td></tr>
+                  <tr><td>2</td><td><strong>吉他从四轨减到一对</strong></td><td>密度</td><td><strong>副歌的四轨才有升级空间</strong>（第 5、10 章）</td></tr>
+                  <tr><td>3</td><td><strong>这一对推到 L100 / R100</strong></td><td>方位</td><td>中间彻底腾空；<strong>副歌可以用内圈那一对制造「更满」的感觉</strong></td></tr>
+                  <tr><td>4</td><td><strong>贝斯改弹根音长音</strong></td><td>时间 ＋ 密度</td><td>低频从断续变连续，整体更结实（第 9 章）</td></tr>
+                  <tr><td>5</td><td><strong>鼓改四分踩镲、底鼓每小节 2 击</strong></td><td>密度</td><td>不占新频段的减法；<strong>副歌换八分踩镲就是一次免费的升级</strong>（第 8 章）</td></tr>
+                  <tr><td>6</td><td><strong>吉他做 2.5 kHz 的小凹陷</strong>（幅度 2–3 dB）</td><td>频率</td><td>收尾；因为前面已经让了很多，这里只需要很小的幅度</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三个值得注意的地方</strong>：</p>
+            <ol>
+              <li><strong>六步里有五步是编曲决定，只有最后一步是混音。</strong>而且正因为前五步做足了，最后一步的幅度可以很小——<strong>吉他几乎没有变薄。</strong></li>
+              <li><strong>每一步的「额外好处」栏里，有四条是关于副歌的。</strong>给人声让路和给副歌留升级空间，在主歌里是<strong>同一个动作</strong>。这不是巧合：两者都要求主歌保持克制。</li>
+              <li><strong>没有任何一步是「把人声调大」。</strong>做完这六步，人声的音量很可能比原来还低一点，却清楚得多。</li>
+            </ol>
+            <p><strong>自检</strong>：把这段主歌的人声轨静音，单独听伴奏。<strong>它应该听起来「有点空、像缺了什么」——那个缺口正好是人声的形状。</strong>如果静音之后伴奏听起来很完整、很满足，那说明你没有为人声留出位置。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 11.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>极端金属（如死亡金属、黑金属）的人声通常是嘶吼或咆哮，频谱特征与清唱完全不同。这会怎样改变本章的所有结论？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>先看频谱差别：</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>清唱</th><th>嘶吼 / 咆哮</th></tr></thead>
+                <tbody>
+                  <tr><td>基频</td><td>明确，有音高</td><td><strong>基本没有稳定音高</strong>，接近噪声</td></tr>
+                  <tr><td>频谱形状</td><td>共振峰清晰，能量集中</td><td><strong>宽带、扁平</strong>，从 200 Hz 铺到 8 kHz</td></tr>
+                  <tr><td>动态</td><td>大</td><td><strong>被压得很扁</strong>（发声方式本身就是过载）</td></tr>
+                  <tr><td>与吉他的关系</td><td>频谱形状不同，可以分辨</td><td><strong>频谱形状与失真吉他高度相似</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>哪些结论变了：</strong></p>
+            <ul>
+              <li><strong>「2–4 kHz 决定清晰度」不再成立。</strong>嘶吼本来就没有清晰的辅音，歌词可懂度不是设计目标。所以那一处争地的<strong>紧迫性大幅下降</strong>——这也是为什么极端金属可以把吉他做得那么满。</li>
+              <li><strong>EQ 的作用进一步下降。</strong>嘶吼与失真吉他的频谱形状太像了，EQ 很难把它们分开。<strong>能分开它们的只有时间与方位。</strong></li>
+              <li><strong>「和声人声」的规则要重写。</strong>叠加的嘶吼不会像清唱那样产生「两条旋律线」的混乱（因为没有旋律线），所以可以叠得更多、更居中。</li>
+            </ul>
+            <p><strong>哪些结论反而更重要：</strong></p>
+            <ul>
+              <li><strong>时间上的让路成了几乎唯一的手段。</strong>这解释了一个听起来很奇怪的事实：<strong>极端金属的编曲往往比主流金属更依赖问答结构</strong>——riff 与人声严格轮流，因为它们在频率上根本分不开。</li>
+              <li><strong>「有且只有一个主角」更加严格。</strong>当两个声源的频谱形状几乎一样时，同时出现就是纯粹的能量叠加，没有任何可分辨性。</li>
+              <li><strong>动态成了唯一的可用变量。</strong>清唱有自己的强弱起伏，嘶吼没有——所以极端金属只能靠<strong>编制的开合</strong>（有没有、多少件）来制造动态，这正是它大量使用突然的休止与 breakdown 的原因。</li>
+            </ul>
+            <p><strong>一个总的观察</strong>：风格越极端，可用的维度越少——失真限制了和声（第 9、10 章），嘶吼取消了旋律与动态，降调挤占了低频（第 7 章）。<strong>剩下的维度就那么几个：时间、编制、对齐。</strong>这解释了为什么极端金属的编曲听起来「简单」却很难写好——它是在极小的可行空间里做的设计。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 人声也是<strong>「占两端、让中间」</strong>：150–300 Hz 给厚度，<strong>2–4 kHz 给清晰度</strong>——「听得清词」几乎完全取决于后者。② 冲突的三个来源：清晰度争夺（2–4 kHz）、泥区堆积（250–500 Hz）、<strong>节奏冲突（不是频率问题）</strong>。③ 让路的优先级：<strong>时间 &gt; 密度 &gt; 方位 &gt; 频率</strong>；前三种零成本，EQ 是唯一会让乐器变差的。④ <strong>问答结构</strong>是时间让路的标准做法；riff 只占一半时间反而更突出——感知强度 ≈ 占的时间 × 独占注意力的程度，<strong>而第二项更重要</strong>。⑤ 和声人声三条规则：<strong>拉到两侧 · 低 5–8 dB · 只在副歌</strong>——频率上让不开，就在方位、响度、时间上全部让开。⑥ <strong>人声不在时中间会空出来</strong>，必须有人接班。⑦ 贯穿全书的检查：<strong>任何时刻都要有且只有一个主角</strong>；指着任意一秒问「现在谁是主角」，答不上来就有问题。</p>
+          <p><strong>下一章预告</strong>：第二篇的每一件乐器都已就位。第 12 章《织体与密度：编曲的减法》把它们放回同一个工程里——本书的<strong>旗舰演示</strong>是一个完整的多轨混音沙盒，你可以对整首示范曲的每一轨做静音、独奏、音量、声像，并实时看到频段占用。那一章要回答的问题只有一个：<strong>什么时候该加，什么时候该减。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./12-织体与密度编曲的减法.html"><strong>下一章：第 12 章 · 织体与密度：编曲的减法</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      var RIFF = [0, 0, 3, 5], BARS = 4;
+      var SCALE = [0, 2, 3, 5, 7, 8, 10];
+      var VOX_BASE = R.ROOT + 12;              /* E3 —— 主唱旋律所在的音区 */
+
+      var rig = null;
+      function stopAll() {
+        if (rig) { rig.dispose(); rig = null; }
+        A.stopAll();
+        if ($("v-play")) $("v-play").textContent = "▶ 循环播放";
+      }
+      function start(tracks) {
+        stopAll();
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: BARS * 4, loop: true, tracks: tracks });
+        rig.play();
+      }
+      function thirdUp(d) {
+        var i = SCALE.indexOf(((d % 12) + 12) % 12);
+        if (i < 0) return d + 3;
+        var j = i + 2;
+        return Math.floor(d / 12) * 12 + SCALE[j % 7] + (j >= 7 ? 12 : 0);
+      }
+
+      /* 主唱旋律：四小节，第 1–2 与 5–6 拍组唱，其余留白换气 */
+      var VOX = [
+        { t: 0,   d: 7,  dur: 1 },   { t: 1,   d: 8,  dur: 0.5 }, { t: 1.5, d: 7,  dur: 0.5 },
+        { t: 2,   d: 5,  dur: 1 },   { t: 3,   d: 3,  dur: 1 },
+        { t: 4,   d: 5,  dur: 0.5 }, { t: 4.5, d: 7,  dur: 0.5 }, { t: 5,   d: 8,  dur: 1.5 },
+        { t: 6.5, d: 7,  dur: 0.5 }, { t: 7,   d: 5,  dur: 1 },
+        { t: 8,   d: 7,  dur: 1 },   { t: 9,   d: 10, dur: 1 },   { t: 10,  d: 12, dur: 1.5 },
+        { t: 11.5, d: 10, dur: 0.5 },
+        { t: 12,  d: 8,  dur: 1 },   { t: 13,  d: 7,  dur: 0.5 }, { t: 13.5, d: 5, dur: 0.5 },
+        { t: 14,  d: 3,  dur: 2 }
+      ];
+      function voxTrack(opts) {
+        opts = opts || {};
+        var map = opts.map || function (d) { return d; };
+        return {
+          id: opts.id || "vx", name: opts.name || "主唱（清音单音线代替）", inst: "guitar",
+          gain: opts.gain == null ? 0.95 : opts.gain,
+          pan: opts.pan == null ? 0 : opts.pan, drive: 0.1, lp: 5000,
+          events: VOX.map(function (n) {
+            return { t: n.t, midi: VOX_BASE + map(n.d), dur: n.dur, mute: false, gain: 0.9 };
+          })
+        };
+      }
+      function drumsTrack(kind) {
+        var d = [];
+        for (var q = 0; q < BARS; q++) {
+          R.drumPattern(1, kind || "basic").forEach(function (e) {
+            d.push(Object.assign({}, e, { t: e.t + q * 4 }));
+          });
+        }
+        return { id: "dr", name: "鼓", inst: "drums", gain: 1, events: d };
+      }
+      function bassTrack(long) {
+        var b = [];
+        for (var q = 0; q < BARS; q++) {
+          if (long) b.push({ t: q * 4, midi: R.ROOT - 12, dur: 4, gain: 0.92 });
+          else RIFF.forEach(function (r, i) {
+            b.push({ t: q * 4 + i, midi: R.ROOT - 12 + r, dur: 1, gain: 0.9 });
+          });
+        }
+        return { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: b };
+      }
+      /* 完整 gallop riff */
+      function riffEvents(bars) {
+        var g = [];
+        for (var q = 0; q < (bars || BARS); q++) {
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + q * 4 }));
+          });
+        }
+        return g;
+      }
+      /* 让路版：人声唱的小节只弹长和弦，空当里才做 riff 的动作 */
+      function riffWithGaps(voxBars) {
+        var g = [];
+        for (var q = 0; q < BARS; q++) {
+          if (voxBars.indexOf(q) >= 0) {
+            g.push({ t: q * 4, midis: [R.ROOT, R.ROOT + 7, R.ROOT + 12], dur: 4,
+              mute: false, spread: 0.014, gain: 0.6 });
+          } else {
+            R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+              g.push(Object.assign({}, e, { t: e.t + q * 4 }));
+            });
+          }
+        }
+        return g;
+      }
+
+      /* ---------- 演示 1：四种让路手段 ---------- */
+      KBG.soundToggle($("v-sound"));
+      var WAYS = [
+        { k: "time", cn: "① 时间", desc: "riff 只在人声乐句之间做动作，人声唱时弹长和弦" },
+        { k: "dens", cn: "② 密度", desc: "吉他从四轨减到两轨" },
+        { k: "pan",  cn: "③ 方位", desc: "声像从 ±50% 拉到 ±100%，中间彻底让出" },
+        { k: "eq",   cn: "④ 频率", desc: "吉他滚降 2 kHz 以上（EQ 让路，代价是吉他变薄）" }
+      ];
+      var on = {}, rows = [];
+      WAYS.forEach(function (w) {
+        on[w.k] = false;
+        var row = document.createElement("div");
+        row.className = "dim-row off";
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn kbb-mini"; b.textContent = "关";
+        var nm = document.createElement("span"); nm.className = "dn"; nm.textContent = w.cn;
+        var dd = document.createElement("span"); dd.className = "dd"; dd.textContent = w.desc;
+        b.addEventListener("click", function () { on[w.k] = !on[w.k]; syncV(); rebuildV(); });
+        row.appendChild(b); row.appendChild(nm); row.appendChild(dd);
+        $("v-dims").appendChild(row);
+        rows.push({ w: w, row: row, b: b });
+      });
+      function syncV() {
+        rows.forEach(function (r) {
+          r.b.textContent = on[r.w.k] ? "开" : "关";
+          r.b.classList.toggle("on", on[r.w.k]);
+          r.row.classList.toggle("off", !on[r.w.k]);
+        });
+        var n = WAYS.filter(function (w) { return on[w.k]; }).length;
+        $("v-on").textContent = n + " / 4";
+        $("v-clarity").textContent =
+          n === 0 ? "很差 —— 旋律几乎被埋掉" :
+          (on.eq && n === 1) ? "略有改善 —— 但代价是吉他变薄" :
+          (on.time && n === 1) ? "明显改善 —— 而且没有任何代价" :
+          n <= 2 ? "清楚" : n === 3 ? "很清楚" : "非常清楚";
+        $("v-clarity").className = n === 0 ? "warn" : n >= 2 ? "ok" : "";
+        $("v-cost").textContent = on.eq ? "吉他高频被滚降，音色变薄" : "无";
+        $("v-cost").className = on.eq ? "warn" : "ok";
+      }
+      function vTracks() {
+        var ev = on.time ? riffWithGaps([0, 2]) : riffEvents();
+        var pan = on.pan ? 1 : 0.5, lp = on.eq ? 2000 : 6000;
+        var g = [
+          { id: "g1", name: "吉他 L1", inst: "guitar", gain: 0.72, pan: -pan, drive: 0.82, hp: 100, lp: lp, events: ev },
+          { id: "g2", name: "吉他 R1", inst: "guitar", gain: 0.72, pan: pan, drive: 0.82, hp: 100, lp: lp, events: ev }
+        ];
+        if (!on.dens) {
+          g.push({ id: "g3", name: "吉他 L2", inst: "guitar", gain: 0.62, pan: -pan * 0.55,
+            drive: 0.82, hp: 100, lp: lp, events: ev });
+          g.push({ id: "g4", name: "吉他 R2", inst: "guitar", gain: 0.62, pan: pan * 0.55,
+            drive: 0.82, hp: 100, lp: lp, events: ev });
+        }
+        return [drumsTrack(), bassTrack(on.time)].concat(g, [voxTrack()]);
+      }
+      function rebuildV() {
+        var was = !!rig;
+        stopAll();
+        if (was) { start(vTracks()); $("v-play").textContent = "⏸ 暂停"; }
+      }
+      $("v-play").addEventListener("click", function () {
+        if (rig) { stopAll(); return; }
+        start(vTracks()); $("v-play").textContent = "⏸ 暂停";
+      });
+      $("v-all").addEventListener("click", function () { WAYS.forEach(function (w) { on[w.k] = true; }); syncV(); rebuildV(); });
+      $("v-none").addEventListener("click", function () { WAYS.forEach(function (w) { on[w.k] = false; }); syncV(); rebuildV(); });
+      $("v-onlyeq").addEventListener("click", function () {
+        WAYS.forEach(function (w) { on[w.k] = (w.k === "eq"); }); syncV(); rebuildV();
+        $("v-msg").textContent = "只开频率：吉他滚降了 2 kHz 以上，旋律确实清楚了一点——但吉他也明显变薄了，而且改善幅度不如「只开时间」。这正是 EQ 排在最后的原因。";
+      });
+      $("v-onlytime").addEventListener("click", function () {
+        WAYS.forEach(function (w) { on[w.k] = (w.k === "time"); }); syncV(); rebuildV();
+        $("v-msg").textContent = "只开时间：riff 退到人声乐句之间，吉他的音色、轨数、声像全都没变——但旋律一下子就清楚了，而且 riff 每次出现反而更突出。";
+      });
+      $("v-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 2：齐头并进 vs 问答 ---------- */
+      var Q = {
+        together: { cn: "① 齐头并进", ratio: "100%", clar: "吃力 —— 两条线互相打断", mem: "弱（一直在响，听觉已适应）", ok: false,
+                    ev: function () { return riffEvents(); }, long: false },
+        call:     { cn: "② 问答（轮流上场）", ratio: "50%", clar: "清楚 —— 各占各的两小节", mem: "强（每次都在安静背景上出现）", ok: true,
+                    ev: function () { return riffWithGaps([0, 2]); }, long: true }
+      };
+      Object.keys(Q).forEach(function (k) {
+        $("q-" + k).addEventListener("click", function () {
+          Object.keys(Q).forEach(function (j) {
+            $("q-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = Q[k];
+          $("q-name").textContent = v.cn;
+          $("q-ratio").textContent = v.ratio;
+          $("q-clar").textContent = v.clar;  $("q-clar").className = v.ok ? "ok" : "warn";
+          $("q-mem").textContent = v.mem;
+          var ev = v.ev();
+          start([drumsTrack(), bassTrack(v.long),
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.8, pan: -0.85, drive: 0.82, hp: 100, events: ev },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.78, pan: 0.85, drive: 0.82, hp: 100, events: ev },
+            voxTrack()]);
+        });
+      });
+      $("q-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 3：和声人声的摆法 ---------- */
+      var H = {
+        bad:  { cn: "① 居中 · 等音量（错误）", pan: "0%（和主唱同一位置）", gain: "±0 dB",
+                res: "两条旋律线抢主角 —— 结果两条都没听清", ok: false },
+        good: { cn: "② 两侧 · 低 6 dB", pan: "±80%", gain: "−6 dB",
+                res: "主唱重新成为主角，副歌明显变宽", ok: true },
+        full: { cn: "③ 三度 ＋ 八度两层", pan: "三度 ±80%，八度 ±92%", gain: "−6 / −8 dB",
+                res: "厚度与色彩兼得；两层分居不同音区，互不干扰", ok: true },
+        solo: { cn: "⓪ 只有主唱（对照）", pan: "—", gain: "—", res: "清楚，但副歌不够大", ok: true }
+      };
+      Object.keys(H).forEach(function (k) {
+        $("h-" + k).addEventListener("click", function () {
+          Object.keys(H).forEach(function (j) {
+            $("h-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = H[k];
+          $("h-name").textContent = v.cn;
+          $("h-pan").textContent = v.pan;
+          $("h-gain").textContent = v.gain;
+          $("h-res").textContent = v.res;
+          $("h-res").className = v.ok ? "ok" : "warn";
+          var ev = riffEvents();
+          var tr = [drumsTrack("driving"), bassTrack(false),
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.72, pan: -0.9, drive: 0.82, hp: 100, events: ev },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.7, pan: 0.9, drive: 0.82, hp: 100, events: ev },
+            voxTrack()];
+          if (k === "bad") {
+            tr.push(voxTrack({ id: "h1", name: "和声（三度）", map: thirdUp, pan: 0, gain: 0.95 }));
+          } else if (k === "good") {
+            tr.push(voxTrack({ id: "h1", name: "和声 L（三度）", map: thirdUp, pan: -0.8, gain: 0.48 }));
+            tr.push(voxTrack({ id: "h2", name: "和声 R（三度）", map: thirdUp, pan: 0.8, gain: 0.48 }));
+          } else if (k === "full") {
+            tr.push(voxTrack({ id: "h1", name: "和声 L（三度）", map: thirdUp, pan: -0.8, gain: 0.48 }));
+            tr.push(voxTrack({ id: "h2", name: "和声 R（三度）", map: thirdUp, pan: 0.8, gain: 0.48 }));
+            tr.push(voxTrack({ id: "h3", name: "和声 L（八度）", map: function (d) { return d + 12; }, pan: -0.92, gain: 0.38 }));
+            tr.push(voxTrack({ id: "h4", name: "和声 R（八度）", map: function (d) { return d + 12; }, pan: 0.92, gain: 0.38 }));
+          }
+          start(tr);
+        });
+      });
+      $("h-stop").addEventListener("click", stopAll);
+
+      syncV();
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopAll(); });
+    });
+  </script>
+</body>
+</html>

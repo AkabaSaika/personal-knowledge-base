@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>05 对比：副歌凭什么是副歌 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 5 章：对比是相对的，副歌的「大」由主歌的「小」定义；六个可操作维度（音区、密度、和声节奏、织体、律动、音量）逐项拆解，以及为什么减法优先。">
+  <meta name="kb:tags" content="作曲,编曲,对比,副歌,主歌,音区,密度,和声节奏,织体,律动,减法,dbi,fuge">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .dim-list { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+    .dim-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); transition: opacity .15s;
+    }
+    .dim-row.off { opacity: .45; }
+    .dim-row .dn { min-width: 6.5em; font-weight: 600; font-size: .94em; }
+    .dim-row .dd { flex: 1 1 240px; font-size: .86em; color: var(--kb-fg-muted); }
+    .dim-row .dp { font-size: .78em; padding: 1px 8px; border-radius: 999px;
+      border: 1px solid var(--kb-border); color: var(--kb-fg-muted); white-space: nowrap; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 5 章 · 对比：副歌凭什么是副歌</h1>
+        <p class="kb-lead">「副歌不够炸」是本书要解决的头号问题，而绝大多数人对它的第一反应都是错的——<strong>加东西</strong>。加一把吉他、加一层和声、把音量推上去。结果往往是副歌更满了，却没有更炸。原因很简单：<strong>「炸」不是一个绝对量，而是一个差值。</strong>这一章把这个差值拆成六个可以单独操作的维度，并用一个能逐项开关的演示让你亲耳听见——每一个维度分别贡献了多少。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 解释为什么对比是相对的、绝对强度没有意义；② 说出六个对比维度并知道各自的强度与成本；③ 判断一首歌的副歌到底缺哪个维度；④ 用「减主歌」代替「加副歌」；⑤ 避开对比的三个典型陷阱。</p>
+        </div>
+
+        <h2>对比是相对的</h2>
+        <p>一个思想实验：把一首歌的副歌单独截出来听，你能判断它「炸不炸」吗？</p>
+        <p><strong>不能。</strong>你只能判断它响不响、密不密。而「炸」是听众在<strong>经历了主歌之后</strong>产生的感受——它衡量的是落差，不是绝对值。</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一条几乎万能的推论</p>
+          <p><strong>任何「提高副歌」的手段，都有一个「降低主歌」的等效版本，而且后者通常更好。</strong></p>
+          <p>原因有三：① 主歌通常还有很多余量可以往下减，而副歌往往已经接近满了；② 减法不消耗音量与频谱预算，加法要；③ 主歌变稀之后，人声反而更清楚了（第 2 章、第 11 章）。</p>
+        </div>
+
+        <h2>六个维度</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>维度</th><th>主歌 → 副歌</th><th>强度</th><th>成本</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 音区</strong></td><td>riff / 旋律整体升高八度或半个八度</td><td><strong>高</strong></td><td>低（但受人声音域约束，第 2 章）</td></tr>
+              <tr><td><strong>② 密度与发音</strong></td><td>闷音密集 → 放开延音；或反过来</td><td><strong>高</strong></td><td>低</td></tr>
+              <tr><td><strong>③ 和声节奏</strong></td><td>每拍换和弦 → 每两拍换（变慢、变宽）</td><td>中</td><td>低</td></tr>
+              <tr><td><strong>④ 织体</strong></td><td>加八度吉他 / 加和声轨 / 声像拉宽</td><td><strong>最高</strong></td><td>中（需要多一轨）</td></tr>
+              <tr><td><strong>⑤ 律动</strong></td><td>鼓从基本型 → 更密的踩镲与底鼓 + 擦片</td><td>中高</td><td>低</td></tr>
+              <tr><td><strong>⑥ 音量</strong></td><td>整体推高几个分贝</td><td><strong>最低</strong></td><td>低，但<strong>会被压缩抹平</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>请特别注意第一行与最后一行的强度差。</strong>音量是最直觉、也最没用的一个——现代制作普遍使用动态压缩，你在工程里推上去的几个分贝，混完之后大概率不剩什么。而<strong>织体与音区的变化是压缩抹不掉的</strong>，因为它们改变的不是振幅，是内容。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎛️ 演示 1：六个维度逐个开关（本书核心演示）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：主歌固定不变，副歌的六个维度（音区、密度与发音、和声节奏、织体、律动、音量）可以逐个开关。全部关闭时，副歌与主歌几乎无法区分；逐个打开，你会听出织体与音区贡献最大，音量贡献最小。这解释了为什么「把副歌调响一点」几乎没有用。</p></noscript>
+            <div id="x-sound"></div>
+            <div class="dim-list" id="x-dims"></div>
+            <div class="kb-readout">
+              <span>已开启 <b id="x-on">0 / 6</b></span>
+              <span>预期效果 <b id="x-verdict">副歌与主歌几乎无法区分</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="x-play" type="button">▶ 循环播放（主歌 4 小节 → 副歌 4 小节）</button>
+              <button class="kb-btn" id="x-all" type="button">全部开启</button>
+              <button class="kb-btn" id="x-none" type="button">全部关闭</button>
+              <button class="kb-btn" id="x-onlyvol" type="button">只开音量</button>
+              <button class="kb-btn" id="x-stop" type="button">■ 停止</button>
+            </div>
+            <p id="x-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">建议顺序：先「全部关闭」听一遍（副歌听起来只是主歌又来了一遍）→ 点「只开音量」（几乎没变化）→ 再单独打开「织体」（差别一下就出来了）→ 最后全开。<strong>这个对比会改变你以后处理副歌的默认动作。</strong></p>
+          </div>
+        </div>
+
+        <h2>哪些维度最有效</h2>
+        <p>把六个维度按「每单位成本带来的对比强度」排序：</p>
+        <ol>
+          <li><strong>织体</strong>——加一轨八度吉他或把声像拉宽，效果立竿见影，而且完全不占音量预算。第 10 章会讲双吉他的四种分工。</li>
+          <li><strong>音区</strong>——升八度是最便宜的强度提升，唯一的约束来自人声（第 2 章）。</li>
+          <li><strong>密度与发音</strong>——闷音换成放开延音，音墙一下子打开；这一项还顺便改变了音色。</li>
+          <li><strong>律动</strong>——鼓的变化会带动整支乐队的感觉，但它需要鼓手（或编程）配合。</li>
+          <li><strong>和声节奏</strong>——变慢会让段落显得更宽阔、更「重要」，但它是最微妙的一项，单独用不够明显。</li>
+          <li><strong>音量</strong>——直觉上最有用，实际上最没用。</li>
+        </ol>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 为什么音量最没用</p>
+          <p>三个理由叠加：① <strong>动态压缩会抹平它</strong>——现代混音与母带都会压缩动态范围，你推的 3 dB 可能只剩 0.5 dB；② <strong>它没有内容</strong>——同样的东西更响，听觉会归类为「同一段的另一遍」而不是新段落（第 3 章）；③ <strong>它有上限</strong>——副歌已经接近满，再推就削顶了。</p>
+          <p><strong>但这不代表音量无用</strong>：它是一个很好的<strong>辅助</strong>维度。和另外两个维度一起用时，那 2 dB 会让整体变化更连贯。<strong>问题只出在把它当成唯一手段的时候。</strong></p>
+        </div>
+
+        <h2>减法优先</h2>
+        <p>现在把开头那条推论落到实处。要制造同样大小的落差，有两条路：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>加法：把副歌推高</th><th>减法：把主歌压低</th></tr></thead>
+            <tbody>
+              <tr><td>做什么</td><td>副歌加吉他、加和声、推音量</td><td>主歌拿掉一把吉他、鼓只打镲、放弃低音</td></tr>
+              <tr><td>余量</td><td>副歌通常已接近满，余量小</td><td><strong>主歌余量很大</strong></td></tr>
+              <tr><td>频谱代价</td><td>更拥挤（第 7 章）</td><td><strong>更空，人声更清楚</strong></td></tr>
+              <tr><td>副歌能到多高</td><td>受限于满值</td><td><strong>不受限——因为参照点下移了</strong></td></tr>
+              <tr><td>风险</td><td>混音变糊；主唱要跟音墙较劲</td><td>主歌可能变得太空、缺乏吸引力</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>实践中的正确做法是两者结合，但从减法开始。</strong>先把主歌减到「刚好还站得住」，再看副歌还需不需要加——很多时候你会发现根本不需要加。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">➖ 演示 2：加副歌 vs 减主歌（同样的落差，两种做法）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：要制造同样大小的主歌—副歌落差，可以「把副歌加满」，也可以「把主歌减稀」。后者往往更好：主歌余量更大、频谱更空、人声更清楚，而且副歌不必顶到满值就已经显得很大。</p></noscript>
+            <div class="kb-readout">
+              <span>做法 <b id="sub-name">—</b></span>
+              <span>主歌 <b id="sub-v">—</b></span>
+              <span>副歌 <b id="sub-c">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="sub-add" type="button">▶ 加法：主歌不动，副歌加满</button>
+              <button class="kb-btn" id="sub-cut" type="button">▶ 减法：副歌不动，主歌减稀</button>
+              <button class="kb-btn" id="sub-both" type="button">▶ 两者结合（推荐）</button>
+              <button class="kb-btn" id="sub-stop" type="button">■ 停止</button>
+            </div>
+            <p id="sub-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">三个版本的<strong>落差大小接近</strong>，但请注意「减法」版本的主歌有多空——那些空出来的位置，在真实作品里是留给人声的（第 11 章）。</p>
+          </div>
+        </div>
+
+        <h2>三个陷阱</h2>
+        <p><strong>陷阱一：一次改太多。</strong>六个维度全开、再加上换调换速度，听众会觉得副歌是<strong>另一首歌</strong>而不是这首歌的高潮。段落之间需要「同一首歌」的连续性——通常靠<strong>保持不变的那几样</strong>来提供：同样的速度、同样的调、同样的主 riff 骨架。<strong>改三四个维度通常就够了，全改反而会断裂。</strong></p>
+        <p><strong>陷阱二：主歌写得太满。</strong>第 3 章说过，承诺型段落最常见的错误是写得太好。主歌如果已经四轨吉他、双踩全开，副歌就无处可去了。<strong>写主歌时就要为副歌留位置</strong>——这是一个在写作阶段就要做的决定，混音阶段补救不了。</p>
+        <p><strong>陷阱三：只用音量。</strong>见上一节。症状是「在工程里听着挺炸，导出之后就没了」。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">⚠️ 演示 3：适度对比 vs 过度对比</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：改三四个维度足以让副歌被听成新段落；如果连速度、调性、主 riff 骨架也一起换，听众会觉得副歌是另一首歌——段落之间失去了「同一首歌」的连续性。对比需要变化，也需要保留。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="ov-name">—</b></span>
+              <span>改了 <b id="ov-changed">—</b></span>
+              <span>保留了 <b id="ov-kept">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="ov-good" type="button">▶ 适度：改 4 个维度</button>
+              <button class="kb-btn" id="ov-bad" type="button">▶ 过度：连调与速度也换</button>
+              <button class="kb-btn" id="ov-stop" type="button">■ 停止</button>
+            </div>
+            <p id="ov-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">「过度」版本听起来不是副歌，而是<strong>切到了另一首歌</strong>。差别不在于变化的<em>大小</em>，而在于<strong>有没有保留足以让人认出「还是这首歌」的东西</strong>——这与第 1 章「变形一次只改一个参数」是同一条原则，只是尺度放大到了段落。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 5.1</p>
+          <p>副歌不够炸。你已经加了两把吉他、把音量推高了 3 dB，还是不行。下一步该做什么？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先停止加东西，转向减法与其他维度。</strong>你已经用掉的两招恰好是「织体」和「音量」——而音量基本无效（会被压缩抹平），加吉他如果只是同度加倍，织体维度也没真正用上。</p>
+            <p><strong>按顺序做四件事</strong>：</p>
+            <ol>
+              <li><strong>先把主歌减稀。</strong>拿掉一把吉他、让鼓在主歌只打踩镲不打底鼓军鼓的满拍、贝斯只弹长音。<strong>这一步通常就解决了一半问题</strong>，而且不花任何频谱预算。</li>
+              <li><strong>检查那两把吉他是不是同度加倍。</strong>如果两把弹的是完全一样的东西，它们只增加了厚度，没有增加<strong>信息</strong>。改成一把原位、一把高八度（或三度和声），织体维度才真正生效（第 10 章）。</li>
+              <li><strong>改发音方式。</strong>主歌闷音、副歌放开延音。这一项几乎零成本，而且效果非常明显——音墙一下子打开。</li>
+              <li><strong>把音量推回去。</strong>那 3 dB 现在可以改成 1 dB 的辅助，配合前三项使用。</li>
+            </ol>
+            <p><strong>一个判断标准</strong>：把主歌和副歌各截 4 小节，去掉所有音量差，只听<strong>内容</strong>。如果这时还分不出哪个是副歌，那问题就在内容维度，加多少音量都没用。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 5.2</p>
+          <p>主歌已经是四轨吉他 + 双踩全开，副歌无论怎么加都显不出来。怎么救？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>诊断：主歌把「满」这个位置占了，副歌没有可去的地方。</strong>这是第 3 章说的「承诺型段落写得太好」的极端情形。</p>
+            <p><strong>唯一有效的方向是改主歌，不是改副歌。</strong>三级改造，按力度递增：</p>
+            <ol>
+              <li><strong>轻度：抽掉一半吉他轨。</strong>四轨减到两轨，声像收窄到 ±0.4。副歌再拉回四轨、±0.9——<strong>横向空间的开合本身就是强对比</strong>。</li>
+              <li><strong>中度：主歌改成闷音单音织体。</strong>四轨全部弹同一条闷音低音线（不弹强力和弦），副歌才放开成完整和弦。这一下同时改了密度、织体、和声信息量三项。</li>
+              <li><strong>重度：主歌去掉双踩。</strong>鼓改成基本型甚至只打踩镲。双踩是能量的顶点手段，用在主歌等于提前把牌打完了——把它留给副歌或最后一遍。</li>
+            </ol>
+            <p><strong>如果乐队不愿意「削弱」主歌</strong>（很常见的阻力），有一个折中：<strong>把现在这个满编的版本留给最后一遍副歌</strong>，主歌用它的简化版。这样素材没有浪费，只是换了位置——而且最后一遍副歌会成为全曲真正的顶点（第 13 章）。</p>
+            <p><strong>更根本的教训</strong>：这个问题在混音阶段无法解决。<strong>它是一个编曲决策，而且必须在写作阶段就做出来</strong>——写主歌时就要问「副歌还能往哪走」。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 5.3</p>
+          <p>「在工程里听着挺炸，导出之后就没了。」请解释原因并给出对策。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>原因：你的对比几乎全部建立在音量上，而导出链路上的压缩把音量差抹平了。</strong></p>
+            <p>具体发生了什么：</p>
+            <ul>
+              <li>混音总线上的压缩器 / 限制器会<strong>压低最响的部分</strong>——也就是你的副歌；</li>
+              <li>母带处理会进一步压缩动态范围以提高整体响度；</li>
+              <li>流媒体平台的响度归一化还会再压一次。</li>
+            </ul>
+            <p>三级处理之后，你在工程里推的 3–4 dB 可能只剩不到 1 dB。<strong>而工程里没有这些处理，所以你听到的是「未经现实检验」的版本。</strong></p>
+            <p><strong>对策</strong>：</p>
+            <ol>
+              <li><strong>把对比转移到内容维度</strong>——织体、音区、密度、和声节奏。<strong>压缩能压振幅，压不掉「多了一条八度线」这件事。</strong></li>
+              <li><strong>监听时挂上总线压缩。</strong>在混音过程中就带着限制器听，你会立刻发现哪些对比是假的。</li>
+              <li><strong>做一次「归一化测试」</strong>：把主歌和副歌各截一段，把两段的响度调成一样，再听。<strong>如果这时还听得出哪个是副歌，你的对比就是真的。</strong></li>
+            </ol>
+            <p>第 15 章会从制作角度再讲一遍这件事——<strong>制作链路会反过来约束编曲决策</strong>，这是重型音乐尤其明显的一条规律。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说「对比是相对的」？这条原则推出了什么实用结论？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为「炸」衡量的是落差，不是绝对值。</strong>把副歌单独截出来听，你只能判断它响不响、密不密，无法判断它炸不炸——「炸」是听众经历了主歌之后产生的感受。</p>
+            <p><strong>实用结论</strong>：<strong>任何「提高副歌」的手段，都有一个「降低主歌」的等效版本。</strong>而后者通常更好，因为：</p>
+            <ul>
+              <li>主歌余量大，副歌往往已接近满；</li>
+              <li>减法不消耗音量与频谱预算，加法要；</li>
+              <li>主歌变稀之后人声更清楚。</li>
+            </ul>
+            <p><strong>推广</strong>：这条原则不只适用于主歌—副歌。想让某个东西显得强，最可靠的办法是<strong>把它旁边的东西做弱</strong>——桥段之于最后一遍副歌、休止之于重音（<a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html">上一本第 11 章</a>）、低音区之于高音区，都是同一件事。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>把六个对比维度按「效果强度」排序，并各用一句话说明它改变了什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>织体</strong>——加八度吉他、加和声轨、拉宽声像：改变了<strong>声音的层数与横向宽度</strong>。</li>
+              <li><strong>音区</strong>——整体升高八度：改变了<strong>感知强度</strong>，人耳对音区比对音量更敏感。</li>
+              <li><strong>密度与发音</strong>——闷音换成放开延音：同时改变了<strong>音符密度与音色</strong>。</li>
+              <li><strong>律动</strong>——鼓从基本型换成更密的型 + 擦片：改变了<strong>整支乐队的推进感</strong>。</li>
+              <li><strong>和声节奏</strong>——和弦变化从每拍一次变成每两拍一次：改变了段落的<strong>宽窄感</strong>。</li>
+              <li><strong>音量</strong>——整体推高几分贝：只改变了<strong>振幅</strong>。</li>
+            </ol>
+            <p><strong>排序背后的规律</strong>：<strong>越靠前的维度，改变的「内容」越多；越靠后，越只改变「量」。</strong>而听觉对内容的变化远比对量的变化敏感——这也解释了为什么最直觉的音量是最没用的。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>音量为什么是最没用的对比维度？它还有什么价值？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个理由叠加</strong>：① <strong>会被压缩抹平</strong>——混音总线、母带、流媒体归一化三级处理下来，你推的几个分贝所剩无几；② <strong>没有内容</strong>——同样的东西更响，听觉会归类为「同一段的另一遍」而不是新段落；③ <strong>有硬上限</strong>——副歌通常已接近满值，再推就削顶。</p>
+            <p><strong>但它仍然有价值，作为辅助维度</strong>：</p>
+            <ul>
+              <li><strong>让其他维度的变化更连贯。</strong>加了八度吉他、放开了闷音，再配上 1–2 dB 的抬升，整体过渡会更自然，不会显得「只是多了几个音」。</li>
+              <li><strong>在动态范围大的风格里它很有用。</strong>后摇、氛围金属、古典跨界这类不做大量压缩的音乐，音量是完全有效的手段。</li>
+              <li><strong>反向使用更有效。</strong>把主歌<strong>调小</strong>比把副歌调大有用——因为主歌离满值远，有余量可减。</li>
+            </ul>
+            <p><strong>一句话</strong>：<strong>音量适合做形容词，不适合做动词。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>为下面三个「加副歌」的做法，各写出一个等效的「减主歌」做法。</p>
+          <p>① 副歌加第二把吉他；② 副歌鼓换成双踩；③ 副歌把旋律升高八度。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>加副歌</th><th>等效的减主歌</th><th>额外收益</th></tr></thead>
+                <tbody>
+                  <tr><td>副歌加第二把吉他</td><td><strong>主歌只留一把吉他，且摆在中间</strong>（副歌保持两把、拉开左右）</td><td>主歌频谱更空，人声更清楚；副歌的「宽」感更明显</td></tr>
+                  <tr><td>副歌换双踩</td><td><strong>主歌鼓只打踩镲与军鼓，底鼓极简</strong>（副歌保持基本型即可）</td><td>不必真的用双踩就能拉开差距；低频预算留给贝斯</td></tr>
+                  <tr><td>副歌旋律升八度</td><td><strong>主歌旋律降到低音区</strong>（副歌保持原音区）</td><td>主唱在主歌是放松的，不用整首都在高处（第 2 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>共同的模式</strong>：减主歌的版本不但达到了同样的落差，还<strong>顺带解决了别的问题</strong>——频谱拥挤、主唱疲劳、低频打架。这不是巧合：<strong>加法在制造对比的同时会制造新问题，减法在制造对比的同时会解决旧问题。</strong></p>
+            <p><strong>唯一要小心的</strong>：主歌不能减到失去吸引力。习题 5.6 会讨论这个边界。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>六个维度里，哪些改变的是「振幅」、哪些改变的是「内容」？为什么这个区分在现代制作里特别重要？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>改变振幅的</strong>：音量（唯一一个）。<br>
+            <strong>改变内容的</strong>：织体（多了声部）、音区（频率位置变了）、密度与发音（音符数与包络变了）、律动（节奏事件变了）、和声节奏（和弦变化率变了）。</p>
+            <p><strong>为什么这个区分特别重要</strong>：因为<strong>现代制作链路是专门用来压缩振幅动态的</strong>。</p>
+            <ul>
+              <li>总线压缩器：压低最响的部分；</li>
+              <li>母带限制器：进一步提高平均响度、削掉峰值；</li>
+              <li>流媒体响度归一化：把整首歌拉到统一的响度目标。</li>
+            </ul>
+            <p>这三级处理会系统性地<strong>削弱振幅维度的对比</strong>，但对内容维度<strong>几乎没有影响</strong>——压缩器不会把你的八度吉他压掉，也不会把放开的延音变回闷音。</p>
+            <p><strong>实用推论</strong>：<strong>在响度战争的时代，编曲的重要性反而上升了。</strong>过去可以靠动态起伏做出的效果，现在必须靠编曲内容做出来。这也解释了为什么现代重型制作那么依赖分层与织体设计（第 15 章）——<strong>那是唯一压不掉的对比。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>主歌减稀之后显得太空、不够吸引人。怎么办？减法的边界在哪？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>边界很明确：主歌必须自己站得住。</strong>它可以稀，但不能无聊——因为听众要在这里待一分钟。</p>
+            <p><strong>「稀而不空」的四种做法</strong>：</p>
+            <ol>
+              <li><strong>用音色补内容。</strong>减掉的是层数，不是趣味。一把清音吉他配上延迟或颤音效果，可以在只有一层的情况下依然吸引人。<strong>音色是不占频谱预算的内容。</strong></li>
+              <li><strong>把注意力交给别人。</strong>吉他减稀，正是为了让<strong>人声</strong>成为主歌的主角。如果减稀之后觉得空，往往是因为你在没有人声的情况下听——把人声轨放上去，那个「空」正好是它的位置（第 11 章）。</li>
+              <li><strong>保留一个钩子元素。</strong>主歌可以只有一层，但那一层应该是有辨识度的——主 riff 的简化版、一个反复出现的小动机（第 1 章）。<strong>稀不等于没有内容。</strong></li>
+              <li><strong>让它逐渐长起来。</strong>主歌前四小节最稀，后四小节加进贝斯或踩镲——<strong>段落内部也可以有小的渐进</strong>，这样既保住了对比余量，又不会让人在一分钟里听同一个静态织体。</li>
+            </ol>
+            <p><strong>一个自检</strong>：把主歌单独循环两分钟。如果你自己都想跳过，那它确实减过头了；如果还能听下去，那它的「空」就是设计而不是缺陷。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么「一次改太多」会让副歌听起来像另一首歌？该保留哪些东西来维持连续性？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为听众判断「这还是同一首歌吗」，靠的是没有改变的那些东西。</strong>这与第 1 章「变形一次只改一个参数」是完全相同的原则，只是尺度从动机放大到了段落。</p>
+            <p><strong>必须保留（改了就会断裂）</strong>：</p>
+            <ul>
+              <li><strong>速度。</strong>BPM 一变，听众几乎必然感知为「换了一首」。想改变速度感，用 half-time / double-time（第 14 章）——BPM 不变，感觉变。</li>
+              <li><strong>调。</strong>副歌转调是可以的，但要么是近关系调（<a href="../../吉他乐理/教材/04-大调音阶与五度圈.html">上一本第 4 章</a>的相邻调），要么要有明确的过渡。直接跳到三全音外的调 ＝ 断裂。</li>
+              <li><strong>主 riff 或主动机的骨架。</strong>哪怕副歌的和弦全换了，让 riff 的节奏型或轮廓有所保留，听众就能认出关联。</li>
+            </ul>
+            <p><strong>可以放心改的</strong>：织体、音区、密度、律动、音量、和弦色彩——这六项全改也不会断裂，因为速度、调与动机骨架还在。</p>
+            <p><strong>一条经验</strong>：<strong>改三到四个维度，通常就已经足够被听成新段落；六个全改是上限，再往外就要动到「不该动的三样」了。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p><strong>处境</strong>：主歌是四轨吉他（全部同度加倍）+ 双踩全开 + 贝斯跟着吉他齐奏；副歌用了同样的配置，只是和弦变了、音量推高 3 dB。反馈是「整首歌都很满，但没有高潮」。写出完整的改造方案与执行顺序。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>诊断</strong>：三个问题叠加——① 主歌占满了「满」的位置，副歌无处可去；② 四轨吉他全是同度加倍，只增加厚度不增加信息（织体维度形同虚设）；③ 唯一的对比手段是音量，而它会被压缩抹平。</p>
+            <p><strong>执行顺序（先减后加，先内容后音量）</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>步骤</th><th>做什么</th><th>动的维度</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><strong>主歌吉他四轨减到两轨</strong>，声像从 ±0.9 收到 ±0.4</td><td>织体（减）</td></tr>
+                  <tr><td>2</td><td><strong>主歌鼓去掉双踩</strong>，改基本型；把双踩留给副歌与最后一遍</td><td>律动（减）</td></tr>
+                  <tr><td>3</td><td><strong>主歌吉他改成闷音单音线</strong>（不弹完整强力和弦）</td><td>密度 + 和声信息量（减）</td></tr>
+                  <tr><td>4</td><td><strong>副歌的四轨改成分工</strong>：两轨原位 ±0.9，两轨高八度 ±0.5</td><td>织体（真正启用）</td></tr>
+                  <tr><td>5</td><td><strong>副歌放开闷音</strong>，改成延音的完整和弦</td><td>密度与发音</td></tr>
+                  <tr><td>6</td><td><strong>副歌和声节奏放慢</strong>：每两拍换一个和弦（主歌每拍换）</td><td>和声节奏</td></tr>
+                  <tr><td>7</td><td><strong>贝斯在主歌改弹长音根音</strong>，副歌才跟吉他齐奏</td><td>织体 + 律动</td></tr>
+                  <tr><td>8</td><td><strong>把音量差从 3 dB 减到 1 dB</strong></td><td>音量（降级为辅助）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>结果</strong>：主歌降了三个维度，副歌升了三个维度，落差从「只有 3 dB」变成「六个内容维度」。而且总体响度反而下降了——<strong>混音空间被腾出来，人声与贝斯都会更清楚。</strong></p>
+            <p><strong>关键顺序说明</strong>：<strong>1–3 步（减主歌）必须先做。</strong>如果先加副歌，你会发现加不动（已经满了），然后误以为问题无解。<strong>减法先行不只是效果更好，它还是让加法重新变得可能的前提。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 5.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>「对比是相对的」这条原则，在音乐的其他尺度上如何体现？请举三个尺度不同的例子。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>尺度</th><th>体现</th><th>出处</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>一个音</strong>（毫秒级）</td><td><strong>休止是密集织体里最强的重音。</strong>不加任何东西，只是拿走——因为「响」是相对于周围的密度而言的</td><td><a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html">上一本第 11 章</a></td></tr>
+                  <tr><td><strong>一个乐句</strong>（秒级）</td><td><strong>独奏的顶点靠前面的疏定义。</strong>从头快到尾的独奏没有高潮，因为处处是顶点等于没有顶点</td><td><a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html">上一本第 16 章</a></td></tr>
+                  <tr><td><strong>一个段落</strong>（十秒级）</td><td><strong>副歌的「大」由主歌的「小」定义</strong>——本章的主题</td><td>本章</td></tr>
+                  <tr><td><strong>一首歌</strong>（分钟级）</td><td><strong>最后一遍副歌之所以是顶点，是因为前面有一个能量骤降的桥段。</strong>先挖谷再造峰</td><td>第 3 章习题 3.8、第 13 章</td></tr>
+                  <tr><td><strong>一张专辑</strong>（小时级）</td><td>一张全是快歌的专辑听起来会比有一首慢歌的专辑<strong>更不激烈</strong>——没有参照就没有强度</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>统一的表述</strong>：<strong>听觉系统测量的是变化，不是绝对值。</strong>持续不变的刺激会被适应掉——这是感知的基本机制，不是音乐特有的。</p>
+            <p><strong>由此得到一条贯穿全书的操作原则</strong>：<strong>想让 X 变强，先让 X 旁边的东西变弱。</strong>它在每一个尺度上都成立，而且几乎总比「让 X 更强」更有效、更便宜、副作用更小。</p>
+            <p><strong>它的反面同样有用</strong>：如果一首歌「一直很猛但不打动人」，不要问「哪里还不够猛」，要问「<strong>哪里可以变弱</strong>」。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>对比是相对的</strong>：「炸」衡量落差而非绝对值，所以任何「提高副歌」都有一个「降低主歌」的等效版本，<strong>而后者通常更好</strong>。② 六个维度按强度排序：<strong>织体 &gt; 音区 &gt; 密度与发音 &gt; 律动 &gt; 和声节奏 &gt; 音量</strong>。③ <strong>音量最没用</strong>——会被压缩抹平、没有内容、有硬上限；它适合做形容词，不适合做动词。④ 关键区分：<strong>音量改变振幅，其余五项改变内容</strong>；现代制作链路专门压缩振幅动态，所以<strong>只有内容维度的对比压不掉</strong>。⑤ <strong>减法优先</strong>：先把主歌减到「刚好还站得住」，再看副歌需不需要加——常常不需要。⑥ 三个陷阱：<strong>一次改太多</strong>（速度、调、动机骨架三样不能动）、<strong>主歌写太满</strong>（写作阶段的决定，混音救不了）、<strong>只用音量</strong>。</p>
+          <p><strong>下一章预告</strong>：这一章讲的是主歌与副歌之间的<strong>落差</strong>。第 6 章《连接：Pre-chorus、Build-up 与 Drop》讲的是<strong>怎么走过这段落差</strong>——build 的四种手段、drop 前的静默，以及为什么「预副歌」是业余作品里最常缺的一段。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./06-连接与Build-up.html"><strong>下一章：第 6 章 · 连接：Pre-chorus、Build-up 与 Drop</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+      var VERSE = [0, 0, 3, 5];
+
+      /* 通用：拼一个「主歌 4 小节 + 副歌 4 小节」的 rig */
+      function makeRig(v, c) {
+        var gtr = [], gtr2 = [], bass = [], drums = [];
+        function addBars(cfg, barFrom, bars) {
+          for (var q = 0; q < bars; q++) {
+            var off = (barFrom + q) * 4;
+            var roots = cfg.roots, oct = cfg.oct || 0;
+            R.events(roots, cfg.rhy, { mute: cfg.mute, octave: oct }).forEach(function (e) {
+              gtr.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * cfg.gain }));
+            });
+            if (cfg.tracks2 !== false) {
+              R.events(roots, cfg.rhy, { mute: cfg.mute, octave: oct + (cfg.oct2 || 0) }).forEach(function (e) {
+                gtr2.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * cfg.gain }));
+              });
+            }
+            roots.forEach(function (r, i) {
+              if (r === null || cfg.bass === false) return;
+              bass.push({ t: off + i, midi: R.ROOT - 12 + r, dur: cfg.bassLong ? 4 : 1, gain: 0.9 * cfg.gain });
+            });
+          }
+          R.drumPattern(bars, cfg.drums).forEach(function (e) {
+            drums.push(Object.assign({}, e, { t: e.t + barFrom * 4, gain: (e.gain || 0.8) * cfg.gain }));
+          });
+          if (cfg.crash) drums.push({ t: barFrom * 4, piece: "crash", gain: 0.55 });
+        }
+        addBars(v, 0, 4);
+        addBars(c, 4, 4);
+        return {
+          lengthBeats: 32,
+          tracks: [
+            { id: "dr", name: "鼓", inst: "drums", gain: 1, events: drums },
+            { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: bass },
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.85, pan: -(c.pan || 0.6), drive: 0.82, events: gtr },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.8, pan: (c.pan || 0.6), drive: 0.82, events: gtr2 }
+          ]
+        };
+      }
+      function base(over) {
+        return Object.assign({ roots: VERSE, rhy: "gallop", mute: true, drums: "basic",
+          gain: 1, oct: 0, oct2: 0, pan: 0.6, crash: false }, over || {});
+      }
+
+      /* ---------- 演示 1：六个维度逐个开关 ---------- */
+      KBG.soundToggle($("x-sound"));
+      var DIMS = [
+        { k: "pitch",   cn: "① 音区",       desc: "副歌 riff 整体升高八度", power: "高" },
+        { k: "density", cn: "② 密度与发音", desc: "闷音 gallop → 放开延音的四分音符", power: "高" },
+        { k: "harm",    cn: "③ 和声节奏",   desc: "每拍换和弦 → 每两拍换（并换成 ♭Ⅵ–♭Ⅲ）", power: "中" },
+        { k: "texture", cn: "④ 织体",       desc: "吉他 R 改弹高八度 + 声像从 ±0.6 拉到 ±0.9", power: "最高" },
+        { k: "groove",  cn: "⑤ 律动",       desc: "鼓从基本型 → 加密底鼓 + 擦片", power: "中高" },
+        { k: "vol",     cn: "⑥ 音量",       desc: "整体推高约 2 dB", power: "最低" }
+      ];
+      var on = {}, xRig = null;
+      DIMS.forEach(function (d) { on[d.k] = false; });
+      var rows = [];
+      DIMS.forEach(function (d) {
+        var row = document.createElement("div");
+        row.className = "dim-row off";
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn kbb-mini"; b.textContent = "关";
+        var nm = document.createElement("span"); nm.className = "dn"; nm.textContent = d.cn;
+        var dd = document.createElement("span"); dd.className = "dd"; dd.textContent = d.desc;
+        var dp = document.createElement("span"); dp.className = "dp"; dp.textContent = "强度：" + d.power;
+        b.addEventListener("click", function () { on[d.k] = !on[d.k]; syncX(); rebuildX(); });
+        row.appendChild(b); row.appendChild(nm); row.appendChild(dd); row.appendChild(dp);
+        $("x-dims").appendChild(row);
+        rows.push({ d: d, row: row, b: b });
+      });
+      function syncX() {
+        rows.forEach(function (r) {
+          r.b.textContent = on[r.d.k] ? "开" : "关";
+          r.b.classList.toggle("on", on[r.d.k]);
+          r.row.classList.toggle("off", !on[r.d.k]);
+        });
+        var n = DIMS.filter(function (d) { return on[d.k]; }).length;
+        $("x-on").textContent = n + " / 6";
+        $("x-verdict").textContent =
+          n === 0 ? "副歌与主歌几乎无法区分" :
+          (on.vol && n === 1) ? "几乎听不出差别 —— 音量是最弱的维度" :
+          n <= 2 ? "有变化，但可能被听成同一段的另一遍" :
+          n <= 4 ? "明确是两个段落（推荐区间）" : "对比拉满；注意别再动速度与调（陷阱一）";
+      }
+      function chorusCfg() {
+        return base({
+          roots: on.harm ? [8, 8, 3, 3] : VERSE,
+          rhy: on.density ? "quarter" : "gallop",
+          mute: !on.density,
+          oct: on.pitch ? 1 : 0,
+          oct2: on.texture ? 1 : 0,
+          pan: on.texture ? 0.9 : 0.6,
+          drums: on.groove ? "driving" : "basic",
+          crash: on.groove,
+          gain: on.vol ? 1.26 : 1
+        });
+      }
+      function rebuildX() {
+        var wasPlaying = !!xRig;
+        if (xRig) { xRig.dispose(); xRig = null; }
+        A.stopAll();
+        if (!wasPlaying) return;
+        var spec = makeRig(base(), chorusCfg());
+        xRig = KBB.tracks({ bpm: BPM, lengthBeats: 32, loop: true, tracks: spec.tracks });
+        xRig.play();
+      }
+      $("x-play").addEventListener("click", function () {
+        if (xRig) { xRig.dispose(); xRig = null; A.stopAll(); $("x-play").textContent = "▶ 循环播放（主歌 4 小节 → 副歌 4 小节）"; return; }
+        var spec = makeRig(base(), chorusCfg());
+        xRig = KBB.tracks({ bpm: BPM, lengthBeats: 32, loop: true, tracks: spec.tracks });
+        xRig.play();
+        $("x-play").textContent = "⏸ 暂停";
+      });
+      $("x-all").addEventListener("click", function () { DIMS.forEach(function (d) { on[d.k] = true; }); syncX(); rebuildX(); });
+      $("x-none").addEventListener("click", function () { DIMS.forEach(function (d) { on[d.k] = false; }); syncX(); rebuildX(); });
+      $("x-onlyvol").addEventListener("click", function () {
+        DIMS.forEach(function (d) { on[d.k] = (d.k === "vol"); }); syncX(); rebuildX();
+        $("x-msg").textContent = "只开音量：副歌响了约 2 dB，但内容一个字没变——听听看你能不能分出这是两个段落。";
+      });
+      $("x-stop").addEventListener("click", function () {
+        if (xRig) { xRig.dispose(); xRig = null; } A.stopAll();
+        $("x-play").textContent = "▶ 循环播放（主歌 4 小节 → 副歌 4 小节）";
+      });
+
+      /* ---------- 演示 2：加副歌 vs 减主歌 ---------- */
+      var FULL = { roots: [8, 8, 3, 3], rhy: "quarter", mute: false, oct2: 1, pan: 0.9, drums: "driving", crash: true, gain: 1 };
+      var THIN = { roots: VERSE, rhy: "gallop", mute: true, tracks2: false, bass: false, drums: "half", pan: 0.3, gain: 0.75 };
+      var SUB = {
+        add:  { cn: "加法：主歌不动，副歌加满", v: base(), c: base(FULL),
+                dv: "四层齐全（两把吉他 + 贝斯 + 全套鼓）", dc: "再加八度、拉宽声像、加密鼓" },
+        cut:  { cn: "减法：副歌不动，主歌减稀", v: base(THIN), c: base(),
+                dv: "只剩一把吉他 + 踩镲，无贝斯", dc: "回到「正常」的四层" },
+        both: { cn: "两者结合（推荐）", v: base(THIN), c: base(FULL),
+                dv: "只剩一把吉他 + 踩镲", dc: "八度 + 宽声像 + 加密鼓" }
+      };
+      var subRig = null;
+      function playSub(k) {
+        if (subRig) { subRig.dispose(); subRig = null; }
+        A.stopAll();
+        ["add", "cut", "both"].forEach(function (j) {
+          $("sub-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        var s = SUB[k], spec = makeRig(s.v, s.c);
+        $("sub-name").textContent = s.cn;
+        $("sub-v").textContent = s.dv;
+        $("sub-c").textContent = s.dc;
+        subRig = KBB.tracks({ bpm: BPM, lengthBeats: 32, loop: true, tracks: spec.tracks });
+        subRig.play();
+      }
+      ["add", "cut", "both"].forEach(function (k) {
+        $("sub-" + k).addEventListener("click", function () { playSub(k); });
+      });
+      $("sub-stop").addEventListener("click", function () {
+        if (subRig) { subRig.dispose(); subRig = null; } A.stopAll();
+      });
+
+      /* ---------- 演示 3：适度 vs 过度 ---------- */
+      var OV = {
+        good: { cn: "适度：改 4 个维度",
+                c: base({ roots: [8, 8, 3, 3], rhy: "quarter", mute: false, oct2: 1, pan: 0.9, drums: "driving", crash: true }),
+                changed: "音区 · 密度 · 织体 · 律动", kept: "速度 · 调 · riff 骨架" },
+        bad:  { cn: "过度：连调与速度感也换",
+                c: base({ roots: [6, 6, 1, 1], rhy: "half", mute: false, oct: 1, oct2: 1, pan: 0.95, drums: "half", crash: true, gain: 1.2 }),
+                changed: "全部六项 + 转到三全音外的调 + half-time", kept: "几乎没有" }
+      };
+      var ovRig = null;
+      function playOv(k) {
+        if (ovRig) { ovRig.dispose(); ovRig = null; }
+        A.stopAll();
+        ["good", "bad"].forEach(function (j) {
+          $("ov-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        var o = OV[k], spec = makeRig(base(), o.c);
+        $("ov-name").textContent = o.cn;
+        $("ov-changed").textContent = o.changed;
+        $("ov-kept").textContent = o.kept;
+        ovRig = KBB.tracks({ bpm: BPM, lengthBeats: 32, loop: true, tracks: spec.tracks });
+        ovRig.play();
+      }
+      ["good", "bad"].forEach(function (k) {
+        $("ov-" + k).addEventListener("click", function () { playOv(k); });
+      });
+      $("ov-stop").addEventListener("click", function () {
+        if (ovRig) { ovRig.dispose(); ovRig = null; } A.stopAll();
+      });
+
+      syncX();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 旋律：轮廓、音域与和声 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 2 章：旋律的四种轮廓、人声音域的现实约束与副歌该落在哪、旋律音与和弦音的关系，以及重复与变化的配比。">
+  <meta name="kb:tags" content="作曲,编曲,旋律,轮廓,音域,人声,和弦音,目标音,乐句,摇滚,金属,xl,ylk">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 0.88em; color: var(--kb-fg-muted); }
+    .kb-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+    .ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .ct-grid .kb-btn { width: 100%; justify-content: center; }
+    .ct-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 2 章 · 旋律：轮廓、音域与和声</h1>
+        <p class="kb-lead">「我是写 riff 的，旋律不归我管」——这是重型乐手最常见也最昂贵的误解。<strong>主唱要在你的 riff 上面唱</strong>：你选的调决定了他唱得上去还是唱不上去，你的 riff 占了哪个音区决定了他的旋律有没有地方待，你的和弦决定了他哪些音落下去是稳的。这一章讲三件事：旋律的<strong>形状</strong>（听众真正记住的东西）、<strong>音域</strong>（一个残酷的物理约束）、以及旋律与和声的<strong>咬合</strong>。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出四种旋律轮廓，并解释为什么轮廓比具体音高更容易被记住；② 用人声音域表判断一首歌的调选得对不对；③ 用「和弦音落强拍」把旋律和和声咬合起来；④ 说明同一条旋律配不同和弦时性格如何改变；⑤ 用动机变形写出「aaba」式的四句乐句。</p>
+        </div>
+
+        <h2>轮廓：听众记住的是形状</h2>
+        <p>让一个人回忆一段旋律，他很少能说出准确的音高，但几乎总能<strong>比划出它的形状</strong>——先上去，再落下来，最后停在半空。这就是<strong>旋律轮廓</strong>（contour），它是旋律最先被感知、也最后被遗忘的一层。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>轮廓</th><th>形状</th><th>感觉</th><th>放在哪</th></tr></thead>
+            <tbody>
+              <tr><td><strong>上行</strong></td><td>持续往上</td><td>推进、积累、越来越紧</td><td>预副歌、build-up（第 6 章）</td></tr>
+              <tr><td><strong>下行</strong></td><td>持续往下</td><td>释放、松弛、结论</td><td>副歌后半、结尾</td></tr>
+              <tr><td><strong>拱形</strong></td><td>先上后下</td><td>最完整的「一句话」，有起有落</td><td><strong>最常用</strong>；主歌与副歌的单句</td></tr>
+              <tr><td><strong>波浪</strong></td><td>反复起伏</td><td>流动、叙述性，不强调某一点</td><td>主歌铺陈、说唱式的段落</td></tr>
+              <tr><td>平直</td><td>基本不动</td><td>压抑、机械、蓄力</td><td>主歌开头、breakdown 前</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 先画形状，再填音</p>
+          <p>写旋律卡住时，最有效的办法不是「再试几个音」，而是<strong>先决定这一句的形状与落点</strong>——它要往上冲还是往下落？最高点在第几拍？落在哪个音上？形状定了，具体的音有大把可选，而且怎么选都不会离题。</p>
+          <p>这和上一本第 16 章讲独奏时的顺序完全一致：<strong>先定骨架（落音 + 密度），再填内容。</strong>反过来做——从第一个音开始即兴，指望它自己长成一句话——正是「旋律听起来很散」的主要原因。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">📈 演示 1：四种轮廓（音数相同，形状不同）</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="c-canvas" height="170"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同样八个音、同样的节奏、同样的音阶，只改变音高的排列形状，感觉完全不同——上行推进、下行释放、拱形完整、波浪流动、平直压抑。听众记住的是这个形状，而不是具体的音高。</p></noscript>
+            <div id="c-sound"></div>
+            <div class="ct-grid" id="c-grid"></div>
+            <div class="kb-readout">
+              <span>轮廓 <b id="c-name">拱形</b></span>
+              <span>音高（级数）<b id="c-deg">—</b></span>
+              <span>感觉 <b id="c-feel">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <label class="kb-control">速度<span class="kb-control-value" id="c-bv"></span>
+                <input type="range" id="c-bpm" min="70" max="160" step="2" value="108"></label>
+              <button class="kb-btn" id="c-chord" type="button">🎸 加上和弦伴奏</button>
+              <button class="kb-btn" id="c-stop" type="button">■ 停止</button>
+            </div>
+            <p id="c-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">八个音、同一个音阶、同一套节奏——只有排列顺序不同。<strong>请注意最后一个音落在哪</strong>：拱形与下行落在主音（收得住），上行落在高处（悬着），这就是轮廓决定「说完了没有」的地方。</p>
+          </div>
+        </div>
+
+        <h2>音域：一个躲不掉的物理约束</h2>
+        <p>吉他手挑调时想的是「哪个把位顺手」；主唱想的是「唱不唱得上去」。这两件事经常打架，而且<strong>吉他手几乎总是错的那一方</strong>——因为吉他可以变调夹、可以换把位，嗓子不能。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>声部</th><th>舒适音域</th><th>副歌高点通常落在</th><th>再往上</th></tr></thead>
+            <tbody>
+              <tr><td><strong>男声（摇滚 / 金属）</strong></td><td>A2 – D4</td><td>D4 – A4</td><td>C5 以上多为假声、混声或撕裂音</td></tr>
+              <tr><td>女声（摇滚 / 金属）</td><td>G3 – C5</td><td>C5 – F5</td><td>A5 以上通常是特色而非常态</td></tr>
+              <tr><td>低吼 / 咆哮</td><td>音高不确定</td><td>—</td><td>频段集中在 200 Hz – 3 kHz，见第 11 章</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>三条实用推论</strong>：</p>
+        <ol>
+          <li><strong>副歌的高点决定调。</strong>先定「副歌最高音唱哪个音」，再倒推该用什么调——而不是先定调再让主唱硬上。这个顺序几乎能解决所有「副歌唱得很吃力」的问题。</li>
+          <li><strong>主歌要留出下降空间。</strong>如果主歌已经唱到 D4，副歌就没地方再高了。<strong>主歌低，副歌才高得起来</strong>——这是第 5 章「对比」的第一个维度。</li>
+          <li><strong>「唱不上去」往往是编曲问题。</strong>不要先想着换主唱：先看能不能整体降一个全音（吉他可以降调，见<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html">上一本第 15 章</a>），或者把旋律的高点改成一个低八度的落音加一个和声人声。</li>
+        </ol>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎤 演示 2：同一条旋律，三个音区</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条旋律放在不同音区，感知强度差别巨大——低音区显得压抑、中音区自然、高音区紧张有力。这就是为什么「副歌不够炸」常常不是音量问题而是音区问题；也是为什么主歌必须待在低处，副歌才有地方可去。</p></noscript>
+            <div class="kb-readout">
+              <span>音区 <b id="r-name">中（自然）</b></span>
+              <span>最高音 <b id="r-top">—</b></span>
+              <span>对男声 <b id="r-vox">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn" id="r-low" type="button">▶ 低八度（压抑）</button>
+              <button class="kb-btn kb-btn-primary" id="r-mid" type="button">▶ 原音区（自然）</button>
+              <button class="kb-btn" id="r-high" type="button">▶ 高八度（紧张）</button>
+              <button class="kb-btn" id="r-seq" type="button">▶ 三个音区连着听</button>
+              <button class="kb-btn" id="r-stop" type="button">■ 停止</button>
+            </div>
+            <p id="r-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">三段用的是<strong>完全相同的旋律</strong>，只差八度。听「三个音区连着听」——从低到高，紧张度是一级一级涨上去的，而<strong>音量一点没变</strong>。这是编曲里最便宜的强度控制手段。</p>
+          </div>
+        </div>
+
+        <h2>旋律与和声：让它们咬合</h2>
+        <p>上一本第 16 章讲独奏时给过三条落点规则，它们对唱的旋律同样成立，而且更重要——因为人声是听众注意力的中心：</p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三条落点规则（复用自<a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html">上一本第 16 章</a>）</p>
+          <p>① <strong>乐句结尾落在当前和弦的和弦音上</strong>（尤其根音或三音）；② <strong>强拍尽量是和弦音</strong>，弱拍随意；③ <strong>和弦切换的瞬间，旋律也跟着动</strong>，用最短距离移到新和弦独有的音上。</p>
+        </div>
+        <p>但作曲和独奏有一个重要差别：<strong>作曲时，和弦是你自己选的。</strong>所以规则可以反过来用——<strong>先写旋律，再给它配和弦</strong>。同一条旋律配不同的和弦，性格会完全改变，因为每个音的「身份」变了：一个 G 音在 Em 和弦下是三音（柔和），在 C 和弦下是五音（稳定），在 Am 和弦下则是 ♭7（悬着）。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎹 演示 3：一条旋律，三套和弦</div>
+          <div class="kb-interactive-body">
+            <canvas class="kb-canvas" id="m-canvas" height="190"></canvas>
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条旋律配不同的和弦，每个旋律音的「身份」会改变——同一个音可能在这套和弦下是稳定的和弦音，在另一套下变成悬着的经过音。作曲时和弦是可选的，因此可以先写旋律再配和声，用和弦来决定旋律的性格。</p></noscript>
+            <div class="kb-legend">
+              <span><i style="background:#16a34a"></i>和弦音（可落脚）</span>
+              <span><i style="background:#8b5cf6"></i>经过音（在路上）</span>
+              <span><i style="background:#dc2626"></i>调外音（张力）</span>
+            </div>
+            <div class="kb-readout">
+              <span>和弦组 <b id="m-name">ⅰ – ♭Ⅶ – ♭Ⅵ – ♭Ⅶ</b></span>
+              <span>和弦 <b id="m-ch">—</b></span>
+              <span>落音的身份 <b id="m-fit">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="m-a" type="button">▶ 配法 A：落在 ⅰ（E 是根音）</button>
+              <button class="kb-btn" id="m-b" type="button">▶ 配法 B：落在 ♭Ⅵ（E 是三音）</button>
+              <button class="kb-btn" id="m-c" type="button">▶ 配法 C：落在 Ⅴ（E 不是和弦音）</button>
+              <button class="kb-btn" id="m-melody" type="button">▶ 只听旋律</button>
+              <button class="kb-btn" id="m-stop" type="button">■ 停止</button>
+            </div>
+            <p id="m-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">旋律一个音都没改，三套和弦却让它落在三种身份上：<strong>A 让落音成为根音（最稳，句号）</strong>、<strong>B 让它成为三音（稳但明亮，转身的感觉）</strong>、<strong>C 让它根本不是和弦音（悬着，半终止）</strong>。这正是例题 2.1 说的「收住」与「话没说完」——<strong>而旋律本身没有变，是和弦决定了它说完没有。</strong></p>
+          </div>
+        </div>
+
+        <h2>重复与变化：旋律也用动机变形</h2>
+        <p>第 1 章的六种变形对旋律完全适用，而且旋律比 riff 更需要它们——因为人声要唱歌词，而歌词每句都不一样，如果旋律也每句都不一样，听众就没有任何东西可抓。</p>
+        <p>最经典的四句结构是 <strong>a – a – b – a</strong>：</p>
+        <pre><code>第 1 句 a：立起动机，落在不稳定的音上（悬着）
+第 2 句 a：几乎重复，改一下落音（回到主音，或走得更远）
+第 3 句 b：明显不同——换轮廓、换音区、换节奏密度
+第 4 句 a：回到 a，落在主音，收束</code></pre>
+        <p><strong>四句里有三句是同一个东西</strong>——这个比例听起来吓人，实际上正是流行旋律的常态。听众需要的重复量，远比写作者以为的多。</p>
+
+        <h2>旋律与 Riff：谁给谁让路</h2>
+        <p>最后一个问题，也是重型音乐特有的：<strong>吉他 riff 本身就有很强的节奏与音高活动，人声该怎么挤进去？</strong></p>
+        <p>三种可行的关系，第 11 章会展开讲：</p>
+        <ul>
+          <li><strong>交替（call &amp; response）</strong>：riff 唱一句，人声唱一句，互不重叠。最省事也最有效，Thrash 与硬摇滚大量使用。</li>
+          <li><strong>人声在 riff 的空隙里</strong>：riff 留出固定的休止，人声正好落在那里。要求 riff 写作时就<strong>为人声预留位置</strong>。</li>
+          <li><strong>riff 简化</strong>：主唱唱的时候，吉他改成长音或简化的织体，唱完再回到完整 riff。这是最常见的做法，也是「主歌吉他为什么听起来比 demo 里简单」的原因。</li>
+        </ul>
+        <p><strong>这三种都不是「妥协」，而是分工。</strong>听众在同一时间只能跟住一条线；两条线同时抢，结果是两条都听不清（第 7 章会从频谱角度再解释一遍）。</p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 2.1</p>
+          <p>一句旋律要听起来「话没说完」，另一句要「说完了」。各该用什么轮廓、落在什么音上？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>话没说完</strong>：<strong>上行轮廓</strong> + 落在<strong>不稳定的音</strong>上（第 2、5 或 7 级）。上行本身就带着「还要继续」的方向；落在非主音上则让听觉悬着，等一个解决。<br>
+            最强的组合是<strong>上行 + 落在导音或属音</strong>——这相当于旋律版的半终止（<a href="../../吉他乐理/教材/07-顺阶和弦与和声功能.html">上一本第 7 章</a>）。</p>
+            <p><strong>说完了</strong>：<strong>下行或拱形</strong> + 落在<strong>主音</strong>上。下行是释放的方向，主音是最稳定的落点，两者叠加就是最明确的句号。</p>
+            <p><strong>为什么两个参数要一起用</strong>：轮廓管「方向感」，落音管「稳定感」。<strong>只对一个的话会互相打架</strong>——上行却落在主音，听起来是「勉强收住」；下行却落在导音，听起来是「泄了气还没到家」。这两种组合不是不能用，但它们是特殊效果，不是默认选择。</p>
+            <p><strong>实战用法</strong>：把主歌写成「悬 – 收 – 悬 – 收」的四句，最后一句的「收」再收得更彻底一点（更长的时值、更低的落音）。这样段落内部有呼吸，段落结尾又有明确的结束。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 2.2</p>
+          <p>主唱是男声，你希望副歌的最高音落在 <strong>A4</strong>（一个有冲击力但还能真声唱的位置）。这条旋律的最高音是主音上方的<strong>五度</strong>。应该选什么调？主歌该待在什么音区？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>倒推调</strong>：最高音 A4 是主音上方纯五度 → 主音 ＝ A4 往下纯五度 ＝ <strong>D4</strong>，也就是这首歌是 <strong>D 调</strong>（大调或小调取决于别的音）。</p>
+            <p><strong>主歌该在哪</strong>：副歌高点在 A4，主歌就必须<strong>明显更低</strong>，否则副歌上不去也显不出来。合理的安排是主歌活动在 <strong>D3 – A3</strong>（比副歌低一个八度左右），最高偶尔碰到 B3。</p>
+            <p><strong>这样安排的三个好处</strong>：</p>
+            <ol>
+              <li><strong>主唱在主歌是放松的</strong>——D3–A3 在男声舒适区正中间，可以专心处理咬字与情绪，不用跟嗓子较劲。</li>
+              <li><strong>副歌的高度是「挣来的」</strong>——听众听了两分钟的低音区，A4 一出来就是明确的爆发点。</li>
+              <li><strong>留了余地</strong>——最后一遍副歌如果想再升级，还能往上够到 B4 或用假声，而不是一开始就顶满。</li>
+            </ol>
+            <p><strong>吉他手要接受的现实</strong>：D 调在吉他上不如 E 调顺手（E 有两根空弦）。但<strong>调是给嗓子选的，不是给手选的</strong>——手可以用变调夹、降调或换把位解决，嗓子不能。如果确实想要 E 调的空弦便利，那就<strong>整体降全音到 D</strong>（<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html">上一本第 15 章</a>）：所有形状不变，实际音高正好落在 D。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 2.3</p>
+          <p>旋律片段是 <strong>E – G – A – B</strong>（E 小调里的 1 – ♭3 – 4 – 5）。分别配 <strong>Em</strong> 和配 <strong>C</strong>，每个音的身份如何变化？哪一个更适合作为落点？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>旋律音</th><th>配 Em（E G B）</th><th>配 C（C E G）</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>E</strong></td><td>根音 —— 最稳</td><td>三音 —— 稳，且决定和弦是大和弦</td></tr>
+                  <tr><td><strong>G</strong></td><td>三音 —— 稳</td><td>五音 —— 稳</td></tr>
+                  <tr><td><strong>A</strong></td><td>经过音（第 4 级）</td><td>经过音（C 的第 6 音）</td></tr>
+                  <tr><td><strong>B</strong></td><td>五音 —— 稳</td><td>经过音（C 的大七度，悬着）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>哪个更适合作落点</strong>：<strong>取决于旋律停在哪个音上。</strong></p>
+            <ul>
+              <li>若旋律停在 <strong>B</strong>：配 <strong>Em</strong>（B 是五音，稳）比配 C（B 是大七度，飘）落得住。</li>
+              <li>若旋律停在 <strong>E</strong>：两者都可以，但性格不同——配 Em 是「回到家」，配 C 则是<strong>同一个音变成了别人家的三音</strong>，听起来明亮、有一种转身的感觉。<strong>这是一个非常好用的效果</strong>：旋律一个音不动，靠换和弦制造转折。</li>
+            </ul>
+            <p><strong>更一般的观察</strong>：这四个音里有三个（E、G、B）在两个和弦下都是和弦音——因为 Em 与 C 共享 E 和 G 两个音（<a href="../../吉他乐理/教材/13-摇滚的和弦进行.html">上一本第 13 章</a>的借用与共同音）。<strong>共同音越多，两个和弦互换时旋律越不需要改动</strong>，这正是配和声时最省力的切入点：先找旋律落音，再找哪些和弦把它当和弦音。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>四种旋律轮廓各给人什么感觉？为什么拱形最常用？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>上行</strong>＝推进、积累、越来越紧；<strong>下行</strong>＝释放、松弛、结论；<strong>拱形</strong>（先上后下）＝有起有落的完整一句；<strong>波浪</strong>＝流动、叙述性，不强调某一点。</p>
+            <p><strong>拱形最常用，三个原因</strong>：</p>
+            <ol>
+              <li><strong>它自带完整的叙事</strong>——出发、到达高点、回落收束，一句话该有的三段都有了。</li>
+              <li><strong>它符合呼吸</strong>——人说话和唱歌本来就是气息推上去、再放下来，拱形是最省力也最自然的形状。</li>
+              <li><strong>它把高点放在句子内部</strong>，因此句尾可以落在稳定音上——<strong>既有强调点，又能收住</strong>。上行做不到（高点就是句尾，收不住），下行也做不到（没有强调点）。</li>
+            </ol>
+            <p><strong>但正因为最常用，它也最容易平庸。</strong>实战里常见的做法是「三句拱形 + 一句上行」——前三句自然完整，第四句故意悬着，把听众推向下一段。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>男声摇滚主唱的舒适音域大约是多少？副歌高点通常落在哪？这两个数字对选调意味着什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>舒适音域</strong>：约 <strong>A2 – D4</strong>。<strong>副歌高点</strong>：通常落在 <strong>D4 – A4</strong>，再往上（C5 以上）多需要假声、混声或撕裂音。</p>
+            <p><strong>对选调的意义</strong>：<strong>先定副歌高点，再倒推调。</strong>如果你的副歌旋律最高音是主音上方的五度，而你希望它落在 A4，那主音就是 D4，歌就是 D 调（例题 2.2）。</p>
+            <p><strong>常见的错误顺序</strong>是：吉他手先选一个手顺的调（比如 E），写完全部 riff 和副歌，最后才发现主唱得唱到 B4——于是要么硬撑（每场演出都在赌），要么整首重来。</p>
+            <p><strong>补救成本对比</strong>：写作阶段换调 ＝ 改几个数字；录完再换调 ＝ 全部重录。<strong>这是本书里性价比最高的一条流程建议：在写副歌旋律的那一刻就把调定死。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>复述旋律与和声咬合的三条落点规则。为什么作曲时这三条比独奏时更灵活？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三条规则</strong>：① 乐句结尾落在当前和弦的和弦音上（尤其根音或三音）；② 强拍尽量是和弦音，弱拍随意；③ 和弦切换的瞬间旋律也跟着动，用最短距离移到新和弦独有的音上。</p>
+            <p><strong>为什么作曲时更灵活</strong>：因为<strong>和弦是你自己选的</strong>。</p>
+            <ul>
+              <li><strong>独奏时</strong>和弦是给定的，你只能调整旋律去适应它——规则是单向约束。</li>
+              <li><strong>作曲时</strong>你可以反过来：先写出你喜欢的旋律，再<strong>挑一套让它的落音正好是和弦音的和弦</strong>。同一个落音有好几个和弦能接住它（例题 2.3 里 E 既是 Em 的根音也是 C 的三音），选哪一个就成了色彩决策而不是对错决策。</li>
+            </ul>
+            <p><strong>实用做法</strong>：写完旋律后，把每句的<strong>落音</strong>圈出来，然后问「哪些和弦把这个音当和弦音」。通常有三四个候选，逐一试听挑最合适的——<strong>这比先定和弦再硬凑旋律容易得多，写出来的旋律也更像「唱出来的」而不是「算出来的」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.4 <span class="kb-exercise-badge">基础</span></p>
+          <p><strong>a – a – b – a</strong> 结构里，四句有三句几乎相同。这不会太重复吗？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>不会——听众需要的重复量远超写作者的直觉。</strong></p>
+            <p><strong>三个原因</strong>：</p>
+            <ol>
+              <li><strong>写作者听过几百遍，听众听的是第一遍。</strong>你觉得「太重复了」，是因为你已经把它听腻了；对第一次听的人来说，重复是唯一能让他学会这段旋律的机会。</li>
+              <li><strong>歌词每句都不一样。</strong>人声这条线上已经有大量新信息在流动（歌词），旋律如果也每句都变，听众的处理带宽会被占满，结果是<strong>两样都记不住</strong>。旋律保持稳定，正好给歌词让出注意力。</li>
+              <li><strong>a 的三次出现并不完全相同。</strong>通常第 2 次改落音、第 4 次改落音并加长——它们是第 1 章说的「变形」，不是原样复读。<strong>听众感知到的是「同一句话说了三遍，每遍语气不同」。</strong></li>
+            </ol>
+            <p><strong>b 句的作用</strong>：它是唯一的对比，因此必须<strong>明显不同</strong>——换轮廓、换音区、换密度，至少改一样。如果 b 和 a 只有细微差别，整段就真的变成单调了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>主唱反馈「副歌唱得很吃力」。在<strong>不换主唱</strong>的前提下，给出三种编曲层面的解法，并说明各自代价。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>整首降调。</strong>降一个全音或半音。<br>
+              <strong>代价</strong>：吉他形状全保留（整体降调不改变任何指法，<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html">上一本第 15 章</a>），但如果原来用了空弦音效或开放和弦，音色会略变肥、张力变松；另外和别人合奏时要说清楚。<strong>这是首选，因为代价最小。</strong></li>
+              <li><strong>把旋律的高点改成低八度 + 和声人声。</strong>主唱唱低八度的主旋律，另一轨（或另一个人）唱高八度或三度和声。<br>
+              <strong>代价</strong>：需要多一轨人声；现场需要第二个能唱的人。但收益很大——<strong>厚度反而增加了</strong>，而且主唱不再赌运气。</li>
+              <li><strong>改旋律轮廓，把高点缩短。</strong>不是整体降低，而是让最高音只出现<strong>一次、且时值很短</strong>（一个经过音而不是一个长音）。人声在高处短暂经过比长时间停留容易得多。<br>
+              <strong>代价</strong>：旋律要重写，且高点的冲击力会减弱一些。</li>
+            </ol>
+            <p><strong>第四种（常被忽略）</strong>：<strong>降低伴奏的音量与密度，而不是降低旋律。</strong>「唱得吃力」有时是因为主唱在跟一堵音墙较劲——把副歌的吉他从四轨减到两轨、把镲片压下去，主唱不用喊了，听感上反而更有力（第 12 章的减法）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「先写旋律再配和弦」与「先写和弦再写旋律」，各自的优势与风险是什么？重型音乐通常是哪一种？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>先旋律后和弦</th><th>先和弦后旋律</th></tr></thead>
+                <tbody>
+                  <tr><td>优势</td><td>旋律更自然、更像「唱出来的」；不受和弦框架限制</td><td>快、有骨架、和声必然咬合；适合协作</td></tr>
+                  <tr><td>风险</td><td>可能写出难配和声的旋律；需要更多和声知识</td><td>旋律容易变成「和弦音的排列」，缺乏歌唱性</td></tr>
+                  <tr><td>典型场景</td><td>流行、抒情、旋律金属的副歌</td><td>大多数摇滚与金属</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>重型音乐通常是第三种：先写 Riff。</strong>Riff 既不是纯和弦也不是纯旋律——它同时给出了和声骨架（根音线）与节奏框架，旋律要在它<strong>留出的空间</strong>里生长。这是重型音乐旋律常显得「片段化、口号化」的结构性原因：不是主唱写不出长句，而是 riff 没给长句留位置。</p>
+            <p><strong>实用建议</strong>：<strong>两种方法交替用，不要固定一种。</strong>主歌可以从 riff 出发（顺手、有力），副歌反过来<strong>先唱出旋律再配和弦</strong>——因为副歌需要歌唱性，而从 riff 长出来的副歌容易缺这个。很多歌「主歌很带劲、副歌没记住」，根源就在两段用了同一种写法。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>吉他 Riff 与人声抢位置时，三种解法各自的代价是什么？为什么说它们「不是妥协而是分工」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>解法</th><th>代价</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>交替（call &amp; response）</strong></td><td>段落被切成一问一答的小块，不适合需要连贯长句的抒情段；riff 要能写成短句</td></tr>
+                  <tr><td><strong>Riff 留空隙</strong></td><td>Riff 的设计自由度下降——必须在固定位置留休止，写作时就要为人声让位</td></tr>
+                  <tr><td><strong>Riff 简化</strong></td><td>主歌的吉他会显得「不如 demo 带劲」；需要在副歌或间奏把完整 riff 补回来，否则整首都不过瘾</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>为什么是分工而非妥协</strong>：因为<strong>听众在同一时间只能跟住一条线</strong>。这不是审美偏好，是注意力的容量限制——两条同样密集、同样响、频段又重叠的线同时出现，结果不是「信息量翻倍」，而是<strong>两条都听不清</strong>。</p>
+            <p>所以「让路」并没有损失什么：那条被简化的 riff 本来就传不到听众耳朵里。<strong>真正的损失只发生在你不让路的时候。</strong></p>
+            <p>第 7 章会从频谱角度给出同一结论的另一个版本（掩蔽效应），第 11 章会把「怎么让路」展开成具体手段。<strong>这条原则会在本书里出现至少三次——它是编曲的第一原理。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>主歌旋律已经唱到了 D4，副歌想更有冲击力。但主唱再高就吃力了。<strong>在不升高音高的前提下</strong>，给出四种让副歌更炸的办法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p>这道题的关键洞察是：<strong>「炸」是相对的，而音高只是六个可用维度之一</strong>（第 5 章会把它们整理全）。</p>
+            <ol>
+              <li><strong>把主歌改低。</strong>最有效的一招，而且方向是反的——不抬副歌，压主歌。主歌降到 A3 附近，同样的 D4 副歌立刻显得高了五度。<strong>对比是相对的，改哪一端都算数。</strong></li>
+              <li><strong>降低和声节奏。</strong>主歌每小节两个和弦，副歌每两小节一个。和弦变化变慢会让段落显得更宽、更稳、更「大」——这是一个完全不动音高的强度手段。</li>
+              <li><strong>改变织体密度与声像。</strong>主歌单吉他居中，副歌双吉他分左右 + 加一轨八度和声。<strong>横向空间打开</strong>带来的「变大」感，人耳非常敏感（第 10 章）。</li>
+              <li><strong>在副歌前留一拍全乐队静默。</strong>静默之后的第一下，主观响度会显著提高。这是零成本的——不加任何东西，只是拿走一拍。</li>
+            </ol>
+            <p><strong>第五种，如果允许改旋律但不改最高音</strong>：<strong>让 D4 出现得更频繁、时值更长。</strong>主歌里 D4 只是一个经过音，副歌里让它成为每句的落音并拖两拍——同一个音，分量完全不同。</p>
+            <p><strong>共同的教训</strong>：当一个维度用到头时，正确的反应不是硬推它，而是<strong>换一个维度</strong>。「副歌不够炸就唱更高」是最直觉、也最容易把主唱毁掉的做法。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 2.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为什么听众需要的重复量，远超写作者的直觉？请从记忆与注意力的角度解释，并给出一个可操作的自检方法。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>根本原因：写作者与听众处在完全不同的认知状态。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>写作者</th><th>听众</th></tr></thead>
+                <tbody>
+                  <tr><td>听过多少遍</td><td>几百遍</td><td><strong>第一遍</strong></td></tr>
+                  <tr><td>注意力</td><td>全神贯注在这段音乐上</td><td>可能在开车、走路、聊天</td></tr>
+                  <tr><td>已知信息</td><td>知道结构、知道接下来是什么</td><td>什么都不知道</td></tr>
+                  <tr><td>对重复的感受</td><td><strong>腻</strong></td><td><strong>刚开始记住</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>结果是系统性偏差</strong>：写作者对「够了」的判断，几乎总是<strong>早于</strong>听众真正记住的时刻。凭直觉写，重复量必然不足；于是歌听起来「东西很多但记不住」——这是业余作品最常见的问题，比「太重复」常见得多。</p>
+            <p><strong>三个可操作的自检</strong>：</p>
+            <ol>
+              <li><strong>隔天测试。</strong>写完放一天，第二天不看谱、不弹琴，直接哼。哼不出来的部分，说明重复量或辨识度不够。这是最有效的一条，因为它把你的状态强行拉回「不熟悉」。</li>
+              <li><strong>给别人听一遍，只听一遍。</strong>然后请他哼出记得的部分。他哼出什么，什么就是你这首歌的钩子；如果他什么都哼不出来，问题不在编曲细节，在重复量。</li>
+              <li><strong>数一数。</strong>把主钩子在全曲出现的次数数出来。流行歌通常是 <strong>6–10 次</strong>；如果你的只有 2–3 次，几乎可以确定不够。</li>
+            </ol>
+            <p><strong>反过来的风险也要承认</strong>：重复量确实存在上限，超过之后会变成单调。但那个上限比大多数人想象的高得多，而且<strong>有第 1 章的六种变形可以把重复「藏起来」</strong>——同一个动机出现十次，只要每次都有一点不同，听众感知到的是「熟悉」而不是「又来了」。<strong>解决重复过量的办法是变形，不是减少重复。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 听众记住的是<strong>轮廓</strong>而非具体音高；四种轮廓——上行推进、下行释放、<strong>拱形最完整</strong>、波浪流动。<strong>先画形状与落点，再填音。</strong>② <strong>音域是硬约束</strong>：男声舒适 A2–D4、副歌高点 D4–A4。<strong>先定副歌高点，再倒推调</strong>——这是本书性价比最高的流程建议。③ 旋律与和声咬合仍是<strong>三条落点规则</strong>，但作曲时和弦可选，所以能<strong>先写旋律再挑和弦</strong>。④ 同一条旋律配不同和弦，每个音的<strong>身份</strong>会变（根音 / 三音 / 经过音），性格随之改变。⑤ 旋律同样用<strong>动机变形</strong>；<strong>a–a–b–a</strong> 里三句相同不是偷懒，是听众需要的重复量。⑥ Riff 与人声抢位置的三种解法（交替、留空隙、简化）<strong>不是妥协而是分工</strong>——两条线同时抢，结果是两条都听不清。</p>
+          <p><strong>下一章预告</strong>：动机和旋律都是「素材」。第 3 章《段落的功能》要往上一层——主歌、副歌、桥段各自在干什么，为什么它们必须<strong>不一样</strong>，以及一首歌其实是一个「承诺与兑现」的循环。<strong>那一章开始，我们会用段落时间轴看整首歌的形状。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./03-段落的功能.html"><strong>下一章：第 3 章 · 段落的功能：每一段在干什么</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, T = KBG.theory, R = KBB.riff;
+      function $(id) { return document.getElementById(id); }
+      function cssVar(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+      var redraws = [];
+      var EMIN = [0, 2, 3, 5, 7, 8, 10, 12];     // E 自然小调，八个音
+      var MEL_BASE = 52;                          // E3，人声舒适区偏低处
+
+      /* ---------- 演示 1：四种轮廓 ---------- */
+      KBG.soundToggle($("c-sound"));
+      var CONTOURS = [
+        { k: "arch", cn: "拱形", idx: [0, 2, 4, 6, 7, 5, 2, 0], feel: "有起有落的完整一句；高点在内部，句尾收得住" },
+        { k: "up",   cn: "上行", idx: [0, 1, 2, 3, 4, 5, 6, 7], feel: "推进、积累；句尾停在高处，话没说完" },
+        { k: "down", cn: "下行", idx: [7, 6, 5, 4, 3, 2, 1, 0], feel: "释放、松弛；落在主音，是个结论" },
+        { k: "wave", cn: "波浪", idx: [0, 3, 1, 4, 2, 5, 3, 0], feel: "流动、叙述性，不强调某一点" },
+        { k: "flat", cn: "平直", idx: [0, 0, 1, 0, 0, 1, 0, 0], feel: "压抑、机械，适合蓄力与 breakdown 前" }
+      ];
+      var cIdx = 0, cBpm = 108, cCh = null, cChord = false, cH = null;
+      var cBtns = [];
+      CONTOURS.forEach(function (ct, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn"; b.textContent = ct.cn;
+        b.addEventListener("click", function () { cIdx = i; showC(); playC(); });
+        $("c-grid").appendChild(b); cBtns.push(b);
+      });
+      var cv1 = $("c-canvas");
+      var ctx1 = KB.fitCanvas(cv1, 170, function () { drawC(); });
+      function drawC() {
+        var w = cv1.clientWidth || 600, h = 170;
+        var accent = cssVar("--kb-accent", "#2563eb");
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx1.clearRect(0, 0, w, h);
+        var x0 = 34, x1 = w - 14, span = x1 - x0;
+        if (span < 80) return;
+        ctx1.font = "11px -apple-system, PingFang SC, sans-serif";
+        var ct = CONTOURS[cIdx], top = 26, bot = h - 34;
+        for (var g = 0; g <= 7; g++) {
+          var gy = bot - (bot - top) * (g / 7);
+          ctx1.strokeStyle = faint; ctx1.globalAlpha = 0.22; ctx1.lineWidth = 1;
+          ctx1.beginPath(); ctx1.moveTo(x0, gy); ctx1.lineTo(x1, gy); ctx1.stroke();
+          ctx1.globalAlpha = 1; ctx1.fillStyle = faint; ctx1.textAlign = "right";
+          ctx1.fillText(T.DEGREES[T.mod12(EMIN[g])], x0 - 6, gy + 4);
+        }
+        ctx1.strokeStyle = accent; ctx1.lineWidth = 2.2;
+        ctx1.beginPath();
+        ct.idx.forEach(function (v, i) {
+          var px = x0 + span * (i / 7), py = bot - (bot - top) * (v / 7);
+          if (i === 0) ctx1.moveTo(px, py); else ctx1.lineTo(px, py);
+        });
+        ctx1.stroke();
+        ct.idx.forEach(function (v, i) {
+          var px = x0 + span * (i / 7), py = bot - (bot - top) * (v / 7);
+          var last = (i === ct.idx.length - 1);
+          ctx1.fillStyle = last ? "#16a34a" : accent;
+          ctx1.beginPath(); ctx1.arc(px, py, last ? 7 : 5, 0, 2 * Math.PI); ctx1.fill();
+        });
+        ctx1.fillStyle = muted; ctx1.textAlign = "left";
+        ctx1.fillText("八个音的音高排列（绿点＝落音）", x0, 16);
+      }
+      redraws.push(drawC);
+      function showC() {
+        var ct = CONTOURS[cIdx];
+        cBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === cIdx ? " on" : ""); });
+        $("c-name").textContent = ct.cn;
+        $("c-deg").textContent = ct.idx.map(function (v) { return T.DEGREES[T.mod12(EMIN[v])]; }).join(" ");
+        $("c-feel").textContent = ct.feel;
+        drawC();
+      }
+      function cChan() { if (!cCh) cCh = A.channel({ drive: 0.1, gain: 0.9 }); return cCh; }
+      function playC() {
+        if (cH) { cH.stop(); cH = null; }
+        A.stopAll();
+        var ct = CONTOURS[cIdx];
+        var ev = ct.idx.map(function (v, i) {
+          return { t: i * 0.5, midi: MEL_BASE + EMIN[v], dur: 0.5, gain: 0.85, channel: cChan() };
+        });
+        ev.push({ t: 4, midi: MEL_BASE + EMIN[ct.idx[7]], dur: 1.5, gain: 0.85, channel: cChan() });
+        if (cChord) {
+          [[0, "min"], [10, "maj"], [8, "maj"], [10, "maj"]].forEach(function (c, i) {
+            var base = 40 + c[0];
+            ev.push({ t: i, midis: T.CHORDS[c[1]].steps.map(function (s) { return base + s; }),
+              dur: 1, gain: 0.4, spread: 0.03, channel: cChan() });
+          });
+        }
+        cH = A.sequence(ev, { bpm: cBpm, loop: true, lengthBeats: 5.5 });
+      }
+      $("c-chord").addEventListener("click", function () {
+        cChord = !cChord;
+        $("c-chord").textContent = cChord ? "🎸 去掉和弦伴奏" : "🎸 加上和弦伴奏";
+        if (cH) playC();
+      });
+      $("c-stop").addEventListener("click", function () {
+        if (cH) { cH.stop(); cH = null; } A.stopAll();
+      });
+      KB.bindRange($("c-bpm"), $("c-bv"), function (x) { return x + " BPM"; },
+        function (x) { cBpm = x; if (cH) playC(); });
+
+      /* ---------- 演示 2：三个音区 ---------- */
+      var ARCH = [0, 2, 4, 6, 7, 5, 2, 0];
+      var rCh = null, rH = null;
+      function rChan() { if (!rCh) rCh = A.channel({ drive: 0.1, gain: 0.9 }); return rCh; }
+      function archEv(oct, t0) {
+        var ev = [];
+        ARCH.forEach(function (v, i) {
+          ev.push({ t: (t0 || 0) + i * 0.5, midi: MEL_BASE + 12 * oct + EMIN[v], dur: 0.5, gain: 0.85, channel: rChan() });
+        });
+        ev.push({ t: (t0 || 0) + 4, midi: MEL_BASE + 12 * oct, dur: 1.5, gain: 0.85, channel: rChan() });
+        return ev;
+      }
+      var R_INFO = {
+        "-1": { cn: "低八度（压抑）", vox: "太低，多数男声唱着没力气" },
+        "0":  { cn: "原音区（自然）", vox: "落在舒适区，主歌合适" },
+        "1":  { cn: "高八度（紧张）", vox: "接近副歌高点，需要支撑但有冲击力" }
+      };
+      function playR(oct) {
+        if (rH) { rH.stop(); rH = null; }
+        A.stopAll();
+        [["low", -1], ["mid", 0], ["high", 1]].forEach(function (p) {
+          $("r-" + p[0]).className = "kb-btn" + (p[1] === oct ? " kb-btn-primary" : "");
+        });
+        var top = MEL_BASE + 12 * oct + EMIN[7];
+        $("r-name").textContent = R_INFO[String(oct)].cn;
+        $("r-top").textContent = T.name(top, { octave: 1 });
+        $("r-vox").textContent = R_INFO[String(oct)].vox;
+        rH = A.sequence(archEv(oct), { bpm: 108, loop: true, lengthBeats: 5.5 });
+      }
+      [["low", -1], ["mid", 0], ["high", 1]].forEach(function (p) {
+        $("r-" + p[0]).addEventListener("click", function () { playR(p[1]); });
+      });
+      $("r-seq").addEventListener("click", function () {
+        if (rH) { rH.stop(); rH = null; }
+        A.stopAll();
+        var ev = archEv(-1, 0).concat(archEv(0, 6), archEv(1, 12));
+        rH = A.sequence(ev, { bpm: 108 });
+        $("r-name").textContent = "低 → 中 → 高";
+        $("r-top").textContent = "同一条旋律，只差八度";
+        $("r-vox").textContent = "紧张度一级级上涨，而音量完全没变";
+      });
+      $("r-stop").addEventListener("click", function () {
+        if (rH) { rH.stop(); rH = null; } A.stopAll();
+      });
+
+      /* ---------- 演示 3：一条旋律，三套和弦 ---------- */
+      var MEL = [0, 3, 5, 3, 7, 5, 3, 0];          // 相对 E 的半音，拱形，两拍一个
+      var SETS = {
+        a: { cn: "ⅰ – ♭Ⅶ – ♭Ⅵ – ⅰ", ch: [[0, "min"], [10, "maj"], [8, "maj"], [0, "min"]] },
+        b: { cn: "ⅰ – ♭Ⅵ – ♭Ⅲ – ♭Ⅵ", ch: [[0, "min"], [8, "maj"], [3, "maj"], [8, "maj"]] },
+        c: { cn: "ⅳ – ⅰ – ♭Ⅵ – Ⅴ", ch: [[5, "min"], [0, "min"], [8, "maj"], [7, "maj"]] }
+      };
+      var mKey = "a", mCh = null, mH = null;
+      var EMIN_PCS = T.scalePcs(4, "naturalMinor");
+      function mChan() { if (!mCh) mCh = A.channel({ drive: 0.12, gain: 0.9 }); return mCh; }
+      function roleOf(melSemi, chord) {
+        var pc = T.mod12(4 + melSemi);
+        var tones = T.CHORDS[chord[1]].steps.map(function (s) { return T.mod12(4 + chord[0] + s); });
+        if (tones.indexOf(pc) >= 0) return "chord";
+        if (EMIN_PCS.indexOf(pc) >= 0) return "scale";
+        return "out";
+      }
+      var cv3 = $("m-canvas");
+      var ctx3 = KB.fitCanvas(cv3, 190, function () { drawM(); });
+      function drawM() {
+        var w = cv3.clientWidth || 600, h = 190;
+        var muted = cssVar("--kb-fg-muted", "#64748b");
+        var faint = cssVar("--kb-fg-faint", "#94a3b8");
+        ctx3.clearRect(0, 0, w, h);
+        var x0 = 20, x1 = w - 14, span = x1 - x0;
+        if (span < 80) return;
+        ctx3.font = "11px -apple-system, PingFang SC, sans-serif";
+        var set = SETS[mKey], top = 30, bot = h - 46;
+        var lo = Math.min.apply(null, MEL), hi = Math.max.apply(null, MEL);
+        for (var b = 0; b < 4; b++) {
+          var bx = x0 + span * (b / 4), bw = span / 4;
+          ctx3.strokeStyle = faint; ctx3.globalAlpha = 0.3;
+          ctx3.beginPath(); ctx3.moveTo(bx, top - 8); ctx3.lineTo(bx, bot + 24); ctx3.stroke();
+          ctx3.globalAlpha = 1;
+          ctx3.fillStyle = muted; ctx3.textAlign = "center";
+          ctx3.fillText(T.chordName(T.mod12(4 + set.ch[b][0]), set.ch[b][1]), bx + bw / 2, h - 24);
+        }
+        MEL.forEach(function (s, i) {
+          var px = x0 + span * ((i + 0.5) / 8);
+          var py = bot - (bot - top) * ((s - lo) / Math.max(1, hi - lo));
+          var role = roleOf(s, set.ch[Math.floor(i / 2)]);
+          ctx3.fillStyle = role === "chord" ? "#16a34a" : (role === "scale" ? "#8b5cf6" : "#dc2626");
+          ctx3.beginPath(); ctx3.arc(px, py, i === 7 ? 8 : 6, 0, 2 * Math.PI); ctx3.fill();
+          ctx3.fillStyle = "#fff"; ctx3.textAlign = "center";
+          ctx3.fillText(T.DEGREES[T.mod12(s)], px, py + 3.5);
+        });
+        ctx3.fillStyle = muted; ctx3.textAlign = "left";
+        ctx3.fillText("旋律（大圆＝落音）· 下方是当前小节的和弦", x0, 18);
+        var n = MEL.filter(function (s, i) { return roleOf(s, set.ch[Math.floor(i / 2)]) === "chord"; }).length;
+        $("m-name").textContent = set.cn;
+        $("m-ch").textContent = set.ch.map(function (c) { return T.chordName(T.mod12(4 + c[0]), c[1]); }).join(" – ");
+        var lastRole = roleOf(MEL[7], set.ch[3]);
+        var lastPc = T.mod12(4 + MEL[7]);
+        var lastCh = set.ch[3];
+        var idx = T.CHORDS[lastCh[1]].steps.map(function (x) { return T.mod12(4 + lastCh[0] + x); }).indexOf(lastPc);
+        $("m-fit").textContent = (lastRole === "chord"
+            ? (idx === 0 ? "根音 —— 最稳，句号" : idx === 1 ? "三音 —— 稳且明亮" : "五音 —— 稳")
+            : "不是和弦音 —— 悬着，半终止")
+          + "　（八个音里 " + n + " 个是和弦音）";
+      }
+      redraws.push(drawM);
+      function playM(k, melodyOnly) {
+        mKey = k || mKey;
+        Object.keys(SETS).forEach(function (j) {
+          $("m-" + j).className = "kb-btn" + (j === mKey && !melodyOnly ? " kb-btn-primary" : "");
+        });
+        if (mH) { mH.stop(); mH = null; }
+        A.stopAll();
+        var ev = MEL.map(function (s, i) {
+          return { t: i * 0.5, midi: MEL_BASE + s, dur: 0.5, gain: 0.88, channel: mChan() };
+        });
+        ev.push({ t: 4, midi: MEL_BASE + MEL[7], dur: 2, gain: 0.88, channel: mChan() });
+        if (!melodyOnly) {
+          SETS[mKey].ch.forEach(function (c, i) {
+            var base = 40 + c[0];
+            ev.push({ t: i, midis: [base - 12].concat(T.CHORDS[c[1]].steps.map(function (s) { return base + s; })),
+              dur: 1, gain: 0.42, spread: 0.03, channel: mChan() });
+          });
+        }
+        mH = A.sequence(ev, { bpm: 100, loop: true, lengthBeats: 6 });
+        drawM();
+      }
+      ["a", "b", "c"].forEach(function (k) {
+        $("m-" + k).addEventListener("click", function () { playM(k, false); });
+      });
+      $("m-melody").addEventListener("click", function () {
+        playM(mKey, true);
+        $("m-msg").textContent = "只有旋律，没有和弦——注意此时你很难判断哪个音「稳」。稳定感不是旋律自带的，是和弦赋予的。";
+      });
+      $("m-stop").addEventListener("click", function () {
+        if (mH) { mH.stop(); mH = null; } A.stopAll();
+      });
+
+      if (window.MutationObserver) {
+        new MutationObserver(function () { redraws.forEach(function (f) { f(); }); })
+          .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      }
+      showC(); drawM();
+    });
+  </script>
+</body>
+</html>

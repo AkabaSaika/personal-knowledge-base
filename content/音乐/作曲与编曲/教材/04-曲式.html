@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>04 曲式：五种结构与它们为什么有效 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 4 章：曲式是期待管理、五种常见结构（主歌副歌 / AABA / Riff 驱动 / 通谱 / 渐进式）各自适合什么素材，以及重复的经济学。">
+  <meta name="kb:tags" content="作曲,编曲,曲式,结构,主歌副歌,AABA,riff驱动,通谱,渐进,重复,金属,qs,jiegou">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 6px; margin: 10px 0 4px; }
+    .form-grid .kb-btn { width: 100%; justify-content: center; }
+    .form-grid .kb-btn.on { border-color: var(--kb-accent); color: var(--kb-accent); }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 4 章 · 曲式：五种结构与它们为什么有效</h1>
+        <p class="kb-lead">上一章讲了每个段落在干什么。这一章讲它们该按什么顺序排。<strong>曲式不是填表格，而是期待管理</strong>——当听众听到第二遍主歌时，他已经知道后面会有副歌；这个「知道」本身就是推进力。选一个曲式，等于跟听众签一份合同：我会给你什么、什么时候给。这一章讲五种常见合同各自的条款，以及一个被严重低估的问题——<strong>一首歌到底该有几个不同的素材？</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用「期待管理」解释曲式的作用；② 说出五种结构的段落排法、适合的素材与各自风险；③ 判断手里的素材该配哪种结构；④ 说清 Riff 驱动结构与主歌副歌结构的根本差别；⑤ 用「重复的经济学」决定一首歌该有几个素材。</p>
+        </div>
+
+        <h2>曲式是期待管理</h2>
+        <p>听众在听一首没听过的歌时，一直在做一件事：<strong>预测接下来会发生什么。</strong>曲式就是你给他的预测框架。</p>
+        <ul>
+          <li><strong>预测成功</strong>会带来满足感（「我就知道副歌要来了」）——这是重复与方整结构的价值。</li>
+          <li><strong>预测落空</strong>会带来惊喜或困惑，取决于落空的方式是否有道理——这是桥段、变拍、假结束的价值。</li>
+          <li><strong>无法预测</strong>会带来疲劳。如果每一秒都无法预知，听众会放弃预测，注意力随之关闭。</li>
+        </ul>
+        <p><strong>好的曲式在「可预测」与「有意外」之间保持一个比例，而这个比例远比多数人以为的更偏向可预测。</strong>大致的经验是：<strong>八成可预测，两成意外</strong>。而那两成之所以有效，正是因为另外八成建立了预期。</p>
+
+        <h2>五种结构</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>结构</th><th>典型排法</th><th>适合的素材</th><th>风险</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 主歌—副歌</strong></td><td>前奏 · 主 · 预 · 副 · 主 · 预 · 副 · 桥 · 副</td><td>有一个强钩子（旋律或口号）</td><td>套路化；副歌不够强时整首垮掉</td></tr>
+              <tr><td><strong>② AABA</strong></td><td>A · A · B · A（每段 8 小节，共 32）</td><td>旋律本身很完整、能撑满一段</td><td>对现代听众偏「老派」；B 段压力大</td></tr>
+              <tr><td><strong>③ Riff 驱动</strong></td><td>A · B · A · C · B · D（无固定副歌）</td><td><strong>有若干强 riff，但没有歌唱性旋律</strong></td><td>缺少记忆锚点；容易听成「一堆片段」</td></tr>
+              <tr><td><strong>④ 通谱</strong></td><td>A · B · C · D · E（几乎不重复）</td><td>素材极多且各自独立；叙事性强</td><td><strong>最难写好</strong>；听众记不住任何东西</td></tr>
+              <tr><td><strong>⑤ 渐进式</strong></td><td>一条单向上升的长曲线，最后爆发</td><td>音色与织体本身有说服力（后摇、氛围金属）</td><td>前段太长会流失听众；只有一次高潮</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧱 演示 1：五种结构（同样的素材，五种排法）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：用完全相同的五段素材，按不同顺序与重复次数排列，会得到性格完全不同的五首歌。主歌副歌式靠交替建立期待；AABA 靠一个段落的三次回归；Riff 驱动靠段落并置的对比；通谱一路向前不回头；渐进式则是单向的一条长坡。</p></noscript>
+            <div id="f-sound"></div>
+            <div class="form-grid" id="f-grid"></div>
+            <div id="f-timeline"></div>
+            <div class="kb-readout">
+              <span>结构 <b id="f-name">—</b></span>
+              <span>排法 <b id="f-order">—</b></span>
+              <span>总长 <b id="f-len">—</b></span>
+              <span>当前段落 <b id="f-cur">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="f-play" type="button">▶ 播放</button>
+              <button class="kb-btn" id="f-stop" type="button">■ 停止</button>
+            </div>
+            <p id="f-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">五个版本用的是<strong>完全相同的五段素材</strong>，只有顺序与重复次数不同。请特别对比「主歌副歌式」与「Riff 驱动式」——前者有明确的高低起伏，后者是一串并列的对比块。</p>
+          </div>
+        </div>
+
+        <h2>结构与素材的匹配</h2>
+        <p>选结构不是审美偏好，而是<strong>看手里有什么</strong>：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>你手里有</th><th>该选</th><th>为什么</th></tr></thead>
+            <tbody>
+              <tr><td>一个特别强的旋律钩子</td><td>主歌—副歌</td><td>这个结构就是为「把钩子重复六到十次」设计的</td></tr>
+              <tr><td>三四个强 riff，但唱不出旋律</td><td><strong>Riff 驱动</strong></td><td>不必硬编一个副歌；让 riff 之间的对比承担结构</td></tr>
+              <tr><td>一段完整、能唱满 8 小节的旋律</td><td>AABA</td><td>这个结构给旋律最多的展开空间</td></tr>
+              <tr><td>大量互不相干的好点子</td><td>先别选通谱</td><td><strong>多半应该拆成几首歌</strong>，而不是塞进一首</td></tr>
+              <tr><td>一个音色 / 织体的想法</td><td>渐进式</td><td>让时间和层次本身成为内容</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 最常见的错配</p>
+          <p><strong>硬给 Riff 驱动的素材套一个主歌副歌结构。</strong>症状是：副歌其实只是「另一个 riff，但和弦更亮一点」，没有可唱的旋律，也没有口号。这样的副歌撑不起「兑现」的职责，整首歌听起来就是四个 riff 轮流播放，还多了一层假装。</p>
+          <p><strong>对策二选一</strong>：要么老实用 Riff 驱动结构（第 4 节），要么<strong>真的去写一个旋律副歌</strong>——哪怕它简单到只有三个音、只有一句歌词。<strong>「有没有可唱的东西」是这两种结构的分水岭。</strong></p>
+        </div>
+
+        <h2>Riff 驱动结构：金属的主力</h2>
+        <p>它与主歌副歌式有一个根本差别：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>主歌—副歌式</th><th>Riff 驱动式</th></tr></thead>
+            <tbody>
+              <tr><td>段落靠什么区分</td><td><strong>能量高低</strong>（主歌低、副歌高）</td><td><strong>性格对比</strong>（快 / 慢、密 / 疏、明 / 暗）</td></tr>
+              <tr><td>听众等待什么</td><td>等副歌回来</td><td>等下一个 riff</td></tr>
+              <tr><td>记忆锚点</td><td>副歌钩子</td><td><strong>主 riff</strong>（通常是第一个出现的那个）</td></tr>
+              <tr><td>结构形状</td><td>波浪（起伏循环）</td><td>拼贴（块与块并置）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>它的三条纪律</strong>（缺一就会听成「一堆片段」）：</p>
+        <ol>
+          <li><strong>必须有一个主 riff，而且要回来至少三次。</strong>它就是这首歌的「副歌」，哪怕没人唱。听众需要一个能认出的锚。</li>
+          <li><strong>相邻的 riff 必须明确不同。</strong>不是靠更响，而是靠速度感、密度、调式色彩（<a href="../../吉他乐理/教材/14-金属的调式色彩.html">上一本第 14 章</a>）、或音区。两个都是「中速闷音 gallop」的 riff 挨在一起，听众分不出这是两段还是一段。</li>
+          <li><strong>要有一个「最低点」。</strong>通常是 breakdown 或一段清音——它的作用与桥段完全相同：把耳朵清空，让主 riff 最后一次回来时重新变新鲜。</li>
+        </ol>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">⚖️ 演示 2：同样的素材，两种排法</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同样四段素材，排成主歌副歌式会产生明确的能量起伏与「等待副歌」的期待；排成 Riff 驱动式则是块与块的并置，靠性格对比而非高低推进。两者没有优劣，但要求的素材不同——前者需要一个能唱的钩子，后者需要一个足够强的主 riff。</p></noscript>
+            <div id="cmp-timeline"></div>
+            <div class="kb-readout">
+              <span>排法 <b id="cmp-name">—</b></span>
+              <span>结构 <b id="cmp-order">—</b></span>
+              <span>靠什么推进 <b id="cmp-how">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="cmp-vc" type="button">▶ 主歌—副歌式</button>
+              <button class="kb-btn" id="cmp-riff" type="button">▶ Riff 驱动式</button>
+              <button class="kb-btn" id="cmp-stop" type="button">■ 停止</button>
+            </div>
+            <p id="cmp-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">注意时间轴上色块<strong>高度</strong>的差别：主歌副歌式是明显的波浪，Riff 驱动式则接近一条平线——它的变化在<strong>横向</strong>（性格）而不是<strong>纵向</strong>（能量）。</p>
+          </div>
+        </div>
+
+        <h2>重复的经济学</h2>
+        <p>最后一个问题，而且它比曲式的选择更根本：<strong>一首歌该有几个不同的素材？</strong></p>
+        <p>答案出人意料地小：<strong>三到四个。</strong>一首三分半的歌，用三个素材、每个出现三次，几乎总是好过用九个素材、每个出现一次。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>3 个素材 × 3 次</th><th>9 个素材 × 1 次</th></tr></thead>
+            <tbody>
+              <tr><td>听众记住多少</td><td><strong>大部分</strong>——每个都听了三遍</td><td><strong>几乎为零</strong>——每个只闪过一次</td></tr>
+              <tr><td>结构清晰度</td><td>高，能形成期待</td><td>低，无法预测</td></tr>
+              <tr><td>写作成本</td><td>低（还能用第 1 章的变形）</td><td>高（要写九段好素材）</td></tr>
+              <tr><td>常见误判</td><td>「太重复了吧？」——通常不会</td><td>「信息量好大！」——听众接收不到</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>为什么直觉会出错</strong>：写作者已经把每段听了几十遍，所以觉得重复；听众听的是第一遍，需要重复才能记住（第 2 章习题 2.9）。<strong>「素材太多」是业余作品比「素材太少」常见得多的问题。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">💰 演示 3：重复的经济学（3×3 vs 6×1）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同样的时长，用三个素材各重复三次，比用六个不同素材各出现一次更容易被记住、结构也更清晰。听完之后试着哼——「素材多」的版本几乎什么都留不下。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="e-ver">—</b></span>
+              <span>素材数 <b id="e-count">—</b></span>
+              <span>结构 <b id="e-struct">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="e-econ" type="button">▶ 3 个素材 × 3 次</button>
+              <button class="kb-btn" id="e-waste" type="button">▶ 6 个素材 × 1 次</button>
+              <button class="kb-btn" id="e-stop" type="button">■ 停止</button>
+            </div>
+            <p id="e-msg" style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">两个版本时长相同。听完之后<strong>停下来，试着哼出你记住的部分</strong>——这个测试比任何分析都有说服力。</p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 4.1</p>
+          <p>你手里有四个不错的 riff，但完全唱不出一条像样的旋律。该用什么结构？具体怎么排？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>用 Riff 驱动结构。</strong>没有旋律钩子就不要硬编副歌——那样只会得到一个「假副歌」（正文的警告框）。</p>
+            <p><strong>一个可行的排法</strong>（设四个 riff 为 A、B、C、D，A 是最强的那个）：</p>
+            <pre><code>A(8) – B(8) – A(8) – C(8) – A(8) – D(8，最低点/breakdown) – A(8) – B(8)
+</code></pre>
+            <p><strong>三个关键决定</strong>：</p>
+            <ol>
+              <li><strong>A 出现四次</strong>，且是开头和结尾。它是这首歌的记忆锚，听众离开时脑子里应该是它。</li>
+              <li><strong>B、C、D 各承担一种对比</strong>——比如 B 更快更密、C 换调式色彩（弗里几亚的 ♭2）、D 是半速的 breakdown。<strong>相邻两段绝不能是同一种性格。</strong></li>
+              <li><strong>D 是最低点，放在约 3/4 处</strong>。它的作用等同于桥段：把耳朵清空，让最后两次 A 和 B 重新变新鲜。</li>
+            </ol>
+            <p><strong>如果之后想加人声</strong>：不必改结构。让人声在 A 段用<strong>口号式的短句</strong>（两三个音、一句词，重复），它就成了事实上的副歌钩子——很多经典金属歌就是这么做的。<strong>「可唱」不等于「旋律优美」，一句吼出来的短句同样能当锚。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 4.2</p>
+          <p>一首歌用了 9 个各不相同的段落，听众反馈「东西挺多但记不住」。请诊断并给出改法。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>诊断：素材过量，重复不足。</strong>9 个素材各出现一次，每个都只被听到一遍——而<strong>一遍不足以形成记忆</strong>。听众感受到的不是「信息量大」，而是「一直在换，没抓住任何东西」。</p>
+            <p><strong>改法（三步）</strong>：</p>
+            <ol>
+              <li><strong>筛。</strong>用第 1 章的三条标准过一遍 9 个段落，挑出<strong>最好的 3 个</strong>。剩下 6 个不要删，存起来——它们是下一首歌的种子。</li>
+              <li><strong>排。</strong>把 3 个素材排成 A–B–A–C–A–B 之类，每个至少出现两到三次。总时长通常不用变，因为重复不比新素材短。</li>
+              <li><strong>变形，不是换素材。</strong>如果担心重复太多，用第 1 章的六种变形处理第二、三次出现——改节奏、加花、移位、截断。<strong>听众感知到的是「熟悉但有变化」，而不是「又来了」。</strong></li>
+            </ol>
+            <p><strong>一个反直觉但重要的观察</strong>：改完之后这首歌的<strong>信息量确实变少了</strong>，但<strong>被接收到的信息量大幅增加</strong>。作曲的目标从来不是最大化信息量，而是最大化<strong>被记住的信息量</strong>——这两个量经常是反向的。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 4.3</p>
+          <p>AABA 结构里，B 段（桥段）的写作压力为什么特别大？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>因为它是全曲唯一的对比，而且只有一次机会。</strong></p>
+            <p>在 AABA 的 32 小节里，A 出现三次（24 小节），B 只出现一次（8 小节）。这意味着：</p>
+            <ul>
+              <li><strong>全曲 75% 的时间是同一个东西</strong>——如果 B 段不够不同，整首歌就是一段音乐重复四遍。</li>
+              <li><strong>B 段承担了所有的「变化」职责</strong>：换和声、换音区、换织体，最好三样都换。</li>
+              <li><strong>B 段还要负责「送回 A」</strong>——它的结尾必须制造出想回到 A 的期待，否则最后一次 A 会显得多余。</li>
+            </ul>
+            <p><strong>三个具体要求</strong>：① 和声要离开主调（常用的做法是转到关系大调或 Ⅳ 上）；② 旋律轮廓要与 A 明显不同（A 是拱形，B 就用上行）；③ 结尾停在<strong>属功能</strong>上（<a href="../../吉他乐理/教材/07-顺阶和弦与和声功能.html">上一本第 7 章</a>的半终止），把听众推回 A。</p>
+            <p><strong>这也解释了为什么 AABA 在现代摇滚里用得少了</strong>：它对单一段落（B）的质量要求太高，容错率低。主歌副歌式把变化的职责分散到了预副歌、副歌、桥段三处，任何一处平庸都不至于毁掉全曲。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>为什么说曲式是「期待管理」？可预测与意外的比例大致应该是多少？为什么偏向可预测？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为听众在听一首新歌时，一直在预测接下来会发生什么。</strong>曲式就是你给他的预测框架：预测成功带来满足，预测落空带来惊喜或困惑，完全无法预测则带来疲劳并导致注意力关闭。</p>
+            <p><strong>比例大致是八成可预测、两成意外。</strong></p>
+            <p><strong>为什么偏向可预测</strong>，三个理由：</p>
+            <ol>
+              <li><strong>意外依赖预期而存在。</strong>没有那八成建立起来的预期，两成的意外就不成其为意外——它只是随机。<strong>可预测是意外的燃料。</strong></li>
+              <li><strong>听众的注意力是有限资源。</strong>处理意外需要认知投入；持续的意外会耗尽它，听众会转为「不再认真听」的省电模式。</li>
+              <li><strong>记忆需要重复。</strong>可预测的部分正是重复的部分，也就是听众最终能带走的部分（第 2 章习题 2.9）。</li>
+            </ol>
+            <p><strong>推论</strong>：当你觉得一首歌「太套路」时，往往不是可预测的比例太高，而是<strong>那两成意外没做好或干脆没有</strong>。解决办法是加一个好意外，而不是把八成的框架拆掉。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>五种结构分别适合什么样的素材？请各用一句话概括。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ul>
+              <li><strong>主歌—副歌</strong>：有一个<strong>强旋律钩子</strong>——这个结构就是为「把钩子重复六到十次」设计的。</li>
+              <li><strong>AABA</strong>：有一段<strong>完整、能唱满 8 小节的旋律</strong>，且你能再写出一段足够不同的 B。</li>
+              <li><strong>Riff 驱动</strong>：有<strong>三四个强 riff 但没有歌唱性旋律</strong>——让 riff 之间的对比承担结构。</li>
+              <li><strong>通谱</strong>：素材极多、各自独立，且有明确的叙事线索把它们串起来。<strong>门槛最高。</strong></li>
+              <li><strong>渐进式</strong>：手里的想法是<strong>一个音色或织体</strong>，而不是一段旋律——让时间和层次本身成为内容。</li>
+            </ul>
+            <p><strong>选结构的正确顺序</strong>：先看手里有什么，再选结构。<strong>反过来（先定结构再凑素材）几乎必然导致「假副歌」或「凑数段落」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>Riff 驱动结构的三条纪律是什么？违反任何一条会有什么后果？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>必须有一个主 riff，回来至少三次。</strong><br>违反 → 没有记忆锚，听众听完什么都想不起来，整首歌变成「一堆片段」。</li>
+              <li><strong>相邻的 riff 必须明确不同</strong>（靠速度感、密度、调式色彩或音区，而不是靠更响）。<br>违反 → 听众分不清这是两段还是一段，段落切换不被感知，结构失效。</li>
+              <li><strong>要有一个最低点</strong>（breakdown 或清音段）。<br>违反 → 全程高能量，听觉疲劳；而且最后一次主 riff 回来时不再新鲜，结尾没有高潮。</li>
+            </ol>
+            <p><strong>三条的共同逻辑</strong>：Riff 驱动结构放弃了「副歌」这个天然的记忆锚与能量高点，因此必须<strong>用别的手段把这两样补回来</strong>——主 riff 补记忆锚，最低点补能量对比，段落差异补结构感。<strong>它不是「更自由的结构」，而是「把约束换了个位置的结构」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>一首三分半的歌大约该有几个不同的素材？为什么写作者的直觉在这件事上通常是错的？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三到四个。</strong>每个出现三次左右。</p>
+            <p><strong>为什么直觉会错</strong>：写作者已经把每段听了几十遍，重复对他来说是「腻」；听众听的是第一遍，重复对他来说是「刚开始记住」。这个状态差导致<strong>系统性偏差</strong>——凭直觉写，素材必然过多、重复必然不足。</p>
+            <p><strong>结果</strong>：作品听起来「东西很多但记不住」。这是业余作品比「太重复」<strong>常见得多</strong>的问题，但因为它伪装成「信息量大」，反而不容易被自我诊断出来。</p>
+            <p><strong>一个可操作的检验</strong>：听完自己的歌，隔十分钟，试着哼。能哼出来的部分就是听众能带走的部分。如果什么都哼不出来，问题几乎肯定是素材太多而不是太少。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「硬给 Riff 素材套主歌副歌结构」有什么典型症状？两种对策各是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>典型症状</strong>：所谓的「副歌」其实只是另一个 riff，只是和弦更亮一点、鼓打得更满一点。它没有可唱的旋律，也没有可喊的口号。整首歌听起来是四个 riff 轮流播放，还多了一层「假装这里是副歌」的尴尬。</p>
+            <p><strong>更精确的诊断方法</strong>：<strong>把副歌的伴奏去掉，问「这里听众该唱什么」。</strong>如果答案是「没什么可唱的」，那它就不是副歌。</p>
+            <p><strong>对策一：老实用 Riff 驱动结构。</strong>承认这首歌没有副歌，改用 A–B–A–C–A 的并置排法，让最强的 riff 承担记忆锚的职责。<strong>这不是降级</strong>——大量经典金属就是这么写的。</p>
+            <p><strong>对策二：真的去写一个旋律副歌。</strong>关键是别把标准定得太高——<strong>三个音、一句歌词、重复四遍</strong>就够了。副歌的功能是「让人跟着唱」，不是「展示旋律才华」。很多极其有效的金属副歌，旋律简单到只在两个音之间摆动。</p>
+            <p><strong>要避免的第三种做法</strong>：把副歌写得更复杂、更炫技，指望「更厉害」能解决「不像副歌」。这会让问题更严重——<strong>副歌的本质是可及性，不是复杂度。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>Riff 驱动结构里，相邻段落必须「明确不同」。请给出四种制造对比的具体手段，并说明各自的强度。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>手段</th><th>做法</th><th>对比强度</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>节奏密度</strong></td><td>gallop 十六分 → 全音符长音；或反过来</td><td><strong>最强</strong>。密度是听觉最敏感的维度之一（第 1 章）</td></tr>
+                  <tr><td><strong>速度感（不是 BPM）</strong></td><td>half-time / double-time——BPM 不变，但感觉慢一半或快一倍</td><td><strong>很强</strong>，且不需要乐队换速度（第 14 章）</td></tr>
+                  <tr><td><strong>调式色彩</strong></td><td>爱奥利亚 → 弗里几亚（加 ♭2），或换到 ♭Ⅵ 上（<a href="../../吉他乐理/教材/14-金属的调式色彩.html">上一本第 14 章</a>）</td><td>中等。需要听众有一定的听觉敏感度</td></tr>
+                  <tr><td><strong>音区与织体</strong></td><td>低音区单音 riff → 高把位音块；或双吉他 → 单吉他</td><td>中等偏强，且与第二篇的编曲手段直接衔接</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>不推荐单用的手段</strong>：<strong>音量</strong>。它的可用范围有限（到了段落三你就没有余量了），而且现代制作的动态压缩会把音量差异抹平——你以为拉开了，混完发现没差别。</p>
+            <p><strong>组合原则</strong>：与第 3 章「至少改两个维度」一致——单一手段的对比容易被听成「同一段的变奏」，两个以上同时改，才会被听成新段落。<strong>最有效的常见组合是「密度 + 速度感」</strong>：从密集的十六分 gallop 切到 half-time 的长音，这一下几乎不可能听不出来。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么说通谱结构「最难写好」？什么条件下它才真正成立？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>难在它同时放弃了两样东西</strong>：</p>
+            <ul>
+              <li><strong>放弃了重复</strong> → 听众无法记住任何素材（第 2 章习题 2.9 的记忆机制失效）。</li>
+              <li><strong>放弃了可预测性</strong> → 听众无法建立期待，注意力得不到框架支撑（习题 4.1）。</li>
+            </ul>
+            <p><strong>也就是说，作曲家必须用别的东西把这两样补回来。</strong>这就是它的成立条件：</p>
+            <ol>
+              <li><strong>必须有一条清晰的叙事线索。</strong>虽然素材不重复，但它们之间要有<strong>可感知的发展关系</strong>——后一段是前一段的变形、发展或回应（第 1 章的六种变形在这里是救命工具）。<strong>「不重复」不等于「不相关」。</strong></li>
+              <li><strong>每一段本身都要足够强。</strong>没有重复来加深印象，就只能靠单次呈现的质量。九段平庸的素材远不如三段好素材重复三次。</li>
+              <li><strong>要有明确的整体曲线。</strong>即使段落不重复，能量必须有起伏与一个顶点（第 13 章），否则听众不知道自己处在这首歌的什么位置。</li>
+            </ol>
+            <p><strong>一个诚实的判断标准</strong>：如果你的通谱作品里，各段之间<strong>换成别的顺序也无所谓</strong>，那它不是通谱，只是一堆片段的拼接。真正的通谱结构里，每一段都<strong>必须</strong>在那个位置。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>用<strong>三个</strong>素材设计一首 Riff 驱动的金属歌。写出段落顺序、小节数与每段的对比手段，说明主 riff 出现了几次以及为什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>三个素材</strong>：<br>
+            <strong>A</strong>＝主 riff：E 小调 gallop，[1 – 1 – ♭3 – 4]，中速密集，闷音<br>
+            <strong>B</strong>＝对比 riff：换到 ♭Ⅵ 上，四分音符长音，放开闷音，高把位<br>
+            <strong>C</strong>＝breakdown：half-time，只有根音单音 + 大量休止</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>段落</th><th>素材</th><th>小节</th><th>对比手段</th><th>作用</th></tr></thead>
+                <tbody>
+                  <tr><td>前奏</td><td>A（单吉他）</td><td>4</td><td>—</td><td>立刻放出主 riff，第一秒就是记忆锚</td></tr>
+                  <tr><td>1</td><td><strong>A</strong>（全乐队）</td><td>8</td><td>—</td><td>确立主 riff</td></tr>
+                  <tr><td>2</td><td><strong>B</strong></td><td>8</td><td>密度↓ + 音区↑ + 放开闷音</td><td>第一次对比；给耳朵换气</td></tr>
+                  <tr><td>3</td><td><strong>A</strong></td><td>8</td><td>回归</td><td>第二次出现，锚被加固</td></tr>
+                  <tr><td>4</td><td><strong>C</strong></td><td>8</td><td><strong>half-time + 大量休止</strong></td><td><strong>全曲最低点</strong>，把耳朵清空</td></tr>
+                  <tr><td>5</td><td><strong>A</strong>（加料）</td><td>8</td><td>加八度吉他 / 双踩</td><td>第三次出现，且是最强版本 —— 全曲高潮</td></tr>
+                  <tr><td>6</td><td><strong>B</strong></td><td>4</td><td>缩短一半</td><td>收束前的最后一次对比</td></tr>
+                  <tr><td>尾奏</td><td>A（渐稀）</td><td>4</td><td>层层拿掉</td><td>回到起点，只剩单吉他</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>主 riff A 出现四次</strong>（前奏 + 三个完整段落 + 尾奏），约占全曲一半时长。<strong>为什么这么多</strong>：</p>
+            <ol>
+              <li>它是<strong>唯一的记忆锚</strong>——这首歌没有副歌，A 必须承担「让人记住」的全部职责。</li>
+              <li>它<strong>划分结构</strong>——每次 A 回来，听众就知道「一个循环结束了」，这就是可预测性的来源。</li>
+              <li>它<strong>可以被加料</strong>——第 5 段的 A 是加了料的版本，所以四次出现并不等于四次雷同。</li>
+            </ol>
+            <p><strong>关键的位置决定</strong>：<strong>C（最低点）放在第 4 段，约全曲 55% 处；紧接着的第 5 段是高潮，约 70% 处。</strong>先挖谷再造峰——制造高点最有效的方法是先制造低点（第 3 章习题 3.8 的同一条原则）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 4.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>「八成可预测、两成意外」这个比例，在不同流派里会怎么变？举三个例子并解释背后的原因。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>流派</th><th>大致比例</th><th>为什么</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>主流流行 / 电台摇滚</strong></td><td>约 <strong>9 : 1</strong></td><td>目标听众常在做别的事（开车、工作），注意力投入低。可预测性必须高到「不用专心也能跟上」；意外只留给一两处（比如最后一遍副歌的升调）</td></tr>
+                  <tr><td><strong>主流金属 / 硬摇滚</strong></td><td>约 <strong>8 : 2</strong></td><td>听众是主动收听的，愿意投入注意力；但仍然需要能跟着点头、能记住 riff，所以框架依旧稳固</td></tr>
+                  <tr><td><strong>前卫 / 数学金属</strong></td><td>约 <strong>5 : 5</strong> 甚至更低</td><td>听众是「来被挑战的」，把解读复杂结构本身当作乐趣。但代价是受众极窄，且<strong>必须反复听才能进入</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>背后的统一原因：比例由「听众愿意投入多少注意力」决定，而不是由作品的艺术高度决定。</strong>这是一条关于<strong>沟通</strong>的规律，不是关于品味的规律。</p>
+            <p><strong>三条实用推论</strong>：</p>
+            <ol>
+              <li><strong>先想清楚你的听众在什么状态下听。</strong>为现场设计的歌（听众全神贯注、还在跳）和为流媒体设计的歌（听众在通勤）应该有不同的比例。</li>
+              <li><strong>「意外」的成本随比例上升而上升。</strong>在 9:1 的框架里，一个意外就足够成为亮点；在 5:5 的框架里，每个意外都在稀释其他意外，必须有极强的内在逻辑把它们串起来——这就是为什么前卫作品对作曲能力的要求高得多。</li>
+              <li><strong>不要用比例伪装能力不足。</strong>「我的歌很难懂是因为我在做前卫」和「我写不出可预测的好框架」在听感上是无法区分的。<strong>唯一的检验是：能写出 9:1 的好歌的人，才有资格选择 5:5。</strong></li>
+            </ol>
+            <p><strong>与上一本的呼应</strong>：这和<a href="../../吉他乐理/教材/13-摇滚的和弦进行.html">上一本第 13 章习题 13.9</a>的结论是同一个——<strong>规则的适用范围由它服务的目的决定；知道自己在为谁写、在什么条件下被听，比知道任何一条规则都重要。</strong></p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>曲式是期待管理</strong>：可预测带来满足、意外带来惊喜、完全不可预测带来疲劳。大致<strong>八成可预测、两成意外</strong>，而意外依赖预期才成立。② 五种结构各有适配的素材：<strong>强钩子→主歌副歌；完整旋律→AABA；强 riff 无旋律→Riff 驱动；素材极多且有叙事→通谱；音色织体的想法→渐进式</strong>。<strong>先看手里有什么，再选结构。</strong>③ 最常见的错配是<strong>硬给 riff 素材套主歌副歌</strong>，症状是「假副歌」；对策是老实用 Riff 驱动，或真去写一个简单到只有三个音的副歌。④ Riff 驱动的三条纪律：<strong>主 riff 至少回来三次、相邻段落必须明确不同、要有一个最低点</strong>。⑤ <strong>重复的经济学</strong>：三到四个素材、各出现三次，远好过九个素材各一次。<strong>目标不是最大化信息量，而是最大化被记住的信息量。</strong></p>
+          <p><strong>下一章预告</strong>：第 3、4 章反复提到「段落必须不同」「副歌要更炸」。第 5 章《对比：副歌凭什么是副歌》会把这件事彻底展开成<strong>六个可操作的维度</strong>，并用一个能逐项开关的演示让你听见每一个维度分别贡献了多少。<strong>那是本书第一篇最实用的一章。</strong></p>
+        
+          <p class="kb-next-ch">➡️ <a href="./05-对比.html"><strong>下一章：第 5 章 · 对比：副歌凭什么是副歌</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, SONG = KBB.song;
+      function $(id) { return document.getElementById(id); }
+      function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+      /* ---------- 演示 1：五种结构 ---------- */
+      KBG.soundToggle($("f-sound"));
+      var FORMS = [
+        { k: "vc",      cn: "① 主歌—副歌", order: ["intro", "verse", "pre", "chorus", "verse", "chorus"] },
+        { k: "aaba",    cn: "② AABA",      order: ["verse", "verse", "bridge", "verse"] },
+        { k: "riff",    cn: "③ Riff 驱动", order: ["verse", "pre", "verse", "bridge", "pre", "verse"] },
+        { k: "through", cn: "④ 通谱",      order: ["intro", "verse", "pre", "chorus", "bridge"] },
+        { k: "prog",    cn: "⑤ 渐进式",    order: ["intro", "intro", "verse", "verse", "pre", "chorus"] }
+      ];
+      var fIdx = 0, fRig = null, fRaf = null, fTl = null;
+      var fBtns = [];
+      FORMS.forEach(function (fm, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn"; b.textContent = fm.cn;
+        b.addEventListener("click", function () { fIdx = i; showForm(); });
+        $("f-grid").appendChild(b); fBtns.push(b);
+      });
+      function stopF() {
+        if (fRig) { fRig.dispose(); fRig = null; }
+        if (fRaf) { cancelAnimationFrame(fRaf); fRaf = null; }
+        A.stopAll(); if (fTl) fTl.setPos(null);
+        $("f-play").textContent = "▶ 播放";
+      }
+      function showForm() {
+        stopF();
+        var fm = FORMS[fIdx];
+        fBtns.forEach(function (b, i) { b.className = "kb-btn" + (i === fIdx ? " on" : ""); });
+        var spec = SONG.build(fm.order);
+        clear($("f-timeline"));
+        fTl = KBB.timeline($("f-timeline"), spec.sections, { label: fm.cn + " · 高度＝能量" });
+        $("f-name").textContent = fm.cn;
+        $("f-order").textContent = fm.order.map(function (k) { return SONG.SEC[k].name; }).join(" · ");
+        $("f-len").textContent = spec.lengthBeats + " 拍（约 " +
+          Math.round(spec.lengthBeats * 60 / SONG.bpm) + " 秒）";
+        $("f-cur").textContent = "—";
+      }
+      $("f-play").addEventListener("click", function () {
+        if (fRig) { stopF(); return; }
+        var fm = FORMS[fIdx], spec = SONG.build(fm.order);
+        fRig = KBB.tracks({ bpm: SONG.bpm, lengthBeats: spec.lengthBeats, loop: true, tracks: spec.tracks });
+        fRig.play();
+        $("f-play").textContent = "⏸ 暂停";
+        (function tick() {
+          if (!fRig) return;
+          var pos = fRig.position();
+          fTl.setPos(pos);
+          $("f-cur").textContent = fTl.sectionAt(pos).name;
+          fRaf = requestAnimationFrame(tick);
+        })();
+      });
+      $("f-stop").addEventListener("click", stopF);
+
+      /* ---------- 演示 2：两种排法 ---------- */
+      var CMP = {
+        vc:   { cn: "主歌—副歌式", order: ["verse", "pre", "chorus", "verse", "chorus"],
+                how: "能量高低（波浪形）——听众在等副歌回来" },
+        riff: { cn: "Riff 驱动式", order: ["verse", "pre", "verse", "bridge", "pre"],
+                how: "性格对比（并置）——听众在等下一个 riff" }
+      };
+      var cRig = null, cRaf = null, cTl = null;
+      function stopC() {
+        if (cRig) { cRig.dispose(); cRig = null; }
+        if (cRaf) { cancelAnimationFrame(cRaf); cRaf = null; }
+        A.stopAll(); if (cTl) cTl.setPos(null);
+      }
+      function playCmp(k) {
+        stopC();
+        ["vc", "riff"].forEach(function (j) {
+          $("cmp-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        var c = CMP[k], spec = SONG.build(c.order);
+        clear($("cmp-timeline"));
+        cTl = KBB.timeline($("cmp-timeline"), spec.sections, { label: c.cn + " · 高度＝能量" });
+        $("cmp-name").textContent = c.cn;
+        $("cmp-order").textContent = c.order.map(function (x) { return SONG.SEC[x].name; }).join(" · ");
+        $("cmp-how").textContent = c.how;
+        cRig = KBB.tracks({ bpm: SONG.bpm, lengthBeats: spec.lengthBeats, loop: true, tracks: spec.tracks });
+        cRig.play();
+        (function tick() {
+          if (!cRig) return;
+          cTl.setPos(cRig.position());
+          cRaf = requestAnimationFrame(tick);
+        })();
+      }
+      ["vc", "riff"].forEach(function (k) {
+        $("cmp-" + k).addEventListener("click", function () { playCmp(k); });
+      });
+      $("cmp-stop").addEventListener("click", stopC);
+
+      /* ---------- 演示 3：重复的经济学 ---------- */
+      var MATS = [
+        { roots: [0, 0, 3, 5], rhy: "gallop",  mute: true },
+        { roots: [8, 3, 10, 0], rhy: "quarter", mute: false },
+        { roots: [0, 1, 0, 3], rhy: "sixteen", mute: true },
+        { roots: [5, 5, 7, 8], rhy: "eighth",  mute: true },
+        { roots: [10, 8, 7, 5], rhy: "gallop", mute: true },
+        { roots: [0, null, 3, null], rhy: "half", mute: false }
+      ];
+      var ECON = [0, 1, 0, 2, 0, 1];        /* 三个素材，各出现 3 / 2 / 1 次 */
+      var WASTE = [0, 1, 2, 3, 4, 5];       /* 六个素材，各一次 */
+      var eRig = null;
+      function buildEcon(plan) {
+        var gtr = [], gtr2 = [], bass = [], drums = [];
+        plan.forEach(function (mi, bar) {
+          var m = MATS[mi], off = bar * 4;
+          R.events(m.roots, m.rhy, { mute: m.mute }).forEach(function (e) {
+            gtr.push(Object.assign({}, e, { t: e.t + off }));
+            gtr2.push(Object.assign({}, e, { t: e.t + off }));
+          });
+          m.roots.forEach(function (r, i) {
+            if (r === null) return;
+            bass.push({ t: off + i, midi: R.ROOT - 12 + r, dur: 1, gain: 0.9 });
+          });
+        });
+        R.drumPattern(plan.length, "basic").forEach(function (e) { drums.push(e); });
+        return {
+          lengthBeats: plan.length * 4,
+          tracks: [
+            { id: "dr", name: "鼓", inst: "drums", gain: 1, events: drums },
+            { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: bass },
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.85, pan: -0.6, drive: 0.82, events: gtr },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.8, pan: 0.6, drive: 0.82, events: gtr2 }
+          ]
+        };
+      }
+      function playEcon(k) {
+        if (eRig) { eRig.dispose(); eRig = null; }
+        A.stopAll();
+        ["econ", "waste"].forEach(function (j) {
+          $("e-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+        });
+        var plan = k === "econ" ? ECON : WASTE;
+        var uniq = plan.filter(function (v, i) { return plan.indexOf(v) === i; }).length;
+        $("e-ver").textContent = k === "econ" ? "3 个素材 × 3 次" : "6 个素材 × 1 次";
+        $("e-count").textContent = uniq + " 个不同素材 / 共 " + plan.length + " 小节";
+        $("e-struct").textContent = plan.map(function (i) { return "ABCDEF"[i]; }).join(" – ");
+        var spec = buildEcon(plan);
+        eRig = KBB.tracks({ bpm: SONG.bpm, lengthBeats: spec.lengthBeats, loop: true, tracks: spec.tracks });
+        eRig.play();
+      }
+      ["econ", "waste"].forEach(function (k) {
+        $("e-" + k).addEventListener("click", function () { playEcon(k); });
+      });
+      $("e-stop").addEventListener("click", function () {
+        if (eRig) { eRig.dispose(); eRig = null; } A.stopAll();
+      });
+
+      showForm();
+
+      /* 切换深浅色主题后重绘两条时间轴（canvas 取的是 CSS 变量的颜色） */
+      new MutationObserver(function () {
+        if (fTl) fTl.redraw();
+        if (cTl) cTl.redraw();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    });
+  </script>
+</body>
+</html>

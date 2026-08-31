@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>13 张力曲线：宏观设计 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 13 章：把整首歌的能量画成一条曲线；三种曲线形状；高潮为什么落在全曲 70–80% 处；时长与段落预算；曲线的三条纪律——顶点唯一、顶点前必须有谷、曲线不能是直线。">
+  <meta name="kb:tags" content="作曲,编曲,张力,能量曲线,高潮,时长,结构,顶点,谷,zlqxhgsj,zl">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+    .ec-presets { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 2px; }
+    .ec-presets .kb-btn { font-size: .86em; }
+    .ec-diag { margin: 8px 0 0; font-size: .92em; }
+    .ec-diag li { margin: 2px 0; }
+    .bad { color: #dc2626; }
+    .good { color: #16a34a; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 13 章 · 张力曲线：宏观设计</h1>
+        <p class="kb-lead">到这里为止，本书讲的全是局部技巧——一个动机、一段连接、一件乐器、一个段落。这一章站到整首歌的高度，问一个只有在这个高度才能回答的问题：<strong>这些段落连起来，形成的是一条什么形状的曲线？</strong>而这条曲线的形状，决定了听众会不会把这首歌听完。</p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 把一首歌的能量画成一条可以检查的曲线；② 辨认三种曲线形状并说出各自的问题；③ 解释高潮为什么落在全曲 70–80% 而不是结尾；④ 用段落预算控制时长；⑤ 用三条纪律（顶点唯一、顶点前必须有谷、曲线不能是直线）检查任何一首歌。</p>
+        </div>
+
+        <h2>能量是可以画出来的</h2>
+        <p>「能量」听起来主观，但它由一组具体的、可以清点的因素决定：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>因素</th><th>低能量</th><th>高能量</th><th>出处</th></tr></thead>
+            <tbody>
+              <tr><td><strong>编制</strong></td><td>1–3 轨</td><td>8–9 轨</td><td>第 12 章</td></tr>
+              <tr><td><strong>音区</strong></td><td>只有原位</td><td>加高八度层</td><td>第 5、10 章</td></tr>
+              <tr><td><strong>密度与发音</strong></td><td>长音、闷音</td><td>放开延音、十六分</td><td>第 5、8 章</td></tr>
+              <tr><td><strong>律动</strong></td><td>半速、只有踩镲</td><td>八分底鼓、双踩、擦片</td><td>第 8 章</td></tr>
+              <tr><td><strong>织体</strong></td><td>铺底或单声部</td><td>齐奏或多层复调</td><td>第 12 章</td></tr>
+              <tr><td>音量</td><td>—</td><td>—</td><td><strong>刻意不列入</strong>——它会被压缩抹平（第 5 章）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>把这几项加权合成一个 0 到 1 的刻度，就得到了一条<strong>可以画出来、也可以检查</strong>的曲线。这不是比喻——本章的演示就是让你直接拖这条曲线，然后听结果。</p>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 音量不在这张表里</p>
+          <p>这是刻意的。<strong>能量曲线必须由「内容」构成，不能由「振幅」构成</strong>——因为混音总线压缩、母带限制与流媒体响度归一化会把振幅动态压平（第 5 章习题 5.5）。</p>
+          <p>换句话说：<strong>一条画在音量上的能量曲线，导出之后就不存在了。</strong>而画在编制、音区、密度、律动、织体上的曲线，压缩抹不掉。</p>
+        </div>
+
+        <h2>三种曲线形状</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>形状</th><th>样子</th><th>问题 / 特点</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 单调上升</strong></td><td>每一段都比上一段更满，一路涨到结尾</td><td><strong>最常见的错误。</strong>没有谷就没有峰；而且中途就会满到无法再加，后面几段全部塌陷成一个平台</td></tr>
+              <tr><td><strong>② 双峰</strong></td><td>两个副歌各是一个峰，中间有个小谷</td><td>可用，但<strong>两个峰一样高就等于没有顶点</strong>；需要让第二个明显更高</td></tr>
+              <tr><td><strong>③ 阶梯 ＋ 深谷</strong></td><td>逐级抬升 → 副歌 → 回落 → 再抬 → 副歌 → <strong>深谷（桥段）</strong> → 顶点</td><td><strong>重型音乐的标准形状。</strong>顶点唯一，而且它前面有全曲最深的谷</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figure>
+          <svg viewBox="0 0 720 230" width="720" height="230" role="img" aria-label="三种能量曲线形状对比：单调上升是一条直线上升然后变成平台；双峰是两个高度相近的峰；阶梯加深谷是逐级抬升、中间回落、桥段处降到最低、最后升到全曲顶点">
+            <g font-size="11" fill="var(--kb-fg-muted)">
+              <text x="8" y="14">① 单调上升（错）</text>
+              <text x="250" y="14">② 双峰</text>
+              <text x="492" y="14">③ 阶梯 ＋ 深谷（推荐）</text>
+            </g>
+            <g stroke="var(--kb-border)" fill="none">
+              <rect x="8" y="22" width="222" height="150" rx="5"/>
+              <rect x="250" y="22" width="222" height="150" rx="5"/>
+              <rect x="492" y="22" width="220" height="150" rx="5"/>
+            </g>
+            <polyline points="18,160 55,140 92,118 129,96 166,74 203,72 220,72" fill="none" stroke="#dc2626" stroke-width="2.2"/>
+            <text x="119" y="188" font-size="10.5" fill="#dc2626" text-anchor="middle">中途就满了，后面全是平台</text>
+            <text x="119" y="204" font-size="10.5" fill="var(--kb-fg-muted)" text-anchor="middle">没有谷 ⇒ 没有峰</text>
+            <polyline points="260,160 292,120 324,60 356,110 388,120 420,58 462,58" fill="none" stroke="#d97706" stroke-width="2.2"/>
+            <text x="361" y="188" font-size="10.5" fill="#d97706" text-anchor="middle">两个峰一样高</text>
+            <text x="361" y="204" font-size="10.5" fill="var(--kb-fg-muted)" text-anchor="middle">⇒ 顶点不唯一</text>
+            <polyline points="500,162 530,132 552,96 578,52 604,104 622,150 648,34 682,86 704,120" fill="none" stroke="#16a34a" stroke-width="2.4"/>
+            <circle cx="622" cy="150" r="4" fill="#16a34a"/>
+            <circle cx="648" cy="34" r="4.5" fill="#16a34a"/>
+            <text x="622" y="168" font-size="10" fill="#16a34a" text-anchor="middle">谷</text>
+            <text x="650" y="26" font-size="10" fill="#16a34a" text-anchor="middle">顶点</text>
+            <text x="602" y="188" font-size="10.5" fill="#16a34a" text-anchor="middle">顶点唯一，且紧接最深的谷</text>
+            <text x="602" y="204" font-size="10.5" fill="var(--kb-fg-muted)" text-anchor="middle">顶点在全曲约 75% 处</text>
+          </svg>
+          <figcaption>三种曲线。形状 ③ 的关键不在于它最高，而在于<strong>它的顶点前面有一个深谷</strong>——落差才是能量的来源（第 5 章）。</figcaption>
+        </figure>
+
+        <h2>高潮该在哪里</h2>
+        <p><strong>经验位置是全曲的 70–80% 处。</strong>为什么不是结尾，也不是中间？</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>位置</th><th>问题</th></tr></thead>
+            <tbody>
+              <tr><td><strong>50%（正中）</strong></td><td>后一半没有东西可期待，听众会在这之后逐渐流失</td></tr>
+              <tr><td><strong>70–80%</strong></td><td><strong>推荐。</strong>前面有足够的铺垫，后面还留有一段收尾让听众落地</td></tr>
+              <tr><td><strong>100%（结尾）</strong></td><td>戛然而止，没有消化的时间；而且高潮本身需要至少一段完整的时长才成立</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 顶点之后为什么还要留一段</p>
+          <p>三个理由：</p>
+          <p>① <strong>顶点需要时间被感知。</strong>如果最后一遍副歌只唱了半段就结束，听众还没来得及意识到「这就是最高点」。<strong>顶点至少要有一个完整段落的长度。</strong></p>
+          <p>② <strong>听众需要一个着陆点。</strong>尾奏（或副歌的延长、重复）让情绪有地方落下——这和第 3 章说的「段落有功能」是一致的：<strong>结束也是一种功能。</strong></p>
+          <p>③ <strong>它给了「再听一遍」的机会。</strong>在能量下降的收尾里，听众会开始回味刚刚过去的顶点。突然停止则会打断这个过程。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">📈 演示 1：能量曲线编辑器（拖动每段的高度，直接听结果）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一首十段的完整歌曲，每一段的能量可以直接拖动调整，编配（轨数、密度、鼓型、音区）会随之自动改变并即时播放。三个预设分别是单调上升、双峰、阶梯加深谷。诊断栏会实时检查三条纪律：顶点是否唯一、顶点前是否有谷、曲线是不是一条直线。你会发现「阶梯加深谷」的全曲音符数最少，最后一遍副歌却最有冲击力。</p></noscript>
+            <div id="ec-sound"></div>
+            <div id="ec-host"></div>
+            <div class="ec-presets" id="ec-presets"></div>
+            <div class="kb-readout">
+              <span>顶点位置 <b id="ec-peak">—</b></span>
+              <span>顶点前的谷 <b id="ec-valley">—</b></span>
+              <span>最大落差 <b id="ec-drop">—</b></span>
+              <span>当前段落 <b id="ec-sec">—</b></span>
+            </div>
+            <ul class="ec-diag" id="ec-diag"></ul>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="ec-play" type="button">▶ 播放整首</button>
+              <button class="kb-btn" id="ec-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">在色块上<strong>上下拖动</strong>可以改变那一段的能量，编配会跟着变（能量低 ＝ 轨少、闷音、半速鼓；能量高 ＝ 四层、放开延音、加密底鼓与擦片）。<strong>先点三个预设各听一遍，再自己动手把「单调上升」改成一条好曲线。</strong></p>
+          </div>
+        </div>
+
+        <h2>时长与段落预算</h2>
+        <p>一首典型的摇滚 / 金属作品在 3:00–4:30 之间。这不是审美规定，而是<strong>注意力预算</strong>的结果——超过这个长度，你需要更多的变化来维持注意力，而变化的手段是有限的（第 5 章）。</p>
+        <p>按 148 BPM 计算，一个 4 小节的段落约 6.5 秒。一份典型的预算：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>段落</th><th>小节</th><th>约</th><th>累计</th><th>能量</th></tr></thead>
+            <tbody>
+              <tr><td>前奏</td><td>4</td><td>6.5 s</td><td>0:07</td><td>0.30</td></tr>
+              <tr><td>主歌 1</td><td>8</td><td>13 s</td><td>0:20</td><td>0.45</td></tr>
+              <tr><td>预副歌</td><td>4</td><td>6.5 s</td><td>0:26</td><td>0.68</td></tr>
+              <tr><td>副歌 1</td><td>8</td><td>13 s</td><td>0:39</td><td>0.90</td></tr>
+              <tr><td>主歌 2</td><td>8</td><td>13 s</td><td>0:52</td><td>0.50</td></tr>
+              <tr><td>预副歌</td><td>4</td><td>6.5 s</td><td>0:59</td><td>0.70</td></tr>
+              <tr><td>副歌 2</td><td>8</td><td>13 s</td><td>1:12</td><td>0.92</td></tr>
+              <tr><td>间奏 / 独奏</td><td>8</td><td>13 s</td><td>1:25</td><td>0.75</td></tr>
+              <tr><td><strong>桥段</strong></td><td>8</td><td>13 s</td><td>1:38</td><td><strong>0.20</strong></td></tr>
+              <tr><td><strong>最后一遍副歌</strong></td><td>12</td><td>19 s</td><td><strong>1:57</strong></td><td><strong>1.00</strong></td></tr>
+              <tr><td>尾奏</td><td>4</td><td>6.5 s</td><td>2:04</td><td>0.40</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>这个预算算出来大约 2:04——比目标短。<strong>这是好事</strong>：它说明结构本身是紧凑的，你还有余量去加一段器乐、把某段从 8 小节扩到 16 小节，或者放慢速度。<strong>先把结构排紧，再决定往哪里加，比先写长再删容易得多。</strong></p>
+        <p><strong>注意最后一遍副歌的位置</strong>：1:38 到 1:57，在 2:04 的总长里是 <strong>79%–94%</strong>——顶点开始于全曲约 79% 处，正落在推荐区间。这不是巧合，而是「桥段在倒数第二段、顶点在倒数第一个大段」这个结构的自然结果。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🎯 演示 2：顶点放在哪里</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一首歌的三个版本，唯一的差别是能量顶点的位置——放在全曲 50%、78%、100% 处。50% 的版本后半程一路走低，听众没有可期待的东西；100% 的版本戛然而止，顶点还没被感知就结束了；78% 的版本前有铺垫、后有着陆，是三者里唯一完整的。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="pk-name">—</b></span>
+              <span>顶点位置 <b id="pk-pos">—</b></span>
+              <span>问题 <b id="pk-issue">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="pk-mid" type="button">▶ 顶点在 50%</button>
+              <button class="kb-btn" id="pk-good" type="button">▶ 顶点在 78%（推荐）</button>
+              <button class="kb-btn" id="pk-end" type="button">▶ 顶点在结尾</button>
+              <button class="kb-btn" id="pk-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">三个版本的<strong>段落数、素材、总长完全相同</strong>，只有能量的分布不同。请特别注意 50% 版本的后半段——它并没有变难听，只是<strong>没有任何理由继续听下去</strong>。</p>
+          </div>
+        </div>
+
+        <h2>三条纪律</h2>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 检查任何一首歌的三条纪律</p>
+          <p><strong>① 顶点唯一。</strong>全曲只能有一个最高点。两个一样高的顶点等于没有顶点（第 5 章：处处是顶点 ＝ 没有顶点）。</p>
+          <p><strong>② 顶点前必须有谷。</strong>而且这个谷应该是全曲最深的。落差 ＝ 顶点 − 它前面那一段，所以<strong>挖谷比造峰便宜得多</strong>（第 5、6 章）。</p>
+          <p><strong>③ 曲线不能是直线。</strong>无论是单调上升的斜线还是一直很高的平线，都意味着没有变化——而听觉测量的是变化（第 5 章习题 5.9）。</p>
+        </div>
+        <p>第 ② 条值得再强调一次，因为它是本书出现次数最多的一条原则，而且每次都以不同的形式出现：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>尺度</th><th>它的样子</th><th>出处</th></tr></thead>
+            <tbody>
+              <tr><td>一个音</td><td>休止是密集织体里最强的重音</td><td><a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html#休止什么都不弹也是一种弹法">上一本第 11 章</a></td></tr>
+              <tr><td>半拍到两拍</td><td>drop 前的静默</td><td>第 6 章</td></tr>
+              <tr><td>一小节</td><td>减法 build：build 末端反而降下来</td><td>第 6 章</td></tr>
+              <tr><td>一个段落</td><td>减主歌比加副歌有效</td><td>第 5 章</td></tr>
+              <tr><td><strong>一首歌</strong></td><td><strong>桥段挖谷，最后一遍才是顶点</strong></td><td><strong>本章</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>五个尺度，同一条原则。</strong>如果本书只能留下一句话，那就是它：<strong>想让某处更强，先让它前面更弱。</strong></p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🕳️ 演示 3：桥段挖多深，顶点就有多高</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一首歌，最后一遍副歌的编配完全不变，只改变它前面那个桥段的能量（0.70 / 0.35 / 0.12）。桥段越空，最后一遍副歌的冲击力越强——而最后一遍本身一个音符都没有改。这直接证明了「落差 ＝ 顶点 − 它前面那一段」。</p></noscript>
+            <div class="kb-readout">
+              <span>桥段能量 <b id="bg-e">—</b></span>
+              <span>桥段编制 <b id="bg-cfg">—</b></span>
+              <span>与顶点的落差 <b id="bg-drop">—</b></span>
+              <span>最后一遍的冲击力 <b id="bg-hit">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="bg-hi" type="button">▶ 桥段 0.70（几乎和副歌一样满）</button>
+              <button class="kb-btn" id="bg-mid" type="button">▶ 桥段 0.35</button>
+              <button class="kb-btn" id="bg-lo" type="button">▶ 桥段 0.12（只剩骨架）</button>
+              <button class="kb-btn" id="bg-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">三个版本的最后一遍副歌<strong>完全相同</strong>——同样的轨数、同样的音符、同样的音量。变的只有它前面那 8 小节。<strong>如果你听出了差别，那个差别百分之百来自桥段。</strong></p>
+          </div>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 13.1</p>
+          <p>一首歌「听到一半就想跳过」，但每一段单独听都不错。诊断并给出方案。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>「每段都不错、整首没劲」是张力曲线出了问题的典型症状。</strong>把每段的能量列出来，几乎必然是下面三种之一：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>曲线形状</th><th>症状</th><th>方案</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>一路平</strong>（每段都在 0.7–0.8）</td><td>「一直很猛但不打动人」</td><td><strong>挖谷</strong>：把主歌降到 0.4，桥段降到 0.2</td></tr>
+                  <tr><td><strong>单调上升</strong></td><td>前半段太弱、后半段全是平台</td><td>把中间某一段<strong>拉下来</strong>，制造起伏</td></tr>
+                  <tr><td><strong>顶点在前半</strong></td><td>正是「听到一半想跳过」的直接原因</td><td>把最满的编配<strong>挪到倒数第二个大段之后</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>诊断的具体做法</strong>（五分钟）：</p>
+            <ol>
+              <li>列出所有段落，给每段打一个 0–1 的能量分（按本章开头那张因素表：编制、音区、密度、律动、织体）。</li>
+              <li>画出来，或者干脆就看这串数字。</li>
+              <li>过三条纪律：<strong>顶点唯一吗？顶点前有谷吗？曲线是直线吗？</strong></li>
+            </ol>
+            <p><strong>最常见的答案是「没有谷」。</strong>而修它几乎总是减法——把某一段做空，而不是把别的段做满。<strong>这既便宜又不会让混音变糊，还顺带把时长压下来了。</strong></p>
+            <p><strong>一个反直觉的提醒</strong>：「每段单独听都不错」有时恰恰是问题的一部分。<strong>好的主歌不应该单独听起来就很过瘾</strong>——它的任务是铺陈与承诺（第 3 章），过瘾是副歌的事。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 13.2</p>
+          <p>歌写完是 5:20，需要压到 3:30。怎么删？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>不要平均地删，要按「信息量密度」删。</strong>先把每个段落标上「它提供了什么新信息」，然后从提供新信息最少的开始砍。</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>顺序</th><th>删什么</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td><strong>重复的整段</strong>——第三遍主歌、第四遍副歌</td><td>不提供任何新信息，纯粹在耗时间（第 4 章「重复的经济学」）</td></tr>
+                  <tr><td><strong>2</strong></td><td><strong>段落内部的重复</strong>——16 小节的主歌砍成 8 小节</td><td>后 8 小节通常是前 8 小节的复述</td></tr>
+                  <tr><td><strong>3</strong></td><td><strong>过长的间奏 / 独奏</strong></td><td>16 小节的独奏砍成 8；<strong>独奏也要有张力曲线</strong>（<a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html">上一本第 16 章</a>）</td></tr>
+                  <tr><td><strong>4</strong></td><td><strong>过长的前奏</strong></td><td>8 小节砍成 4；<strong>前奏是最容易让人跳过的段落</strong></td></tr>
+                  <tr><td>5</td><td>桥段</td><td><strong>最后才动它</strong>——它是顶点的前提，砍掉它等于砍掉高潮</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>绝对不要做的两件事</strong>：</p>
+            <ul>
+              <li><strong>不要把所有段落等比例缩短。</strong>那会让每个段落都失去它需要的时间——尤其是顶点，它至少要有一个完整段落的长度才能被感知。</li>
+              <li><strong>不要删桥段来省时间。</strong>删掉之后你会省下 13 秒，但会失去整首歌的落差。<strong>如果实在要动它，缩短它（8 小节 → 4 小节）而不是删掉它</strong>——一个短的谷仍然是谷。</li>
+            </ul>
+            <p><strong>压缩之后一定要重画曲线</strong>：删掉两段之后，顶点的相对位置会变。原本在 78% 的顶点可能变成 88%，收尾就不够了。<strong>删完检查一遍三条纪律，通常还需要微调。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 13.3</p>
+          <p>乐队坚持「桥段也要很猛，不然现场会冷场」。怎么回应？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>这个担心是真实的，但结论下反了。</strong>先承认前提：现场确实需要保持注意力，一个太空的桥段可能让观众走神。但解决办法不是把桥段做满。</p>
+            <p><strong>三个回应：</strong></p>
+            <ol>
+              <li><strong>「猛」和「有内容」不是一回事。</strong>桥段可以能量低但信息量高——一段独奏、一条有旋律的贝斯走线（第 9 章）、一次转调、一段新的和声进行。<strong>观众不会因为音量小而走神，会因为「没有新东西」而走神。</strong></li>
+              <li><strong>桥段做满的代价是最后一遍副歌塌掉。</strong>可以用演示 3 直接验证：最后一遍的编配完全不变，只把桥段从 0.12 提到 0.70，最后一遍的冲击力就明显下降。<strong>你换来了 13 秒的热闹，付出的是全曲高潮。</strong></li>
+              <li><strong>现场恰恰是落差最有效的地方。</strong>桥段安静下来的时候，观众会跟着安静；然后最后一遍砸下来——<strong>这是现场最可靠的一个瞬间</strong>。很多乐队的招牌时刻正是这个瞬间。</li>
+            </ol>
+            <p><strong>一个折中方案，如果说服不了</strong>：把桥段写成「<strong>先空后建</strong>」——前 4 小节降到 0.15，后 4 小节做成一个 build 推到 0.6，然后落到最后一遍的 1.0。<strong>这样既有谷（前 4 小节），又有让人跟着起来的推进（后 4 小节），而且落差仍然很大</strong>（1.0 − 0.6 之外还有更早的 0.15 作为对照）。</p>
+            <p><strong>要说的核心一句话</strong>：<strong>桥段不是「弱的段落」，它是「让下一段变强的段落」。</strong>它的价值不体现在它自己身上——这和第 6 章连接段的定位完全一样。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>能量由哪些因素构成？为什么音量不在这张表里？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>五个因素</strong>：编制（轨数）、音区（有没有高八度层）、密度与发音（长音 / 闷音 / 十六分 / 放开延音）、律动（鼓的密度与镲片种类）、织体（铺底 / 主调 / 齐奏 / 复调）。</p>
+            <p><strong>音量被刻意排除</strong>，因为它会被制作链路抹平：混音总线压缩 → 母带限制 → 流媒体响度归一化，三级处理之后你画在音量上的曲线基本不存在了（第 5 章习题 5.5）。</p>
+            <p><strong>换个说法</strong>：能量曲线必须由<strong>内容</strong>构成，不能由<strong>振幅</strong>构成。压缩器能压掉振幅，压不掉「这一段多了一条八度吉他」「这一段鼓从半速换成了八分底鼓」。</p>
+            <p><strong>一个实用检验</strong>：把整首歌做响度归一化（每段响度调成一样），然后再听一遍。<strong>如果段落之间还能听出高低起伏，你的能量曲线是真的。</strong>如果听起来变成一条平线，那它原本就只画在音量上。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>三种曲线形状各有什么问题或特点？为什么「单调上升」是最常见的错误？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ul>
+              <li><strong>① 单调上升</strong>：每段都比上一段更满。<strong>没有谷就没有峰</strong>；而且中途就会满到无法再加，后面几段全部塌成一个平台。</li>
+              <li><strong>② 双峰</strong>：两个副歌各一个峰。可用，但<strong>两个一样高就等于没有顶点</strong>——必须让第二个明显更高。</li>
+              <li><strong>③ 阶梯 ＋ 深谷</strong>：逐级抬升 → 副歌 → 回落 → 再抬 → 副歌 → <strong>深谷</strong> → 顶点。重型音乐的标准形状。</li>
+            </ul>
+            <p><strong>为什么「单调上升」最常见</strong>，有三个原因：</p>
+            <ol>
+              <li><strong>它符合直觉。</strong>「歌应该越来越激烈」听起来天经地义。</li>
+              <li><strong>它是加法思维的自然结果。</strong>写作时总是在往上加，很少有人主动往下减（第 12 章）。</li>
+              <li><strong>每一步局部都是对的。</strong>「这一段比上一段更满」单独看没有任何问题——错误只在整体上才显现。<strong>这正是为什么必须画出整条曲线来看。</strong></li>
+            </ol>
+            <p><strong>它的致命后果</strong>：由于编制、音区、密度都有物理上限（第 10 章习题 10.6），单调上升必然在中途撞到天花板。<strong>撞到之后剩下的所有段落都是同一个高度，也就是最平的一段。</strong>讽刺的是，追求「越来越猛」的写法，结果是后半程最不猛。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>高潮为什么放在全曲 70–80% 处？放在 50% 和 100% 分别有什么问题？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>位置</th><th>问题</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>50%</strong></td><td>后一半没有可期待的东西。听众不会觉得难听，只是<strong>没有理由继续听下去</strong>——这是最隐蔽也最致命的一种失败</td></tr>
+                  <tr><td><strong>70–80%</strong></td><td><strong>推荐</strong>：前面有足够的铺垫积累期待，后面还留有一段收尾</td></tr>
+                  <tr><td><strong>100%</strong></td><td>① 顶点没有时间被感知（它至少需要一个完整段落）；② 听众没有着陆点；③ 失去了回味的机会</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>「顶点之后还要留一段」的三个理由</strong>：</p>
+            <ul>
+              <li><strong>顶点需要时间被感知</strong>——最后一遍副歌只唱半段就结束，听众还没意识到那是最高点；</li>
+              <li><strong>需要着陆点</strong>——尾奏让情绪有地方落下，结束本身也是一种段落功能（第 3 章）；</li>
+              <li><strong>需要回味的空间</strong>——在能量下降的收尾里，听众会开始回想刚过去的顶点。</li>
+            </ul>
+            <p><strong>一条实用换算</strong>：如果结构是「…→ 桥段 → 最后一遍副歌 → 尾奏」，顶点位置几乎自动落在 75–85%。<strong>换句话说，正确的结构会自动把顶点放在正确的位置</strong>——你不需要单独去计算它。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>张力曲线的三条纪律是什么？用它们检查一首你熟悉的歌。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>顶点唯一。</strong>全曲只能有一个最高点；两个一样高等于没有顶点。</li>
+              <li><strong>顶点前必须有谷</strong>，而且应当是全曲最深的谷。落差 ＝ 顶点 − 它前面那一段。</li>
+              <li><strong>曲线不能是直线</strong>——无论是单调上升的斜线还是一直很高的平线。</li>
+            </ol>
+            <p><strong>检查方法</strong>：听一遍，在每个段落切换处记下一个 0–1 的能量分（不用精确，0.1 的粒度就够）。得到一串数字之后，三条纪律各花十秒就能过完。</p>
+            <p><strong>常见的检查结果</strong>：</p>
+            <ul>
+              <li>大多数<strong>业余作品</strong>违反第 ② 条——没有谷，或者谷不在顶点前面。</li>
+              <li>不少<strong>极端金属</strong>作品违反第 ③ 条——一直很高。这有时是风格的选择（它追求的是持续的强度而不是叙事），但更多时候是没有意识到可以有起伏。</li>
+              <li><strong>违反第 ① 条</strong>的通常是「两个副歌一样满」——修它很容易：<strong>把前面几遍副歌减一点，而不是把最后一遍加满。</strong></li>
+            </ul>
+            <p><strong>顺带一提</strong>：这三条纪律对<strong>一张专辑</strong>同样适用，只是尺度换成了曲目顺序（第 5 章习题 5.9）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>用演示 3 的结果解释「落差 ＝ 顶点 − 它前面那一段」。为什么这个公式意味着「挖谷比造峰便宜」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>演示 3 的设计是一个受控实验</strong>：最后一遍副歌的编配、音符、音量全部固定不变，唯一的变量是它前面那个桥段的能量（0.70 / 0.35 / 0.12）。结果是桥段越空，最后一遍的冲击力越强。</p>
+            <p><strong>由于顶点是固定的，感知到的差别只能来自参照点</strong>——这直接证明了落差公式。</p>
+            <p><strong>为什么挖谷更便宜</strong>，四个理由：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>造峰（把顶点抬高）</th><th>挖谷（把前一段压低）</th></tr></thead>
+                <tbody>
+                  <tr><td>余量</td><td><strong>小</strong>——顶点通常已接近满</td><td><strong>大</strong>——桥段离零很远</td></tr>
+                  <tr><td>频谱代价</td><td>更拥挤（第 7 章）</td><td><strong>更空</strong></td></tr>
+                  <tr><td>录音成本</td><td>要加轨、要多录</td><td><strong>零</strong>——只是少弹</td></tr>
+                  <tr><td>混音风险</td><td>可能变糊、削顶</td><td><strong>无</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>更根本的一点</strong>：顶点有物理上限（编制、音区、密度都会饱和），<strong>而谷几乎没有下限</strong>——你总可以再拿掉一件乐器。所以在「抬高顶点」这条路走到头之后，「挖深谷底」这条路还很长。</p>
+            <p><strong>这解释了一个现象</strong>：很多制作精良的重型作品，最后一遍副歌其实和第二遍副歌<strong>用的是完全相同的编配</strong>。它更强，纯粹是因为它前面的桥段更空（第 12 章的编制曲线 2→5→5→9→3→9）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么「每段单独听都不错」有时反而是问题的信号？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为不是每个段落都应该「单独听起来过瘾」——那不是它们的功能。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>段落</th><th>它的功能</th><th>单独听应该是什么感觉</th></tr></thead>
+                <tbody>
+                  <tr><td>主歌</td><td>铺陈、承诺（第 3 章）</td><td><strong>有点意犹未尽</strong>——它在等待被兑现</td></tr>
+                  <tr><td>预副歌</td><td>制造缺口（第 6 章）</td><td><strong>悬着、没有解决</strong></td></tr>
+                  <tr><td>副歌</td><td>兑现</td><td>过瘾、完整</td></tr>
+                  <tr><td>桥段</td><td><strong>让下一段变强</strong></td><td><strong>不完整</strong>，甚至有点空</td></tr>
+                  <tr><td>尾奏</td><td>着陆</td><td>收束、余韵</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>所以「每段单独听都很过瘾」意味着</strong>：所有段落都被写成了副歌。而这直接导致——</p>
+            <ul>
+              <li>能量曲线是一条<strong>高位的平线</strong>（违反纪律 ③）；</li>
+              <li>没有任何段落在制造期待，所以副歌兑现的不是任何东西；</li>
+              <li>顶点不唯一，也没有谷。</li>
+            </ul>
+            <p><strong>这与第 5 章的「陷阱二：主歌写得太满」是同一个错误</strong>，只是从两个段落之间的关系放大到了整首歌。<strong>根源都是同一件事：把「每一部分都尽量好」当成了「整体好」的充分条件。</strong></p>
+            <p><strong>一个有用的心态调整</strong>：写主歌时的目标不是「让这段好听」，而是「<strong>让副歌进来的时候好听</strong>」。这两个目标经常互相冲突，而后者才是对的那个。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>时长压缩时为什么「不能等比例缩短所有段落」？如果必须动桥段，应该怎么动？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为段落的时长需求不是等比的，每个段落有它的最小可用长度。</strong></p>
+            <ul>
+              <li><strong>顶点</strong>至少需要一个完整段落——它需要时间被感知（本章）。等比缩短会让它「还没成立就过去了」。</li>
+              <li><strong>主歌</strong>需要时间铺陈与建立期待，但它的后半段通常是重复，可以砍。</li>
+              <li><strong>连接段</strong>本来就短，而且 4 小节几乎是它的最优值（第 6 章）——再砍就失去功能了。</li>
+              <li><strong>前奏与间奏</strong>的可压缩性最高，因为它们提供的新信息最少。</li>
+            </ul>
+            <p><strong>所以正确的做法是按「信息量密度」删</strong>：先删整段的重复，再删段落内部的重复，然后是过长的间奏与前奏。</p>
+            <p><strong>如果必须动桥段</strong>：<strong>缩短它，不要删掉它。</strong>8 小节改成 4 小节，甚至 2 小节。理由是——</p>
+            <ul>
+              <li><strong>谷的深度比谷的长度重要。</strong>2 小节的深谷仍然能给出全部落差；而没有谷，最后一遍就没有落差可言。</li>
+              <li><strong>删掉桥段省下的 13 秒，代价是整首歌的高潮。</strong>这是本书里性价比最差的一次交换。</li>
+            </ul>
+            <p><strong>压缩之后必须重画曲线</strong>：删掉两段之后顶点的相对位置会移动。原本在 78% 的顶点可能变成 88%，收尾就不够了——<strong>这时可能需要把尾奏加长，或者把某个前面的段落再砍一点。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>用演示 1 把「单调上升」改造成一条合格的曲线。写下你改动的每一步、改动的理由，以及三条纪律的检查结果。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>起点（单调上升）</strong>：0.20 → 0.32 → 0.44 → 0.56 → 0.66 → 0.75 → 0.84 → 0.90 → 0.95 → 1.00</p>
+            <p><strong>问题</strong>：顶点在最后一段（100% 位置，无着陆）；没有任何谷；曲线是一条直线。三条纪律全部违反。</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>步</th><th>改动</th><th>理由</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><strong>桥段（第 9 段）降到 0.15</strong></td><td>挖出全曲最深的谷——<strong>这一步单独就修复了纪律 ②</strong>，而且效果最明显</td></tr>
+                  <tr><td>2</td><td><strong>最后一遍副歌（第 10 段）提到 1.00，尾奏补一段 0.35</strong></td><td>把顶点从结尾挪到约 78%，留出着陆段（纪律 ③ 的位置部分）</td></tr>
+                  <tr><td>3</td><td><strong>主歌 1 降到 0.40，主歌 2 降到 0.48</strong></td><td>制造两个中间的小谷；同时给副歌腾出落差</td></tr>
+                  <tr><td>4</td><td><strong>副歌 1、副歌 2 定在 0.86 / 0.90</strong></td><td>明显低于顶点的 1.00 —— <strong>修复纪律 ①（顶点唯一）</strong></td></tr>
+                  <tr><td>5</td><td><strong>预副歌定在 0.68 / 0.72</strong></td><td>介于主歌与副歌之间，且低于副歌（第 6 章：预副歌不能是第二个副歌）</td></tr>
+                  <tr><td>6</td><td><strong>间奏定在 0.75</strong></td><td>比副歌低，但明显高于桥段——它是「从副歌下滑到桥段」的中间台阶</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>改造后</strong>：0.28 → 0.40 → 0.68 → 0.86 → 0.48 → 0.72 → 0.90 → 0.75 → <strong>0.15</strong> → <strong>1.00</strong> → 0.35</p>
+            <p><strong>三条纪律检查</strong>：</p>
+            <ul>
+              <li><strong>① 顶点唯一</strong>：最高点 1.00 只有一个，第二高是 0.90 —— <span class="good">通过</span></li>
+              <li><strong>② 顶点前有谷</strong>：顶点前一段是 0.15，是全曲最低 —— <span class="good">通过</span>，落差 0.85</li>
+              <li><strong>③ 不是直线</strong>：曲线有 4 次明显下降 —— <span class="good">通过</span></li>
+            </ul>
+            <p><strong>值得注意的两点</strong>：</p>
+            <ol>
+              <li><strong>改造后的全曲平均能量比改造前<em>低</em>。</strong>但它听起来更有冲击力——因为冲击力来自落差不是均值（第 5 章）。</li>
+              <li><strong>六步里有四步是「降低某段」。</strong>只有第 2 步在提高。这再次印证了减法优先。</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 13.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本书反复出现「想让某处更强，先让它前面更弱」。请列出它在至少五个不同尺度上的表现，并说明为什么同一条原则能跨越如此不同的尺度。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>尺度</th><th>表现</th><th>出处</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>毫秒（一个音）</strong></td><td>休止是密集织体里最强的重音</td><td><a href="../../吉他乐理/教材/11-强力和弦与Riff语法.html#休止什么都不弹也是一种弹法">上一本第 11 章</a></td></tr>
+                  <tr><td><strong>半拍到两拍</strong></td><td>drop 前的静默让落点变重</td><td>第 6 章</td></tr>
+                  <tr><td><strong>一小节</strong></td><td>减法 build：build 末端反而降下来</td><td>第 6 章</td></tr>
+                  <tr><td><strong>几秒（乐句）</strong></td><td>独奏的顶点靠前面的疏定义；riff 只出现一半时间反而更突出</td><td><a href="../../吉他乐理/教材/16-独奏构建与新古典技巧.html">上一本第 16 章</a>、第 11 章</td></tr>
+                  <tr><td><strong>十秒（段落）</strong></td><td>减主歌比加副歌有效</td><td>第 5 章</td></tr>
+                  <tr><td><strong>分钟（整首）</strong></td><td>桥段挖谷，最后一遍才是顶点</td><td>本章</td></tr>
+                  <tr><td><strong>小时（专辑）</strong></td><td>全是快歌的专辑听起来比有一首慢歌的更不激烈</td><td>第 5 章习题 5.9</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>为什么同一条原则能跨越这么多尺度</strong>：因为它不是一条音乐规则，而是<strong>感知系统的基本工作方式</strong>。</p>
+            <ul>
+              <li><strong>听觉（以及所有感官）测量的是变化，不是绝对值。</strong>持续不变的刺激会被适应掉——这在神经层面是一个非常基础的机制，从毛细胞的适应到皮层的预测编码都在做同一件事。</li>
+              <li><strong>而「变化」总是相对于紧邻的上下文。</strong>一个刺激的感知强度取决于它和它前面那段时间的差异，无论那段时间是 20 毫秒还是 20 秒。</li>
+              <li><strong>所以尺度只影响「前面那段」有多长，不影响机制本身。</strong></li>
+            </ul>
+            <p><strong>由此可以推出两条实用的元规则</strong>：</p>
+            <ol>
+              <li><strong>任何「这里不够 X」的问题，都有一个「它前面能不能更不 X」的版本，而且后者通常更容易解决。</strong></li>
+              <li><strong>任何「一直很 X 却不打动人」的问题，答案都是「哪里可以不 X」。</strong></li>
+            </ol>
+            <p><strong>这也解释了本书为什么反复强调减法</strong>：不是因为「少即是美」这种审美偏好，而是因为<strong>减法直接作用于感知机制本身</strong>，而加法只作用于内容的绝对量——后者受各种物理上限约束（频谱、声像、动态余量），前者几乎没有上限。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>能量可以画出来</strong>：由编制、音区、密度与发音、律动、织体五项构成——<strong>音量刻意不算</strong>，因为它会被压缩抹平。② 三种曲线形状：<strong>单调上升（最常见的错误）/ 双峰（顶点不唯一）/ 阶梯 ＋ 深谷（推荐）</strong>。③ 高潮放在全曲 <strong>70–80%</strong>：50% 让后半程失去理由，100% 让顶点来不及被感知、也没有着陆点。④ <strong>正确的结构会自动把顶点放对位置</strong>——「桥段 → 最后一遍副歌 → 尾奏」自然落在 75–85%。⑤ 时长压缩按<strong>信息量密度</strong>删：整段重复 → 段内重复 → 长间奏 → 长前奏；<strong>桥段最后才动，而且是缩短不是删除</strong>。⑥ 三条纪律：<strong>顶点唯一 · 顶点前必须有谷 · 曲线不能是直线</strong>。⑦ <strong>落差 ＝ 顶点 − 它前面那一段</strong>，所以挖谷比造峰便宜——顶点有物理上限，谷几乎没有下限。⑧ <strong>「想让某处更强，先让它前面更弱」在七个尺度上都成立</strong>，因为听觉测量的是变化而不是绝对值。</p>
+          <p><strong>下一章预告</strong>：曲线画好了，但一首四分钟的歌需要的变化，往往比「六个对比维度」能提供的更多。第 14 章《变化的工具箱》把手段一次性摊开——升调副歌、half/double-time、变拍、breakdown、转调、织体反转，以及每一件工具的适用条件与代价。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./14-变化的工具箱.html"><strong>下一章：第 14 章 · 变化的工具箱</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      function cssv(n, fb) {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        return v || fb;
+      }
+
+      /* 十段完整结构。energy 可拖动；编配由 energy 推出 */
+      var ROOTS = {
+        intro:  [0, null, 0, null], verse: [0, 0, 3, 5], pre: [0, 3, 5, 7],
+        chorus: [8, 3, 10, 0], solo: [0, 3, 5, 3], bridge: [0, null, 8, null],
+        outro:  [0, null, null, null]
+      };
+      var SECS = [
+        { key: "intro",  name: "前奏",   role: "intro",  bars: 2, e: 0.28 },
+        { key: "verse",  name: "主歌 1", role: "verse",  bars: 4, e: 0.40 },
+        { key: "pre",    name: "预副歌", role: "pre",    bars: 2, e: 0.68 },
+        { key: "chorus", name: "副歌 1", role: "chorus", bars: 4, e: 0.86 },
+        { key: "verse",  name: "主歌 2", role: "verse",  bars: 4, e: 0.48 },
+        { key: "pre",    name: "预副歌", role: "pre",    bars: 2, e: 0.72 },
+        { key: "chorus", name: "副歌 2", role: "chorus", bars: 4, e: 0.90 },
+        { key: "solo",   name: "间奏",   role: "solo",   bars: 2, e: 0.75 },
+        { key: "bridge", name: "桥段",   role: "bridge", bars: 4, e: 0.15 },
+        { key: "chorus", name: "最后副歌", role: "chorus", bars: 4, e: 1.00 },
+        { key: "outro",  name: "尾奏",   role: "outro",  bars: 4, e: 0.35 }
+      ];
+      var PRESETS = {
+        "阶梯 ＋ 深谷（推荐）": [0.28, 0.40, 0.68, 0.86, 0.48, 0.72, 0.90, 0.75, 0.15, 1.00, 0.35],
+        "单调上升（错）":       [0.20, 0.32, 0.44, 0.56, 0.66, 0.75, 0.84, 0.90, 0.95, 1.00, 1.00],
+        "双峰（顶点不唯一）":   [0.28, 0.45, 0.70, 0.95, 0.50, 0.72, 0.95, 0.70, 0.55, 0.95, 0.40],
+        "一路很高（平线）":     [0.72, 0.78, 0.80, 0.84, 0.78, 0.82, 0.86, 0.80, 0.76, 0.86, 0.70]
+      };
+
+      /* 能量 → 编配 */
+      function cfgFor(e) {
+        if (e < 0.25) return { rhy: "half",    mute: false, two: false, drums: null,      bass: "long", oct: false, crash: false, g: 0.80, cn: "1 轨长音，无鼓无贝斯" };
+        if (e < 0.42) return { rhy: "gallop",  mute: true,  two: false, drums: "half",    bass: "long", oct: false, crash: false, g: 0.85, cn: "1 轨闷音，半速鼓，贝斯长音" };
+        if (e < 0.60) return { rhy: "gallop",  mute: true,  two: true,  drums: "basic",   bass: "beat", oct: false, crash: false, g: 0.90, cn: "2 轨闷音，基本鼓，贝斯跟拍" };
+        if (e < 0.78) return { rhy: "eighth",  mute: true,  two: true,  drums: "basic",   bass: "beat", oct: false, crash: false, g: 0.95, cn: "2 轨八分，基本鼓，密度提高" };
+        if (e < 0.93) return { rhy: "quarter", mute: false, two: true,  drums: "driving", bass: "beat", oct: true,  crash: true,  g: 1.00, cn: "4 轨（含高八度），放开延音，加密底鼓 ＋ 擦片" };
+        return              { rhy: "quarter", mute: false, two: true,  drums: "driving", bass: "beat", oct: true,  crash: true,  g: 1.00, dbl: true, cn: "4 轨 ＋ 双踩，全开" };
+      }
+
+      function buildSpec(secs) {
+        var gtr = [], gtr2 = [], oct = [], bass = [], drums = [], marks = [], t = 0;
+        secs.forEach(function (s) {
+          var c = cfgFor(s.e), roots = ROOTS[s.key], beats = s.bars * 4;
+          marks.push({ name: s.name, role: s.role, beats: beats, energy: s.e, at: t, cfg: c });
+          for (var q = 0; q < s.bars; q++) {
+            var off = t + q * 4;
+            R.events(roots, c.rhy, { mute: c.mute }).forEach(function (ev) {
+              gtr.push(Object.assign({}, ev, { t: ev.t + off, gain: (ev.gain || 0.8) * c.g }));
+              if (c.two) gtr2.push(Object.assign({}, ev, { t: ev.t + off + 0.008, gain: (ev.gain || 0.8) * c.g }));
+              if (c.oct) {
+                var o = Object.assign({}, ev, { t: ev.t + off, gain: (ev.gain || 0.8) * 0.72 });
+                if (o.midis) o.midis = o.midis.map(function (m) { return m + 12; });
+                o.mute = false;
+                oct.push(o);
+              }
+            });
+            if (c.bass === "long") {
+              bass.push({ t: off, midi: R.ROOT - 12 + (roots[0] == null ? 0 : roots[0]), dur: 4, gain: 0.9 * c.g });
+            } else {
+              roots.forEach(function (r, i) {
+                if (r === null) return;
+                bass.push({ t: off + i, midi: R.ROOT - 12 + r, dur: 1, gain: 0.9 * c.g });
+              });
+            }
+            if (c.drums) {
+              R.drumPattern(1, c.drums).forEach(function (e) {
+                drums.push(Object.assign({}, e, { t: e.t + off, gain: (e.gain || 0.8) * c.g }));
+              });
+              if (c.dbl) for (var d = 0; d < 4; d += 0.25) drums.push({ t: off + d, piece: "kick", gain: 0.68 });
+            }
+            if (c.crash && q === 0) drums.push({ t: off, piece: "crash", gain: 0.6 });
+          }
+          t += beats;
+        });
+        return {
+          lengthBeats: t, marks: marks,
+          tracks: [
+            { id: "dr", name: "鼓", inst: "drums", gain: 1, events: drums },
+            { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: bass },
+            { id: "g1", name: "吉他 L", inst: "guitar", gain: 0.8, pan: -0.85, drive: 0.82, hp: 100, events: gtr },
+            { id: "g2", name: "吉他 R", inst: "guitar", gain: 0.76, pan: 0.85, drive: 0.82, hp: 100, events: gtr2 },
+            { id: "g3", name: "高八度层", inst: "guitar", gain: 0.55, pan: 0.35, drive: 0.8, hp: 150, events: oct }
+          ]
+        };
+      }
+
+      var rig = null, ticker = null, owner = null;
+      function stopAll() {
+        if (ticker) { ticker.stop(); ticker = null; }
+        if (rig) { rig.dispose(); rig = null; }
+        owner = null;
+        A.stopAll();
+        if ($("ec-play")) $("ec-play").textContent = "▶ 播放整首";
+        if ($("ec-sec")) $("ec-sec").textContent = "—";
+        draw(null);
+      }
+      function play(secs, who, onTick) {
+        stopAll();
+        var spec = buildSpec(secs);
+        owner = who;
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: spec.lengthBeats, loop: true, tracks: spec.tracks });
+        rig.play();
+        ticker = KB.makeLoop(function () {
+          if (!rig || !rig.isPlaying()) return;
+          var p = rig.position();
+          if (onTick) onTick(p, spec);
+        });
+        ticker.start();
+        return spec;
+      }
+
+      /* ---------- 演示 1：能量曲线编辑器 ---------- */
+      KBG.soundToggle($("ec-sound"));
+      var cv = document.createElement("canvas");
+      cv.className = "kb-canvas kb-canvas-drag";
+      cv.setAttribute("aria-label", "能量曲线编辑器：每个色块是一个段落，上下拖动改变它的能量");
+      $("ec-host").appendChild(cv);
+      var H = 190;
+      var ctx = KB.fitCanvas(cv, H, function () { draw(headPos); });
+      var TOTAL = SECS.reduce(function (a, s) { return a + s.bars * 4; }, 0);
+      var headPos = null;
+      function bounds() {
+        var w = cv.clientWidth || 600, x0 = 8, x1 = w - 8;
+        return { w: w, x0: x0, span: x1 - x0, top: 26, bot: H - 34 };
+      }
+      function draw(p) {
+        var b = bounds();
+        ctx.clearRect(0, 0, b.w, H);
+        if (b.span < 60) return;
+        var muted = cssv("--kb-fg-muted", "#64748b"), faint = cssv("--kb-fg-faint", "#94a3b8");
+        ctx.font = "11px -apple-system, PingFang SC, sans-serif";
+        ctx.strokeStyle = faint; ctx.globalAlpha = 0.3; ctx.lineWidth = 1;
+        [0.25, 0.5, 0.75, 1].forEach(function (v) {
+          var y = b.bot - (b.bot - b.top) * v;
+          ctx.beginPath(); ctx.moveTo(b.x0, y); ctx.lineTo(b.x0 + b.span, y); ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+        var acc = 0, pts = [];
+        SECS.forEach(function (s) {
+          var beats = s.bars * 4;
+          var bx = b.x0 + b.span * (acc / TOTAL), bw = b.span * (beats / TOTAL);
+          var hgt = Math.max(6, (b.bot - b.top) * s.e);
+          ctx.fillStyle = KBB.ROLE_COLOR[s.role] || KBB.ROLE_COLOR.verse;
+          ctx.globalAlpha = 0.8;
+          ctx.fillRect(bx + 1, b.bot - hgt, Math.max(2, bw - 2), hgt);
+          ctx.globalAlpha = 1;
+          if (bw > 34) {
+            ctx.fillStyle = "#fff"; ctx.textAlign = "center";
+            ctx.fillText(s.name, bx + bw / 2, b.bot - 8);
+          }
+          ctx.fillStyle = muted; ctx.textAlign = "center";
+          if (bw > 24) ctx.fillText(s.e.toFixed(2), bx + bw / 2, H - 18);
+          pts.push({ x: bx + bw / 2, y: b.bot - hgt });
+          acc += beats;
+        });
+        ctx.strokeStyle = cssv("--kb-fg", "#1e293b"); ctx.lineWidth = 1.6;
+        ctx.globalAlpha = 0.6;
+        ctx.beginPath();
+        pts.forEach(function (pt, i) { i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y); });
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = muted; ctx.textAlign = "left";
+        ctx.fillText("能量曲线　拖动色块上下改变能量（0–1）", b.x0, 15);
+        if (p != null) {
+          var px = b.x0 + b.span * ((p % TOTAL) / TOTAL);
+          ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.moveTo(px, b.top - 10); ctx.lineTo(px, b.bot + 5); ctx.stroke();
+        }
+      }
+      function hitTest(x) {
+        var b = bounds(), acc = 0;
+        for (var i = 0; i < SECS.length; i++) {
+          var beats = SECS[i].bars * 4;
+          var bx = b.x0 + b.span * (acc / TOTAL), bw = b.span * (beats / TOTAL);
+          if (x >= bx && x <= bx + bw) return i;
+          acc += beats;
+        }
+        return null;
+      }
+      KB.enableDrag(cv, function (x) { return hitTest(x); }, function (i, x, y) {
+        var b = bounds();
+        var v = (b.bot - y) / (b.bot - b.top);
+        SECS[i].e = Math.max(0.05, Math.min(1, Math.round(v * 100) / 100));
+        draw(headPos); diagnose();
+      }, function () { if (owner === "ec") startEc(); });
+
+      function diagnose() {
+        var es = SECS.map(function (s) { return s.e; });
+        var max = Math.max.apply(null, es);
+        var peakIdx = es.indexOf(max);
+        var nPeak = es.filter(function (v) { return max - v < 0.04; }).length;
+        var acc = 0, at = 0;
+        for (var i = 0; i < SECS.length; i++) {
+          if (i === peakIdx) { at = acc; break; }
+          acc += SECS[i].bars * 4;
+        }
+        var pct = Math.round(at / TOTAL * 100);
+        var before = peakIdx > 0 ? es[peakIdx - 1] : 1;
+        var minAll = Math.min.apply(null, es);
+        var drop = max - before;
+        $("ec-peak").textContent = SECS[peakIdx].name + "（全曲 " + pct + "%）";
+        $("ec-valley").textContent = peakIdx > 0 ? before.toFixed(2) : "无（顶点在开头）";
+        $("ec-drop").textContent = drop.toFixed(2);
+        $("ec-drop").className = drop >= 0.5 ? "ok" : drop >= 0.3 ? "" : "warn";
+        var downs = 0;
+        for (var k = 1; k < es.length; k++) if (es[k] < es[k - 1] - 0.03) downs++;
+        var items = [
+          { ok: nPeak === 1, t: nPeak === 1 ? "① 顶点唯一" : "① 顶点不唯一 —— 有 " + nPeak + " 段能量相同或接近最高" },
+          { ok: before <= minAll + 0.03 && drop >= 0.4,
+            t: (before <= minAll + 0.03 && drop >= 0.4)
+              ? "② 顶点前是全曲最深的谷，落差 " + drop.toFixed(2)
+              : "② 顶点前的谷不够深（前一段 " + before.toFixed(2) + "，全曲最低 " + minAll.toFixed(2) + "）" },
+          { ok: downs >= 3, t: downs >= 3 ? "③ 曲线有 " + downs + " 次明显下降，不是直线" : "③ 只有 " + downs + " 次下降 —— 接近一条直线" },
+          { ok: pct >= 65 && pct <= 85,
+            t: (pct >= 65 && pct <= 85)
+              ? "④ 顶点起始于全曲 " + pct + "%，落在推荐区间（65–85%）"
+              : "④ 顶点起始于 " + pct + "% —— " + (pct < 65 ? "偏早，后半程失去期待" : "偏晚，没有着陆段") }
+        ];
+        var host = $("ec-diag");
+        while (host.firstChild) host.removeChild(host.firstChild);
+        items.forEach(function (it) {
+          var li = document.createElement("li");
+          li.className = it.ok ? "good" : "bad";
+          li.textContent = (it.ok ? "✓ " : "✗ ") + it.t;
+          host.appendChild(li);
+        });
+      }
+      function startEc() {
+        play(SECS, "ec", function (p) {
+          headPos = p; draw(p);
+          var acc = 0;
+          for (var i = 0; i < SECS.length; i++) {
+            acc += SECS[i].bars * 4;
+            if (p < acc) { $("ec-sec").textContent = SECS[i].name + "（能量 " + SECS[i].e.toFixed(2) + "・" + cfgFor(SECS[i].e).cn + "）"; break; }
+          }
+        });
+        $("ec-play").textContent = "⏸ 暂停";
+      }
+      $("ec-play").addEventListener("click", function () {
+        if (owner === "ec") { stopAll(); return; }
+        startEc();
+      });
+      $("ec-stop").addEventListener("click", stopAll);
+      Object.keys(PRESETS).forEach(function (name) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = name;
+        b.addEventListener("click", function () {
+          PRESETS[name].forEach(function (v, i) { if (SECS[i]) SECS[i].e = v; });
+          draw(headPos); diagnose();
+          if (owner === "ec") startEc();
+        });
+        $("ec-presets").appendChild(b);
+      });
+
+      /* ---------- 演示 2：顶点位置 ---------- */
+      var PK = {
+        mid:  { cn: "顶点在 50%", pos: "全曲正中（副歌 2）", issue: "后一半没有可期待的东西",
+                e: [0.28, 0.42, 0.66, 0.82, 0.50, 0.70, 1.00, 0.72, 0.40, 0.80, 0.35] },
+        good: { cn: "顶点在 78%（推荐）", pos: "最后一遍副歌，之后有尾奏", issue: "无 —— 前有铺垫、后有着陆",
+                e: [0.28, 0.40, 0.68, 0.86, 0.48, 0.72, 0.90, 0.75, 0.15, 1.00, 0.35] },
+        end:  { cn: "顶点在最后一段（全曲 89%）", pos: "尾奏的位置被顶点占了，之后没有着陆段",
+                issue: "戛然而止，顶点来不及被感知",
+                e: [0.25, 0.38, 0.60, 0.78, 0.45, 0.66, 0.84, 0.70, 0.30, 0.86, 1.00] }
+      };
+      Object.keys(PK).forEach(function (k) {
+        $("pk-" + k).addEventListener("click", function () {
+          Object.keys(PK).forEach(function (j) {
+            $("pk-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = PK[k];
+          $("pk-name").textContent = v.cn;
+          $("pk-pos").textContent = v.pos;
+          $("pk-issue").textContent = v.issue;
+          $("pk-issue").className = k === "good" ? "ok" : "warn";
+          var secs = SECS.map(function (s, i) { return Object.assign({}, s, { e: v.e[i] }); });
+          play(secs, "pk");
+        });
+      });
+      $("pk-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 3：桥段挖多深 ---------- */
+      var BASE_E = [0.28, 0.40, 0.68, 0.86, 0.48, 0.72, 0.90, 0.75, 0.15, 1.00, 0.35];
+      var BG = { hi: 0.70, mid: 0.35, lo: 0.12 };
+      var BGTXT = { hi: "几乎和副歌一样满", mid: "中等落差", lo: "只剩骨架" };
+      Object.keys(BG).forEach(function (k) {
+        $("bg-" + k).addEventListener("click", function () {
+          Object.keys(BG).forEach(function (j) {
+            $("bg-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var e = BG[k];
+          var secs = SECS.map(function (s, i) {
+            return Object.assign({}, s, { e: i === 8 ? e : BASE_E[i] });
+          });
+          $("bg-e").textContent = e.toFixed(2) + "（" + BGTXT[k] + "）";
+          $("bg-cfg").textContent = cfgFor(e).cn;
+          $("bg-drop").textContent = (1.00 - e).toFixed(2);
+          $("bg-hit").textContent = e <= 0.2 ? "最强" : e <= 0.4 ? "明显" : "很弱";
+          $("bg-hit").className = e <= 0.2 ? "ok" : e <= 0.4 ? "" : "warn";
+          play(secs, "bg");
+        });
+      });
+      $("bg-stop").addEventListener("click", stopAll);
+
+      draw(null); diagnose();
+      new MutationObserver(function () { draw(headPos); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopAll(); });
+    });
+  </script>
+</body>
+</html>

@@ -269,7 +269,7 @@
         <h2>编写约定（供后续章节遵守）</h2>
         <ul>
           <li>文件名与页面标题都用 <code>NN 章名</code> 编号（如 <code>01 音、律与指板：一把等分的尺子</code>），保证导航树按学习顺序排列。</li>
-          <li>章节文件放本目录（<code>content/音乐/吉他乐理/教材/</code>）；共用的发声引擎、指板 / 和弦图 / TAB 渲染器放 <code>_media/guitar-kit.js</code>（<code>window.KBG</code>），各章只写页面专属逻辑，不重复造轮子。</li>
+          <li>章节文件放本目录（<code>content/音乐/吉他乐理/教材/</code>）；共用的发声引擎、指板 / 和弦图 / TAB 渲染器放共享层 <code>assets/js/guitar-kit.js</code>（<code>window.KBG</code>），各章只写页面专属逻辑，不重复造轮子。</li>
           <li>示意图用内联 SVG（颜色取 CSS 变量以适配深浅色）；指板图、和弦图、TAB 一律调用 <code>KBG.*</code> 生成，保证全书视觉统一。</li>
           <li>每个演示内必须有 <code>&lt;noscript&gt;</code> 兜底文案，写明该演示的核心结论——不开 JavaScript 的读者也能读懂这一页。</li>
           <li>每写完一章：把本页对应行状态改为 <span class="toc-status toc-done">已上线</span> 并加链接 → 章末补「下一章」链接 → 重跑 <code>python3 scripts/build_index.py</code>。</li>
@@ -300,7 +300,7 @@
   <script src="../../../../assets/js/search.js" defer></script>
   <script src="../../../../assets/js/interactive.js" defer></script>
   <script src="../../../../assets/js/app.js" defer></script>
-  <script src="./_media/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       var A = KBG.audio, msg = document.getElementById("demo-msg");

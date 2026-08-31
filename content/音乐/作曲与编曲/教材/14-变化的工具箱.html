@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>14 变化的工具箱 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 14 章：八件制造变化的工具（half/double-time、升调、转调、breakdown、织体反转、变拍、polymeter、突然的空）的强度、代价与适用条件，以及「每件只用一次」的使用纪律。">
+  <meta name="kb:tags" content="作曲,编曲,变化,half-time,double-time,升调,转调,breakdown,变拍,polymeter,bhdgjx,bh">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 14 章 · 变化的工具箱</h1>
+        <p class="kb-lead">第 5 章给了六个对比维度，第 13 章给了一条能量曲线。但一首四分钟的歌需要的变化，往往比这些能提供的更多——尤其是在第三、第四个段落之后，六个维度基本都用过一轮了。这一章把剩下的手段一次性摊开：<strong>八件工具，每一件都能制造一次明确的转折，而每一件都有明确的代价。</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 说出八件工具各自的强度与代价；② 解释 half-time / double-time 为什么比直接改 BPM 安全；③ 正确使用升调与转调，并知道它们的区别；④ 写出一个合格的 breakdown；⑤ 遵守使用纪律——<strong>一首歌最多用两三件，每件只用一次</strong>。</p>
+        </div>
+
+        <h2>工具箱总表</h2>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>工具</th><th>做什么</th><th>强度</th><th>代价 / 风险</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① Half-time</strong></td><td>军鼓从每 2 拍一次改成每 4 拍一次，BPM 不变</td><td>高</td><td>低——<strong>最安全的一件</strong></td></tr>
+              <tr><td><strong>② Double-time</strong></td><td>律动加倍，BPM 不变</td><td>高</td><td>低，但容易显得忙</td></tr>
+              <tr><td><strong>③ Breakdown</strong></td><td>能量骤降 ＋ 全体齐奏的稀疏重音</td><td><strong>最高</strong></td><td>用一次就够；连用会疲劳</td></tr>
+              <tr><td><strong>④ 织体反转</strong></td><td>把伴奏变成主角、主角变成伴奏</td><td>中高</td><td>低；<strong>最被低估的一件</strong></td></tr>
+              <tr><td><strong>⑤ 升调副歌</strong></td><td>最后一遍整体升高 1–2 个半音</td><td>中高</td><td><strong>需要主唱能上去</strong>；用滥了会显得廉价</td></tr>
+              <tr><td><strong>⑥ 转调</strong></td><td>某一段真正换到另一个调</td><td>高</td><td><strong>要有过渡</strong>，否则断裂（第 5 章陷阱一）</td></tr>
+              <tr><td><strong>⑦ 变拍 / Polymeter</strong></td><td>换拍号，或让 riff 与鼓的周期错开</td><td>高</td><td><strong>会破坏可跟随性</strong>；用在跳舞不起来的地方</td></tr>
+              <tr><td><strong>⑧ 突然的空</strong></td><td>一整小节只剩一件乐器或什么都没有</td><td>中高</td><td><strong>成本为零</strong>，但需要一个值得强调的落点</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 先问一句：基本手段用完了吗</p>
+          <p>这八件是<strong>特殊手段</strong>，不是常规手段。用它们之前先确认第 5 章的六个维度、第 6 章的连接手段、第 12 章的编制变化都已经用过——<strong>绝大多数「不够有变化」的歌，缺的是常规手段而不是特殊手段。</strong></p>
+          <p>原因很简单：特殊手段每一件都会消耗「同一首歌」的连续性。<strong>常规手段可以反复用，特殊手段每首歌只有两三次额度。</strong></p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🧰 演示 1：同一段素材的五种变化</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条 riff 与同一套和声，用五种方式处理——原样、half-time（军鼓改成每四拍一次，BPM 不变）、double-time（律动加倍）、breakdown（音符骤减、全体齐奏、周围留空）、织体反转（节奏吉他退成长音，贝斯变成主角）。五者的素材完全相同，听感差别却极大——这说明「有没有变化」取决于处理方式，而不是有没有新素材。</p></noscript>
+            <div id="t-sound"></div>
+            <div class="kb-readout">
+              <span>版本 <b id="t-name">—</b></span>
+              <span>BPM <b id="t-bpm">—</b></span>
+              <span>每小节音符 <b id="t-notes">—</b></span>
+              <span>它改变了 <b id="t-what">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="t-normal" type="button">▶ 原样</button>
+              <button class="kb-btn" id="t-half" type="button">▶ Half-time</button>
+              <button class="kb-btn" id="t-double" type="button">▶ Double-time</button>
+              <button class="kb-btn" id="t-break" type="button">▶ Breakdown</button>
+              <button class="kb-btn" id="t-flip" type="button">▶ 织体反转</button>
+              <button class="kb-btn" id="t-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">五个版本的<strong>速度完全相同（148 BPM）、和声完全相同、riff 的音高完全相同</strong>。请特别注意 half-time 与 double-time：<strong>没有一个音改变了它的时间位置，改变的只是鼓的骨架。</strong></p>
+          </div>
+        </div>
+
+        <h2>Half-time 与 Double-time</h2>
+        <p>这两件是工具箱里性价比最高的，因为它们<strong>改变了速度感却没有改变速度</strong>。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>正常</th><th>Half-time</th><th>Double-time</th></tr></thead>
+            <tbody>
+              <tr><td>BPM</td><td>148</td><td><strong>148（不变）</strong></td><td><strong>148（不变）</strong></td></tr>
+              <tr><td>军鼓落在</td><td>第 2、4 拍</td><td><strong>只在第 3 拍</strong></td><td>每一拍</td></tr>
+              <tr><td>底鼓</td><td>第 1、3 拍</td><td>第 1 拍（＋切分）</td><td>每半拍</td></tr>
+              <tr><td>听感</td><td>—</td><td><strong>变慢一半、变重</strong></td><td><strong>变快一倍、变紧</strong></td></tr>
+              <tr><td>其他声部要改吗</td><td>—</td><td><strong>不必</strong>（改了更好）</td><td><strong>不必</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 为什么它比直接改 BPM 安全得多</p>
+          <p>第 5 章的陷阱一说过：<strong>速度、调、主动机骨架是「不能动的三样」</strong>——BPM 一变，听众几乎必然感知为「换了一首歌」。</p>
+          <p>Half-time 绕过了这个限制：它<strong>只改变鼓的骨架</strong>，底层的节拍网格完全没变。所以吉他可以继续弹原来的东西，两个段落也可以无缝切换回来——<strong>你得到了速度变化的全部效果，却没有付出断裂的代价。</strong></p>
+          <p>这也解释了为什么 half-time 在重型音乐里如此常见：<strong>它是唯一能在不换歌的前提下大幅改变速度感的手段。</strong></p>
+        </div>
+        <p><strong>用在哪里</strong>：half-time 最经典的位置是<strong>最后一遍副歌之前</strong>或<strong>breakdown</strong>——它把能量从「快」转成「重」。Double-time 则常用于<strong>间奏、独奏</strong>或<strong>最后一遍副歌的最后四小节</strong>，把能量从「重」转成「猛」。</p>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">⏱️ 演示 2：速度感 vs 速度</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一段音乐在 half-time、正常、double-time 之间切换，全程 BPM 固定为 148。听感上速度变化极大，但节拍网格从未改变——吉他的每一个音都落在原来的位置上。作为对照，还有一个真正把 BPM 改成 74 的版本，它听起来就是「另一首歌」。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="h-name">—</b></span>
+              <span>实际 BPM <b id="h-bpm">—</b></span>
+              <span>军鼓间隔 <b id="h-snare">—</b></span>
+              <span>是否会被听成另一首歌 <b id="h-risk">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="h-normal" type="button">▶ 正常</button>
+              <button class="kb-btn" id="h-half" type="button">▶ Half-time（BPM 不变）</button>
+              <button class="kb-btn" id="h-double" type="button">▶ Double-time（BPM 不变）</button>
+              <button class="kb-btn" id="h-slow" type="button">▶ 对照：真的把 BPM 改成 74</button>
+              <button class="kb-btn" id="h-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">对比后两个按钮：<strong>「Half-time」和「BPM 74」的军鼓间隔是一样的</strong>（都是约 1.6 秒一次），但前者的吉他仍在原来的网格上跑，后者整体慢了一半。<strong>前者可以随时切回来，后者不能。</strong></p>
+          </div>
+        </div>
+
+        <h2>升调与转调</h2>
+        <p>这两个经常被混为一谈，但它们是不同的工具：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>升调副歌</th><th>转调</th></tr></thead>
+            <tbody>
+              <tr><td>做什么</td><td>最后一遍<strong>整体</strong>升高 1–2 个半音</td><td>某一段换到<strong>另一个调</strong>，通常是近关系调</td></tr>
+              <tr><td>和声关系</td><td>不变——只是整体平移</td><td><strong>改变</strong>——新调有新的和弦</td></tr>
+              <tr><td>需要过渡吗</td><td>不太需要（半音上行本身就是过渡）</td><td><strong>需要</strong>，否则断裂</td></tr>
+              <tr><td>主要风险</td><td>主唱上不去；用滥了显得廉价</td><td>处理不好会像换了一首歌</td></tr>
+              <tr><td>适合</td><td>主流摇滚的最后一遍副歌</td><td>桥段、间奏；前卫与旋律金属</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>关于升调副歌的诚实评价</strong>：它非常有效，也非常容易被识破。听众听过一千次这个套路，所以它现在带有很强的年代感。<strong>如果要用，用一个半音而不是两个，而且不要在升调的同时再加别的东西</strong>——让它成为那一段唯一的新元素。</p>
+        <p><strong>关于转调</strong>：重型音乐里最安全的做法是转到<strong>关系调或平行调</strong>（<a href="../../吉他乐理/教材/04-大调音阶与五度圈.html">上一本第 4 章</a>），或者干脆用<strong>调式变换</strong>——同一个主音换一个调式（<a href="../../吉他乐理/教材/14-金属的调式色彩.html#金属的三个调式">上一本第 14 章</a>）。后者尤其好用，因为主音不变，听觉不会觉得换了地方，但色彩明显不同。</p>
+
+        <h2>Breakdown</h2>
+        <p>Breakdown 是工具箱里强度最高的一件，第 8、9 章已经讲过它的配器（完全齐奏、贝斯长音、周围留空）。这里补三条<strong>结构</strong>上的规则：</p>
+        <ol>
+          <li><strong>它必须紧接一个能量高点。</strong>Breakdown 的效果来自落差——从满编骤降到几个稀疏的重音。如果它前面本来就很空，那它只是「继续空」。</li>
+          <li><strong>它的长度要短。</strong>4 到 8 小节。Breakdown 的信息密度极低（每小节可能只有三四个音），超过 8 小节就会从「重」变成「空洞」。</li>
+          <li><strong>一首歌只用一次。</strong>第二次出现时，听众已经知道会发生什么——而 breakdown 的一半效果来自意外。</li>
+        </ol>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ Breakdown 最常见的两个失败</p>
+          <p><strong>① 音符太多。</strong>Breakdown 的重量来自空隙（第 8 章例题 8.3）。如果每一格都有音，它就退化成了「慢一点的 riff」。</p>
+          <p><strong>② 镲片打满。</strong>持续的踩镲会把空隙填上，重量立刻消失。Breakdown 里镲片通常只在重音上出现，或者完全不出现。</p>
+        </div>
+
+        <h2>织体反转：最被低估的一件</h2>
+        <p><strong>把伴奏变成主角，把主角变成伴奏。</strong>这件工具几乎没有代价，却很少被有意识地使用。</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>反转前</th><th>反转后</th><th>效果</th></tr></thead>
+            <tbody>
+              <tr><td>吉他弹 riff，贝斯跟根音</td><td><strong>吉他弹长和弦，贝斯弹 riff</strong></td><td>同样的素材，完全不同的段落</td></tr>
+              <tr><td>人声唱旋律，吉他伴奏</td><td><strong>吉他弹人声的旋律，人声改成长音或不唱</strong></td><td>器乐段落有了主角（第 11 章）</td></tr>
+              <tr><td>鼓打律动，吉他打点</td><td><strong>鼓只打点，吉他弹持续的织体</strong></td><td>重心整体转移</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>为什么它被低估</strong>：因为它不产生任何「新东西」——素材完全一样，只是分配变了。但正因为素材一样，<strong>它完全不消耗「同一首歌」的连续性</strong>：听众会立刻认出这是同一条 riff，只是换了个人在弹。<strong>最大的变化感，最小的断裂风险。</strong></p>
+
+        <h2>变拍与 Polymeter</h2>
+        <p>这两件都改变节拍的可预测性，但方式不同：</p>
+        <ul>
+          <li><strong>变拍</strong>——换拍号，比如 4/4 里插一小节 7/8。听感是「少了半拍」，非常明确。</li>
+          <li><strong>Polymeter</strong>——拍号不变，但让 riff 的长度与小节长度<strong>不整除</strong>（比如 7 个八分音符的 riff 在 4/4 里循环）。结果是 riff 每次落在不同的位置，要经过若干小节才回到原点（<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html#polymeter让极少素材产生极长变化">上一本第 15 章</a>）。</li>
+        </ul>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 它们的共同代价：可跟随性</p>
+          <p>Backbeat 之所以有效，是因为它给了身体一个稳定的参照（第 8 章）。变拍与 polymeter 破坏这个参照——<strong>听众跟不上，身体也动不起来。</strong></p>
+          <p>所以它们的正确位置是<strong>不需要跳舞的段落</strong>：间奏、桥段、riff 展示段。<strong>放在副歌里几乎总是错的</strong>——副歌需要的是可预测、可跟唱、可点头。</p>
+          <p><strong>一个安全的用法</strong>：让鼓维持稳定的 4/4 backbeat，只让吉他 riff 用 polymeter。这样身体有参照，耳朵有惊喜——<strong>这正是 djent 的核心手法</strong>（<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html#djent低音管节奏高音管色彩">上一本第 15 章</a>）。</p>
+        </div>
+
+        <div class="kb-interactive">
+          <div class="kb-interactive-header">🔀 演示 3：4/4 · 变拍 · Polymeter</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：同一条 riff 素材的三种节拍处理——① 规整的 4/4；② 每四小节插一小节 7/8（变拍，听感是「少了半拍」）；③ polymeter：riff 长 7 个八分音符，鼓保持 4/4，于是 riff 每小节落在不同位置，要经过 7 小节才回到原点。第三种的鼓仍然稳定可跟随，而 riff 一直在移动——这正是 djent 的核心手法。</p></noscript>
+            <div class="kb-readout">
+              <span>版本 <b id="m-name">—</b></span>
+              <span>riff 长度 <b id="m-len">—</b></span>
+              <span>回到原点需要 <b id="m-cycle">—</b></span>
+              <span>可跟随性 <b id="m-follow">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="m-44" type="button">▶ ① 规整 4/4</button>
+              <button class="kb-btn" id="m-78" type="button">▶ ② 变拍（插一小节 7/8）</button>
+              <button class="kb-btn" id="m-poly" type="button">▶ ③ Polymeter（7 个八分）</button>
+              <button class="kb-btn" id="m-stop" type="button">■ 停止</button>
+            </div>
+            <p style="margin:8px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">版本 ③ 里请<strong>只跟着鼓点头</strong>——你会发现鼓始终稳定，而 riff 每一小节都落在不同的位置上。<strong>这就是 polymeter 的价值：极少的素材产生极长的变化，同时不牺牲可跟随性。</strong></p>
+          </div>
+        </div>
+
+        <h2>使用纪律</h2>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 三条纪律</p>
+          <p><strong>① 一首歌最多用两三件。</strong>每一件都会消耗「同一首歌」的连续性预算（第 5 章陷阱一）。八件全用，听众会觉得这是一个拼贴。</p>
+          <p><strong>② 每件只用一次。</strong>Breakdown 第二次出现时已经不意外；升调第二次已经不新鲜。<strong>特殊手段的一半效果来自它的稀缺。</strong></p>
+          <p><strong>③ 用之前先确认常规手段已经用完。</strong>六个对比维度、连接段、编制变化——这些可以反复使用且没有额度限制。<strong>特殊手段是补充，不是替代。</strong></p>
+        </div>
+        <p><strong>一个典型的分配</strong>：一首四分钟的歌，用 <strong>half-time</strong>（桥段前）＋ <strong>织体反转</strong>（桥段）＋ <strong>breakdown 或升调</strong>（最后一遍之前）。三件，各一次，分布在全曲的后 40%——<strong>因为那正是常规手段开始耗尽的地方。</strong></p>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 14.1</p>
+          <p>一首歌到第三分钟开始显得重复，但结构、编制、能量曲线都检查过没问题。该用哪件工具？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先确认这确实是「常规手段用完了」，而不是别的问题。</strong>三个快速排查：</p>
+            <ul>
+              <li><strong>是不是段落太长？</strong>16 小节的副歌唱三遍就是 48 小节的同一段。<strong>缩短比加变化便宜。</strong></li>
+              <li><strong>是不是重复次数太多？</strong>第四遍副歌几乎总是可以删（第 13 章例题 13.2）。</li>
+              <li><strong>是不是最后一遍没有升级？</strong>如果最后一遍和第二遍一模一样，问题在能量曲线而不在工具箱（第 13 章）。</li>
+            </ul>
+            <p><strong>如果确认是常规手段用尽，按这个顺序选工具：</strong></p>
+            <ol>
+              <li><strong>织体反转</strong>（第一选择）。零代价、不消耗连续性、素材完全复用。让贝斯弹 riff、吉他弹长和弦，或者让吉他弹人声的旋律。<strong>它常常一步就解决问题。</strong></li>
+              <li><strong>Half-time</strong>。在最后一遍副歌之前插入一段 half-time，能量从「快」转成「重」，而 BPM 一点没变。</li>
+              <li><strong>突然的空</strong>。整整一小节只剩人声或一件乐器。成本为零，效果明显。</li>
+              <li>再往后才考虑 breakdown、升调、转调——它们代价更大。</li>
+            </ol>
+            <p><strong>一个诊断细节</strong>：「第三分钟开始重复」往往意味着<strong>问题出在第 2:30 那个位置的段落</strong>，而不是它后面的段落。听众在那里第一次产生「我听过这个了」的感觉，之后的一切都会被这个印象染色。<strong>去看那一段，通常它就是「第三遍主歌」或「第二遍间奏」这类可以直接删掉的东西。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 14.2</p>
+          <p>想让副歌「更猛」，考虑把 BPM 从 148 提到 170。这是好主意吗？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>几乎肯定不是。</strong>三个理由：</p>
+            <ol>
+              <li><strong>速度是「不能动的三样」之一</strong>（第 5 章陷阱一）。BPM 一变，听众感知到的是「换了一首歌」而不是「副歌来了」。段落之间的连续性靠不变的东西提供，而速度是其中最强的一个。</li>
+              <li><strong>更快不等于更猛。</strong>快会让每个音的空间变小、瞬态变模糊、重心变不清楚——这和第 12 章「密度不等于能量」是同一件事。<strong>重型音乐里最重的段落往往是最慢的。</strong></li>
+              <li><strong>它带来大量连带问题</strong>：主唱的换气、鼓手的稳定性、riff 的可演奏性、以及切回来时的过渡。</li>
+            </ol>
+            <p><strong>想要「更猛」，正确的选项</strong>（按推荐度）：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>做法</th><th>为什么更好</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Double-time</strong>（律动加倍，BPM 不变）</td><td>得到「更快」的全部听感，零断裂风险</td></tr>
+                  <tr><td><strong>Half-time</strong>（反方向）</td><td>如果你要的其实是「更重」——多数情况下是</td></tr>
+                  <tr><td>加高八度吉他层</td><td>音区维度，压缩抹不掉（第 5、10 章）</td></tr>
+                  <tr><td>把副歌前面那段做空</td><td>落差比绝对强度重要（第 5、13 章）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>什么时候改 BPM 是对的</strong>：整首歌一个速度，从头到尾。或者作为一次<strong>刻意的、有明确过渡的</strong>大转折（前卫金属常见），而且要有一个明显的接缝设计——渐快、一次休止、一段自由节奏的过渡。<strong>「悄悄提速 20 BPM」是两者中最糟的：既有断裂的代价，又没有转折的收益。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 14.3</p>
+          <p>写了一个 breakdown，乐队都觉得「不够重」。检查清单是什么？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>检查</th><th>常见错误</th><th>修正</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 前面够满吗</strong></td><td>breakdown 前面本来就空</td><td>Breakdown 的重量来自落差。<strong>它必须紧接一个能量高点</strong></td></tr>
+                  <tr><td><strong>② 音符够少吗</strong></td><td>每个十六分格都有音</td><td>每小节只留三四个重音，<strong>其余全空</strong>（第 8 章例题 8.3）</td></tr>
+                  <tr><td><strong>③ 镲片在打吗</strong></td><td>踩镲持续打满</td><td><strong>拿掉</strong>。持续的高频会把空隙填上，重量立刻消失</td></tr>
+                  <tr><td><strong>④ 对齐了吗</strong></td><td>吉他、贝斯、底鼓各打各的</td><td><strong>完全齐奏</strong>——同一瞬间的能量会被听成一件巨型乐器（第 8 章）</td></tr>
+                  <tr><td><strong>⑤ 贝斯在做什么</strong></td><td>跟吉他一样短促</td><td>贝斯<strong>音长要更长</strong>，把重音之间的低频接住（第 9 章例题 9.3）</td></tr>
+                  <tr><td><strong>⑥ 前面有静默吗</strong></td><td>直接接进去</td><td>加半拍到一拍的静默（第 6 章）</td></tr>
+                  <tr><td><strong>⑦ 太长了吗</strong></td><td>16 小节</td><td>砍到 4–8 小节。信息密度太低，久了会从「重」变「空洞」</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>命中率最高的是 ② 和 ③。</strong>「不够重」的 breakdown 十次里有八次是音符太多、镲片太满——两者都是在填空隙，而空隙正是重量的来源。</p>
+            <p><strong>一个反直觉的检验</strong>：把 breakdown 的音符<strong>再删掉一半</strong>，听听是不是更重了。如果是，继续删。<strong>大多数人删得远远不够。</strong></p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>Half-time 做了什么？为什么它比直接改 BPM 安全得多？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>Half-time 只改变鼓的骨架</strong>：军鼓从每 2 拍一次改成每 4 拍一次，底鼓相应变稀。<strong>BPM 不变，节拍网格不变，其他声部一个音都不用改。</strong></p>
+            <p><strong>为什么更安全</strong>：第 5 章的陷阱一指出，速度、调、主动机骨架是「不能动的三样」——BPM 一变，听众几乎必然感知为「换了一首歌」。</p>
+            <p>Half-time 绕过了这个限制：底层网格没变，所以</p>
+            <ul>
+              <li>吉他可以继续弹原来的东西（甚至一个音都不改）；</li>
+              <li>可以<strong>随时无缝切回来</strong>——真正改 BPM 则需要一个过渡；</li>
+              <li>现场演奏时乐手的内部计时不需要重置。</li>
+            </ul>
+            <p><strong>结果是：你得到了速度变化的全部听感，却没有付出断裂的代价。</strong>这是工具箱里性价比最高的一件，也是它在重型音乐里如此常见的原因。</p>
+            <p><strong>一个可以验证的细节</strong>（演示 2）：148 BPM 的 half-time 与真正的 74 BPM，<strong>军鼓间隔完全相同（约 1.62 秒）</strong>。差别只在于吉他还在不在原来的网格上——而那正是「同一首歌」的证据。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>升调副歌与转调有什么区别？各自的风险是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>升调副歌</th><th>转调</th></tr></thead>
+                <tbody>
+                  <tr><td>做什么</td><td>最后一遍<strong>整体平移</strong>升高 1–2 个半音</td><td>某一段换到<strong>另一个调</strong></td></tr>
+                  <tr><td>和声关系</td><td><strong>不变</strong>——所有音程关系原样保留</td><td><strong>改变</strong>——新调有新的顺阶和弦</td></tr>
+                  <tr><td>需要过渡</td><td>不太需要</td><td><strong>需要</strong></td></tr>
+                  <tr><td>风险</td><td>主唱上不去；<strong>用滥了显得廉价</strong></td><td>处理不好会像换了一首歌</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>升调的风险细说</strong>：它太有效也太常见，听众听过上千次，所以现在带有明显的年代感与套路感。建议：<strong>用一个半音而不是两个</strong>；<strong>不要在升调的同时再加别的新元素</strong>——让它成为那一段唯一的变化，否则听众会把注意力放在「哦又升调了」上。</p>
+            <p><strong>转调的安全做法</strong>：转到关系调或平行调（<a href="../../吉他乐理/教材/04-大调音阶与五度圈.html">上一本第 4 章</a>），或者用<strong>调式变换</strong>——主音不变、只换调式（<a href="../../吉他乐理/教材/14-金属的调式色彩.html#金属的三个调式">上一本第 14 章</a>）。后者尤其适合重型音乐：<strong>主音不变意味着听觉不会觉得换了地方，但色彩明显不同</strong>，比如从自然小调换到弗里几亚，只差一个音却完全改变了氛围。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>Breakdown 的三条结构规则是什么？为什么它一首歌只能用一次？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>它必须紧接一个能量高点。</strong>Breakdown 的效果来自落差——从满编骤降到几个稀疏的重音。前面本来就空的话，它只是「继续空」。</li>
+              <li><strong>它的长度要短</strong>（4–8 小节）。信息密度极低，超过 8 小节会从「重」变成「空洞」。</li>
+              <li><strong>一首歌只用一次。</strong></li>
+            </ol>
+            <p><strong>为什么只能用一次</strong>：<strong>breakdown 的一半效果来自意外。</strong>第一次出现时，听众被从满编状态里突然扔进几乎空白的空间；第二次出现时，他们已经知道会发生什么，那个「掉下去」的感觉就没有了。</p>
+            <p>还有两个附加理由：</p>
+            <ul>
+              <li><strong>它是能量的顶点手段</strong>（和双踩一样，第 8 章）。顶点只能有一个（第 13 章纪律 ①）。</li>
+              <li><strong>它需要一个能量高点作为前提</strong>。用两次意味着中间必须重新爬回满编，而那需要时间与素材——通常一首歌没有这个预算。</li>
+            </ul>
+            <p><strong>如果确实想要两次「重的段落」</strong>：让第二次用<strong>不同的工具</strong>——half-time 的满编段落也很重，但机制完全不同（密而慢 vs 稀而空），听觉不会觉得重复。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>什么是织体反转？为什么说它是「最被低估的一件工具」？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>织体反转 ＝ 把伴奏变成主角，把主角变成伴奏。</strong>常见的三种：</p>
+            <ul>
+              <li>吉他弹 riff、贝斯跟根音 → <strong>吉他弹长和弦、贝斯弹 riff</strong>；</li>
+              <li>人声唱旋律、吉他伴奏 → <strong>吉他弹人声的旋律、人声改长音或退场</strong>；</li>
+              <li>鼓打律动、吉他打点 → <strong>鼓只打点、吉他弹持续织体</strong>。</li>
+            </ul>
+            <p><strong>为什么被低估</strong>：因为它<strong>不产生任何新素材</strong>——听起来像是「什么都没加」。而人们衡量「有没有做工作」时习惯看新东西的数量。</p>
+            <p><strong>但这恰恰是它的优点</strong>：</p>
+            <ul>
+              <li><strong>零代价</strong>——不加轨、不占新频段、不需要新录音；</li>
+              <li><strong>不消耗连续性预算</strong>——素材一样，听众会立刻认出「还是这条 riff，只是换了个人弹」；</li>
+              <li><strong>它同时改变了注意力分配与织体类型</strong>（第 12 章），是一个真正的两维度动作。</li>
+            </ul>
+            <p><strong>一句话总结</strong>：<strong>最大的变化感，最小的断裂风险。</strong>在「歌听起来重复」的诊断里，它应该是第一个被尝试的工具（例题 14.1）。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>变拍与 polymeter 有什么区别？为什么它们不适合放在副歌？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>区别</strong>：</p>
+            <ul>
+              <li><strong>变拍</strong>——真的换拍号（4/4 里插一小节 7/8）。听感是「少了半拍」，非常明确，而且每小节都回到起点。</li>
+              <li><strong>Polymeter</strong>——拍号不变，但 riff 的长度与小节长度<strong>不整除</strong>（7 个八分音符的 riff 在 4/4 里循环）。riff 每小节落在不同位置，要经过若干小节才回到原点（<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html#polymeter让极少素材产生极长变化">上一本第 15 章</a>）。</li>
+            </ul>
+            <p><strong>为什么不适合副歌</strong>：因为它们破坏<strong>可跟随性</strong>。</p>
+            <p>Backbeat 之所以是摇滚的定义特征，正是因为它给身体提供了一个稳定的参照（第 8 章）。副歌需要的恰恰是可预测、可跟唱、可点头——<strong>而变拍和 polymeter 都在取消这个参照。</strong>它们制造的是「意外」，而副歌需要的是「兑现」（第 3 章）。</p>
+            <p><strong>正确的位置</strong>：间奏、桥段、riff 展示段——任何不需要跳舞的地方。</p>
+            <p><strong>一个安全的折中</strong>：<strong>让鼓维持稳定的 4/4 backbeat，只让吉他 riff 用 polymeter。</strong>身体跟鼓，耳朵跟 riff——两者都得到满足。这正是 djent 的核心手法（<a href="../../吉他乐理/教材/15-降调七弦与现代金属.html#djent低音管节奏高音管色彩">上一本第 15 章</a>），也是演示 3 的版本 ③。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>为什么这八件是「特殊手段」而不是常规手段？「每件只用一次」背后的机制是什么？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>区分的标准是：它消不消耗「同一首歌」的连续性预算。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>常规手段</th><th>特殊手段</th></tr></thead>
+                <tbody>
+                  <tr><td>例子</td><td>六个对比维度、连接段、编制变化、贝斯写法</td><td>本章的八件</td></tr>
+                  <tr><td>改变的是</td><td><strong>同一件事的程度</strong>（多一层、密一点、亮一点）</td><td><strong>规则本身</strong>（拍号、调、律动的框架）</td></tr>
+                  <tr><td>可以反复用吗</td><td><strong>可以</strong>，每一段都可以用</td><td><strong>不行</strong>，一首歌两三次</td></tr>
+                  <tr><td>断裂风险</td><td>无</td><td>有</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>「每件只用一次」的机制有两层</strong>：</p>
+            <ol>
+              <li><strong>惊讶只有一次。</strong>特殊手段的效果很大一部分来自「没想到」。第二次出现时，听众已经建立了预期——<strong>它从「转折」退化成了「这首歌的一个特点」。</strong></li>
+              <li><strong>它会变成新的常态。</strong>如果 breakdown 出现两次，第三段落听众会开始期待第三次；而没有第三次时，那反而成了缺失。<strong>用两次的成本不只是第二次没效果，还包括它改变了听众对整首歌的模型。</strong></li>
+            </ol>
+            <p><strong>这与第 12 章「把一个元素用在所有地方，等于没有用它」是同一条原则</strong>，只是这里的「所有地方」下降到了「两次」——因为特殊手段的效果衰减得比常规手段快得多。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>演示 2 显示，148 BPM 的 half-time 与真正的 74 BPM，军鼓间隔完全相同。既然听感上都是「慢了一半」，为什么一个安全一个危险？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>因为听觉同时在跟踪两层节奏信息，而这两种做法只改变了其中一层。</strong></p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>Half-time（148 BPM）</th><th>真的改成 74 BPM</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>骨架层</strong>（军鼓 / 底鼓的周期）</td><td>慢了一半</td><td>慢了一半</td></tr>
+                  <tr><td><strong>网格层</strong>（吉他音符、踩镲的最小单位）</td><td><strong>不变</strong></td><td><strong>也慢了一半</strong></td></tr>
+                  <tr><td>听觉的结论</td><td>「同一首歌，鼓变了」</td><td>「另一首歌」</td></tr>
+                  <tr><td>能否无缝切回</td><td><strong>能</strong></td><td>不能，需要过渡</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>关键在网格层。</strong>吉他的十六分音符、踩镲的八分音符构成了一张<strong>底层的时间网格</strong>，听觉用它来判断「这还是刚才那个速度吗」。Half-time 保留了这张网格，所以听觉的解释是「速度没变，只是鼓换了打法」；真的改 BPM 则连网格一起改了，那就是换了一首。</p>
+            <p><strong>一个可以直接验证的推论</strong>：如果在 half-time 段落里<strong>把吉他也改成长音</strong>（网格层的信息消失），它就开始像真的变慢了——因为听觉失去了判断网格的依据。<strong>所以 half-time 段落里保留一件仍在原网格上打点的乐器（踩镲、闷音吉他）很重要</strong>，它是「同一首歌」的证据。</p>
+            <p><strong>这也解释了 double-time 的安全性</strong>：它同样只改骨架层，网格层甚至更清楚（多了细分）。<strong>两者都是在「不动网格」的前提下改变骨架——这正是它们低风险的原因。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>为一首 4 分钟的重型作品分配特殊手段：选三件，指定位置，说明每一件解决什么问题，并检查它们互相之间没有冲突。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>结构</strong>：前奏 → 主歌 1 → 预副歌 → 副歌 1 → 主歌 2 → 预副歌 → 副歌 2 → 间奏 → <strong>桥段</strong> → 最后一遍副歌 → 尾奏</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>工具</th><th>位置</th><th>解决的问题</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>① 织体反转</strong></td><td><strong>间奏</strong>（约 2:20）</td><td>此时常规手段已用过一轮；间奏没有人声，需要一个主角（第 11 章）。让贝斯弹主 riff、吉他退成长和弦——<strong>零成本，且立刻听出这是新段落</strong></td></tr>
+                  <tr><td><strong>② Half-time</strong></td><td><strong>桥段</strong>（约 2:45）</td><td>桥段要挖出全曲最深的谷（第 13 章）。Half-time 把能量从「快」转成「重而空」，配合编制减到三轨——<strong>既是谷，也不无聊</strong></td></tr>
+                  <tr><td><strong>③ 突然的空</strong></td><td><strong>最后一遍副歌进入前的最后一拍</strong>（约 3:05）</td><td>把落差拉满（第 6 章）。<strong>成本为零，而且不与前两件冲突</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>冲突检查</strong>：</p>
+            <ul>
+              <li><strong>三件都在全曲后 40%</strong> —— 正确。那正是常规手段开始耗尽的地方。</li>
+              <li><strong>三件各用一次</strong> —— 符合纪律 ②。</li>
+              <li><strong>三件不互相抵消</strong>：织体反转改的是「谁是主角」，half-time 改的是「律动骨架」，突然的空改的是「落点前的参照」。<strong>三个不同的维度，可以叠加。</strong></li>
+              <li><strong>连续性预算</strong>：三件里只有 half-time 改变了框架，另外两件完全没有——<strong>预算消耗很小。</strong></li>
+            </ul>
+            <p><strong>为什么不选 breakdown 和升调</strong>：</p>
+            <ul>
+              <li><strong>Breakdown</strong> 会和 half-time 的桥段冲突——两者都是「能量骤降 ＋ 变重」，位置也接近。<strong>选一个就够了</strong>，而 half-time 的连续性代价更小。</li>
+              <li><strong>升调</strong>会和「突然的空」争夺最后一遍副歌的注意力。纪律 ② 的精神是<strong>让每一件工具独占一个位置</strong>——同一个转折点上叠两件，两件都会被削弱。</li>
+            </ul>
+            <p><strong>如果这首歌是 6 分钟的前卫作品</strong>，可以再加一件——<strong>polymeter 放在间奏的后半段</strong>（那里不需要跳舞），或者<strong>调式变换放在桥段</strong>（主音不变，色彩变）。但四分钟的作品用三件已经饱和了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 14.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>本章的八件工具里，有几件其实是前面章节某条原则的特例。请找出它们，并说明这个观察对学习编曲意味着什么。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>工具</th><th>它是哪条原则的特例</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>突然的空</strong></td><td><strong>「想让某处更强，先让它前面更弱」</strong>（第 5、6、13 章）——它就是这条原则的极端形式</td></tr>
+                  <tr><td><strong>Breakdown</strong></td><td>同上 ＋ <strong>「重量来自对齐与空隙，不来自数量」</strong>（第 8、12 章）</td></tr>
+                  <tr><td><strong>织体反转</strong></td><td><strong>「任何时刻只有一个主角」</strong>（第 11 章）——它是主角的一次交接</td></tr>
+                  <tr><td><strong>Half / Double-time</strong></td><td><strong>「改变量，不要改变框架」</strong>（第 5 章陷阱一）——它精确地只改允许改的那一层</td></tr>
+                  <tr><td>升调 / 转调 / 变拍 / Polymeter</td><td><strong>不是特例</strong>——它们确实改变了框架本身，这也是它们代价最大的原因</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>观察结果</strong>：八件里有四件是旧原则的特例，而<strong>这四件恰好是代价最低、最推荐先用的四件</strong>。真正「新」的那四件（升调、转调、变拍、polymeter）全都改变了框架，也全都风险更高。</p>
+            <p><strong>这对学习编曲意味着三件事</strong>：</p>
+            <ol>
+              <li><strong>「工具」比「原则」多，但原则比工具少得多。</strong>本书讲了几十种具体做法，但它们反复归结到三四条原则：变化的相对性、每刻一个主角、内容优于振幅、让路优于挖 EQ。<strong>记住原则，工具可以自己推出来。</strong></li>
+              <li><strong>遇到新的风格或新的手法时，先问它是哪条原则的特例。</strong>如果能归到已知原则，你立刻就知道它的适用条件与代价；如果归不到，那它可能真的改变了框架，需要格外小心。</li>
+              <li><strong>代价与「新颖度」正相关。</strong>越是从旧原则里推出来的手段越安全，越是「全新的东西」越容易断裂。<strong>这不是保守，而是因为听众的理解也建立在同一批原则上。</strong></li>
+            </ol>
+            <p><strong>第三篇剩下两章的定位由此也清楚了</strong>：第 15 章讲制作如何反过来约束这些原则的适用范围，第 16 章把全部原则收拢成一份可以逐条执行的自查清单。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① 八件工具：<strong>half-time / double-time / breakdown / 织体反转 / 升调 / 转调 / 变拍与 polymeter / 突然的空</strong>。② <strong>Half-time 与 double-time 只改鼓的骨架，不动底层网格</strong>——所以能得到速度变化的全部听感而没有断裂代价；148 BPM 的 half-time 与真的 74 BPM 军鼓间隔相同，差别在吉他还在不在原网格上。③ <strong>升调是平移，转调是换调</strong>；重型音乐里最安全的转调是<strong>调式变换</strong>（主音不变，色彩变）。④ Breakdown 三条规则：<strong>必须紧接高点 · 4–8 小节 · 一首歌只用一次</strong>；最常见的失败是音符太多与镲片打满。⑤ <strong>织体反转是最被低估的一件</strong>：零代价、不消耗连续性预算，是「歌听起来重复」时的第一选择。⑥ 变拍与 polymeter 破坏<strong>可跟随性</strong>，只能放在不需要跳舞的段落；<strong>鼓稳 4/4、riff 用 polymeter</strong> 是安全折中。⑦ 三条纪律：<strong>一首歌最多两三件 · 每件只用一次 · 先确认常规手段已用完</strong>。⑧ 八件里有四件是旧原则的特例，而它们恰好是最安全的四件——<strong>记住原则，工具可以自己推出来。</strong></p>
+          <p><strong>下一章预告</strong>：到这里为止，本书讨论的一切都发生在「编曲」这个阶段。但真实的作品要经过录音、分轨、加倍、EQ、压缩、母带——<strong>而这些处理会反过来决定编曲能怎么写</strong>。第 15 章《制作对编曲的反作用》处理这个循环，也解释了重型音乐里那些看起来反直觉的惯例是从哪来的。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./15-制作对编曲的反作用.html"><strong>下一章：第 15 章 · 制作对编曲的反作用</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, BPM = KBB.song.bpm;
+      function $(id) { return document.getElementById(id); }
+      var RIFF = [0, 0, 3, 5], BARS = 4;
+      function low(d) { return R.ROOT - 12 + d; }
+
+      var rig = null;
+      function stopAll() { if (rig) { rig.dispose(); rig = null; } A.stopAll(); }
+      function start(tracks, beats, bpm) {
+        stopAll();
+        rig = KBB.tracks({ bpm: bpm || BPM, lengthBeats: beats, loop: true, tracks: tracks });
+        rig.play();
+      }
+      function gtrTrack(id, events, pan, gain) {
+        return { id: id, name: "吉他 " + id, inst: "guitar", gain: gain == null ? 0.8 : gain,
+          pan: pan, drive: 0.82, hp: 100, events: events };
+      }
+      function drTrack(events) { return { id: "dr", name: "鼓", inst: "drums", gain: 1, events: events }; }
+      function baTrack(events) { return { id: "ba", name: "贝斯", inst: "bass", gain: 0.95, drive: 0.25, events: events }; }
+
+      /* 各种鼓型：normal / half / double / break */
+      function drumsFor(kind, bars) {
+        var ev = [], b;
+        for (var q = 0; q < bars; q++) {
+          var off = q * 4;
+          if (kind === "half") {
+            ev.push({ t: off, piece: "kick", gain: 0.95 });
+            ev.push({ t: off + 1.5, piece: "kick", gain: 0.7 });
+            ev.push({ t: off + 2, piece: "snare", gain: 0.95 });
+            for (b = 0; b < 4; b += 0.5) ev.push({ t: off + b, piece: "hh", gain: 0.34 });
+          } else if (kind === "double") {
+            for (b = 0; b < 4; b += 0.5) ev.push({ t: off + b, piece: "kick", gain: 0.78 });
+            for (b = 0; b < 4; b += 1) ev.push({ t: off + b, piece: "snare", gain: 0.82 });
+            for (b = 0; b < 4; b += 0.25) ev.push({ t: off + b, piece: "hh", gain: 0.3 });
+          } else if (kind === "break") {
+            [0, 1.5, 2.5].forEach(function (t) { ev.push({ t: off + t, piece: "kick", gain: 1 }); });
+            ev.push({ t: off + 2.5, piece: "snare", gain: 0.9 });
+            if (q === 0) ev.push({ t: off, piece: "crash", gain: 0.6 });
+          } else {
+            R.drumPattern(1, "basic").forEach(function (e) { ev.push(Object.assign({}, e, { t: e.t + off })); });
+          }
+        }
+        return ev;
+      }
+      function riffEvents(bars) {
+        var g = [];
+        for (var q = 0; q < bars; q++) {
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            g.push(Object.assign({}, e, { t: e.t + q * 4 }));
+          });
+        }
+        return g;
+      }
+      function bassBeat(bars) {
+        var b = [];
+        for (var q = 0; q < bars; q++) RIFF.forEach(function (r, i) {
+          b.push({ t: q * 4 + i, midi: low(r), dur: 1, gain: 0.9 });
+        });
+        return b;
+      }
+      function bassLong(bars) {
+        var b = [];
+        for (var q = 0; q < bars; q++) b.push({ t: q * 4, midi: low(0), dur: 4, gain: 0.92 });
+        return b;
+      }
+
+      /* ---------- 演示 1：五种变化 ---------- */
+      KBG.soundToggle($("t-sound"));
+      var T = {
+        normal: { cn: "原样", notes: 12, what: "—（基准）",
+                  build: function () {
+                    var g = riffEvents(BARS);
+                    return [drTrack(drumsFor("normal", BARS)), baTrack(bassBeat(BARS)),
+                      gtrTrack("L", g, -0.85), gtrTrack("R", g, 0.85, 0.76)];
+                  } },
+        half:   { cn: "Half-time", notes: 12, what: "只改鼓的骨架 —— 吉他一个音都没动",
+                  build: function () {
+                    var g = riffEvents(BARS);
+                    return [drTrack(drumsFor("half", BARS)), baTrack(bassLong(BARS)),
+                      gtrTrack("L", g, -0.85), gtrTrack("R", g, 0.85, 0.76)];
+                  } },
+        double: { cn: "Double-time", notes: 12, what: "同样只改鼓 —— 网格层甚至更清楚了",
+                  build: function () {
+                    var g = riffEvents(BARS);
+                    return [drTrack(drumsFor("double", BARS)), baTrack(bassBeat(BARS)),
+                      gtrTrack("L", g, -0.85), gtrTrack("R", g, 0.85, 0.76)];
+                  } },
+        brk:    { cn: "Breakdown", notes: 3, what: "音符骤减 ＋ 全体齐奏 ＋ 周围留空",
+                  build: function () {
+                    var g = [], b = [];
+                    for (var q = 0; q < BARS; q++) {
+                      [0, 1.5, 2.5].forEach(function (t) {
+                        g.push({ t: q * 4 + t, midis: [R.ROOT, R.ROOT + 7, R.ROOT + 12],
+                          dur: 0.4, mute: true, spread: 0.006, gain: 0.98 });
+                        b.push({ t: q * 4 + t, midi: low(0), dur: t === 2.5 ? 1.5 : 1.2, gain: 0.98 });
+                      });
+                    }
+                    return [drTrack(drumsFor("break", BARS)), baTrack(b),
+                      gtrTrack("L", g, -0.8), gtrTrack("R", g, 0.8, 0.78)];
+                  } },
+        flip:   { cn: "织体反转", notes: 12, what: "主角交接：贝斯弹 riff，吉他退成长和弦",
+                  build: function () {
+                    var g = [], b = [];
+                    for (var q = 0; q < BARS; q++) {
+                      g.push({ t: q * 4, midis: [R.ROOT, R.ROOT + 7, R.ROOT + 12],
+                        dur: 4, mute: false, spread: 0.02, gain: 0.5 });
+                      R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+                        b.push({ t: e.t + q * 4, midi: low(e.midis ? e.midis[0] - R.ROOT : 0),
+                          dur: 0.35, gain: (e.gain || 0.8) * 1.05 });
+                      });
+                    }
+                    return [drTrack(drumsFor("normal", BARS)), baTrack(b),
+                      gtrTrack("L", g, -0.85, 0.6), gtrTrack("R", g, 0.85, 0.58)];
+                  } }
+      };
+      Object.keys(T).forEach(function (k) {
+        var btn = $("t-" + (k === "brk" ? "break" : k));
+        btn.addEventListener("click", function () {
+          Object.keys(T).forEach(function (j) {
+            $("t-" + (j === "brk" ? "break" : j)).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          $("t-name").textContent = T[k].cn;
+          $("t-bpm").textContent = BPM + "（五个版本完全相同）";
+          $("t-notes").textContent = T[k].notes + " 个";
+          $("t-what").textContent = T[k].what;
+          start(T[k].build(), BARS * 4);
+        });
+      });
+      $("t-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 2：速度感 vs 速度 ---------- */
+      function snareGap(bpm, beatsBetween) { return (60 / bpm * beatsBetween).toFixed(2) + " s"; }
+      var HH = {
+        normal: { cn: "正常", bpm: BPM, kind: "normal", gap: snareGap(BPM, 2), risk: "否", ok: true },
+        half:   { cn: "Half-time（BPM 不变）", bpm: BPM, kind: "half", gap: snareGap(BPM, 4), risk: "否 —— 网格层没变", ok: true },
+        double: { cn: "Double-time（BPM 不变）", bpm: BPM, kind: "double", gap: snareGap(BPM, 1), risk: "否 —— 网格层没变", ok: true },
+        slow:   { cn: "真的把 BPM 改成 74", bpm: 74, kind: "normal", gap: snareGap(74, 2), risk: "是 —— 网格层也慢了一半", ok: false }
+      };
+      Object.keys(HH).forEach(function (k) {
+        $("h-" + k).addEventListener("click", function () {
+          Object.keys(HH).forEach(function (j) {
+            $("h-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = HH[k];
+          $("h-name").textContent = v.cn;
+          $("h-bpm").textContent = v.bpm;
+          $("h-snare").textContent = v.gap;
+          $("h-risk").textContent = v.risk;
+          $("h-risk").className = v.ok ? "ok" : "warn";
+          var g = riffEvents(BARS);
+          start([drTrack(drumsFor(v.kind, BARS)),
+            baTrack(v.kind === "half" ? bassLong(BARS) : bassBeat(BARS)),
+            gtrTrack("L", g, -0.85), gtrTrack("R", g, 0.85, 0.76)], BARS * 4, v.bpm);
+        });
+      });
+      $("h-stop").addEventListener("click", stopAll);
+
+      /* ---------- 演示 3：4/4 · 变拍 · Polymeter ---------- */
+      /* polymeter 用的 riff：7 个八分音符 */
+      var POLY = [0, 0, 3, 0, 5, 0, 3];
+      function polyRiff(reps) {
+        var ev = [];
+        for (var r = 0; r < reps; r++) {
+          POLY.forEach(function (d, i) {
+            var t = r * 3.5 + i * 0.5;
+            ev.push({ t: t, midis: [R.ROOT + d, R.ROOT + d + 7, R.ROOT + d + 12],
+              dur: 0.45, mute: true, spread: 0.008, gain: i === 0 ? 0.95 : 0.66 });
+          });
+        }
+        return ev;
+      }
+      function drums44(bars) { return drumsFor("normal", bars); }
+      /* 变拍：三小节 4/4 ＋ 一小节 7/8（3.5 拍） */
+      function oddMeter() {
+        var g = [], d = [], b = [], t = 0;
+        [4, 4, 4, 3.5].forEach(function (len) {
+          R.events(RIFF, "gallop", { mute: true }).forEach(function (e) {
+            if (e.t < len) g.push(Object.assign({}, e, { t: e.t + t }));
+          });
+          RIFF.forEach(function (r, i) { if (i < len) b.push({ t: t + i, midi: low(r), dur: 1, gain: 0.9 }); });
+          for (var k = 0; k < len; k += 0.5) d.push({ t: t + k, piece: "hh", gain: 0.4 });
+          d.push({ t: t, piece: "kick", gain: 0.92 });
+          d.push({ t: t + 1, piece: "snare", gain: 0.85 });
+          if (len >= 3) d.push({ t: t + 2, piece: "kick", gain: 0.86 });
+          if (len >= 4) d.push({ t: t + 3, piece: "snare", gain: 0.85 });
+          else d.push({ t: t + 3, piece: "snare", gain: 0.9 });
+          t += len;
+        });
+        return { g: g, d: d, b: b, beats: t };
+      }
+      var M = {
+        "44":   { cn: "① 规整 4/4", len: "4 拍（8 个八分）", cycle: "1 小节", follow: "高", ok: true },
+        "78":   { cn: "② 变拍：每四小节插一小节 7/8", len: "4 / 4 / 4 / 3.5 拍", cycle: "4 小节（一个循环 15.5 拍）", follow: "中 —— 每四小节被打断一次", ok: false },
+        "poly": { cn: "③ Polymeter：7 个八分的 riff", len: "3.5 拍（7 个八分）", cycle: "7 小节（28 拍）", follow: "高 —— 鼓始终稳定 4/4", ok: true }
+      };
+      Object.keys(M).forEach(function (k) {
+        $("m-" + k).addEventListener("click", function () {
+          Object.keys(M).forEach(function (j) {
+            $("m-" + j).className = "kb-btn" + (j === k ? " kb-btn-primary" : "");
+          });
+          var v = M[k];
+          $("m-name").textContent = v.cn;
+          $("m-len").textContent = v.len;
+          $("m-cycle").textContent = v.cycle;
+          $("m-follow").textContent = v.follow;
+          $("m-follow").className = v.ok ? "ok" : "warn";
+          if (k === "44") {
+            var g = riffEvents(4);
+            start([drTrack(drums44(4)), baTrack(bassBeat(4)),
+              gtrTrack("L", g, -0.85), gtrTrack("R", g, 0.85, 0.76)], 16);
+          } else if (k === "78") {
+            var o = oddMeter();
+            start([drTrack(o.d), baTrack(o.b),
+              gtrTrack("L", o.g, -0.85), gtrTrack("R", o.g, 0.85, 0.76)], o.beats);
+          } else {
+            var pg = polyRiff(8);            /* 8 × 3.5 ＝ 28 拍 ＝ 7 小节 */
+            var pd = drums44(7);
+            var pb = [];
+            for (var q = 0; q < 7; q++) pb.push({ t: q * 4, midi: low(0), dur: 4, gain: 0.9 });
+            start([drTrack(pd), baTrack(pb),
+              gtrTrack("L", pg, -0.85), gtrTrack("R", pg, 0.85, 0.76)], 28);
+          }
+        });
+      });
+      $("m-stop").addEventListener("click", stopAll);
+
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopAll(); });
+    });
+  </script>
+</body>
+</html>

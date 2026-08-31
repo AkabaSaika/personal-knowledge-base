@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-kb-root="../../../../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12 织体与密度：编曲的减法 · 知识库</title>
+  <meta name="kb:summary" content="作曲与编曲教材第 12 章：织体是声部之间的关系而不是数量；密度不等于能量；加法的三条纪律与减法的优先顺序；多轨混音沙盒——完整示范曲的九轨静音/独奏/音量/声像与实时频段占用。">
+  <meta name="kb:tags" content="编曲,织体,密度,减法,混音,沙盒,多轨,静音,独奏,声像,ztymdbqdjf,zt">
+  <meta name="kb:created" content="2026-08-31">
+  <script>(function(){try{var t=localStorage.getItem('kbTheme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="../../../../assets/css/theme.css">
+  <link rel="stylesheet" href="../../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../../assets/css/components.css">
+  <link rel="stylesheet" href="../../../../assets/css/content.css">
+  <style>
+    .kb-readout {
+      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 2px;
+      padding: 8px 12px; border: 1px solid var(--kb-border); border-radius: 8px;
+      background: var(--kb-surface-alt); font-size: 0.92em;
+    }
+    .kb-readout b { color: var(--kb-accent); font-variant-numeric: tabular-nums; }
+    .kb-readout b.warn { color: #dc2626; }
+    .kb-readout b.ok { color: #16a34a; }
+    .sb-presets { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 2px; }
+    .sb-presets .kb-btn { font-size: .86em; }
+    .kb-interactive.sandbox .kb-interactive-body { padding-bottom: 14px; }
+  </style>
+</head>
+<body class="kb-page">
+  <header id="kb-header" class="kb-header"></header>
+
+  <div class="kb-shell">
+    <main class="kb-content" id="kb-content">
+      <article>
+        <h1>第 12 章 · 织体与密度：编曲的减法</h1>
+        <p class="kb-lead">前五章把每一件乐器都摆好了位置。这一章把它们放回同一个工程里，回答第二篇真正的问题：<strong>什么时候该加，什么时候该减。</strong>本章的演示是全书的旗舰——一个完整的多轨沙盒，你可以对整首示范曲的九条轨做静音、独奏、音量、声像，并实时看到频段占用与段落位置。<strong>请一定亲手玩它，这一章的结论用听的比用读的快得多。</strong></p>
+
+        <div class="kb-callout kb-info">
+          <p class="kb-callout-title">🎯 学习目标</p>
+          <p>学完本章你能：① 用「声部之间的关系」而不是「有几件乐器」来描述织体；② 区分密度与能量，并说出它们背离的典型情形；③ 遵守加法的三条纪律；④ 按正确的顺序做减法，并用「删掉之后没人发现」来判断该删什么；⑤ 为整首歌画一条编制的时间曲线。</p>
+        </div>
+
+        <h2>织体：不是「有几件」，是「在做什么」</h2>
+        <p>「织体」（texture）这个词经常被误用成「有多少轨」。它真正指的是<strong>同一时刻各声部之间的关系</strong>。四种基本类型：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>声部关系</th><th>重型音乐里的例子</th><th>特点</th></tr></thead>
+            <tbody>
+              <tr><td><strong>齐奏</strong></td><td>所有人做同一件事</td><td>Breakdown；riff 与底鼓完全对齐（第 8 章）</td><td>最重；<strong>但只有一个声部</strong></td></tr>
+              <tr><td><strong>主调</strong></td><td>一个主角 ＋ 一群伴奏</td><td>人声 ＋ 节奏吉他；独奏 ＋ 伴奏</td><td><strong>最常用</strong>；清楚、易听</td></tr>
+              <tr><td><strong>复调</strong></td><td>两条以上同等重要的独立线</td><td>双主音的三度和声；riff 与贝斯走线并行</td><td>信息量最大；<strong>也最容易糊</strong></td></tr>
+              <tr><td><strong>铺底</strong></td><td>没有明确主角，只有一片持续的背景</td><td>氛围段落；长和弦 ＋ 环境声</td><td>适合过渡；<strong>不能持续太久</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>关键的一点</strong>：这四种类型和轨数<strong>没有必然关系</strong>。八轨可以是齐奏（全部做同一件事），两轨也可以是复调（两条独立的线）。<strong>「加了一轨」不等于「织体变复杂了」——这取决于那一轨在做什么。</strong></p>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 织体变化是最强的对比维度</p>
+          <p>第 5 章把织体排在六个对比维度的第一位，原因现在可以说清楚了：<strong>织体的改变会同时改变频谱占用、注意力分配与信息密度三件事。</strong></p>
+          <p>比如从「主调」换成「齐奏」：频谱上所有能量被压到同一批时刻，注意力从「跟随人声」变成「跟随整体」，信息量从两条线降到一条。<strong>一个动作，三个维度同时变。</strong>这就是为什么它比推 3 dB 有效得多。</p>
+        </div>
+
+        <h2>密度不等于能量</h2>
+        <p>这是编曲里最常见的混淆之一，值得单独说明：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th></th><th>密度</th><th>能量</th></tr></thead>
+            <tbody>
+              <tr><td>定义</td><td>单位时间内的<strong>音符数量</strong></td><td>听众感知到的<strong>强度</strong></td></tr>
+              <tr><td>可以数出来吗</td><td><strong>可以</strong>——它是客观的</td><td>不能——它是相对的（第 5 章）</td></tr>
+              <tr><td>提高它的方式</td><td>更多音符、更密的节奏</td><td>音区、织体、对齐、对比、编制</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>两者背离的三个典型情形</strong>：</p>
+        <ol>
+          <li><strong>桥段的贝斯走线</strong>（第 9 章习题 9.8）：音符最多，能量最低——因为音色干净、编制稀疏、没有齐奏。</li>
+          <li><strong>Breakdown</strong>：音符极少（每小节可能只有三四个），能量最高——因为完全齐奏，且周围是空的（第 8 章）。</li>
+          <li><strong>十六分踩镲的主歌</strong>：密度很高，能量却不高——因为高频的密集颗粒不改变重心。</li>
+        </ol>
+        <div class="kb-callout kb-warn">
+          <p class="kb-callout-title">⚠️ 「副歌不够炸就加音符」是错的</p>
+          <p>它把密度当成了能量的旋钮。实际上加音符往往<strong>降低</strong>能量——因为音符越密，每一个音的空间越小、瞬态越模糊、重心越不清楚。</p>
+          <p><strong>最重的段落往往是音符最少的段落。</strong>这在重型音乐里几乎是一条定律，而它和第 5、8、9 章的结论完全一致：<strong>重量来自对齐与对比，不来自数量。</strong></p>
+        </div>
+
+        <h2>加法的三条纪律</h2>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 想加东西之前，先过这三关</p>
+          <p><strong>① 每段只加一件事。</strong>一个段落相对上一段只增加一个新元素。同时加三样，听众分不清是哪一样让它变好的——你自己也分不清。</p>
+          <p><strong>② 先问「它的主频段是什么，那里已经有人了吗」</strong>（第 7 章）。答不上主频段的，多半可以不加。</p>
+          <p><strong>③ 加了就要有对应的减。</strong>新元素进来时，看看有没有旧元素可以退场。<strong>编制的总量应该大致守恒，变化的是构成。</strong></p>
+        </div>
+        <p><strong>第 ③ 条是最反直觉、也最有用的一条。</strong>一首歌从头到尾编制单调递增，最后会满到无法再加，而且中间的每一段都比它应有的样子更满。「加一样、减一样」则让每个段落都有<strong>新东西</strong>，却不会累积拥挤——<strong>而听觉对「新」的敏感度远高于对「多」。</strong></p>
+
+        <h2>减法：先减什么</h2>
+        <p>需要腾出空间时，按这个顺序考虑：</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>顺序</th><th>减什么</th><th>判断依据</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1</strong></td><td><strong>没有主频段的轨</strong></td><td>第 7 章的主频段规则：填不出「它的存在感来自 ___ Hz」的，先删</td></tr>
+              <tr><td><strong>2</strong></td><td><strong>重复的信息</strong></td><td>两轨弹一模一样的东西且不是有意加倍——留一轨</td></tr>
+              <tr><td><strong>3</strong></td><td><strong>与主角争地的</strong></td><td>人声段落里的复杂 riff、独奏时的花哨贝斯</td></tr>
+              <tr><td><strong>4</strong></td><td><strong>密度</strong>（不是轨数）</td><td>轨还在，但弹得更稀：闷音改长音、十六分改八分</td></tr>
+              <tr><td>5</td><td>轨数</td><td>最后才动这个；因为它是最不可逆的决定</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 最有效的一个测试</p>
+          <p><strong>把一轨静音，播放整段。如果没有人（包括你自己）发现少了什么，那它本来就该删。</strong></p>
+          <p>这个测试之所以有效，是因为它绕开了「我花了时间录它」这种心理成本。<strong>一轨的价值不在于它花了多少功夫，而在于它不在的时候有没有人想念它。</strong></p>
+          <p><strong>注意一个常见的自我欺骗</strong>：静音之后「总音量小了一点」不算「发现少了什么」。<strong>正确的判断是——删掉它，然后把别的推 1 dB。如果这样听起来一样好甚至更好，那就删。</strong></p>
+        </div>
+
+        <div class="kb-interactive sandbox">
+          <div class="kb-interactive-header">🎚️ 演示：多轨混音沙盒（本书旗舰演示）</div>
+          <div class="kb-interactive-body">
+            <noscript><p>此演示需要启用 JavaScript。核心结论：一首完整的示范曲（前奏 → 主歌 → 预副歌 → 副歌 → 桥段 → 最后一遍副歌）配九条轨——鼓、贝斯、两对节奏吉他（原位与高八度）、主唱、两条和声人声。每一轨都可以静音、独奏、调音量与声像，同时实时显示当前段落与各轨主频段的重叠数。两种编制模式可以切换：「整首都满」（所有轨全程在场）与「按段落配置」（八度吉他与和声只在副歌出现，桥段只留鼓贝斯与人声）。后者的音符总数更少，听感却明显更有层次——这就是本章的全部结论。</p></noscript>
+            <div id="sb-sound"></div>
+            <div id="sb-timeline"></div>
+            <div class="kb-readout">
+              <span>当前段落 <b id="sb-sec">—</b></span>
+              <span>编制模式 <b id="sb-mode">整首都满</b></span>
+              <span>在场轨数 <b id="sb-n">—</b></span>
+              <span>主频段重叠 <b id="sb-clash">—</b></span>
+            </div>
+            <div class="kb-interactive-controls">
+              <button class="kb-btn kb-btn-primary" id="sb-play" type="button">▶ 播放整首</button>
+              <button class="kb-btn" id="sb-flat" type="button">编制：整首都满</button>
+              <button class="kb-btn" id="sb-smart" type="button">编制：按段落配置</button>
+              <button class="kb-btn" id="sb-reset" type="button">重置混音台</button>
+              <button class="kb-btn" id="sb-stop" type="button">■ 停止</button>
+            </div>
+            <div class="sb-presets" id="sb-presets"></div>
+            <div id="sb-mixer"></div>
+            <div id="sb-spectrum"></div>
+            <p style="margin:10px 0 0;font-size:0.92em;color:var(--kb-fg-muted);">
+              <strong>建议的三个实验</strong>：<br>
+              ① 用「整首都满」播放一遍，再切到「按段落配置」——<strong>后者的音符更少，却明显更有层次</strong>。<br>
+              ② 点预设「全部打开」→「主歌的配置」→「桥段的配置」，看右下角的<strong>主频段重叠数</strong>：<strong>24 处 → 6 处 → 1 处</strong>。同样这九条轨，只是让不需要的层退场，拥挤度就降到了二十四分之一——<strong>这就是「按段落配置」在副歌以外做的全部事情</strong>。<br>
+              ③ 把贝斯静音听一遍（第 9 章）；再把主唱独奏，听听伴奏在人声乐句之间留了多少空隙（第 11 章）。
+            </p>
+          </div>
+        </div>
+
+        <h2>编制的时间曲线</h2>
+        <p>把整首歌的「在场轨数」画成一条曲线，它应该长什么样？</p>
+        <div class="kb-table-wrap">
+          <table>
+            <thead><tr><th>段落</th><th>在场</th><th>轨数</th><th>相对上一段的<strong>唯一</strong>变化</th></tr></thead>
+            <tbody>
+              <tr><td>前奏</td><td>吉他 L/R</td><td>2</td><td>—（建立 riff）</td></tr>
+              <tr><td>主歌</td><td>＋鼓、贝斯、主唱</td><td>5</td><td>加入节奏组与人声</td></tr>
+              <tr><td>预副歌</td><td>同上，密度提高</td><td>5</td><td><strong>只改密度，不加轨</strong>（第 6 章）</td></tr>
+              <tr><td>副歌</td><td>＋高八度吉他 ×2、和声 ×2</td><td><strong>9</strong></td><td>加入织体层</td></tr>
+              <tr><td>桥段</td><td>鼓、贝斯、主唱</td><td><strong>3</strong></td><td><strong>大幅减法</strong>——全曲最低点</td></tr>
+              <tr><td>最后一遍副歌</td><td>全部</td><td><strong>9</strong></td><td>从 3 回到 9，落差最大</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>这条曲线的形状是 2 → 5 → 5 → 9 → 3 → 9。</strong>请注意三件事：</p>
+        <ol>
+          <li><strong>它不是单调上升的。</strong>桥段那个 3 是整首歌里最重要的数字——<strong>最后一遍副歌之所以是顶点，是因为它前面有一个谷底</strong>（第 5、6 章）。</li>
+          <li><strong>预副歌没有加轨。</strong>它靠密度推进（第 6 章），把「加轨」这张牌留给副歌。<strong>每一张牌只打一次。</strong></li>
+          <li><strong>副歌和最后一遍的轨数相同。</strong>最后一遍更强，靠的不是更多轨，而是<strong>它前面的桥段更空</strong>。</li>
+        </ol>
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 一个可以直接用的自查</p>
+          <p><strong>把你的歌的「在场轨数」按段落列出来。如果它是一条单调上升的直线，那这首歌一定有问题。</strong></p>
+          <p>正确的曲线应该有起有落，而且<strong>最深的那个谷紧挨着最高的那个峰</strong>。这条自查花不到两分钟，却能发现绝大多数结构性的编曲问题。</p>
+        </div>
+
+        <h2>例题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 12.1</p>
+          <p>一份编曲有 14 条轨，听起来很满但没有重点。从哪里开始收拾？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>先做主频段清单，再逐条静音测试。两步就能砍掉一半。</strong></p>
+            <ol>
+              <li><strong>为每一轨写一句「它的存在感来自 ___ Hz」</strong>（第 7 章）。写不出来的先标记。经验上 14 轨里通常有 4–6 轨写不出来。</li>
+              <li><strong>对标记的每一轨做静音测试</strong>：静音它，播放整段，然后把别的推 1 dB。如果听起来一样好甚至更好，删掉。</li>
+              <li><strong>找重复信息</strong>：两轨在弹一模一样的东西吗？如果不是有意的 double tracking（第 10 章），留一轨。</li>
+              <li><strong>找与主角争地的</strong>：人声段落里有没有复杂的 riff、花哨的贝斯、忙碌的键盘？让它们退到长音。</li>
+              <li><strong>最后看轨数</strong>——到这一步通常已经不需要再动了。</li>
+            </ol>
+            <p><strong>「没有重点」这个症状本身就是诊断结果</strong>：它意味着每一秒都没有一个明确的主角（第 11 章）。所以还有一个更快的入口：<strong>逐秒问「现在谁是主角」，然后把所有和这个主角争地的轨在这一段减掉。</strong></p>
+            <p><strong>一个心理障碍要提前说破</strong>：删轨最大的阻力不是技术判断，而是「我花了两小时录它」。<strong>录制成本是沉没成本，它和这一轨在混音里的价值毫无关系。</strong>静音测试的价值就在于它绕开了这个心理账户。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 12.2</p>
+          <p>乐队想在第二段主歌里「加点东西，别和第一段一样」。有哪些成本递增的选项？</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p>按成本从低到高，每一项都遵守「每段只加一件事」：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>成本</th><th>做法</th><th>说明</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>零</strong></td><td>鼓的镲片从闭镲换成叮叮</td><td>不加轨、不占新频段（第 8 章）</td></tr>
+                  <tr><td><strong>零</strong></td><td>贝斯从根音长音改成跟底鼓</td><td>写法变化就是织体变化（第 9 章）</td></tr>
+                  <tr><td><strong>零</strong></td><td>吉他从闷音改成部分放开延音</td><td>发音方式的变化（第 5 章）</td></tr>
+                  <tr><td>低</td><td>加一条很轻的高八度吉他，只在乐句末尾出现</td><td>加了轨，但只占很短的时间</td></tr>
+                  <tr><td>低</td><td>人声加一条只唱最后一句的和声</td><td>时间上高度局部化（第 11 章）</td></tr>
+                  <tr><td>中</td><td>整段加一对高八度吉他</td><td><strong>小心：这张牌通常要留给副歌</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>推荐前三项中的任意一项，而且只选一项。</strong>理由：</p>
+            <ul>
+              <li>它们成本为零，不消耗副歌的升级空间；</li>
+              <li>它们各自只改一件事，效果可辨认；</li>
+              <li><strong>第二段主歌需要的是「不一样」，不是「更大」</strong>——它的能量位置不应该改变，否则后面的预副歌就没有推进的余地了。</li>
+            </ul>
+            <p><strong>一个常被忽略的选项</strong>：<strong>第二段主歌可以比第一段更空。</strong>比如第一段有贝斯，第二段前两小节把贝斯拿掉，两小节后再进来。这同样是「不一样」，而且它给这一段制造了一个内部的小起伏。<strong>「加点东西」的最好答案有时是「拿掉点东西」。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">📝 例题 12.3</p>
+          <p>沙盒里把「整首都满」切到「按段落配置」之后，音符总数变少了，听起来却更大。请解释。</p>
+          <details class="kb-answer" open>
+            <summary>查看解答</summary>
+            <p><strong>因为「大」是相对的，而「按段落配置」给出了参照点。</strong>三个机制同时起作用：</p>
+            <ol>
+              <li><strong>副歌有了对比。</strong>在「整首都满」里，高八度吉他与和声人声从头响到尾，副歌进来时它们<strong>没有变化</strong>——听觉收到的信号是「同一段又来了一遍」。按段落配置之后，这两层只在副歌出现，副歌就多了一个明确的新元素（第 5 章的织体维度）。</li>
+              <li><strong>桥段挖出了谷底。</strong>「整首都满」没有低点，所以也没有高点。按段落配置的桥段只剩三轨，最后一遍副歌从 3 跳回 9——<strong>落差是「整首都满」的三倍。</strong></li>
+              <li><strong>频谱腾出来了。</strong>主歌里高八度吉他和和声不在，1–3 kHz 少了四层堆积，<strong>人声与贝斯都变清楚了</strong>（第 7、11 章）。而听觉把「更清楚」也解释成「更好、更大」。</li>
+            </ol>
+            <p><strong>这三条其实是同一件事的三个侧面</strong>：编曲的价值不在任何单一时刻的绝对内容，而在<strong>时刻之间的差异</strong>。所以「整首都满」不只是浪费，它是<strong>主动破坏</strong>——它把可以用来制造差异的素材，平摊到了每一秒。</p>
+            <p><strong>一个可以直接带走的说法</strong>：<strong>把一个元素用在所有地方，等于没有用它。</strong>这适用于高八度吉他、和声人声、双踩、擦片、开镲、失真贝斯——本书里所有被称为「手段」的东西。</p>
+          </details>
+        </section>
+
+        <h2>习题</h2>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.1 <span class="kb-exercise-badge">基础</span></p>
+          <p>织体的四种基本类型是什么？为什么说它们和轨数没有必然关系？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ul>
+              <li><strong>齐奏</strong>——所有声部做同一件事（Breakdown）。最重，但<strong>只有一个声部</strong>。</li>
+              <li><strong>主调</strong>——一个主角 ＋ 一群伴奏（人声 ＋ 节奏吉他）。最常用，清楚易听。</li>
+              <li><strong>复调</strong>——两条以上同等重要的独立线（双主音和声、riff 与贝斯走线并行）。信息量最大，也最容易糊。</li>
+              <li><strong>铺底</strong>——没有明确主角，只有持续的背景（氛围段落）。适合过渡，不能久留。</li>
+            </ul>
+            <p><strong>为什么与轨数无关</strong>：织体描述的是<strong>关系</strong>，不是数量。八轨全部弹同一条 riff 是齐奏（一个声部）；两轨弹两条独立的旋律是复调（两个声部）。<strong>八轨的齐奏比两轨的复调「简单」得多。</strong></p>
+            <p><strong>实践含义</strong>：「加一轨」不等于「织体变复杂」。要判断一次加法有没有真正增加内容，问的不是「多了几轨」，而是「<strong>多了几个声部</strong>」——也就是第 10 章的那个问题：这一轨在弹的东西，是不是别人已经在弹了。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.2 <span class="kb-exercise-badge">基础</span></p>
+          <p>密度与能量有什么区别？举出两个它们背离的例子。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>密度</strong>是单位时间内的音符数量，<strong>客观、可以数出来</strong>。<strong>能量</strong>是听众感知到的强度，<strong>相对、取决于上下文</strong>（第 5 章）。</p>
+            <p><strong>背离的例子</strong>：</p>
+            <ol>
+              <li><strong>桥段的贝斯走线</strong>：音符最多（八度跳跃 + 走音 + 切分），能量最低——因为音色干净、编制稀疏、没有齐奏（第 9 章习题 9.8）。</li>
+              <li><strong>Breakdown</strong>：音符极少（每小节可能只有三四个），能量最高——因为完全齐奏，且音与音之间是空的（第 8 章）。</li>
+              <li><strong>十六分踩镲的主歌</strong>：密度高，能量不高——高频的密集颗粒不改变重心。</li>
+            </ol>
+            <p><strong>为什么这个区分重要</strong>：因为「副歌不够炸」的第一反应经常是「加音符」，而那往往<strong>降低</strong>能量——音符越密，每个音的空间越小、瞬态越模糊、重心越不清楚。</p>
+            <p><strong>一条可以记住的定律</strong>：<strong>最重的段落往往是音符最少的段落。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.3 <span class="kb-exercise-badge">基础</span></p>
+          <p>加法的三条纪律是什么？第三条为什么最反直觉？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <ol>
+              <li><strong>每段只加一件事。</strong>同时加三样，听众分不清是哪一样起了作用，你自己也分不清。</li>
+              <li><strong>先问「它的主频段是什么，那里有人了吗」。</strong>答不上主频段的多半可以不加（第 7 章）。</li>
+              <li><strong>加了就要有对应的减。</strong>编制的总量大致守恒，变化的是构成。</li>
+            </ol>
+            <p><strong>第三条反直觉，是因为它违背「越多越好」的本能。</strong>但它的依据很硬：</p>
+            <ul>
+              <li><strong>听觉对「新」远比对「多」敏感。</strong>一个段落里换掉一件乐器，比多加一件乐器更容易被察觉。</li>
+              <li><strong>单调递增会耗尽空间。</strong>如果每段都只加不减，到副歌就已经满了，最后一遍无处可去（第 5 章陷阱二）。</li>
+              <li><strong>它顺带解决了频谱问题。</strong>总量守恒意味着拥挤度不会累积（第 7 章）。</li>
+            </ul>
+            <p><strong>一个具体的例子</strong>：副歌加入高八度吉他的同时，把原位吉他的密度降一档（十六分改八分）。<strong>结果是副歌明显更大，而 1–3 kHz 的堆积几乎没有增加。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.4 <span class="kb-exercise-badge">基础</span></p>
+          <p>静音测试怎么做？它为什么比「听着觉得该不该删」更可靠？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>做法</strong>：把一轨静音，播放整段。如果没有人（包括你自己）发现少了什么，那它本来就该删。</p>
+            <p><strong>关键的补充步骤</strong>：静音之后「总音量小了一点」<strong>不算</strong>「发现少了什么」。正确的判断是——<strong>删掉它，然后把别的推 1 dB</strong>。如果这样听起来一样好甚至更好，那就删。</p>
+            <p><strong>为什么比主观判断可靠</strong>，有三个理由：</p>
+            <ol>
+              <li><strong>它绕开了沉没成本。</strong>「我花了两小时录它」和「它在混音里有没有价值」毫无关系，但前者会强烈影响判断。静音测试问的是一个纯粹的听觉问题。</li>
+              <li><strong>它是一个二元判断，不是程度判断。</strong>「这轨重要吗」很难回答；「少了它你发现了吗」很好回答。</li>
+              <li><strong>它自动考虑了掩蔽。</strong>一轨可能在单听时很好听，但在混音里完全被掩蔽——静音测试直接测的就是它在混音里的可辨识度（第 7 章）。</li>
+            </ol>
+            <p><strong>一个变体，用于判断整个段落</strong>：把某个段落里所有的「附加层」（八度吉他、和声、氛围）一起静音。如果这个段落还成立，说明那些层是修饰而不是骨架——<strong>那它们就应该只出现在需要修饰的地方，而不是全程。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.5 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>沙盒里的编制曲线是 2 → 5 → 5 → 9 → 3 → 9。请解释其中三个「反常」之处：预副歌没加轨、桥段只有 3、最后一遍和副歌一样是 9。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>反常之处</th><th>原因</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>预副歌没加轨（5 → 5）</strong></td><td>它靠<strong>密度</strong>推进（第 6 章：build 的四种手段里，密度排第一，轨数根本不在表里）。把「加轨」这张牌留给副歌——<strong>每张牌只打一次</strong></td></tr>
+                  <tr><td><strong>桥段只有 3</strong></td><td>它是全曲的<strong>谷底</strong>，任务是为最后一遍挖出落差（第 5、6 章）。桥段写得太满是很常见的错误——它会同时毁掉自己和后面那一段</td></tr>
+                  <tr><td><strong>最后一遍还是 9</strong></td><td>因为<strong>轨数在副歌就已经饱和了</strong>（第 10 章习题 10.6）。最后一遍更强不是因为轨数更多，而是因为<strong>它前面的桥段更空</strong>——落差从 9−5＝4 变成了 9−3＝6</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>三者共同指向同一条原则</strong>：<strong>编制的绝对数量不重要，重要的是它的变化。</strong>2 → 5 → 5 → 9 → 3 → 9 这条曲线里，真正做功的是那三次跳变（5→9、9→3、3→9），而不是任何一个数字本身。</p>
+            <p><strong>如果一定要给最后一遍再加点什么</strong>，正确的选择是换维度而不是加轨：把原位吉他中的一对改成高八度（第 10 章）、加一次双踩（第 8 章）、把和声从三度扩成三度＋八度两层（第 11 章）。<strong>这些都不增加轨数，或者只增加已经在场的那类元素的内部层次。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.6 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>「把一个元素用在所有地方，等于没有用它。」请用本书前面章节的至少四个例子支持这句话，并说明它的例外。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>元素</th><th>用在所有地方的后果</th><th>出处</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>双踩</strong></td><td>失去重心，没有升级空间，低频长期占满</td><td>第 8 章</td></tr>
+                  <tr><td><strong>擦片</strong></td><td>不再标记段落开始，变成背景纹理</td><td>第 8 章</td></tr>
+                  <tr><td><strong>过门</strong></td><td>成了标点符号，失去标记功能</td><td>第 6、8 章</td></tr>
+                  <tr><td><strong>和声人声</strong></td><td>不再是副歌的对比手段；而且全程与主唱争地</td><td>第 11 章</td></tr>
+                  <tr><td><strong>高八度吉他</strong></td><td>副歌没有新元素；全程侵占人声频段</td><td>第 10、11 章</td></tr>
+                  <tr><td><strong>齐奏</strong></td><td>整首歌只剩一个声部，失去层次</td><td>第 8 章</td></tr>
+                  <tr><td><strong>音量</strong></td><td>被压缩抹平；「处处是顶点等于没有顶点」</td><td>第 5 章</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>背后的统一机制</strong>：听觉系统测量的是<strong>变化</strong>，不是绝对值（第 5 章习题 5.9）。一个持续不变的刺激会被适应掉——<strong>它从「效果」退化成「背景」。</strong></p>
+            <p><strong>例外：骨架元素。</strong>有些东西<strong>必须</strong>全程在场，因为它们提供的是连续性而不是效果：</p>
+            <ul>
+              <li><strong>速度与调</strong>（第 5 章：改了会断裂）；</li>
+              <li><strong>backbeat</strong>（第 8 章：军鼓在 2、4，它是整首歌的时间参照）；</li>
+              <li><strong>主 riff 或主动机的骨架</strong>（第 1、5 章：它是「还是这首歌」的证据）；</li>
+              <li><strong>贝斯</strong>（第 9 章：它是连接层，缺了整首会塌）。</li>
+            </ul>
+            <p><strong>怎么区分</strong>：问「它不在的时候，听众会觉得<strong>少了一个效果</strong>还是<strong>换了一首歌</strong>」。前者是手段，应该节约使用；后者是骨架，必须全程在场。</p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.7 <span class="kb-exercise-badge kb-adv">进阶</span></p>
+          <p>在沙盒里把主唱独奏，会听到伴奏消失。但如果反过来——只静音主唱——伴奏听起来应该是什么样的？为什么这是一个有用的测试？</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>正确的伴奏在没有人声时，应该听起来「有点空、像缺了什么」</strong>——那个缺口正好是人声的形状。</p>
+            <p><strong>为什么这是个有用的测试</strong>：它把「有没有为人声让路」这个模糊的问题，变成了一个明确的听觉判断。</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>静音人声后的听感</th><th>诊断</th><th>处理</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>有点空，像缺了什么</strong></td><td><strong>正确</strong>——伴奏为人声留了位置</td><td>不用改</td></tr>
+                  <tr><td>很完整、很满足、像一首器乐曲</td><td><strong>伴奏太满</strong>——人声进来只能硬挤</td><td>按第 11 章四种手段让路</td></tr>
+                  <tr><td>很空、听不下去</td><td>让过头了——伴奏本身没有内容</td><td>加回一个有辨识度的元素（第 5 章习题 5.6）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>「像一首器乐曲」是最危险的那一种</strong>，因为它在没有人声时听起来最好。乐队自己排练时（尤其是主唱不在的时候）非常容易走到这一步——<strong>伴奏被打磨得越完整，留给人声的位置越少。</strong></p>
+            <p><strong>一条推广</strong>：这个测试对任何主角都适用。静音独奏轨，间奏应该显得空；静音底鼓，律动应该塌。<strong>如果拿掉主角之后一切照旧，那说明那个主角本来就没有真正占据位置。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.8 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>用沙盒设计一个实验，证明「密度不等于能量」。写出实验步骤、预期结果，以及这个结果对编曲决策的含义。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>实验设计</strong>（沙盒里可以直接做）：</p>
+            <ol>
+              <li><strong>基准</strong>：用「按段落配置」播放整首，注意副歌的感知强度。</li>
+              <li><strong>实验 A（提高密度）</strong>：切到「整首都满」。此时高八度吉他与和声在每一段都响，<strong>全曲的音符总数大幅增加</strong>。</li>
+              <li><strong>实验 B（降低密度）</strong>：回到「按段落配置」，再把桥段能听到的轨进一步静音（只留鼓）。<strong>音符总数进一步减少。</strong></li>
+              <li>比较三种情况下「最后一遍副歌」的感知强度。</li>
+            </ol>
+            <p><strong>预期结果</strong>：</p>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th></th><th>全曲音符数</th><th>最后一遍副歌的感知强度</th></tr></thead>
+                <tbody>
+                  <tr><td>实验 A（整首都满）</td><td><strong>最多</strong></td><td><strong>最弱</strong></td></tr>
+                  <tr><td>基准（按段落配置）</td><td>中</td><td>强</td></tr>
+                  <tr><td>实验 B（桥段更空）</td><td><strong>最少</strong></td><td><strong>最强</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>结果与密度完全反相关</strong>——这就是「密度不等于能量」的直接证据。而机制在第 5 章已经给过：<strong>能量衡量的是落差，而落差由参照点决定；降低参照点比抬高峰值有效得多。</strong></p>
+            <p><strong>对编曲决策的三条含义</strong>：</p>
+            <ol>
+              <li><strong>「这里不够猛」的第一问不是「怎么更猛」，而是「它前面能不能更弱」</strong>（第 6 章习题 6.9）。</li>
+              <li><strong>全曲音符总数是一个几乎没有意义的指标</strong>；有意义的是段落之间的差值。</li>
+              <li><strong>做加法之前先做一遍减法。</strong>很多时候减完之后就不需要加了——而且减法不消耗频谱预算、不增加录音工作量、不会让混音变糊。</li>
+            </ol>
+            <p><strong>一个诚实的补充</strong>：这条规律有边界。<strong>如果基准本身就太稀（乐队只有一把吉他），那减法很快会碰到「站不住」的底线</strong>（第 5 章习题 5.6）。密度不等于能量，但密度也不是没有下限——<strong>它只是不是那个应该被首先调节的旋钮。</strong></p>
+          </details>
+        </section>
+
+        <section class="kb-exercise">
+          <p class="kb-exercise-title">✏️ 习题 12.9 <span class="kb-exercise-badge kb-hard">挑战</span></p>
+          <p>第二篇（第 7–12 章）给出了一整套编曲方法。请把它压缩成一个不超过七步的工作流程，并说明每一步要回答的问题。</p>
+          <details class="kb-answer">
+            <summary>查看答案与解析</summary>
+            <div class="kb-table-wrap">
+              <table>
+                <thead><tr><th>步</th><th>做什么</th><th>要回答的问题</th><th>出处</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1</strong></td><td><strong>逐段确定主角</strong></td><td>这一段谁在说话？（人声？riff？独奏？整体？）</td><td>第 11 章</td></tr>
+                  <tr><td><strong>2</strong></td><td><strong>写主频段清单</strong></td><td>每一轨的存在感来自多少赫兹？有没有两行相同？</td><td>第 7 章</td></tr>
+                  <tr><td><strong>3</strong></td><td><strong>安排低频分工</strong></td><td>底鼓与贝斯谁占哪一段时间？双踩处贝斯弹什么？</td><td>第 8、9 章</td></tr>
+                  <tr><td><strong>4</strong></td><td><strong>给主角让路</strong></td><td>时间 → 密度 → 方位 → 频率，按顺序做了吗？</td><td>第 11 章</td></tr>
+                  <tr><td><strong>5</strong></td><td><strong>分配中频与声像</strong></td><td>吉他几轨、什么分工、摆在哪？中间腾空了吗？</td><td>第 10 章</td></tr>
+                  <tr><td><strong>6</strong></td><td><strong>画编制的时间曲线</strong></td><td>它有起有落吗？最深的谷是不是紧挨着最高的峰？</td><td>第 12 章</td></tr>
+                  <tr><td><strong>7</strong></td><td><strong>逐轨做静音测试</strong></td><td>少了它有人发现吗？删掉再推 1 dB 会更好吗？</td><td>第 12 章</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>这个顺序不是随意的，它遵循两条原则</strong>：</p>
+            <ol>
+              <li><strong>从结构到细节。</strong>第 1、6 步是整首歌尺度的决定，第 2–5 步是段落尺度的，第 7 步是逐轨的。<strong>反过来做会让你在细节上花很多力气，然后发现结构不对。</strong></li>
+              <li><strong>从零成本到有成本。</strong>前六步全部是编曲决定，成本为零；只有做完它们之后剩下的问题，才交给 EQ 与混音（第 7、11 章）。</li>
+            </ol>
+            <p><strong>如果只能记住一步</strong>，记第 1 步：<strong>逐秒确定主角。</strong>它几乎自动推出其余所有决定——知道谁是主角，就知道谁要让路、让哪个维度、让多少。</p>
+            <p><strong>第三篇的预告</strong>：这七步都发生在「编曲」这个阶段。但真实的作品还要经过制作与混音，而<strong>那个过程会反过来改变编曲能怎么写</strong>——第 15 章会专门处理这件事。</p>
+          </details>
+        </section>
+
+        <div class="kb-callout kb-tip">
+          <p class="kb-callout-title">💡 本页要点</p>
+          <p>① <strong>织体是声部之间的关系</strong>，不是轨数：齐奏 / 主调 / 复调 / 铺底；八轨的齐奏比两轨的复调简单。② <strong>密度 ≠ 能量</strong>——最重的段落往往是音符最少的段落；「不够炸就加音符」是错的。③ 加法三条纪律：<strong>每段只加一件事 · 先问主频段 · 加了就要有对应的减</strong>。④ 减法的顺序：<strong>没有主频段的 → 重复信息 → 与主角争地的 → 密度 → 轨数</strong>。⑤ <strong>静音测试</strong>：删掉它再把别的推 1 dB，如果一样好就删——它绕开了沉没成本。⑥ 编制曲线应当<strong>有起有落，最深的谷紧挨最高的峰</strong>（2→5→5→9→3→9）；单调上升的编曲一定有问题。⑦ <strong>把一个元素用在所有地方，等于没有用它</strong>；例外是骨架元素（速度、调、backbeat、主动机、贝斯）。⑧ 第二篇的七步工作流：<strong>定主角 → 写主频段清单 → 安排低频分工 → 给主角让路 → 分配中频与声像 → 画编制曲线 → 逐轨静音测试</strong>。</p>
+          <p><strong>下一章预告</strong>：第二篇到此结束——你已经能把一支乐队完整地摆进一首歌。第三篇处理最后一层：<strong>打磨</strong>。第 13 章《张力曲线：宏观设计》把本书所有的局部技巧收拢成一条贯穿全曲的能量曲线，回答「高潮应该在哪里、一首歌应该多长」这类只有站在整首的高度才能回答的问题。</p>
+        
+          <p class="kb-next-ch">➡️ <a href="./13-张力曲线宏观设计.html"><strong>下一章：第 13 章 · 张力曲线：一首歌的宏观设计</strong></a></p>
+        </div>
+      </article>
+    </main>
+    <aside id="kb-sidebar" class="kb-sidebar"></aside>
+  </div>
+
+  <script src="../../../../assets/generated/site-index.js" defer></script>
+  <script src="../../../../assets/js/theme.js" defer></script>
+  <script src="../../../../assets/js/nav.js" defer></script>
+  <script src="../../../../assets/js/toc.js" defer></script>
+  <script src="../../../../assets/js/search.js" defer></script>
+  <script src="../../../../assets/js/interactive.js" defer></script>
+  <script src="../../../../assets/js/app.js" defer></script>
+  <script src="../../../../assets/js/guitar-kit.js" defer></script>
+  <script src="../../../../assets/js/band-kit.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var A = KBG.audio, R = KBB.riff, SONG = KBB.song, BPM = SONG.bpm;
+      function $(id) { return document.getElementById(id); }
+      var SCALE = [0, 2, 3, 5, 7, 8, 10];
+      var VOX_BASE = R.ROOT + 12;
+      function thirdUp(d) {
+        var i = SCALE.indexOf(((d % 12) + 12) % 12);
+        if (i < 0) return d + 3;
+        var j = i + 2;
+        return Math.floor(d / 12) * 12 + SCALE[j % 7] + (j >= 7 ? 12 : 0);
+      }
+
+      var ORDER = ["intro", "verse", "pre", "chorus", "bridge", "chorus"];
+      /* 各段的人声乐句（相对段落起点的拍数），前奏没有人声 */
+      var PHRASE = {
+        verse: [[0, 7, 1], [1, 8, 0.5], [1.5, 7, 0.5], [2, 5, 1], [3, 3, 1],
+                [4, 5, 0.5], [4.5, 7, 0.5], [5, 8, 1.5], [6.5, 7, 0.5], [7, 5, 1],
+                [8, 7, 1], [9, 8, 0.5], [9.5, 10, 0.5], [10, 8, 1], [11, 7, 1],
+                [12, 5, 1], [13, 3, 0.5], [13.5, 5, 0.5], [14, 3, 2]],
+        pre:    [[0, 5, 1], [1, 7, 1], [2, 8, 1], [3, 10, 1], [4, 7, 1.5], [5.5, 8, 0.5], [6, 10, 2]],
+        chorus: [[0, 12, 1.5], [1.5, 10, 0.5], [2, 8, 1], [3, 7, 1],
+                 [4, 8, 1], [5, 10, 1], [6, 12, 2],
+                 [8, 12, 1.5], [9.5, 10, 0.5], [10, 8, 1], [11, 10, 1],
+                 [12, 7, 1], [13, 8, 1], [14, 5, 2]],
+        bridge: [[0, 0, 2], [2, 3, 2], [4, 5, 2], [6, 3, 2]]
+      };
+      var ROLEKEY = { 前奏: "intro", 主歌: "verse", 预副歌: "pre", 副歌: "chorus", 桥段: "bridge" };
+
+      /* 频段占位表（各轨的「主频段」，第 7 章的主频段规则） */
+      var BANDS = [
+        { id: "dr", name: "鼓（底鼓）", lo: 40,  hi: 90,   row: 0, color: "#dc2626" },
+        { id: "ba", name: "贝斯",       lo: 80,  hi: 250,  row: 1, color: "#2563eb" },
+        { id: "g1", name: "吉他 L1",    lo: 200, hi: 3000, row: 2, color: "#16a34a" },
+        { id: "g2", name: "吉他 R1",    lo: 200, hi: 3000, row: 3, color: "#16a34a" },
+        { id: "g3", name: "吉他 L2 8va", lo: 500, hi: 6000, row: 4, color: "#65a30d" },
+        { id: "g4", name: "吉他 R2 8va", lo: 500, hi: 6000, row: 5, color: "#65a30d" },
+        { id: "vx", name: "主唱",       lo: 300, hi: 4000, row: 6, color: "#d97706" },
+        { id: "h1", name: "和声 L",     lo: 400, hi: 4000, row: 7, color: "#8b5cf6" },
+        { id: "h2", name: "和声 R",     lo: 400, hi: 4000, row: 8, color: "#8b5cf6" }
+      ];
+
+      var spec = SONG.build(ORDER);
+      var timeline = KBB.timeline($("sb-timeline"), spec.sections, { label: "段落 · 高度＝能量　（竖线是播放头）" });
+      var spectrum = KBB.spectrum($("sb-spectrum"), BANDS, { label: "各轨主频段　红色斜线 ＝ 重叠区" });
+
+      /* 按段落生成人声与和声事件 */
+      function voxEvents(harmony) {
+        var ev = [];
+        spec.sections.forEach(function (s) {
+          var key = ROLEKEY[s.name];
+          var ph = PHRASE[key];
+          if (!ph) return;
+          ph.forEach(function (n) {
+            var d = harmony ? thirdUp(n[1]) : n[1];
+            ev.push({ t: s.at + n[0], midi: VOX_BASE + d, dur: n[2], mute: false, gain: 0.9 });
+          });
+        });
+        return ev;
+      }
+      /* 高八度吉他：把吉他 L 的事件整体升八度 */
+      function octEvents() {
+        return spec.tracks[2].events.map(function (e) {
+          var o = Object.assign({}, e);
+          if (o.midis) o.midis = o.midis.map(function (m) { return m + 12; });
+          if (o.midi != null) o.midi = o.midi + 12;
+          o.mute = false;
+          return o;
+        });
+      }
+      /* 只保留落在指定段落里的事件 */
+      function onlyIn(events, keys) {
+        var ranges = spec.sections.filter(function (s) { return keys.indexOf(ROLEKEY[s.name]) >= 0; })
+          .map(function (s) { return [s.at, s.at + s.beats]; });
+        return events.filter(function (e) {
+          return ranges.some(function (r) { return e.t >= r[0] && e.t < r[1]; });
+        });
+      }
+
+      var smart = false;
+      function buildTracks() {
+        var base = spec.tracks;
+        var oct = octEvents();
+        var vx = voxEvents(false), hm = voxEvents(true);
+        if (smart) {
+          oct = onlyIn(oct, ["chorus"]);
+          hm = onlyIn(hm, ["chorus"]);
+          vx = onlyIn(vx, ["verse", "pre", "chorus"]);
+        }
+        return [
+          Object.assign({}, base[0], { gain: 1.0, pan: 0 }),
+          Object.assign({}, base[1], { gain: 0.95, pan: 0 }),
+          Object.assign({}, base[2], { name: "吉他 L1", gain: 0.8, pan: -0.9, hp: 100 }),
+          Object.assign({}, base[3], { name: "吉他 R1", gain: 0.78, pan: 0.9, hp: 100 }),
+          { id: "g3", name: "吉他 L2 8va", inst: "guitar", gain: 0.6, pan: -0.5, drive: 0.8, hp: 150, events: oct },
+          { id: "g4", name: "吉他 R2 8va", inst: "guitar", gain: 0.58, pan: 0.5, drive: 0.8, hp: 150,
+            events: oct.map(function (e) { return Object.assign({}, e, { t: e.t + 0.01 }); }) },
+          { id: "vx", name: "主唱", inst: "guitar", gain: 0.95, pan: 0, drive: 0.1, lp: 5000, events: vx },
+          { id: "h1", name: "和声 L", inst: "guitar", gain: 0.44, pan: -0.8, drive: 0.1, lp: 5000, events: hm },
+          { id: "h2", name: "和声 R", inst: "guitar", gain: 0.44, pan: 0.8, drive: 0.1, lp: 5000,
+            events: hm.map(function (e) { return Object.assign({}, e, { t: e.t + 0.012 }); }) }
+        ];
+      }
+
+      var rig = null, mixer = null, ticker = null, saved = {};
+      function rememberMix() {
+        if (!rig) return;
+        rig.tracks.forEach(function (t) { saved[t.id] = { mute: t.mute, solo: t.solo, gain: t.gain, pan: t.pan }; });
+      }
+      function clearHost(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+      function makeRig() {
+        var tracks = buildTracks().map(function (t) {
+          var s = saved[t.id];
+          return s ? Object.assign({}, t, s) : t;
+        });
+        rig = KBB.tracks({ bpm: BPM, lengthBeats: spec.lengthBeats, loop: true, tracks: tracks });
+        clearHost($("sb-mixer"));
+        mixer = KBB.mixer($("sb-mixer"), rig, { onChange: syncSb });
+        syncSb();
+      }
+      function syncSb() {
+        if (!rig) return;
+        var anySolo = rig.tracks.some(function (t) { return t.solo; });
+        var live = rig.tracks.filter(function (t) { return anySolo ? t.solo : !t.mute; });
+        var liveIds = live.map(function (t) { return t.id; });
+        $("sb-n").textContent = live.length + " / " + rig.tracks.length;
+        BANDS.forEach(function (b) { spectrum.setHidden(b.name, liveIds.indexOf(b.id) < 0); });
+        var vis = BANDS.filter(function (b) { return liveIds.indexOf(b.id) >= 0; });
+        var clash = 0;
+        for (var i = 0; i < vis.length; i++) {
+          for (var j = i + 1; j < vis.length; j++) {
+            if (Math.min(vis[i].hi, vis[j].hi) > Math.max(vis[i].lo, vis[j].lo)) clash++;
+          }
+        }
+        $("sb-clash").textContent = clash + " 处";
+        $("sb-clash").className = clash > 20 ? "warn" : clash > 10 ? "" : "ok";
+        $("sb-mode").textContent = smart ? "按段落配置" : "整首都满";
+        $("sb-flat").className = "kb-btn" + (smart ? "" : " kb-btn-primary");
+        $("sb-smart").className = "kb-btn" + (smart ? " kb-btn-primary" : "");
+      }
+      function stopAll() {
+        if (ticker) { ticker.stop(); ticker = null; }
+        if (rig) { rig.stop(); }
+        A.stopAll();
+        timeline.setPos(null);
+        $("sb-play").textContent = "▶ 播放整首";
+        $("sb-sec").textContent = "—";
+      }
+      function play() {
+        if (!rig) makeRig();
+        rig.play();
+        $("sb-play").textContent = "⏸ 暂停";
+        ticker = KB.makeLoop(function () {
+          if (!rig || !rig.isPlaying()) return;
+          var p = rig.position();
+          timeline.setPos(p);
+          var s = timeline.sectionAt(p);
+          if (s) $("sb-sec").textContent = s.name;
+        });
+        ticker.start();
+      }
+      $("sb-play").addEventListener("click", function () {
+        if (ticker) { stopAll(); return; }
+        play();
+      });
+      $("sb-stop").addEventListener("click", stopAll);
+      function switchMode(v) {
+        smart = v;
+        var wasPlaying = !!ticker;
+        rememberMix();
+        stopAll();
+        if (rig) { rig.dispose(); rig = null; }
+        makeRig();
+        if (wasPlaying) play();
+      }
+      $("sb-flat").addEventListener("click", function () { switchMode(false); });
+      $("sb-smart").addEventListener("click", function () { switchMode(true); });
+      $("sb-reset").addEventListener("click", function () {
+        saved = {};
+        var wasPlaying = !!ticker;
+        stopAll();
+        if (rig) { rig.dispose(); rig = null; }
+        makeRig();
+        if (wasPlaying) play();
+      });
+
+      /* 预设：一组静音状态，用来演示第 11、12 章的结论 */
+      var PRESETS = {
+        "全部打开": [],
+        "主歌的配置": ["g3", "g4", "h1", "h2"],
+        "桥段的配置": ["g1", "g2", "g3", "g4", "h1", "h2"],
+        "只留节奏组": ["g1", "g2", "g3", "g4", "vx", "h1", "h2"],
+        "去掉贝斯（第 9 章）": ["ba"]
+      };
+      Object.keys(PRESETS).forEach(function (name) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "kb-btn";
+        b.textContent = name;
+        b.addEventListener("click", function () {
+          if (!rig) makeRig();
+          var muted = PRESETS[name];
+          rig.tracks.forEach(function (t) {
+            rig.setSolo(t.id, false);
+            rig.setMute(t.id, muted.indexOf(t.id) >= 0);
+          });
+          if (mixer && mixer.sync) mixer.sync();
+          syncSb();
+        });
+        $("sb-presets").appendChild(b);
+      });
+
+      KBG.soundToggle($("sb-sound"));
+      makeRig();
+      new MutationObserver(function () { timeline.redraw(); spectrum.redraw(); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopAll(); });
+    });
+  </script>
+</body>
+</html>

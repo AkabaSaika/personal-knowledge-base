@@ -549,3 +549,48 @@ mark,
   color: var(--kb-fg-faint);
   text-align: center;
 }
+
+/* ===== 多轨混音台（band-kit.js 的 KBB.mixer 生成） ===== */
+.kbb-mixer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+.kbb-track {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--kb-border);
+  border-radius: 8px;
+  background: var(--kb-surface-alt);
+  transition: opacity 0.15s;
+}
+.kbb-track.dim { opacity: 0.4; }
+.kbb-track .kbb-name {
+  min-width: 5.5em;
+  font-weight: 600;
+  font-size: 0.94em;
+  color: var(--kb-fg);
+}
+.kbb-track small {
+  font-size: 0.78em;
+  color: var(--kb-fg-muted);
+}
+.kb-btn.kbb-mini {
+  padding: 3px 10px;
+  font-size: 0.82em;
+}
+.kb-btn.kbb-mini.on {
+  background: var(--kb-accent);
+  border-color: var(--kb-accent);
+  color: #fff;
+}
+.kbb-slider {
+  flex: 1 1 96px;
+  min-width: 80px;
+  max-width: 160px;
+  accent-color: var(--kb-accent);
+}
